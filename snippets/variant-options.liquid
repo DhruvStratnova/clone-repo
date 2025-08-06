@@ -1,0 +1,59 @@
+{%- liquid
+  assign swatch_count = option.values | map: 'swatch' | compact | size
+  assign picker_type = block.settings.picker_type
+
+  if swatch_count > 0 and block.settings.swatch_shape != 'none'
+    if block.settings.picker_type == 'dropdown'
+      assign picker_type = 'swatch_dropdown'
+    else
+      assign picker_type = 'swatch'
+    endif
+  endif
+-%}
+
+{%- for value in option.values -%}
+  {%- if picker_type == 'swatch' -%}
+    <div class="swatch-input-wrapper">
+      <input
+        type="radio"
+        id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+        name="{{ option.name }}"
+        value="{{ value | escape }}"
+        form="{{ product_form_id }}"
+        {% if option.selected_value == value %}checked{% endif %}
+        class="swatch-input"        
+      >
+      <label
+        for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+        class="swatch-label"
+      >
+        {{- value -}}
+      </label>
+    </div>
+  {%- elsif picker_type == 'button' -%}
+    <div class="button-input-wrapper">
+      <input
+        type="radio"
+        id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+        name="{{ option.name }}"
+        value="{{ value | escape }}"
+        form="{{ product_form_id }}"
+        {% if option.selected_value == value %}checked{% endif %}
+        class="button-input"
+      >
+      <label
+        for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+        class="button-label"
+      >
+        {{- value -}}
+      </label>
+    </div>
+  {%- else -%}
+    <option
+      value="{{ value | escape }}"
+      {% if option.selected_value == value %}selected="selected"{% endif %}
+    >
+      {{- value -}}
+    </option>
+  {%- endif -%}
+{%- endfor -%}
