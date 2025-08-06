@@ -27,6 +27,7 @@
         for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
         class="swatch-label"
       >
+        {% render 'swatch', swatch: value, shape: block.settings.swatch_shape %}
         {{- value -}}
       </label>
     </div>
