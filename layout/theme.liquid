@@ -296,26 +296,6 @@
         document.documentElement.classList.add('shopify-design-mode');
       }
     </script>
-
-<!-- 🌍 Redirect non-Indian users to Stripe payment page -->
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    fetch('https://ipapi.co/json/')
-      .then(response => response.json())
-      .then(data => {
-        const country = data.country;
-
-        if (country !== 'IN') {
-          window.location.href = '/pages/pay-with-stripe'; // Replace with your actual page handle
-        }
-      })
-      .catch(error => {
-        console.error("GeoIP lookup failed:", error);
-      });
-  });
-</script>
-
-
   </head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
