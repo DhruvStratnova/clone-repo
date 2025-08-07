@@ -9,7 +9,9 @@
  */
 {
   "current": {
+    "logo": "shopify://shop_images/Frame_2147203559.png",
     "logo_width": 190,
+    "favicon": "shopify://shop_images/IMG_9334_1.png",
     "type_header_font": "ovo_n4",
     "heading_scale": 100,
     "type_body_font": "neuzeit_s_n4",
@@ -18,10 +20,10 @@
     "spacing_sections": 0,
     "spacing_grid_horizontal": 28,
     "spacing_grid_vertical": 12,
-    "animations_reveal_on_scroll": false,
-    "animations_hover_elements": "vertical-lift",
-    "buttons_border_thickness": 1,
-    "buttons_border_opacity": 100,
+    "animations_reveal_on_scroll": true,
+    "animations_hover_elements": "3d-lift",
+    "buttons_border_thickness": 4,
+    "buttons_border_opacity": 50,
     "buttons_radius": 40,
     "buttons_shadow_opacity": 0,
     "buttons_shadow_horizontal_offset": 0,
@@ -29,7 +31,7 @@
     "buttons_shadow_blur": 5,
     "variant_pills_border_thickness": 1,
     "variant_pills_border_opacity": 55,
-    "variant_pills_radius": 40,
+    "variant_pills_radius": 20,
     "variant_pills_shadow_opacity": 0,
     "variant_pills_shadow_horizontal_offset": 0,
     "variant_pills_shadow_vertical_offset": 4,
