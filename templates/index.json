@@ -217,7 +217,7 @@
         "show_view_all": false,
         "view_all_style": "solid",
         "color_scheme": "background-1",
-        "image_ratio": "portrait",
+        "image_ratio": "square",
         "image_shape": "default",
         "show_secondary_image": true,
         "show_vendor": false,
