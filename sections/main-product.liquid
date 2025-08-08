@@ -477,10 +477,13 @@
 
               {%- when 'variant_picker' -%}
                 {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %}
-                {} 
-                <div class="{{ product.options_with_values  }} test123">
+                {% comment %} {% assign show_app = false %} {% endcomment %}
+                {% for option in product.options_with_values %}
+                    <div class="{{ option  }} test123">  </div>
+                {% endfor %} 
+             
 
-                </div>
+               
               {%- when 'buy_buttons' -%}
                 {%- render 'buy-buttons',
                   block: block,
