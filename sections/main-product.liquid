@@ -477,7 +477,7 @@
 
               {%- when 'variant_picker' -%}
                 {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %}
-                 <div class="{{ product.selected_variant.url }} test123">
+                 <div class="{{ product.id }} test123">
 
                 </div>
               {%- when 'buy_buttons' -%}
