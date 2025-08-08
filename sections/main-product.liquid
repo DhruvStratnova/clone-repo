@@ -750,27 +750,32 @@
 </product-info>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    // Select the fieldset by its class
-    const optionFieldset = document.querySelector('.product-form__input.product-form__input--pill');
+document.addEventListener("DOMContentLoaded", function () {
+  // Find all fieldsets
+  const fieldsets = document.querySelectorAll(".product-form__input.product-form__input--pill");
 
-    if (optionFieldset) {
-      // Listen for changes inside the fieldset
-      optionFieldset.addEventListener('change', function () {
-        const checkedInput = optionFieldset.querySelector("input[type='radio']:checked");
+  fieldsets.forEach(fieldset => {
+    const legend = fieldset.querySelector("legend");
+    if (legend && legend.textContent.trim().toLowerCase() === "choice of wear") {
+      
+      // Log the default selected value
+      const defaultChecked = fieldset.querySelector("input[type='radio']:checked");
+      if (defaultChecked) {
+        console.log("Default choice of wear:", defaultChecked.value);
+      }
+
+      // Listen for changes
+      fieldset.addEventListener("change", function () {
+        const checkedInput = fieldset.querySelector("input[type='radio']:checked");
         if (checkedInput) {
-          console.log('Selected value:', checkedInput.value);
+          console.log("Selected choice of wear:", checkedInput.value);
         }
       });
-
-      // Optional: Log the default checked value on page load
-      const defaultChecked = optionFieldset.querySelector("input[name='choice of wear-2']:checked");
-      if (defaultChecked) {
-        console.log('Default selected value:', defaultChecked.value);
-      }
     }
   });
+});
 </script>
+
 
 {% schema %}
 {
