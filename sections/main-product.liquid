@@ -478,33 +478,16 @@
               {%- when 'variant_picker' -%}
                 {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %}
                 {% comment %} {% assign show_app = false %} {% endcomment %}
-                {% for option in product.options_with_values %}
-  {% if option.selected_value == "ring" or option.selected_value == "pendant" %}
-    <div class="{{ option.selected_value }} test123" onchange="showApp()">
+                {% comment %}
+                  {% for option in product.options_with_values %}
+                  {% if option.selected_value == "ring" or option.selected_value == "pendant" %}
+                {% endcomment %}
+                <div class="optionplus-widget-container"></div>
+                {% comment %}
+                  {% endif %}
+                  {% endfor %}
+                {% endcomment %}
 
-      {%- comment -%} OptionPlus Widget Integration {%- endcomment -%}
-      <div id="optionplus-container" data-product-id="{{ product.id }}"></div>
-
-      {%- comment -%} Include variant data for faster loading {%- endcomment -%}
-      {% assign metafield_data = product.metafields.optionPlus.Variant.value | parse_json %}
-      {% if metafield_data %}
-        <script type="application/json" data-optionplus-variants>
-          {{ metafield_data | json }}
-        </script>
-      {% endif %}
-
-      <script 
-        src="https://option-plus.vercel.app/api/widget?store=ff17qq-pk&t=1754653931242"
-        defer>
-      </script>
-
-    </div>
-  {% endif %}
-{% endfor %}
-
-             
-
-               
               {%- when 'buy_buttons' -%}
                 {%- render 'buy-buttons',
                   block: block,
@@ -767,12 +750,27 @@
 </product-info>
 
 <script>
-  function showApp(){
-  console.log("variant has been changed")
-  }
+  document.addEventListener('DOMContentLoaded', function () {
+    // Select the fieldset by its class
+    const optionFieldset = document.querySelector('.product-form__input.product-form__input--pill');
+
+    if (optionFieldset) {
+      // Listen for changes inside the fieldset
+      optionFieldset.addEventListener('change', function () {
+        const checkedInput = optionFieldset.querySelector("input[type='radio']:checked");
+        if (checkedInput) {
+          console.log('Selected value:', checkedInput.value);
+        }
+      });
+
+      // Optional: Log the default checked value on page load
+      const defaultChecked = optionFieldset.querySelector("input[type='radio']:checked");
+      if (defaultChecked) {
+        console.log('Default selected value:', defaultChecked.value);
+      }
+    }
+  });
 </script>
-
-
 
 {% schema %}
 {
@@ -2302,7 +2300,3 @@
   ]
 }
 {% endschema %}
-
-
-
-
