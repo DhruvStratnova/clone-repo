@@ -74,7 +74,8 @@
 
   {% assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src' %}
   <div class="page-width">
-    <!-- OptionPlus Widget Integration --> <div id="optionplus-container" data-product-id="{{ product.id }}"></div> <!-- Include variant data for faster loading --> {% assign metafield_data = product.metafields.optionPlus.Variant.value | parse_json %} {% if metafield_data %} <script type="application/json" data-optionplus-variants> {{ metafield_data | json }} </script> {% endif %} <script src="https://option-plus.vercel.app/api/widget?store=ff17qq-pk&t=1754653931242" defer></script>
+   
+    <div id="optionplus-container" data-product-id="{{ product.id }}"></div> <!-- Include variant data for faster loading --> {% assign metafield_data = product.metafields.optionPlus.Variant.value | parse_json %} {% if metafield_data %} <script type="application/json" data-optionplus-variants> {{ metafield_data | json }} </script> {% endif %} <script src="https://option-plus.vercel.app/api/widget?store=ff17qq-pk&t=1754653931242" defer></script>
     <div class="product product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}">
       <div class="grid__item product__media-wrapper">
         {% render 'product-media-gallery', variant_images: variant_images %}
