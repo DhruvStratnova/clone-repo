@@ -479,7 +479,7 @@
                 {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %}
                 {% comment %} {% assign show_app = false %} {% endcomment %}
                 {% for option in product.options_with_values %}
-                    <div class="{{ option.values  }} test123">  </div>
+                    <div class="{{ option.selected_value  }} test123">  </div>
                 {% endfor %} 
              
 
