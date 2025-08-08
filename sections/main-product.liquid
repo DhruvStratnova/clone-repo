@@ -477,10 +477,11 @@
 
               {%- when 'variant_picker' -%}
                 {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %}
-                {% assign show_app = false %}
+                {% comment %} {% assign show_app = false %} {% endcomment %}
                 {% for option in product.options_with_values %}
-                    
-                  <div class="{{ option.selected_value  }} test123">  </div>
+                  {% if option.selected_value == "ring" or option.selected_value == "pendant"  %}  
+                  <div class="{{ option.selected_value  }} test123"></div>
+                {% endif %}
                 {% endfor %} 
              
 
