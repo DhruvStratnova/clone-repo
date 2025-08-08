@@ -752,26 +752,23 @@
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     const productId = "{{ product.id }}";
-   const metafieldData = {{ product.metafields.optionPlus.Variant.value  | escape | json }};
+    const metafieldData = {{ product.metafields.optionPlus.Variant.value | default: empty | json }};
 
     function loadOptionPlusWidget() {
       const container = document.querySelector(".optionplus-widget-container");
       if (!container || container.dataset.loaded === "true") return;
 
-      // Create the container div
       const widgetDiv = document.createElement("div");
       widgetDiv.id = "optionplus-container";
       widgetDiv.dataset.productId = productId;
       container.appendChild(widgetDiv);
 
-      // Inject the variant JSON
       const jsonScript = document.createElement("script");
       jsonScript.type = "application/json";
       jsonScript.dataset.optionplusVariants = "";
       jsonScript.textContent = JSON.stringify(metafieldData);
       container.appendChild(jsonScript);
 
-      // Inject the OptionPlus widget script
       const widgetScript = document.createElement("script");
       widgetScript.src = "https://option-plus.vercel.app/api/widget?store=ff17qq-pk&t=1754653931242";
       widgetScript.defer = true;
@@ -788,7 +785,6 @@
       }
     }
 
-    // Handle changes in "choice of wear"
     document.body.addEventListener("change", function (event) {
       const target = event.target;
       if (target.matches('.product-form__input.product-form__input--pill input[type="radio"]')) {
@@ -804,7 +800,6 @@
       }
     });
 
-    // Initial check on page load
     const choiceOfWearLegend = [...document.querySelectorAll(".product-form__input.product-form__input--pill legend")]
       .find(l => l.textContent.trim().toLowerCase() === "choice of wear");
 
