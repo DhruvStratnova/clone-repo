@@ -477,7 +477,7 @@
 
               {%- when 'variant_picker' -%}
                 {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %}
-                {% comment %} {% assign show_app = false %} {% endcomment %}
+                {% assign show_app = false %}
                 {% comment %}
                   {% for option in product.options_with_values %}
                   {% if option.selected_value == "ring" or option.selected_value == "pendant" %}
