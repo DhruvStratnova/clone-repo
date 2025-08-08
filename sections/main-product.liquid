@@ -482,15 +482,7 @@
                   {% for option in product.options_with_values %}
                   {% if option.selected_value == "ring" or option.selected_value == "pendant" %}
                 {% endcomment %}
-                <div class="optionplus-widget-container">
- {% comment %} <!-- OptionPlus Widget Integration -->  {% endcomment %}
-    <div id="optionplus-container" data-product-id="{{ product.id }}"></div> 
-    {% comment %} <!-- Include variant data for faster loading --> {% endcomment %}
-     {% assign metafield_data = product.metafields.optionPlus.Variant.value | parse_json %} {% if metafield_data %} 
-      <script type="application/json" data-optionplus-variants> {{ metafield_data | json }} </script> {% endif %} 
-      <script src="https://option-plus.vercel.app/api/widget?store=ff17qq-pk&t=1754653931242" defer></script>
-      
-                </div>
+                <div class="optionplus-widget-container"></div>
                 {% comment %}
                   {% endif %}
                   {% endfor %}
