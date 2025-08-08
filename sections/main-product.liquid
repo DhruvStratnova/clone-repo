@@ -480,7 +480,7 @@
                 {% comment %} {% assign show_app = false %} {% endcomment %}
                 {% for option in product.options_with_values %}
                   {% if option.selected_value == "ring" or option.selected_value == "pendant"  %}  
-                  <div class="{{ option.selected_value  }} test123" onchange="show"> 
+                  <div class="{{ option.selected_value  }} test123" onchange="showApp()"> 
                     {% comment %} <!-- OptionPlus Widget Integration -->  {% endcomment %}
     <div id="optionplus-container" data-product-id="{{ product.id }}"></div> 
     {% comment %} <!-- Include variant data for faster loading --> {% endcomment %}
