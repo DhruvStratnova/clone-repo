@@ -406,6 +406,27 @@
         "padding_top": 36,
         "padding_bottom": 36
       }
+    },
+    "1754756233592eb8c3": {
+      "type": "apps",
+      "blocks": {
+        "testimonials_slider_carousel_widget_block_YPkXY7": {
+          "type": "shopify://apps/testimonials-slider/blocks/carousel-widget-block/cd756d38-7c3d-4332-af00-4ff87263e921",
+          "name": "Testimonials",
+          "settings": {
+            "themeId": "dark",
+            "configNumber": "10",
+            "autoscroll": true,
+            "showAvatar": true
+          }
+        }
+      },
+      "block_order": [
+        "testimonials_slider_carousel_widget_block_YPkXY7"
+      ],
+      "settings": {
+        "include_margins": true
+      }
     }
   },
   "order": [
@@ -417,6 +438,7 @@
     "featured_collection_6N6qke",
     "collection_list_XLNAUt",
     "image_with_text_DYDtwA",
-    "collection_list_ctAMFr"
+    "collection_list_ctAMFr",
+    "1754756233592eb8c3"
   ]
 }
