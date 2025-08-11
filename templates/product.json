@@ -71,6 +71,7 @@
         },
         "description": {
           "type": "description",
+          "name": "Benefits",
           "settings": {}
         },
         "collapsible_tab_E7TEXf": {
@@ -82,12 +83,39 @@
             "page": ""
           }
         },
+        "collapsible_tab_pqMmbA": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Best day to wear",
+            "icon": "none",
+            "content": "<p>Friday is the best day to wear Zircon, as it is associated with Venus, which governs wealth and stability. Wearing it on Friday morning enhances its financial stability properties.</p>",
+            "page": ""
+          }
+        },
         "collapsible_tab_WdVC4W": {
           "type": "collapsible_tab",
           "settings": {
             "heading": "Style tip",
             "icon": "none",
             "content": "<p>Elegant as both, but best as a ring to show off its diamond-like sparkle. Choose a silver or white gold setting for a classic, refined look.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_tab_JRextw": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Packaging",
+            "icon": "none",
+            "content": "<p>Presented in an sturdy black kappa box with foam, designed especially for safekeeping and gifting.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_tab_PMAnfd": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Returns + Exchanges",
+            "icon": "none",
+            "content": "<p>This product is not eligible for returns. However, we do offer a 7-day exchange policy in case of any manufacturing defects. Please ensure the product is in its original condition for a smooth exchange process.</p>",
             "page": ""
           }
         },
@@ -108,7 +136,10 @@
         "buy_buttons",
         "description",
         "collapsible_tab_E7TEXf",
+        "collapsible_tab_pqMmbA",
         "collapsible_tab_WdVC4W",
+        "collapsible_tab_JRextw",
+        "collapsible_tab_PMAnfd",
         "share"
       ],
       "settings": {
