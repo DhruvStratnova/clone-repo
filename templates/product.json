@@ -73,6 +73,24 @@
           "type": "description",
           "settings": {}
         },
+        "collapsible_tab_E7TEXf": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "How to use",
+            "icon": "none",
+            "content": "<p>1. Wear the Zircon consistently, as continuous wear enhances its effects on financial security and growth.<br/>2. Purify the Zircon by soaking it in gangajal or clean water with a pinch of sea salt for a few hours.<br/>3. Before wearing, chant the mantra “Om Shukraya Namah” 11 times to activate its energy.<br/>4. Place the Zircon ring on the ring or little finger of your right hand to align with Venus’s energy, which governs wealth and financial stability.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_tab_WdVC4W": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Style tip",
+            "icon": "none",
+            "content": "<p>Elegant as both, but best as a ring to show off its diamond-like sparkle. Choose a silver or white gold setting for a classic, refined look.</p>",
+            "page": ""
+          }
+        },
         "share": {
           "type": "share",
           "settings": {
@@ -89,6 +107,8 @@
         "quantity_selector",
         "buy_buttons",
         "description",
+        "collapsible_tab_E7TEXf",
+        "collapsible_tab_WdVC4W",
         "share"
       ],
       "settings": {
