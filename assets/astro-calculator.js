@@ -162,20 +162,28 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Updated displayResult function to match json.astrologyapi.com's basic_gem_suggestion response
   function displayResult(data) {
-    let output = `
-      <div class="rudraksha-result">
-        <h3>Recommended Gemstone: ${data.gem_suggestion || 'N/A'}</h3>
-        <p><strong>Name:</strong> ${data.name || 'N/A'}</p>
-        <p><strong>Rashi:</strong> ${data.rashi || 'N/A'}</p>
-        <p><strong>Nakshatra:</strong> ${data.nakshatra || 'N/A'}</p>
-        <p><strong>Planet:</strong> ${data.planet || 'N/A'}</p>
-        <p><strong>Reason:</strong> ${data.reason || 'N/A'}</p>
-        ${data.wear_gem_stone_rec ? `<p><strong>Recommendation to Wear Gemstone:</strong> ${data.wear_gem_stone_rec}</p>` : ''}
-        ${data.wear_rudraksha_rec ? `<p><strong>Recommendation to Wear Rudraksha:</strong> ${data.wear_rudraksha_rec}</p>` : ''}
+  // Container for cards
+  let output = `<div class="rudraksha-result-cards">`;
+
+  Object.entries(data).forEach(([category, gemInfo]) => {
+    output += `
+      <div class="rudraksha-card">
+        <h3>${category} Gemstone</h3>
+        <p><strong>Name:</strong> ${gemInfo.name || 'N/A'}</p>
+        <p><strong>Semi Gem:</strong> ${gemInfo.semi_gem || 'N/A'}</p>
+        <p><strong>Wear Finger:</strong> ${gemInfo.wear_finger || 'N/A'}</p>
+        <p><strong>Weight (Carat):</strong> ${gemInfo.weight_caret || 'N/A'}</p>
+        <p><strong>Wear Metal:</strong> ${gemInfo.wear_metal || 'N/A'}</p>
+        <p><strong>Wear Day:</strong> ${gemInfo.wear_day || 'N/A'}</p>
+        <p><strong>Deity:</strong> ${gemInfo.gem_deity || 'N/A'}</p>
       </div>
     `;
+  });
 
-    astroOutputDiv.innerHTML = output;
-    astroResultsDiv.style.display = 'block'; // Make results visible
-  }
+  output += `</div>`;
+
+  astroOutputDiv.innerHTML = output;
+  astroResultsDiv.style.display = 'block'; // Make results visible
+}
+
 });
