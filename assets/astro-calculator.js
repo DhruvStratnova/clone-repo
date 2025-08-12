@@ -26,19 +26,6 @@ document.addEventListener("DOMContentLoaded", function () {
      <div>
     <section class="rudraksha-section">
       <div class="rudraksha-container">
-        <h2 class="rudraksha-title">Rudraksha Calculator</h2>
-        <p class="rudraksha-subtitle">Let your birth chart reveal the perfect Rudraksha for you</p>
-
-        <h3 class="rudraksha-personalized">Rudraksha Personalized <strong>For You!</strong></h3>
-        <p>
-          Enter your details below to receive a personalized Rudraksha recommendation tailored to your needs and astrology.
-        </p>
-
-        <div class="rudraksha-tabs">
-          <button class="tab active" data-tab="by-birth">Gemstone Calculator</button>
-          <button class="tab" data-tab="by-purpose">Rudraksha Calculator</button>
-        </div>
-
         <form id="rudraksha-form">
           <!-- Form fields will be dynamically loaded by astro-calculator.js based on tab selection. -->
           <!-- The initial content below serves as the default 'By Birth' structure before JS fully initializes. -->
