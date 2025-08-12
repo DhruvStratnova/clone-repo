@@ -175,7 +175,7 @@ document.addEventListener("DOMContentLoaded", function () {
           </p>
           <p><strong>Metal:</strong> ${gem.wear_metal || 'N/A'}</p>
           <p><strong>Finger:</strong> ${gem.wear_finger || 'N/A'} finger of right hand</p>
-          <p><strong>Timing:</strong> ${gem.wear_day || 'N/A'}</p>
+          <p><strong>Wear Day:</strong> ${gem.wear_day || 'N/A'}</p>
           <p><strong>Recommended Weight:</strong> ${gem.weight_caret || 'N/A'} carat</p>
           <p><strong>Semi Gem:</strong> ${gem.semi_gem || 'N/A'}</p>
         </div>
