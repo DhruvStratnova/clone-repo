@@ -17,29 +17,31 @@
 {%- endstyle -%}
 
 <div class="section-{{ section.id }}-padding">
-  <h1 class="main-page-title page-title h0{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
-    {{ page.title | escape }}
-  </h1>
-  <div class="rte{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-    {{ page.content }}
-  </div>
+  {% comment %}
+    <h1 class="main-page-title page-title h0{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+      {{ page.title | escape }}
+    </h1>
+  {% endcomment %}
+  {% comment %}
+    <div class="rte{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+      {{ page.content }}
+    </div>
+  {% endcomment %}
   <div>
-    <section class="rudraksha-section">
-      <div class="rudraksha-container">
-        <h2 class="rudraksha-title">Rudraksha Calculator</h2>
-        <p class="rudraksha-subtitle">Let your birth chart reveal the perfect Rudraksha for you</p>
+    <section class="calculator-section">
+      <div class="calculator-container">
+        <h2 class="calculator-title">Astro Calculator</h2>
+        <p class="calculator-subtilte">Let your birth chart reveal the perfect Gemstone/Rudraksha for you</p>
 
-        <h3 class="rudraksha-personalized">Rudraksha Personalized <strong>For You!</strong></h3>
-        <p>
-          Enter your details below to receive a personalized Rudraksha recommendation tailored to your needs and astrology.
-        </p>
+        <h3 class="calculator-personalized">Personalized <strong>For You!</strong></h3>
+        <p>Enter your details below to receive a personalized recommendation tailored to your needs and astrology.</p>
 
-        <div class="rudraksha-tabs">
-          <button class="tab active" data-tab="by-birth">By Birth</button>
-          <button class="tab" data-tab="by-purpose">By Purpose</button>
+        <div class="calculator-tabs">
+          <button class="tab active" data-tab="by-gemstone">Gemstone Calculator</button>
+          <button class="tab" data-tab="by-rudraksha">Rudraksha Calculator</button>
         </div>
 
-        <form id="rudraksha-form">
+        <form id="calculator-form">
           <!-- Form fields will be dynamically loaded by astro-calculator.js based on tab selection. -->
           <!-- The initial content below serves as the default 'By Birth' structure before JS fully initializes. -->
           <div class="form-group">
@@ -58,7 +60,7 @@
             <input type="text" name="lon" placeholder="Longitude (e.g., 77.2090)" required>
           </div>
 
-          <button type="submit" class="rudraksha-btn">Know your Rudraksha</button>
+          <button type="submit" class="rudraksha-btn">Know your Gemstone</button>
         </form>
 
         <!-- Results Section -->
