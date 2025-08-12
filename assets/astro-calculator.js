@@ -88,6 +88,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const currentTab = document.querySelector(".rudraksha-tabs .tab.active").dataset.tab;
 
       if (currentTab === "by-rudraksha") {
+        fetchURL = 
          if (isNaN(parseFloat(data.lat)) || isNaN(parseFloat(data.lon))) {
             alert("Please enter valid numerical values for Latitude and Longitude.");
             return;
