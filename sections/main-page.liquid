@@ -17,7 +17,6 @@
 {%- endstyle -%}
 
 <div class="section-{{ section.id }}-padding">
-
   <h1 class="main-page-title page-title h0{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
     {{ page.title | escape }}
   </h1>
@@ -32,7 +31,8 @@
 
         <h3 class="rudraksha-personalized">Rudraksha Personalized <strong>For You!</strong></h3>
         <p>
-          Enter your details below to receive a personalized Rudraksha recommendation tailored to your needs and astrology.
+          Enter your details below to receive a personalized Rudraksha recommendation tailored to your needs and
+          astrology.
         </p>
 
         <div class="rudraksha-tabs">
@@ -40,7 +40,7 @@
           <button class="tab" data-tab="by-purpose">Rudraksha Calculator</button>
         </div>
 
-        <form id="rudraksha-form">
+        <form id="calculator-form">
           <!-- Form fields will be dynamically loaded by astro-calculator.js based on tab selection. -->
           <!-- The initial content below serves as the default 'By Birth' structure before JS fully initializes. -->
           <div class="form-group">

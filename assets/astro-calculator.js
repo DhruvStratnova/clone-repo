@@ -2,7 +2,7 @@
 
 document.addEventListener("DOMContentLoaded", function () {
   const tabs = document.querySelectorAll(".rudraksha-tabs .tab");
-  const form = document.getElementById("rudraksha-form");
+  const form = document.getElementById("calculator-form");
   const astroResultsDiv = document.getElementById("astro-results");
   const astroOutputDiv = document.getElementById("astro-output");
 
@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
      <div>
    
      
-        <form id="rudraksha-form">
+        <form id="calculator-form">
           <!-- Form fields will be dynamically loaded by astro-calculator.js based on tab selection. -->
           <!-- The initial content below serves as the default 'By Birth' structure before JS fully initializes. -->
           <div class="form-group">
@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Form submit handler
   document.addEventListener("submit", async function (e) {
-    if (e.target.id === "rudraksha-form") {
+    if (e.target.id === "calculator-form") {
       e.preventDefault();
 
       const currentTab = document.querySelector(".rudraksha-tabs .tab.active").dataset.tab;
