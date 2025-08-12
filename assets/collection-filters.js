@@ -21,11 +21,12 @@ document.addEventListener('DOMContentLoaded', function () {
     Array.from(productGrid.children).forEach(item => {
       const card = item.querySelector('.card');
       if (!card) return;
-      const gem = (card.getAttribute('data-gemstone') || '').split(',');
+      const title = card.querySelector('.card__heading, .card__heading.h5, .card__heading.h3, .card__heading.h4');
+      const productTitle = title ? title.textContent.trim() : '';
       const planetVal = (card.getAttribute('data-planet') || '').split(',');
       const zodiacVal = (card.getAttribute('data-zodiac') || '').split(',');
 
-      const gemMatch = !gemstone || gem.includes(gemstone);
+      const gemMatch = !gemstone || (productTitle.toLowerCase().includes(gemstone.toLowerCase()));
       const planetMatch = !planet || planetVal.includes(planet);
       const zodiacMatch = !zodiac || zodiacVal.includes(zodiac);
 
