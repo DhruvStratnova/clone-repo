@@ -7,6 +7,9 @@
   .section-{{ section.id }}-padding {
     padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
     padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  {%- comment -%}
+  Astro Calculator Shopify Section Schema: Editable CSS properties with defaults matching current styles.
+  {%- endcomment -%}
   }
   @media screen and (min-width: 750px) {
     .section-{{ section.id }}-padding {
@@ -16,7 +19,20 @@
   }
 {%- endstyle -%}
 
-<div class="section-{{ section.id }}-padding">
+<div class="section-{{ section.id }}-padding" style="
+  --astro-bg: {{ section.settings.astro_bg }};
+  --astro-title-color: {{ section.settings.astro_title_color }};
+  --astro-subtitle-color: {{ section.settings.astro_subtitle_color }};
+  --astro-btn-bg: {{ section.settings.astro_btn_bg }};
+  --astro-btn-color: {{ section.settings.astro_btn_color }};
+  --astro-btn-bg-hover: {{ section.settings.astro_btn_bg_hover }};
+  --astro-card-radius: {{ section.settings.astro_card_radius }};
+  --astro-card-shadow: {{ section.settings.astro_card_shadow }};
+  --astro-tab-bg: {{ section.settings.astro_tab_bg }};
+  --astro-tab-bg-active: {{ section.settings.astro_tab_bg_active }};
+  --astro-tab-color: {{ section.settings.astro_tab_color }};
+  --astro-tab-radius: {{ section.settings.astro_tab_radius }};
+">
   {% comment %}
     <h1 class="main-page-title page-title h0{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
       {{ page.title | escape }}
@@ -30,15 +46,17 @@
   <div>
     <section class="calculator-section">
       <div class="calculator-container">
-        <h2 class="calculator-title">Astro Calculator</h2>
-        <p class="calculator-subtilte">Let your birth chart reveal the perfect Gemstone/Rudraksha for you</p>
+
+  <h2 class="calculator-title" style="color: var(--astro-title-color);">Astro Calculator</h2>
+  <p class="calculator-subtilte" style="color: var(--astro-subtitle-color);">Let your birth chart reveal the perfect Gemstone/Rudraksha for you</p>
 
         <h3 class="calculator-personalized">Personalized <strong>For You!</strong></h3>
         <p>Enter your details below to receive a personalized recommendation tailored to your needs and astrology.</p>
 
+
         <div class="calculator-tabs">
-          <button class="tab active" data-tab="by-gemstone">Gemstone Calculator</button>
-          <button class="tab" data-tab="by-rudraksha">Rudraksha Calculator</button>
+          <button class="tab active" data-tab="by-gemstone" style="background: var(--astro-tab-bg); color: var(--astro-tab-color); border-radius: var(--astro-tab-radius);">Gemstone Calculator</button>
+          <button class="tab" data-tab="by-rudraksha" style="background: var(--astro-tab-bg); color: var(--astro-tab-color); border-radius: var(--astro-tab-radius);">Rudraksha Calculator</button>
         </div>
 
         <form id="calculator-form">
@@ -60,11 +78,11 @@
             <input type="text" name="lon" placeholder="Longitude (e.g., 77.2090)" required>
           </div>
 
-          <button type="submit" class="rudraksha-btn">Know your Gemstone</button>
+          <button type="submit" class="rudraksha-btn" style="background: var(--astro-btn-bg); color: var(--astro-btn-color);">Know your Gemstone</button>
         </form>
 
         <!-- Results Section -->
-        <div id="astro-results" class="astro-results" style="display:none;">
+  <div id="astro-results" class="astro-results" style="display:none;">
           <h3>Recommendation Details</h3>
           <div id="astro-output"></div>
         </div>
@@ -75,13 +93,13 @@
 
 {% schema %}
 {
-  "name": "t:sections.main-page.name",
+  "name": "Astro Calculator",
   "tag": "section",
   "class": "section",
   "settings": [
     {
       "type": "header",
-      "content": "t:sections.all.padding.section_padding_heading"
+      "content": "Section Padding"
     },
     {
       "type": "range",
@@ -90,7 +108,7 @@
       "max": 100,
       "step": 4,
       "unit": "px",
-      "label": "t:sections.all.padding.padding_top",
+      "label": "Padding Top",
       "default": 36
     },
     {
@@ -100,8 +118,84 @@
       "max": 100,
       "step": 4,
       "unit": "px",
-      "label": "t:sections.all.padding.padding_bottom",
+      "label": "Padding Bottom",
       "default": 36
+    },
+    {
+      "type": "header",
+      "content": "Astro Calculator Styles"
+    },
+    {
+      "type": "color",
+      "id": "astro_bg",
+      "label": "Background Gradient",
+      "default": "linear-gradient(180deg, #6a3b1a, #3a1d0b)"
+    },
+    {
+      "type": "color",
+      "id": "astro_title_color",
+      "label": "Title Color",
+      "default": "#FFD700"
+    },
+    {
+      "type": "color",
+      "id": "astro_subtitle_color",
+      "label": "Subtitle Color",
+      "default": "#fff"
+    },
+    {
+      "type": "color",
+      "id": "astro_btn_bg",
+      "label": "Button Background",
+      "default": "#d26944"
+    },
+    {
+      "type": "color",
+      "id": "astro_btn_color",
+      "label": "Button Text Color",
+      "default": "#fff"
+    },
+    {
+      "type": "color",
+      "id": "astro_btn_bg_hover",
+      "label": "Button Hover Background",
+      "default": "#a14c2f"
+    },
+    {
+      "type": "text",
+      "id": "astro_card_radius",
+      "label": "Card Border Radius",
+      "default": "12px"
+    },
+    {
+      "type": "text",
+      "id": "astro_card_shadow",
+      "label": "Card Box Shadow",
+      "default": "0 4px 12px rgba(0,0,0,0.08)"
+    },
+    {
+      "type": "color",
+      "id": "astro_tab_bg",
+      "label": "Tab Background",
+      "default": "#a14c2f"
+    },
+    {
+      "type": "color",
+      "id": "astro_tab_bg_active",
+      "label": "Tab Active Background",
+      "default": "#d26944"
+    },
+    {
+      "type": "color",
+      "id": "astro_tab_color",
+      "label": "Tab Text Color",
+      "default": "#fff"
+    },
+    {
+      "type": "text",
+      "id": "astro_tab_radius",
+      "label": "Tab Border Radius",
+      "default": "6px"
     }
   ]
 }
