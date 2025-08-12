@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
     </div>
   `;
 
-  const byPurposeFields = `
+  const rudrakshaFields = `
      <div>
    
      
@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (tabName === "by-birth") {
       form.innerHTML = gemstoneFields + `<button type="submit" class="rudraksha-btn">Know your Rudraksha</button>`;
     } else {
-      form.innerHTML = byPurposeFields + `<button type="submit" class="rudraksha-btn">Find by Purpose</button>`;
+      form.innerHTML = rudrakshaFields + `<button type="submit" class="rudraksha-btn">Find by Purpose</button>`;
     }
   }
 
