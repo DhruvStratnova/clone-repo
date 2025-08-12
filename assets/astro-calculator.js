@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const byPurposeFields = `
      <div>
-    <section class="rudraksha-section">
+   
      
         <form id="rudraksha-form">
           <!-- Form fields will be dynamically loaded by astro-calculator.js based on tab selection. -->
@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", function () {
           <div id="astro-output"></div>
         </div>
       
-    </section>
+
   </div>
   `;
 
