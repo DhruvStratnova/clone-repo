@@ -81,6 +81,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Form submit handler
   document.addEventListener("submit", async function (e) {
+    const fetchURL = ''
     if (e.target.id === "calculator-form") {
       e.preventDefault();
 
