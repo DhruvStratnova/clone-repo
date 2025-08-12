@@ -41,18 +41,21 @@
     endif
   -%}
   <div class="card-wrapper product-card-wrapper underline-links-hover">
-    <div
-      class="
-        card card--{{ settings.card_style }}
-        {% if card_product.featured_media %} card--media{% else %} card--text{% endif %}
-        {% if settings.card_style == 'card' %} color-{{ settings.card_color_scheme }} gradient{% endif %}
-        {% if image_shape and image_shape != 'default' %} card--shape{% endif %}
-        {% if extend_height %} card--extend-height{% endif %}
-        {% if card_product.featured_media == nil and settings.card_style == 'card' %} ratio{% endif %}
-        {% if horizontal_class %} card--horizontal{% endif %}
-      "
-      style="--ratio-percent: {{ 1 | divided_by: ratio | times: 100 }}%;"
-    >
+      <div
+        class="
+          card card--{{ settings.card_style }}
+          {% if card_product.featured_media %} card--media{% else %} card--text{% endif %}
+          {% if settings.card_style == 'card' %} color-{{ settings.card_color_scheme }} gradient{% endif %}
+          {% if image_shape and image_shape != 'default' %} card--shape{% endif %}
+          {% if extend_height %} card--extend-height{% endif %}
+          {% if card_product.featured_media == nil and settings.card_style == 'card' %} ratio{% endif %}
+          {% if horizontal_class %} card--horizontal{% endif %}
+        "
+        style="--ratio-percent: {{ 1 | divided_by: ratio | times: 100 }}%;"
+        data-gemstone="{{ card_product.metafields.custom.gemstone | default: card_product.tags | join: ',' }}"
+        data-planet="{{ card_product.metafields.custom.planet | default: card_product.tags | join: ',' }}"
+        data-zodiac="{{ card_product.metafields.custom.zodiac | default: card_product.tags | join: ',' }}"
+      >
       <div
         class="card__inner {% if settings.card_style == 'standard' %}color-{{ settings.card_color_scheme }} gradient{% endif %}{% if card_product.featured_media or settings.card_style == 'standard' %} ratio{% endif %}"
         style="--ratio-percent: {{ 1 | divided_by: ratio | times: 100 }}%;"

@@ -97,8 +97,35 @@
       </facet-filters-form>
     {%- endif -%}
 
+    <!-- Custom Filter UI for Gemstone, Planet, Zodiac -->
+    <div id="custom-filters" class="custom-filters" style="margin-bottom: 2rem;">
+      <form id="productFilterForm">
+        <fieldset>
+          <legend>Gemstone</legend>
+          {% assign gemstones = "diamond,ruby,sapphire,emerald,amethyst,pearl,garnet,opal,aquamarine,topaz,tourmaline,jade" | split: "," %}
+          {% for gemstone in gemstones %}
+            <label><input type="checkbox" name="gemstone" value="{{ gemstone | capitalize }}"> {{ gemstone | capitalize }}</label>
+          {% endfor %}
+        </fieldset>
+        <fieldset>
+          <legend>Planet</legend>
+          {% assign planets = "Sun,Moon,Mercury,Venus,Mars,Jupiter,Saturn,Rahu,Ketu" | split: "," %}
+          {% for planet in planets %}
+            <label><input type="checkbox" name="planet" value="{{ planet }}"> {{ planet }}</label>
+          {% endfor %}
+        </fieldset>
+        <fieldset>
+          <legend>Zodiac</legend>
+          {% assign zodiacs = "Aries,Taurus,Gemini,Cancer,Leo,Virgo,Libra,Scorpio,Sagittarius,Capricorn,Aquarius,Pisces" | split: "," %}
+          {% for zodiac in zodiacs %}
+            <label><input type="checkbox" name="zodiac" value="{{ zodiac }}"> {{ zodiac }}</label>
+          {% endfor %}
+        </fieldset>
+      </form>
+    </div>
     <div class="{% if section.settings.filter_type == 'vertical' %} facets-vertical page-width{% endif %}">
       {{ 'component-facets.css' | asset_url | stylesheet_tag }}
+      <script src="{{ 'collection-filters.js' | asset_url }}" defer="defer"></script>
       <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
       {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
         <aside
