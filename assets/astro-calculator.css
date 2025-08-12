@@ -25,11 +25,11 @@
   margin-bottom: 20px;
 }
 
-.rudraksha-tabs {
+.calculator-tabs {
   margin: 20px 0;
 }
 
-.rudraksha-tabs .tab {
+.calculator-tabs .tab {
   background: #a14c2f;
   border: none;
   color: #fff;
@@ -39,7 +39,7 @@
   cursor: pointer;
 }
 
-.rudraksha-tabs .tab.active {
+.calculator-tabs .tab.active {
   background: #d26944;
 }
 

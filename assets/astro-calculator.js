@@ -1,7 +1,7 @@
 /* assets/astro-calculator.js */
 
 document.addEventListener("DOMContentLoaded", function () {
-  const tabs = document.querySelectorAll(".rudraksha-tabs .tab");
+  const tabs = document.querySelectorAll(".calculator-tabs .tab");
   const form = document.getElementById("calculator-form");
   const astroResultsDiv = document.getElementById("astro-results");
   const astroOutputDiv = document.getElementById("astro-output");
@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (e.target.id === "calculator-form") {
       e.preventDefault();
 
-      const currentTab = document.querySelector(".rudraksha-tabs .tab.active").dataset.tab;
+      const currentTab = document.querySelector(".calculator-tabs .tab.active").dataset.tab;
       const formData = new FormData(e.target);
       const data = Object.fromEntries(formData.entries());
 
