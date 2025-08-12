@@ -193,7 +193,7 @@
                 </p>
 
                 {% comment %} console.log(product.metafields.custom, metafields.custom ) {% endcomment %}
-              {%- when 'metafields.custom' -%}
+              {%- when 'product.metafields.custom' -%}
                 {%- if product.metafields.custom -%}
                   <div class="product__accordion accordion quick-add-hidden" {{ block.shopify_attributes }}>
                     <details id="Details-{{ block.id }}-{{ section.id }}">
