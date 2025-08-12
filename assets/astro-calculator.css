@@ -308,7 +308,7 @@ input, select {
 }
 
 .recommend-text {
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   margin-top: 8px;
 }
 
@@ -336,7 +336,7 @@ input, select {
 }
 
 .rudraksha-title {
-  font-size: 2rem;
+  font-size: 3rem;
   color: #7c2d12;
   margin-bottom: 10px;
 }
@@ -348,7 +348,7 @@ input, select {
 }
 
 .rudraksha-detail {
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   color: #4b5563;
   line-height: 1.4;
 }
