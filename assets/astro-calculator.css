@@ -242,7 +242,7 @@ input, select {
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
   overflow: hidden;
   max-width: 100%;
-  flex: 1 1 300px;
+  flex: 1 1 ;
   display: flex;
   flex-direction: column;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
