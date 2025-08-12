@@ -87,6 +87,11 @@ document.addEventListener("DOMContentLoaded", function () {
       const currentTab = document.querySelector(".rudraksha-tabs .tab.active").dataset.tab;
 
       if (currentTab === "by-rudraksha") {
+         if (isNaN(parseFloat(data.lat)) || isNaN(parseFloat(data.lon))) {
+            alert("Please enter valid numerical values for Latitude and Longitude.");
+            return;
+        }
+        
         alert("The 'By Purpose' feature is not yet integrated with an API. Please use 'By Birth' or implement a separate API call for purpose-based recommendations.");
         return; // Prevent API call for By Purpose
       }
