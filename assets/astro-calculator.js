@@ -22,8 +22,6 @@ document.addEventListener("DOMContentLoaded", function () {
     </div>
   `;
 
-  // Note: The "By Purpose" tab currently collects data but does not interact with the 'gem-suggestion' API,
-  // which requires birth details. You might need a different API endpoint or logic for this tab.
   const byPurposeFields = `
     <div class="form-group">
       <input type="text" name="name" placeholder="Enter your name" required>
@@ -87,20 +85,40 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       // IMPORTANT SECURITY NOTE: Hardcoding API keys in client-side JavaScript is insecure.
-      // For a production Shopify store, consider using a server-side proxy (e.g., a Shopify Function,
-      // a Node.js/PHP proxy, or a service like Netlify Functions/AWS Lambda)
+      // Anyone can view your source code and extract these keys.
+      // For a production Shopify store, you MUST use a server-side proxy (e.g., a Shopify Function,
+      // a custom Node.js/PHP proxy, or a service like Netlify Functions/AWS Lambda)
       // to make API calls and keep your API key secure on the server.
-      const API_KEY = "86af5961c6dfcac90d4ae97401a974385dc7c6a3"; // This should be securely handled
+      const USER_ID = "YOUR_USER_ID"; // <<< REPLACE WITH YOUR ACTUAL USER ID
+      const API_KEY = "YOUR_API_KEY"; // <<< REPLACE WITH YOUR ACTUAL API KEY
+      const language = "en"; // Or make this dynamic based on user preference
 
-      // Prepare API payload for 'by-birth'
+      const auth = "Basic " + btoa(USER_ID + ":" + API_KEY); // btoa for Base64 encoding
+
+      // Parse date and time inputs
+      const dob = new Date(data.dob);
+      let hour = 0;
+      let min = 0;
+
+      if (data.no_time) {
+          hour = 0;
+          min = 0;
+      } else if (data.tob) {
+          const [h, m] = data.tob.split(':').map(Number);
+          hour = h;
+          min = m;
+      }
+
+      // Prepare API payload for json.astrologyapi.com
       const payload = {
-        api_key: API_KEY,
-        dob: data.dob,
-        tob: data.no_time ? "" : data.tob || "", // Send empty string if no_time is checked
-        lat: parseFloat(data.lat), // Ensure latitude is a number
-        lon: parseFloat(data.lon), // Ensure longitude is a number
-        tz: 5.5, // Fixed timezone, consider making this dynamic if needed
-        lang: "en"
+        day: dob.getDate(),
+        month: dob.getMonth() + 1, // Month is 0-indexed in JS Date
+        year: dob.getFullYear(),
+        hour: hour,
+        min: min,
+        lat: parseFloat(data.lat),
+        lon: parseFloat(data.lon),
+        tzone: 5.5, // Fixed timezone, consider making this dynamic if needed
       };
 
       try {
@@ -108,69 +126,51 @@ document.addEventListener("DOMContentLoaded", function () {
         astroOutputDiv.innerHTML = '<p>Loading recommendation...</p>';
         astroResultsDiv.style.display = 'block';
 
-        const res = await fetch("https://api.vedicastroapi.com/v3-json/extended-horoscope/gem-suggestion", {
+        const res = await fetch("https://json.astrologyapi.com/v1/basic_gem_suggestion", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "authorization": auth,
+            "Content-Type": "application/json",
+            "Accept-Language": language
+          },
           body: JSON.stringify(payload)
         });
 
         if (!res.ok) {
           const errorData = await res.json();
-          throw new Error(`API request failed: ${res.status} - ${errorData.message || res.statusText}`);
+          // Check for specific error messages from the API if available
+          const errorMessage = errorData.message || errorData.error || res.statusText;
+          throw new Error(`API request failed: ${res.status} - ${errorMessage}`);
         }
         const result = await res.json();
 
-        if (result.status === 200 && result.response) {
-          const r = result.response;
-          const filtered = {
-            name: r.name,
-            gem: r.gem,
-            planet: r.planet,
-            other_name: r.other_name,
-            description: r.description,
-            // Ensure these are arrays, as .join() expects them
-            good_results: Array.isArray(r.good_results) ? r.good_results : [r.good_results].filter(Boolean),
-            diseases_cure: Array.isArray(r.diseases_cure) ? r.diseases_cure : [r.diseases_cure].filter(Boolean),
-            finger: r.finger,
-            weight: r.weight,
-            day: r.day,
-            metal: r.metal,
-            substitute: Array.isArray(r.substitute) ? r.substitute : [r.substitute].filter(Boolean),
-            not_to_wear_with: Array.isArray(r.not_to_wear_with) ? r.not_to_wear_with : [r.not_to_wear_with].filter(Boolean),
-            time_to_wear_short: r.time_to_wear_short,
-            time_to_wear: r.time_to_wear,
-            methods: r.methods
-          };
-
-          displayResult(filtered);
+        // The response structure from basic_gem_suggestion is usually simpler.
+        // It provides 'name', 'gem_suggestion', 'rashi', 'nakshatra', 'planet', 'reason', etc.
+        // Adjust displayResult to show relevant information.
+        if (result && result.gem_suggestion) {
+          displayResult(result);
         } else {
-          astroOutputDiv.innerHTML = "<p>No valid recommendation found. Please check your input.</p>";
+          astroOutputDiv.innerHTML = "<p>No valid recommendation found. Please check your input or try different coordinates.</p>";
         }
       } catch (err) {
         console.error("Error during API call:", err);
-        astroOutputDiv.innerHTML = `<p>Something went wrong. Please try again. Error: ${err.message}</p>`;
+        astroOutputDiv.innerHTML = `<p>Something went wrong. Please try again. Error: ${err.message || err}</p>`;
       }
     }
   });
 
+  // Updated displayResult function to match json.astrologyapi.com's basic_gem_suggestion response
   function displayResult(data) {
     let output = `
       <div class="rudraksha-result">
-        <h3>Recommended Gemstone: ${data.name || 'N/A'} (${data.other_name || 'N/A'})</h3>
-        <p><strong>Gem:</strong> ${data.gem || 'N/A'}</p>
+        <h3>Recommended Gemstone: ${data.gem_suggestion || 'N/A'}</h3>
+        <p><strong>Name:</strong> ${data.name || 'N/A'}</p>
+        <p><strong>Rashi:</strong> ${data.rashi || 'N/A'}</p>
+        <p><strong>Nakshatra:</strong> ${data.nakshatra || 'N/A'}</p>
         <p><strong>Planet:</strong> ${data.planet || 'N/A'}</p>
-        <p><strong>Description:</strong> ${data.description || 'N/A'}</p>
-        <p><strong>Good Results:</strong> ${data.good_results.length ? data.good_results.join(", ") : 'N/A'}</p>
-        <p><strong>Diseases Cure:</strong> ${data.diseases_cure.length ? data.diseases_cure.join(", ") : 'N/A'}</p>
-        <p><strong>Finger:</strong> ${data.finger || 'N/A'}</p>
-        <p><strong>Weight:</strong> ${data.weight || 'N/A'}</p>
-        <p><strong>Day:</strong> ${data.day || 'N/A'}</p>
-        <p><strong>Metal:</strong> ${data.metal || 'N/A'}</p>
-        <p><strong>Substitute:</strong> ${data.substitute.length ? data.substitute.join(", ") : 'N/A'}</p>
-        <p><strong>Not to Wear With:</strong> ${data.not_to_wear_with.length ? data.not_to_wear_with.join(", ") : 'N/A'}</p>
-        <p><strong>Time to Wear (short):</strong> ${data.time_to_wear_short || 'N/A'}</p>
-        <p><strong>Time to Wear:</strong> ${data.time_to_wear || 'N/A'}</p>
-        <p><strong>Methods:</strong> ${data.methods || 'N/A'}</p>
+        <p><strong>Reason:</strong> ${data.reason || 'N/A'}</p>
+        ${data.wear_gem_stone_rec ? `<p><strong>Recommendation to Wear Gemstone:</strong> ${data.wear_gem_stone_rec}</p>` : ''}
+        ${data.wear_rudraksha_rec ? `<p><strong>Recommendation to Wear Rudraksha:</strong> ${data.wear_rudraksha_rec}</p>` : ''}
       </div>
     `;
 
