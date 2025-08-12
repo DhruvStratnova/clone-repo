@@ -1,3 +1,4 @@
+//main-page.liquid (calculator template)
 {{ 'section-main-page.css' | asset_url | stylesheet_tag }}
 {{ 'astro-calculator.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'astro-calculator.js' | asset_url }}" defer></script>
@@ -39,9 +40,11 @@
         </div>
 
         <form id="rudraksha-form">
+          <!-- Form fields will be dynamically loaded by astro-calculator.js based on tab selection. -->
+          <!-- The initial content below serves as the default 'By Birth' structure before JS fully initializes. -->
           <div class="form-group">
             <input type="text" name="name" placeholder="Enter your name" required>
-            <input type="tel" name="phone" placeholder="Enter your phone number" required>
+            <input type="tel" name="phone" placeholder="Enter your phone number">
           </div>
 
           <div class="form-group">
@@ -51,7 +54,8 @@
           </div>
 
           <div class="form-group">
-            <input type="text" name="pob" placeholder="Place of Birth" required>
+            <input type="text" name="lat" placeholder="Latitude (e.g., 28.6139)" required>
+            <input type="text" name="lon" placeholder="Longitude (e.g., 77.2090)" required>
           </div>
 
           <button type="submit" class="rudraksha-btn">Know your Rudraksha</button>
@@ -59,7 +63,7 @@
 
         <!-- Results Section -->
         <div id="astro-results" class="astro-results" style="display:none;">
-          <h3>Recommended Gemstone</h3>
+          <h3>Recommendation Details</h3>
           <div id="astro-output"></div>
         </div>
       </div>
