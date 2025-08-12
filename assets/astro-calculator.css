@@ -201,7 +201,7 @@ input, select {
   color: #333;
   margin: 20px auto;
   border-top: 5px solid #1d3557; /* Accent color */
-  transition: transform 0.2s ease;
+  /* transition: transform 0.2s ease; */
 /* } */
 
 .gem-card:hover {
