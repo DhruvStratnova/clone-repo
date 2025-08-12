@@ -277,6 +277,7 @@ input, select {
   list-style: none;
   padding: 0;
   margin: 0;
+  color: 
 }
 
 .gemstone-specs li {
@@ -318,7 +319,7 @@ input, select {
    =========================== */
 .rudraksha-card {
   border-top: 5px solid #d97706; /* warm earthy tone */
-  width: 100;
+  width: 100%;
 }
 
 .rudraksha-image img {
