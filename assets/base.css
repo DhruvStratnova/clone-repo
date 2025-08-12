@@ -2927,7 +2927,7 @@ details-disclosure > details {
   text-align: center;
   background-color: rgb(255 255 255 / 0%);
   border-color: rgb(255 255 255 / 0%);
-  color: rgb(var(--color-badge-foreground));
+  color: #FFFFFF;
   word-break: break-word;
 }
 
