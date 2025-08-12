@@ -168,12 +168,6 @@ function displayResult(data) {
     output += `
       <div class="gemstone-card">
         <!-- Gem Image -->
-        <div class="gemstone-image-wrapper">
-          <img src="/assets/images/${gem.gem_key}.jpg" 
-               alt="${gem.name}" 
-               class="gemstone-image">
-        </div>
-
         <!-- Content -->
         <div class="gemstone-content">
           <h2 class="gemstone-title">${gem.name}</h2>
