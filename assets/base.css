@@ -2918,7 +2918,7 @@ details-disclosure > details {
 
 .badge {
   border: 1px solid transparent;
-  border-radius: rgb(255 255 255 / 0%);
+  border-radius: var(--badge-corner-radius);
   display: inline-block;
   font-size: 1.2rem;
   letter-spacing: 0.1rem;
@@ -2926,7 +2926,7 @@ details-disclosure > details {
   padding: 0.5rem 1.3rem 0.6rem 1.3rem;
   text-align: center;
   background-color: rgb(255 255 255 / 0%);
-  border-color: rgba(var(--color-badge-border), var(--alpha-badge-border));
+  border-color: rgb(255 255 255 / 0%);
   color: rgb(var(--color-badge-foreground));
   word-break: break-word;
 }
