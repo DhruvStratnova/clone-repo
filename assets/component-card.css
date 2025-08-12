@@ -272,7 +272,7 @@
 
 .card__badge {
   align-self: flex-end;
-  grid-row-start: 3;
+  /* grid-row-start: 3; */
   justify-self: flex-start;
   display: inline-block;
   background-image: url(https://cdn.shopify.com/s/files/1/0878/4907/4985/files/Rectangle_46_1.png?v=1747294058);
