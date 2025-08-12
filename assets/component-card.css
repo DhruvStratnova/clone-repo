@@ -287,14 +287,6 @@
 .card__badge.top {
   align-self: flex-start;
   grid-row-start: 1;
-   display: inline-block;
-  background-image: url(https://cdn.shopify.com/s/files/1/0878/4907/4985/files/Rectangle_46_1.png?v=1747294058);
-  background-size: cover;
-  background-repeat: no-repeat;
-  color: #fff;
-  padding: 3px 6px 7px 6px;
-  font-size: 0.7rem;
-  text-align: left;
 }
 
 .card__badge.right {
