@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const astroResultsDiv = document.getElementById("astro-results");
   const astroOutputDiv = document.getElementById("astro-output");
 
-  const byBirthFields = `
+  const gemstoneFields = `
     <div class="form-group">
       <input type="text" name="name" placeholder="Enter your name" required>
       <input type="tel" name="phone" placeholder="Enter your phone number">
@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", function () {
     astroOutputDiv.innerHTML = ''; // Clear previous results
 
     if (tabName === "by-birth") {
-      form.innerHTML = byBirthFields + `<button type="submit" class="rudraksha-btn">Know your Rudraksha</button>`;
+      form.innerHTML = gemstoneFields + `<button type="submit" class="rudraksha-btn">Know your Rudraksha</button>`;
     } else {
       form.innerHTML = byPurposeFields + `<button type="submit" class="rudraksha-btn">Find by Purpose</button>`;
     }
