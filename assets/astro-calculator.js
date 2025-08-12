@@ -23,19 +23,52 @@ document.addEventListener("DOMContentLoaded", function () {
   `;
 
   const byPurposeFields = `
-    <div class="form-group">
-      <input type="text" name="name" placeholder="Enter your name" required>
-      <input type="tel" name="phone" placeholder="Enter your phone number">
-    </div>
-    <div class="form-group">
-      <select name="purpose" required>
-        <option value="">Select your purpose</option>
-        <option value="health">Health & Wellness</option>
-        <option value="career">Career Growth</option>
-        <option value="spiritual">Spiritual Upliftment</option>
-        <option value="relationships">Better Relationships</option>
-      </select>
-    </div>
+     <div>
+    <section class="rudraksha-section">
+      <div class="rudraksha-container">
+        <h2 class="rudraksha-title">Rudraksha Calculator</h2>
+        <p class="rudraksha-subtitle">Let your birth chart reveal the perfect Rudraksha for you</p>
+
+        <h3 class="rudraksha-personalized">Rudraksha Personalized <strong>For You!</strong></h3>
+        <p>
+          Enter your details below to receive a personalized Rudraksha recommendation tailored to your needs and astrology.
+        </p>
+
+        <div class="rudraksha-tabs">
+          <button class="tab active" data-tab="by-birth">Gemstone Calculator</button>
+          <button class="tab" data-tab="by-purpose">Rudraksha Calculator</button>
+        </div>
+
+        <form id="rudraksha-form">
+          <!-- Form fields will be dynamically loaded by astro-calculator.js based on tab selection. -->
+          <!-- The initial content below serves as the default 'By Birth' structure before JS fully initializes. -->
+          <div class="form-group">
+            <input type="text" name="name" placeholder="Enter your name" required>
+            <input type="tel" name="phone" placeholder="Enter your phone number">
+          </div>
+
+          <div class="form-group">
+            <input type="date" name="dob" required>
+            <input type="time" name="tob">
+            <label><input type="checkbox" name="no_time"> I don't have time of birth</label>
+          </div>
+
+          <div class="form-group">
+            <input type="text" name="lat" placeholder="Latitude (e.g., 28.6139)" required>
+            <input type="text" name="lon" placeholder="Longitude (e.g., 77.2090)" required>
+          </div>
+
+          <button type="submit" class="rudraksha-btn">Know your Rudraksha</button>
+        </form>
+
+        <!-- Results Section -->
+        <div id="astro-results" class="astro-results" style="display:none;">
+          <h3>Recommendation Details</h3>
+          <div id="astro-output"></div>
+        </div>
+      </div>
+    </section>
+  </div>
   `;
 
   function switchTab(tabName) {
