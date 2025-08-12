@@ -148,7 +148,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // The response structure from basic_gem_suggestion is usually simpler.
         // It provides 'name', 'gem_suggestion', 'rashi', 'nakshatra', 'planet', 'reason', etc.
         // Adjust displayResult to show relevant information.
-        if (result && result.gem_suggestion) {
+        if (result && result.) {
           displayResult(result);
         } else {
           astroOutputDiv.innerHTML = "<p>No valid recommendation found. Please check your input or try different coordinates.</p>";
