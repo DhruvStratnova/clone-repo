@@ -74,51 +74,6 @@
           "name": "Benefits",
           "settings": {}
         },
-        "collapsible_tab_E7TEXf": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "How to use",
-            "icon": "none",
-            "content": "<p>1235</p>",
-            "page": ""
-          }
-        },
-        "collapsible_tab_pqMmbA": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "Best day to wear",
-            "icon": "none",
-            "content": "<p><br/>The best day to wear Zircon (Jarkan) is <strong>Thursday</strong>, as it is associated with Jupiter, the planet of wisdom, prosperity, and growth.<br/><br/></p>",
-            "page": ""
-          }
-        },
-        "collapsible_tab_WdVC4W": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "Style tip",
-            "icon": "none",
-            "content": "<p><br/>Wear Zircon jewelry with formal or semi-formal outfits in shades of blue, white, or neutral colors to highlight its brilliance.<br/><br/>Choose silver or white gold settings for a sleek, elegant look.<br/><br/>Keep accessories minimal to let the gemstone’s sparkle stand out.<br/><br/></p>",
-            "page": ""
-          }
-        },
-        "collapsible_tab_JRextw": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "Packaging",
-            "icon": "none",
-            "content": "<p>Presented in an sturdy black kappa box with foam, designed especially for safekeeping and gifting.</p>",
-            "page": ""
-          }
-        },
-        "collapsible_tab_PMAnfd": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "Returns + Exchanges",
-            "icon": "none",
-            "content": "<p>This product is not eligible for returns. However, we do offer a 7-day exchange policy in case of any manufacturing defects. Please ensure the product is in its original condition for a smooth exchange process.</p>",
-            "page": ""
-          }
-        },
         "share": {
           "type": "share",
           "settings": {
@@ -135,11 +90,6 @@
         "quantity_selector",
         "buy_buttons",
         "description",
-        "collapsible_tab_E7TEXf",
-        "collapsible_tab_pqMmbA",
-        "collapsible_tab_WdVC4W",
-        "collapsible_tab_JRextw",
-        "collapsible_tab_PMAnfd",
         "share"
       ],
       "settings": {
