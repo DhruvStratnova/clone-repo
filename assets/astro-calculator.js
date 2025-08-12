@@ -167,8 +167,6 @@ document.addEventListener("DOMContentLoaded", function () {
   Object.entries(data).forEach(([category, gem]) => {
     output += `
       <div class="gemstone-card">
-        <img src="/assets/images/${gem.gem_key}.jpg" alt="${gem.name}" class="gemstone-image">
-        
         <div class="gemstone-content">
           <h2>${gem.name}</h2>
           <p class="gemstone-description">
