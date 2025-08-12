@@ -8,25 +8,26 @@ document.addEventListener('DOMContentLoaded', function () {
   const productGrid = document.getElementById('product-grid');
   if (!productGrid) return;
 
-  function getCheckedValues(name) {
-    return Array.from(filterForm.querySelectorAll(`input[name="${name}"]:checked`)).map(cb => cb.value);
+  function getSelectedValue(name) {
+    const select = filterForm.querySelector(`select[name="${name}"]`);
+    return select ? select.value : '';
   }
 
   function filterProducts() {
-    const gemstones = getCheckedValues('gemstone');
-    const planets = getCheckedValues('planet');
-    const zodiacs = getCheckedValues('zodiac');
+    const gemstone = getSelectedValue('gemstone');
+    const planet = getSelectedValue('planet');
+    const zodiac = getSelectedValue('zodiac');
 
     Array.from(productGrid.children).forEach(item => {
       const card = item.querySelector('.card');
       if (!card) return;
       const gem = (card.getAttribute('data-gemstone') || '').split(',');
-      const planet = (card.getAttribute('data-planet') || '').split(',');
-      const zodiac = (card.getAttribute('data-zodiac') || '').split(',');
+      const planetVal = (card.getAttribute('data-planet') || '').split(',');
+      const zodiacVal = (card.getAttribute('data-zodiac') || '').split(',');
 
-      const gemMatch = !gemstones.length || gemstones.some(g => gem.includes(g));
-      const planetMatch = !planets.length || planets.some(p => planet.includes(p));
-      const zodiacMatch = !zodiacs.length || zodiacs.some(z => zodiac.includes(z));
+      const gemMatch = !gemstone || gem.includes(gemstone);
+      const planetMatch = !planet || planetVal.includes(planet);
+      const zodiacMatch = !zodiac || zodiacVal.includes(zodiac);
 
       if (gemMatch && planetMatch && zodiacMatch) {
         item.style.display = '';

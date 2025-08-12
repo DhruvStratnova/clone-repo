@@ -100,27 +100,30 @@
     <!-- Custom Filter UI for Gemstone, Planet, Zodiac -->
     <div id="custom-filters" class="custom-filters" style="margin-bottom: 2rem;">
       <form id="productFilterForm">
-        <fieldset>
-          <legend>Gemstone</legend>
+        <label for="filter-gemstone">Gemstone</label>
+        <select name="gemstone" id="filter-gemstone">
+          <option value="">All Gemstones</option>
           {% assign gemstones = "diamond,ruby,sapphire,emerald,amethyst,pearl,garnet,opal,aquamarine,topaz,tourmaline,jade" | split: "," %}
           {% for gemstone in gemstones %}
-            <label><input type="checkbox" name="gemstone" value="{{ gemstone | capitalize }}"> {{ gemstone | capitalize }}</label>
+            <option value="{{ gemstone | capitalize }}">{{ gemstone | capitalize }}</option>
           {% endfor %}
-        </fieldset>
-        <fieldset>
-          <legend>Planet</legend>
+        </select>
+        <label for="filter-planet">Planet</label>
+        <select name="planet" id="filter-planet">
+          <option value="">All Planets</option>
           {% assign planets = "Sun,Moon,Mercury,Venus,Mars,Jupiter,Saturn,Rahu,Ketu" | split: "," %}
           {% for planet in planets %}
-            <label><input type="checkbox" name="planet" value="{{ planet }}"> {{ planet }}</label>
+            <option value="{{ planet }}">{{ planet }}</option>
           {% endfor %}
-        </fieldset>
-        <fieldset>
-          <legend>Zodiac</legend>
+        </select>
+        <label for="filter-zodiac">Zodiac</label>
+        <select name="zodiac" id="filter-zodiac">
+          <option value="">All Zodiacs</option>
           {% assign zodiacs = "Aries,Taurus,Gemini,Cancer,Leo,Virgo,Libra,Scorpio,Sagittarius,Capricorn,Aquarius,Pisces" | split: "," %}
           {% for zodiac in zodiacs %}
-            <label><input type="checkbox" name="zodiac" value="{{ zodiac }}"> {{ zodiac }}</label>
+            <option value="{{ zodiac }}">{{ zodiac }}</option>
           {% endfor %}
-        </fieldset>
+        </select>
       </form>
     </div>
     <div class="{% if section.settings.filter_type == 'vertical' %} facets-vertical page-width{% endif %}">
