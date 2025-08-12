@@ -21,6 +21,7 @@
   <div class="rte{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
     {{ page.content }}
   </div>
+  {{ 'rudraksha-calculator.css' | asset_url | stylesheet_tag }}
 </div>
 
 {% schema %}
