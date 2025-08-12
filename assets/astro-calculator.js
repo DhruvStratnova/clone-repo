@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
     astroOutputDiv.innerHTML = '';
 
     if (tabName === "by-gemstone") {
-      form.innerHTML = gemstoneFields + `<button type="submit" class="rudraksha-btn">Know your Rudraksha</button>`;
+      form.innerHTML = gemstoneFields + `<button type="submit" class="rudraksha-btn">Know your Gemstone</button>`;
     } else {
       form.innerHTML = rudrakshaFields + `<button type="submit" class="rudraksha-btn">Know your Rudraksha</button>`;
     }
