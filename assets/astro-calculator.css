@@ -268,7 +268,7 @@ input, select {
 }
 
 .gemstone-description {
-  font-size: 1rem;
+  font-size: 1.5rem;
   color: #555;
   margin-bottom: 15px;
 }
@@ -284,7 +284,7 @@ input, select {
 }
 
 .gemstone-specs li {
-  font-size: 1rem;
+  font-size: 1.5rem;
   margin: 5px 0;
 }
 
