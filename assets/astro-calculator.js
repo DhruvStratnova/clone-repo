@@ -143,7 +143,7 @@ document.addEventListener("DOMContentLoaded", function () {
           throw new Error(`API request failed: ${res.status} - ${errorMessage}`);
         }
         const result = await res.json();
-        console.log();
+        console.log(result);
 
         // The response structure from basic_gem_suggestion is usually simpler.
         // It provides 'name', 'gem_suggestion', 'rashi', 'nakshatra', 'planet', 'reason', etc.
