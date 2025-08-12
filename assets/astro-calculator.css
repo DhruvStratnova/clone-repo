@@ -209,7 +209,7 @@ input, select {
 }
 
 .gem-title {
-  font-size: 1.5rem;
+  font-size: 3rem;
   margin-bottom: 15px;
   color: #1d3557;
   text-align: center;
@@ -217,7 +217,7 @@ input, select {
 
 .gem-info p {
   margin: 6px 0;
-  font-size: 1rem;
+  font-size: 1.5rem;
 }
 
 .gem-info strong {
