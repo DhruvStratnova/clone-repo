@@ -91,9 +91,9 @@ document.addEventListener("DOMContentLoaded", function () {
             alert("Please enter valid numerical values for Latitude and Longitude.");
             return;
         }
-        
-        alert("The 'By Purpose' feature is not yet integrated with an API. Please use 'By Birth' or implement a separate API call for purpose-based recommendations.");
-        return; // Prevent API call for By Purpose
+
+        // alert("The 'By Purpose' feature is not yet integrated with an API. Please use 'By Birth' or implement a separate API call for purpose-based recommendations.");
+        // return; // Prevent API call for By Purpose
       }
 
       const formData = new FormData(e.target);
