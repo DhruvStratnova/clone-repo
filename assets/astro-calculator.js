@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", function () {
     astroResultsDiv.style.display = 'none'; // Hide results when switching tabs
     astroOutputDiv.innerHTML = ''; // Clear previous results
 
-    if (tabName === "by-birth") {
+    if (tabName === "by-gemstone") {
       form.innerHTML = gemstoneFields + `<button type="submit" class="rudraksha-btn">Know your Rudraksha</button>`;
     } else {
       form.innerHTML = rudrakshaFields + `<button type="submit" class="rudraksha-btn">Find by Purpose</button>`;
@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Default tab on load
-  switchTab("by-birth");
+  switchTab("by-gemstone");
 
   // Tab click event
   tabs.forEach(tab => {
@@ -94,8 +94,8 @@ document.addEventListener("DOMContentLoaded", function () {
       const formData = new FormData(e.target);
       const data = Object.fromEntries(formData.entries());
 
-      // Validate lat/lon for 'by-birth'
-      if (currentTab === "by-birth") {
+      // Validate lat/lon for 'by-gemstone'
+      if (currentTab === "by-gemstone") {
         if (isNaN(parseFloat(data.lat)) || isNaN(parseFloat(data.lon))) {
             alert("Please enter valid numerical values for Latitude and Longitude.");
             return;

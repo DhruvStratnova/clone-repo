@@ -20,9 +20,11 @@
   <h1 class="main-page-title page-title h0{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
     {{ page.title | escape }}
   </h1>
-  {% comment %} <div class="rte{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-    {{ page.content }}
-  </div> {% endcomment %}
+  {% comment %}
+    <div class="rte{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+      {{ page.content }}
+    </div>
+  {% endcomment %}
   <div>
     <section class="rudraksha-section">
       <div class="rudraksha-container">
@@ -36,7 +38,7 @@
         </p>
 
         <div class="rudraksha-tabs">
-          <button class="tab active" data-tab="by-birth">Gemstone Calculator</button>
+          <button class="tab active" data-tab="by-gemstone">Gemstone Calculator</button>
           <button class="tab" data-tab="by-purpose">Rudraksha Calculator</button>
         </div>
 
