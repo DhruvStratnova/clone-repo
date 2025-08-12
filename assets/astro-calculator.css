@@ -223,3 +223,127 @@ input, select {
 .gem-info strong {
   color: #457b9d;
 }
+
+
+/* ===========================
+   Common Card Styles
+   =========================== */
+.gemstone-card-container,
+.rudraksha-card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.gemstone-card,
+.rudraksha-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  overflow: hidden;
+  max-width: 380px;
+  flex: 1 1 300px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.gemstone-card:hover,
+.rudraksha-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+
+/* ===========================
+   Gemstone Card
+   =========================== */
+.gemstone-content {
+  padding: 20px;
+}
+
+.gemstone-title {
+  font-size: 1.5rem;
+  color: #2a3f54;
+  margin-bottom: 10px;
+}
+
+.gemstone-description {
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+.gemstone-specs {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.gemstone-specs li {
+  font-size: 0.9rem;
+  margin: 5px 0;
+}
+
+.gemstone-footer {
+  background: #f8f9fa;
+  padding: 15px 20px;
+  text-align: center;
+}
+
+.view-product-btn {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.view-product-btn:hover {
+  background: #0056b3;
+}
+
+.recommend-text {
+  font-size: 0.85rem;
+  margin-top: 8px;
+}
+
+.highlight {
+  font-weight: bold;
+  color: #28a745;
+}
+
+/* ===========================
+   Rudraksha Card
+   =========================== */
+.rudraksha-card {
+  border-top: 5px solid #d97706; /* warm earthy tone */
+}
+
+.rudraksha-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.rudraksha-content {
+  padding: 20px;
+}
+
+.rudraksha-title {
+  font-size: 1.5rem;
+  color: #7c2d12;
+  margin-bottom: 10px;
+}
+
+.rudraksha-recommend {
+  font-weight: bold;
+  color: #b45309;
+  margin-bottom: 10px;
+}
+
+.rudraksha-detail {
+  font-size: 0.95rem;
+  color: #4b5563;
+  line-height: 1.4;
+}
