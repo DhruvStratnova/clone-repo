@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const byPurposeFields = `
      <div>
     <section class="rudraksha-section">
-      <div class="rudraksha-container">
+     
         <form id="rudraksha-form">
           <!-- Form fields will be dynamically loaded by astro-calculator.js based on tab selection. -->
           <!-- The initial content below serves as the default 'By Birth' structure before JS fully initializes. -->
@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
           <h3>Recommendation Details</h3>
           <div id="astro-output"></div>
         </div>
-      </div>
+      
     </section>
   </div>
   `;
