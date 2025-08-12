@@ -322,7 +322,7 @@ input, select {
    =========================== */
 .rudraksha-card {
   border-top: 5px solid #d97706; /* warm earthy tone */
-  width: 100vh;
+  width: 100%;
 }
 
 .rudraksha-image img {
