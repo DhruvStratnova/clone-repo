@@ -44,8 +44,6 @@ document.addEventListener("DOMContentLoaded", function () {
             <input type="text" name="lat" placeholder="Latitude (e.g., 28.6139)" required>
             <input type="text" name="lon" placeholder="Longitude (e.g., 77.2090)" required>
           </div>
-
-          <button type="submit" class="rudraksha-btn">Know your Rudraksha</button>
         </form>
 
         <!-- Results Section -->
