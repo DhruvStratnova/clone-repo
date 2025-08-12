@@ -89,7 +89,7 @@ document.addEventListener("DOMContentLoaded", function () {
       // For a production Shopify store, you MUST use a server-side proxy (e.g., a Shopify Function,
       // a custom Node.js/PHP proxy, or a service like Netlify Functions/AWS Lambda)
       // to make API calls and keep your API key secure on the server.
-      const USER_ID = "YOUR_USER_ID"; // <<< REPLACE WITH YOUR ACTUAL USER ID
+      const USER_ID = "642699"; // <<< REPLACE WITH YOUR ACTUAL USER ID
       const API_KEY = "86af5961c6dfcac90d4ae97401a974385dc7c6a3"; // <<< REPLACE WITH YOUR ACTUAL API KEY
       const language = "en"; // Or make this dynamic based on user preference
 
