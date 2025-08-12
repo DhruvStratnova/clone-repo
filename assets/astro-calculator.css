@@ -15,7 +15,7 @@
   border-radius: 12px;
 }
 
-.rudraksha-title {
+.calculator-title {
   font-size: 2.5rem;
   margin-bottom: 5px;
 }
@@ -335,7 +335,7 @@ input, select {
   padding: 20px;
 }
 
-.rudraksha-title {
+.calculator-title {
   font-size: 3rem;
   color: #7c2d12;
   margin-bottom: 10px;

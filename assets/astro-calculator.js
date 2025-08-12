@@ -180,7 +180,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const output = `
       <div class="rudraksha-card">
         <div class="rudraksha-content">
-          <h2 class="rudraksha-title">${data.name}</h2>
+          <h2 class="calculator-title">${data.name}</h2>
           <p class="rudraksha-recommend">${data.recommend}</p>
           <p class="rudraksha-detail">${data.detail}</p>
         </div>
