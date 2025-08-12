@@ -152,6 +152,7 @@ input, select {
   list-style: none;
   padding: 0;
   margin: 0;
+  color: #666;
   font-size: 14px;
   line-height: 1.6;
 }
