@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const currentTab = document.querySelector(".rudraksha-tabs .tab.active").dataset.tab;
 
-      if (currentTab === "by-purpose") {
+      if (currentTab === "by-rudraksha") {
         alert("The 'By Purpose' feature is not yet integrated with an API. Please use 'By Birth' or implement a separate API call for purpose-based recommendations.");
         return; // Prevent API call for By Purpose
       }
