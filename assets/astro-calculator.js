@@ -153,7 +153,7 @@ document.addEventListener("DOMContentLoaded", function () {
         astroOutputDiv.innerHTML = '<p>Loading recommendation...</p>';
         astroResultsDiv.style.display = 'block';
 
-        const res = await fetch("https://json.astrologyapi.com/v1/basic_gem_suggestion", {
+        const res = await fetch(fetchURL, {
           method: "POST",
           headers: {
             "authorization": auth,
