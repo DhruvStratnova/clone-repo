@@ -202,7 +202,7 @@ input, select {
   margin: 20px auto;
   border-top: 5px solid #1d3557; /* Accent color */
   transition: transform 0.2s ease;
-}
+/* } */
 
 .gem-card:hover {
   transform: translateY(-4px);
