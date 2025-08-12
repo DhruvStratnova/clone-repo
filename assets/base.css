@@ -2918,7 +2918,7 @@ details-disclosure > details {
 
 .badge {
   border: 1px solid transparent;
-  border-radius: var(--badge-corner-radius);
+  border-radius: rgb(255 255 255 / 0%);
   display: inline-block;
   font-size: 1.2rem;
   letter-spacing: 0.1rem;
