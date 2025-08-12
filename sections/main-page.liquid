@@ -1,6 +1,6 @@
 {% comment %} //main-page.liquid (calculator template) {% endcomment %}
 {{ 'section-main-page.css' | asset_url | stylesheet_tag }}
-{{ 'astro-calculator.css' | asset_url | stylesheet_tag }}
+{% comment %} {{ 'astro-calculator.css' | asset_url | stylesheet_tag }} {% endcomment %}
 <script src="{{ 'astro-calculator.js' | asset_url }}" defer></script>
 
 {%- style -%}
