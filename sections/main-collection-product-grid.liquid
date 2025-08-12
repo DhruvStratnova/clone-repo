@@ -98,7 +98,44 @@
     {%- endif -%}
 
     <!-- Custom Filter UI for Gemstone, Planet, Zodiac -->
-    <div id="custom-filters" class="custom-filters" style="margin-bottom: 2rem;">
+    <style>
+      .custom-filters {
+        margin-bottom: 2rem;
+        display: flex;
+        gap: 2rem;
+        flex-wrap: wrap;
+        align-items: flex-end;
+      }
+      .custom-filters form {
+        display: flex;
+        gap: 2rem;
+        flex-wrap: wrap;
+        align-items: flex-end;
+      }
+      .custom-filters label {
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+        display: block;
+        color: #222;
+      }
+      .custom-filters select {
+        padding: 0.5rem 2rem 0.5rem 0.75rem;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 1rem;
+        background: #fff url('data:image/svg+xml;utf8,<svg fill="%23333" height="20" viewBox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M7.293 7.293a1 1 0 011.414 0L10 8.586l1.293-1.293a1 1 0 111.414 1.414l-2 2a1 1 0 01-1.414 0l-2-2a1 1 0 010-1.414z"/></svg>') no-repeat right 0.75rem center/1.25rem 1.25rem;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        min-width: 180px;
+        transition: border 0.2s;
+      }
+      .custom-filters select:focus {
+        border-color: #888;
+        outline: none;
+      }
+    </style>
+    <div id="custom-filters" class="custom-filters">
       <form id="productFilterForm">
         <label for="filter-gemstone">Gemstone</label>
         <select name="gemstone" id="filter-gemstone">
