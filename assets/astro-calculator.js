@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (tabName === "by-gemstone") {
       form.innerHTML = gemstoneFields + `<button type="submit" class="rudraksha-btn">Know your Rudraksha</button>`;
     } else {
-      form.innerHTML = rudrakshaFields + `<button type="submit" class="rudraksha-btn">Find your Rudraksha</button>`;
+      form.innerHTML = rudrakshaFields + `<button type="submit" class="rudraksha-btn">Know your Rudraksha</button>`;
     }
   }
 
