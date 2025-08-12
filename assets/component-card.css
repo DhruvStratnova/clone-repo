@@ -271,7 +271,7 @@
 }
 
 .card__badge {
-  align-self: flex-end;
+  align-self: flex-start;
   grid-row-start: 3;
   justify-self: flex-start;
   display: inline-block;
