@@ -318,6 +318,7 @@ input, select {
    =========================== */
 .rudraksha-card {
   border-top: 5px solid #d97706; /* warm earthy tone */
+  self
 }
 
 .rudraksha-image img {
