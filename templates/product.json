@@ -78,7 +78,7 @@
           "type": "collapsible_tab",
           "settings": {
             "heading": "How to use",
-            "icon": "apple",
+            "icon": "none",
             "content": "<p>abkdj</p>",
             "page": ""
           }
