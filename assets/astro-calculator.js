@@ -179,9 +179,6 @@ document.addEventListener("DOMContentLoaded", function () {
   function displayRudrakshaResult(data) {
     const output = `
       <div class="rudraksha-card">
-        // <div class="rudraksha-image">
-        //   <img src="${data.img_url}" alt="${data.name}">
-        // </div>
         <div class="rudraksha-content">
           <h2 class="rudraksha-title">${data.name}</h2>
           <p class="rudraksha-recommend">${data.recommend}</p>
