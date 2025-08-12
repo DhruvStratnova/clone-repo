@@ -106,7 +106,7 @@ input, select {
   border-radius: 12px;
   border: 1px solid #e5e5e5;
   overflow: hidden;
-  max-width: 320px;
+  max-width: 100%;
   flex: 1 1 calc(33.333% - 24px);
   display: flex;
   flex-direction: column;
