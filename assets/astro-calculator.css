@@ -91,3 +91,75 @@ input, select {
   margin-bottom: 10px;
   color: #444;
 }
+
+
+.gemstone-card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.gemstone-card {
+  background: #fff;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  max-width: 300px;
+  flex: 1 1 calc(33.333% - 20px);
+  display: flex;
+  flex-direction: column;
+}
+
+.gemstone-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.gemstone-content {
+  padding: 15px;
+  flex-grow: 1;
+}
+
+.gemstone-content h2 {
+  margin: 0 0 8px;
+  font-size: 20px;
+}
+
+.gemstone-description {
+  font-size: 14px;
+  margin-bottom: 10px;
+  color: #555;
+}
+
+.gemstone-footer {
+  padding: 15px;
+  border-top: 1px solid #eee;
+  text-align: center;
+}
+
+.view-product-btn {
+  background: none;
+  border: 1px solid #c00;
+  color: #c00;
+  padding: 8px 16px;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.view-product-btn:hover {
+  background: #c00;
+  color: #fff;
+}
+
+.recommend-text {
+  font-size: 12px;
+  margin-top: 8px;
+}
+
+.highlight {
+  color: #c00;
+  font-weight: bold;
+}
