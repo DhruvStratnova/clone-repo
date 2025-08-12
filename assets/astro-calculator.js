@@ -161,25 +161,37 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // Updated displayResult function to match json.astrologyapi.com's basic_gem_suggestion response
- function displayResult(data) {
+function displayResult(data) {
   let output = `<div class="gemstone-card-container">`;
 
   Object.entries(data).forEach(([category, gem]) => {
     output += `
       <div class="gemstone-card">
-        <div class="gemstone-content">
-          <h2>${gem.name}</h2>
-          <p class="gemstone-description">
-            Represents ${gem.gem_deity}, helping overcome obstacles and bringing stability. 
-            It provides protection and helps in personal advancement.
-          </p>
-          <p><strong>Metal:</strong> ${gem.wear_metal || 'N/A'}</p>
-          <p><strong>Finger:</strong> ${gem.wear_finger || 'N/A'} finger of right hand</p>
-          <p><strong>Wear Day:</strong> ${gem.wear_day || 'N/A'}</p>
-          <p><strong>Recommended Weight:</strong> ${gem.weight_caret || 'N/A'} carat</p>
-          <p><strong>Semi Gem:</strong> ${gem.semi_gem || 'N/A'}</p>
+        <!-- Gem Image -->
+        <div class="gemstone-image-wrapper">
+          <img src="/assets/images/${gem.gem_key}.jpg" 
+               alt="${gem.name}" 
+               class="gemstone-image">
         </div>
 
+        <!-- Content -->
+        <div class="gemstone-content">
+          <h2 class="gemstone-title">${gem.name}</h2>
+          <p class="gemstone-description">
+            Represents <strong>${gem.gem_deity}</strong>, helping overcome obstacles 
+            and bringing stability. Provides protection and supports personal growth.
+          </p>
+
+          <ul class="gemstone-specs">
+            <li><strong>Metal:</strong> ${gem.wear_metal || 'N/A'}</li>
+            <li><strong>Finger:</strong> ${gem.wear_finger || 'N/A'} finger of right hand</li>
+            <li><strong>Wear Day:</strong> ${gem.wear_day || 'N/A'}</li>
+            <li><strong>Weight:</strong> ${gem.weight_caret || 'N/A'} carat</li>
+            <li><strong>Semi Gem:</strong> ${gem.semi_gem || 'N/A'}</li>
+          </ul>
+        </div>
+
+        <!-- Footer -->
         <div class="gemstone-footer">
           <button class="view-product-btn">View Product</button>
           <p class="recommend-text">
