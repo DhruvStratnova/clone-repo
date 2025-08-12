@@ -161,21 +161,33 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // Updated displayResult function to match json.astrologyapi.com's basic_gem_suggestion response
-  function displayResult(data) {
-  // Container for cards
-  let output = `<div class="rudraksha-result-cards">`;
+ function displayResult(data) {
+  let output = `<div class="gemstone-card-container">`;
 
-  Object.entries(data).forEach(([category, gemInfo]) => {
+  Object.entries(data).forEach(([category, gem]) => {
     output += `
-      <div class="rudraksha-card">
-        <h3>${category} Gemstone</h3>
-        <p><strong>Name:</strong> ${gemInfo.name || 'N/A'}</p>
-        <p><strong>Semi Gem:</strong> ${gemInfo.semi_gem || 'N/A'}</p>
-        <p><strong>Wear Finger:</strong> ${gemInfo.wear_finger || 'N/A'}</p>
-        <p><strong>Weight (Carat):</strong> ${gemInfo.weight_caret || 'N/A'}</p>
-        <p><strong>Wear Metal:</strong> ${gemInfo.wear_metal || 'N/A'}</p>
-        <p><strong>Wear Day:</strong> ${gemInfo.wear_day || 'N/A'}</p>
-        <p><strong>Deity:</strong> ${gemInfo.gem_deity || 'N/A'}</p>
+      <div class="gemstone-card">
+        <img src="/assets/images/${gem.gem_key}.jpg" alt="${gem.name}" class="gemstone-image">
+        
+        <div class="gemstone-content">
+          <h2>${gem.name}</h2>
+          <p class="gemstone-description">
+            Represents ${gem.gem_deity}, helping overcome obstacles and bringing stability. 
+            It provides protection and helps in personal advancement.
+          </p>
+          <p><strong>Metal:</strong> ${gem.wear_metal || 'N/A'}</p>
+          <p><strong>Finger:</strong> ${gem.wear_finger || 'N/A'} finger of right hand</p>
+          <p><strong>Timing:</strong> ${gem.wear_day || 'N/A'}</p>
+          <p><strong>Recommended Weight:</strong> ${gem.weight_caret || 'N/A'} carat</p>
+          <p><strong>Semi Gem:</strong> ${gem.semi_gem || 'N/A'}</p>
+        </div>
+
+        <div class="gemstone-footer">
+          <button class="view-product-btn">View Product</button>
+          <p class="recommend-text">
+            <span class="highlight">97.31% astrologers</span> recommended this based on your details
+          </p>
+        </div>
       </div>
     `;
   });
@@ -183,7 +195,8 @@ document.addEventListener("DOMContentLoaded", function () {
   output += `</div>`;
 
   astroOutputDiv.innerHTML = output;
-  astroResultsDiv.style.display = 'block'; // Make results visible
+  astroResultsDiv.style.display = 'block';
 }
+
 
 });
