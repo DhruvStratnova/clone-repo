@@ -676,26 +676,21 @@
                   show_pickup_availability: true
                 -%}
 
-                {% comment %} Collapsible Row description {% endcomment %}
-                <div class="collapsible-row-container">
-                  <details class="collapsible-row-details">
-                    <summary class="collapsible-row-summary">
-                      <h2 class="collapsible-row-title">{{ section.settings.title }}</h2>
-                      <svg
-                        class="collapsible-row-icon"
-                        aria-hidden="true"
-                        focusable="false"
-                        role="presentation"
-                        viewBox="0 0 10 6"
-                      >
-                        <path d="M9 1L5 5 1 1" stroke="currentColor" stroke-width="2" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path>
-                      </svg>
-                    </summary>
-                    <div class="collapsible-row-content">
-                      <p>{{ section.settings.description }}</p>
-                    </div>
-                  </details>
-                </div>
+{% comment %} Collapsible Row description {% endcomment %}
+<div class="collapsible-row-container">
+  <details class="collapsible-row-details">
+    <summary class="collapsible-row-summary">
+      <h2 class="collapsible-row-title">{{ section.settings.title }}</h2>
+      <svg class="collapsible-row-icon" aria-hidden="true" focusable="false" role="presentation" viewBox="0 0 10 6">
+        <path d="M9 1L5 5 1 1" stroke="currentColor" stroke-width="2" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+    </summary>
+    <div class="collapsible-row-content">
+      <p>{{ section.settings.description }}</p>
+    </div>
+  </details>
+</div>
+
 
               {%- when 'rating' -%}
                 {%- if product.metafields.reviews.rating.value != blank -%}
@@ -735,6 +730,9 @@
                     </p>
                   </div>
                 {%- endif -%}
+
+
+
 
               {%- when 'complementary' -%}
                 <product-recommendations
@@ -1766,17 +1764,17 @@
           "info": "t:sections.main-product.blocks.icon_with_text.settings.pairing_1.info"
         },
         {
-          "type": "text",
-          "id": "title",
-          "label": "Heading",
-          "default": "Collapsible Row"
-        },
-        {
-          "type": "richtext",
-          "id": "description",
-          "label": "Description",
-          "default": "<p>A description is a statement that tells what someone or something is like, using words to convey their appearance, characteristics, or qualities. An example is a specific instance or illustration that helps clarify or demonstrate a general idea or principle.</p>"
-        },
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Collapsible Row"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>A description is a statement that tells what someone or something is like, using words to convey their appearance, characteristics, or qualities. An example is a specific instance or illustration that helps clarify or demonstrate a general idea or principle.</p>"
+    },
         {
           "type": "select",
           "id": "icon_1",
@@ -2551,6 +2549,8 @@
       "label": "t:sections.all.padding.padding_bottom",
       "default": 36
     }
+   
   ]
 }
+
 {% endschema %}
