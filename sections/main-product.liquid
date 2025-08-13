@@ -83,10 +83,18 @@
 
       <div class="product__info-wrapper grid__item{% if settings.page_width > 1400 and section.settings.media_size == "small" %} product__info-wrapper--extra-padding{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
         <div class="product-page-purpose-pill-container">
-          {}
-          <p class="product-page-purpose-pill">
-            {{ product.metafields.custom.key_feature | replace: '[', '' | replace: ']', '' | replace: '"', '' }}
-          </p>
+          {% assign purpose_pill_string = product.metafields.custom.key_feature
+            | replace: '[', ''
+            | replace: ']', ''
+            | replace: '"', ''
+          %}
+          {% assign purpose_pill_array = purpose_pill_string | split: ',' %}
+
+          {% for pill in purpose_pill_array %}
+            <p class="product-page-purpose-pill">
+              {{ pill | strip }}
+            </p>
+          {% endfor %}
         </div>
 
         <section
