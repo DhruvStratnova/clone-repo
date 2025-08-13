@@ -232,14 +232,14 @@ product-info {
 }
 
 .product-page-purpose-pill-container{
-  margin-bottom:4px;
+  margin-bottom:6px;
 }
 
-/* .product-page-purpose-pill{
+.product-page-purpose-pill{
   background-color:#cdebb2;
   border-radius:16px;
   padding:6px;
-} */
+}
 
 .product__text {
   margin-bottom: 0;
