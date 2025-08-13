@@ -239,7 +239,7 @@ product-info {
   background-color:#cdebb2;
    width: fit-content;
   /* border-radius:16px; */
-  /* padding:6px; */
+  padding:5px;
 }
 
 .product__text {
