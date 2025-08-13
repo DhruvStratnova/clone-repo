@@ -233,6 +233,7 @@ product-info {
 
 .product-page-purpose-pill-container{
   margin-bottom:6px;
+  display: flex;
 }
 
 .product-page-purpose-pill{
