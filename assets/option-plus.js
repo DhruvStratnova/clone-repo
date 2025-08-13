@@ -843,13 +843,13 @@
           .optionplus-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            border-color: #007bff;
+            border-color: #000000;
           }
 
           .optionplus-btn.selected {
-            background-color: #007bff !important;
+            background-color: #000000 !important;
             color: white !important;
-            border-color: #007bff !important;
+            border-color: #000000 !important;
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
           }
@@ -870,7 +870,7 @@
 
           .optionplus-select:focus {
             outline: none;
-            border-color: #007bff;
+            border-color: #000000;
             box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
           }
 
@@ -889,7 +889,7 @@
 
           .optionplus-textfield:focus {
             outline: none;
-            border-color: #007bff;
+            border-color: #000000;
             box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
           }
 
@@ -917,7 +917,7 @@
           }
 
           .optionplus-color-swatch.selected {
-            box-shadow: 0 0 0 3px #007bff;
+            box-shadow: 0 0 0 3px #000000;
             transform: scale(1.1);
             position: relative;
           }
@@ -954,7 +954,7 @@
           }
 
           .optionplus-checkbox-label:hover {
-            border-color: #007bff;
+            border-color: #000000;
             background: #f8f9ff;
           }
 
@@ -994,7 +994,7 @@
           }
 
           .optionplus-image-swatch.selected {
-            box-shadow: 0 0 0 3px #007bff;
+            box-shadow: 0 0 0 3px #000000;
             transform: scale(1.05);
             position: relative;
           }
@@ -1004,7 +1004,7 @@
             position: absolute;
             top: 5px;
             right: 5px;
-            background: #007bff;
+            background: #000000;
             color: white;
             border-radius: 50%;
             width: 18px;
@@ -1036,7 +1036,7 @@
 
           .optionplus-dropdown-header:hover,
           .optionplus-dropdown-header.active {
-            border-color: #007bff;
+            border-color: #000000;
             box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
           }
 
@@ -1069,7 +1069,7 @@
             left: 0;
             right: 0;
             background: white;
-            border: 2px solid #007bff;
+            border: 2px solid #000000;
             border-top: none;
             border-radius: 0 0 4px 4px;
             max-height: 200px;
@@ -1101,13 +1101,13 @@
 
           .optionplus-dropdown-option.selected {
             background-color: #e7f3ff;
-            color: #007bff;
+            color: #000000;
           }
 
           .optionplus-dropdown-option .option-price {
             margin-left: auto;
             font-size: 12px;
-            color: #007bff;
+            color: #000000;
             font-weight: 600;
             background: #f0f8ff;
             padding: 2px 6px;
