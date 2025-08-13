@@ -237,8 +237,8 @@ product-info {
 
 .product-page-purpose-pill{
   background-color:#cdebb2;
-  border-radius:16px;
-  padding:6px;
+  /* border-radius:16px; */
+  /* padding:6px; */
 }
 
 .product__text {
