@@ -795,7 +795,7 @@
           .optionplus-widget { 
             max-width: 100%; 
             margin: 1rem auto; 
-            font-family: inherit; 
+            font-family: "Neuzeit S", "sans-serif"; 
           }
           
           .optionplus-section {
