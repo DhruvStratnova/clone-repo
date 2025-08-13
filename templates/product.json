@@ -23,13 +23,6 @@
           "type": "title",
           "settings": {}
         },
-        "text_rYYMYd": {
-          "type": "text",
-          "settings": {
-            "text": "Hrishabhharati",
-            "text_style": "body"
-          }
-        },
         "price": {
           "type": "price",
           "settings": {}
@@ -91,7 +84,6 @@
       "block_order": [
         "vendor",
         "title",
-        "text_rYYMYd",
         "price",
         "variant_picker",
         "option_plus_option_plus_block_qytF6m",
