@@ -202,24 +202,7 @@
                   {%- endif -%}
                 </p>
 
-                <div class="product__accordion accordion quick-add-hidden" {{ block.shopify_attributes }}>
-                  <details id="Details-{{ block.id }}-{{ section.id }}">
-                    <summary>
-                      <div class="summary__title">
-                        <h2 class="h4 accordion__title">
-                          {{ block.settings.title | default: 'Description' }}
-                        </h2>
-                      </div>
-                      {% comment %} {% render 'icon-caret' %}  {% endcomment %}
-                    </summary>
-
-                    <div class="accordion__content rte" id="ProductAccordion-{{ block.id }}-{{ section.id }}">
-                      <div class="product__description rte quick-add-hidden">
-                        {{ product.description }}
-                      </div>
-                    </div>
-                  </details>
-                </div>
+               
 
                 {% comment %} console.log(product.metafields.custom, metafields.custom ) {% endcomment %}
                 {% comment %} {%- when 'product.metafields.custom' -%} {% endcomment %}
