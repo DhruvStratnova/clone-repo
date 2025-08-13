@@ -233,16 +233,12 @@ product-info {
 
 .product__text {
   margin-bottom: 0;
-  border:1px;
-  border-color:#00000;
 }
 
 a.product__text {
   display: block;
   text-decoration: none;
   color: rgba(var(--color-foreground), 0.75);
-   border:1px;
-  border-color:#00000;
 }
 
 .product__text.caption-with-letter-spacing {
