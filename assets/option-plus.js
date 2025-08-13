@@ -1000,7 +1000,7 @@
           }
           
           .optionplus-image-swatch.selected::after {
-            content: 'âœ“';
+            content: '';
             position: absolute;
             top: 5px;
             right: 5px;
