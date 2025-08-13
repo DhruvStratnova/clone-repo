@@ -1503,3 +1503,56 @@ a.product__text {
     border: none;
   }
 }
+
+
+
+.collapsible-row-container {
+  border: 1px solid #e5e5e5; /* Border from screenshot */
+  padding: 1.5rem; /* Padding to match spacing */
+  background-color: #fff; /* White background */
+}
+
+.collapsible-row-details {
+  border: none;
+  list-style: none; /* Remove default marker */
+}
+
+/* Summary/title bar styling */
+.collapsible-row-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  padding: 0;
+}
+
+.collapsible-row-title {
+  margin: 0;
+  font-size: 1.25rem; /* Adjust font size as needed */
+  font-weight: bold; /* Bold text for the title */
+}
+
+/* Icon styling and rotation */
+.collapsible-row-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  transition: transform 0.3s ease;
+  transform: rotate(0deg);
+}
+
+.collapsible-row-details[open] .collapsible-row-icon {
+  transform: rotate(180deg);
+}
+
+/* Content styling */
+.collapsible-row-content p {
+  margin: 1rem 0 0;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #333; /* Darker text color */
+}
+
+/* Optional: remove any default browser focus outline */
+.collapsible-row-details:focus-within {
+  outline: none;
+}
