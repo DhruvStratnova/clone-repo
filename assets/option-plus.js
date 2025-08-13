@@ -1213,7 +1213,7 @@
 
             .optionplus-title {
               font-size: 0.8rem;
-              font-family: "Neuzeit S", "sans-serif";
+              font-family: Neuzeit S, "sans-serif;
             }
 
             .optionplus-btn {
