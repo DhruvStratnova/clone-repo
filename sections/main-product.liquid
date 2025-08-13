@@ -681,7 +681,7 @@
                 <div class="collapsible-row-container">
                   <details class="collapsible-row-details">
                     <summary class="collapsible-row-summary">
-                      <h2 class="collapsible-row-title">{{ section.settings.title }}</h2>
+                      <h2 class="collapsible-row-title">Benefits</h2>
                       <svg
                         class="collapsible-row-icon"
                         aria-hidden="true"
@@ -701,7 +701,7 @@
                 <div class="collapsible-row-container">
                   <details class="collapsible-row-details">
                     <summary class="collapsible-row-summary">
-                      <h2 class="collapsible-row-title">{{ section.settings.title }}</h2>
+                      <h2 class="collapsible-row-title">How to Use</h2>
                       <svg
                         class="collapsible-row-icon"
                         aria-hidden="true"
@@ -713,7 +713,7 @@
                       </svg>
                     </summary>
                     <div class="collapsible-row-content">
-                      <p>{{ product.metafields.custom.benefits }}</p>
+                      <p>{{ product.metafields.custom.how_to_use }}</p>
                     </div>
                   </details>
                 </div>
@@ -721,7 +721,7 @@
                 <div class="collapsible-row-container">
                   <details class="collapsible-row-details">
                     <summary class="collapsible-row-summary">
-                      <h2 class="collapsible-row-title">{{ section.settings.title }}</h2>
+                      <h2 class="collapsible-row-title">Style Tip</h2>
                       <svg
                         class="collapsible-row-icon"
                         aria-hidden="true"
@@ -733,16 +733,15 @@
                       </svg>
                     </summary>
                     <div class="collapsible-row-content">
-                      <p>{{ product.metafields.custom.benefits }}</p>
+                      <p>{{ product.metafields.custom.style_tip }}</p>
                     </div>
                   </details>
                 </div>
-
 
                 <div class="collapsible-row-container">
                   <details class="collapsible-row-details">
                     <summary class="collapsible-row-summary">
-                      <h2 class="collapsible-row-title">{{ section.settings.title }}</h2>
+                      <h2 class="collapsible-row-title">Best Day to Wear</h2>
                       <svg
                         class="collapsible-row-icon"
                         aria-hidden="true"
@@ -754,16 +753,15 @@
                       </svg>
                     </summary>
                     <div class="collapsible-row-content">
-                      <p>{{ product.metafields.custom.benefits }}</p>
+                      <p>{{ product.metafields.custom.best_day_to_wear }}</p>
                     </div>
                   </details>
                 </div>
-
 
                 <div class="collapsible-row-container">
                   <details class="collapsible-row-details">
                     <summary class="collapsible-row-summary">
-                      <h2 class="collapsible-row-title">{{ section.settings.title }}</h2>
+                      <h2 class="collapsible-row-title">Packaging</h2>
                       <svg
                         class="collapsible-row-icon"
                         aria-hidden="true"
@@ -775,16 +773,15 @@
                       </svg>
                     </summary>
                     <div class="collapsible-row-content">
-                      <p>{{ product.metafields.custom.benefits }}</p>
+                      <p>{{ product.metafields.custom.packaging }}</p>
                     </div>
                   </details>
                 </div>
-
 
                 <div class="collapsible-row-container">
                   <details class="collapsible-row-details">
                     <summary class="collapsible-row-summary">
-                      <h2 class="collapsible-row-title">{{ section.settings.title }}</h2>
+                      <h2 class="collapsible-row-title">Returns or Exchanges</h2>
                       <svg
                         class="collapsible-row-icon"
                         aria-hidden="true"
@@ -796,12 +793,10 @@
                       </svg>
                     </summary>
                     <div class="collapsible-row-content">
-                      <p>{{ product.metafields.custom.benefits }}</p>
+                      <p>{{ product.metafields.custom.returnsorexchange }}</p>
                     </div>
                   </details>
                 </div>
-
-                
 
               {%- when 'rating' -%}
                 {%- if product.metafields.reviews.rating.value != blank -%}
