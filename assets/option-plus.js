@@ -965,8 +965,8 @@
 
           /* Image Swatches Grid */
           .optionplus-image-swatches {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            display: flex;
+            // grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
             gap: 8px;
             max-width: 600px;
             margin-bottom: 0.5rem;
