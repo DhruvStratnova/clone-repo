@@ -1213,6 +1213,7 @@
 
             .optionplus-title {
               font-size: 0.8rem;
+              
             }
 
             .optionplus-btn {
