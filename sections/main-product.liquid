@@ -83,6 +83,13 @@
           id="ProductInfo-{{ section.id }}"
           class="product__info-container{% if section.settings.enable_sticky_info %} product__column-sticky{% endif %}"
         >
+
+
+            <div class="product-page-purpose-pill">
+                  <p>
+                    {{ product.metafields.custom.purpose }} hello hrishabh!!!!!!
+                  </p>
+                </div>
           {%- assign product_form_id = 'product-form-' | append: section.id -%}
 
           {%- for block in section.blocks -%}
