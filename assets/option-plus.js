@@ -1069,7 +1069,7 @@
             left: 0;
             right: 0;
             background: white;
-            border: 2px solid #000000;
+            // border: 2px solid #000000;
             border-top: none;
             border-radius: 0 0 4px 4px;
             max-height: 200px;
