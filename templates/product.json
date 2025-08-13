@@ -63,15 +63,6 @@
           "type": "quantity_selector",
           "settings": {}
         },
-        "collapsible_tab_9H3wqj": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "Collapsible row",
-            "icon": "none",
-            "content": "<p>A description isa statement that tells what someone or something is like, using words to convey their appearance, characteristics, or qualities.An example is a specific instance or illustration that helps clarify or demonstrate a general idea or principle.</p>",
-            "page": ""
-          }
-        },
         "buy_buttons": {
           "type": "buy_buttons",
           "settings": {
@@ -98,7 +89,6 @@
         "variant_picker",
         "option_plus_option_plus_block_qytF6m",
         "quantity_selector",
-        "collapsible_tab_9H3wqj",
         "buy_buttons",
         "description",
         "share"
