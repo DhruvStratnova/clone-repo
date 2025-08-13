@@ -801,9 +801,9 @@
           .optionplus-section {
             margin-bottom: 0.75rem;
             padding: 0.5rem;
-            background: #f9f9f9;
+            // background: #f9f9f9;
             border-radius: 8px;
-            border: 1px solid #e0e0e0;
+            // border: 1px solid #e0e0e0;
           }
 
           .optionplus-title {
