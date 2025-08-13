@@ -824,8 +824,8 @@
           }
 
           .optionplus-btn {
-            background-color: #4caf50;
-            color: #ffffff;
+            background-color: #ffffff;
+            color: #000000;
             border: 2px solid #e0e0e0;
             padding: 12px 16px;
             text-align: center;
