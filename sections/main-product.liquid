@@ -713,6 +713,23 @@
                     </p>
                   </div>
                 {%- endif -%}
+
+                <div class="collapsible-row-container">
+  <details class="collapsible-row-details">
+    <summary class="collapsible-row-summary">
+      <h2 class="collapsible-row-title">{{ section.settings.title }}</h2>
+      <svg class="collapsible-row-icon" aria-hidden="true" focusable="false" role="presentation" viewBox="0 0 10 6">
+        <path d="M9 1L5 5 1 1" stroke="currentColor" stroke-width="2" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+    </summary>
+    <div class="collapsible-row-content">
+      <p>{{ section.settings.description }}</p>
+    </div>
+  </details>
+</div>
+
+
+
               {%- when 'complementary' -%}
                 <product-recommendations
                   class="complementary-products quick-add-hidden{% if block.settings.make_collapsible_row %} is-accordion{% endif %}{% if block.settings.enable_quick_add %} complementary-products-contains-quick-add{% endif %}"
