@@ -1011,7 +1011,7 @@
             height: 18px;
             display: flex;
             align-items: center;
-            justify-content: start;
+            justify-content: center;
             font-size: 10px;
             font-weight: bold;
           }
