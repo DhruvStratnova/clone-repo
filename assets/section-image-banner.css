@@ -592,7 +592,7 @@ justify-content: center;
 
 .tabber_coll{
   display:flex;
-  justify-content: space-between;
+  justify-content: center;
   
   /* background: linear-gradient(to bottom, #d7f9f1, #f9ead7); */
 
