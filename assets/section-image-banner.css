@@ -610,3 +610,56 @@ justify-content: center;
   background: linear-gradient(to bottom,rgba(175, 230, 252, 0.87), #f9ead7);
 
 } */
+
+
+/* Style for the tab content in its collapsed state */
+.listing-description-accordion .tabcontent {
+  padding: 0 12px; /* Set padding to 0 when collapsed */
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+
+/* Style for the tab content in its expanded state */
+.listing-description-accordion .tabcontent.active {
+  max-height: 500px; /* A value larger than the max possible height of the content */
+  padding: 6px 12px;
+  transition: max-height 0.3s ease-in, padding 0.3s ease-in;
+}
+
+/* New class to set display to block for the active tab */
+.listing-description-accordion .tabcontent.display-block {
+    display: block !important;
+}
+
+/*
+  Keep the rest of your original CSS for .tab and .tablinks
+  but make sure they are scoped with the parent class
+  .listing-description-accordion.
+*/
+.listing-description-accordion .tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+.listing-description-accordion .tablinks {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+.listing-description-accordion .tablinks:hover {
+  background-color: #ddd;
+}
+
+.listing-description-accordion .tablinks.active {
+  background-color: #ccc;
+}
