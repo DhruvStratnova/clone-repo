@@ -11,7 +11,7 @@
 
 <div class="collection-hero{% if section.settings.show_collection_image and collection.image %} collection-hero--with-image{% endif %} color-{{ section.settings.color_scheme }} gradient">
   
-<div class="listing-description-accordion">
+{% comment %} <div class="listing-description-accordion">
   <div class="tabber_coll">
     <div class="tab">
       <button class="tablinks" onclick="tabAccordion(event, 'About')">About</button>
@@ -63,7 +63,7 @@
   </div>
 </div>
   
-  
+   {% endcomment %}
   
   
   <div class="collection-hero__inner page-width {% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
@@ -108,7 +108,7 @@
 
 
 
-
+{% comment %} 
 <script>
  function tabAccordion(evt, cityName) {
   var i, tabcontent, tablinks;
@@ -138,7 +138,7 @@
     evt.currentTarget.className += " active";
   }
 }
-</script>
+</script> {% endcomment %}
 
 
 {% schema %}
