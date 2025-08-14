@@ -591,6 +591,8 @@ justify-content: center;
 .tabber_coll{
   display:flex;
   justify-content: center;
+  background: linear-gradient(to bottom, #d7f9f1, #f9ead7);
+
 }
 
 .tabber_content{
@@ -598,4 +600,6 @@ justify-content: center;
   /* margin: calc(4rem + var(--page-width-margin)) 0 calc(4rem + var(--page-width-margin)); */
   align-self:center;
   padding: 2rem 10rem 2rem 10rem ;
+  background: linear-gradient(to bottom, #d7f9f1, #f9ead7);
+
 }
