@@ -115,294 +115,291 @@
       }}
     </div>
   {%- endif -%}
-  {% comment %} <div class="banner__content banner__content--{{ section.settings.desktop_content_position }} page-width{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-    <div class="banner__box content-container content-container--full-width-mobile color-{{ section.settings.color_scheme }} gradient">
-      {%- for block in section.blocks -%}
-        {%- case block.type -%}
-          {%- when 'heading' -%}
-            <h2
-              class="banner__heading inline-richtext {{ block.settings.heading_size }}"
-              {{ block.shopify_attributes }}
-            >
-              {{ block.settings.heading }}
-            </h2>
-          {%- when 'text' -%}
-            <div class="banner__text rte {{ block.settings.text_style }}" {{ block.shopify_attributes }}>
-              <p>{{ block.settings.text }}</p>
-            </div>
-          {% comment %} {%- when 'buttons' -%}
-            <div
-              class="banner__buttons{% if block.settings.button_label_1 != blank and block.settings.button_label_2 != blank %} banner__buttons--multiple{% endif %}"
-              {{ block.shopify_attributes }}
-            >
-              {%- if block.settings.button_label_1 != blank -%}
-                <a
-                  {% if block.settings.button_link_1 == blank %}
-                    role="link" aria-disabled="true"
-                  {% else %}
-                    href="{{ block.settings.button_link_1 }}"
-                  {% endif %}
-                  class="button{% if block.settings.button_style_secondary_1 %} button--secondary{% else %} button--primary{% endif %}"
-                >
-                  {{- block.settings.button_label_1 | escape -}}
-                </a>
-              {%- endif -%}
-              {%- if block.settings.button_label_2 != blank -%}
-                <a
-                  {% if block.settings.button_link_2 == blank %}
-                    role="link" aria-disabled="true"
-                  {% else %}
-                    href="{{ block.settings.button_link_2 }}"
-                  {% endif %}
-                  class="button{% if block.settings.button_style_secondary_2 %} button--secondary{% else %} button--primary{% endif %}"
-                >
-                  {{- block.settings.button_label_2 | escape -}}
-                </a>
-              {%- endif -%}
-            </div> {% endcomment %}
-        {%- endcase -%}
-      {%- endfor -%}
+  {% comment %}
+    <div class="banner__content banner__content--{{ section.settings.desktop_content_position }} page-width{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+      <div class="banner__box content-container content-container--full-width-mobile color-{{ section.settings.color_scheme }} gradient">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'heading' -%}
+              <h2
+                class="banner__heading inline-richtext {{ block.settings.heading_size }}"
+                {{ product.category.name }}
+              >
+                {{ block.settings.heading }}
+              </h2>
+            {%- when 'text' -%}
+              <div class="banner__text rte {{ block.settings.text_style }}" {{ product.category.name }}>
+                <p>{{ block.settings.text }}</p>
+              </div>
+            {% comment %} {%- when 'buttons' -%}
+              <div
+                class="banner__buttons{% if block.settings.button_label_1 != blank and block.settings.button_label_2 != blank %} banner__buttons--multiple{% endif %}"
+                {{ product.category.name }}
+              >
+                {%- if block.settings.button_label_1 != blank -%}
+                  <a
+                    {% if block.settings.button_link_1 == blank %}
+                      role="link" aria-disabled="true"
+                    {% else %}
+                      href="{{ block.settings.button_link_1 }}"
+                    {% endif %}
+                    class="button{% if block.settings.button_style_secondary_1 %} button--secondary{% else %} button--primary{% endif %}"
+                  >
+                    {{- block.settings.button_label_1 | escape -}}
+                  </a>
+                {%- endif -%}
+                {%- if block.settings.button_label_2 != blank -%}
+                  <a
+                    {% if block.settings.button_link_2 == blank %}
+                      role="link" aria-disabled="true"
+                    {% else %}
+                      href="{{ block.settings.button_link_2 }}"
+                    {% endif %}
+                    class="button{% if block.settings.button_style_secondary_2 %} button--secondary{% else %} button--primary{% endif %}"
+                  >
+                    {{- block.settings.button_label_2 | escape -}}
+                  </a>
+                {%- endif -%}
+              </div> {% endcomment %}
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
     </div>
-  </div> {% endcomment %}
+  {% endcomment %}
 </div>
 
-
-<div class="product__accordion accordion quick-add-hidden" {{ block.shopify_attributes }}>
-  <details id="Details-Description-{{ section.id }}">
-    <summary>
-      <div class="summary__title">
-        <h2 class="h4 accordion__title">Description</h2>
-      </div>
-            <svg
-        width="16"
-        height="16"
-        viewBox="0 0 24 24"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        style="transform: rotate(0deg); transition: transform 0.3s;"
-      >
-        <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </summary>
-    <div class="accordion__content rte" id="ProductAccordion-Description-{{ section.id }}">
-      <div class="product__description rte quick-add-hidden">
-        {{ product.description }}
-      </div>
-    </div>
-  </details>
+<div class="product__accordion accordion quick-add-hidden" {{ product.category.name }}>
+  <details id="Details-Description-{{ section.id }}">
+    <summary>
+      <div class="summary__title">
+        <h2 class="h4 accordion__title">Description</h2>
+      </div>
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        style="transform: rotate(0deg); transition: transform 0.3s;"
+      >
+        <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </summary>
+    <div class="accordion__content rte" id="ProductAccordion-Description-{{ section.id }}">
+      <div class="product__description rte quick-add-hidden">{{ product.description }}</div>
+    </div>
+  </details>
 </div>
 
+{% comment %}
+  <div class="listing-colapsible-description">
 
-<div class="listing-colapsible-description">
+    <div class="product__accordion accordion quick-add-hidden" {{ product.category.name }}>
+      <details id="Details-{{ product.category.name }}-{{ section.id }}">
+        <summary>
+          <div class="summary__title">
+            <h2 class="h4 accordion__title">About</h2>
+          </div>
+          <!-- Inline caret SVG -->
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            style="transform: rotate(0deg); transition: transform 0.3s;"
+          >
+            <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </summary>
+        <div class="accordion__content rte" id="ProductAccordion-{{ product.category.name }}-{{ section.id }}">
+          <div class="product__description rte quick-add-hidden">
+            {{ product.metafields.custom.benefits }}
+          </div>
+        </div>
+      </details>
+    </div>
+    <div class="product__accordion accordion quick-add-hidden" {{ product.category.name }}>
+      <details id="Details-{{ product.category.name }}-{{ section.id }}">
+        <summary>
+          <div class="summary__title">
+            <h2 class="h4 accordion__title">Clean & Care</h2>
+          </div>
+          <!-- Inline caret SVG -->
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            style="transform: rotate(0deg); transition: transform 0.3s;"
+          >
+            <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </summary>
+        <div class="accordion__content rte" id="ProductAccordion-{{ product.category.name }}-{{ section.id }}">
+          <div class="product__description rte quick-add-hidden">
+            {{ product.metafields.custom.benefits }}
+          </div>
+        </div>
+      </details>
+    </div>
+    <div class="product__accordion accordion quick-add-hidden" {{ product.category.name }}>
+      <details id="Details-{{ product.category.name }}-{{ section.id }}">
+        <summary>
+          <div class="summary__title">
+            <h2 class="h4 accordion__title">How to Wear</h2>
+          </div>
+          <!-- Inline caret SVG -->
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            style="transform: rotate(0deg); transition: transform 0.3s;"
+          >
+            <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </summary>
+        <div class="accordion__content rte" id="ProductAccordion-{{ product.category.name }}-{{ section.id }}">
+          <div class="product__description rte quick-add-hidden">
+            {{ product.metafields.custom.benefits }}
+          </div>
+        </div>
+      </details>
+    </div>
+    <div class="product__accordion accordion quick-add-hidden" {{ product.category.name }}>
+      <details id="Details-{{ product.category.name }}-{{ section.id }}">
+        <summary>
+          <div class="summary__title">
+            <h2 class="h4 accordion__title">Benefits</h2>
+          </div>
+          <!-- Inline caret SVG -->
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            style="transform: rotate(0deg); transition: transform 0.3s;"
+          >
+            <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </summary>
+        <div class="accordion__content rte" id="ProductAccordion-{{ product.category.name }}-{{ section.id }}">
+          <div class="product__description rte quick-add-hidden">
+            {{ product.metafields.custom.benefits }}
+          </div>
+        </div>
+      </details>
+    </div>
+    <div class="product__accordion accordion quick-add-hidden" {{ product.category.name }}>
+      <details id="Details-{{ product.category.name }}-{{ section.id }}">
+        <summary>
+          <div class="summary__title">
+            <h2 class="h4 accordion__title">Types</h2>
+          </div>
+          <!-- Inline caret SVG -->
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            style="transform: rotate(0deg); transition: transform 0.3s;"
+          >
+            <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </summary>
+        <div class="accordion__content rte" id="ProductAccordion-{{ product.category.name }}-{{ section.id }}">
+          <div class="product__description rte quick-add-hidden">
+            {{ product.metafields.custom.benefits }}
+          </div>
+        </div>
+      </details>
+    </div>
+    <div class="product__accordion accordion quick-add-hidden" {{ product.category.name }}>
+      <details id="Details-{{ product.category.name }}-{{ section.id }}">
+        <summary>
+          <div class="summary__title">
+            <h2 class="h4 accordion__title">Quality & Price</h2>
+          </div>
+          <!-- Inline caret SVG -->
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            style="transform: rotate(0deg); transition: transform 0.3s;"
+          >
+            <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </summary>
+        <div class="accordion__content rte" id="ProductAccordion-{{ product.category.name }}-{{ section.id }}">
+          <div class="product__description rte quick-add-hidden">
+            {{ product.metafields.custom.benefits }}
+          </div>
+        </div>
+      </details>
+    </div>
+    <div class="product__accordion accordion quick-add-hidden" {{ product.category.name }}>
+      <details id="Details-{{ product.category.name }}-{{ section.id }}">
+        <summary>
+          <div class="summary__title">
+            <h2 class="h4 accordion__title">Buyers Beware</h2>
+          </div>
+          <!-- Inline caret SVG -->
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            style="transform: rotate(0deg); transition: transform 0.3s;"
+          >
+            <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </summary>
+        <div class="accordion__content rte" id="ProductAccordion-{{ product.category.name }}-{{ section.id }}">
+          <div class="product__description rte quick-add-hidden">
+            {{ product.metafields.custom.benefits }}
+          </div>
+        </div>
+      </details>
+    </div>
+    <div class="product__accordion accordion quick-add-hidden" {{ product.category.name }}>
+      <details id="Details-{{ product.category.name }}-{{ section.id }}">
+        <summary>
+          <div class="summary__title">
+            <h2 class="h4 accordion__title">FAQs</h2>
+          </div>
+          <!-- Inline caret SVG -->
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            style="transform: rotate(0deg); transition: transform 0.3s;"
+          >
+            <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </summary>
+        <div class="accordion__content rte" id="ProductAccordion-{{ product.category.name }}-{{ section.id }}">
+          <div class="product__description rte quick-add-hidden">
+            {{ product.metafields.custom.benefits }}
+          </div>
+        </div>
+      </details>
+    </div>
+  </div>
+{% endcomment %}
 
-  <div class="product__accordion accordion quick-add-hidden" {{ block.shopify_attributes }}>
-    <details id="Details-{{  }}-{{ section.id }}">
-      <summary>
-        <div class="summary__title">
-          <h2 class="h4 accordion__title">About</h2>
-        </div>
-        <!-- Inline caret SVG -->
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          style="transform: rotate(0deg); transition: transform 0.3s;"
-        >
-          <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </summary>
-                    <div class="accordion__content rte" id="ProductAccordion-{{  }}-{{ section.id }}">
-                      <div class="product__description rte quick-add-hidden">
-                        {{ product.metafields.custom.benefits }}
-                      </div>
-                    </div>
-                  </details>
-                </div>
-  <div class="product__accordion accordion quick-add-hidden" {{ block.shopify_attributes }}>
-    <details id="Details-{{  }}-{{ section.id }}">
-      <summary>
-        <div class="summary__title">
-          <h2 class="h4 accordion__title">Clean & Care</h2>
-        </div>
-        <!-- Inline caret SVG -->
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          style="transform: rotate(0deg); transition: transform 0.3s;"
-        >
-          <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </summary>
-                    <div class="accordion__content rte" id="ProductAccordion-{{  }}-{{ section.id }}">
-                      <div class="product__description rte quick-add-hidden">
-                        {{ product.metafields.custom.benefits }}
-                      </div>
-                    </div>
-                  </details>
-                </div>
-  <div class="product__accordion accordion quick-add-hidden" {{ block.shopify_attributes }}>
-    <details id="Details-{{  }}-{{ section.id }}">
-      <summary>
-        <div class="summary__title">
-          <h2 class="h4 accordion__title">How to Wear</h2>
-        </div>
-        <!-- Inline caret SVG -->
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          style="transform: rotate(0deg); transition: transform 0.3s;"
-        >
-          <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </summary>
-                    <div class="accordion__content rte" id="ProductAccordion-{{  }}-{{ section.id }}">
-                      <div class="product__description rte quick-add-hidden">
-                        {{ product.metafields.custom.benefits }}
-                      </div>
-                    </div>
-                  </details>
-                </div>
-  <div class="product__accordion accordion quick-add-hidden" {{ block.shopify_attributes }}>
-    <details id="Details-{{  }}-{{ section.id }}">
-      <summary>
-        <div class="summary__title">
-          <h2 class="h4 accordion__title">Benefits</h2>
-        </div>
-        <!-- Inline caret SVG -->
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          style="transform: rotate(0deg); transition: transform 0.3s;"
-        >
-          <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </summary>
-                    <div class="accordion__content rte" id="ProductAccordion-{{  }}-{{ section.id }}">
-                      <div class="product__description rte quick-add-hidden">
-                        {{ product.metafields.custom.benefits }}
-                      </div>
-                    </div>
-                  </details>
-                </div>
-  <div class="product__accordion accordion quick-add-hidden" {{ block.shopify_attributes }}>
-    <details id="Details-{{  }}-{{ section.id }}">
-      <summary>
-        <div class="summary__title">
-          <h2 class="h4 accordion__title">Types</h2>
-        </div>
-        <!-- Inline caret SVG -->
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          style="transform: rotate(0deg); transition: transform 0.3s;"
-        >
-          <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </summary>
-                    <div class="accordion__content rte" id="ProductAccordion-{{  }}-{{ section.id }}">
-                      <div class="product__description rte quick-add-hidden">
-                        {{ product.metafields.custom.benefits }}
-                      </div>
-                    </div>
-                  </details>
-                </div>
-  <div class="product__accordion accordion quick-add-hidden" {{ block.shopify_attributes }}>
-    <details id="Details-{{  }}-{{ section.id }}">
-      <summary>
-        <div class="summary__title">
-          <h2 class="h4 accordion__title">Quality & Price</h2>
-        </div>
-        <!-- Inline caret SVG -->
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          style="transform: rotate(0deg); transition: transform 0.3s;"
-        >
-          <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </summary>
-                    <div class="accordion__content rte" id="ProductAccordion-{{  }}-{{ section.id }}">
-                      <div class="product__description rte quick-add-hidden">
-                        {{ product.metafields.custom.benefits }}
-                      </div>
-                    </div>
-                  </details>
-                </div>
-  <div class="product__accordion accordion quick-add-hidden" {{ block.shopify_attributes }}>
-    <details id="Details-{{  }}-{{ section.id }}">
-      <summary>
-        <div class="summary__title">
-          <h2 class="h4 accordion__title">Buyers Beware</h2>
-        </div>
-        <!-- Inline caret SVG -->
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          style="transform: rotate(0deg); transition: transform 0.3s;"
-        >
-          <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </summary>
-                    <div class="accordion__content rte" id="ProductAccordion-{{  }}-{{ section.id }}">
-                      <div class="product__description rte quick-add-hidden">
-                        {{ product.metafields.custom.benefits }}
-                      </div>
-                    </div>
-                  </details>
-                </div>
-                 <div class="product__accordion accordion quick-add-hidden" {{ block.shopify_attributes }}>
-    <details id="Details-{{  }}-{{ section.id }}">
-      <summary>
-        <div class="summary__title">
-          <h2 class="h4 accordion__title">FAQs</h2>
-        </div>
-        <!-- Inline caret SVG -->
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          style="transform: rotate(0deg); transition: transform 0.3s;"
-        >
-          <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </summary>
-                    <div class="accordion__content rte" id="ProductAccordion-{{  }}-{{ section.id }}">
-                      <div class="product__description rte quick-add-hidden">
-                        {{ product.metafields.custom.benefits }}
-                      </div>
-                    </div>
-                  </details>
-                </div>
-</div>
-                
-
-
-
-                {% schema %}
-                {
-                  "name": "t:sections.image-banner.name",
+{% schema %}
+{
+  "name": "t:sections.image-banner.name",
   "tag": "section",
   "class": "section",
   "disabled_on": {
@@ -566,7 +563,7 @@
       "id": "stack_images_on_mobile",
       "default": true,
       "label": "t:sections.image-banner.settings.stack_images_on_mobile.label"
-    },    
+    },
     {
       "type": "select",
       "id": "mobile_content_alignment",
@@ -675,8 +672,8 @@
       "limit": 1,
       "settings": [
         {
-        "type": "header",
-        "content": "t:sections.image-banner.blocks.buttons.settings.header_1.content"
+          "type": "header",
+          "content": "t:sections.image-banner.blocks.buttons.settings.header_1.content"
         },
         {
           "type": "text",
@@ -697,8 +694,8 @@
           "label": "t:sections.image-banner.blocks.buttons.settings.button_style_secondary_1.label"
         },
         {
-        "type": "header",
-        "content": "t:sections.image-banner.blocks.buttons.settings.header_2.content"
+          "type": "header",
+          "content": "t:sections.image-banner.blocks.buttons.settings.header_2.content"
         },
         {
           "type": "text",
