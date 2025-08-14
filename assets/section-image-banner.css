@@ -656,10 +656,3 @@ justify-content: center;
   font-size: 17px;
 }
 
-.listing-description-accordion .tablinks:hover {
-  background-color: #ddd;
-}
-
-.listing-description-accordion .tablinks.active {
-  background-color: #ccc;
-}
