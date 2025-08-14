@@ -137,7 +137,7 @@
         outline: none;
       }
     </style>
-    <div id="custom-filters" class="custom-filters">
+    {% comment %} <div id="custom-filters" class="custom-filters">
       <form id="productFilterForm">
         <label for="filter-gemstone">Gemstone</label>
         <select name="gemstone" id="filter-gemstone">
@@ -164,7 +164,7 @@
           {% endfor %}
         </select>
       </form>
-    </div>
+    </div> {% endcomment %}
     <div class="{% if section.settings.filter_type == 'vertical' %} facets-vertical page-width{% endif %}">
       {{ 'component-facets.css' | asset_url | stylesheet_tag }}
       <script src="{{ 'collection-filters.js' | asset_url }}" defer="defer"></script>
