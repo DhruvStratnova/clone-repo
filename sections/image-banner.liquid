@@ -546,14 +546,14 @@
 <div class="listing-description-accordion">
   <div class="tabber_coll">
     <div class="tab">
-      <button class="tablinks" onclick="openCity(event, 'About')">About</button>
-      <button class="tablinks active" onclick="openCity(event, 'Clean &amp; Care')">Clean &amp; Care</button>
-      <button class="tablinks" onclick="openCity(event, 'Who Should Wear')">Who Should Wear</button>
-      <button class="tablinks" onclick="openCity(event, 'Benefits')">Benefits</button>
-      <button class="tablinks" onclick="openCity(event, 'Types')">Types</button>
-      <button class="tablinks" onclick="openCity(event, 'Quality &amp; Price')">Quality &amp; Price</button>
-      <button class="tablinks" onclick="openCity(event, 'Buyer Beware')">Buyer Beware</button>
-      <button class="tablinks" onclick="openCity(event, 'FAQs')">FAQs</button>
+      <button class="tablinks" onclick="tabAccordion(event, 'About')">About</button>
+      <button class="tablinks active" onclick="tabAccordion(event, 'Clean &amp; Care')">Clean &amp; Care</button>
+      <button class="tablinks" onclick="tabAccordion(event, 'Who Should Wear')">Who Should Wear</button>
+      <button class="tablinks" onclick="tabAccordion(event, 'Benefits')">Benefits</button>
+      <button class="tablinks" onclick="tabAccordion(event, 'Types')">Types</button>
+      <button class="tablinks" onclick="tabAccordion(event, 'Quality &amp; Price')">Quality &amp; Price</button>
+      <button class="tablinks" onclick="tabAccordion(event, 'Buyer Beware')">Buyer Beware</button>
+      <button class="tablinks" onclick="tabAccordion(event, 'FAQs')">FAQs</button>
     </div>
   </div>
 
@@ -572,7 +572,7 @@
 
 
 <script>
-  function openCity(evt, cityName) {
+  function tabAccordion(evt, cityName) {
   // Declare all variables
   var i, tabcontent, tablinks;
 
