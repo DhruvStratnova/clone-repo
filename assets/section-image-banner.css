@@ -499,3 +499,26 @@ display:flex;
 gap:2rem;
 justify-content: center;
 } */
+
+
+.accordion-header-row {
+  display: flex;
+  justify-content: space-between;
+  /* Add other styling for spacing and appearance */
+}
+
+.accordion-title {
+  padding: 10px;
+  cursor: pointer;
+  /* Style your titles here */
+}
+
+.content-panel {
+  display: none;
+  width: 100%;
+}
+
+.content-panel.active {
+  display: block;
+  /* Set your content styles here, and ensure it takes full width */
+}
