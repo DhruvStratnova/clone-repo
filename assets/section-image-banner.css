@@ -500,19 +500,19 @@ gap:2rem;
 justify-content: center;
 } */
 
-
+/* 
 .accordion-header-row {
   display: flex;
   justify-content: space-between;
   /* Add other styling for spacing and appearance */
-}
+} */
 
-.accordion-title {
+/* .accordion-title {
   padding: 10px;
   cursor: pointer;
   /* Style your titles here */
   
-}
+} */
 
 
 .accordion-title:after {
