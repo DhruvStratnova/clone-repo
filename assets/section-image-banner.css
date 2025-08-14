@@ -511,7 +511,9 @@ justify-content: center;
   padding: 10px;
   cursor: pointer;
   /* Style your titles here */
+  
 }
+
 
 .content-panel {
   display: none;
