@@ -541,15 +541,15 @@ justify-content: center;
  */
 
 
- /* Style for the container of the tabs */
-.tab {
+/* Style for the container of the tabs */
+.listing-description-accordion .tab {
   overflow: hidden;
   border: 1px solid #ccc;
   background-color: #f1f1f1;
 }
 
 /* Style the buttons inside the tab */
-.tab button {
+.listing-description-accordion .tablinks {
   background-color: inherit;
   float: left;
   border: none;
@@ -561,19 +561,29 @@ justify-content: center;
 }
 
 /* Change background color of buttons on hover */
-.tab button:hover {
+.listing-description-accordion .tablinks:hover {
   background-color: #ddd;
 }
 
 /* Create an active/current tablink class */
-.tab button.active {
+.listing-description-accordion .tablinks.active {
   background-color: #ccc;
 }
 
 /* Style the tab content */
-.tabcontent {
+.listing-description-accordion .tabcontent {
   padding: 6px 12px;
   border: 1px solid #ccc;
   border-top: none;
   display: none; /* This is essential for hiding inactive content */
+}
+
+/*
+  Add this for better button layout if needed.
+  It helps prevent the buttons from wrapping to a new line
+  if the text is long.
+*/
+.listing-description-accordion .tab {
+  display: flex;
+  flex-wrap: wrap;
 }
