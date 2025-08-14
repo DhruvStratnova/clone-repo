@@ -590,5 +590,5 @@ justify-content: center;
 
 .tabber_coll{
   display:flex;
-  
+  justify-content: center;
 }
