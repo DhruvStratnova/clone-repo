@@ -1033,6 +1033,11 @@
             <h1 class="h2">{{ block.settings.page.title | escape }}</h1>
             {{ block.settings.page.content }}
           </div>
+
+
+ {% section 'product-faq' %}
+
+
         </div>
       </modal-dialog>
     {%- endfor -%}
@@ -1062,7 +1067,7 @@
     </script>
 
 
-     {% section 'product-faq' %}
+
     
   </div>
 </product-info>
