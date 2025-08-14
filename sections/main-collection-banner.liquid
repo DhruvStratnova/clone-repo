@@ -101,6 +101,46 @@
   </div>
 </div>
 
+
+
+
+
+
+
+
+
+<script>
+ function tabAccordion(evt, cityName) {
+  var i, tabcontent, tablinks;
+
+  // Check if the clicked button is already active
+  if (evt.currentTarget.classList.contains("active")) {
+    // If it is, remove the 'active' class and hide the content
+    evt.currentTarget.classList.remove("active");
+    document.getElementById(cityName).style.display = "none";
+  } else {
+    // If it's not active, proceed with the standard tab functionality
+
+    // Get all elements with class="tabcontent" and hide them
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.className += " active";
+  }
+}
+</script>
+
+
 {% schema %}
 {
   "name": "t:sections.main-collection-banner.name",
