@@ -163,9 +163,6 @@ document.addEventListener("DOMContentLoaded", function () {
           </div>
           <div class="gemstone-footer">
             <button class="view-product-btn">View Product</button>
-            <p class="recommend-text">
-              <span class="highlight">97.31% astrologers</span> recommended this based on your details
-            </p>
           </div>
         </div>
       `;
