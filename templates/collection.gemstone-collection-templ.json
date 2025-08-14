@@ -85,11 +85,74 @@
         "padding_top": 36,
         "padding_bottom": 36
       }
+    },
+    "collapsible_content_M7gqi6": {
+      "type": "collapsible-content",
+      "blocks": {
+        "collapsible_row_XJBMpX": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "What are its benefits?",
+            "icon": "none",
+            "row_content": "<p>1. Citrine attracts positivity, uplifting your mood and outlook.<br/>2. It boosts confidence, encouraging a brighter, can-do attitude.<br/>3. Citrine enhances motivation, helping you stay focused on goals.<br/>4. It promotes abundance, attracting prosperity and success.<br/><br/></p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_yLw6xq": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How natural and authentic is this gemstone?",
+            "icon": "none",
+            "row_content": "<p>All our stones are 100% natural and authentic. The healing stones have been sourced from top international mines from across the globe and certified by various labs.  <br/><br/></p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_dCTPWW": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "What is the return policy and estimated delivery duration?",
+            "icon": "none",
+            "row_content": "<p>We offer a hassle-free 7-day return policy. Additionally, you can expect delivery within 10 to 14 days. <br/><br/></p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_daCmTz": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How is this energized and how can i wear it?",
+            "icon": "none",
+            "row_content": "<p><strong>How can crystals heal-</strong> All healing crystals correspond to different planets in our solar system, which is why each crystal vibrates at its unique frequency. These healing stones offer more than mere aesthetic value. At the right frequency the crystals directly affect the 7 chakras of the human body.  <br/><br/><br/><strong>What is energisation-</strong> When properly energised, the crystals vibrate at frequencies that align with the various chakras in our body. This process of ensuring the alignment of frequencies, known as the energization of a healing stone, enhances their therapeutic and psychic benefits. </p><p><br/><strong>How we help-</strong> At Astrotalk, we ensure that all our healing stones are sourced and energised by trusted experts and astrologers to guarantee their authenticity. Before delivery, all our healing stones are energised with pure intentions and energy by our esteemed astrologers, making them highly effective for our customers. </p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "collapsible_row_XJBMpX",
+        "collapsible_row_yLw6xq",
+        "collapsible_row_dCTPWW",
+        "collapsible_row_daCmTz"
+      ],
+      "name": "t:sections.collapsible_content.presets.name",
+      "settings": {
+        "caption": "",
+        "heading": "FAQs",
+        "heading_size": "h1",
+        "heading_alignment": "center",
+        "layout": "none",
+        "container_color_scheme": "",
+        "color_scheme": "",
+        "open_first_collapsible_row": false,
+        "image_ratio": "adapt",
+        "desktop_layout": "image_second",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
     }
   },
   "order": [
     "image_banner_zpGQzQ",
     "banner",
-    "product-grid"
+    "product-grid",
+    "collapsible_content_M7gqi6"
   ]
 }
