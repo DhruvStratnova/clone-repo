@@ -597,4 +597,5 @@ justify-content: center;
   /* max-width:1200px; */
   /* margin: calc(4rem + var(--page-width-margin)) 0 calc(4rem + var(--page-width-margin)); */
   align-self:center;
+  padding: 2rem;
 }
