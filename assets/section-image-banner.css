@@ -592,3 +592,7 @@ justify-content: center;
   display:flex;
   justify-content: center;
 }
+
+.tabber_content{
+  max-width:1200
+}
