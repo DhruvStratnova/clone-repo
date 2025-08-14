@@ -573,8 +573,8 @@ justify-content: center;
 /* Style the tab content */
 .listing-description-accordion .tabcontent {
   padding: 6px 12px;
-  border: 1px solid #ccc;
-  border-top: none;
+  /* border: 1px solid #ccc; */
+  /* border-top: none; */
   display: none; /* This is essential for hiding inactive content */
 }
 
