@@ -136,13 +136,7 @@
         outline: none;
       }
     </style>
-   
-    <div class="{% if section.settings.filter_type == 'vertical' %} facets-vertical page-width{% endif %}">
-      {{ 'component-facets.css' | asset_url | stylesheet_tag }}
-      <script src="{{ 'collection-filters.js' | asset_url }}" defer="defer"></script>
-      <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
-      {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
-         <div id="custom-filters" class="custom-filters">
+    <div id="custom-filters" class="custom-filters">
       <form id="productFilterForm">
         <label for="filter-gemstone">Gemstone</label>
         <select name="gemstone" id="filter-gemstone">
@@ -170,6 +164,11 @@
         </select>
       </form>
     </div>
+    <div class="{% if section.settings.filter_type == 'vertical' %} facets-vertical page-width{% endif %}">
+      {{ 'component-facets.css' | asset_url | stylesheet_tag }}
+      <script src="{{ 'collection-filters.js' | asset_url }}" defer="defer"></script>
+      <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
+      {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
         <aside
           aria-labelledby="verticalTitle"
           class="facets-wrapper{% unless section.settings.enable_filtering %} facets-wrapper--no-filters{% endunless %}{% if section.settings.filter_type != 'vertical' %} page-width{% endif %}"
