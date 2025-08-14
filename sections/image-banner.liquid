@@ -2,29 +2,29 @@
 
 {%- if section.settings.image_height == 'adapt' and section.settings.image != blank -%}
   {%- style -%}
-    @media screen and (max-width: 749px) {
-      #Banner-{{ section.id }}::before,
-      #Banner-{{ section.id }} .banner__media::before,
-      #Banner-{{ section.id }}:not(.banner--mobile-bottom) .banner__content::before {
-        padding-bottom: {{ 1 | divided_by: section.settings.image.aspect_ratio | times: 100 }}%;
-        content: '';
-        display: block;
+      @media screen and (max-width: 749px) {
+        #Banner-{{ section.id }}::before,
+        #Banner-{{ section.id }} .banner__media::before,
+        #Banner-{{ section.id }}:not(.banner--mobile-bottom) .banner__content::before {
+          padding-bottom: {{ 1 | divided_by: section.settings.image.aspect_ratio | times: 100 }}%;
+          content: '';
+          display: block;
+        }
       }
-    }
 
-    @media screen and (min-width: 750px) {
-      #Banner-{{ section.id }}::before,
-      #Banner-{{ section.id }} .banner__media::before {
-        padding-bottom: {{ 1 | divided_by: section.settings.image.aspect_ratio | times: 100 }}%;
-        content: '';
-        display: block;
+      @media screen and (min-width: 750px) {
+        #Banner-{{ section.id }}::before,
+        #Banner-{{ section.id }} .banner__media::before {
+          padding-bottom: {{ 1 | divided_by: section.settings.image.aspect_ratio | times: 100 }}%;
+          content: '';
+          display: block;
+        }
+      }
+      @media screen and (max-width: 749px) {
+      .collection-hero--with-image .collection-hero__inner {
+        padding-bottom: calc({{ settings.media_shadow_vertical_offset | at_least: 0 }}px + 2rem);
       }
     }
-    @media screen and (max-width: 749px) {
-    .collection-hero--with-image .collection-hero__inner {
-      padding-bottom: calc({{ settings.media_shadow_vertical_offset | at_least: 0 }}px + 2rem);
-    }
-  }
   {%- endstyle -%}
 {%- endif -%}
 
@@ -173,129 +173,131 @@
   {% endcomment %}
 </div>
 
-{% comment %} <div class="product__accordion accordion quick-add-hidden" {{ product.category.name }}>
+{% comment %}
+  <div class="product__accordion accordion quick-add-hidden" {{ product.category.name }}>
 
-  <details id="Details-Description-{{ section.id }}">
-    <summary>
-      <div class="summary__title">
-        <h2 class="h4 accordion__title">Description</h2>
+    <details id="Details-Description-{{ section.id }}">
+      <summary>
+        <div class="summary__title">
+          <h2 class="h4 accordion__title">Description</h2>
+        </div>
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          style="transform: rotate(0deg); transition: transform 0.3s;"
+        >
+          <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </summary>
+      <div class="accordion__content rte" id="ProductAccordion-Description-{{ section.id }}">
+        <div class="product__description rte quick-add-hidden">
+          lkjsadfgvlasdrfglahnerygsdthgsaerdjhyoipghserodythghouesrtdfo;guhnrtolungoiutrnopinthouintrsoitjhhgpijsopdtarhyjsarjtdhopifgjbspijdtghpisjrpidtjhpisrjtdpihjsrpijdp'ihjeouitjhthp
+          ij
+          {% comment %} {{ product.description }} {% endcomment %}
+        </div>
       </div>
-      <svg
-        width="16"
-        height="16"
-        viewBox="0 0 24 24"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        style="transform: rotate(0deg); transition: transform 0.3s;"
-      >
-        <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </summary>
-    <div class="accordion__content rte" id="ProductAccordion-Description-{{ section.id }}">
-      <div class="product__description rte quick-add-hidden">
-        lkjsadfgvlasdrfglahnerygsdthgsaerdjhyoipghserodythghouesrtdfo;guhnrtolungoiutrnopinthouintrsoitjhhgpijsopdtarhyjsarjtdhopifgjbspijdtghpisjrpidtjhpisrjtdpihjsrpijdp'ihjeouitjhthp
-        ij
-        {% comment %} {{ product.description }} {% endcomment %}
+    </details>
+    <details id="Details-Description-{{ section.id }}">
+      <summary>
+        <div class="summary__title">
+          <h2 class="h4 accordion__title">Health</h2>
+        </div>
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          style="transform: rotate(0deg); transition: transform 0.3s;"
+        >
+          <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </summary>
+      <div class="accordion__content rte" id="ProductAccordion-Description-{{ section.id }}">
+        <div class="product__description rte quick-add-hidden">
+          lkjsadfgvlasdrfglahnerygsdthgsaerdjhyoipghserodythghouesrtdfo;guhnrtolungoiutrnopinthouintrsoitjhhgpijsopdtarhyjsarjtdhopifgjbspijdtghpisjrpidtjhpisrjtdpihjsrpijdp'ihjeouitjhthp
+          ij
+          {% comment %} {{ product.description }} {% endcomment %}
+        </div>
       </div>
-    </div>
-  </details>
-  <details id="Details-Description-{{ section.id }}">
-    <summary>
-      <div class="summary__title">
-        <h2 class="h4 accordion__title">Health</h2>
+    </details>
+    <details id="Details-Description-{{ section.id }}">
+      <summary>
+        <div class="summary__title">
+          <h2 class="h4 accordion__title">DMoney</h2>
+        </div>
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          style="transform: rotate(0deg); transition: transform 0.3s;"
+        >
+          <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </summary>
+      <div class="accordion__content rte" id="ProductAccordion-Description-{{ section.id }}">
+        <div class="product__description rte quick-add-hidden">
+          lkjsadfgvlasdrfglahnerygsdthgsaerdjhyoipghserodythghouesrtdfo;guhnrtolungoiutrnopinthouintrsoitjhhgpijsopdtarhyjsarjtdhopifgjbspijdtghpisjrpidtjhpisrjtdpihjsrpijdp'ihjeouitjhthp
+          ij
+          {% comment %} {{ product.description }} {% endcomment %}
+        </div>
       </div>
-      <svg
-        width="16"
-        height="16"
-        viewBox="0 0 24 24"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        style="transform: rotate(0deg); transition: transform 0.3s;"
-      >
-        <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </summary>
-    <div class="accordion__content rte" id="ProductAccordion-Description-{{ section.id }}">
-      <div class="product__description rte quick-add-hidden">
-        lkjsadfgvlasdrfglahnerygsdthgsaerdjhyoipghserodythghouesrtdfo;guhnrtolungoiutrnopinthouintrsoitjhhgpijsopdtarhyjsarjtdhopifgjbspijdtghpisjrpidtjhpisrjtdpihjsrpijdp'ihjeouitjhthp
-        ij
-        {% comment %} {{ product.description }} {% endcomment %}
+    </details>
+    <details id="Details-Description-{{ section.id }}">
+      <summary>
+        <div class="summary__title">
+          <h2 class="h4 accordion__title">Benefits</h2>
+        </div>
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          style="transform: rotate(0deg); transition: transform 0.3s;"
+        >
+          <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </summary>
+      <div class="accordion__content rte" id="ProductAccordion-Description-{{ section.id }}">
+        <div class="product__description rte quick-add-hidden">
+          lkjsadfgvlasdrfglahnerygsdthgsaerdjhyoipghserodythghouesrtdfo;guhnrtolungoiutrnopinthouintrsoitjhhgpijsopdtarhyjsarjtdhopifgjbspijdtghpisjrpidtjhpisrjtdpihjsrpijdp'ihjeouitjhthp
+          ij
+          {% comment %} {{ product.description }} {% endcomment %}
+        </div>
       </div>
-    </div>
-  </details>
-  <details id="Details-Description-{{ section.id }}">
-    <summary>
-      <div class="summary__title">
-        <h2 class="h4 accordion__title">DMoney</h2>
+    </details>
+    <details id="Details-Description-{{ section.id }}">
+      <summary>
+        <div class="summary__title">
+          <h2 class="h4 accordion__title">Style</h2>
+        </div>
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          style="transform: rotate(0deg); transition: transform 0.3s;"
+        >
+          <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </summary>
+      <div class="accordion__content rte" id="ProductAccordion-Description-{{ section.id }}">
+        <div class="product__description rte quick-add-hidden">
+          lkjsadfgvlasdrfglahnerygsdthgsaerdjhyoipghserodythghouesrtdfo;guhnrtolungoiutrnopinthouintrsoitjhhgpijsopdtarhyjsarjtdhopifgjbspijdtghpisjrpidtjhpisrjtdpihjsrpijdp'ihjeouitjhthp
+          ij
+          {% comment %} {{ product.description }} {% endcomment %}
+        </div>
       </div>
-      <svg
-        width="16"
-        height="16"
-        viewBox="0 0 24 24"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        style="transform: rotate(0deg); transition: transform 0.3s;"
-      >
-        <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </summary>
-    <div class="accordion__content rte" id="ProductAccordion-Description-{{ section.id }}">
-      <div class="product__description rte quick-add-hidden">
-        lkjsadfgvlasdrfglahnerygsdthgsaerdjhyoipghserodythghouesrtdfo;guhnrtolungoiutrnopinthouintrsoitjhhgpijsopdtarhyjsarjtdhopifgjbspijdtghpisjrpidtjhpisrjtdpihjsrpijdp'ihjeouitjhthp
-        ij
-        {% comment %} {{ product.description }} {% endcomment %}
-      </div>
-    </div>
-  </details>
-  <details id="Details-Description-{{ section.id }}">
-    <summary>
-      <div class="summary__title">
-        <h2 class="h4 accordion__title">Benefits</h2>
-      </div>
-      <svg
-        width="16"
-        height="16"
-        viewBox="0 0 24 24"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        style="transform: rotate(0deg); transition: transform 0.3s;"
-      >
-        <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </summary>
-    <div class="accordion__content rte" id="ProductAccordion-Description-{{ section.id }}">
-      <div class="product__description rte quick-add-hidden">
-        lkjsadfgvlasdrfglahnerygsdthgsaerdjhyoipghserodythghouesrtdfo;guhnrtolungoiutrnopinthouintrsoitjhhgpijsopdtarhyjsarjtdhopifgjbspijdtghpisjrpidtjhpisrjtdpihjsrpijdp'ihjeouitjhthp
-        ij
-        {% comment %} {{ product.description }} {% endcomment %}
-      </div>
-    </div>
-  </details>
-  <details id="Details-Description-{{ section.id }}">
-    <summary>
-      <div class="summary__title">
-        <h2 class="h4 accordion__title">Style</h2>
-      </div>
-      <svg
-        width="16"
-        height="16"
-        viewBox="0 0 24 24"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        style="transform: rotate(0deg); transition: transform 0.3s;"
-      >
-        <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </summary>
-    <div class="accordion__content rte" id="ProductAccordion-Description-{{ section.id }}">
-      <div class="product__description rte quick-add-hidden">
-        lkjsadfgvlasdrfglahnerygsdthgsaerdjhyoipghserodythghouesrtdfo;guhnrtolungoiutrnopinthouintrsoitjhhgpijsopdtarhyjsarjtdhopifgjbspijdtghpisjrpidtjhpisrjtdpihjsrpijdp'ihjeouitjhthp
-        ij
-        {% comment %} {{ product.description }} {% endcomment %}
-      </div>
-    </div>
-  </details>
-</div> {% endcomment %}
+    </details>
+  </div>
+{% endcomment %}
 
 {% comment %}
   <div class="product__accordion-container">
@@ -547,7 +549,6 @@
   </div>
 {% endcomment %}
 
-{% comment %} 
 <div class="listing-description-accordion">
   <div class="tabber_coll">
     <div class="tab">
@@ -570,11 +571,24 @@
       <h2>How to Clean and Care for Blue Sapphire</h2>
       <p>To maintain the brilliance of your Blue Sapphire and ensure its longevity, proper care is essential:</p>
       <ul>
-        <li>**Daily Cleaning:** Soak your blue sapphire in a mixture of mild dish soap and warm water for 15-20 minutes. Use a soft brush to gently clean the stone, particularly around the setting, then rinse thoroughly and pat dry with a soft cloth.</li>
-        <li>**Avoid Chemicals:** Keep your blue sapphire stone away from harsh chemicals such as bleach, chlorine, and detergents, as these can damage the stone or its setting.</li>
-        <li>**Storage:** Store your blue sapphire separately in a soft pouch or a dedicated compartment of a jewelry box to avoid scratches from harder stones like diamonds.</li>
+        <li>
+          **Daily Cleaning:** Soak your blue sapphire in a mixture of mild dish soap and warm water for 15-20 minutes.
+          Use a soft brush to gently clean the stone, particularly around the setting, then rinse thoroughly and pat dry
+          with a soft cloth.
+        </li>
+        <li>
+          **Avoid Chemicals:** Keep your blue sapphire stone away from harsh chemicals such as bleach, chlorine, and
+          detergents, as these can damage the stone or its setting.
+        </li>
+        <li>
+          **Storage:** Store your blue sapphire separately in a soft pouch or a dedicated compartment of a jewelry box
+          to avoid scratches from harder stones like diamonds.
+        </li>
         <li>**Avoid Heat:** Prolonged exposure to direct sunlight or extreme heat can fade the sapphire’s color.</li>
-        <li>**Professional Cleaning:** Have your blue sapphire professionally cleaned and inspected by a jeweler annually to maintain its shine and ensure that the setting remains secure.</li>
+        <li>
+          **Professional Cleaning:** Have your blue sapphire professionally cleaned and inspected by a jeweler annually
+          to maintain its shine and ensure that the setting remains secure.
+        </li>
       </ul>
     </div>
     <div id="Benefits" class="tabcontent">
@@ -600,38 +614,36 @@
   </div>
 </div>
 
-
 <script>
- function tabAccordion(evt, cityName) {
-  var i, tabcontent, tablinks;
+  function tabAccordion(evt, cityName) {
+    var i, tabcontent, tablinks;
 
-  // Check if the clicked button is already active
-  if (evt.currentTarget.classList.contains("active")) {
-    // If it is, remove the 'active' class and hide the content
-    evt.currentTarget.classList.remove("active");
-    document.getElementById(cityName).style.display = "none";
-  } else {
-    // If it's not active, proceed with the standard tab functionality
+    // Check if the clicked button is already active
+    if (evt.currentTarget.classList.contains('active')) {
+      // If it is, remove the 'active' class and hide the content
+      evt.currentTarget.classList.remove('active');
+      document.getElementById(cityName).style.display = 'none';
+    } else {
+      // If it's not active, proceed with the standard tab functionality
 
-    // Get all elements with class="tabcontent" and hide them
-    tabcontent = document.getElementsByClassName("tabcontent");
-    for (i = 0; i < tabcontent.length; i++) {
-      tabcontent[i].style.display = "none";
+      // Get all elements with class="tabcontent" and hide them
+      tabcontent = document.getElementsByClassName('tabcontent');
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = 'none';
+      }
+
+      // Get all elements with class="tablinks" and remove the class "active"
+      tablinks = document.getElementsByClassName('tablinks');
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(' active', '');
+      }
+
+      // Show the current tab, and add an "active" class to the button that opened the tab
+      document.getElementById(cityName).style.display = 'block';
+      evt.currentTarget.className += ' active';
     }
-
-    // Get all elements with class="tablinks" and remove the class "active"
-    tablinks = document.getElementsByClassName("tablinks");
-    for (i = 0; i < tablinks.length; i++) {
-      tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
-
-    // Show the current tab, and add an "active" class to the button that opened the tab
-    document.getElementById(cityName).style.display = "block";
-    evt.currentTarget.className += " active";
   }
-}
 </script>
- {% endcomment %}
 
 {% schema %}
 {
