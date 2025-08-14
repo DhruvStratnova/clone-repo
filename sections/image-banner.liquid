@@ -168,70 +168,7 @@
   {% endcomment %}
 </div>
 
-<div class="product__accordion accordion quick-add-hidden" {{ product.category.name }}>
-
-<div class="header-row-dropdown-accordion">
-<summary>
-      <div class="summary__title">
-        <h2 class="h4 accordion__title">Description</h2>
-      </div>
-      <svg
-        width="16"
-        height="16"
-        viewBox="0 0 24 24"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        style="transform: rotate(0deg); transition: transform 0.3s;"
-      >
-        <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </summary>
-<summary>
-      <div class="summary__title">
-        <h2 class="h4 accordion__title">Health</h2>
-      </div>
-      <svg
-        width="16"
-        height="16"
-        viewBox="0 0 24 24"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        style="transform: rotate(0deg); transition: transform 0.3s;"
-      >
-        <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </summary>
-<summary>
-      <div class="summary__title">
-        <h2 class="h4 accordion__title">DMoney</h2>
-      </div>
-      <svg
-        width="16"
-        height="16"
-        viewBox="0 0 24 24"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        style="transform: rotate(0deg); transition: transform 0.3s;"
-      >
-        <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </summary>
-<summary>
-      <div class="summary__title">
-        <h2 class="h4 accordion__title">Benefits</h2>
-      </div>
-      <svg
-        width="16"
-        height="16"
-        viewBox="0 0 24 24"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        style="transform: rotate(0deg); transition: transform 0.3s;"
-      >
-        <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </summary>
-</div>
+{% comment %} <div class="product__accordion accordion quick-add-hidden" {{ product.category.name }}>
 
   <details id="Details-Description-{{ section.id }}">
     <summary>
@@ -353,7 +290,7 @@
       </div>
     </div>
   </details>
-</div>
+</div> {% endcomment %}
 
 {% comment %}
   <div class="product__accordion-container">
@@ -604,6 +541,34 @@
     </div>
   </div>
 {% endcomment %}
+
+
+<div class="color-scheme color-scheme--scheme-1 color-scheme--bg-85a6149763f18c09ad19b58dcb5021f7">
+  <div class="tabber_coll">
+    <div class="tab">
+      <button class="tablinks" onclick="openCity(event, 'About')">About</button>
+      <button class="tablinks active" onclick="openCity(event, 'Clean &amp; Care')">Clean &amp; Care</button>
+      <button class="tablinks" onclick="openCity(event, 'Who Should Wear')">Who Should Wear</button>
+      <button class="tablinks" onclick="openCity(event, 'Benefits')">Benefits</button>
+      <button class="tablinks" onclick="openCity(event, 'Types')">Types</button>
+      <button class="tablinks" onclick="openCity(event, 'Quality &amp; Price')">Quality &amp; Price</button>
+      <button class="tablinks" onclick="openCity(event, 'Buyer Beware')">Buyer Beware</button>
+      <button class="tablinks" onclick="openCity(event, 'FAQs')">FAQs</button>
+    </div>
+  </div>
+
+  <div class="tabber_content">
+    <div id="About" class="tabcontent">...</div>
+    <div id="Clean &amp; Care" class="tabcontent" style="display: block;">...</div>
+    <div id="Who Should Wear" class="tabcontent">...</div>
+    <div id="Benefits" class="tabcontent">...</div>
+    <div id="Types" class="tabcontent">...</div>
+    <div id="Quality &amp; Price" class="tabcontent">...</div>
+    <div id="Buyer Beware" class="tabcontent">...</div>
+    <div id="FAQs" class="tabcontent">...</div>
+  </div>
+</div>
+
 
 {% schema %}
 {
