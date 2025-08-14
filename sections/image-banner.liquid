@@ -186,7 +186,10 @@
       </svg>
     </summary>
     <div class="accordion__content rte" id="ProductAccordion-Description-{{ section.id }}">
-      <div class="product__description rte quick-add-hidden">{{ product.description }}</div>
+      <div class="product__description rte quick-add-hidden">
+      
+        {% comment %} {{ product.description }} {% endcomment %}
+      </div>
     </div>
   </details>
 </div>
