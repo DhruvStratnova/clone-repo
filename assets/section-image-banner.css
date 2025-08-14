@@ -518,7 +518,7 @@ justify-content: center;
 .accordion-title:after {
     content: "";
     display: inline-block;
-    background-image: url(caret-new.svg);
+    background-image: url();
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
