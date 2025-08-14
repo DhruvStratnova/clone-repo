@@ -495,7 +495,7 @@
 
 
 .listing-colapsible-description{
-display
+display:flex;
 
 
 }
