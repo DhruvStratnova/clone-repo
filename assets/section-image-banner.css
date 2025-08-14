@@ -594,6 +594,7 @@ justify-content: center;
 }
 
 .tabber_content{
-  max-width:1200px;
-  margin: calc(4rem + var(--page-width-margin)) 0 calc(4rem + var(--page-width-margin));
+  /* max-width:1200px; */
+  /* margin: calc(4rem + var(--page-width-margin)) 0 calc(4rem + var(--page-width-margin)); */
+  align-self
 }
