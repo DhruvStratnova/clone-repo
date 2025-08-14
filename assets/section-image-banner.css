@@ -515,7 +515,7 @@ justify-content: center;
 } */
 
 
-.accordion-title:after {
+/* .accordion-title:after {
     content: "";
     display: inline-block;
     background-image: url(http://www.w3.org/2000/svg);
@@ -527,15 +527,15 @@ justify-content: center;
     height: 16px;
     margin-left: 3px;
     margin-top: 4px;
-}
+} */
 
-.content-panel {
+/* .content-panel {
   display: none;
   width: 100%;
-}
+} */
 
-.content-panel.active {
+/* .content-panel.active {
   display: block;
   /* Set your content styles here, and ensure it takes full width */
-}
+} */
 
