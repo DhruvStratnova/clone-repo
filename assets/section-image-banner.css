@@ -500,12 +500,12 @@ gap:2rem;
 justify-content: center;
 } */
 
-/* 
-.accordion-header-row {
+
+.header-row-dropdown-accordio {
   display: flex;
   justify-content: space-between;
   /* Add other styling for spacing and appearance */
-} */
+}
 
 /* .accordion-title {
   padding: 10px;
