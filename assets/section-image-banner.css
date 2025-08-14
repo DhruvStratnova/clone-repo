@@ -515,6 +515,20 @@ justify-content: center;
 }
 
 
+.accordion-title:after {
+    content: "";
+    display: inline-block;
+    background-image: url(caret-new.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    margin-left: 3px;
+    margin-top: 4px;
+}
+
 .content-panel {
   display: none;
   width: 100%;
