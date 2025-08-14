@@ -286,10 +286,11 @@ input, select {
   list-style: none;
   padding: 0;
   margin: 0;
- list-style: none;
+  list-style: none;
   color: #666;
   font-size: 16px;
   line-height: 1.6;
+  text-align: left
 }
 
 .gemstone-specs li {
