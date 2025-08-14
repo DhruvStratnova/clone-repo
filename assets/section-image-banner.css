@@ -587,3 +587,8 @@ justify-content: center;
   display: flex;
   flex-wrap: wrap;
 }
+
+.tabber_coll{
+  display:flex;
+  
+}
