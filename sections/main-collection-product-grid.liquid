@@ -183,7 +183,34 @@
             filter_type: section.settings.filter_type,
             paginate: paginate
           %}
-          
+              <div id="custom-filters" class="custom-filters">
+      <form id="productFilterForm">
+        <label for="filter-gemstone">Gemstone</label>
+        <select name="gemstone" id="filter-gemstone">
+          <option value="">All Gemstones</option>
+          {% assign gemstones = "diamond,ruby,sapphire,emerald,amethyst,pearl,garnet,opal,aquamarine,topaz,tourmaline,jade" | split: "," %}
+          {% for gemstone in gemstones %}
+            <option value="{{ gemstone | capitalize }}">{{ gemstone | capitalize }}</option>
+          {% endfor %}
+        </select>
+        <label for="filter-planet">Planet</label>
+        <select name="planet" id="filter-planet">
+          <option value="">All Planets</option>
+          {% assign planets = "Sun,Moon,Mercury,Venus,Mars,Jupiter,Saturn,Rahu,Ketu" | split: "," %}
+          {% for planet in planets %}
+            <option value="{{ planet }}">{{ planet }}</option>
+          {% endfor %}
+        </select>
+        <label for="filter-zodiac">Zodiac</label>
+        <select name="zodiac" id="filter-zodiac">
+          <option value="">All Zodiacs</option>
+          {% assign zodiacs = "Aries,Taurus,Gemini,Cancer,Leo,Virgo,Libra,Scorpio,Sagittarius,Capricorn,Aquarius,Pisces" | split: "," %}
+          {% for zodiac in zodiacs %}
+            <option value="{{ zodiac }}">{{ zodiac }}</option>
+          {% endfor %}
+        </select>
+      </form>
+    </div>
         </aside>
       {%- endif -%}
 
