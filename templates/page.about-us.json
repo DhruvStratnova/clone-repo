@@ -38,7 +38,7 @@
         "button_LVRnLh": {
           "type": "button",
           "settings": {
-            "button_label": "Button label",
+            "button_label": "",
             "button_link": "",
             "button_style_secondary": false
           }
@@ -51,13 +51,12 @@
       ],
       "name": "t:sections.image-with-text.presets.name",
       "settings": {
-        "image": "shopify://shop_images/images.jpg",
         "height": "small",
         "desktop_image_width": "small",
         "layout": "text_first",
         "image_behavior": "zoom-in",
         "content_layout": "no-overlap",
-        "desktop_content_position": "top",
+        "desktop_content_position": "bottom",
         "desktop_content_alignment": "left",
         "mobile_content_alignment": "left",
         "section_color_scheme": "",
