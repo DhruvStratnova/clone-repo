@@ -86,6 +86,54 @@
         "padding_bottom": 36
       }
     },
+    "image_with_text_GGVXqL": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_b7m6wk": {
+          "type": "heading",
+          "settings": {
+            "heading": "Gemstones & You",
+            "heading_size": "h1"
+          }
+        },
+        "text_bkKARH": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Through the sacred lens of Vedic astrology, we come to realize that the divine rhythms of the universe are deeply intertwined with the celestial movements of the planets.</p><p>These sacred planets—the radiant Sun, gentle Moon, fiery Mars, wise Jupiter, graceful Venus, swift Mercury, and steadfast Saturn—along with the mystical shadow forces Rahu and Ketu, guide the course of our earthly journey.</p><p>Gemstones, created by divine will over countless ages, are imbued with the pure energies of these cosmic beings. As sacred vessels of planetary grace, they help harmonize and align our lives with the blessings of the universe, offering protection, strength, and spiritual upliftment.</p>",
+            "text_style": "body"
+          }
+        },
+        "button_FGMQRB": {
+          "type": "button",
+          "settings": {
+            "button_label": "Learn More",
+            "button_link": "shopify://pages/about-us",
+            "button_style_secondary": true
+          }
+        }
+      },
+      "block_order": [
+        "heading_b7m6wk",
+        "text_bkKARH",
+        "button_FGMQRB"
+      ],
+      "name": "t:sections.image-with-text.presets.name",
+      "settings": {
+        "image": "shopify://shop_images/sushil_kanya.jpg",
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "layout": "image_first",
+        "image_behavior": "none",
+        "content_layout": "no-overlap",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "mobile_content_alignment": "left",
+        "section_color_scheme": "",
+        "color_scheme": "",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
     "collapsible_content_EtJFbL": {
       "type": "collapsible-content",
       "blocks": {
@@ -153,6 +201,7 @@
     "image_banner_zpGQzQ",
     "banner",
     "product-grid",
+    "image_with_text_GGVXqL",
     "collapsible_content_EtJFbL"
   ]
 }
