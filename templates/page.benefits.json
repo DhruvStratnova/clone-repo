@@ -49,6 +49,7 @@
         "text_7DA68E",
         "button_C778xt"
       ],
+      "disabled": true,
       "name": "t:sections.image-with-text.presets.name",
       "settings": {
         "image": "shopify://shop_images/image_184.png",
@@ -65,10 +66,54 @@
         "padding_top": 36,
         "padding_bottom": 36
       }
+    },
+    "rich_text_NBAKU6": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_kjai78": {
+          "type": "heading",
+          "settings": {
+            "heading": "Benefits",
+            "heading_size": "h1"
+          }
+        },
+        "text_wB4JQw": {
+          "type": "text",
+          "settings": {
+            "text": "<p><a href=\"/products/dhan-yog-bracelet\" title=\"Dhan Yog Bracelet\">Dhan Yog Bracelets Benefits<br/></a><a href=\"/products/7-mukhi-rudraksha\" title=\"7 Mukhi Rudraksha\">7 Mukhi Rudraksha Benefits<br/></a><a href=\"/products/tigers-eye\" title=\"Tiger's Eye\">Tiger Eye Stone Benefits<br/></a><a href=\"/products/5-mukhi-rudraksha\" title=\"5 Mukhi Rudraksha\">5 Mukhi Rudraksha Benefits</a></p>"
+          }
+        },
+        "button_6p937N": {
+          "type": "button",
+          "settings": {
+            "button_label": "",
+            "button_link": "",
+            "button_style_secondary": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_kjai78",
+        "text_wB4JQw",
+        "button_6p937N"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
     }
   },
   "order": [
     "main",
-    "image_with_text_r9XRxy"
+    "image_with_text_r9XRxy",
+    "rich_text_NBAKU6"
   ]
 }
