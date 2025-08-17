@@ -35,7 +35,7 @@
 }
 
 .calculator-tabs .tab {
-  background: rgb(206, 101, 62);
+  background: #824920;
   border: none;
   color: #fff;
   padding: 10px 20px;
@@ -45,7 +45,7 @@
 }
 
 .calculator-tabs .tab.active {
-  background: #824920;
+  background:rgb(206, 101, 62);
 }
 
 .calculator-personalized{
