@@ -38,7 +38,7 @@
   aria-label="{{ section.settings.accessibility_info | escape }}"
 >
   {%- if section.settings.auto_rotate and section.blocks.size > 1 -%}
-    {% comment %} <div class="slideshow__controls slideshow__controls--top slider-buttons{% if section.settings.show_text_below %} slideshow__controls--border-radius-mobile{% endif %}">
+    <div class="slideshow__controls slideshow__controls--top slider-buttons{% if section.settings.show_text_below %} slideshow__controls--border-radius-mobile{% endif %}">
       <button
         type="button"
         class="slider-button slider-button--prev"
@@ -100,7 +100,7 @@
           </span>
         </button>
       {%- endif -%}
-    </div> {% endcomment %}
+    </div>
   {%- endif -%}
 
 {% comment %} Banner Images {% endcomment %}
