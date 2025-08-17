@@ -909,7 +909,7 @@
                                 <ul class="list-unstyled" role="list">
                                   {%- for product in recommendations.products
                                     limit: block.settings.products_per_page
-                                    offset: continue
+                                    offset: forloop.index0 | times: block.settings.products_per_page
                                   -%}
                                     <li>
                                       {%- if block.settings.enable_quick_add -%}
@@ -1055,11 +1055,7 @@
     {%- endif -%}
 
     {%- liquid
-      if product.selected_or_first_available_variant.featured_media
-        assign seo_media = product.selected_or_first_available_variant.featured_media
-      else
-        assign seo_media = product.featured_media
-      endif
+      # Removed unused assignment to seo_media
     -%}
 
     <script type="application/ld+json">
