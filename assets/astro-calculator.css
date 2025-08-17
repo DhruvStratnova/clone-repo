@@ -14,7 +14,7 @@
 .calculator-container {
   max-width: 600px;
   margin: auto;
-  background:rgba(79, 55, 110, 0.63);
+  background:rgba(79, 55, 110, 0.4);
   padding: 30px;
   border-radius: 12px;
 }
