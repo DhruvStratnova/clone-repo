@@ -71,7 +71,7 @@ input, select {
   color: #fff;
   padding: 12px 25px;
   border: none;
-  border-radius: 6px;
+  border-radius: 0px;
   font-size: 1.5rem;
   cursor: pointer;
 }
