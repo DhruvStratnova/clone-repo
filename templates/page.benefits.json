@@ -109,11 +109,55 @@
         "padding_top": 40,
         "padding_bottom": 52
       }
+    },
+    "rich_text_dMi67q": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_7WyQTn": {
+          "type": "heading",
+          "settings": {
+            "heading": "Why To Choose Astroaura",
+            "heading_size": "h1"
+          }
+        },
+        "text_fMM8zK": {
+          "type": "text",
+          "settings": {
+            "text": "<p><br/>At <strong>AstroAura</strong>, we don’t just interpret the stars—we help you understand your inner universe. Every reading, aura insight, and guidance session is personalized to your unique energy, blending ancient astrology with modern intuition. We empower you to make confident decisions, embrace your potential, and navigate life with clarity and purpose. With a holistic approach that connects mind, body, and soul, AstroAura transforms cosmic wisdom into real-life guidance, helping you shine from within. Plus, enjoy <strong>easy 7-day returns</strong>, products that are <strong>ethically sourced</strong>, <strong>aura-synchronized</strong>, deliver <strong>10× benefits</strong>, and come with <strong>108 hours of mantra charging</strong> to amplify your energy.</p>"
+          }
+        },
+        "button_QpzrHi": {
+          "type": "button",
+          "settings": {
+            "button_label": "",
+            "button_link": "",
+            "button_style_secondary": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_7WyQTn",
+        "text_fMM8zK",
+        "button_QpzrHi"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
     }
   },
   "order": [
     "main",
     "image_with_text_r9XRxy",
-    "rich_text_NBAKU6"
+    "rich_text_NBAKU6",
+    "rich_text_dMi67q"
   ]
 }
