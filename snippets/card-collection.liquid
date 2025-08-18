@@ -104,6 +104,14 @@
                 {%- endif %}
               </a>
             </h3>
+            <div class="card-description-purpose">
+            {% assign purpose_pill_string = card_product.metafields.custom.key_feature
+            | replace: '[', ''
+            | replace: ']', ''
+            | replace: '"', ''
+          %}
+            <p>{{ purpose_pill_string }}</p>
+          </div>
             {%- if card_collection.description != blank -%}
               <p class="card__caption">
                 {{- card_collection.description | strip_html | truncatewords: 12 -}}
