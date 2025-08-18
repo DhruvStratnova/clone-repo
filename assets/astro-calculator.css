@@ -363,3 +363,10 @@ input, select {
   color: #4b5563;
   line-height: 1.4;
 }
+
+
+
+.calculator-form-containter{
+max-width:600
+
+}
