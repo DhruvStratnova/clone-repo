@@ -594,6 +594,7 @@ justify-content: center;
   display:flex;
   justify-content:space-between;
   align-content:center;
+  flex-wrap:
   gap: 6rem;
   /* background: linear-gradient(to bottom, #d7f9f1, #f9ead7); */
 
