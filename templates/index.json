@@ -531,9 +531,9 @@
         "color_scheme": "",
         "show_view_all": false,
         "columns_mobile": "1",
-        "swipe_on_mobile": false,
-        "padding_top": 16,
-        "padding_bottom": 16
+        "swipe_on_mobile": true,
+        "padding_top": 12,
+        "padding_bottom": 12
       }
     },
     "1754756233592eb8c3": {
