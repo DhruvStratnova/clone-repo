@@ -18,102 +18,6 @@
         "padding_bottom": 0
       }
     },
-    "image_with_text_r9XRxy": {
-      "type": "image-with-text",
-      "blocks": {
-        "heading_pPfrRq": {
-          "type": "heading",
-          "settings": {
-            "heading": "About Us",
-            "heading_size": "h1"
-          }
-        },
-        "text_7DA68E": {
-          "type": "text",
-          "settings": {
-            "text": "<p><br/>At <strong>AstroAura</strong>, we believe the universe is within us, guiding our choices and energies. We help individuals connect with their unique cosmic blueprint through astrology, intuition, and personalized insights. Our mission is to empower you to understand your aura, navigate life’s challenges, and embrace opportunities in love, career, and personal growth. Through readings, aura analysis, and practical guidance, we provide tools to align with your true potential. Step into your cosmic flow, understand your energies, and transform your life with <strong>AstroAura</strong>.<br/><br/></p>",
-            "text_style": "body"
-          }
-        },
-        "button_C778xt": {
-          "type": "button",
-          "settings": {
-            "button_label": "",
-            "button_link": "",
-            "button_style_secondary": false
-          }
-        }
-      },
-      "block_order": [
-        "heading_pPfrRq",
-        "text_7DA68E",
-        "button_C778xt"
-      ],
-      "disabled": true,
-      "name": "t:sections.image-with-text.presets.name",
-      "settings": {
-        "image": "shopify://shop_images/image_184.png",
-        "height": "small",
-        "desktop_image_width": "medium",
-        "layout": "text_first",
-        "image_behavior": "none",
-        "content_layout": "no-overlap",
-        "desktop_content_position": "top",
-        "desktop_content_alignment": "left",
-        "mobile_content_alignment": "left",
-        "section_color_scheme": "",
-        "color_scheme": "",
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
-    "image_with_text_yPAnm4": {
-      "type": "image-with-text",
-      "blocks": {
-        "heading_ALkJwA": {
-          "type": "heading",
-          "settings": {
-            "heading": "Why to choose AstoAura",
-            "heading_size": "h1"
-          }
-        },
-        "text_a4qMJL": {
-          "type": "text",
-          "settings": {
-            "text": "<p><br/>At <strong>AstroAura</strong>, we don’t just interpret the stars—we help you understand your inner universe. Every reading, aura insight, and guidance session is personalized to your unique energy, blending ancient astrology with modern intuition. We empower you to make confident decisions, embrace your potential, and navigate life with clarity and purpose. With a holistic approach that connects mind, body, and soul, AstroAura transforms cosmic wisdom into real-life guidance, helping you shine from within. Plus, enjoy <strong>easy 7-day returns</strong>, products that are <strong>ethically sourced</strong>, <strong>aura-synchronized</strong>, deliver <strong>10× benefits</strong>, and come with <strong>108 hours of mantra charging</strong> to amplify your energy.</p>",
-            "text_style": "body"
-          }
-        },
-        "button_YUkDnt": {
-          "type": "button",
-          "settings": {
-            "button_label": "",
-            "button_link": "",
-            "button_style_secondary": false
-          }
-        }
-      },
-      "block_order": [
-        "heading_ALkJwA",
-        "text_a4qMJL",
-        "button_YUkDnt"
-      ],
-      "name": "t:sections.image-with-text.presets.name",
-      "settings": {
-        "height": "adapt",
-        "desktop_image_width": "medium",
-        "layout": "text_first",
-        "image_behavior": "none",
-        "content_layout": "no-overlap",
-        "desktop_content_position": "top",
-        "desktop_content_alignment": "left",
-        "mobile_content_alignment": "left",
-        "section_color_scheme": "",
-        "color_scheme": "",
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
     "rich_text_gh68Bb": {
       "type": "rich-text",
       "blocks": {
@@ -160,8 +64,6 @@
   },
   "order": [
     "main",
-    "image_with_text_r9XRxy",
-    "image_with_text_yPAnm4",
     "rich_text_gh68Bb"
   ]
 }
