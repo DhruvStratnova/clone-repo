@@ -82,7 +82,6 @@
       </div>
 
       <div class="product__info-wrapper grid__item{% if settings.page_width > 1400 and section.settings.media_size == "small" %} product__info-wrapper--extra-padding{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-        
         {% comment %} Purpose pill at the top of product details page {% endcomment %}
         <div class="product-page-purpose-pill-container">
           {% assign purpose_pill_string = product.metafields.custom.key_feature
@@ -909,7 +908,7 @@
                                 <ul class="list-unstyled" role="list">
                                   {%- for product in recommendations.products
                                     limit: block.settings.products_per_page
-                                    offset: continue
+                                    offset: all_products
                                   -%}
                                     <li>
                                       {%- if block.settings.enable_quick_add -%}
@@ -1034,10 +1033,7 @@
             {{ block.settings.page.content }}
           </div>
 
-
- {% section 'product-faq' %}
-
-
+          {% section 'product-faq' %}
         </div>
       </modal-dialog>
     {%- endfor -%}
@@ -1065,10 +1061,6 @@
     <script type="application/ld+json">
       {{ product | structured_data }}
     </script>
-
-
-
-    
   </div>
 </product-info>
 
@@ -2667,7 +2659,3 @@
   ]
 }
 {% endschema %}
-
-
-
-
