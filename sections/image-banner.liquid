@@ -558,29 +558,69 @@
   <div class="tabber_coll">
     <div class="tab">
       <button class="tablinks" onclick="tabAccordion(event, 'About')">About
-        <svg class="caret-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+        <!-- Inline caret SVG -->
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            style="transform: rotate(0deg); transition: transform 0.3s;"
+          >
+            <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
       </button>
       <button class="tablinks active" onclick="tabAccordion(event, 'Clean &amp; Care')">Clean &amp; Care
-        <svg class="caret-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+        <!-- Inline caret SVG -->
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            style="transform: rotate(0deg); transition: transform 0.3s;"
+          >
+            <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
       </button>
       <button class="tablinks" onclick="tabAccordion(event, 'Benefits')">Benefits
-        <svg class="caret-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+        <!-- Inline caret SVG -->
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            style="transform: rotate(0deg); transition: transform 0.3s;"
+          >
+            <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
       </button>
       <button class="tablinks" onclick="tabAccordion(event, 'Types')">Types
-        <svg class="caret-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+        <!-- Inline caret SVG -->
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            style="transform: rotate(0deg); transition: transform 0.3s;"
+          >
+            <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
       </button>
       <button class="tablinks" onclick="tabAccordion(event, 'Quality &amp; Price')">Quality &amp; Price
-        <svg class="caret-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+        <!-- Inline caret SVG -->
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            style="transform: rotate(0deg); transition: transform 0.3s;"
+          >
+            <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
       </button>
       <button class="tablinks" onclick="tabAccordion(event, 'Buyer Beware')">Buyer Beware
         <!-- Inline caret SVG -->
@@ -672,47 +712,26 @@
       // If it is, remove the 'active' class and hide the content
       evt.currentTarget.classList.remove('active');
       document.getElementById(cityName).style.display = 'none';
-      // Animate caret SVG to collapsed (rotate 0deg)
-      var caret = evt.currentTarget.querySelector('.caret-svg');
-      if (caret) {
-        caret.style.transform = 'rotate(0deg)';
-        caret.style.transition = 'transform 0.3s';
-      }
     } else {
-      // Hide all tab contents
+      // If it's not active, proceed with the standard tab functionality
+
+      // Get all elements with class="tabcontent" and hide them
       tabcontent = document.getElementsByClassName('tabcontent');
       for (i = 0; i < tabcontent.length; i++) {
         tabcontent[i].style.display = 'none';
       }
-      // Remove active class and reset caret SVGs
+
+      // Get all elements with class="tablinks" and remove the class "active"
       tablinks = document.getElementsByClassName('tablinks');
       for (i = 0; i < tablinks.length; i++) {
         tablinks[i].className = tablinks[i].className.replace(' active', '');
-        var caret = tablinks[i].querySelector('.caret-svg');
-        if (caret) {
-          caret.style.transform = 'rotate(0deg)';
-          caret.style.transition = 'transform 0.3s';
-        }
       }
+
       // Show the current tab, and add an "active" class to the button that opened the tab
       document.getElementById(cityName).style.display = 'block';
       evt.currentTarget.className += ' active';
-      // Animate caret SVG to expanded (rotate 180deg)
-      var caret = evt.currentTarget.querySelector('.caret-svg');
-      if (caret) {
-        caret.style.transform = 'rotate(180deg)';
-        caret.style.transition = 'transform 0.3s';
-      }
     }
   }
-<style>
-.caret-svg {
-  display: inline-block;
-  vertical-align: middle;
-  margin-left: 8px;
-  transition: transform 0.3s;
-}
-</style>
 </script>
 
 {% schema %}
