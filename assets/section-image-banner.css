@@ -616,7 +616,7 @@ justify-content: center;
 
 .tabber_coll .tab {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-even;
   flex-wrap: wrap;
   gap: 10px;
   width:100%;
