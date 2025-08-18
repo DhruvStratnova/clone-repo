@@ -9,7 +9,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const gemstoneFields = `
     <div class="form-group">
       <input type="text" name="name" placeholder="Enter your name" required>
-      // <input type="tel" name="phone" placeholder="Enter your phone number">
     </div>
     <div class="form-group">
       <input type="date" name="dob" required>
@@ -25,7 +24,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const rudrakshaFields = `
     <div class="form-group">
       <input type="text" name="name" placeholder="Enter your name" required>
-      // <input type="tel" name="phone" placeholder="Enter your phone number">
     </div>
     <div class="form-group">
       <input type="date" name="dob" required>
