@@ -537,6 +537,46 @@
       "settings": {
         "include_margins": true
       }
+    },
+    "collage_EmY7zc": {
+      "type": "collage",
+      "blocks": {
+        "image_UCXR3w": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Frame_60.png"
+          }
+        },
+        "product_NEitRD": {
+          "type": "product",
+          "settings": {
+            "product": "1-mukhi-rudraksha",
+            "second_image": true
+          }
+        },
+        "collection_BpyYhN": {
+          "type": "collection",
+          "settings": {
+            "collection": "bracelets-pendants"
+          }
+        }
+      },
+      "block_order": [
+        "image_UCXR3w",
+        "product_NEitRD",
+        "collection_BpyYhN"
+      ],
+      "name": "t:sections.collage.presets.name",
+      "settings": {
+        "heading": "BROWSE BY CATEGORY",
+        "heading_size": "h1",
+        "desktop_layout": "left",
+        "mobile_layout": "column",
+        "card_styles": "product-card-wrapper",
+        "color_scheme": "",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
     }
   },
   "order": [
@@ -551,6 +591,7 @@
     "collection_list_ctAMFr",
     "collapsible_content_iPVB77",
     "collection_list_7pE7D6",
-    "1754756233592eb8c3"
+    "1754756233592eb8c3",
+    "collage_EmY7zc"
   ]
 }
