@@ -461,9 +461,9 @@
         "collapsible_row_NFn8DC": {
           "type": "collapsible_row",
           "settings": {
-            "heading": "Collapsible row",
-            "icon": "check_mark",
-            "row_content": "",
+            "heading": "Hand Crafted by Artisans",
+            "icon": "none",
+            "row_content": "<p>Meticulously crafted by experienced artisans with special attention to detail.</p><p>Original crystals, delicately polished to enhance the brilliance and look. Unparalleled craftsmanship to bring out the magnificent detail in each product.</p>",
             "page": ""
           }
         }
