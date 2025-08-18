@@ -32,7 +32,8 @@
           <legend class="form__label">
             {{ option.name }}:
             <span data-selected-value>
-              {{- option.selected_value -}}
+              {% comment %} {{- option.selected_value -}} {% endcomment %}
+               <svg>
             </span>
           </legend>
           {% render 'product-variant-options',
