@@ -529,6 +529,33 @@
       "settings": {
         "include_margins": true
       }
+    },
+    "collection_list_FyYyxF": {
+      "type": "collection-list",
+      "blocks": {
+        "featured_collection_wHKrwC": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "100-original-rudraksha-certified-by-trusted-lab"
+          }
+        }
+      },
+      "block_order": [
+        "featured_collection_wHKrwC"
+      ],
+      "name": "t:sections.collection-list.presets.name",
+      "settings": {
+        "title": "Why To Choose AtsroAura",
+        "heading_size": "h1",
+        "image_ratio": "square",
+        "columns_desktop": 3,
+        "color_scheme": "",
+        "show_view_all": false,
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
     }
   },
   "order": [
@@ -543,6 +570,7 @@
     "collection_list_ctAMFr",
     "collapsible_content_iPVB77",
     "collage_EmY7zc",
-    "1754756233592eb8c3"
+    "1754756233592eb8c3",
+    "collection_list_FyYyxF"
   ]
 }
