@@ -222,7 +222,7 @@
         "show_secondary_image": true,
         "show_vendor": false,
         "show_rating": false,
-        "quick_add": "none",
+        "quick_add": "standard",
         "columns_mobile": "2",
         "swipe_on_mobile": true,
         "padding_top": 8,
@@ -474,9 +474,7 @@
       "blocks": {
         "image_UCXR3w": {
           "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/Frame_64_1d0d4d5c-a18f-476e-a0d4-256b9072a155.png"
-          }
+          "settings": {}
         },
         "product_NEitRD": {
           "type": "product",
