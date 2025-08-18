@@ -31,8 +31,8 @@
         "variant_picker": {
           "type": "variant_picker",
           "settings": {
-            "picker_type": "button",
-            "swatch_shape": "circle"
+            "picker_type": "dropdown",
+            "swatch_shape": "square"
           }
         },
         "option_plus_option_plus_block_qytF6m": {
