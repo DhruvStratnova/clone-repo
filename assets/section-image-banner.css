@@ -546,8 +546,6 @@ justify-content: center;
   overflow: hidden;
   border: 1px solid #ccc;
   background-color: #f1f1f1;
-  align-content:center;
-  justify-content: space-between;
 }
 
 /* Style the buttons inside the tab */
@@ -589,14 +587,13 @@ justify-content: center;
   display: flex;
   flex-wrap: wrap;
   /* background: linear-gradient(to bottom, #d7f9f1, #f9ead7); */
-justify-content:space-between;
-align-items:center;
-align-content:center;
+
 }
 
 .tabber_coll{
   display:flex;
   justify-content:space-between;
+  align-content:center;
 
   gap: 6rem;
   /* background: linear-gradient(to bottom, #d7f9f1, #f9ead7); */
