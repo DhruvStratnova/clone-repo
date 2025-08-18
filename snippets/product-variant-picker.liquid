@@ -32,7 +32,7 @@
           <legend class="form__label">
             {{ option.name }}:
             <span data-selected-value>
-              {{- option.selected_value -}}
+              {% comment %} {{- option.selected_value -}} {% endcomment %}
             </span>
           </legend>
           {% render 'product-variant-options',
@@ -55,7 +55,7 @@
       {%- else -%}
         <div class="product-form__input product-form__input--dropdown">
           <label class="form__label" for="Option-{{ section.id }}-{{ forloop.index0 }}">
-            {% comment %} {{ option.name }} {% endcomment %}
+            {{ option.name }}
           </label>
           <div class="select">
             {%- if picker_type == 'swatch_dropdown' -%}
