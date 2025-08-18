@@ -8,9 +8,9 @@
  * ------------------------------------------------------------
  */
 {
-  "parent": "page.astro-calculator.json",
-  "context": {
-    "market": "in"
-  },
-  "sections": {}
+  "markets": {
+    "in": {
+      "parent": "@default"
+    }
+  }
 }
