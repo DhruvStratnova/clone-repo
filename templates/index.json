@@ -515,7 +515,7 @@
         "featured_collection_wHKrwC": {
           "type": "featured_collection",
           "settings": {
-            "collection": "100-original-rudraksha-certified-by-trusted-lab"
+            "collection": "100-original-rudraksha-certificate-by-trusted-lab"
           }
         }
       },
@@ -526,7 +526,7 @@
       "settings": {
         "title": "Why To Choose AtsroAura",
         "heading_size": "h1",
-        "image_ratio": "square",
+        "image_ratio": "adapt",
         "columns_desktop": 3,
         "color_scheme": "",
         "show_view_all": false,
