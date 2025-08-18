@@ -435,7 +435,7 @@
           "type": "collapsible_row",
           "settings": {
             "heading": "Charged for you by Top Astros",
-            "icon": "check_mark",
+            "icon": "none",
             "row_content": "<p><br/>At AstroAura, every healing stone is carefully sourced and energised by our trusted astrologers, infused with pure intentions to ensure authenticity and effectiveness for you.</p>",
             "page": ""
           }
