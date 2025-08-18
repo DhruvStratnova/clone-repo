@@ -621,3 +621,41 @@ justify-content: center;
   gap: 10px;
   width:100%;
 }
+
+
+
+/* extra styling */
+.tablinks {
+  background: none;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.3s;
+}
+
+.tablinks:hover {
+  background-color: #f5f5f5;
+}
+
+.tablinks.active {
+  background-color: #e0e0e0;
+}
+
+.tablinks .caret {
+  transition: transform 0.3s ease;
+}
+
+.tablinks.active .caret {
+  transform: rotate(180deg);
+}
+
+.tabcontent {
+  display: none;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-top: none;
+}
