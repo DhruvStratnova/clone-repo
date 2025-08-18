@@ -407,54 +407,6 @@
         "padding_bottom": 36
       }
     },
-    "image_with_text_GBJEWL": {
-      "type": "image-with-text",
-      "blocks": {
-        "heading_UmaDEE": {
-          "type": "heading",
-          "settings": {
-            "heading": "Why Astroaura",
-            "heading_size": "h1"
-          }
-        },
-        "text_8EAAkN": {
-          "type": "text",
-          "settings": {
-            "text": "<ol><li>Charged for you by top Astros<br/>At AstroAura, every healing stone is carefully sourced and energised by our trusted astrologers, infused with pure intentions to ensure authenticity and effectiveness for you.</li></ol><p>2  100% Natural & Authentic.<br/>   All our stones are 100% authentic and     original, sourced from top international mines across the globe.<br/><br/>3 Certified by Govt Labs<br/>Certified by trusted experts at the gemology lab. Passed multiple screenings for originality and quality.<br/><br/><br/>4 Hand Crafted by Artisans<br/>Meticulously crafted by experienced artisans with special attention to detail.</p><p>Original crystals, delicately polished to enhance the brilliance and look. Unparalleled craftsmanship to bring out the magnificent detail in each product.</p>",
-            "text_style": "body"
-          }
-        },
-        "button_MdMX6f": {
-          "type": "button",
-          "settings": {
-            "button_label": "",
-            "button_link": "",
-            "button_style_secondary": false
-          }
-        }
-      },
-      "block_order": [
-        "heading_UmaDEE",
-        "text_8EAAkN",
-        "button_MdMX6f"
-      ],
-      "name": "t:sections.image-with-text.presets.name",
-      "settings": {
-        "image": "shopify://shop_images/the-astro-aura-gurgaon-astrologers-q9p4f4cmww_5ad74e33-2258-41ca-a024-a677c98f2e81.jpg",
-        "height": "adapt",
-        "desktop_image_width": "medium",
-        "layout": "text_first",
-        "image_behavior": "ambient",
-        "content_layout": "no-overlap",
-        "desktop_content_position": "top",
-        "desktop_content_alignment": "left",
-        "mobile_content_alignment": "left",
-        "section_color_scheme": "",
-        "color_scheme": "",
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
     "1754756233592eb8c3": {
       "type": "apps",
       "blocks": {
@@ -475,6 +427,68 @@
       "settings": {
         "include_margins": true
       }
+    },
+    "collapsible_content_iPVB77": {
+      "type": "collapsible-content",
+      "blocks": {
+        "collapsible_row_TVnU6p": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Charged for you by Top Astros",
+            "icon": "check_mark",
+            "row_content": "<p><br/>At AstroAura, every healing stone is carefully sourced and energised by our trusted astrologers, infused with pure intentions to ensure authenticity and effectiveness for you.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_N46mmB": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Collapsible row",
+            "icon": "check_mark",
+            "row_content": "",
+            "page": ""
+          }
+        },
+        "collapsible_row_Udz3jQ": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Collapsible row",
+            "icon": "check_mark",
+            "row_content": "",
+            "page": ""
+          }
+        },
+        "collapsible_row_NFn8DC": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Collapsible row",
+            "icon": "check_mark",
+            "row_content": "",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "collapsible_row_TVnU6p",
+        "collapsible_row_N46mmB",
+        "collapsible_row_Udz3jQ",
+        "collapsible_row_NFn8DC"
+      ],
+      "name": "t:sections.collapsible_content.presets.name",
+      "settings": {
+        "caption": "",
+        "heading": "Why Astroaura",
+        "heading_size": "h1",
+        "heading_alignment": "center",
+        "layout": "none",
+        "container_color_scheme": "",
+        "color_scheme": "",
+        "open_first_collapsible_row": false,
+        "image_ratio": "adapt",
+        "desktop_layout": "image_second",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
     }
   },
   "order": [
@@ -487,7 +501,7 @@
     "collection_list_XLNAUt",
     "image_with_text_DYDtwA",
     "collection_list_ctAMFr",
-    "image_with_text_GBJEWL",
-    "1754756233592eb8c3"
+    "1754756233592eb8c3",
+    "collapsible_content_iPVB77"
   ]
 }
