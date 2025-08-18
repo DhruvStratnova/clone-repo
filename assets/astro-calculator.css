@@ -368,5 +368,7 @@ input, select {
 
 .calculator-form-containter{
 max-width:600px;
+display:flex;
+flex-direction:col
 
 }
