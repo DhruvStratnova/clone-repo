@@ -32,7 +32,7 @@
           <legend class="form__label">
             {{ option.name }}:
             <span data-selected-value>
-              {% comment %} {{- option.selected_value -}} {% endcomment %}
+              {{- option.selected_value -}}
             </span>
           </legend>
           {% render 'product-variant-options',
@@ -44,7 +44,7 @@
         </fieldset>
       {%- elsif picker_type == 'button' -%}
         <fieldset class="js product-form__input product-form__input--pill">
-          <legend class="form__label">{{ option.name }}</legend>
+          {% comment %} <legend class="form__label">{{ option.name }}</legend> {% endcomment %}
           {% render 'product-variant-options',
             product: product,
             option: option,
