@@ -72,6 +72,7 @@
       "blocks": {
         "heading_7WyQTn": {
           "type": "heading",
+          "disabled": true,
           "settings": {
             "heading": "Why To Choose Astroaura",
             "heading_size": "h1"
@@ -79,6 +80,7 @@
         },
         "text_fMM8zK": {
           "type": "text",
+          "disabled": true,
           "settings": {
             "text": "<p><br/>At <strong>AstroAura</strong>, we don’t just interpret the stars—we help you understand your inner universe. Every reading, aura insight, and guidance session is personalized to your unique energy, blending ancient astrology with modern intuition. We empower you to make confident decisions, embrace your potential, and navigate life with clarity and purpose. With a holistic approach that connects mind, body, and soul, AstroAura transforms cosmic wisdom into real-life guidance, helping you shine from within. Plus, enjoy <strong>easy 7-day returns</strong>, products that are <strong>ethically sourced</strong>, <strong>aura-synchronized</strong>, deliver <strong>10× benefits</strong>, and come with <strong>108 hours of mantra charging</strong> to amplify your energy.</p>"
           }
