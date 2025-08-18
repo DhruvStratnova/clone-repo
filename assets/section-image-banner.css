@@ -587,7 +587,7 @@ justify-content: center;
   display: flex;
   flex-wrap: wrap;
   /* background: linear-gradient(to bottom, #d7f9f1, #f9ead7); */
-
+justify-content:space-between;
 }
 
 .tabber_coll{
