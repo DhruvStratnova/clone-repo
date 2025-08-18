@@ -164,6 +164,11 @@
             </a>
           </h3>
           <div>
+            {% assign purpose_pill_string = card_product.metafields.custom.key_feature
+            | replace: '[', ''
+            | replace: ']', ''
+            | replace: '"', ''
+          %}
             <p>{{ card_product.metafields.custom.key_feature }}</p>
           </div>
           <div class="card-information">
