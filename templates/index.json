@@ -469,75 +469,6 @@
         "padding_bottom": 36
       }
     },
-    "collection_list_7pE7D6": {
-      "type": "collection-list",
-      "blocks": {
-        "featured_collection_FYcrWi": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "bracelets"
-          }
-        },
-        "featured_collection_pemfNN": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "gemstones"
-          }
-        },
-        "featured_collection_wRpHjf": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "rudrasha"
-          }
-        },
-        "featured_collection_wpbAmQ": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "crystal-rakhi"
-          }
-        }
-      },
-      "block_order": [
-        "featured_collection_FYcrWi",
-        "featured_collection_pemfNN",
-        "featured_collection_wRpHjf",
-        "featured_collection_wpbAmQ"
-      ],
-      "name": "t:sections.collection-list.presets.name",
-      "settings": {
-        "title": "BROWSE BY CATEGORY",
-        "heading_size": "h1",
-        "image_ratio": "square",
-        "columns_desktop": 3,
-        "color_scheme": "",
-        "show_view_all": false,
-        "columns_mobile": "1",
-        "swipe_on_mobile": false,
-        "padding_top": 20,
-        "padding_bottom": 20
-      }
-    },
-    "1754756233592eb8c3": {
-      "type": "apps",
-      "blocks": {
-        "testimonials_slider_carousel_widget_block_YPkXY7": {
-          "type": "shopify://apps/testimonials-slider/blocks/carousel-widget-block/cd756d38-7c3d-4332-af00-4ff87263e921",
-          "name": "Testimonials",
-          "settings": {
-            "themeId": "dark",
-            "configNumber": "10",
-            "autoscroll": true,
-            "showAvatar": true
-          }
-        }
-      },
-      "block_order": [
-        "testimonials_slider_carousel_widget_block_YPkXY7"
-      ],
-      "settings": {
-        "include_margins": true
-      }
-    },
     "collage_EmY7zc": {
       "type": "collage",
       "blocks": {
@@ -577,6 +508,27 @@
         "padding_top": 36,
         "padding_bottom": 36
       }
+    },
+    "1754756233592eb8c3": {
+      "type": "apps",
+      "blocks": {
+        "testimonials_slider_carousel_widget_block_YPkXY7": {
+          "type": "shopify://apps/testimonials-slider/blocks/carousel-widget-block/cd756d38-7c3d-4332-af00-4ff87263e921",
+          "name": "Testimonials",
+          "settings": {
+            "themeId": "dark",
+            "configNumber": "10",
+            "autoscroll": true,
+            "showAvatar": true
+          }
+        }
+      },
+      "block_order": [
+        "testimonials_slider_carousel_widget_block_YPkXY7"
+      ],
+      "settings": {
+        "include_margins": true
+      }
     }
   },
   "order": [
@@ -590,8 +542,7 @@
     "image_with_text_DYDtwA",
     "collection_list_ctAMFr",
     "collapsible_content_iPVB77",
-    "collection_list_7pE7D6",
-    "1754756233592eb8c3",
-    "collage_EmY7zc"
+    "collage_EmY7zc",
+    "1754756233592eb8c3"
   ]
 }
