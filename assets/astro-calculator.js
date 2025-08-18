@@ -33,6 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
     <div class="form-group">
       <input type="text" name="lat" placeholder="Latitude (e.g., 28.6139)" required>
       <input type="text" name="lon" placeholder="Longitude (e.g., 77.2090)" required>
+      <input type="text" name="lon" placeholder="Longitude (e.g., 77.2090)" required>
     </div>
   `;
 
