@@ -443,9 +443,9 @@
         "collapsible_row_N46mmB": {
           "type": "collapsible_row",
           "settings": {
-            "heading": "Collapsible row",
-            "icon": "check_mark",
-            "row_content": "",
+            "heading": "100% Natural & Authentic",
+            "icon": "none",
+            "row_content": "<p>All our stones are 100% authentic and original, sourced from top international mines across the globe.<br/><br/></p>",
             "page": ""
           }
         },
