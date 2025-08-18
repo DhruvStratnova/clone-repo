@@ -12,7 +12,7 @@
 }
 
 .calculator-container {
-  max-width: 1500px;
+  max-width: 600px;
   margin: auto;
   background:rgba(144, 132, 143, 0.5);
   padding: 30px;
@@ -104,7 +104,7 @@ input, select {
 
 .gemstone-card-container {
   display: flex;
-  flex-direction:column;
+  /* flex-direction:column; */
   flex-wrap: wrap;
   gap: 24px;
   justify-content: center;
