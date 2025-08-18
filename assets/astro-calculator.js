@@ -39,6 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
   `;
 
   function switchTab(tabName) {
+    console.log(product)
     tabs.forEach(tab => tab.classList.remove("active"));
     document.querySelector(`.tab[data-tab="${tabName}"]`).classList.add("active");
     astroResultsDiv.style.display = 'none';
