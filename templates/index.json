@@ -407,27 +407,6 @@
         "padding_bottom": 36
       }
     },
-    "1754756233592eb8c3": {
-      "type": "apps",
-      "blocks": {
-        "testimonials_slider_carousel_widget_block_YPkXY7": {
-          "type": "shopify://apps/testimonials-slider/blocks/carousel-widget-block/cd756d38-7c3d-4332-af00-4ff87263e921",
-          "name": "Testimonials",
-          "settings": {
-            "themeId": "dark",
-            "configNumber": "10",
-            "autoscroll": true,
-            "showAvatar": true
-          }
-        }
-      },
-      "block_order": [
-        "testimonials_slider_carousel_widget_block_YPkXY7"
-      ],
-      "settings": {
-        "include_margins": true
-      }
-    },
     "image_with_text_GBJEWL": {
       "type": "image-with-text",
       "blocks": {
@@ -448,7 +427,7 @@
         "button_MdMX6f": {
           "type": "button",
           "settings": {
-            "button_label": "Button label",
+            "button_label": "",
             "button_link": "",
             "button_style_secondary": false
           }
@@ -475,6 +454,27 @@
         "padding_top": 36,
         "padding_bottom": 36
       }
+    },
+    "1754756233592eb8c3": {
+      "type": "apps",
+      "blocks": {
+        "testimonials_slider_carousel_widget_block_YPkXY7": {
+          "type": "shopify://apps/testimonials-slider/blocks/carousel-widget-block/cd756d38-7c3d-4332-af00-4ff87263e921",
+          "name": "Testimonials",
+          "settings": {
+            "themeId": "dark",
+            "configNumber": "10",
+            "autoscroll": true,
+            "showAvatar": true
+          }
+        }
+      },
+      "block_order": [
+        "testimonials_slider_carousel_widget_block_YPkXY7"
+      ],
+      "settings": {
+        "include_margins": true
+      }
     }
   },
   "order": [
@@ -487,7 +487,7 @@
     "collection_list_XLNAUt",
     "image_with_text_DYDtwA",
     "collection_list_ctAMFr",
-    "1754756233592eb8c3",
-    "image_with_text_GBJEWL"
+    "image_with_text_GBJEWL",
+    "1754756233592eb8c3"
   ]
 }
