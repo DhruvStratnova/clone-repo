@@ -161,9 +161,11 @@ document.addEventListener("DOMContentLoaded", function () {
               <li><strong>Semi Gem:</strong> ${gem.semi_gem || 'N/A'}</li>
             </ul>
           </div>
-          <div class="gemstone-footer">
+          <a
+          href="{{ product.url }}" 
+          class="gemstone-footer">
             <button class="view-product-btn">View Product</button>
-          </div>
+          </a>
         </div>
       `;
     });
