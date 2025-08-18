@@ -612,3 +612,12 @@ justify-content: center;
   background: linear-gradient(to bottom,rgba(175, 230, 252, 0.87), #f9ead7);
 
 } */
+
+
+.tabber_coll .tab {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  width
+}
