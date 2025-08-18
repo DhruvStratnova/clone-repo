@@ -652,10 +652,3 @@ justify-content: center;
 .tablinks.active .caret {
   transform: rotate(180deg);
 }
-
-.tabcontent {
-  display: none;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-top: none;
-}
