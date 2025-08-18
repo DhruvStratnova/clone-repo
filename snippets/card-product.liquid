@@ -163,7 +163,9 @@
               {{ card_product.title | escape }}
             </a>
           </h3>
-          <div>{{ card_product.metafields.custom.key_feature }}</div>
+          <div>
+            <p>{{ card_product.metafields.custom.key_feature }}
+              </p></div>
           <div class="card-information">
             {%- if show_vendor -%}
               <span class="visually-hidden">{{ 'accessibility.vendor' | t }}</span>
