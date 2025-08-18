@@ -623,4 +623,11 @@ justify-content: center;
 }
 
 
+.tablinks .caret {
+  transition: transform 0.3s ease;
+}
+
+.tablinks.active .caret {
+  transform: rotate(180deg);
+}
 
