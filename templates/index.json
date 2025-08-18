@@ -452,9 +452,9 @@
         "collapsible_row_Udz3jQ": {
           "type": "collapsible_row",
           "settings": {
-            "heading": "Collapsible row",
-            "icon": "check_mark",
-            "row_content": "",
+            "heading": "Certified by Govt Labs",
+            "icon": "none",
+            "row_content": "<p>Certified by trusted experts at the gemology lab. Passed multiple screenings for originality and quality.<br/><br/></p>",
             "page": ""
           }
         },
