@@ -318,12 +318,19 @@
           "settings": {
             "collection": "bracelets"
           }
+        },
+        "featured_collection_XYNVzn": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "crystal-rakhi"
+          }
         }
       },
       "block_order": [
         "featured_collection_ze4rBV",
         "featured_collection_Pgykar",
-        "featured_collection_cftXQ8"
+        "featured_collection_cftXQ8",
+        "featured_collection_XYNVzn"
       ],
       "name": "t:sections.collection-list.presets.name",
       "settings": {
