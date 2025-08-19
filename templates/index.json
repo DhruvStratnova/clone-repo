@@ -319,6 +319,53 @@
         "padding_bottom": 36
       }
     },
+    "image_with_text_DYDtwA": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_c6fF64": {
+          "type": "heading",
+          "settings": {
+            "heading": "Our shop",
+            "heading_size": "h2"
+          }
+        },
+        "text_PLAK8A": {
+          "type": "text",
+          "settings": {
+            "text": "<p><strong>Rudraksha beads are sacred symbols of Lord Shiva, promoting peace, protection, and spiritual growth. They enhance meditation, balance energy, and guide the wearer toward inner strength and divine connection.</strong></p>",
+            "text_style": "body"
+          }
+        },
+        "button_L7GN3F": {
+          "type": "button",
+          "settings": {
+            "button_label": "Shop all",
+            "button_link": "shopify://collections/all",
+            "button_style_secondary": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_c6fF64",
+        "text_PLAK8A",
+        "button_L7GN3F"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/freepik_edit_13_1.webp",
+        "height": "small",
+        "desktop_image_width": "small",
+        "layout": "image_first",
+        "image_behavior": "none",
+        "content_layout": "no-overlap",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "left",
+        "mobile_content_alignment": "center",
+        "section_color_scheme": "",
+        "color_scheme": "accent-1",
+        "padding_top": 56,
+        "padding_bottom": 60
+      }
+    },
     "collection_list_Cp4wfW": {
       "type": "collection-list",
       "blocks": {
@@ -374,51 +421,45 @@
         "padding_bottom": 36
       }
     },
-    "image_with_text_DYDtwA": {
-      "type": "image-with-text",
+    "collection_list_XLNAUt": {
+      "type": "collection-list",
       "blocks": {
-        "heading_c6fF64": {
-          "type": "heading",
+        "featured_collection_cipx4n": {
+          "type": "featured_collection",
           "settings": {
-            "heading": "Our shop",
-            "heading_size": "h2"
+            "collection": "rudrasha"
           }
         },
-        "text_PLAK8A": {
-          "type": "text",
+        "featured_collection_yUYkDi": {
+          "type": "featured_collection",
           "settings": {
-            "text": "<p><strong>Rudraksha beads are sacred symbols of Lord Shiva, promoting peace, protection, and spiritual growth. They enhance meditation, balance energy, and guide the wearer toward inner strength and divine connection.</strong></p>",
-            "text_style": "body"
+            "collection": "bracelets"
           }
         },
-        "button_L7GN3F": {
-          "type": "button",
+        "featured_collection_LDdpWr": {
+          "type": "featured_collection",
           "settings": {
-            "button_label": "Shop all",
-            "button_link": "shopify://collections/all",
-            "button_style_secondary": false
+            "collection": "gemstones"
           }
         }
       },
       "block_order": [
-        "heading_c6fF64",
-        "text_PLAK8A",
-        "button_L7GN3F"
+        "featured_collection_cipx4n",
+        "featured_collection_yUYkDi",
+        "featured_collection_LDdpWr"
       ],
+      "name": "t:sections.collection-list.presets.name",
       "settings": {
-        "image": "shopify://shop_images/freepik_edit_13_1.webp",
-        "height": "small",
-        "desktop_image_width": "small",
-        "layout": "image_first",
-        "image_behavior": "none",
-        "content_layout": "no-overlap",
-        "desktop_content_position": "middle",
-        "desktop_content_alignment": "left",
-        "mobile_content_alignment": "center",
-        "section_color_scheme": "",
-        "color_scheme": "accent-1",
-        "padding_top": 56,
-        "padding_bottom": 60
+        "title": "Shop By Purpose",
+        "heading_size": "h2",
+        "image_ratio": "square",
+        "columns_desktop": 6,
+        "color_scheme": "",
+        "show_view_all": false,
+        "columns_mobile": "2",
+        "swipe_on_mobile": true,
+        "padding_top": 36,
+        "padding_bottom": 36
       }
     },
     "image_with_text_dMnjUt": {
@@ -467,47 +508,6 @@
         "color_scheme": "background-1",
         "padding_top": 12,
         "padding_bottom": 24
-      }
-    },
-    "collection_list_XLNAUt": {
-      "type": "collection-list",
-      "blocks": {
-        "featured_collection_cipx4n": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "rudrasha"
-          }
-        },
-        "featured_collection_yUYkDi": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "bracelets"
-          }
-        },
-        "featured_collection_LDdpWr": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "gemstones"
-          }
-        }
-      },
-      "block_order": [
-        "featured_collection_cipx4n",
-        "featured_collection_yUYkDi",
-        "featured_collection_LDdpWr"
-      ],
-      "name": "t:sections.collection-list.presets.name",
-      "settings": {
-        "title": "Shop By Purpose",
-        "heading_size": "h2",
-        "image_ratio": "square",
-        "columns_desktop": 6,
-        "color_scheme": "",
-        "show_view_all": false,
-        "columns_mobile": "2",
-        "swipe_on_mobile": true,
-        "padding_top": 36,
-        "padding_bottom": 36
       }
     },
     "collage_EmY7zc": {
@@ -630,11 +630,11 @@
     "image_with_text_tz9Af9",
     "featured_collection",
     "featured_collection_6N6qke",
-    "collection_list_ctAMFr",
     "image_with_text_DYDtwA",
     "collection_list_Cp4wfW",
-    "image_with_text_dMnjUt",
     "collection_list_XLNAUt",
+    "collection_list_ctAMFr",
+    "image_with_text_dMnjUt",
     "collage_EmY7zc",
     "image_with_text_mJmbpt",
     "1754756233592eb8c3"
