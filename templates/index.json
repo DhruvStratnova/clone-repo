@@ -533,6 +533,7 @@
       "blocks": {
         "heading_KVPGXe": {
           "type": "heading",
+          "disabled": true,
           "settings": {
             "heading": "Image banner",
             "heading_size": "h1"
@@ -540,6 +541,7 @@
         },
         "text_W3ehGi": {
           "type": "text",
+          "disabled": true,
           "settings": {
             "text": "Give customers details about the banner image(s) or content on the template.",
             "text_style": "body"
@@ -547,6 +549,7 @@
         },
         "buttons_dErRt4": {
           "type": "buttons",
+          "disabled": true,
           "settings": {
             "button_label_1": "Button label",
             "button_link_1": "",
