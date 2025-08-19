@@ -469,6 +469,54 @@
         "padding_bottom": 36
       }
     },
+    "image_with_text_dMnjUt": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_jw44BV": {
+          "type": "heading",
+          "settings": {
+            "heading": "Why AtroAura",
+            "heading_size": "h1"
+          }
+        },
+        "text_x3JxKH": {
+          "type": "text",
+          "settings": {
+            "text": "<h4>Charged for you by Top Astros<br/>At AstroAura, every healing stone is authentically sourced and energised with pure intentions by our expert astrologers to ensure maximum effectiveness.</h4><h4><br/>100% Natural & Authentic<br/>All our stones are 100% authentic and original, sourced from top international mines across the globe.<br/><br/>Certified by Govt Labs<br/>Certified by trusted experts at the gemology lab. Passed multiple screenings for originality and quality.<br/><br/>Hand Crafted by Artisans<br/><br/>Expertly crafted by artisans, using genuine crystals polished to perfection for unmatched brilliance and detail.</h4>",
+            "text_style": "subtitle"
+          }
+        },
+        "button_9T4M69": {
+          "type": "button",
+          "settings": {
+            "button_label": "",
+            "button_link": "",
+            "button_style_secondary": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_jw44BV",
+        "text_x3JxKH",
+        "button_9T4M69"
+      ],
+      "name": "t:sections.image-with-text.presets.name",
+      "settings": {
+        "image": "shopify://shop_images/why_astroaura.jpg",
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "layout": "text_first",
+        "image_behavior": "none",
+        "content_layout": "no-overlap",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "mobile_content_alignment": "left",
+        "section_color_scheme": "background-1",
+        "color_scheme": "background-1",
+        "padding_top": 32,
+        "padding_bottom": 32
+      }
+    },
     "collage_EmY7zc": {
       "type": "collage",
       "blocks": {
@@ -534,54 +582,6 @@
         "swipe_on_mobile": true,
         "padding_top": 12,
         "padding_bottom": 12
-      }
-    },
-    "image_with_text_dMnjUt": {
-      "type": "image-with-text",
-      "blocks": {
-        "heading_jw44BV": {
-          "type": "heading",
-          "settings": {
-            "heading": "Why To Choose AtroAura",
-            "heading_size": "h1"
-          }
-        },
-        "text_x3JxKH": {
-          "type": "text",
-          "settings": {
-            "text": "<h4>Charged for you by Top Astros<br/>At AstroAura, every healing stone is authentically sourced and energised with pure intentions by our expert astrologers to ensure maximum effectiveness.</h4><h4><br/>100% Natural & Authentic<br/>All our stones are 100% authentic and original, sourced from top international mines across the globe.<br/><br/>Certified by Govt Labs<br/>Certified by trusted experts at the gemology lab. Passed multiple screenings for originality and quality.<br/><br/>Hand Crafted by Artisans<br/><br/>Expertly crafted by artisans, using genuine crystals polished to perfection for unmatched brilliance and detail.</h4>",
-            "text_style": "subtitle"
-          }
-        },
-        "button_9T4M69": {
-          "type": "button",
-          "settings": {
-            "button_label": "",
-            "button_link": "",
-            "button_style_secondary": false
-          }
-        }
-      },
-      "block_order": [
-        "heading_jw44BV",
-        "text_x3JxKH",
-        "button_9T4M69"
-      ],
-      "name": "t:sections.image-with-text.presets.name",
-      "settings": {
-        "image": "shopify://shop_images/why_astroaura.jpg",
-        "height": "adapt",
-        "desktop_image_width": "medium",
-        "layout": "text_first",
-        "image_behavior": "none",
-        "content_layout": "no-overlap",
-        "desktop_content_position": "top",
-        "desktop_content_alignment": "left",
-        "mobile_content_alignment": "left",
-        "section_color_scheme": "background-1",
-        "color_scheme": "background-1",
-        "padding_top": 32,
-        "padding_bottom": 32
       }
     },
     "1754756233592eb8c3": {
