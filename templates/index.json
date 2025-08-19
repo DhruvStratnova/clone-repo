@@ -598,33 +598,6 @@
         "include_margins": true
       }
     },
-    "collection_list_Vaagag": {
-      "type": "collection-list",
-      "blocks": {
-        "featured_collection_PR3Vbx": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "certified-gems"
-          }
-        }
-      },
-      "block_order": [
-        "featured_collection_PR3Vbx"
-      ],
-      "name": "t:sections.collection-list.presets.name",
-      "settings": {
-        "title": "Certified Gems",
-        "heading_size": "h1",
-        "image_ratio": "adapt",
-        "columns_desktop": 3,
-        "color_scheme": "",
-        "show_view_all": false,
-        "columns_mobile": "1",
-        "swipe_on_mobile": false,
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
     "image_banner_48rk4e": {
       "type": "image-banner",
       "blocks": {
@@ -718,7 +691,6 @@
     "image_banner_qdgKKL",
     "collection_list_FyYyxF",
     "1754756233592eb8c3",
-    "collection_list_Vaagag",
     "image_banner_48rk4e",
     "image_with_text_mJmbpt"
   ]
