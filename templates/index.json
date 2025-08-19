@@ -484,7 +484,7 @@
         "collection_BpyYhN"
       ],
       "custom_css": [
-        "h2 {font-size: 10;}"
+        "h2 {font-size: 20;}"
       ],
       "name": "t:sections.collage.presets.name",
       "settings": {
