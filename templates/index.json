@@ -535,7 +535,7 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/Aura_synchorined.jpg",
-            "image_overlay_opacity": 10,
+            "image_overlay_opacity": 0,
             "heading": "Image slide",
             "heading_size": "h2",
             "subheading": "Tell your brand's story through images",
@@ -577,7 +577,7 @@
         "slide_height": "small",
         "slider_visual": "counter",
         "auto_rotate": false,
-        "change_slides_speed": 5,
+        "change_slides_speed": 3,
         "image_behavior": "none",
         "show_text_below": true,
         "accessibility_info": "Slideshow about our brand"
