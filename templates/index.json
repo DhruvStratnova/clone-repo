@@ -461,7 +461,7 @@
         "image_UCXR3w": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/image_184_ae0cdbbe-e0e7-40ed-9d28-ec3ab9a91785.png"
+            "image": "shopify://shop_images/image_184_dd276250-9670-4e0c-ad6e-509d9368115d.png"
           }
         },
         "product_NEitRD": {
@@ -572,7 +572,7 @@
         "slide_BDFYWc"
       ],
       "custom_css": [
-        "he{font-size: 12;}"
+        "he {font-size: 12;}"
       ],
       "name": "t:sections.slideshow.presets.name",
       "settings": {
