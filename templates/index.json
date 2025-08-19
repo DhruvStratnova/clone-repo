@@ -583,11 +583,14 @@
         "text_yeNGGf",
         "buttons_8p9RMw"
       ],
+      "custom_css": [
+        "h2{font-size: 16;}"
+      ],
       "name": "t:sections.image-banner.presets.name",
       "settings": {
         "image": "shopify://shop_images/Aura_synchorined.jpg",
         "image_overlay_opacity": 0,
-        "image_height": "medium",
+        "image_height": "small",
         "image_behavior": "none",
         "desktop_content_position": "middle-center",
         "desktop_content_alignment": "center",
