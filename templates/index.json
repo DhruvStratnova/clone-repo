@@ -402,7 +402,7 @@
       ],
       "name": "t:sections.collection-list.presets.name",
       "settings": {
-        "title": "Aura-synchronized treasures",
+        "title": "Collections",
         "heading_size": "h1",
         "image_ratio": "square",
         "columns_desktop": 5,
