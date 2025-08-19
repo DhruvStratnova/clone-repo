@@ -414,7 +414,7 @@
           "type": "heading",
           "settings": {
             "heading": "Why AtroAura",
-            "heading_size": "h2"
+            "heading_size": "h1"
           }
         },
         "text_x3JxKH": {
@@ -442,7 +442,7 @@
       "settings": {
         "image": "shopify://shop_images/why_astroaura.jpg",
         "height": "adapt",
-        "desktop_image_width": "medium",
+        "desktop_image_width": "small",
         "layout": "text_first",
         "image_behavior": "none",
         "content_layout": "no-overlap",
