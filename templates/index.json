@@ -494,7 +494,7 @@
         "mobile_layout": "column",
         "card_styles": "none",
         "color_scheme": "",
-        "padding_top": 16,
+        "padding_top": 20,
         "padding_bottom": 20
       }
     },
