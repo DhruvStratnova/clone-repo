@@ -528,27 +528,6 @@
         "padding_bottom": 12
       }
     },
-    "1754756233592eb8c3": {
-      "type": "apps",
-      "blocks": {
-        "testimonials_slider_carousel_widget_block_YPkXY7": {
-          "type": "shopify://apps/testimonials-slider/blocks/carousel-widget-block/cd756d38-7c3d-4332-af00-4ff87263e921",
-          "name": "Testimonials",
-          "settings": {
-            "themeId": "dark",
-            "configNumber": "10",
-            "autoscroll": true,
-            "showAvatar": true
-          }
-        }
-      },
-      "block_order": [
-        "testimonials_slider_carousel_widget_block_YPkXY7"
-      ],
-      "settings": {
-        "include_margins": true
-      }
-    },
     "slideshow_R9Lqbe": {
       "type": "slideshow",
       "blocks": {
@@ -595,13 +574,34 @@
       "name": "t:sections.slideshow.presets.name",
       "settings": {
         "layout": "full_bleed",
-        "slide_height": "medium",
+        "slide_height": "small",
         "slider_visual": "counter",
         "auto_rotate": false,
         "change_slides_speed": 5,
         "image_behavior": "none",
         "show_text_below": true,
         "accessibility_info": "Slideshow about our brand"
+      }
+    },
+    "1754756233592eb8c3": {
+      "type": "apps",
+      "blocks": {
+        "testimonials_slider_carousel_widget_block_YPkXY7": {
+          "type": "shopify://apps/testimonials-slider/blocks/carousel-widget-block/cd756d38-7c3d-4332-af00-4ff87263e921",
+          "name": "Testimonials",
+          "settings": {
+            "themeId": "dark",
+            "configNumber": "10",
+            "autoscroll": true,
+            "showAvatar": true
+          }
+        }
+      },
+      "block_order": [
+        "testimonials_slider_carousel_widget_block_YPkXY7"
+      ],
+      "settings": {
+        "include_margins": true
       }
     }
   },
@@ -618,7 +618,7 @@
     "image_with_text_dMnjUt",
     "collage_EmY7zc",
     "collection_list_FyYyxF",
-    "1754756233592eb8c3",
-    "slideshow_R9Lqbe"
+    "slideshow_R9Lqbe",
+    "1754756233592eb8c3"
   ]
 }
