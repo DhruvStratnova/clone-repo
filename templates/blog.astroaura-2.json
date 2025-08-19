@@ -11,6 +11,7 @@
   "sections": {
     "main": {
       "type": "main-blog",
+      "disabled": true,
       "settings": {
         "layout": "collage",
         "show_image": true,
