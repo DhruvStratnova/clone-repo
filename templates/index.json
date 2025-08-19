@@ -517,7 +517,7 @@
       "name": "t:sections.collection-list.presets.name",
       "settings": {
         "title": "Why To Choose AtsroAura",
-        "heading_size": "h2",
+        "heading_size": "h1",
         "image_ratio": "adapt",
         "columns_desktop": 1,
         "color_scheme": "",
