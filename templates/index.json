@@ -547,6 +547,35 @@
         "show_text_below": true
       }
     },
+    "image_banner_48rk4e": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_KVPGXe": {
+          "type": "heading",
+          "settings": {
+            "heading": "Image banner",
+            "heading_size": "h1"
+          }
+        }
+      },
+      "block_order": [
+        "heading_KVPGXe"
+      ],
+      "name": "t:sections.image-banner.presets.name",
+      "settings": {
+        "image": "shopify://shop_images/before__footet.jpg",
+        "image_overlay_opacity": 0,
+        "image_height": "adapt",
+        "image_behavior": "none",
+        "desktop_content_position": "top-left",
+        "desktop_content_alignment": "left",
+        "show_text_box": false,
+        "color_scheme": "",
+        "stack_images_on_mobile": true,
+        "mobile_content_alignment": "center",
+        "show_text_below": true
+      }
+    },
     "collection_list_FyYyxF": {
       "type": "collection-list",
       "blocks": {
@@ -577,35 +606,6 @@
         "padding_bottom": 20
       }
     },
-    "image_banner_48rk4e": {
-      "type": "image-banner",
-      "blocks": {
-        "heading_KVPGXe": {
-          "type": "heading",
-          "settings": {
-            "heading": "Image banner",
-            "heading_size": "h1"
-          }
-        }
-      },
-      "block_order": [
-        "heading_KVPGXe"
-      ],
-      "name": "t:sections.image-banner.presets.name",
-      "settings": {
-        "image": "shopify://shop_images/before__footet.jpg",
-        "image_overlay_opacity": 0,
-        "image_height": "adapt",
-        "image_behavior": "none",
-        "desktop_content_position": "top-left",
-        "desktop_content_alignment": "left",
-        "show_text_box": false,
-        "color_scheme": "",
-        "stack_images_on_mobile": true,
-        "mobile_content_alignment": "center",
-        "show_text_below": true
-      }
-    },
     "1754756233592eb8c3": {
       "type": "apps",
       "blocks": {
@@ -626,6 +626,55 @@
       "settings": {
         "include_margins": true
       }
+    },
+    "image_banner_6cPigL": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_tTfamP": {
+          "type": "heading",
+          "settings": {
+            "heading": "Image banner",
+            "heading_size": "h1"
+          }
+        },
+        "text_dhTxeE": {
+          "type": "text",
+          "settings": {
+            "text": "Give customers details about the banner image(s) or content on the template.",
+            "text_style": "body"
+          }
+        },
+        "buttons_b9Bjtb": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "Button label",
+            "button_link_1": "",
+            "button_style_secondary_1": false,
+            "button_label_2": "Button label",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_tTfamP",
+        "text_dhTxeE",
+        "buttons_b9Bjtb"
+      ],
+      "name": "t:sections.image-banner.presets.name",
+      "settings": {
+        "image": "shopify://shop_images/Certified_gems.jpg",
+        "image_overlay_opacity": 0,
+        "image_height": "small",
+        "image_behavior": "none",
+        "desktop_content_position": "middle-center",
+        "desktop_content_alignment": "center",
+        "show_text_box": true,
+        "color_scheme": "",
+        "stack_images_on_mobile": true,
+        "mobile_content_alignment": "center",
+        "show_text_below": true
+      }
     }
   },
   "order": [
@@ -643,6 +692,7 @@
     "image_banner_qdgKKL",
     "image_banner_48rk4e",
     "collection_list_FyYyxF",
-    "1754756233592eb8c3"
+    "1754756233592eb8c3",
+    "image_banner_6cPigL"
   ]
 }
