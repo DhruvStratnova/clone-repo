@@ -653,6 +653,54 @@
         "mobile_content_alignment": "center",
         "show_text_below": true
       }
+    },
+    "image_with_text_mJmbpt": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_EGdkDe": {
+          "type": "heading",
+          "settings": {
+            "heading": "Certified Gems",
+            "heading_size": "h1"
+          }
+        },
+        "text_6qCVAe": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Genuine, certified gemstones guaranteed for authenticity and quality.</p>",
+            "text_style": "body"
+          }
+        },
+        "button_c3yhNn": {
+          "type": "button",
+          "settings": {
+            "button_label": "",
+            "button_link": "",
+            "button_style_secondary": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_EGdkDe",
+        "text_6qCVAe",
+        "button_c3yhNn"
+      ],
+      "name": "t:sections.image-with-text.presets.name",
+      "settings": {
+        "image": "shopify://shop_images/Certified_gems_2.jpg",
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "layout": "image_first",
+        "image_behavior": "none",
+        "content_layout": "no-overlap",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "mobile_content_alignment": "left",
+        "section_color_scheme": "",
+        "color_scheme": "",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
     }
   },
   "order": [
@@ -671,6 +719,7 @@
     "collection_list_FyYyxF",
     "1754756233592eb8c3",
     "collection_list_Vaagag",
-    "image_banner_48rk4e"
+    "image_banner_48rk4e",
+    "image_with_text_mJmbpt"
   ]
 }
