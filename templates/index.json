@@ -474,12 +474,14 @@
       "blocks": {
         "image_UCXR3w": {
           "type": "image",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/image_184_ae0cdbbe-e0e7-40ed-9d28-ec3ab9a91785.png"
+          }
         },
         "product_NEitRD": {
           "type": "product",
           "settings": {
-            "product": "1-mukhi-rudraksha",
+            "product": "neelam-1",
             "second_image": true
           }
         },
