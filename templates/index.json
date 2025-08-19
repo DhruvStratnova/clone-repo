@@ -257,68 +257,6 @@
         "padding_bottom": 12
       }
     },
-    "collection_list_ctAMFr": {
-      "type": "collection-list",
-      "blocks": {
-        "featured_collection_LQkKG4": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "rudraksha-mala"
-          }
-        },
-        "featured_collection_WQxCBX": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "rudrasha"
-          }
-        },
-        "featured_collection_qmmMtM": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "gemstones"
-          }
-        },
-        "featured_collection_Npy7LD": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "mission-pattern-remedies"
-          }
-        },
-        "featured_collection_xY3HpY": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "crystal-rakhi"
-          }
-        },
-        "featured_collection_qceXDX": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "bracelets"
-          }
-        }
-      },
-      "block_order": [
-        "featured_collection_LQkKG4",
-        "featured_collection_WQxCBX",
-        "featured_collection_qmmMtM",
-        "featured_collection_Npy7LD",
-        "featured_collection_xY3HpY",
-        "featured_collection_qceXDX"
-      ],
-      "name": "t:sections.collection-list.presets.name",
-      "settings": {
-        "title": "Collections",
-        "heading_size": "h1",
-        "image_ratio": "square",
-        "columns_desktop": 5,
-        "color_scheme": "",
-        "show_view_all": false,
-        "columns_mobile": "1",
-        "swipe_on_mobile": false,
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
     "image_with_text_DYDtwA": {
       "type": "image-with-text",
       "blocks": {
@@ -411,11 +349,11 @@
       "settings": {
         "title": "Aura-synchronized treasures",
         "heading_size": "h1",
-        "image_ratio": "square",
+        "image_ratio": "adapt",
         "columns_desktop": 3,
         "color_scheme": "",
         "show_view_all": false,
-        "columns_mobile": "1",
+        "columns_mobile": "2",
         "swipe_on_mobile": false,
         "padding_top": 36,
         "padding_bottom": 36
@@ -458,6 +396,68 @@
         "show_view_all": false,
         "columns_mobile": "2",
         "swipe_on_mobile": true,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "collection_list_ctAMFr": {
+      "type": "collection-list",
+      "blocks": {
+        "featured_collection_LQkKG4": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "rudraksha-mala"
+          }
+        },
+        "featured_collection_WQxCBX": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "rudrasha"
+          }
+        },
+        "featured_collection_qmmMtM": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "gemstones"
+          }
+        },
+        "featured_collection_Npy7LD": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "mission-pattern-remedies"
+          }
+        },
+        "featured_collection_xY3HpY": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "crystal-rakhi"
+          }
+        },
+        "featured_collection_qceXDX": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "bracelets"
+          }
+        }
+      },
+      "block_order": [
+        "featured_collection_LQkKG4",
+        "featured_collection_WQxCBX",
+        "featured_collection_qmmMtM",
+        "featured_collection_Npy7LD",
+        "featured_collection_xY3HpY",
+        "featured_collection_qceXDX"
+      ],
+      "name": "t:sections.collection-list.presets.name",
+      "settings": {
+        "title": "Collections",
+        "heading_size": "h1",
+        "image_ratio": "square",
+        "columns_desktop": 5,
+        "color_scheme": "",
+        "show_view_all": false,
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
         "padding_top": 36,
         "padding_bottom": 36
       }
