@@ -324,13 +324,20 @@
           "settings": {
             "collection": "crystal-rakhi"
           }
+        },
+        "featured_collection_agTTph": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "mission-pattern-remedies"
+          }
         }
       },
       "block_order": [
         "featured_collection_ze4rBV",
         "featured_collection_Pgykar",
         "featured_collection_cftXQ8",
-        "featured_collection_XYNVzn"
+        "featured_collection_XYNVzn",
+        "featured_collection_agTTph"
       ],
       "name": "t:sections.collection-list.presets.name",
       "settings": {
