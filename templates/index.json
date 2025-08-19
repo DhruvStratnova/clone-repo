@@ -407,68 +407,6 @@
         "padding_bottom": 36
       }
     },
-    "collapsible_content_iPVB77": {
-      "type": "collapsible-content",
-      "blocks": {
-        "collapsible_row_TVnU6p": {
-          "type": "collapsible_row",
-          "settings": {
-            "heading": "Charged for you by Top Astros",
-            "icon": "none",
-            "row_content": "<p><br/>At AstroAura, every healing stone is carefully sourced and energised by our trusted astrologers, infused with pure intentions to ensure authenticity and effectiveness for you.</p>",
-            "page": ""
-          }
-        },
-        "collapsible_row_N46mmB": {
-          "type": "collapsible_row",
-          "settings": {
-            "heading": "100% Natural & Authentic",
-            "icon": "none",
-            "row_content": "<p>All our stones are 100% authentic and original, sourced from top international mines across the globe.<br/><br/></p>",
-            "page": ""
-          }
-        },
-        "collapsible_row_Udz3jQ": {
-          "type": "collapsible_row",
-          "settings": {
-            "heading": "Certified by Govt Labs",
-            "icon": "none",
-            "row_content": "<p>Certified by trusted experts at the gemology lab. Passed multiple screenings for originality and quality.<br/><br/></p>",
-            "page": ""
-          }
-        },
-        "collapsible_row_NFn8DC": {
-          "type": "collapsible_row",
-          "settings": {
-            "heading": "Hand Crafted by Artisans",
-            "icon": "none",
-            "row_content": "<p>Meticulously crafted by experienced artisans with special attention to detail.</p><p>Original crystals, delicately polished to enhance the brilliance and look. Unparalleled craftsmanship to bring out the magnificent detail in each product.</p>",
-            "page": ""
-          }
-        }
-      },
-      "block_order": [
-        "collapsible_row_TVnU6p",
-        "collapsible_row_N46mmB",
-        "collapsible_row_Udz3jQ",
-        "collapsible_row_NFn8DC"
-      ],
-      "name": "t:sections.collapsible_content.presets.name",
-      "settings": {
-        "caption": "",
-        "heading": "Why AstroAura",
-        "heading_size": "h1",
-        "heading_alignment": "center",
-        "layout": "none",
-        "container_color_scheme": "",
-        "color_scheme": "",
-        "open_first_collapsible_row": false,
-        "image_ratio": "adapt",
-        "desktop_layout": "image_second",
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
     "image_with_text_dMnjUt": {
       "type": "image-with-text",
       "blocks": {
@@ -545,13 +483,16 @@
         "product_NEitRD",
         "collection_BpyYhN"
       ],
+      "custom_css": [
+        "h2 {font-size: 10;}"
+      ],
       "name": "t:sections.collage.presets.name",
       "settings": {
         "heading": "BROWSE BY CATEGORY",
         "heading_size": "h1",
         "desktop_layout": "left",
         "mobile_layout": "column",
-        "card_styles": "product-card-wrapper",
+        "card_styles": "none",
         "color_scheme": "",
         "padding_top": 36,
         "padding_bottom": 36
@@ -569,6 +510,9 @@
       },
       "block_order": [
         "featured_collection_wHKrwC"
+      ],
+      "custom_css": [
+        "h2{font-size: 15;}"
       ],
       "name": "t:sections.collection-list.presets.name",
       "settings": {
@@ -604,57 +548,6 @@
       "settings": {
         "include_margins": true
       }
-    },
-    "image_banner_derjg7": {
-      "type": "image-banner",
-      "blocks": {
-        "heading_XeTmDD": {
-          "type": "heading",
-          "settings": {
-            "heading": "Image banner",
-            "heading_size": "h1"
-          }
-        },
-        "text_YBd9Ff": {
-          "type": "text",
-          "disabled": true,
-          "settings": {
-            "text": "Give customers details about the banner image(s) or content on the template.",
-            "text_style": "body"
-          }
-        },
-        "buttons_JcNRJC": {
-          "type": "buttons",
-          "disabled": true,
-          "settings": {
-            "button_label_1": "Button label",
-            "button_link_1": "",
-            "button_style_secondary_1": false,
-            "button_label_2": "Button label",
-            "button_link_2": "",
-            "button_style_secondary_2": false
-          }
-        }
-      },
-      "block_order": [
-        "heading_XeTmDD",
-        "text_YBd9Ff",
-        "buttons_JcNRJC"
-      ],
-      "name": "t:sections.image-banner.presets.name",
-      "settings": {
-        "image": "shopify://shop_images/Aura_synchorined.jpg",
-        "image_overlay_opacity": 0,
-        "image_height": "medium",
-        "image_behavior": "none",
-        "desktop_content_position": "middle-center",
-        "desktop_content_alignment": "left",
-        "show_text_box": true,
-        "color_scheme": "",
-        "stack_images_on_mobile": true,
-        "mobile_content_alignment": "center",
-        "show_text_below": true
-      }
     }
   },
   "order": [
@@ -667,11 +560,9 @@
     "collection_list_XLNAUt",
     "image_with_text_DYDtwA",
     "collection_list_ctAMFr",
-    "collapsible_content_iPVB77",
     "image_with_text_dMnjUt",
     "collage_EmY7zc",
     "collection_list_FyYyxF",
-    "1754756233592eb8c3",
-    "image_banner_derjg7"
+    "1754756233592eb8c3"
   ]
 }
