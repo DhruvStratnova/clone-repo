@@ -663,7 +663,7 @@
       ],
       "name": "t:sections.image-banner.presets.name",
       "settings": {
-        "image": "shopify://shop_images/Certified_gems.jpg",
+        "image": "shopify://shop_images/Certified_gems_2.jpg",
         "image_overlay_opacity": 0,
         "image_height": "adapt",
         "image_behavior": "none",
