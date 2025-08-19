@@ -257,6 +257,68 @@
         "padding_bottom": 12
       }
     },
+    "collection_list_ctAMFr": {
+      "type": "collection-list",
+      "blocks": {
+        "featured_collection_LQkKG4": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "rudraksha-mala"
+          }
+        },
+        "featured_collection_WQxCBX": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "rudrasha"
+          }
+        },
+        "featured_collection_qmmMtM": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "gemstones"
+          }
+        },
+        "featured_collection_Npy7LD": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "mission-pattern-remedies"
+          }
+        },
+        "featured_collection_xY3HpY": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "crystal-rakhi"
+          }
+        },
+        "featured_collection_qceXDX": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "bracelets"
+          }
+        }
+      },
+      "block_order": [
+        "featured_collection_LQkKG4",
+        "featured_collection_WQxCBX",
+        "featured_collection_qmmMtM",
+        "featured_collection_Npy7LD",
+        "featured_collection_xY3HpY",
+        "featured_collection_qceXDX"
+      ],
+      "name": "t:sections.collection-list.presets.name",
+      "settings": {
+        "title": "Collections",
+        "heading_size": "h1",
+        "image_ratio": "square",
+        "columns_desktop": 5,
+        "color_scheme": "",
+        "show_view_all": false,
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
     "collection_list_Cp4wfW": {
       "type": "collection-list",
       "blocks": {
@@ -357,68 +419,6 @@
         "color_scheme": "accent-1",
         "padding_top": 56,
         "padding_bottom": 60
-      }
-    },
-    "collection_list_ctAMFr": {
-      "type": "collection-list",
-      "blocks": {
-        "featured_collection_LQkKG4": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "rudraksha-mala"
-          }
-        },
-        "featured_collection_WQxCBX": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "rudrasha"
-          }
-        },
-        "featured_collection_qmmMtM": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "gemstones"
-          }
-        },
-        "featured_collection_Npy7LD": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "mission-pattern-remedies"
-          }
-        },
-        "featured_collection_xY3HpY": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "crystal-rakhi"
-          }
-        },
-        "featured_collection_qceXDX": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "bracelets"
-          }
-        }
-      },
-      "block_order": [
-        "featured_collection_LQkKG4",
-        "featured_collection_WQxCBX",
-        "featured_collection_qmmMtM",
-        "featured_collection_Npy7LD",
-        "featured_collection_xY3HpY",
-        "featured_collection_qceXDX"
-      ],
-      "name": "t:sections.collection-list.presets.name",
-      "settings": {
-        "title": "Collections",
-        "heading_size": "h1",
-        "image_ratio": "square",
-        "columns_desktop": 5,
-        "color_scheme": "",
-        "show_view_all": false,
-        "columns_mobile": "1",
-        "swipe_on_mobile": false,
-        "padding_top": 36,
-        "padding_bottom": 36
       }
     },
     "image_with_text_dMnjUt": {
@@ -630,9 +630,9 @@
     "image_with_text_tz9Af9",
     "featured_collection",
     "featured_collection_6N6qke",
-    "collection_list_Cp4wfW",
-    "image_with_text_DYDtwA",
     "collection_list_ctAMFr",
+    "image_with_text_DYDtwA",
+    "collection_list_Cp4wfW",
     "image_with_text_dMnjUt",
     "collection_list_XLNAUt",
     "collage_EmY7zc",
