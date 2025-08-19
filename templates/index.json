@@ -383,12 +383,6 @@
           "settings": {
             "collection": "bracelets"
           }
-        },
-        "featured_collection_wiMyhX": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "bracelets"
-          }
         }
       },
       "block_order": [
@@ -397,8 +391,7 @@
         "featured_collection_qmmMtM",
         "featured_collection_Npy7LD",
         "featured_collection_xY3HpY",
-        "featured_collection_qceXDX",
-        "featured_collection_wiMyhX"
+        "featured_collection_qceXDX"
       ],
       "name": "t:sections.collection-list.presets.name",
       "settings": {
