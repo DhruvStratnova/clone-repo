@@ -257,47 +257,6 @@
         "padding_bottom": 12
       }
     },
-    "collection_list_XLNAUt": {
-      "type": "collection-list",
-      "blocks": {
-        "featured_collection_cipx4n": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "rudrasha"
-          }
-        },
-        "featured_collection_yUYkDi": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "bracelets"
-          }
-        },
-        "featured_collection_LDdpWr": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "gemstones"
-          }
-        }
-      },
-      "block_order": [
-        "featured_collection_cipx4n",
-        "featured_collection_yUYkDi",
-        "featured_collection_LDdpWr"
-      ],
-      "name": "t:sections.collection-list.presets.name",
-      "settings": {
-        "title": "Shop By Purpose",
-        "heading_size": "h2",
-        "image_ratio": "square",
-        "columns_desktop": 6,
-        "color_scheme": "",
-        "show_view_all": false,
-        "columns_mobile": "2",
-        "swipe_on_mobile": true,
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
     "collection_list_Cp4wfW": {
       "type": "collection-list",
       "blocks": {
@@ -510,6 +469,47 @@
         "padding_bottom": 24
       }
     },
+    "collection_list_XLNAUt": {
+      "type": "collection-list",
+      "blocks": {
+        "featured_collection_cipx4n": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "rudrasha"
+          }
+        },
+        "featured_collection_yUYkDi": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "bracelets"
+          }
+        },
+        "featured_collection_LDdpWr": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "gemstones"
+          }
+        }
+      },
+      "block_order": [
+        "featured_collection_cipx4n",
+        "featured_collection_yUYkDi",
+        "featured_collection_LDdpWr"
+      ],
+      "name": "t:sections.collection-list.presets.name",
+      "settings": {
+        "title": "Shop By Purpose",
+        "heading_size": "h2",
+        "image_ratio": "square",
+        "columns_desktop": 6,
+        "color_scheme": "",
+        "show_view_all": false,
+        "columns_mobile": "2",
+        "swipe_on_mobile": true,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
     "collage_EmY7zc": {
       "type": "collage",
       "blocks": {
@@ -630,11 +630,11 @@
     "image_with_text_tz9Af9",
     "featured_collection",
     "featured_collection_6N6qke",
-    "collection_list_XLNAUt",
     "collection_list_Cp4wfW",
     "image_with_text_DYDtwA",
     "collection_list_ctAMFr",
     "image_with_text_dMnjUt",
+    "collection_list_XLNAUt",
     "collage_EmY7zc",
     "image_with_text_mJmbpt",
     "1754756233592eb8c3"
