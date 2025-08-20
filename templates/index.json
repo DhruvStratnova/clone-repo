@@ -355,7 +355,7 @@
       "name": "t:sections.collection-list.presets.name",
       "settings": {
         "title": "Collections",
-        "heading_size": "h1",
+        "heading_size": "h2",
         "image_ratio": "square",
         "columns_desktop": 5,
         "color_scheme": "",
@@ -459,7 +459,7 @@
       "name": "t:sections.collection-list.presets.name",
       "settings": {
         "title": "Aura-synchronized treasures",
-        "heading_size": "h1",
+        "heading_size": "h2",
         "image_ratio": "square",
         "columns_desktop": 5,
         "color_scheme": "",
@@ -477,7 +477,7 @@
           "type": "heading",
           "settings": {
             "heading": "Why AtroAura",
-            "heading_size": "h1"
+            "heading_size": "h2"
           }
         },
         "text_x3JxKH": {
@@ -568,7 +568,7 @@
           "type": "heading",
           "settings": {
             "heading": "Certified Gems",
-            "heading_size": "h1"
+            "heading_size": "h2"
           }
         },
         "text_6qCVAe": {
