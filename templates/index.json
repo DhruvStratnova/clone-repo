@@ -664,6 +664,9 @@
         "text_n8MhxD",
         "buttons_zPM9wE"
       ],
+      "custom_css": [
+        ".tabber_coll .tab {display: flex; /* visibility: hidden; */ justify-content: space-evenly; flex-wrap: wrap; gap: 10px; width: 100%;}"
+      ],
       "name": "t:sections.image-banner.presets.name",
       "settings": {
         "image_overlay_opacity": 0,
