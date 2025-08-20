@@ -629,6 +629,54 @@
       "settings": {
         "include_margins": true
       }
+    },
+    "image_banner_WwmTHL": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_Dfe33i": {
+          "type": "heading",
+          "settings": {
+            "heading": "Image banner",
+            "heading_size": "h1"
+          }
+        },
+        "text_n8MhxD": {
+          "type": "text",
+          "settings": {
+            "text": "Give customers details about the banner image(s) or content on the template.",
+            "text_style": "body"
+          }
+        },
+        "buttons_zPM9wE": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "Button label",
+            "button_link_1": "",
+            "button_style_secondary_1": false,
+            "button_label_2": "Button label",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_Dfe33i",
+        "text_n8MhxD",
+        "buttons_zPM9wE"
+      ],
+      "name": "t:sections.image-banner.presets.name",
+      "settings": {
+        "image_overlay_opacity": 0,
+        "image_height": "medium",
+        "image_behavior": "none",
+        "desktop_content_position": "middle-center",
+        "desktop_content_alignment": "center",
+        "show_text_box": true,
+        "color_scheme": "",
+        "stack_images_on_mobile": true,
+        "mobile_content_alignment": "center",
+        "show_text_below": true
+      }
     }
   },
   "order": [
@@ -645,6 +693,7 @@
     "image_with_text_dMnjUt",
     "collage_EmY7zc",
     "image_with_text_mJmbpt",
-    "1754756233592eb8c3"
+    "1754756233592eb8c3",
+    "image_banner_WwmTHL"
   ]
 }
