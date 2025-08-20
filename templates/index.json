@@ -716,6 +716,9 @@
         "text_nmT6zn",
         "buttons_Krp9wG"
       ],
+      "custom_css": [
+        ".tabber_coll .tab {display: none; /* visibility: hidden; */ flex-wrap: wrap; gap: 10px; width: 100%;}"
+      ],
       "name": "t:sections.image-banner.presets.name",
       "settings": {
         "image_overlay_opacity": 0,
