@@ -393,6 +393,7 @@
         "featured_collection_yUYkDi",
         "featured_collection_LDdpWr"
       ],
+      "custom_css": [],
       "name": "t:sections.collection-list.presets.name",
       "settings": {
         "title": "Shop By Purpose",
@@ -402,7 +403,7 @@
         "color_scheme": "",
         "show_view_all": false,
         "columns_mobile": "2",
-        "swipe_on_mobile": true,
+        "swipe_on_mobile": false,
         "padding_top": 36,
         "padding_bottom": 36
       }
@@ -551,7 +552,7 @@
       "name": "t:sections.collage.presets.name",
       "settings": {
         "heading": "BROWSE BY CATEGORY",
-        "heading_size": "h1",
+        "heading_size": "h2",
         "desktop_layout": "left",
         "mobile_layout": "column",
         "card_styles": "none",
