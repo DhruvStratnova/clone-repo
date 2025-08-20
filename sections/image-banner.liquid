@@ -556,100 +556,65 @@
     <div class="tab">
       <button class="tablinks" onclick="tabAccordion(event, 'About')">
         About
-        <!-- Inline caret SVG -->
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="caret">
           <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </button>
-      <button class="tablinks active" onclick="tabAccordion(event, 'Clean &amp; Care')">
+      <button class="tablinks active" onclick="tabAccordion(event, 'Clean & Care')">
         Clean &amp; Care
-        <!-- Inline caret SVG -->
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="caret">
           <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </button>
       <button class="tablinks" onclick="tabAccordion(event, 'Benefits')">
         Benefits
-        <!-- Inline caret SVG -->
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="caret">
           <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </button>
       <button class="tablinks" onclick="tabAccordion(event, 'Types')">
         Types
-        <!-- Inline caret SVG -->
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="caret">
           <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </button>
-      <button class="tablinks" onclick="tabAccordion(event, 'Quality &amp; Price')">
+      <button class="tablinks" onclick="tabAccordion(event, 'Quality & Price')">
         Quality &amp; Price
-        <!-- Inline caret SVG -->
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="caret">
           <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </button>
-      {% comment %} <button class="tablinks" onclick="tabAccordion(event, 'Buyer Beware')">
-        Buyer Beware
-        <!-- Inline caret SVG -->
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="caret">
-          <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
-      <button class="tablinks" onclick="tabAccordion(event, 'FAQs')">
-        FAQs
-        <!-- Inline caret SVG -->
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="caret">
-          <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button> {% endcomment %}
+      {% comment %} ... other buttons ... {% endcomment %}
     </div>
   </div>
 
   <div class="tabber_content">
-    <div id="" class="tabcontent">
-      {% comment %} <h2>About the Stone</h2> {% endcomment %}
+    <div id="About" class="tabcontent">
       <div>
         {{- collection.metafields.custom.about }}
       </div>
     </div>
-    <div id="" class="tabcontent" style="display: block;">
+    <div id="Clean & Care" class="tabcontent" style="display: block;">
       <div>
         {{- collection.metafields.custom.clean_care }}
       </div>
     </div>
-    <div id="" class="tabcontent">
-      {% comment %} <h2>Benefits</h2> {% endcomment %}
+    <div id="Benefits" class="tabcontent">
       <div>
         {{- collection.metafields.custom.benefits }}
       </div>
     </div>
-    <div id="" class="">
-      {% comment %} <h2>Types</h2> {% endcomment %}
+    <div id="Types" class="tabcontent">
       <div>
         {{- collection.metafields.custom.types }}
       </div>
     </div>
-    <div id="" class="">
-      {% comment %} <h2>Quality & Price</h2> {% endcomment %}
+    <div id="Quality & Price" class="tabcontent">
       <div>
         {{- collection.metafields.custom.quality_price }}
       </div>
     </div>
-    {% comment %}
-      <div id="Buyer Beware" class="tabcontent">
-        <h2>Buyer Beware</h2>
-      <div>
-          {{- collection.metafields.custom.about }}
-        </div>
-      </div>
-      <div id="FAQs" class="tabcontent">
-        <h2>FAQs</h2>
-       <div>
-          {{- collection.metafields.custom.about }}
-        </div>
-      </div>
-    {% endcomment %}
+    {% comment %} ... other content divs ... {% endcomment %}
   </div>
 </div>
 
@@ -683,6 +648,8 @@
     }
   }
 </script>
+
+
 
 {% schema %}
 {
