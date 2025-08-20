@@ -234,7 +234,7 @@ product-info {
 .product-page-purpose-pill-container{
   margin-bottom:6px;
   display: flex;
-  flex-wrap:
+  flex-wrap: wrap;
   gap: 1rem;
 }
 
