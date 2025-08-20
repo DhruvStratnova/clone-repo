@@ -372,19 +372,19 @@
         "featured_collection_cipx4n": {
           "type": "featured_collection",
           "settings": {
-            "collection": "rudrasha"
+            "collection": "money"
           }
         },
         "featured_collection_yUYkDi": {
           "type": "featured_collection",
           "settings": {
-            "collection": "bracelets"
+            "collection": "health"
           }
         },
         "featured_collection_LDdpWr": {
           "type": "featured_collection",
           "settings": {
-            "collection": "gemstones"
+            "collection": "wealth"
           }
         }
       },
