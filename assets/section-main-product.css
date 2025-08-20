@@ -236,6 +236,7 @@ product-info {
   display: flex;
   flex-wrap: wrap;
   gap: 0px 8px;
+  height:8px;
 }
 
 .product-page-purpose-pill{
