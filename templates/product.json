@@ -35,6 +35,10 @@
             "swatch_shape": "square"
           }
         },
+        "globo_product_option_app_block_e6Fg3B": {
+          "type": "shopify://apps/globo-product-option/blocks/app-block/fdc9fad5-1a0f-4bd4-9c8a-1af6a6eef6b8",
+          "settings": {}
+        },
         "option_plus_option_plus_block_qytF6m": {
           "type": "shopify://apps/option-plus/blocks/OptionPlusBlock/f5a2f298-6d68-4e0e-a5d5-c1c57a64b3d0",
           "disabled": true,
@@ -87,6 +91,7 @@
         "title",
         "price",
         "variant_picker",
+        "globo_product_option_app_block_e6Fg3B",
         "option_plus_option_plus_block_qytF6m",
         "quantity_selector",
         "buy_buttons",
