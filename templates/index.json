@@ -718,7 +718,7 @@
       ],
       "custom_css": [
         ".tabber_coll .tab {display: none; /* visibility: hidden; */ flex-wrap: wrap; gap: 10px; width: 100%;}",
-        ".media > *:not(.zoom):not(.deferred-media__poster-button),.media model-viewer {display: block; max-width: 80%; position: absolute; top: 0; left: 0; height: 80%; width: 80%;}"
+        ".media > *:not(.zoom):not(.deferred-media__poster-button),.media model-viewer {display: block; max-width: 60%; position: absolute; top: 0; left: 0; height: 50%; width: 50%;}"
       ],
       "name": "t:sections.image-banner.presets.name",
       "settings": {
