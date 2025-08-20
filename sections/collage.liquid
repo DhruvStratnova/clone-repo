@@ -130,7 +130,6 @@
                       data-media-id="{{ block.settings.video_url.id }}"
                     >
                       <div
-                        id="collage-media-largeimg"
                         class="media media--transparent ratio"
                         {% if block.settings.cover_image != blank %}
                           style="--ratio-percent: {{ 1 | divided_by: block.settings.cover_image.aspect_ratio | times: 100 }}%"
