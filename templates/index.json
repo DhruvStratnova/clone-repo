@@ -366,6 +366,47 @@
         "padding_bottom": 36
       }
     },
+    "collection_list_XLNAUt": {
+      "type": "collection-list",
+      "blocks": {
+        "featured_collection_cipx4n": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "rudrasha"
+          }
+        },
+        "featured_collection_yUYkDi": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "bracelets"
+          }
+        },
+        "featured_collection_LDdpWr": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "gemstones"
+          }
+        }
+      },
+      "block_order": [
+        "featured_collection_cipx4n",
+        "featured_collection_yUYkDi",
+        "featured_collection_LDdpWr"
+      ],
+      "name": "t:sections.collection-list.presets.name",
+      "settings": {
+        "title": "Shop By Purpose",
+        "heading_size": "h2",
+        "image_ratio": "square",
+        "columns_desktop": 6,
+        "color_scheme": "",
+        "show_view_all": false,
+        "columns_mobile": "2",
+        "swipe_on_mobile": true,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
     "collection_list_b7XdPw": {
       "type": "collection-list",
       "blocks": {
@@ -424,47 +465,6 @@
         "show_view_all": false,
         "columns_mobile": "1",
         "swipe_on_mobile": false,
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
-    "collection_list_XLNAUt": {
-      "type": "collection-list",
-      "blocks": {
-        "featured_collection_cipx4n": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "rudrasha"
-          }
-        },
-        "featured_collection_yUYkDi": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "bracelets"
-          }
-        },
-        "featured_collection_LDdpWr": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "gemstones"
-          }
-        }
-      },
-      "block_order": [
-        "featured_collection_cipx4n",
-        "featured_collection_yUYkDi",
-        "featured_collection_LDdpWr"
-      ],
-      "name": "t:sections.collection-list.presets.name",
-      "settings": {
-        "title": "Shop By Purpose",
-        "heading_size": "h2",
-        "image_ratio": "square",
-        "columns_desktop": 6,
-        "color_scheme": "",
-        "show_view_all": false,
-        "columns_mobile": "2",
-        "swipe_on_mobile": true,
         "padding_top": 36,
         "padding_bottom": 36
       }
