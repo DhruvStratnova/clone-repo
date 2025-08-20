@@ -716,8 +716,12 @@
         "text_ReKzaD",
         "buttons_3BQ4yB"
       ],
+      "custom_css": [
+        ".tabber_coll .tab {display: none; justify-content: space-evenly; flex-wrap: wrap; gap: 10px; width: 100%;}"
+      ],
       "name": "t:sections.image-banner.presets.name",
       "settings": {
+        "image": "shopify://shop_images/23.jpg",
         "image_overlay_opacity": 0,
         "image_height": "medium",
         "image_behavior": "none",
