@@ -469,61 +469,6 @@
         "padding_bottom": 36
       }
     },
-    "collection_list_Cp4wfW": {
-      "type": "collection-list",
-      "blocks": {
-        "featured_collection_ze4rBV": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "gemstones"
-          }
-        },
-        "featured_collection_Pgykar": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "rudrasha"
-          }
-        },
-        "featured_collection_cftXQ8": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "bracelets"
-          }
-        },
-        "featured_collection_XYNVzn": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "crystal-rakhi"
-          }
-        },
-        "featured_collection_agTTph": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "mission-pattern-remedies"
-          }
-        }
-      },
-      "block_order": [
-        "featured_collection_ze4rBV",
-        "featured_collection_Pgykar",
-        "featured_collection_cftXQ8",
-        "featured_collection_XYNVzn",
-        "featured_collection_agTTph"
-      ],
-      "name": "t:sections.collection-list.presets.name",
-      "settings": {
-        "title": "Aura-synchronized treasures",
-        "heading_size": "h1",
-        "image_ratio": "adapt",
-        "columns_desktop": 3,
-        "color_scheme": "",
-        "show_view_all": false,
-        "columns_mobile": "2",
-        "swipe_on_mobile": false,
-        "padding_top": 20,
-        "padding_bottom": 28
-      }
-    },
     "image_with_text_dMnjUt": {
       "type": "image-with-text",
       "blocks": {
@@ -694,9 +639,8 @@
     "featured_collection_6N6qke",
     "image_with_text_DYDtwA",
     "collection_list_ctAMFr",
-    "collection_list_b7XdPw",
     "collection_list_XLNAUt",
-    "collection_list_Cp4wfW",
+    "collection_list_b7XdPw",
     "image_with_text_dMnjUt",
     "collage_EmY7zc",
     "image_with_text_mJmbpt",
