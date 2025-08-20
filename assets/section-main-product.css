@@ -235,8 +235,9 @@ product-info {
   /* margin-bottom:6px; */
   display: flex;
   flex-wrap: wrap;
-  gap: 0px 8px}
-  
+  gap: 0px 8px;
+}
+
 
 .product-page-purpose-pill{
   background-color:#cdebb2;
