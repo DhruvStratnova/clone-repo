@@ -183,7 +183,7 @@
             filter_type: section.settings.filter_type,
             paginate: paginate
           %}
-              <div id="custom-filters" class="custom-filters">
+              {% comment %} <div id="custom-filters" class="custom-filters">
       <form id="productFilterForm">
         <label for="filter-gemstone">Gemstone</label>
         <select name="gemstone" id="filter-gemstone">
@@ -210,7 +210,7 @@
           {% endfor %}
         </select>
       </form>
-    </div>
+    </div> {% endcomment %}
         </aside>
       {%- endif -%}
 
