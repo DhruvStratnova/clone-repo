@@ -1,3 +1,7 @@
+.collection{
+  max-width:1200px;
+}
+
 @media screen and (max-width: 749px) {
   .collection .grid__item:only-child {
     flex: 0 0 100%;
