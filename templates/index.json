@@ -231,6 +231,9 @@
     },
     "featured_collection_6N6qke": {
       "type": "featured-collection",
+      "custom_css": [
+        ".section-template--24917146140974__featured_collection_6N6qke-padding {padding-top: 7px; padding-bottom: 6px; max-width: 1200px; }"
+      ],
       "settings": {
         "collection": "all",
         "products_to_show": 13,
