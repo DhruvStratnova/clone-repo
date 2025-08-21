@@ -90,7 +90,7 @@
 
   .collection--full-width slider-component:not(.slider-component-desktop) {
     padding: 0 1.5rem;
-    max-width: 1200px;
+    max-width: none;
   }
 }
 
