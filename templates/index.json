@@ -232,7 +232,7 @@
     "featured_collection_6N6qke": {
       "type": "featured-collection",
       "custom_css": [
-        ".section-template--24917146140974__featured_collection_6N6qke-padding {padding-top: 0px; padding-bottom: 8px; max-width: 940px; }"
+        ".section-template--24917146140974__featured_collection_6N6qke-padding {padding-top: 0px; padding-bottom: 8px; max-width: 940px;}"
       ],
       "settings": {
         "collection": "all",
@@ -549,6 +549,7 @@
         "product_NEitRD",
         "collection_BpyYhN"
       ],
+      "disabled": true,
       "custom_css": [
         "h2 {font-size: 30;}"
       ],
@@ -667,6 +668,7 @@
         "text_n8MhxD",
         "buttons_zPM9wE"
       ],
+      "disabled": true,
       "custom_css": [
         ".tabber_coll .tab {display: none; /* visibility: hidden; */ justify-content: space-evenly; flex-wrap: wrap; gap: 10px; width: 100%;}"
       ],
