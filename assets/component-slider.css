@@ -11,7 +11,7 @@ slider-component.slider-component-full-width {
   --desktop-margin-left-first-item: 1.5rem;
 }
 
-@media screen and (max-width: 749px) {
+@media screen and (max-width: none) {
   slider-component.page-width {
     padding: 0 1.5rem;
   }
