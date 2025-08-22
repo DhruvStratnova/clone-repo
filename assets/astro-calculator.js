@@ -92,9 +92,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
       //GEOCODING API
-
-
       const geoapifyKey = "55e9073809d4409fa8c39310584517f9";
+
+      
       // Date & time
       const dob = new Date(data.dob);
       let hour = 0, min = 0;
