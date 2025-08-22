@@ -91,7 +91,10 @@ document.addEventListener("DOMContentLoaded", function () {
       const auth = "Basic " + btoa(USER_ID + ":" + API_KEY);
 
 
-      //GEO
+      //GEOCODING API
+
+
+      const geop
       // Date & time
       const dob = new Date(data.dob);
       let hour = 0, min = 0;
