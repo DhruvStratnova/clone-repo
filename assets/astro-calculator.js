@@ -1,4 +1,3 @@
-/* assets/astro-calculator.js */
 
 document.addEventListener("DOMContentLoaded", function () {
   const tabs = document.querySelectorAll(".calculator-tabs .tab");
