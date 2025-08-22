@@ -1,3 +1,23 @@
+.header__menu-item:hover .header__submenu,
+.header__menu-item:focus-within .header__submenu {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Hide submenu by default */
+.header__submenu {
+  display: none;
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+  background: #fff;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+  z-index: 999;
+}
+
+
 :root {
   --alpha-button-background: 1;
   --alpha-button-border: 1;
