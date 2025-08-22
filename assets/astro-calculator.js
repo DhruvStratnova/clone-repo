@@ -90,6 +90,8 @@ document.addEventListener("DOMContentLoaded", function () {
       const language = "en";
       const auth = "Basic " + btoa(USER_ID + ":" + API_KEY);
 
+
+      //GEO
       // Date & time
       const dob = new Date(data.dob);
       let hour = 0, min = 0;
