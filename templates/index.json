@@ -232,7 +232,7 @@
     "featured_collection_6N6qke": {
       "type": "featured-collection",
       "custom_css": [
-        ".section-template--24917146140974__featured_collection_6N6qke-padding {padding-top: 0px; padding-bottom: 8px; max-width: 940px;}"
+        ".card .card__inner .card__media {overflow: hidden; z-index: 0; width: 156px; height: 177px; align-content: center; justify-content: center; border-radius: calc(var(--border-radius) - var(--border-width) - var(--image-padding));}"
       ],
       "settings": {
         "collection": "all",
