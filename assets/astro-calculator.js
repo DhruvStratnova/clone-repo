@@ -6,7 +6,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const astroResultsDiv = document.getElementById("astro-results");
   const astroOutputDiv = document.getElementById("astro-output");
 
-  const gemstoneFields = `
+  // --- CHANGE 1: Simplified the form fields ---
+  // Removed the manual latitude and longitude inputs.
+  const commonFields = `
     <div class="form-group">
       <input type="text" name="name" placeholder="Enter your name" required>
     </div>
@@ -16,28 +18,12 @@ document.addEventListener("DOMContentLoaded", function () {
       <label><input type="checkbox" name="no_time"> I don't have time of birth</label>
     </div>
     <div class="form-group">
-      <input type="text" name="lat" placeholder="Latitude (e.g., 28.6139)" required>
-      <input type="text" name="lon" placeholder="Longitude (e.g., 77.2090)" required>
-      <input type="text" name="placeName" placeholder="Enter Birth Place" required>
-
+      <input type="text" name="placeName" placeholder="Enter Birth Place (e.g., New Delhi, India)" required>
     </div>
   `;
 
-  const rudrakshaFields = `
-    <div class="form-group">
-      <input type="text" name="name" placeholder="Enter your name" required>
-    </div>
-    <div class="form-group">
-      <input type="date" name="dob" required>
-      <input type="time" name="tob">
-      <label><input type="checkbox" name="no_time"> I don't have time of birth</label>
-    </div>
-    <div class="form-group">
-      <input type="text" name="lat" placeholder="Latitude (e.g., 28.6139)" required>
-      <input type="text" name="lon" placeholder="Longitude (e.g., 77.2090)" required>
-      <input type="text" name="placeName" placeholder="Enter Birth Place" required>
-    </div>
-  `;
+  const gemstoneFields = commonFields;
+  const rudrakshaFields = commonFields;
 
   function switchTab(tabName) {
     tabs.forEach(tab => tab.classList.remove("active"));
@@ -71,66 +57,71 @@ document.addEventListener("DOMContentLoaded", function () {
       const formData = new FormData(e.target);
       const data = Object.fromEntries(formData.entries());
 
-      let fetchURL = "";
-      if (currentTab === "by-gemstone") {
-        fetchURL = "https://json.astrologyapi.com/v1/basic_gem_suggestion";
-      } else if (currentTab === "by-rudraksha") {
-        fetchURL = "https://json.astrologyapi.com/v1/rudraksha_suggestion";
-      }
-
-      // Validate lat/lon
-      if (isNaN(parseFloat(data.lat)) || isNaN(parseFloat(data.lon))) {
-        alert("Please enter valid numerical values for Latitude and Longitude.");
-        return;
-      }
-
-      // API auth
-      const USER_ID = "642699";
-      const API_KEY = "86af5961c6dfcac90d4ae97401a974385dc7c6a3";
-      const language = "en";
-      const auth = "Basic " + btoa(USER_ID + ":" + API_KEY);
-
-
-      //GEOCODING API
-      const geoapifyKey = "55e9073809d4409fa8c39310584517f9";
-
-
-      // Date & time
-      const dob = new Date(data.dob);
-      let hour = 0, min = 0;
-      if (!data.no_time && data.tob) {
-        [hour, min] = data.tob.split(":").map(Number);
-      }
-
-      const payload = {
-        day: dob.getDate(),
-        month: dob.getMonth() + 1,
-        year: dob.getFullYear(),
-        hour,
-        min,
-        lat: parseFloat(data.lat),
-        lon: parseFloat(data.lon),
-        birthPlace: placeName
-        tzone: 5.5
-      };
+      // API auth details
+      const ASTRO_USER_ID = "642699";
+      const ASTRO_API_KEY = "86af5961c6dfcac90d4ae97401a974385dc7c6a3";
+      const GEOAPIFY_API_KEY = "55e9073809d4409fa8c39310584517f9"; // Your actual key
+      const auth = "Basic " + btoa(ASTRO_USER_ID + ":" + ASTRO_API_KEY);
+      
+      astroOutputDiv.innerHTML = '<p>Finding location and generating recommendation...</p>';
+      astroResultsDiv.style.display = 'block';
 
       try {
-        astroOutputDiv.innerHTML = '<p>Loading recommendation...</p>';
-        astroResultsDiv.style.display = 'block';
-
-
-
-
-
-
+        // --- CHANGE 2: Fetch coordinates from Geoapify first ---
+        const placeName = data.placeName;
+        const geoApiUrl = `https://api.geoapify.com/v1/geocode/search?text=${encodeURIComponent(placeName)}&apiKey=${GEOAPIFY_API_KEY}`;
         
+        const geoResponse = await fetch(geoApiUrl);
+        if (!geoResponse.ok) {
+          throw new Error("Geocoding API request failed.");
+        }
+        
+        const geoResult = await geoResponse.json();
 
+        // Check if the API found any locations
+        if (!geoResult.features || geoResult.features.length === 0) {
+          throw new Error(`Could not find the location: "${placeName}". Please try a more specific name (e.g., "City, Country").`);
+        }
+
+        const properties = geoResult.features[0].properties;
+        const latitude = properties.lat;
+        const longitude = properties.lon;
+        // You can also get the timezone offset for higher accuracy
+        const timezoneOffsetSeconds = properties.timezone.offset_DST_seconds;
+        const timezoneOffsetHours = timezoneOffsetSeconds / 3600;
+
+        // --- CHANGE 3: Use fetched data for the Astrology API payload ---
+        let fetchURL = "";
+        if (currentTab === "by-gemstone") {
+          fetchURL = "https://json.astrologyapi.com/v1/basic_gem_suggestion";
+        } else if (currentTab === "by-rudraksha") {
+          fetchURL = "https://json.astrologyapi.com/v1/rudraksha_suggestion";
+        }
+
+        const dob = new Date(data.dob);
+        let hour = 0, min = 0;
+        if (!data.no_time && data.tob) {
+          [hour, min] = data.tob.split(":").map(Number);
+        }
+
+        const payload = {
+          day: dob.getDate(),
+          month: dob.getMonth() + 1,
+          year: dob.getFullYear(),
+          hour: hour,
+          min: min,
+          lat: latitude,
+          lon: longitude,
+          tzone: timezoneOffsetHours // Using dynamic timezone from Geoapify
+        };
+        
+        // Now, call the astrology API
         const res = await fetch(fetchURL, {
           method: "POST",
           headers: {
             "authorization": auth,
             "Content-Type": "application/json",
-            "Accept-Language": language
+            "Accept-Language": "en"
           },
           body: JSON.stringify(payload)
         });
@@ -141,7 +132,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         const result = await res.json();
-        console.log(result);
+        console.log("Astrology API Result:", result);
 
         if (currentTab === "by-gemstone") {
           displayResult(result);
@@ -150,45 +141,46 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       } catch (err) {
         console.error("Error during API call:", err);
-        astroOutputDiv.innerHTML = `<p>Something went wrong. Please try again. Error: ${err.message || err}</p>`;
+        astroOutputDiv.innerHTML = `<p><strong>An error occurred:</strong> ${err.message || err}. Please check the input and try again.</p>`;
       }
     }
   });
 
-  // Gemstone card display
+  // Gemstone card display (no changes needed here)
   function displayResult(data) {
     let output = `<div class="gemstone-card-container">`;
     Object.entries(data).forEach(([category, gem]) => {
-      output += `
-        <div class="gemstone-card">
-          <div class="gemstone-content">
-            <h2 class="gemstone-title">${gem.name}</h2>
-            <p class="gemstone-description">
-              Represents <strong>${gem.gem_deity}</strong>, helping overcome obstacles 
-              and bringing stability. Provides protection and supports personal growth.
-            </p>
-            <ul class="gemstone-specs">
-              <li><strong>Metal:</strong> ${gem.wear_metal || 'N/A'}</li>
-              <li><strong>Finger:</strong> ${gem.wear_finger || 'N/A'} finger of right hand</li>
-              <li><strong>Wear Day:</strong> ${gem.wear_day || 'N/A'}</li>
-              <li><strong>Weight:</strong> ${gem.weight_caret || 'N/A'} carat</li>
-              <li><strong>Semi Gem:</strong> ${gem.semi_gem || 'N/A'}</li>
-            </ul>
+      // Check if gem object exists and has properties
+      if (gem && gem.name) {
+          output += `
+          <div class="gemstone-card">
+            <div class="gemstone-content">
+              <h2 class="gemstone-title">${gem.name} (${category.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())})</h2>
+              <p class="gemstone-description">
+                Represents <strong>${gem.gem_deity}</strong>, helping overcome obstacles 
+                and bringing stability. Provides protection and supports personal growth.
+              </p>
+              <ul class="gemstone-specs">
+                <li><strong>Metal:</strong> ${gem.wear_metal || 'N/A'}</li>
+                <li><strong>Finger:</strong> ${gem.wear_finger || 'N/A'} finger of right hand</li>
+                <li><strong>Wear Day:</strong> ${gem.wear_day || 'N/A'}</li>
+                <li><strong>Weight:</strong> ${gem.weight_caret || 'N/A'} carat</li>
+                <li><strong>Semi Gem:</strong> ${gem.semi_gem || 'N/A'}</li>
+              </ul>
+            </div>
+            <a href="#" class="gemstone-footer">
+              <button class="view-product-btn">View Product</button>
+            </a>
           </div>
-          <a
-          href="{{ product.url }}" 
-          class="gemstone-footer">
-            <button class="view-product-btn">View Product</button>
-          </a>
-        </div>
-      `;
+        `;
+      }
     });
     output += `</div>`;
     astroOutputDiv.innerHTML = output;
     astroResultsDiv.style.display = 'block';
   }
 
-  // Rudraksha card display
+  // Rudraksha card display (no changes needed here)
   function displayRudrakshaResult(data) {
     const output = `
       <div class="rudraksha-card">
