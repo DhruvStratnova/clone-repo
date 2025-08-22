@@ -110,7 +110,7 @@ document.addEventListener("DOMContentLoaded", function () {
         min,
         lat: parseFloat(data.lat),
         lon: parseFloat(data.lon),
-        birthPlace: 
+        birthPlace: placeName.
         tzone: 5.5
       };
 
