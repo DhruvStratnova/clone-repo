@@ -118,6 +118,13 @@ document.addEventListener("DOMContentLoaded", function () {
         astroOutputDiv.innerHTML = '<p>Loading recommendation...</p>';
         astroResultsDiv.style.display = 'block';
 
+
+
+
+
+
+        
+
         const res = await fetch(fetchURL, {
           method: "POST",
           headers: {
