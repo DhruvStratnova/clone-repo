@@ -1,3 +1,4 @@
+/* assets/astro-calculator.js */
 
 document.addEventListener("DOMContentLoaded", function () {
   const tabs = document.querySelectorAll(".calculator-tabs .tab");
@@ -5,8 +6,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const astroResultsDiv = document.getElementById("astro-results");
   const astroOutputDiv = document.getElementById("astro-output");
 
-  // --- CHANGE 1: Simplified the form fields ---
-  // Removed the manual latitude and longitude inputs.
   const commonFields = `
     <div class="form-group">
       <input type="text" name="name" placeholder="Enter your name" required>
@@ -55,6 +54,9 @@ document.addEventListener("DOMContentLoaded", function () {
       const currentTab = document.querySelector(".calculator-tabs .tab.active").dataset.tab;
       const formData = new FormData(e.target);
       const data = Object.fromEntries(formData.entries());
+      
+      // --- DEBUG: Log form data ---
+      console.log("1. Form Data Submitted:", data);
 
       // API auth details
       const ASTRO_USER_ID = "642699";
@@ -66,7 +68,6 @@ document.addEventListener("DOMContentLoaded", function () {
       astroResultsDiv.style.display = 'block';
 
       try {
-        // --- CHANGE 2: Fetch coordinates from Geoapify first ---
         const placeName = data.placeName;
         const geoApiUrl = `https://api.geoapify.com/v1/geocode/search?text=${encodeURIComponent(placeName)}&apiKey=${GEOAPIFY_API_KEY}`;
         
@@ -77,7 +78,9 @@ document.addEventListener("DOMContentLoaded", function () {
         
         const geoResult = await geoResponse.json();
 
-        // Check if the API found any locations
+        // --- DEBUG: Log Geoapify response ---
+        console.log("2. Geoapify API Response:", geoResult);
+
         if (!geoResult.features || geoResult.features.length === 0) {
           throw new Error(`Could not find the location: "${placeName}". Please try a more specific name (e.g., "City, Country").`);
         }
@@ -85,11 +88,12 @@ document.addEventListener("DOMContentLoaded", function () {
         const properties = geoResult.features[0].properties;
         const latitude = properties.lat;
         const longitude = properties.lon;
-        // You can also get the timezone offset for higher accuracy
         const timezoneOffsetSeconds = properties.timezone.offset_DST_seconds;
         const timezoneOffsetHours = timezoneOffsetSeconds / 3600;
+        
+        // --- DEBUG: Log extracted coordinates ---
+        console.log(`3. Extracted Location: Latitude=${latitude}, Longitude=${longitude}, Timezone=${timezoneOffsetHours}`);
 
-        // --- CHANGE 3: Use fetched data for the Astrology API payload ---
         let fetchURL = "";
         if (currentTab === "by-gemstone") {
           fetchURL = "https://json.astrologyapi.com/v1/basic_gem_suggestion";
@@ -111,10 +115,12 @@ document.addEventListener("DOMContentLoaded", function () {
           min: min,
           lat: latitude,
           lon: longitude,
-          tzone: timezoneOffsetHours // Using dynamic timezone from Geoapify
+          tzone: timezoneOffsetHours
         };
         
-        // Now, call the astrology API
+        // --- DEBUG: Log the payload for the Astrology API ---
+        console.log("4. Payload for Astrology API:", payload);
+
         const res = await fetch(fetchURL, {
           method: "POST",
           headers: {
@@ -131,7 +137,9 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         const result = await res.json();
-        console.log("Astrology API Result:", result);
+        
+        // --- DEBUG: Log the final result from the Astrology API ---
+        console.log("5. Astrology API Result:", result);
 
         if (currentTab === "by-gemstone") {
           displayResult(result);
@@ -145,11 +153,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // Gemstone card display (no changes needed here)
+  // Gemstone card display
   function displayResult(data) {
     let output = `<div class="gemstone-card-container">`;
     Object.entries(data).forEach(([category, gem]) => {
-      // Check if gem object exists and has properties
       if (gem && gem.name) {
           output += `
           <div class="gemstone-card">
@@ -179,7 +186,7 @@ document.addEventListener("DOMContentLoaded", function () {
     astroResultsDiv.style.display = 'block';
   }
 
-  // Rudraksha card display (no changes needed here)
+  // Rudraksha card display
   function displayRudrakshaResult(data) {
     const output = `
       <div class="rudraksha-card">
