@@ -197,11 +197,7 @@
     "featured_collection": {
       "type": "featured-collection",
       "custom_css": [
-        ".slider-component {overflow-x: hidden; white-space: nowrap;}",
-        ".slider-component:hover {overflow-x: auto;}",
-        ".slider-component::-webkit-scrollbar {height: 8px;}",
-        ".slider-component::-webkit-scrollbar-thumb {background-color: transparent;}",
-        ".slider-component:hover::-webkit-scrollbar-thumb {background-color: #c4c4c4; border-radius: 4px;}"
+        ".card .card__inner .card__media {overflow: hidden; z-index: 0; width: 120px; height: 159px; align-content: center; justify-content: center; border-radius: calc( var(--border-radius) - var(--border-width) - var(--image-padding) );}"
       ],
       "settings": {
         "collection": "all",
