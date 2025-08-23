@@ -372,3 +372,12 @@ display:flex;
 flex-direction:column;
 
 } */
+
+
+@media screen (min-width: 750px) {
+    
+      .gemstone-card-container{
+        display:flex;
+        flex-direction: column;
+      }
+    }
