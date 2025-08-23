@@ -702,7 +702,7 @@
       
       const priceDisplay = document.getElementById('optionplus-price-display');
       if (priceDisplay && this.totalPrice > 0) {
-        priceDisplay.innerHTML = `<div class="optionplus-price">Cart Price will Increment By: $${this.totalPrice.toFixed(2)}</div>`;
+        priceDisplay.innerHTML = `<div class="optionplus-price">Cart Price will Increment By: ${this.totalPrice.toFixed(2)}</div>`;
       } else if (priceDisplay) {
         priceDisplay.innerHTML = '';
       }
@@ -785,6 +785,18 @@
 
       console.log('OptionPlus: Form inputs updated for', targetForms.length, 'forms:', this.selectedValues);
     }
+
+
+
+
+
+
+
+
+
+
+
+
     
     injectStyles() {
       if (document.getElementById('optionplus-styles')) return;
