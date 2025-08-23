@@ -30,7 +30,6 @@
         },
         "variant_picker": {
           "type": "variant_picker",
-          "disabled": true,
           "settings": {
             "picker_type": "button",
             "swatch_shape": "square"
@@ -38,6 +37,7 @@
         },
         "option_plus_option_plus_block_qytF6m": {
           "type": "shopify://apps/option-plus/blocks/OptionPlusBlock/f5a2f298-6d68-4e0e-a5d5-c1c57a64b3d0",
+          "disabled": true,
           "settings": {
             "button_background_color": "#4caf50",
             "button_text_color": "#ffffff",
