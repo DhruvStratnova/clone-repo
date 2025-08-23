@@ -58,6 +58,14 @@
             "checkbox_display_type": "grid"
           }
         },
+        "infinite_options_app_block_JMiNGw": {
+          "type": "shopify://apps/infinite-options/blocks/app-block/7e73b6f9-82b0-45f5-9b9b-04f446ba1a9b",
+          "settings": {}
+        },
+        "apo_product_options_app_block_igkije": {
+          "type": "shopify://apps/apo-product-options/blocks/app-block/a1199153-7462-4b5b-8a80-f0eefba85e99",
+          "settings": {}
+        },
         "quantity_selector": {
           "type": "quantity_selector",
           "disabled": true,
@@ -88,6 +96,8 @@
         "price",
         "variant_picker",
         "option_plus_option_plus_block_qytF6m",
+        "infinite_options_app_block_JMiNGw",
+        "apo_product_options_app_block_igkije",
         "quantity_selector",
         "buy_buttons",
         "description",
