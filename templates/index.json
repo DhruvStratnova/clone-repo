@@ -397,7 +397,7 @@
       "settings": {
         "title": "Shop By Purpose",
         "heading_size": "h2",
-        "image_ratio": "square",
+        "image_ratio": "adapt",
         "columns_desktop": 6,
         "color_scheme": "",
         "show_view_all": false,
