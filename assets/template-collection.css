@@ -75,8 +75,7 @@ margin-left: auto;
 
 .collection__title.title-wrapper {
   margin-bottom: 2.5rem;
-  text-align:left;
-  justify-content:left;
+ 
 }
 
 .collection__title .title:not(:only-child) {
