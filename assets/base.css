@@ -1,35 +1,33 @@
 
 @media only screen and (max-width: 767px) {
   
-  /* Example: reduce header logo size */
+
   .header__heading-logo {
     max-width: 120px;
     height: auto;
   }
 
-  /* Example: adjust menu items */
+ 
   .header__menu-item {
     font-size: 14px;
     padding: 8px 10px;
   }
 
-  /* Example: adjust product grid for 2 per row */
+  
   .grid--view-items .grid__item {
     width: 50% !important;
   }
 
-  /* Example: center align text */
+
   .section-heading, 
   .product__title {
     text-align: center;
   }
 
-  /* Example: reduce padding */
   .section-template {
     padding: 10px;
   }
 }
-
 
 
 
