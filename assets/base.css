@@ -1,33 +1,9 @@
-
-@media only screen and (max-width: 767px) {
-  
-
-  .header__heading-logo {
-    max-width: 120px;
-    height: auto;
-  }
-
- 
-  .header__menu-item {
+@media (max-width: 768px) {
+  body {
     font-size: 14px;
-    padding: 8px 10px;
-  }
-
-  
-  .grid--view-items .grid__item {
-    width: 50% !important;
-  }
-
-
-  .section-heading, 
-  .product__title {
-    text-align: center;
-  }
-
-  .section-template {
-    padding: 10px;
   }
 }
+
 
 
 
