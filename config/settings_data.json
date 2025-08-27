@@ -149,6 +149,11 @@
         "type": "shopify://apps/apo-product-options/blocks/app-embed-block/a1199153-7462-4b5b-8a80-f0eefba85e99",
         "disabled": false,
         "settings": {}
+      },
+      "11532412952436166569": {
+        "type": "shopify://apps/loox-reviews/blocks/loox-inject/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
+        "disabled": false,
+        "settings": {}
       }
     },
     "color_schemes": {
