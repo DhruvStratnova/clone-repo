@@ -135,7 +135,7 @@
                     price_class: 'price--large'
                   -%}
                 </div>
-                {{prod }}
+                {{ product.metafields.custom.origin }}
                 {%- if product.quantity_price_breaks_configured? -%}
                   <div class="volume-pricing-note" id="Volume-Note-{{ section.id }}">
                     <span>{{ 'products.product.volume_pricing.note' | t }}</span>
@@ -1094,7 +1094,7 @@
       container.dataset.loaded = "true";
     }
 
-    
+
     function removeOptionPlusWidget() {
       const container = document.querySelector(".optionplus-widget-container");
       if (container) {
