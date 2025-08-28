@@ -135,7 +135,7 @@
                     price_class: 'price--large'
                   -%}
                 </div>
-                {{- product.metafields.custom.origin }}
+                {% comment %} {{- product.metafields.custom.origin }} {% endcomment %}
                 {%- if product.quantity_price_breaks_configured? -%}
                   <div class="volume-pricing-note" id="Volume-Note-{{ section.id }}">
                     <span>{{ 'products.product.volume_pricing.note' | t }}</span>
