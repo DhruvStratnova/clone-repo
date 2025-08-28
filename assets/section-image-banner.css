@@ -599,7 +599,7 @@ justify-content: center;
 }
 
 .tabber_content{
-  /* max-width:1200px; */
+  max-width:800px;
   /* margin: calc(4rem + var(--page-width-margin)) 0 calc(4rem + var(--page-width-margin)); */
   align-self:center;
   padding: 0rem 10rem 0rem 10rem ;
