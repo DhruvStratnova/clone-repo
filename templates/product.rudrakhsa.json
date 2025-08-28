@@ -62,6 +62,7 @@
         },
         "apo_product_options_app_block_igkije": {
           "type": "shopify://apps/apo-product-options/blocks/app-block/a1199153-7462-4b5b-8a80-f0eefba85e99",
+          "disabled": true,
           "settings": {}
         },
         "quantity_selector": {
