@@ -31,7 +31,7 @@
         "custom_liquid_7JNmNw": {
           "type": "custom_liquid",
           "settings": {
-            "custom_liquid": "{% assign origin = product.metafields.custom.origin\n            | replace: '[', ''\n            | replace: ']', ''\n            | replace: '\"', ''\n          %}\n  <p>Origin: {{ origin }}</p>"
+            "custom_liquid": "{%- assign origin = product.metafields.custom.origin\n  | replace: '[', ''\n  | replace: ']', ''\n  | replace: '\"', ''\n-%}\n<p>Origin: {{ origin }}</p>"
           }
         },
         "variant_picker": {
