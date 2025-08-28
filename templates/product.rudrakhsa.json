@@ -30,7 +30,6 @@
         },
         "variant_picker": {
           "type": "variant_picker",
-          "disabled": true,
           "settings": {
             "picker_type": "button",
             "swatch_shape": "square"
@@ -71,6 +70,7 @@
         },
         "custom_liquid_xmbRzx": {
           "type": "custom_liquid",
+          "disabled": true,
           "settings": {
             "custom_liquid": "<a href=\"https://cdn.shopify.com/s/files/1/0947/9467/8574/files/Ring_Size_Guide.pdf?v=1756296222\" target=\"_blank\" rel=\"noopener noreferrer\">\n  Ring Size Guide\n</a>"
           }
