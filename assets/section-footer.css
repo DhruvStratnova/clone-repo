@@ -9,6 +9,9 @@
 .footer__content-top {
   padding-bottom: 5rem;
   display: block;
+  display: 
+   width: 100vw;
+  max-width:1800px;
 }
 
 @media screen and (max-width: 749px) {
