@@ -13,6 +13,10 @@
   max-width:1600px;
 }
 
+.footer-block{
+  width: 
+}
+
 @media screen and (max-width: 749px) {
   .footer .grid {
     display: block;
