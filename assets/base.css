@@ -3631,3 +3631,15 @@ details-disclosure > details {
   background-color: #c4c4c4; /* Change this color to match your theme */
   border-radius: 4px;
 }
+
+
+.selectCustom-options{
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+
+
+.footer__content-top page-width{
+  wi
+}
