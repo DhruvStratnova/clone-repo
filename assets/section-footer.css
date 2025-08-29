@@ -145,7 +145,6 @@
 @media screen and (max-width: 749px) {
   .footer-block.footer-block--menu:only-child {
     text-align: left;
-    width:100px;
   }
 }
 
