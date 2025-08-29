@@ -9,7 +9,7 @@
 .footer__content-top {
   padding-bottom: 5rem;
   display: block;
-  display: 
+  display: flex;
    width: 100vw;
   max-width:1800px;
 }
