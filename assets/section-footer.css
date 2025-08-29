@@ -510,5 +510,7 @@
 
 
 .footer__content-top{
+  width: 100
   max-width:1600px;
+
 }
