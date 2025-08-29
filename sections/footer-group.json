@@ -18,7 +18,7 @@
           "type": "text",
           "settings": {
             "heading": "About AstroAura",
-            "subtext": "<p>These policies govern the use of the AstroAura Market website and services, operated by Stratnova Technologies LLC, India. They are applicable to both Indian and global customers. By using our website (www.astroaura.market), you agree to abide by the following policies.</p>"
+            "subtext": "<p>These policies govern the use of the AstroAura Market website and services, operated by Stratnova Technologies LLC, India. </p><p>They are applicable to both Indian and global customers. By using our website (www.astroaura.market), you agree to abide by the following policies.</p>"
           }
         },
         "link_list_myPVW9": {
@@ -62,6 +62,13 @@
             "heading": "Others",
             "menu": "footer"
           }
+        },
+        "text_pYPHT4": {
+          "type": "text",
+          "settings": {
+            "heading": "Contact Us",
+            "subtext": "<p>For any questions, concerns, or disputes, please contact us:</p><p></p><p>AstroAura MarketOperated by Stratnova Technologies LLC, India</p><p>Email: vikram@astroaura.ai</p><p>Phone: +91-9910602567</p>"
+          }
         }
       },
       "block_order": [
@@ -71,7 +78,8 @@
         "link_list_etaV6X",
         "link_list_KbybNT",
         "link_list_Cc4Ypr",
-        "link_list_8WAb99"
+        "link_list_8WAb99",
+        "text_pYPHT4"
       ],
       "custom_css": [],
       "settings": {
