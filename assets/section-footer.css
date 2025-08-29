@@ -14,7 +14,7 @@
 }
 
 .footer-block{
-  width: 1/5vw
+  width: 1/5vw;
 }
 
 @media screen and (max-width: 749px) {
