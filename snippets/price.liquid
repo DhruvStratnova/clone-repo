@@ -23,12 +23,13 @@
 
   assign compare_at_price = target.compare_at_price
   assign price = target.price | default: 1999
-  assign price_min = product.price_min
-  assign price_max = product.price_max
+
+  assign price_min = product.price_min 
+  assign price_max = product.price_max 
   assign available = target.available | default: false
-  assign money_price = price | money
-  assign money_price_min = price_min | money
-  assign money_price_max = price_max | money
+  assign money_price = price | money_without_trailing_zeros
+  assign money_price_min = price_min | money_without_trailing_zeros
+  assign money_price_max = price_max | money_without_trailing_zeros
   if settings.currency_code_enabled
     assign money_price = price | money_with_currency
     assign money_price_min = price_min | money_with_currency
@@ -63,6 +64,7 @@
           {%- if show_compare_at_price and compare_at_price -%}
             {%- unless product.price_varies == false and product.compare_at_price_varies %}
               <span class="visually-hidden visually-hidden--inline">
+                
                 {{- 'products.product.price.regular_price' | t -}}
               </span>
               <span>
@@ -70,7 +72,7 @@
                   {% if settings.currency_code_enabled %}
                     {{ compare_at_price | money_with_currency }}
                   {% else %}
-                    {{ compare_at_price | money }}
+                    {{ compare_at_price | money_with_currency }}
                   {% endif %}
                 </s>
               </span>
@@ -109,7 +111,10 @@
         </span>
       </div>
       {%- if product.selected_or_first_available_variant.unit_price_measurement -%}
-        {% render 'unit-price', price: product.selected_or_first_available_variant.unit_price, measurement: product.selected_or_first_available_variant.unit_price_measurement %}
+        {% render 'unit-price',
+          price: product.selected_or_first_available_variant.unit_price,
+          measurement: product.selected_or_first_available_variant.unit_price_measurement
+        %}
       {%- endif -%}
     </div>
     {%- if show_badges -%}
