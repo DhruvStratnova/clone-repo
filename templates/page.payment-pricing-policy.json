@@ -18,57 +18,40 @@
         "padding_bottom": 0
       }
     },
-    "image_with_text_r9XRxy": {
-      "type": "image-with-text",
+    "rich_text_9hJq9V": {
+      "type": "rich-text",
       "blocks": {
-        "heading_pPfrRq": {
+        "heading_cqEhTW": {
           "type": "heading",
           "settings": {
-            "heading": "About Us",
+            "heading": "Payment & Pricing Policy",
             "heading_size": "h1"
           }
         },
-        "text_7DA68E": {
+        "text_FUxeeN": {
           "type": "text",
           "settings": {
-            "text": "<p><br/>At <strong>AstroAura</strong>, we believe the universe is within us, guiding our choices and energies. We help individuals connect with their unique cosmic blueprint through astrology, intuition, and personalized insights. Our mission is to empower you to understand your aura, navigate life’s challenges, and embrace opportunities in love, career, and personal growth. Through readings, aura analysis, and practical guidance, we provide tools to align with your true potential. Step into your cosmic flow, understand your energies, and transform your life with <strong>AstroAura</strong>.<br/><br/></p>",
-            "text_style": "body"
-          }
-        },
-        "button_C778xt": {
-          "type": "button",
-          "settings": {
-            "button_label": "",
-            "button_link": "",
-            "button_style_secondary": false
+            "text": "<p>At AstroAura.market, we are committed to providing our customers with a smooth, transparent, and secure payment experience. Our pricing and payment policies are designed to ensure clarity and fairness for both domestic and international customers.</p><h3>Accepted Payment Methods</h3><p>We support a wide range of payment channels to make checkout convenient:<br/>Domestic Payments (India): Credit cards, debit cards, UPI, net banking, and digital wallets.<br/>International Payments: PayPal, Stripe, and other secure international gateways.<br/> All transactions are processed through trusted payment providers to maintain the highest level of data security and compliance with industry standards.</p><h3>Pricing Transparency</h3><p><br/>For Indian Customers: All prices listed on our website are inclusive of applicable GST or other local taxes, unless otherwise specified.<br/>For International Customers: Prices are displayed in INR and/or USD for convenience. However, depending on the destination country, customs duties, import charges, or local taxes may apply, which are the responsibility of the buyer.</p><h3>Currency & Exchange Rates</h3><p>While we primarily display prices in INR (₹) and USD ($), international transactions may be subject to fluctuations in exchange rates and currency conversion fees determined by your bank or payment provider. AstroAura.market is not responsible for these additional charges.</p><h3>Pricing Errors & Adjustments</h3><p>In the event of a typographical error, system glitch, or incorrect pricing displayed due to technical issues, AstroAura.market reserves the right to:<br/>Cancel the order prior to shipment.<br/>Notify the customer and adjust the pricing accordingly.<br/>Provide the option of continuing the purchase at the correct price or receiving a full refund.</p><h3>Order Confirmation & Invoicing</h3><p><br/>Upon successful payment, customers will receive an order confirmation email with transaction details.<br/>An invoice including price breakdown, taxes, and shipping (if applicable) will be issued digitally for every order.</p><h3>Security & Fraud Prevention</h3><p><br/>All payments are processed over encrypted and secure channels (SSL-certified).<br/>For security reasons, AstroAura.market may request additional verification or identification from customers in case of high-value or suspicious transactions.<br/>Orders found to be fraudulent or unauthorized will be cancelled immediately, and appropriate action will be taken.</p>"
           }
         }
       },
       "block_order": [
-        "heading_pPfrRq",
-        "text_7DA68E",
-        "button_C778xt"
+        "heading_cqEhTW",
+        "text_FUxeeN"
       ],
-      "name": "t:sections.image-with-text.presets.name",
+      "name": "t:sections.rich-text.presets.name",
       "settings": {
-        "image": "shopify://shop_images/image_184.png",
-        "height": "small",
-        "desktop_image_width": "medium",
-        "layout": "text_first",
-        "image_behavior": "none",
-        "content_layout": "no-overlap",
-        "desktop_content_position": "top",
-        "desktop_content_alignment": "left",
-        "mobile_content_alignment": "left",
-        "section_color_scheme": "",
+        "desktop_content_position": "center",
+        "content_alignment": "center",
         "color_scheme": "",
-        "padding_top": 36,
-        "padding_bottom": 36
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
       }
     }
   },
   "order": [
     "main",
-    "image_with_text_r9XRxy"
+    "rich_text_9hJq9V"
   ]
 }
