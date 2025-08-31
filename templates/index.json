@@ -95,6 +95,7 @@
         },
         "slide_FnJjtn": {
           "type": "slide",
+          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/ring-1649210_1920.jpg",
             "image_overlay_opacity": 0,
