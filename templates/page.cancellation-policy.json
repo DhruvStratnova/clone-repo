@@ -18,57 +18,40 @@
         "padding_bottom": 0
       }
     },
-    "image_with_text_r9XRxy": {
-      "type": "image-with-text",
+    "rich_text_MVQGhM": {
+      "type": "rich-text",
       "blocks": {
-        "heading_pPfrRq": {
+        "heading_d8PRR9": {
           "type": "heading",
           "settings": {
-            "heading": "About Us",
+            "heading": "Cancellation & Refund Policy",
             "heading_size": "h1"
           }
         },
-        "text_7DA68E": {
+        "text_EkYUVM": {
           "type": "text",
           "settings": {
-            "text": "<p><br/>At <strong>AstroAura</strong>, we believe the universe is within us, guiding our choices and energies. We help individuals connect with their unique cosmic blueprint through astrology, intuition, and personalized insights. Our mission is to empower you to understand your aura, navigate life’s challenges, and embrace opportunities in love, career, and personal growth. Through readings, aura analysis, and practical guidance, we provide tools to align with your true potential. Step into your cosmic flow, understand your energies, and transform your life with <strong>AstroAura</strong>.<br/><br/></p>",
-            "text_style": "body"
-          }
-        },
-        "button_C778xt": {
-          "type": "button",
-          "settings": {
-            "button_label": "",
-            "button_link": "",
-            "button_style_secondary": false
+            "text": "<p>At AstroAura.market (operated by Stratnova Technologies LLC, India), we value your trust and aim to provide a transparent and smooth shopping experience. Since our products and services are highly personalized, spiritual, and energy-focused, we maintain a strict no cancellation and no refund policy once an order has been confirmed.</p><h3>1. Order Cancellations</h3><p><br/>Once an order is successfully placed and payment has been processed, it cannot be cancelled under any circumstances.<br/>This applies to both physical products (such as gemstones, crystals, and spiritual tools) and digital/consultation services (such as astrology reports or spiritual guidance).<br/>Orders placed in error must still be honored, as each product is sourced, energized, or prepared specifically for the customer.<br/></p><h3>2. Refund Policy</h3><p><br/>All sales are final. We do not offer refunds for any products or services once purchased.<br/>This policy exists because our items are often customized, spiritually charged, or uniquely prepared for individual needs, making them unsuitable for resale.<br/>Customers are advised to carefully review product details, service descriptions, and eligibility before placing an order.<br/></p><h3>3. Exceptional Circumstances</h3><p>While cancellations and refunds are generally not allowed, AstroAura.market may review special cases such as:<br/>Damaged or Defective Product: If the item arrives in damaged condition due to transit, customers may request a replacement in accordance with our Returns & Replacement Policy.<br/>Incorrect Order Fulfillment: In the rare case of receiving an incorrect product, customers are required to notify us immediately for resolution.<br/>Each such case will be handled on a case-by-case basis, and AstroAura.market reserves the sole right to approve or reject replacement requests.<br/></p><h3>4. Digital Services & Consultations</h3><p><br/>For astrology readings, reports, or spiritual consultations, once a booking or order has been confirmed, it cannot be cancelled or refunded.<br/>Rescheduling may be allowed in certain cases (subject to availability and discretion of our team), but refunds will not be processed.<br/></p><h3>5. Customer Responsibility</h3><p><br/>Customers are encouraged to review all product descriptions, sizes, specifications, and details carefully before purchase.<br/>For guidance, our support team is available to clarify product or service details before the order is placed.<br/></p><h3>6. Contact & Support</h3><p>For queries related to cancellations, refunds, or exceptional cases, please contact us:</p><p>📧 Email: vikram@astroaura.ai<br/> 📞 Phone: +91-9910602567</p><p>Our team will be happy to guide you and provide the necessary assistance in line with our policies.</p>"
           }
         }
       },
       "block_order": [
-        "heading_pPfrRq",
-        "text_7DA68E",
-        "button_C778xt"
+        "heading_d8PRR9",
+        "text_EkYUVM"
       ],
-      "name": "t:sections.image-with-text.presets.name",
+      "name": "t:sections.rich-text.presets.name",
       "settings": {
-        "image": "shopify://shop_images/image_184.png",
-        "height": "small",
-        "desktop_image_width": "medium",
-        "layout": "text_first",
-        "image_behavior": "none",
-        "content_layout": "no-overlap",
-        "desktop_content_position": "top",
-        "desktop_content_alignment": "left",
-        "mobile_content_alignment": "left",
-        "section_color_scheme": "",
+        "desktop_content_position": "center",
+        "content_alignment": "center",
         "color_scheme": "",
-        "padding_top": 36,
-        "padding_bottom": 36
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
       }
     }
   },
   "order": [
     "main",
-    "image_with_text_r9XRxy"
+    "rich_text_MVQGhM"
   ]
 }
