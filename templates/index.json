@@ -135,6 +135,10 @@
         "slide_93RPaQ",
         "slide_FnJjtn"
       ],
+      "custom_css": [
+        "slideshow-component {position: relative; display: flex; flex-direction: column; margin: 0 0 4rem 0;}",
+        ".slideshow__controls {display: none;}"
+      ],
       "name": "t:sections.slideshow.presets.name",
       "settings": {
         "layout": "full_bleed",
