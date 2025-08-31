@@ -64,7 +64,7 @@
           {%- if show_compare_at_price and compare_at_price -%}
             {%- unless product.price_varies == false and product.compare_at_price_varies %}
               <span class="visually-hidden visually-hidden--inline">
-                {{ % assign product_regular_products.product.price.regular_price | money_without_trailing_zeros % }}
+                {{ % assign product_regular_price =products.product.price.regular_price | money_without_trailing_zeros % }}
                 {{- 'products.product.price.regular_price' | t -}}
               </span>
               <span>
