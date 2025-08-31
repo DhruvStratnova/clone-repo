@@ -100,7 +100,7 @@
               {% if settings.currency_code_enabled %}
                 {{ compare_at_price | money_with_currency }}
               {% else %}
-                {{ compare_at_price | money }}
+                {{ compare_at_price | money_with_currency }}
               {% endif %}
             </s>
           </span>
