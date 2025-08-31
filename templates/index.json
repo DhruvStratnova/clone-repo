@@ -185,7 +185,7 @@
       "custom_css": [],
       "name": "New Arrivals",
       "settings": {
-        "collection": "all",
+        "collection": "bracelets",
         "products_to_show": 25,
         "title": "New Arrival",
         "heading_size": "h2",
