@@ -65,10 +65,42 @@
         "padding_top": 36,
         "padding_bottom": 36
       }
+    },
+    "rich_text_hxyE8r": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_DCT8ad": {
+          "type": "heading",
+          "settings": {
+            "heading": "Disclaimer/Limitation of Liability",
+            "heading_size": "h1"
+          }
+        },
+        "text_tUt9Dw": {
+          "type": "text",
+          "settings": {
+            "text": "<p>At AstroAura.market, we provide astrology-based products, consultations, and spiritual services with the intention of offering guidance, awareness, and educational value to our customers. Our offerings are designed to help individuals explore their spiritual journey, gain insights, and find clarity.</p><p>However, it is important to note the following:<br/>No Guaranteed Outcomes: While many customers may find our products and services beneficial, we do not guarantee any specific results or outcomes. Astrology, spiritual guidance, and related practices are based on traditional beliefs and interpretations, which may vary from person to person.<br/><br/>Not a Substitute for Professional Advice: The information, products, or services offered by AstroAura.market should not be considered a replacement for professional legal, medical, psychological, or financial advice. Customers are encouraged to seek qualified professionals in these areas for advice and decision-making.<br/><br/>Personal Responsibility: Customers are solely responsible for how they choose to interpret and apply the guidance or information received through our services. Decisions and actions taken based on astrology or spiritual guidance remain the sole responsibility of the individual.<br/><br/>Limitation of Liability: AstroAura.market and its team disclaim any liability for losses, risks, or damages incurred directly or indirectly from reliance on our products, reports, consultations, or content.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_DCT8ad",
+        "text_tUt9Dw"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
     }
   },
   "order": [
     "main",
-    "image_with_text_r9XRxy"
+    "image_with_text_r9XRxy",
+    "rich_text_hxyE8r"
   ]
 }
