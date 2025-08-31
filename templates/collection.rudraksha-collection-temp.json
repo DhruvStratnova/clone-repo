@@ -44,7 +44,7 @@
         "buttons_yt67QM"
       ],
       "custom_css": [
-        ".banner__media {/* height: 100%; */ position: absolute; left: 0; top: 0; height:1700px; /* height: auto; */ width: 100%}"
+        ".banner__media {/* height: 100%; */ position: absolute; left: 0; top: 0; height: 1700px; /* height: auto; */ width: 100%; object-fit: cover;}"
       ],
       "name": "t:sections.image-banner.presets.name",
       "settings": {
