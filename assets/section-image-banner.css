@@ -612,7 +612,8 @@ justify-content: center;
   margin: 0 auto; /* This correctly centers the div block */
   text-align: center; /* Add this to center the text inside the div */
   padding: 0rem 10rem;
-  tabber_content
+  background-color: #f1f1f1;
+  
 }
 
 
