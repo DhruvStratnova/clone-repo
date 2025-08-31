@@ -43,6 +43,9 @@
         "text_TiJNKb",
         "buttons_yt67QM"
       ],
+      "custom_css": [
+        ".banner__media {/* height: 100%; */ position: absolute; left: 0; top: 0; height:1700px; /* height: auto; */ width: 100%}"
+      ],
       "name": "t:sections.image-banner.presets.name",
       "settings": {
         "image": "shopify://shop_images/rudraksh_insta_post_1_1.jpg",
