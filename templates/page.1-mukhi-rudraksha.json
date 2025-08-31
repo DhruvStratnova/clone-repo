@@ -33,23 +33,11 @@
           "settings": {
             "text": "<p>The <strong>1 Mukhi Rudraksha</strong> is considered the most sacred and rarest bead, symbolizing <strong>Lord Shiva</strong> and supreme consciousness. It represents unity, truth, and enlightenment. Wearing it helps in deep meditation, detachment from material distractions, and attaining higher states of spiritual awareness.</p><p>✨ <strong>Key Benefits of 1 Mukhi Rudraksha</strong><br/><strong>Spiritual Growth</strong> – Enhances meditation, wisdom, and inner awakening.<br/><strong>Connection with Divine</strong> – Strengthens bond with Lord Shiva and cosmic energy.<br/><strong>Removes Negative Karma</strong> – Helps in cleansing past life and present obstacles.<br/><strong>Brings Mental Clarity</strong> – Improves focus, peace, and balance of mind.<br/><strong>Detachment & Liberation</strong> – Reduces material desires and leads toward moksha.</p>"
           }
-        },
-        "button_BwdPAx": {
-          "type": "button",
-          "settings": {
-            "button_label": "Button label",
-            "button_link": "",
-            "button_style_secondary": false,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
-          }
         }
       },
       "block_order": [
         "heading_nakrJ7",
-        "text_7NdbBQ",
-        "button_BwdPAx"
+        "text_7NdbBQ"
       ],
       "name": "t:sections.rich-text.presets.name",
       "settings": {
