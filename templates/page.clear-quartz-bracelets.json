@@ -65,10 +65,42 @@
         "padding_top": 36,
         "padding_bottom": 36
       }
+    },
+    "rich_text_yiHbnk": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_VthBFK": {
+          "type": "heading",
+          "settings": {
+            "heading": "Clear Quartz Bracelet Benefits",
+            "heading_size": "h1"
+          }
+        },
+        "text_jFNaLR": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Clear Quartz, also known as the <strong>“Universal Crystal”</strong>, is one of the most powerful healing stones. Wearing a Clear Quartz bracelet helps in amplifying energy, clearing negativity, and bringing mental clarity. It aligns with all chakras, making it a versatile stone for balance and positivity.</p><p>🌟 <strong>Key Benefits of Clear Quartz Bracelet</strong><br/><strong>Amplifies Energy</strong> – Boosts the power of thoughts, intentions, and other crystals.<br/><strong>Brings Mental Clarity</strong> – Improves focus, concentration, and decision-making.<br/><strong>Cleanses Negativity</strong> – Absorbs and removes negative energies around you.<br/><strong>Balances Chakras</strong> – Harmonizes energy flow for overall well-being.<br/><strong>Promotes Healing</strong> – Supports physical, emotional, and spiritual recovery.<br/><strong>Enhances Positivity</strong> – Attracts peace, harmony, and higher vibrations.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_VthBFK",
+        "text_jFNaLR"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
     }
   },
   "order": [
     "main",
-    "image_with_text_r9XRxy"
+    "image_with_text_r9XRxy",
+    "rich_text_yiHbnk"
   ]
 }
