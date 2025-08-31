@@ -18,57 +18,40 @@
         "padding_bottom": 0
       }
     },
-    "image_with_text_r9XRxy": {
-      "type": "image-with-text",
+    "rich_text_GWyqpK": {
+      "type": "rich-text",
       "blocks": {
-        "heading_pPfrRq": {
+        "heading_mx48wU": {
           "type": "heading",
           "settings": {
-            "heading": "About Us",
+            "heading": "Terms and Conditions",
             "heading_size": "h1"
           }
         },
-        "text_7DA68E": {
+        "text_XpVgJY": {
           "type": "text",
           "settings": {
-            "text": "<p><br/>At <strong>AstroAura</strong>, we believe the universe is flow, understand your energies, and transform your life with <strong>AstroAura</strong>.<br/><br/></p>",
-            "text_style": "body"
-          }
-        },
-        "button_C778xt": {
-          "type": "button",
-          "settings": {
-            "button_label": "",
-            "button_link": "",
-            "button_style_secondary": false
+            "text": "<p>By accessing, browsing, or purchasing from AstroAura.market (operated by Stratnova Technologies LLC, India), you acknowledge and agree to comply with the following Terms & Conditions. These terms govern your use of our website, services, and products. We reserve the right to update, modify, or replace these terms at any time without prior notice. Continued use of the website constitutes acceptance of the revised terms.</p><h3>1. User Responsibilities</h3><ul><li><br/>Users must provide accurate, complete, and up-to-date information during registration, checkout, or while interacting with our platform.</li><li><br/>Any false, incomplete, or misleading information may result in suspension or cancellation of your order or account.<br/></li><li><br/>Users are responsible for maintaining the confidentiality of their account details and agree to accept responsibility for all activities conducted under their account.<br/></li></ul><h3>2. Pricing & Payments</h3><ul><li><br/>All prices are displayed in Indian Rupees (INR) and/or United States Dollars (USD).</li><li><br/>International customers acknowledge that prices may vary depending on exchange rates, currency fluctuations, or payment gateway charges.</li><li><br/>AstroAura.market reserves the right to modify prices, apply discounts, or change payment methods at any time without prior notice.</li></ul><h3>3. Intellectual Property</h3><ul><li><br/>All intellectual property, including but not limited to logos, designs, images, text, product descriptions, graphics, and content, is the exclusive property of AstroAura.market and its affiliates.</li><li><br/>Users may not copy, reproduce, distribute, republish, or commercially exploit any content from our website without prior written permission.</li><li><br/>Any unauthorized use of intellectual property may result in legal action.<br/></li></ul><h3>4. Prohibited Activities</h3><p>Users agree not to misuse the website or services in any way, including but not limited to:</p><ul><li><br/>Reselling or redistributing products purchased from AstroAura.market without authorization.</li><li><br/>Uploading, transmitting, or sharing harmful content such as malware, viruses, or fraudulent data.</li><li><br/>Engaging in activities that may disrupt, damage, or interfere with the website’s operation or reputation.</li></ul><h3>5. Shipping, Returns & Replacement</h3><ul><li><br/>Orders will be processed and shipped as per our Shipping & Delivery Policy.</li><li><br/>Returns, replacements, and refunds will be managed in line with our Returns & Replacement Policy.</li><li><br/>Customers are expected to review these policies prior to purchase.</li></ul><h3>6. Limitation of Liability</h3><ul><li><br/>While we take every effort to ensure accuracy, AstroAura.market does not guarantee that all product descriptions, pricing, or availability information is always error-free.<br/></li><li><br/>AstroAura.market shall not be liable for delays, losses, damages, or claims arising due to third-party logistics providers, customs delays, or user negligence.<br/><br/><br/></li><li><br/>Our products are sold with a quality and authenticity guarantee, but we do not guarantee specific outcomes, benefits, or results from their use.<br/></li></ul><h3>7. Dispute Resolution & Governing Law</h3><ul><li><br/>For Indian customers, all disputes, claims, or legal matters shall be governed by and interpreted in accordance with the laws of India, subject to the jurisdiction of courts in Delhi, India.</li><li><br/>For international customers, disputes shall be handled under the applicable laws of the destination country, in compliance with international trade and consumer protection regulations.</li></ul><h3>8. Amendments to Terms</h3><p>AstroAura.market reserves the right to amend, update, or replace these Terms & Conditions at any time. Updates will be effective immediately upon being posted on the website. It is the user’s responsibility to review the terms regularly.</p><h3>9. Contact Information</h3><p>For questions, clarifications, or concerns regarding these Terms & Conditions, please contact us:</p><p>📧 Email: vikram@astroaura.ai<br/>📞 Phone: +91-9910602567</p>"
           }
         }
       },
       "block_order": [
-        "heading_pPfrRq",
-        "text_7DA68E",
-        "button_C778xt"
+        "heading_mx48wU",
+        "text_XpVgJY"
       ],
-      "name": "t:sections.image-with-text.presets.name",
+      "name": "t:sections.rich-text.presets.name",
       "settings": {
-        "image": "shopify://shop_images/image_184.png",
-        "height": "small",
-        "desktop_image_width": "medium",
-        "layout": "text_first",
-        "image_behavior": "none",
-        "content_layout": "no-overlap",
-        "desktop_content_position": "top",
-        "desktop_content_alignment": "left",
-        "mobile_content_alignment": "left",
-        "section_color_scheme": "",
+        "desktop_content_position": "center",
+        "content_alignment": "center",
         "color_scheme": "",
-        "padding_top": 36,
-        "padding_bottom": 36
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
       }
     }
   },
   "order": [
     "main",
-    "image_with_text_r9XRxy"
+    "rich_text_GWyqpK"
   ]
 }
