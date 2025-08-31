@@ -18,57 +18,52 @@
         "padding_bottom": 0
       }
     },
-    "image_with_text_r9XRxy": {
-      "type": "image-with-text",
+    "rich_text_xAaMnB": {
+      "type": "rich-text",
       "blocks": {
-        "heading_pPfrRq": {
+        "heading_nakrJ7": {
           "type": "heading",
           "settings": {
-            "heading": "About Us",
+            "heading": "1 Mukhi Rudraksha For Spiritual Progress",
             "heading_size": "h1"
           }
         },
-        "text_7DA68E": {
+        "text_7NdbBQ": {
           "type": "text",
           "settings": {
-            "text": "<p><br/>At <strong>AstroAura</strong>, we believe the universe is within us, guiding our choices and energies. We help individuals connect with their unique cosmic blueprint through astrology, intuition, and personalized insights. Our mission is to empower you to understand your aura, navigate life’s challenges, and embrace opportunities in love, career, and personal growth. Through readings, aura analysis, and practical guidance, we provide tools to align with your true potential. Step into your cosmic flow, understand your energies, and transform your life with <strong>AstroAura</strong>.<br/><br/></p>",
-            "text_style": "body"
+            "text": "<p>The <strong>1 Mukhi Rudraksha</strong> is considered the most sacred and rarest bead, symbolizing <strong>Lord Shiva</strong> and supreme consciousness. It represents unity, truth, and enlightenment. Wearing it helps in deep meditation, detachment from material distractions, and attaining higher states of spiritual awareness.</p><p>✨ <strong>Key Benefits of 1 Mukhi Rudraksha</strong><br/><strong>Spiritual Growth</strong> – Enhances meditation, wisdom, and inner awakening.<br/><strong>Connection with Divine</strong> – Strengthens bond with Lord Shiva and cosmic energy.<br/><strong>Removes Negative Karma</strong> – Helps in cleansing past life and present obstacles.<br/><strong>Brings Mental Clarity</strong> – Improves focus, peace, and balance of mind.<br/><strong>Detachment & Liberation</strong> – Reduces material desires and leads toward moksha.</p>"
           }
         },
-        "button_C778xt": {
+        "button_BwdPAx": {
           "type": "button",
           "settings": {
-            "button_label": "",
+            "button_label": "Button label",
             "button_link": "",
-            "button_style_secondary": false
+            "button_style_secondary": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
           }
         }
       },
       "block_order": [
-        "heading_pPfrRq",
-        "text_7DA68E",
-        "button_C778xt"
+        "heading_nakrJ7",
+        "text_7NdbBQ",
+        "button_BwdPAx"
       ],
-      "name": "t:sections.image-with-text.presets.name",
+      "name": "t:sections.rich-text.presets.name",
       "settings": {
-        "image": "shopify://shop_images/image_184.png",
-        "height": "small",
-        "desktop_image_width": "medium",
-        "layout": "text_first",
-        "image_behavior": "none",
-        "content_layout": "no-overlap",
-        "desktop_content_position": "top",
-        "desktop_content_alignment": "left",
-        "mobile_content_alignment": "left",
-        "section_color_scheme": "",
+        "desktop_content_position": "center",
+        "content_alignment": "center",
         "color_scheme": "",
-        "padding_top": 36,
-        "padding_bottom": 36
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
       }
     }
   },
   "order": [
     "main",
-    "image_with_text_r9XRxy"
+    "rich_text_xAaMnB"
   ]
 }
