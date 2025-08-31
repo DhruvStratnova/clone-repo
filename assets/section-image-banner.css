@@ -543,7 +543,7 @@ justify-content: center;
 
  .listing-description-accordion-container{
   background: linear-gradient(to bottom,rgba(175, 230, 252, 0.87), #f9ead7);
-    border: 1px solid #ccc;
+    /* border: 1px solid #ccc; */
 
 
 }
@@ -554,7 +554,7 @@ justify-content: center;
 .listing-description-accordion .tab {
   overflow: hidden;
   border: 1px solid #ccc;
-  /* background-color: #f1f1f1; */
+  background-color: #f1f1f1;
 }
 
 /* Style the buttons inside the tab */
