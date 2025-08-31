@@ -213,9 +213,7 @@
     },
     "featured_collection_6N6qke": {
       "type": "featured-collection",
-      "custom_css": [
-        ".card .card__inner .card__media {overflow: hidden; z-index: 0; /* width: 120px; height: 159px; */ align-content: center; justify-content: center; border-radius: calc( var(--border-radius) - var(--border-width) - var(--image-padding) );}"
-      ],
+      "custom_css": [],
       "settings": {
         "collection": "all",
         "products_to_show": 13,
@@ -224,7 +222,7 @@
         "description": "",
         "show_description": false,
         "description_style": "body",
-        "columns_desktop": 5,
+        "columns_desktop": 6,
         "enable_desktop_slider": true,
         "full_width": true,
         "show_view_all": false,
