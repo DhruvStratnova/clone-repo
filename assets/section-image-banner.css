@@ -553,7 +553,7 @@ justify-content: center;
 /* Style for the container of the tabs */
 .listing-description-accordion .tab {
   overflow: hidden;
-  border: 1px solid #ccc;
+  /* border: 1px solid #ccc; */
   background-color: #f1f1f1;
 }
 
