@@ -18,57 +18,40 @@
         "padding_bottom": 0
       }
     },
-    "image_with_text_r9XRxy": {
-      "type": "image-with-text",
+    "rich_text_DiAjgt": {
+      "type": "rich-text",
       "blocks": {
-        "heading_pPfrRq": {
+        "heading_bmQVhX": {
           "type": "heading",
           "settings": {
-            "heading": "About Us",
+            "heading": "Rose-Quartz Bracelet for love",
             "heading_size": "h1"
           }
         },
-        "text_7DA68E": {
+        "text_FJQnpb": {
           "type": "text",
           "settings": {
-            "text": "<p><br/>At <strong>AstroAura</strong>, we believe the universe is within us, guiding our choices and energies. We help individuals connect with their unique cosmic blueprint through astrology, intuition, and personalized insights. Our mission is to empower you to understand your aura, navigate life’s challenges, and embrace opportunities in love, career, and personal growth. Through readings, aura analysis, and practical guidance, we provide tools to align with your true potential. Step into your cosmic flow, understand your energies, and transform your life with <strong>AstroAura</strong>.<br/><br/></p>",
-            "text_style": "body"
-          }
-        },
-        "button_C778xt": {
-          "type": "button",
-          "settings": {
-            "button_label": "",
-            "button_link": "",
-            "button_style_secondary": false
+            "text": "<p>The <strong>Rose Quartz bracelet</strong> is known as the crystal of <strong>unconditional love and harmony</strong>. It opens the heart chakra, helping you attract love, deepen relationships, and heal emotional wounds. Wearing it promotes compassion, self-love, and peaceful connections with others.</p><p>✨ <strong>Key Benefits of Rose Quartz Bracelet</strong><br/><strong>Attracts Love</strong> – Draws new love and strengthens existing relationships.<br/><strong>Heals Emotional Pain</strong> – Releases past heartbreaks and emotional stress.<br/><strong>Promotes Self-Love</strong> – Encourages self-acceptance and inner peace.<br/><strong>Improves Relationships</strong> – Fosters trust, harmony, and forgiveness.<br/><strong>Balances Heart Chakra</strong> – Opens the heart to give and receive love freely.</p>"
           }
         }
       },
       "block_order": [
-        "heading_pPfrRq",
-        "text_7DA68E",
-        "button_C778xt"
+        "heading_bmQVhX",
+        "text_FJQnpb"
       ],
-      "name": "t:sections.image-with-text.presets.name",
+      "name": "t:sections.rich-text.presets.name",
       "settings": {
-        "image": "shopify://shop_images/image_184.png",
-        "height": "small",
-        "desktop_image_width": "medium",
-        "layout": "text_first",
-        "image_behavior": "none",
-        "content_layout": "no-overlap",
-        "desktop_content_position": "top",
-        "desktop_content_alignment": "left",
-        "mobile_content_alignment": "left",
-        "section_color_scheme": "",
+        "desktop_content_position": "center",
+        "content_alignment": "center",
         "color_scheme": "",
-        "padding_top": 36,
-        "padding_bottom": 36
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
       }
     }
   },
   "order": [
     "main",
-    "image_with_text_r9XRxy"
+    "rich_text_DiAjgt"
   ]
 }
