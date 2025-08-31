@@ -22,7 +22,8 @@
   endif
 
   assign compare_at_price = target.compare_at_price
-  assign price = target.price | default: 1999 | money_without_trailing_zeros
+  assign price = target.price | default: 1999 
+  assign variable_name = price
   assign price_min = product.price_min | money_without_trailing_zeros
   assign price_max = product.price_max | money_without_trailing_zeros
   assign available = target.available | default: false
