@@ -18,57 +18,40 @@
         "padding_bottom": 0
       }
     },
-    "image_with_text_r9XRxy": {
-      "type": "image-with-text",
+    "rich_text_PYqHVa": {
+      "type": "rich-text",
       "blocks": {
-        "heading_pPfrRq": {
+        "heading_bxe4Mz": {
           "type": "heading",
           "settings": {
-            "heading": "About Us",
+            "heading": "Tiger Eye Bracelet Benefit",
             "heading_size": "h1"
           }
         },
-        "text_7DA68E": {
+        "text_Mky4Tm": {
           "type": "text",
           "settings": {
-            "text": "<p><br/>At <strong>AstroAura</strong>, we believe the universe is within us, guiding our choices and energies. We help individuals connect with their unique cosmic blueprint through astrology, intuition, and personalized insights. Our mission is to empower you to understand your aura, navigate life’s challenges, and embrace opportunities in love, career, and personal growth. Through readings, aura analysis, and practical guidance, we provide tools to align with your true potential. Step into your cosmic flow, understand your energies, and transform your life with <strong>AstroAura</strong>.<br/><br/></p>",
-            "text_style": "body"
-          }
-        },
-        "button_C778xt": {
-          "type": "button",
-          "settings": {
-            "button_label": "",
-            "button_link": "",
-            "button_style_secondary": false
+            "text": "<p><br/>The <strong>Tiger Eye bracelet</strong> is a powerful stone for <strong>confidence, courage, and protection</strong>. It strengthens willpower, sharpens focus, and helps in making bold decisions. Known as a stone of luck and success, it attracts opportunities while keeping negative energies away. It also balances emotions, reduces stress, and boosts determination.<br/><br/>✨ <strong>Key Benefits of Tiger Eye Bracelet</strong><br/><strong>Boosts Confidence & Courage</strong> – Helps overcome fear and self-doubt.<br/><strong>Sharpens Focus & Clarity</strong> – Improves decision-making and concentration.<br/><strong>Attracts Success & Prosperity</strong> – Brings luck in career and business.<br/><strong>Protects from Negativity</strong> – Shields against jealousy and evil eye.<br/><strong>Balances Emotions</strong> – Reduces stress and promotes inner strength.</p>"
           }
         }
       },
       "block_order": [
-        "heading_pPfrRq",
-        "text_7DA68E",
-        "button_C778xt"
+        "heading_bxe4Mz",
+        "text_Mky4Tm"
       ],
-      "name": "t:sections.image-with-text.presets.name",
+      "name": "t:sections.rich-text.presets.name",
       "settings": {
-        "image": "shopify://shop_images/image_184.png",
-        "height": "small",
-        "desktop_image_width": "medium",
-        "layout": "text_first",
-        "image_behavior": "none",
-        "content_layout": "no-overlap",
-        "desktop_content_position": "top",
-        "desktop_content_alignment": "left",
-        "mobile_content_alignment": "left",
-        "section_color_scheme": "",
+        "desktop_content_position": "center",
+        "content_alignment": "center",
         "color_scheme": "",
-        "padding_top": 36,
-        "padding_bottom": 36
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
       }
     }
   },
   "order": [
     "main",
-    "image_with_text_r9XRxy"
+    "rich_text_PYqHVa"
   ]
 }
