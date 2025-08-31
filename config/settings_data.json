@@ -149,6 +149,11 @@
         "type": "shopify://apps/apo-product-options/blocks/app-embed-block/a1199153-7462-4b5b-8a80-f0eefba85e99",
         "disabled": false,
         "settings": {}
+      },
+      "15119538188275799212": {
+        "type": "shopify://apps/fontify/blocks/app-embed/334490e2-2153-4a2e-a452-e90bdeffa3cc",
+        "disabled": false,
+        "settings": {}
       }
     },
     "color_schemes": {
