@@ -184,7 +184,8 @@
       "type": "featured-collection",
       "custom_css": [
         "h2 {margin: 0 auto; width: fit-content; /* Or a specific width */}",
-        ".contains-card {padding: 32px;}"
+        ".contains-card {padding: 32px;}",
+        ".slider-buttons {display: none;}"
       ],
       "name": "New Arrivals",
       "settings": {
@@ -216,7 +217,8 @@
     "featured_collection_6N6qke": {
       "type": "featured-collection",
       "custom_css": [
-        "h2 {margin: 0 auto; width: fit-content; /* Or a specific width */}"
+        "h2 {margin: 0 auto; width: fit-content; /* Or a specific width */}",
+        ".slider-buttons{display: none;}"
       ],
       "name": "Top Selling",
       "settings": {
