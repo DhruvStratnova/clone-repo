@@ -100,7 +100,7 @@
         "text_UtfAWr": {
           "type": "text",
           "settings": {
-            "text": "<p>Through the sacred lens of Vedic astrology, we come to realize that the divine rhythms of the universe are deeply intertwined with the celestial movements of the planets.</p><p>These sacred planets—the radiant Sun, gentle Moon, fiery Mars, wise Jupiter, graceful Venus, swift Mercury, and steadfast Saturn—along with the mystical shadow forces Rahu and Ketu, guide the course of our earthly journey.</p><p>Gemstones, created by divine will over countless ages, are imbued with the pure energies of these cosmic beings. As sacred vessels of planetary grace, they help harmonize and align our lives with the blessings of the universe, offering protection, strength, and spiritual upliftment.</p>",
+            "text": "<p>Gemstones are nature’s way of channeling cosmic energy to support your mind, body, and spirit. Each stone vibrates with its own frequency, aligning with planetary influences to bring balance, protection, and prosperity. From the fiery confidence of <strong>Ruby</strong> to the calming clarity of <strong>Amethyst</strong>, the wealth-attracting power of <strong>Citrine</strong>, or the grounding strength of <strong>Onyx</strong>, gemstones enhance mental focus, emotional stability, and spiritual growth. By wearing the right gemstone, you can harmonize your energy, amplify positive vibrations, and navigate life with greater clarity and confidence.</p>",
             "text_style": "body"
           }
         },
@@ -108,7 +108,7 @@
           "type": "button",
           "settings": {
             "button_label": "Learn More",
-            "button_link": "shopify://pages/about-us",
+            "button_link": "shopify://collections/gemstones",
             "button_style_secondary": true
           }
         }
