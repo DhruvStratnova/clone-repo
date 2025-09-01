@@ -157,22 +157,6 @@
     {%- if show_badges -%}
       <span class="badge price__badge-sale color-{{ settings.sale_badge_color_scheme }}">
         {{ 'products.product.on_sale' | t }}
-        {%- comment -%}
-    First, get the raw numerical values for price.
-    We use 'variant.price' if it exists, falling back to 'product.price'.
-    This avoids the 'Integer with String' error.
-  {%- endcomment -%}
-  {%- assign current_price_num = variant.price | default: product.price -%}
-  {%- assign compare_price_num = variant.compare_at_price | default: product.compare_at_price -%}
-
-  {%- comment -%} Now, perform the comparison and calculation using the numbers. {%- endcomment -%}
-  {%- if compare_price_num > current_price_num -%}
-    {%- assign savings = compare_price_num | minus: current_price_num -%}
-    {%- assign discount = savings | times: 100.0 | divided_by: compare_price_num | round -%}
-    <p class="price-item--discount">
-      (Save {{ discount }}%)
-    </p>
-  {%- endif -%}
       </span>
 
       <span class="badge price__badge-sold-out color-{{ settings.sold_out_badge_color_scheme }}">
