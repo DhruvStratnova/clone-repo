@@ -24,8 +24,8 @@
   assign compare_at_price = target.compare_at_price
   assign price = target.price | default: 1999
 
-  assign price_min = product.price_min 
-  assign price_max = product.price_max 
+  assign price_min = product.price_min
+  assign price_max = product.price_max
   assign available = target.available | default: false
   assign money_price = price | money_without_trailing_zeros
   assign money_price_min = price_min | money_without_trailing_zeros
@@ -64,7 +64,6 @@
           {%- if show_compare_at_price and compare_at_price -%}
             {%- unless product.price_varies == false and product.compare_at_price_varies %}
               <span class="visually-hidden visually-hidden--inline">
-                
                 {{- 'products.product.price.regular_price' | t -}}
               </span>
               <span>
@@ -110,25 +109,21 @@
         <span class="price-item price-item--sale price-item--last mws-price">
           {{ money_price }}
         </span>
-{% comment %} 
+
         {%- comment -%}
-    First, get the raw numerical values for price.
-    We use 'variant.price' if it exists, falling back to 'product.price'.
-    This avoids the 'Integer with String' error.
-  {%- endcomment -%}
-  {%- assign current_price_num = variant.price | default: product.price -%}
-  {%- assign compare_price_num = variant.compare_at_price | default: product.compare_at_price -%}
+          First, get the raw numerical values for price.
+          We use 'variant.price' if it exists, falling back to 'product.price'.
+          This avoids the 'Integer with String' error.
+        {%- endcomment -%}
+        {%- assign current_price_num = variant.price | default: product.price -%}
+        {%- assign compare_price_num = variant.compare_at_price | default: product.compare_at_price -%}
 
-  {%- comment -%} Now, perform the comparison and calculation using the numbers. {%- endcomment -%}
-  {%- if compare_price_num > current_price_num -%}
-    {%- assign savings = compare_price_num | minus: current_price_num -%}
-    {%- assign discount = savings | times: 100.0 | divided_by: compare_price_num | round -%}
-    <p class="price-item--discount">
-      (Save {{ discount }}%)
-    </p>
-  {%- endif -%} {% endcomment %}
-
-
+        {%- comment -%} Now, perform the comparison and calculation using the numbers. {%- endcomment -%}
+        {%- if compare_price_num > current_price_num -%}
+          {%- assign savings = compare_price_num | minus: current_price_num -%}
+          {%- assign discount = savings | times: 100.0 | divided_by: compare_price_num | round -%}
+          <p class="price-item--discount">(Save {{ discount }}%)</p>
+        {%- endif -%}
       </div>
       {%- if product.selected_or_first_available_variant.unit_price_measurement -%}
         {% render 'unit-price',
@@ -143,7 +138,6 @@
       </span>
 
       <span class="badge price__badge-sold-out color-{{ settings.sold_out_badge_color_scheme }}">
-         
         {{ 'products.product.sold_out' | t }}
       </span>
     {%- endif -%}
