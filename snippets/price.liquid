@@ -109,6 +109,14 @@
         <span class="price-item price-item--sale price-item--last mws-price">
           {{ money_price }}
         </span>
+
+        {%- if compare_at_price > money_price -%}
+    {%- assign savings = compare_at_price | minus: money_price -%}
+    {%- assign discount = savings | times: 100.0 | divided_by: compare_at_price | round -%}
+    <span class="price-item--discount">
+      (Save {{ discount }}%)
+    </span>
+  {%- endif -%}
       </div>
       {%- if product.selected_or_first_available_variant.unit_price_measurement -%}
         {% render 'unit-price',
