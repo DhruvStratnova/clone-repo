@@ -182,7 +182,9 @@
     },
     "featured_collection": {
       "type": "featured-collection",
-      "custom_css": [],
+      "custom_css": [
+        "h2 {margin: 0 auto; width: fit-content; /* Or a specific width */}"
+      ],
       "name": "New Arrivals",
       "settings": {
         "collection": "bracelets",
@@ -212,7 +214,9 @@
     },
     "featured_collection_6N6qke": {
       "type": "featured-collection",
-      "custom_css": [],
+      "custom_css": [
+        "h2 {margin: 0 auto; width: fit-content; /* Or a specific width */}"
+      ],
       "name": "Top Selling",
       "settings": {
         "collection": "all",
@@ -253,7 +257,7 @@
         "text_PLAK8A": {
           "type": "text",
           "settings": {
-            "text": "<p><strong>Rudraksha beads are sacred symbols of Lord Shiva, promoting peace, protection, and spiritual growth. They enhance meditation, balance energy, and guide the wearer toward inner strength and divine connection.</strong></p>",
+            "text": "<p>Rudraksha beads are sacred symbols of Lord Shiva, promoting peace, protection, and spiritual growth. They enhance meditation, balance energy, and guide the wearer toward inner strength and divine connection.</p>",
             "text_style": "body"
           }
         },
@@ -334,6 +338,9 @@
         "featured_collection_Npy7LD",
         "featured_collection_xY3HpY",
         "featured_collection_qceXDX"
+      ],
+      "custom_css": [
+        "h2 {margin: 0 auto; width: fit-content; /* Or a specific width */}"
       ],
       "name": "t:sections.collection-list.presets.name",
       "settings": {
@@ -438,6 +445,9 @@
         "featured_collection_Bxiq68",
         "featured_collection_UyFhPR",
         "featured_collection_gjKN6a"
+      ],
+      "custom_css": [
+        "h2 {margin: 0 auto; width: fit-content; /* Or a specific width */}"
       ],
       "name": "t:sections.collection-list.presets.name",
       "settings": {
