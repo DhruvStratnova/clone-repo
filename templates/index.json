@@ -341,7 +341,7 @@
       ],
       "custom_css": [
         "h2 {margin: 0 auto; width: fit-content; /* Or a specific width */}",
-        "p{font-size: 10px;}"
+        "p {font-size: 10px;}"
       ],
       "name": "t:sections.collection-list.presets.name",
       "settings": {
@@ -452,7 +452,8 @@
         "featured_collection_gjKN6a"
       ],
       "custom_css": [
-        "h2 {margin: 0 auto; width: fit-content; /* Or a specific width */}"
+        "h2 {margin: 0 auto; width: fit-content; /* Or a specific width */}",
+        "p {font-size: 10px;}"
       ],
       "name": "t:sections.collection-list.presets.name",
       "settings": {
