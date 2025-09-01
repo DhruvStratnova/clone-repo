@@ -122,8 +122,10 @@
         {%- if compare_price_num > current_price_num -%}
           {%- assign savings = compare_price_num | minus: current_price_num -%}
           {%- assign discount = savings | times: 100.0 | divided_by: compare_price_num | round -%}
-          <p class="price-item--discount">(Save {{ discount }}%)</p>
+          <span class="price-item--discount">(Save {{ discount }}%)</p>
         {%- endif -%}
+
+
       </div>
       {%- if product.selected_or_first_available_variant.unit_price_measurement -%}
         {% render 'unit-price',
