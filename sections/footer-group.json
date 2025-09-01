@@ -28,13 +28,6 @@
             "subtext": "<p>These policies govern the use of the AstroAura Market website and services, operated by Stratnova Technologies LLC, India. </p><p>They are applicable to both Indian and global customers. By using our website (www.astroaura.market), you agree to abide by the following policies.</p>"
           }
         },
-        "link_list_myPVW9": {
-          "type": "link_list",
-          "settings": {
-            "heading": "AstroAura Market - Policies ",
-            "menu": "astroaura-market-policies"
-          }
-        },
         "link_list_KzEDqW": {
           "type": "link_list",
           "settings": {
@@ -70,6 +63,13 @@
             "menu": "footer"
           }
         },
+        "link_list_myPVW9": {
+          "type": "link_list",
+          "settings": {
+            "heading": "AstroAura Market - Policies ",
+            "menu": "astroaura-market-policies"
+          }
+        },
         "text_pYPHT4": {
           "type": "text",
           "settings": {
@@ -81,12 +81,12 @@
       "block_order": [
         "brand_information_3NXdit",
         "text_VqGyqf",
-        "link_list_myPVW9",
         "link_list_KzEDqW",
         "link_list_etaV6X",
         "link_list_KbybNT",
         "link_list_Cc4Ypr",
         "link_list_8WAb99",
+        "link_list_myPVW9",
         "text_pYPHT4"
       ],
       "custom_css": [],
