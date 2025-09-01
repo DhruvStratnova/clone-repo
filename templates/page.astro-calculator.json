@@ -11,6 +11,9 @@
   "sections": {
     "main": {
       "type": "main-page",
+      "custom_css": [
+        "h2{font-size: 36px;}"
+      ],
       "name": "Astro Calculator",
       "settings": {
         "padding_top": 0,
