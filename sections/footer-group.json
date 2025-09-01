@@ -14,6 +14,12 @@
     "footer": {
       "type": "footer",
       "blocks": {
+        "brand_information_3NXdit": {
+          "type": "brand_information",
+          "settings": {
+            "show_social": true
+          }
+        },
         "text_VqGyqf": {
           "type": "text",
           "disabled": true,
@@ -70,15 +76,10 @@
             "heading": "Contact Us",
             "subtext": "<p>For any questions, concerns, or disputes, please contact us:</p><p></p><p>AstroAura MarketOperated by Stratnova Technologies LLC, India</p><p>Email: vikram@astroaura.ai</p><p>Phone: +91-9910602567</p>"
           }
-        },
-        "brand_information_3NXdit": {
-          "type": "brand_information",
-          "settings": {
-            "show_social": true
-          }
         }
       },
       "block_order": [
+        "brand_information_3NXdit",
         "text_VqGyqf",
         "link_list_myPVW9",
         "link_list_KzEDqW",
@@ -86,8 +87,7 @@
         "link_list_KbybNT",
         "link_list_Cc4Ypr",
         "link_list_8WAb99",
-        "text_pYPHT4",
-        "brand_information_3NXdit"
+        "text_pYPHT4"
       ],
       "custom_css": [],
       "settings": {
