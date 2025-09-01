@@ -103,7 +103,7 @@
         "text_BEWUmW": {
           "type": "text",
           "settings": {
-            "text": "<p>Through the sacred lens of Vedic astrology, we come to realize that the divine rhythms of the universe are deeply intertwined with the celestial movements of the planets.</p><p>These sacred planets—the radiant Sun, gentle Moon, fiery Mars, wise Jupiter, graceful Venus, swift Mercury, and steadfast Saturn—along with the mystical shadow forces Rahu and Ketu, guide the course of our earthly journey.</p><p>Gemstones, created by divine will over countless ages, are imbued with the pure energies of these cosmic beings. As sacred vessels of planetary grace, they help harmonize and align our lives with the blessings of the universe, offering protection, strength, and spiritual upliftment.</p>",
+            "text": "<p>Rudraksha beads are sacred seeds of Lord Shiva, known for their spiritual power and protective energy. Each bead carries unique vibrations that help balance the mind, body, and soul, providing peace, focus, and resilience. Wearing Rudraksha can reduce stress, strengthen intuition, and shield you from negative influences, while enhancing meditation and spiritual growth. From the single Mukhi to multi-faced beads, each Rudraksha type supports specific aspects of life, guiding you toward harmony, clarity, and inner strength.</p>",
             "text_style": "body"
           }
         },
@@ -111,7 +111,7 @@
           "type": "button",
           "settings": {
             "button_label": "Learn More",
-            "button_link": "shopify://pages/about-us",
+            "button_link": "shopify://collections/rudrasha",
             "button_style_secondary": true
           }
         }
