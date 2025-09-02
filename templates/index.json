@@ -632,16 +632,14 @@
         "column_Uj3Ljt"
       ],
       "custom_css": [
-        "h2 {margin: 0 auto; width: fit-content;}",
-        "img {width: 64px; height: 64px;}",
-        ".media {width: fit-content; height: fit-content;}"
+        "h2 {margin: 0 auto; width: fit-content;}"
       ],
       "name": "t:sections.multicolumn.presets.name",
       "settings": {
         "title": "Certified Gems",
         "heading_size": "h1",
-        "image_width": "full",
-        "image_ratio": "adapt",
+        "image_width": "third",
+        "image_ratio": "circle",
         "button_label": "",
         "button_link": "",
         "columns_desktop": 3,
