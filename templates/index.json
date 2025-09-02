@@ -202,7 +202,7 @@
       "type": "featured-collection",
       "custom_css": [
         "h2 {margin: 0 auto; width: fit-content; /* Or a specific width */}",
-        ".contains-card {padding: 32px;}",
+        ".contains-card {/* padding: 32px; */}",
         ".slider-buttons {display: none;}"
       ],
       "name": "New Arrivals",
