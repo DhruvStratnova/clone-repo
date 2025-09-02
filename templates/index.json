@@ -633,7 +633,8 @@
       ],
       "custom_css": [
         "h2 {margin: 0 auto; width: fit-content;}",
-        "img{width:24px; height: 24px; }"
+        "img {width: 64px; height: 64px;}",
+        ".media {width: fit-content; height: fit-content;}"
       ],
       "name": "t:sections.multicolumn.presets.name",
       "settings": {
