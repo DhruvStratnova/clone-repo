@@ -97,8 +97,6 @@
                         assign image_width = 0.5
                       elsif section.settings.image_width == 'third'
                         assign image_width = 0.33
-                      elsif section.settings.image_width == 'custom'
-                        assign image_width = 0.1
                       else
                         assign image_width = 1
                       endif
@@ -267,10 +265,6 @@
         {
           "value": "full",
           "label": "t:sections.multicolumn.settings.image_width.options__3.label"
-        },
-        {
-          "value": "Custom",
-          "label": "custom"
         }
       ],
       "default": "full",
