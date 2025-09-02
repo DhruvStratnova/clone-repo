@@ -47,7 +47,7 @@
       "settings": {
         "image": "shopify://shop_images/ChatGPT_Image_Sep_2_2025_08_57_54_PM.png",
         "image_overlay_opacity": 0,
-        "image_height": "adapt",
+        "image_height": "small",
         "image_behavior": "none",
         "desktop_content_position": "middle-center",
         "desktop_content_alignment": "center",
