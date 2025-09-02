@@ -35,7 +35,7 @@
   #shopify-section-template--{{ section.id }} .media > img {
     width: 100%;
     height: 100%;
-    object-fit: scale-down;
+    {% comment %} object-fit: scale-down; {% endcomment %}
     object-position: center center;
     display: block;
     transition: opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
