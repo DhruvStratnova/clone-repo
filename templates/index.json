@@ -638,7 +638,7 @@
       "settings": {
         "title": "Certified Gems",
         "heading_size": "h1",
-        "image_width": "full",
+        "image_width": "Custom",
         "image_ratio": "circle",
         "button_label": "",
         "button_link": "",
