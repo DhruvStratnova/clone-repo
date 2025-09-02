@@ -441,12 +441,7 @@
   },
   "platform_customizations": {
     "custom_css": [
-      ".tabber_coll {}",
-      ".tabber_content {/* padding: 2rem; */ display: flex; justify-content: center;}",
-      ".tabcontent {background-color: #ffffff; border: 1px solid #eaeaea; border-radius: 12px; padding: 40px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); max-width: 1400px; margin: 2rem 2rem;}",
-      ".banner__media {width: 100%; aspect-ratio: 1240 / 600; /* match your image's ratio */}",
-      ".banner__media img {width: 100%; height: auto; object-fit: ; /* ensures full image is always visible */ display: block;}",
-      ".collection .product-grid {max-width: 80%; max-width: 1400px; margin-left: auto; margin-right: auto;}"
+      "@media screen and (min-width: 990px) {.grid--7-col-desktop {grid-template-columns: repeat(7, 1fr); } .grid--8-col-desktop {grid-template-columns: repeat(8, 1fr); } .grid--9-col-desktop {grid-template-columns: repeat(9, 1fr); } .grid--10-col-desktop {grid-template-columns: repeat(10, 1fr); } .grid--11-col-desktop {grid-template-columns: repeat(11, 1fr); } .grid--12-col-desktop {grid-template-columns: repeat(12, 1fr); } .grid--13-col-desktop {grid-template-columns: repeat(13, 1fr); } .grid--14-col-desktop {grid-template-columns: repeat(14, 1fr); } .grid--15-col-desktop {grid-template-columns: repeat(15, 1fr); }}"
     ]
   }
 }
