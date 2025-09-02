@@ -114,6 +114,7 @@
         "slide_AKgQ4t": {
           "type": "slide",
           "settings": {
+            "image": "shopify://shop_images/Banner_3.png",
             "image_overlay_opacity": 0,
             "heading": "Image slide",
             "heading_size": "h1",
