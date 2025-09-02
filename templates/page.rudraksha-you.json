@@ -24,14 +24,14 @@
         "heading_pPfrRq": {
           "type": "heading",
           "settings": {
-            "heading": "About Us",
+            "heading": "Rudraksha & You",
             "heading_size": "h1"
           }
         },
         "text_7DA68E": {
           "type": "text",
           "settings": {
-            "text": "<p><br/>At <strong>AstroAura</strong>, we believe the universe is within us, guiding our choices and energies. We help individuals connect with their unique cosmic blueprint through astrology, intuition, and personalized insights. Our mission is to empower you to understand your aura, navigate life’s challenges, and embrace opportunities in love, career, and personal growth. Through readings, aura analysis, and practical guidance, we provide tools to align with your true potential. Step into your cosmic flow, understand your energies, and transform your life with <strong>AstroAura</strong>.<br/><br/></p>",
+            "text": "<p>Rudraksha beads are sacred seeds of Lord Shiva, known for their spiritual power and protective energy. Each bead carries unique vibrations that help balance the mind, body, and soul, providing peace, focus, and resilience. Wearing Rudraksha can reduce stress, strengthen intuition, and shield you from negative influences, while enhancing meditation and spiritual growth. From the single Mukhi to multi-faced beads, each Rudraksha type supports specific aspects of life, guiding you toward harmony, clarity, and inner strength.</p>",
             "text_style": "body"
           }
         },
@@ -51,10 +51,10 @@
       ],
       "name": "t:sections.image-with-text.presets.name",
       "settings": {
-        "image": "shopify://shop_images/image_184.png",
+        "image": "shopify://shop_images/ChatGPT_Image_Sep_2_2025_01_34_17_PM.png",
         "height": "small",
         "desktop_image_width": "medium",
-        "layout": "text_first",
+        "layout": "image_first",
         "image_behavior": "none",
         "content_layout": "no-overlap",
         "desktop_content_position": "top",
