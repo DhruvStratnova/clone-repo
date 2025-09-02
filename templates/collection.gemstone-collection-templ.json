@@ -46,7 +46,7 @@
       "custom_css": [
         ".tabber_coll {}",
         ".tabber_content {/* padding: 2rem; */ display: flex; justify-content: center;}",
-        ".tabcontent {background-color: #ffffff; border: 1px solid #eaeaea; border-radius: 12px; padding: 40px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); max-width: 1200px;}",
+        ".tabcontent {background-color: #ffffff; border: 1px solid #eaeaea; border-radius: 12px; padding: 40px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); max-width: 1200px; margin: 2rem 2rem;}",
         ".banner__media {aspect-ratio: 1240 / 600; width: 100%;}",
         ".banner__media img {max-width: 100%; height: auto; object-fit: contain; display: block;}"
       ],
