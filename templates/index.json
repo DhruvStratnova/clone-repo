@@ -312,7 +312,7 @@
         "show_vendor": false,
         "show_rating": false,
         "quick_add": "standard",
-        "columns_mobile": "1",
+        "columns_mobile": "2",
         "swipe_on_mobile": true,
         "padding_top": 0,
         "padding_bottom": 0
@@ -636,7 +636,7 @@
         ".multicolumn-card {background: rgba(255, 255, 255, 0.9); box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.1), 0 10px 15px 0 rgba(0, 0, 0, 0.1);}",
         ".media--circle {padding: 48%; border-radius: 50%;}",
         ".media {display: block; background-color: rgba(var(--color-foreground), 0.1); position: relative; overflow: hidden;}",
-        ".media--transparent {background: linear-gradient(90deg, #f3e8ff 0%, #fce7f3 100%); }",
+        ".media--transparent {background: linear-gradient(90deg, #f3e8ff 0%, #fce7f3 100%);}",
         ".media > img {object-fit: scale-down; object-position: center center; transition: opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);}"
       ],
       "name": "t:sections.multicolumn.presets.name",
