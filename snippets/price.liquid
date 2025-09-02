@@ -124,7 +124,7 @@
         {%- if compare_price_num > current_price_num -%}
           {%- assign savings = compare_price_num | minus: current_price_num -%}
           {%- assign discount = savings | times: 100.0 | divided_by: compare_price_num | round -%}
-          <span class="price-item--discount">(Save {{ discount }}%)</span>
+          <span class="price-item--discount">({{ discount }}% OFF)</span>
         {%- endif -%}
 
 
