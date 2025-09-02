@@ -609,7 +609,8 @@ justify-content: center;
 
 .tabber_content {
   max-width: 1200px;
-  /* display: block; */
+  display: flex;
+  flex-direction
   /* margin: 0 auto; This correctly centers the div block */
   /* text-align: center; Add this to center the text inside the div */
   padding: 2rem 9.5rem;
