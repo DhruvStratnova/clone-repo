@@ -454,6 +454,7 @@
         "featured_collection_UyFhPR",
         "featured_collection_gjKN6a"
       ],
+      "disabled": true,
       "custom_css": [
         "h2 {margin: 0 auto; width: fit-content; /* Or a specific width */}",
         "p {font-size: 10px;}"
