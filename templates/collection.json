@@ -117,14 +117,14 @@
         "heading_b7m6wk": {
           "type": "heading",
           "settings": {
-            "heading": "Gemstones & You",
+            "heading": "Crystal Rakhi & You",
             "heading_size": "h1"
           }
         },
         "text_bkKARH": {
           "type": "text",
           "settings": {
-            "text": "<p>Through the sacred lens of Vedic astrology, we come to realize that the divine rhythms of the universe are deeply intertwined with the celestial movements of the planets.</p><p>These sacred planets—the radiant Sun, gentle Moon, fiery Mars, wise Jupiter, graceful Venus, swift Mercury, and steadfast Saturn—along with the mystical shadow forces Rahu and Ketu, guide the course of our earthly journey.</p><p>Gemstones, created by divine will over countless ages, are imbued with the pure energies of these cosmic beings. As sacred vessels of planetary grace, they help harmonize and align our lives with the blessings of the universe, offering protection, strength, and spiritual upliftment.</p>",
+            "text": "<p>Crystal Rakhis beautifully blend tradition with modern elegance, making them more than just festive threads. Designed with natural crystals, each rakhi carries unique healing and spiritual properties, symbolizing protection, positivity, and emotional balance. Beyond the sacred bond of Raksha Bandhan, these rakhis can also be worn as stylish everyday accessories, offering both charm and energy benefits. Combining culture, love, and wellness, Crystal Rakhis make the celebration truly meaningful and memorable.<br/></p>",
             "text_style": "body"
           }
         },
@@ -132,7 +132,7 @@
           "type": "button",
           "settings": {
             "button_label": "Learn More",
-            "button_link": "shopify://pages/about-us",
+            "button_link": "shopify://collections/crystal-rakhi",
             "button_style_secondary": true
           }
         }
@@ -144,9 +144,9 @@
       ],
       "name": "t:sections.image-with-text.presets.name",
       "settings": {
-        "image": "shopify://shop_images/sushil_kanya.jpg",
-        "height": "adapt",
-        "desktop_image_width": "medium",
+        "image": "shopify://shop_images/ChatGPT_Image_Sep_2_2025_02_37_09_PM.png",
+        "height": "small",
+        "desktop_image_width": "small",
         "layout": "image_first",
         "image_behavior": "none",
         "content_layout": "no-overlap",
