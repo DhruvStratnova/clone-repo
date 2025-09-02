@@ -45,14 +45,14 @@
       ],
       "custom_css": [
         ".tabber_coll {}",
-        ".tabber_content {padding: 2rem; display: flex; justify-content: center; }",
+        ".tabber_content {padding: 2rem; display: flex; justify-content: center;}",
         ".tabcontent {background-color: #ffffff; border: 1px solid #eaeaea; border-radius: 12px; padding: 40px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); max-width: 1200px;}"
       ],
       "name": "t:sections.image-banner.presets.name",
       "settings": {
         "image": "shopify://shop_images/Frame_1_1.png",
         "image_overlay_opacity": 0,
-        "image_height": "medium",
+        "image_height": "adapt",
         "image_behavior": "none",
         "desktop_content_position": "middle-center",
         "desktop_content_alignment": "center",
