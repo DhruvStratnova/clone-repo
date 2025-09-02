@@ -636,9 +636,9 @@
         ".multicolumn-card {background: rgba(255, 255, 255, 0.9); box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.1), 0 10px 15px 0 rgba(0, 0, 0, 0.1);}",
         ".media {display: block; background-color: rgba(var(--color-foreground), 0.1); position: relative; overflow: hidden;}",
         ".media--transparent {background: linear-gradient(90deg, #f3e8ff 0%, #fce7f3 100%);}",
-        ".media--circle {padding: 50%; border-radius: 50%;}",
+        ".media--circle {padding: 40px; border-radius: 50%;}",
         ".media > img {width: 64px;}",
-        "img {margin-left: 0;}"
+        "img {margin-left: 21px;}"
       ],
       "name": "t:sections.multicolumn.presets.name",
       "settings": {
