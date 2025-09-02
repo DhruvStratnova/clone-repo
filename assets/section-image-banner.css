@@ -612,7 +612,7 @@ justify-content: center;
   /* display: block; */
   /* margin: 0 auto; This correctly centers the div block */
   /* text-align: center; Add this to center the text inside the div */
-  padding: 0rem 9.5rem;
+  padding: 2rem 9.5rem;
   background-color: #f1f1f1;
   
 }
