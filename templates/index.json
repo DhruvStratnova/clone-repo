@@ -335,6 +335,7 @@
         },
         "featured_collection_Npy7LD": {
           "type": "featured_collection",
+          "disabled": true,
           "settings": {
             "collection": "mission-pattern-remedies"
           }
