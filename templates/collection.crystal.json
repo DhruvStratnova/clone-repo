@@ -1,0 +1,233 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "image_banner_zpGQzQ": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_Nwhn7g": {
+          "type": "heading",
+          "settings": {
+            "heading": "Image banner",
+            "heading_size": "h1"
+          }
+        },
+        "text_TiJNKb": {
+          "type": "text",
+          "settings": {
+            "text": "Give customers details about the banner image(s) or content on the template.",
+            "text_style": "body"
+          }
+        },
+        "buttons_yt67QM": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "Button label",
+            "button_link_1": "",
+            "button_style_secondary_1": false,
+            "button_label_2": "Button label",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_Nwhn7g",
+        "text_TiJNKb",
+        "buttons_yt67QM"
+      ],
+      "name": "t:sections.image-banner.presets.name",
+      "settings": {
+        "image": "shopify://shop_images/ChatGPT_Image_Sep_2_2025_09_27_36_PM.png",
+        "image_overlay_opacity": 0,
+        "image_height": "adapt",
+        "image_behavior": "none",
+        "desktop_content_position": "middle-center",
+        "desktop_content_alignment": "center",
+        "show_text_box": true,
+        "color_scheme": "",
+        "stack_images_on_mobile": true,
+        "mobile_content_alignment": "center",
+        "show_text_below": true
+      }
+    },
+    "rich_text_dQCfcz": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_wb6zni": {
+          "type": "heading",
+          "settings": {
+            "heading": "All Products",
+            "heading_size": "h2"
+          }
+        }
+      },
+      "block_order": [
+        "heading_wb6zni"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "desktop_content_position": "left",
+        "content_alignment": "left",
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 12,
+        "padding_bottom": 0
+      }
+    },
+    "banner": {
+      "type": "main-collection-banner",
+      "disabled": true,
+      "settings": {
+        "show_collection_description": false,
+        "show_collection_image": false,
+        "color_scheme": "scheme-1"
+      }
+    },
+    "product-grid": {
+      "type": "main-collection-product-grid",
+      "settings": {
+        "products_per_page": 24,
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "color_scheme": "scheme-1",
+        "image_ratio": "adapt",
+        "image_shape": "default",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "standard",
+        "enable_filtering": true,
+        "filter_type": "horizontal",
+        "enable_sorting": true,
+        "padding_top": 12,
+        "padding_bottom": 36
+      }
+    },
+    "image_with_text_GGVXqL": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_b7m6wk": {
+          "type": "heading",
+          "settings": {
+            "heading": "Crystal & You",
+            "heading_size": "h1"
+          }
+        },
+        "text_bkKARH": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Crystals are natural stones known for their healing, spiritual, and energy-enhancing properties. Each crystal carries unique vibrations that promote positivity, balance, and protection. Used for meditation, wellness, and manifestation, crystals help reduce stress, boost focus, and attract harmony. Beautiful and powerful, they combine spiritual benefits with aesthetic appeal in daily life.</p>",
+            "text_style": "body"
+          }
+        },
+        "button_FGMQRB": {
+          "type": "button",
+          "settings": {
+            "button_label": "Learn More",
+            "button_link": "shopify://collections/crystal-rakhi",
+            "button_style_secondary": true
+          }
+        }
+      },
+      "block_order": [
+        "heading_b7m6wk",
+        "text_bkKARH",
+        "button_FGMQRB"
+      ],
+      "name": "t:sections.image-with-text.presets.name",
+      "settings": {
+        "image": "shopify://shop_images/ChatGPT_Image_Sep_2_2025_06_17_51_PM.png",
+        "height": "small",
+        "desktop_image_width": "small",
+        "layout": "image_first",
+        "image_behavior": "none",
+        "content_layout": "no-overlap",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "mobile_content_alignment": "left",
+        "section_color_scheme": "",
+        "color_scheme": "",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "collapsible_content_EtJFbL": {
+      "type": "collapsible-content",
+      "blocks": {
+        "collapsible_row_QLBGTF": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "What are its benefits?",
+            "icon": "none",
+            "row_content": "<p>1. Citrine attracts positivity, uplifting your mood and outlook.<br/>2. It boosts confidence, encouraging a brighter, can-do attitude.<br/>3. Citrine enhances motivation, helping you stay focused on goals.<br/>4. It promotes abundance, attracting prosperity and success.<br/><br/></p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_b34tJL": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How natural and authentic is this gemstone?",
+            "icon": "none",
+            "row_content": "<p>All our stones are 100% natural and authentic. The healing stones have been sourced from top international mines from across the globe and certified by various labs.  <br/><br/></p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_mDqahe": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "What is the return policy and estimated delivery duration?",
+            "icon": "none",
+            "row_content": "<p>We offer a hassle-free 7-day return policy. Additionally, you can expect delivery within 10 to 14 days. <br/><br/></p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_m84QkB": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How is this energized and how can i wear it?",
+            "icon": "none",
+            "row_content": "<p><strong>How can crystals heal-</strong> All healing crystals correspond to different planets in our solar system, which is why each crystal vibrates at its unique frequency. These healing stones offer more than mere aesthetic value. At the right frequency the crystals directly affect the 7 chakras of the human body.  <br/><br/><br/><strong>What is energisation-</strong> When properly energised, the crystals vibrate at frequencies that align with the various chakras in our body. This process of ensuring the alignment of frequencies, known as the energization of a healing stone, enhances their therapeutic and psychic benefits. </p><p><br/><strong>How we help-</strong> At Astrotalk, we ensure that all our healing stones are sourced and energised by trusted experts and astrologers to guarantee their authenticity. Before delivery, all our healing stones are energised with pure intentions and energy by our esteemed astrologers, making them highly effective for our customers. </p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "collapsible_row_QLBGTF",
+        "collapsible_row_b34tJL",
+        "collapsible_row_mDqahe",
+        "collapsible_row_m84QkB"
+      ],
+      "name": "t:sections.collapsible_content.presets.name",
+      "settings": {
+        "caption": "",
+        "heading": "FAQs",
+        "heading_size": "h1",
+        "heading_alignment": "center",
+        "layout": "none",
+        "container_color_scheme": "",
+        "color_scheme": "",
+        "open_first_collapsible_row": false,
+        "image_ratio": "adapt",
+        "desktop_layout": "image_second",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "image_banner_zpGQzQ",
+    "rich_text_dQCfcz",
+    "banner",
+    "product-grid",
+    "image_with_text_GGVXqL",
+    "collapsible_content_EtJFbL"
+  ]
+}
