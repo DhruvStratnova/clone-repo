@@ -369,7 +369,9 @@
       ],
       "custom_css": [
         "h2 {margin: 0 auto; width: fit-content; /* Or a specific width */}",
-        "p {font-size: 10px;}"
+        "p {font-size: 10px;}",
+        ".card {flex-shrink: 0; border-radius: 24px; border: 1px solid rgba(255, 255, 255, 0.6); background: rgba(255, 255, 255, 0.9); box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.1), 0 10px 15px 0 rgba(0, 0, 0, 0.1);}",
+        ".card__media {border-radius: 16px; border: 0 solid #e5e7eb;}"
       ],
       "name": "t:sections.collection-list.presets.name",
       "settings": {
