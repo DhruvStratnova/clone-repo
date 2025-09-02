@@ -611,7 +611,7 @@ justify-content: center;
   max-width: 1200px;
   display: flex;
   flex-direction: column;
-  gap:
+  gap:2rem;
   /* margin: 0 auto; This correctly centers the div block */
   /* text-align: center; Add this to center the text inside the div */
   padding: 2rem 9.5rem;
