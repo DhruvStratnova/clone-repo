@@ -632,7 +632,8 @@
         "column_Uj3Ljt"
       ],
       "custom_css": [
-        "h2 {margin: 0 auto; width: fit-content;}"
+        "h2 {margin: 0 auto; width: fit-content;}",
+        "img{width:24px; height: 24px; }"
       ],
       "name": "t:sections.multicolumn.presets.name",
       "settings": {
