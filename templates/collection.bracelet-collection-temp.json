@@ -100,7 +100,7 @@
         "text_HWqkf7": {
           "type": "text",
           "settings": {
-            "text": "<p>Gemstone and crystal bracelets are not just stylish accessories—they serve as powerful tools to harmonize your energy and enhance your overall well-being. Each bracelet is crafted with natural, certified gemstones or crystals, carefully selected for their unique vibrational properties. Wearing a bracelet daily can help balance emotions, boost confidence, improve focus, and support mental clarity. Beyond their spiritual benefits, these bracelets act as constant reminders of your intentions, helping you stay grounded and aligned with your personal goals. Available in a variety of designs, from elegant gemstone strands to contemporary crystal combinations, they effortlessly blend fashion with functionality. Whether worn alone or stacked with other bracelets, they offer both aesthetic appeal and energy-enhancing benefits, making them ideal for everyday wear or special occasions.</p>",
+            "text": "<p><br/>Bracelets are versatile accessories that combine elegance, style, and personal meaning. Worn for centuries across cultures, they remain one of the most popular forms of jewelry, admired for their ability to enhance any look effortlessly. Crafted from a variety of materials such as gold, silver, beads, leather, or crystals, bracelets are designed to suit different personalities and occasions. A bracelet can be a symbol of love, friendship, strength, or simply a reflection of individual taste. They are lightweight, comfortable, and easy to pair with other jewelry, making them ideal for everyday wear as well as special events. From minimalist designs for a subtle touch to bold statement pieces that stand out, bracelets adapt beautifully to modern fashion trends. Whether worn alone or stacked together, they provide a stylish finishing touch while holding sentimental or symbolic value, making them a meaningful part of personal style.<br/><br/></p>",
             "text_style": "body"
           }
         },
@@ -120,9 +120,9 @@
       ],
       "name": "t:sections.image-with-text.presets.name",
       "settings": {
-        "image": "shopify://shop_images/sushil_kanya.jpg",
-        "height": "adapt",
-        "desktop_image_width": "medium",
+        "image": "shopify://shop_images/ChatGPT_Image_Sep_2_2025_01_52_53_PM.png",
+        "height": "small",
+        "desktop_image_width": "small",
         "layout": "image_first",
         "image_behavior": "none",
         "content_layout": "no-overlap",
