@@ -445,7 +445,8 @@
       ".tabber_content {/* padding: 2rem; */ display: flex; justify-content: center;}",
       ".tabcontent {background-color: #ffffff; border: 1px solid #eaeaea; border-radius: 12px; padding: 40px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); max-width: 1400px; margin: 2rem 2rem;}",
       ".banner__media {width: 100%; aspect-ratio: 1240 / 600; /* match your image's ratio */}",
-      ".banner__media img {width: 100%; height: auto; object-fit: ; /* ensures full image is always visible */ display: block;}"
+      ".banner__media img {width: 100%; height: auto; object-fit: ; /* ensures full image is always visible */ display: block;}",
+      ".collection .product-grid {/* Reduce the max-width of the grid. 90% is a small reduction. Try 80% or 75% to make the cards even smaller. */ max-width: 90%; /* This centers the newly-sized grid on the page. */ margin-left: auto; margin-right: auto;}"
     ]
   }
 }
