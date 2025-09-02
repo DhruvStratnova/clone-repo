@@ -120,7 +120,9 @@
               {%- endif -%}
               <div class="multicolumn-card__info">
 
-<figure>
+
+
+{% comment %} <figure>
   <img 
     src="{{ 'Vector.png' | asset_url }}" 
     alt="A descriptive summary of the image"
@@ -128,7 +130,14 @@
     height="24"
     loading="lazy">
   <figcaption>This is a caption describing the image above.</figcaption>
-</figure>
+</figure> {% endcomment %}
+
+
+
+{% assign images = 'image1.png,image2.png,image3.png' | split: ',' %}
+{% for img in images %}
+  <img src="{{ img | asset_url }}" alt="Image {{ forloop.index }}" loading="lazy" />
+{% endfor %}
 
 
                 {%- if block.settings.title != blank -%}
