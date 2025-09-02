@@ -110,11 +110,30 @@
             "text_alignment_mobile": "center",
             "color_scheme": ""
           }
+        },
+        "slide_HQXeCc": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Banner_3.png",
+            "image_overlay_opacity": 0,
+            "heading": "Image slide",
+            "heading_size": "h1",
+            "subheading": "Tell your brand's story through images",
+            "button_label": "Button label",
+            "link": "",
+            "button_style_secondary": false,
+            "show_text_box": true,
+            "box_align": "middle-center",
+            "text_alignment": "center",
+            "text_alignment_mobile": "center",
+            "color_scheme": "scheme-1"
+          }
         }
       },
       "block_order": [
         "slide_93RPaQ",
-        "slide_FnJjtn"
+        "slide_FnJjtn",
+        "slide_HQXeCc"
       ],
       "custom_css": [
         "slideshow-component {position: relative; display: flex; flex-direction: column; margin: 0 0 4rem 0;}",
@@ -123,7 +142,7 @@
       "name": "t:sections.slideshow.presets.name",
       "settings": {
         "layout": "full_bleed",
-        "slide_height": "adapt_image",
+        "slide_height": "medium",
         "slider_visual": "dots",
         "auto_rotate": true,
         "change_slides_speed": 3,
@@ -145,7 +164,7 @@
         "text_Fka4eU": {
           "type": "text",
           "settings": {
-            "text": "<p><strong>A sacred seed, Rudraksha provides divine protection, inner peace, and clarity for a journey towards enlightenment and balance.<br/></strong>Divine Protection & Spiritual Shield.</p><p>Inner Peace and Mental Clarity.</p><p>Enlightenment & Spiritual Balance.</p>",
+            "text": "<p><strong>A sacred seed, Rudraksha provides divine protection, inner peace, and clarity for a journey towards enlightenment and balance.<br/></strong>Divine Protection & Spiritual Shield.<br/>Inner Peace and Mental Clarity.<br/>Enlightenment & Spiritual Balance.</p>",
             "text_style": "body"
           }
         },
