@@ -87,6 +87,7 @@
                       style="padding-bottom: {{ 1 | divided_by: highest_ratio | times: 100 }}%;"
                     {% endif %}
                   >
+                    {{-section.settings.image_width  }}
                     {%- liquid
                       assign number_of_columns = section.settings.columns_desktop
                       assign number_of_columns_mobile = section.settings.columns_mobile
