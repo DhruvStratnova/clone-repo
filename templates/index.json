@@ -531,6 +531,9 @@
         "text_x3JxKH",
         "button_9T4M69"
       ],
+      "custom_css": [
+        "h2 {margin: 0 auto; width: fit-content;}"
+      ],
       "name": "t:sections.image-with-text.presets.name",
       "settings": {
         "image": "shopify://shop_images/why_astroaura.png",
@@ -538,8 +541,8 @@
         "desktop_image_width": "medium",
         "layout": "text_first",
         "image_behavior": "none",
-        "content_layout": "no-overlap",
-        "desktop_content_position": "top",
+        "content_layout": "overlap",
+        "desktop_content_position": "middle",
         "desktop_content_alignment": "left",
         "mobile_content_alignment": "left",
         "section_color_scheme": "scheme-d042d7b2-a9c1-4c2f-9f34-d12479533a88",
