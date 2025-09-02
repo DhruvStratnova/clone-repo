@@ -119,20 +119,16 @@
                 </div>
               {%- endif -%}
               <div class="multicolumn-card__info">
-
-
-
-{% comment %} {% comment %} {% comment %} {% comment %} {% comment %} <figure>
-  <img 
-    src="{{ 'Vector.png' | asset_url }}" 
-    alt="A descriptive summary of the image"
-    width="24" 
-    height="24"
-    loading="lazy">
-  <figcaption>This is a caption describing the image above.</figcaption>
-</figure> {% endcomment %} {% endcomment %} {% endcomment %} {% endcomment %} {% endcomment %}
-
-
+                <figure>
+                  <img
+                    src="{{ 'Vector.png' | asset_url }}"
+                    alt="A descriptive summary of the image"
+                    width="24"
+                    height="24"
+                    loading="lazy"
+                  >
+                  <figcaption>This is a caption describing the image above.</figcaption>
+                </figure>
 
                 {%- if block.settings.title != blank -%}
                   <h3 class="inline-richtext">{{ block.settings.title }}</h3>
@@ -251,7 +247,7 @@
     {
       "type": "header",
       "content": "t:sections.multicolumn.settings.header_image.content"
-    },    
+    },
     {
       "type": "select",
       "id": "image_width",
@@ -299,23 +295,23 @@
     {
       "type": "header",
       "content": "t:sections.multicolumn.settings.header_button.content"
-    },    
+    },
     {
       "type": "text",
       "id": "button_label",
       "default": "t:sections.multicolumn.settings.button_label.default",
-      "label": "t:sections.multicolumn.settings.button_label.label", 
+      "label": "t:sections.multicolumn.settings.button_label.label",
       "info": "t:sections.multicolumn.settings.button_label.info"
     },
     {
       "type": "url",
       "id": "button_link",
       "label": "t:sections.multicolumn.settings.button_link.label"
-    },    
+    },
     {
       "type": "header",
       "content": "t:sections.multicolumn.settings.header_layout.content"
-    },     
+    },
     {
       "type": "range",
       "id": "columns_desktop",
@@ -362,7 +358,7 @@
       "id": "color_scheme",
       "label": "t:sections.all.colors.label",
       "default": "scheme-1"
-    },    
+    },
     {
       "type": "header",
       "content": "t:sections.multicolumn.settings.header_mobile.content"
