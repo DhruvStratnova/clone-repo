@@ -527,7 +527,7 @@
       "settings": {
         "image": "shopify://shop_images/why_astroaura.png",
         "height": "adapt",
-        "desktop_image_width": "small",
+        "desktop_image_width": "medium",
         "layout": "text_first",
         "image_behavior": "none",
         "content_layout": "no-overlap",
