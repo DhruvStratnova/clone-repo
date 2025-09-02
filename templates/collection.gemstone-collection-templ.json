@@ -46,7 +46,7 @@
       "custom_css": [
         ".tabber_coll {}",
         ".tabber_content {}",
-        ".tabcontent {background-color: #ffffff; border: 1px solid #eaeaea; border-radius: 12px; padding: 40px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);}"
+        ".tabcontent {background-color: #ffffff; border: 1px solid #eaeaea; border-radius: 12px; padding: 40px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); margin: 2rem 2rem ;}"
       ],
       "name": "t:sections.image-banner.presets.name",
       "settings": {
