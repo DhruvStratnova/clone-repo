@@ -446,7 +446,7 @@
       ".tabcontent {background-color: #ffffff; border: 1px solid #eaeaea; border-radius: 12px; padding: 40px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); max-width: 1400px; margin: 2rem 2rem;}",
       ".banner__media {width: 100%; aspect-ratio: 1240 / 600; /* match your image's ratio */}",
       ".banner__media img {width: 100%; height: auto; object-fit: ; /* ensures full image is always visible */ display: block;}",
-      ".collection .product-grid {max-width: 80%; max-width: 1400px; margin: auto; /* margin-right: auto; */}"
+      ".collection .product-grid {max-width: 1200px; margin: auto; /* margin-right: auto; */}"
     ]
   }
 }
