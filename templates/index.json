@@ -287,7 +287,7 @@
       "custom_css": [
         "h2 {margin: 0 auto; width: fit-content; /* Or a specific width */}",
         ".slider-buttons {display: none;}",
-        ".product-card-wrapper{height: 100px}"
+        ".product-card-wrapper {/* height: 100px; */}"
       ],
       "name": "Top Selling",
       "settings": {
