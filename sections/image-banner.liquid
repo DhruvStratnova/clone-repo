@@ -635,7 +635,7 @@
       tabcontent = document.getElementsByClassName('tabcontent');
       tabberContent = document.getElementsByClassName('tabber_content')
       for (i = 0; i < tabcontent.length; i++) {
-        tabberContent.style.display = 'none';
+        {% comment %} tabberContent.style.display = 'none'; {% endcomment %}
         tabcontent[i].style.display = 'none';
 
       }
