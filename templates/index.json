@@ -608,6 +608,7 @@
         "column_eRFf6U": {
           "type": "column",
           "settings": {
+            "image": "shopify://shop_images/Vector_1.svg",
             "title": "Aura Synchronized",
             "text": "<p>Verified by certified gemological laboratories.</p>",
             "link_label": "",
@@ -617,6 +618,7 @@
         "column_Uj3Ljt": {
           "type": "column",
           "settings": {
+            "image": "shopify://shop_images/Vector.svg",
             "title": "Guaranteed",
             "text": "<p>100% authenticity and pure guarantee.</p>",
             "link_label": "",
