@@ -28,6 +28,12 @@
           "type": "price",
           "settings": {}
         },
+        "custom_liquid_HqbPfJ": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{%- assign origin = product.metafields.custom.origin\n  | replace: '[', ''\n  | replace: ']', ''\n  | replace: '\"', ''\n-%}\n<p>Origin: {{ origin }}</p>"
+          }
+        },
         "variant_picker": {
           "type": "variant_picker",
           "disabled": true,
@@ -97,6 +103,7 @@
         "vendor",
         "title",
         "price",
+        "custom_liquid_HqbPfJ",
         "variant_picker",
         "option_plus_option_plus_block_qytF6m",
         "apo_product_options_app_block_igkije",

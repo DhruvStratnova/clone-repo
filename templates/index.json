@@ -203,7 +203,8 @@
       "custom_css": [
         "h2 {margin: 0 auto; width: fit-content; /* Or a specific width */}",
         ".contains-card {/* padding: 32px; */}",
-        ".slider-buttons {display: none;}"
+        ".slider-buttons {display: none;}",
+        ".slider--desktop{max-height: }"
       ],
       "name": "New Arrivals",
       "settings": {
