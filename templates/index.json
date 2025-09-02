@@ -205,7 +205,7 @@
         ".contains-card {/* padding: 32px; */}",
         ".slider-buttons {display: none;}",
         ".slider--desktop {max-height: ;}",
-        ".card__heading {font-size: 16px;}"
+        ".card__heading {font-size: 20px;}"
       ],
       "name": "New Arrivals",
       "settings": {
