@@ -114,7 +114,6 @@
         "slide_AKgQ4t": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/Banner_3.png",
             "image_overlay_opacity": 0,
             "heading": "Image slide",
             "heading_size": "h1",
@@ -524,9 +523,9 @@
       ],
       "name": "t:sections.image-with-text.presets.name",
       "settings": {
-        "image": "shopify://shop_images/why_astroaura.jpg",
-        "height": "adapt",
-        "desktop_image_width": "small",
+        "image": "shopify://shop_images/why_astroaura.png",
+        "height": "small",
+        "desktop_image_width": "medium",
         "layout": "text_first",
         "image_behavior": "none",
         "content_layout": "no-overlap",
