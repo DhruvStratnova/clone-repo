@@ -637,8 +637,8 @@
         ".media {display: block; background-color: rgba(var(--color-foreground), 0.1); position: relative; overflow: hidden;}",
         ".media--transparent {background: linear-gradient(90deg, #f3e8ff 0%, #fce7f3 100%);}",
         ".media--circle {padding: 40px; border-radius: 50%;}",
-        ".media > img {width: 64px;}",
-        "img {margin-left: 21px;}"
+        ".media > img {width: 44px;}",
+        "img {margin-left: 18px;}"
       ],
       "name": "t:sections.multicolumn.presets.name",
       "settings": {
