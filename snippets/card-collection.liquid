@@ -84,6 +84,7 @@
         <div class="card__content">
           <div class="card__information">
             <h3 class="card__heading">
+              {{- card_collection.description  }}
               <a
                 {% if card_collection == blank %}
                   role="link" aria-disabled="true"
@@ -103,7 +104,7 @@
                   </span>
                 {%- endif %}
               </a>
-              {{- card_collection.description  }}
+              
             </h3>
             <div class="card-description-purpose">
               {% assign purpose_pill_string = card_product.metafields.custom.key_feature
