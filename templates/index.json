@@ -598,8 +598,8 @@
         "column_RRajaV": {
           "type": "column",
           "settings": {
-            "title": "Column",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+            "title": "Guarantee of Purity",
+            "text": "<p>Each gem meets International quality standards.</p>",
             "link_label": "",
             "link": ""
           }
@@ -607,8 +607,8 @@
         "column_eRFf6U": {
           "type": "column",
           "settings": {
-            "title": "Column",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+            "title": "Aura Synchronized",
+            "text": "<p>Verified by certified gemological laboratories.</p>",
             "link_label": "",
             "link": ""
           }
@@ -616,8 +616,8 @@
         "column_Uj3Ljt": {
           "type": "column",
           "settings": {
-            "title": "Column",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+            "title": "Guarenteed",
+            "text": "<p>100% authenticity and pure guarantee.</p>",
             "link_label": "",
             "link": ""
           }
@@ -629,7 +629,8 @@
         "column_Uj3Ljt"
       ],
       "custom_css": [
-        "h2 {margin: 0 auto; width: fit-content; /* Or a specific width */}"
+        "h2 {margin: 0 auto; width: fit-content; /* Or a specific width */}",
+        ".multicolumn-card__info {flex-shrink: 0; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.6); background: rgba(255, 255, 255, 0.9); box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.1), 0 10px 15px 0 rgba(0, 0, 0, 0.1);}"
       ],
       "name": "t:sections.multicolumn.presets.name",
       "settings": {
