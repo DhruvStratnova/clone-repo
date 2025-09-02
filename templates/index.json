@@ -287,7 +287,8 @@
       "custom_css": [
         "h2 {margin: 0 auto; width: fit-content; /* Or a specific width */}",
         ".slider-buttons {display: none;}",
-        ".product-card-wrapper {/* height: 100px; */}"
+        ".product-card-wrapper {/* height: 100px; */}",
+        ".card__content {}"
       ],
       "name": "Top Selling",
       "settings": {
@@ -312,8 +313,8 @@
         "quick_add": "standard",
         "columns_mobile": "2",
         "swipe_on_mobile": true,
-        "padding_top": 12,
-        "padding_bottom": 12
+        "padding_top": 0,
+        "padding_bottom": 0
       }
     },
     "collection_list_ctAMFr": {
