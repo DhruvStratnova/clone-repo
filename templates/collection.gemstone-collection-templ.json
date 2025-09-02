@@ -100,7 +100,7 @@
         "text_UtfAWr": {
           "type": "text",
           "settings": {
-            "text": "<p>Gemstones are nature’s way of channeling cosmic energy to support your mind, body, and spirit. Each stone vibrates with its own frequency, aligning with planetary influences to bring balance, protection, and prosperity. From the fiery confidence of <strong>Ruby</strong> to the calming clarity of <strong>Amethyst</strong>, the wealth-attracting power of <strong>Citrine</strong>, or the grounding strength of <strong>Onyx</strong>, gemstones enhance mental focus, emotional stability, and spiritual growth. By wearing the right gemstone, you can harmonize your energy, amplify positive vibrations, and navigate life with greater clarity and confidence.</p>",
+            "text": "<p>With the ever-applicable wisdom of Vedic astrology, we know that<br/>celestial order of the universe is closely interrelated with the motion of the heavenly bodies.Dazzling Sun, calming Moon, fiery Mars, discerning Jupiter, gentle Venus, rapid Mercury, and solid Saturn—accompanied by enigmatic shadow powers Rahu and Ketu—rule the course of human destiny.Alchemical by nature, gemstones over millions of years have been transmuted by the cosmic forces to contain their pure energies. In faith and vibration, as you wear them, gemstones become channels for planetary blessings to attract harmony, strength, protection, and spiritual elevation. Each stone has its own frequency of vibration, which enables you to tune your life path with blessings from the cosmos.</p>",
             "text_style": "body"
           }
         },
@@ -120,9 +120,9 @@
       ],
       "name": "t:sections.image-with-text.presets.name",
       "settings": {
-        "image": "shopify://shop_images/sushil_kanya.jpg",
+        "image": "shopify://shop_images/ChatGPT_Image_Sep_2_2025_01_42_55_PM.png",
         "height": "adapt",
-        "desktop_image_width": "medium",
+        "desktop_image_width": "small",
         "layout": "image_first",
         "image_behavior": "none",
         "content_layout": "no-overlap",
