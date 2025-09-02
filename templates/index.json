@@ -598,6 +598,7 @@
         "column_RRajaV": {
           "type": "column",
           "settings": {
+            "image": "shopify://shop_images/Vector_2.svg",
             "title": "Guarantee of Purity",
             "text": "<p>Each gem meets International quality standards.</p>",
             "link_label": "",

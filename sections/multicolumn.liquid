@@ -119,7 +119,7 @@
                 </div>
               {%- endif -%}
               <div class="multicolumn-card__info">
-                <figure>
+                {% comment %} <figure>
                   <img
                     src="{{ 'Vector.png' | asset_url }}"
                     alt="A descriptive summary of the image"
@@ -128,7 +128,7 @@
                     loading="lazy"
                   >
                   <figcaption>This is a caption describing the image above.</figcaption>
-                </figure>
+                </figure> {% endcomment %}
 
                 {%- if block.settings.title != blank -%}
                   <h3 class="inline-richtext">{{ block.settings.title }}</h3>
