@@ -134,7 +134,7 @@
 
 
 
-{% assign images = 'Vector.png,(2).png,image3.png' | split: ',' %}
+{% assign images = 'Vector.png,Vector(1).png,image3).png' | split: ',' %}
 {% for img in images %}
   <img src="{{ img | asset_url }}" alt="Image {{ forloop.index }}" loading="lazy" />
 {% endfor %}
