@@ -270,9 +270,9 @@
       ],
       "settings": {
         "image": "shopify://shop_images/freepik_edit_13_1.webp",
-        "height": "small",
+        "height": "adapt",
         "desktop_image_width": "small",
-        "layout": "image_first",
+        "layout": "text_first",
         "image_behavior": "none",
         "content_layout": "no-overlap",
         "desktop_content_position": "middle",
