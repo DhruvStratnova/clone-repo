@@ -445,7 +445,7 @@
         "title_QRRHVN": {
           "type": "title",
           "settings": {
-            "heading_size": "h1"
+            "heading_size": "h2"
           }
         },
         "text_nYnqXU": {
@@ -498,7 +498,11 @@
         "buy_buttons_TxXFzQ",
         "share_yjW6JL"
       ],
-      "custom_css": [],
+      "custom_css": [
+        ".product__info-wrapper {align-content: center; border-radius: 24px; height: 300px; border: 1px solid rgba(255, 255, 255, 0.3); background: rgba(255, 255, 255, 0.92); box-shadow: 0 25px 50px 0 rgba(0, 0, 0, 0.25);}",
+        "p {font-size: 12px;}",
+        ".featured-product {align-items: center;}"
+      ],
       "name": "t:sections.featured-product.presets.name",
       "settings": {
         "product": "amethyst-premium-aaa",
@@ -508,7 +512,7 @@
         "constrain_to_viewport": true,
         "media_fit": "contain",
         "media_position": "right",
-        "image_zoom": "lightbox",
+        "image_zoom": "none",
         "hide_variants": false,
         "enable_video_looping": false,
         "padding_top": 36,
