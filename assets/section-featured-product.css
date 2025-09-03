@@ -1,5 +1,5 @@
 .featured-product .product__media-list {
-  width: 100%;
+  width: 75%;
   margin: 0;
   padding-bottom: 0;
 }
@@ -77,5 +77,4 @@
 
 .product__info-wrapper{
   padding: 4rem;
-  max-width:400px;
 }
