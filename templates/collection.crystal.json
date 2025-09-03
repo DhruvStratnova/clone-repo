@@ -51,7 +51,7 @@
       ],
       "name": "t:sections.image-banner.presets.name",
       "settings": {
-        "image": "shopify://shop_images/Gemini_Generated_Image_w6m2qdw6m2qdw6m2.jpg",
+        "image": "shopify://shop_images/ff_1.jpg",
         "image_overlay_opacity": 0,
         "image_height": "adapt",
         "image_behavior": "none",
