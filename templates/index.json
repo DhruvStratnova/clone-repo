@@ -332,6 +332,12 @@
             "collection": "gemstones"
           }
         },
+        "featured_collection_qceXDX": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "bracelets"
+          }
+        },
         "featured_collection_Npy7LD": {
           "type": "featured_collection",
           "disabled": true,
@@ -350,21 +356,15 @@
           "settings": {
             "collection": "rudraksha-mala"
           }
-        },
-        "featured_collection_qceXDX": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "bracelets"
-          }
         }
       },
       "block_order": [
         "featured_collection_WQxCBX",
         "featured_collection_qmmMtM",
+        "featured_collection_qceXDX",
         "featured_collection_Npy7LD",
         "featured_collection_xY3HpY",
-        "featured_collection_LQkKG4",
-        "featured_collection_qceXDX"
+        "featured_collection_LQkKG4"
       ],
       "custom_css": [
         "h2 {margin: 0 auto; width: fit-content; /* Or a specific width */}",
