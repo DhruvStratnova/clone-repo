@@ -96,5 +96,6 @@ background: linear-gradient(90deg, rgba(236, 72, 153, 0.20) 0%, rgba(147, 51, 23
 }
 
 img{
-  
+  width:100px;
+  height:100px;
 }
