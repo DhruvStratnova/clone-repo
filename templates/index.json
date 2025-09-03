@@ -208,9 +208,7 @@
         "h2 {margin: 0 auto; width: fit-content; /* Or a specific width */}",
         ".contains-card {/* padding: 32px; */}",
         ".slider-buttons {display: none;}",
-        ".slider--desktop {max-height: ;}",
-        ".card__heading {font-size: 20px;}",
-        ".card-description-purpose {font-size: 16px;}"
+        ".slider--desktop {max-height: ;}"
       ],
       "name": "New Arrivals",
       "settings": {
