@@ -6,7 +6,7 @@
 
 .featured-product .product-media-container {
   margin-bottom: var(--media-shadow-vertical-offset);
-  max-width: 100%;
+  max-width: 75%;
 }
 
 .featured-product .product__media-item {
