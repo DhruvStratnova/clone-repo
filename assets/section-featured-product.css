@@ -85,3 +85,9 @@
 .product__info-wrapper{
   padding: 4rem;
 }
+
+.product__media{
+  width: 659.221px;
+height: 657.441px;
+flex-shrink: 0;
+}
