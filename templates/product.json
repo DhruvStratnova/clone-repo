@@ -80,6 +80,13 @@
             "custom_liquid": "<a href=\"https://cdn.shopify.com/s/files/1/0947/9467/8574/files/Ring_Size_Guide.pdf?v=1756296222\" target=\"_blank\" rel=\"noopener noreferrer\">\n  Ring Size Guide\n</a>"
           }
         },
+        "text_PPjNd7": {
+          "type": "text",
+          "settings": {
+            "text": "* Actual product may vary from the Image.",
+            "text_style": "body"
+          }
+        },
         "buy_buttons": {
           "type": "buy_buttons",
           "settings": {
@@ -109,6 +116,7 @@
         "apo_product_options_app_block_igkije",
         "quantity_selector",
         "custom_liquid_xmbRzx",
+        "text_PPjNd7",
         "buy_buttons",
         "description",
         "share"
