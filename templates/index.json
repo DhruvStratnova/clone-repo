@@ -182,6 +182,9 @@
         "text_Fka4eU",
         "button_nbyXaA"
       ],
+      "custom_css": [
+        "h2{font-size: 22px;}"
+      ],
       "settings": {
         "image": "shopify://shop_images/Rudraksha-1ITG-1751784213116.avif",
         "height": "medium",
@@ -289,14 +292,15 @@
         ".slider-buttons {display: none;}",
         ".product-card-wrapper {/* height: 100px; */}",
         ".card__content {}",
-        ".collection {/* max-height: 200px */}"
+        ".collection {/* max-height: 200px */}",
+        ".slider-component-full-width {max-width: 100%;}"
       ],
       "name": "Top Selling",
       "settings": {
         "collection": "all",
         "products_to_show": 12,
         "title": "Top Selling",
-        "heading_size": "h1",
+        "heading_size": "h2",
         "description": "",
         "show_description": false,
         "description_style": "body",
