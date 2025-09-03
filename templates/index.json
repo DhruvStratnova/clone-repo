@@ -511,7 +511,7 @@
         "media_size": "small",
         "constrain_to_viewport": true,
         "media_fit": "contain",
-        "media_position": "left",
+        "media_position": "right",
         "image_zoom": "none",
         "hide_variants": false,
         "enable_video_looping": false,
