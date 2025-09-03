@@ -732,7 +732,7 @@
       "name": "t:sections.multicolumn.presets.name",
       "settings": {
         "title": "Certified Gems",
-        "heading_size": "h1",
+        "heading_size": "h2",
         "image_width": "third",
         "image_ratio": "circle",
         "button_label": "",
