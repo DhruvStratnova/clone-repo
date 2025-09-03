@@ -164,7 +164,7 @@
         "text_Fka4eU": {
           "type": "text",
           "settings": {
-            "text": "<p><strong>A sacred seed, Rudraksha provides divine protection, inner peace, and clarity for a journey towards enlightenment and balance.<br/></strong>Divine Protection & Spiritual Shield.</p><p>Inner Peace and Mental Clarity.</p><p>Enlightenment & Spiritual Balance.</p>",
+            "text": "<p>A sacred seed, Rudraksha provides divine protection, inner peace, and clarity for a journey towards enlightenment and balance.</p><p><strong>Divine Protection & Spiritual Shield.</strong></p><p><strong>Inner Peace and Mental Clarity.</strong></p><p><strong>Enlightenment & Spiritual Balance.</strong></p>",
             "text_style": "body"
           }
         },
@@ -233,8 +233,8 @@
         "quick_add": "standard",
         "columns_mobile": "2",
         "swipe_on_mobile": true,
-        "padding_top": 0,
-        "padding_bottom": 48
+        "padding_top": 8,
+        "padding_bottom": 8
       }
     },
     "image_with_text_DYDtwA": {
@@ -280,8 +280,8 @@
         "mobile_content_alignment": "center",
         "section_color_scheme": "",
         "color_scheme": "accent-1",
-        "padding_top": 0,
-        "padding_bottom": 48
+        "padding_top": 56,
+        "padding_bottom": 60
       }
     },
     "featured_collection_6N6qke": {
@@ -292,8 +292,8 @@
       ],
       "name": "Top Selling",
       "settings": {
-        "collection": "all",
-        "products_to_show": 12,
+        "collection": "top-selling",
+        "products_to_show": 9,
         "title": "Top Selling",
         "heading_size": "h2",
         "description": "",
@@ -314,12 +314,18 @@
         "columns_mobile": "2",
         "swipe_on_mobile": true,
         "padding_top": 0,
-        "padding_bottom": 48
+        "padding_bottom": 0
       }
     },
     "collection_list_ctAMFr": {
       "type": "collection-list",
       "blocks": {
+        "featured_collection_LQkKG4": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "rudraksha-mala"
+          }
+        },
         "featured_collection_WQxCBX": {
           "type": "featured_collection",
           "settings": {
@@ -330,12 +336,6 @@
           "type": "featured_collection",
           "settings": {
             "collection": "gemstones"
-          }
-        },
-        "featured_collection_qceXDX": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "bracelets"
           }
         },
         "featured_collection_Npy7LD": {
@@ -351,20 +351,20 @@
             "collection": "crystal-rakhi"
           }
         },
-        "featured_collection_LQkKG4": {
+        "featured_collection_qceXDX": {
           "type": "featured_collection",
           "settings": {
-            "collection": "rudraksha-mala"
+            "collection": "bracelets"
           }
         }
       },
       "block_order": [
+        "featured_collection_LQkKG4",
         "featured_collection_WQxCBX",
         "featured_collection_qmmMtM",
-        "featured_collection_qceXDX",
         "featured_collection_Npy7LD",
         "featured_collection_xY3HpY",
-        "featured_collection_LQkKG4"
+        "featured_collection_qceXDX"
       ],
       "custom_css": [
         "h2 {margin: 0 auto; width: fit-content; /* Or a specific width */}",
@@ -382,8 +382,8 @@
         "show_view_all": false,
         "columns_mobile": "1",
         "swipe_on_mobile": false,
-        "padding_top": 0,
-        "padding_bottom": 48
+        "padding_top": 36,
+        "padding_bottom": 100
       }
     },
     "collection_list_XLNAUt": {
@@ -428,8 +428,8 @@
         "show_view_all": false,
         "columns_mobile": "2",
         "swipe_on_mobile": false,
-        "padding_top": 40,
-        "padding_bottom": 48
+        "padding_top": 36,
+        "padding_bottom": 100
       }
     },
     "collection_list_b7XdPw": {
@@ -499,76 +499,6 @@
         "padding_bottom": 36
       }
     },
-    "featured_product_f67YAF": {
-      "type": "featured-product",
-      "blocks": {
-        "text_NiF9Xy": {
-          "type": "text",
-          "settings": {
-            "text": "{{ section.settings.product.vendor }}",
-            "text_style": "uppercase"
-          }
-        },
-        "title_kGKPJC": {
-          "type": "title",
-          "settings": {
-            "heading_size": "h1"
-          }
-        },
-        "price_d4NLr9": {
-          "type": "price",
-          "settings": {}
-        },
-        "variant_picker_mHLtGP": {
-          "type": "variant_picker",
-          "settings": {
-            "picker_type": "button",
-            "swatch_shape": "circle"
-          }
-        },
-        "quantity_selector_DjpLec": {
-          "type": "quantity_selector",
-          "settings": {}
-        },
-        "buy_buttons_nnG4MT": {
-          "type": "buy_buttons",
-          "settings": {
-            "show_dynamic_checkout": true,
-            "show_gift_card_recipient": true
-          }
-        },
-        "share_wgTJUQ": {
-          "type": "share",
-          "settings": {
-            "share_label": "Share"
-          }
-        }
-      },
-      "block_order": [
-        "text_NiF9Xy",
-        "title_kGKPJC",
-        "price_d4NLr9",
-        "variant_picker_mHLtGP",
-        "quantity_selector_DjpLec",
-        "buy_buttons_nnG4MT",
-        "share_wgTJUQ"
-      ],
-      "name": "t:sections.featured-product.presets.name",
-      "settings": {
-        "product": "amethyst-premium-aaa",
-        "color_scheme": "",
-        "secondary_background": false,
-        "media_size": "medium",
-        "constrain_to_viewport": true,
-        "media_fit": "contain",
-        "media_position": "left",
-        "image_zoom": "lightbox",
-        "hide_variants": false,
-        "enable_video_looping": false,
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
     "image_with_text_dMnjUt": {
       "type": "image-with-text",
       "blocks": {
@@ -616,8 +546,8 @@
         "mobile_content_alignment": "left",
         "section_color_scheme": "scheme-d042d7b2-a9c1-4c2f-9f34-d12479533a88",
         "color_scheme": "scheme-ae31259b-1635-4508-b6f8-de409eaf58b0",
-        "padding_top": 0,
-        "padding_bottom": 48
+        "padding_top": 12,
+        "padding_bottom": 24
       }
     },
     "collage_EmY7zc": {
@@ -726,8 +656,8 @@
         "color_scheme": "scheme-c6323a96-20a5-4474-b039-727f2117b7fb",
         "columns_mobile": "1",
         "swipe_on_mobile": false,
-        "padding_top": 48,
-        "padding_bottom": 80
+        "padding_top": 40,
+        "padding_bottom": 100
       }
     },
     "image_with_text_mJmbpt": {
@@ -866,7 +796,6 @@
     "collection_list_ctAMFr",
     "collection_list_XLNAUt",
     "collection_list_b7XdPw",
-    "featured_product_f67YAF",
     "image_with_text_dMnjUt",
     "collage_EmY7zc",
     "multicolumn_rVVQLW",
