@@ -119,7 +119,7 @@
             "heading": "Image slide",
             "heading_size": "h1",
             "subheading": "Tell your brand's story through images",
-            "button_label": "Button label",
+            "button_label": "",
             "link": "",
             "button_style_secondary": false,
             "show_text_box": true,
@@ -142,13 +142,13 @@
       "name": "t:sections.slideshow.presets.name",
       "settings": {
         "layout": "full_bleed",
-        "slide_height": "medium",
+        "slide_height": "adapt_image",
         "slider_visual": "dots",
         "auto_rotate": true,
         "change_slides_speed": 3,
         "image_behavior": "none",
         "show_text_below": true,
-        "accessibility_info": "Slideshow about our brand"
+        "accessibility_info": ""
       }
     },
     "image_with_text_tz9Af9": {
@@ -164,7 +164,7 @@
         "text_Fka4eU": {
           "type": "text",
           "settings": {
-            "text": "<p>A sacred seed, Rudraksha provides divine protection, inner peace, and clarity for a journey towards enlightenment and balance.</p><p><strong>Divine Protection & Spiritual Shield.</strong></p><p><strong>Inner Peace and Mental Clarity.</strong></p><p><strong>Enlightenment & Spiritual Balance.</strong></p>",
+            "text": "<p><strong>A sacred seed, Rudraksha provides divine protection, inner peace, and clarity for a journey towards enlightenment and balance.<br/></strong>Divine Protection & Spiritual Shield.</p><p>Inner Peace and Mental Clarity.</p><p>Enlightenment & Spiritual Balance.</p>",
             "text_style": "body"
           }
         },
@@ -210,14 +210,14 @@
       ],
       "name": "New Arrivals",
       "settings": {
-        "collection": "new-arrival",
+        "collection": "bracelets",
         "products_to_show": 12,
         "title": "New Arrival",
         "heading_size": "h1",
         "description": "",
         "show_description": false,
         "description_style": "body",
-        "columns_desktop": 4,
+        "columns_desktop": 5,
         "enable_desktop_slider": true,
         "full_width": true,
         "show_view_all": false,
@@ -293,14 +293,14 @@
       ],
       "name": "Top Selling",
       "settings": {
-        "collection": "top-selling",
+        "collection": "all",
         "products_to_show": 12,
         "title": "Top Selling",
         "heading_size": "h1",
         "description": "",
         "show_description": false,
         "description_style": "body",
-        "columns_desktop": 4,
+        "columns_desktop": 6,
         "enable_desktop_slider": true,
         "full_width": true,
         "show_view_all": false,
@@ -538,11 +538,11 @@
       "settings": {
         "image": "shopify://shop_images/why_astroaura.png",
         "height": "adapt",
-        "desktop_image_width": "small",
+        "desktop_image_width": "medium",
         "layout": "text_first",
         "image_behavior": "none",
-        "content_layout": "no-overlap",
-        "desktop_content_position": "top",
+        "content_layout": "overlap",
+        "desktop_content_position": "middle",
         "desktop_content_alignment": "left",
         "mobile_content_alignment": "left",
         "section_color_scheme": "scheme-d042d7b2-a9c1-4c2f-9f34-d12479533a88",
@@ -647,8 +647,8 @@
       "settings": {
         "title": "Certified Gems",
         "heading_size": "h1",
-        "image_width": "full",
-        "image_ratio": "adapt",
+        "image_width": "third",
+        "image_ratio": "circle",
         "button_label": "",
         "button_link": "",
         "columns_desktop": 3,
@@ -657,7 +657,7 @@
         "color_scheme": "scheme-c6323a96-20a5-4474-b039-727f2117b7fb",
         "columns_mobile": "1",
         "swipe_on_mobile": false,
-        "padding_top": 36,
+        "padding_top": 40,
         "padding_bottom": 100
       }
     },
