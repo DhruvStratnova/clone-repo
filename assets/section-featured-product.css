@@ -60,7 +60,7 @@
   }
 
   .background-secondary .featured-product:not(.product--no-media).product--right > .product__info-wrapper {
-    padding: 0 15rem 0 0;
+    padding: 0 5rem 0 0;
   }
 
   .featured-product:not(.product--no-media) > .product__info-wrapper {
