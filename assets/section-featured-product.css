@@ -52,8 +52,7 @@
   .product--right .product__media-wrapper {
     order: 2;
   }
-  {
-    .product__info-container {
+      .product__info-container {
         max-width: 60rem;
         margin: 4rem;
     }
