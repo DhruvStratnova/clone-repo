@@ -77,4 +77,5 @@
 
 .product__info-wrapper{
   padding: 4rem;
+  max-width:400px;
 }
