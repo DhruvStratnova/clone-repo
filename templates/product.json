@@ -121,6 +121,9 @@
         "description",
         "share"
       ],
+      "custom_css": [
+        ".product__text {margin-bottom: 0; font-size: xx-small;}"
+      ],
       "settings": {
         "enable_sticky_info": true,
         "color_scheme": "scheme-1",
