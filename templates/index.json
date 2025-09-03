@@ -210,7 +210,7 @@
       ],
       "name": "New Arrivals",
       "settings": {
-        "collection": "bracelets",
+        "collection": "new-arrival",
         "products_to_show": 12,
         "title": "New Arrival",
         "heading_size": "h1",
