@@ -65,6 +65,7 @@
 
   .featured-product:not(.product--no-media) > .product__info-wrapper {
     padding: 0 7rem;
+    
   }
 
   .background-secondary .featured-product {
@@ -72,8 +73,6 @@
     position: relative;
     z-index: 1;
 
-    .product__info-wrapper{
-  padding: 4rem;
 }
   }
 }
