@@ -1,0 +1,111 @@
+{% comment %} //main-page.liquid (calculator template) {% endcomment %}
+{{ 'section-main-page.css' | asset_url | stylesheet_tag }}
+{{ 'astro-calculator.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'astro-calculator.js' | asset_url }}" defer></script>
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="section-{{ section.id }}-padding">
+  {% comment %}
+    <h1 class="main-page-title page-title h0{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+      {{ page.title | escape }}
+    </h1>
+  {% endcomment %}
+  {% comment %}
+    <div class="rte{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+      {{ page.content }}
+    </div>
+  {% endcomment %}
+  <div>
+    <section class="calculator-section">
+      <div class="calculator-container">
+
+        {% comment %} <div class="calculator-form-containter"> {% endcomment %}
+          <h2 class="calculator-title">Astro Calculator</h2>
+        <p class="calculator-subtilte">Let your birth chart reveal the perfect Gemstone/Rudraksha for you</p>
+
+        <h3 class="calculator-personalized">Personalized <strong>For You!</strong></h3>
+        <p>Enter your details below to receive a personalized recommendation tailored to your needs and astrology.</p>
+
+        <div class="calculator-tabs">
+          <button class="tab active" data-tab="by-gemstone">Gemstone Calculator</button>
+          <button class="tab" data-tab="by-rudraksha">Rudraksha Calculator</button>
+        </div>
+
+        <form id="calculator-form">
+          <!-- Form fields will be dynamically loaded by astro-calculator.js based on tab selection. -->
+          <!-- The initial content below serves as the default 'By Birth' structure before JS fully initializes. -->
+          <div class="form-group">
+            <input type="text" name="name" placeholder="Enter your name" required>
+            {% comment %} <input type="tel" name="phone" placeholder="Enter your phone number"> {% endcomment %}
+          </div>
+
+          <div class="form-group">
+            <input type="date" name="dob" required>
+            <input type="time" name="tob">
+            <label><input type="checkbox" name="no_time"> I don't have time of birth</label>
+          </div>
+
+          <div class="form-group">
+            <input type="text" name="lat" placeholder="Latitude (e.g., 28.6139)" required>
+            <input type="text" name="lon" placeholder="Longitude (e.g., 77.2090)" required>
+          </div>
+
+          <button type="submit" class="rudraksha-btn">Know your Gemstone</button>
+        </form>
+{% comment %} </div> {% endcomment %}
+        </div>
+        <!-- Results Section -->
+        <div id="astro-results" class="astro-results" style="display:none;">
+          <h3>Recommendation Details</h3>
+          <div id="astro-output"></div>
+        </div>
+      
+    </section>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.main-page.name",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    }
+  ]
+}
+{% endschema %}
