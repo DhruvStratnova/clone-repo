@@ -182,10 +182,7 @@
         "text_Fka4eU",
         "button_nbyXaA"
       ],
-      "custom_css": [
-        "h2 {font-size: 16px;}",
-        "p {font-size: 12px;}"
-      ],
+      "custom_css": [],
       "settings": {
         "image": "shopify://shop_images/Rudraksha-1ITG-1751784213116.avif",
         "height": "medium",
