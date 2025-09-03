@@ -45,7 +45,7 @@
       ],
       "name": "t:sections.image-banner.presets.name",
       "settings": {
-        "image": "shopify://shop_images/ChatGPT_Image_Sep_3_2025_10_43_26_AM.png",
+        "image": "shopify://shop_images/ChatGPT_Image_Sep_3_2025_10_43_26_AM_processed_by_imagy.png",
         "image_overlay_opacity": 0,
         "image_height": "adapt",
         "image_behavior": "none",
