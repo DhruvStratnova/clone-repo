@@ -438,7 +438,7 @@
         "text_CmceHM": {
           "type": "text",
           "settings": {
-            "text": "{{ section.settings.product.vendor }}",
+            "text": "Featured Product",
             "text_style": "uppercase"
           }
         },
@@ -448,12 +448,21 @@
             "heading_size": "h1"
           }
         },
+        "text_nYnqXU": {
+          "type": "text",
+          "settings": {
+            "text": "Experience the transformative power of our hand-selected Amethyst crystal. Known as the stone of spiritual protection and purification, this premium grade crystal enhances meditation and promotes inner peace.",
+            "text_style": "body"
+          }
+        },
         "price_qQVDPX": {
           "type": "price",
+          "disabled": true,
           "settings": {}
         },
         "variant_picker_J7hUqP": {
           "type": "variant_picker",
+          "disabled": true,
           "settings": {
             "picker_type": "button",
             "swatch_shape": "circle"
@@ -461,10 +470,12 @@
         },
         "quantity_selector_DicrcN": {
           "type": "quantity_selector",
+          "disabled": true,
           "settings": {}
         },
         "buy_buttons_TxXFzQ": {
           "type": "buy_buttons",
+          "disabled": true,
           "settings": {
             "show_dynamic_checkout": true,
             "show_gift_card_recipient": true
@@ -480,21 +491,23 @@
       "block_order": [
         "text_CmceHM",
         "title_QRRHVN",
+        "text_nYnqXU",
         "price_qQVDPX",
         "variant_picker_J7hUqP",
         "quantity_selector_DicrcN",
         "buy_buttons_TxXFzQ",
         "share_yjW6JL"
       ],
+      "custom_css": [],
       "name": "t:sections.featured-product.presets.name",
       "settings": {
         "product": "amethyst-premium-aaa",
         "color_scheme": "",
         "secondary_background": false,
-        "media_size": "medium",
+        "media_size": "small",
         "constrain_to_viewport": true,
         "media_fit": "contain",
-        "media_position": "left",
+        "media_position": "right",
         "image_zoom": "lightbox",
         "hide_variants": false,
         "enable_video_looping": false,
