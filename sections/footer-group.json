@@ -89,7 +89,10 @@
         "link_list_myPVW9",
         "text_pYPHT4"
       ],
-      "custom_css": [],
+      "custom_css": [
+        ".footer-block__brand-info {text-align: left;}",
+        ".rte > *:last-child {margin-bottom: 0; width: 170px;}"
+      ],
       "settings": {
         "color_scheme": "accent-2",
         "newsletter_enable": true,
