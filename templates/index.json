@@ -204,7 +204,12 @@
     },
     "featured_collection": {
       "type": "featured-collection",
-      "custom_css": [],
+      "custom_css": [
+        "h2 {margin: 0 auto; width: fit-content; /* Or a specific width */}",
+        ".contains-card {/* padding: 32px; */}",
+        ".slider-buttons {display: none;}",
+        ".slider--desktop {/* max-height: ; */}"
+      ],
       "name": "New Arrivals",
       "settings": {
         "collection": "bracelets",
@@ -286,7 +291,7 @@
         ".slider-buttons {display: none;}",
         ".product-card-wrapper {/* height: 100px; */}",
         ".card__content {}",
-        ".collection {/* max-height: 200px */}"
+        ".collection .product-grid {max-width: 1200px; margin: auto; /* margin-right: auto; */}"
       ],
       "name": "Top Selling",
       "settings": {
