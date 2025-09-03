@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Config (move secrets to server/proxy in production)
   const ASTRO_USER_ID = "642699"; // never expose real keys in frontend
   const ASTRO_API_KEY = "86af5961c6dfcac90d4ae97401a974385dc7c6a3"; // use a proxy or strict key restrictions
-  const GEOAPIFY_API_KEY = "YOUR_GEOAPIFY_KEY"; // public-but-rate-limited; still consider proxy
+  const GEOAPIFY_API_KEY = "55e9073809d4409fa8c39310584517f9"; // public-but-rate-limited; still consider proxy
   const GOOGLE_TZ_API_KEY = ""; // optional: when set, computes DOB-accurate offset
 
   const ASTRO_BASE = "https://json.astrologyapi.com/v1";
