@@ -43,6 +43,12 @@
         "text_TiJNKb",
         "buttons_yt67QM"
       ],
+      "custom_css": [
+        ".tabber_coll {}",
+        ".tabber_content {padding: 2rem; display: flex; justify-content: center;}",
+        ".tabcontent {background-color: #ffffff; border: 1px solid #eaeaea; border-radius: 12px; padding: 40px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); max-width: 1400px; margin: 2rem 2rem;}",
+        ".banner__media {width: 100%; aspect-ratio: 2560 / 1024;}"
+      ],
       "name": "t:sections.image-banner.presets.name",
       "settings": {
         "image": "shopify://shop_images/ChatGPT_Image_Sep_3_2025_11_31_37_AM.png",
