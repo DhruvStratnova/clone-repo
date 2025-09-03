@@ -291,8 +291,7 @@
         ".slider-buttons {display: none;}",
         ".product-card-wrapper {/* height: 100px; */}",
         ".card__content {}",
-        ".collection {/* max-height: 200px */}",
-        ".slider-component-full-width {max-width: 100%;}"
+        ".collection {/* max-height: 200px */}"
       ],
       "name": "Top Selling",
       "settings": {
