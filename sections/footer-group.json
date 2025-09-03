@@ -38,7 +38,7 @@
         "link_list_etaV6X": {
           "type": "link_list",
           "settings": {
-            "heading": "Jewellery",
+            "heading": "Astrology Products",
             "menu": "jewellery"
           }
         },
@@ -91,7 +91,7 @@
       ],
       "custom_css": [
         ".footer-block__brand-info {text-align: left;}",
-        ".rte > *:last-child {margin-bottom: 0; width: 170px;}"
+        ".rte > *:last-child {margin-bottom: 0; width: 240px;}"
       ],
       "settings": {
         "color_scheme": "accent-2",
