@@ -488,7 +488,7 @@
       ],
       "name": "t:sections.featured-product.presets.name",
       "settings": {
-        "product": "amethyst-premium-aaa",
+        "product": "",
         "color_scheme": "",
         "secondary_background": false,
         "media_size": "medium",
