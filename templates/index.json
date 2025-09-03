@@ -293,7 +293,7 @@
       ],
       "name": "Top Selling",
       "settings": {
-        "collection": "all",
+        "collection": "top-selling",
         "products_to_show": 12,
         "title": "Top Selling",
         "heading_size": "h1",
