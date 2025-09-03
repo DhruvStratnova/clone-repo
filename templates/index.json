@@ -386,6 +386,76 @@
         "padding_bottom": 48
       }
     },
+    "featured_product_f67YAF": {
+      "type": "featured-product",
+      "blocks": {
+        "text_NiF9Xy": {
+          "type": "text",
+          "settings": {
+            "text": "{{ section.settings.product.vendor }}",
+            "text_style": "uppercase"
+          }
+        },
+        "title_kGKPJC": {
+          "type": "title",
+          "settings": {
+            "heading_size": "h1"
+          }
+        },
+        "price_d4NLr9": {
+          "type": "price",
+          "settings": {}
+        },
+        "variant_picker_mHLtGP": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "swatch_shape": "circle"
+          }
+        },
+        "quantity_selector_DjpLec": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "buy_buttons_nnG4MT": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": true,
+            "show_gift_card_recipient": true
+          }
+        },
+        "share_wgTJUQ": {
+          "type": "share",
+          "settings": {
+            "share_label": "Share"
+          }
+        }
+      },
+      "block_order": [
+        "text_NiF9Xy",
+        "title_kGKPJC",
+        "price_d4NLr9",
+        "variant_picker_mHLtGP",
+        "quantity_selector_DjpLec",
+        "buy_buttons_nnG4MT",
+        "share_wgTJUQ"
+      ],
+      "name": "t:sections.featured-product.presets.name",
+      "settings": {
+        "product": "",
+        "color_scheme": "",
+        "secondary_background": false,
+        "media_size": "medium",
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "media_position": "left",
+        "image_zoom": "lightbox",
+        "hide_variants": false,
+        "enable_video_looping": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
     "collection_list_XLNAUt": {
       "type": "collection-list",
       "blocks": {
@@ -794,6 +864,7 @@
     "image_with_text_DYDtwA",
     "featured_collection_6N6qke",
     "collection_list_ctAMFr",
+    "featured_product_f67YAF",
     "collection_list_XLNAUt",
     "collection_list_b7XdPw",
     "image_with_text_dMnjUt",
