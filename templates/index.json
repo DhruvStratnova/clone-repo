@@ -164,7 +164,7 @@
         "text_Fka4eU": {
           "type": "text",
           "settings": {
-            "text": "<p>A sacred seed, Rudraksha provides divine protection, inner peace, and clarity for a journey towards enlightenment and balance.</p><p><strong>Divine Protection & Spiritual Shield.</strong></p><p><strong>Inner Peace and Mental Clarity.</strong></p><p><strong>Enlightenment & Spiritual Balance.</strong></p>",
+            "text": "<p><strong>A sacred seed, Rudraksha provides divine protection, inner peace, and clarity for a journey towards enlightenment and balance.<br/></strong>Divine Protection & Spiritual Shield.</p><p>Inner Peace and Mental Clarity.</p><p>Enlightenment & Spiritual Balance.</p>",
             "text_style": "body"
           }
         },
@@ -233,8 +233,8 @@
         "quick_add": "standard",
         "columns_mobile": "2",
         "swipe_on_mobile": true,
-        "padding_top": 8,
-        "padding_bottom": 8
+        "padding_top": 0,
+        "padding_bottom": 48
       }
     },
     "image_with_text_DYDtwA": {
@@ -292,7 +292,7 @@
       ],
       "name": "Top Selling",
       "settings": {
-        "collection": "top-selling",
+        "collection": "all",
         "products_to_show": 12,
         "title": "Top Selling",
         "heading_size": "h2",
