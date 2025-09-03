@@ -142,6 +142,7 @@
         "text_bkKARH",
         "button_FGMQRB"
       ],
+      "disabled": true,
       "name": "t:sections.image-with-text.presets.name",
       "settings": {
         "image": "shopify://shop_images/ChatGPT_Image_Sep_2_2025_06_17_51_PM.png",
