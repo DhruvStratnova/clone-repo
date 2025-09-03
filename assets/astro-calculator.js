@@ -1,162 +1,176 @@
-document.addEventListener("DOMContentLoaded", () => {
-  // Elements
+
+document.addEventListener("DOMContentLoaded", function () {
   const tabs = document.querySelectorAll(".calculator-tabs .tab");
   const form = document.getElementById("calculator-form");
   const astroResultsDiv = document.getElementById("astro-results");
   const astroOutputDiv = document.getElementById("astro-output");
 
-  // Config (move secrets to server/proxy in production)
-  const ASTRO_USER_ID = "642699"; // never expose real keys in frontend
-  const ASTRO_API_KEY = "86af5961c6dfcac90d4ae97401a974385dc7c6a3"; // use a proxy or strict key restrictions
-  const GEOAPIFY_API_KEY = "55e9073809d4409fa8c39310584517f9"; // public-but-rate-limited; still consider proxy
-  const GOOGLE_TZ_API_KEY = ""; // optional: when set, computes DOB-accurate offset
+  const commonFields = `
+    <div class="form-group">
+      <input type="text" name="name" placeholder="Enter your name" required>
+    </div>
+    <div class="form-group">
+      <input type="date" name="dob" required>
+      <input type="time" name="tob">
+      <label><input type="checkbox" name="no_time"> I don't have time of birth</label>
+    </div>
+    <div class="form-group">
+      <input type="text" name="placeName" placeholder="Enter Birth Place (e.g., New Delhi, India)" required>
+    </div>
+  `;
 
-  const ASTRO_BASE = "https://json.astrologyapi.com/v1";
-  const ENDPOINTS = {
-    gemstone: `${ASTRO_BASE}/basic_gem_suggestion`,
-    rudraksha: `${ASTRO_BASE}/rudraksha_suggestion`,
-  };
+  const gemstoneFields = commonFields;
+  const rudrakshaFields = commonFields;
 
-  // State
-  let currentTab = "by-gemstone";
-  let inFlight = { geo: null, astro: null }; // AbortControllers
-
-  // Helpers
-  const authHeader = () =>
-    "Basic " + btoa(`${ASTRO_USER_ID}:${ASTRO_API_KEY}`);
-
-  const escapeHTML = (s) =>
-    String(s)
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#39;");
-
-  const setResults = (html) => {
-    astroOutputDiv.innerHTML = html;
-    astroResultsDiv.style.display = "block";
-  };
-
-  const clearResults = () => {
-    astroOutputDiv.innerHTML = "";
-    astroResultsDiv.style.display = "none";
-  };
-
-  // UI: switch tab (no wholesale form re-render; keep stable DOM)
   function switchTab(tabName) {
-    tabs.forEach((tab) => tab.classList.remove("active"));
-    const btn = document.querySelector(`.tab[data-tab="${tabName}"]`);
-    if (btn) btn.classList.add("active");
-    currentTab = tabName;
-    clearResults();
+    tabs.forEach(tab => tab.classList.remove("active"));
+    document.querySelector(`.tab[data-tab="${tabName}"]`).classList.add("active");
+    astroResultsDiv.style.display = 'none';
+    astroOutputDiv.innerHTML = '';
 
-    // Update submit button label only
-    let cta = form.querySelector(".rudraksha-btn");
-    if (!cta) {
-      cta = document.createElement("button");
-      cta.type = "submit";
-      cta.className = "rudraksha-btn";
-      form.appendChild(cta);
+    if (tabName === "by-gemstone") {
+      form.innerHTML = gemstoneFields + `<button type="submit" class="rudraksha-btn">Know your Gemstone</button>`;
+    } else {
+      form.innerHTML = rudrakshaFields + `<button type="submit" class="rudraksha-btn">Know your Rudraksha</button>`;
     }
-    cta.textContent =
-      currentTab === "by-gemstone" ? "Know your Gemstone" : "Know your Rudraksha";
-
-    // Cancel any in-flight requests on tab switch
-    if (inFlight.geo) inFlight.geo.abort();
-    if (inFlight.astro) inFlight.astro.abort();
   }
 
-  // Initialize: ensure common fields exist in HTML instead of innerHTML swaps
-  // Required fields expected in DOM:
-  // - input[name="name"], input[type="date" name="dob"], input[type="time" name="tob"]
-  // - input[type="checkbox" name="no_time"], input[name="placeName"]
+  // Default tab
   switchTab("by-gemstone");
 
-  tabs.forEach((tab) => {
-    tab.addEventListener("click", () => switchTab(tab.dataset.tab));
+  // Tab switching
+  tabs.forEach(tab => {
+    tab.addEventListener("click", () => {
+      switchTab(tab.dataset.tab);
+    });
   });
 
-  // UX: disable time if "no_time" checked
-  const noTimeEl = form.querySelector('input[name="no_time"]');
-  const tobEl = form.querySelector('input[name="tob"]');
-  if (noTimeEl && tobEl) {
-    const syncTimeDisabled = () => {
-      tobEl.disabled = noTimeEl.checked;
-      if (noTimeEl.checked) tobEl.value = "";
-    };
-    noTimeEl.addEventListener("change", syncTimeDisabled);
-    syncTimeDisabled();
-  }
+  // Form submit handler
+  document.addEventListener("submit", async function (e) {
+    if (e.target.id === "calculator-form") {
+      e.preventDefault();
 
-  // Compute tzone (in hours) for DOB
-  async function computeTzoneHours({ lat, lon, dobDate, hasTime, signal }) {
-    // Prefer precise per-timestamp if Google TZ API key is configured
-    if (GOOGLE_TZ_API_KEY) {
-      const unixTs = Math.floor(dobDate.getTime() / 1000);
-      const url =
-        `https://maps.googleapis.com/maps/api/timezone/json` +
-        `?location=${lat},${lon}&timestamp=${unixTs}&key=${GOOGLE_TZ_API_KEY}`;
-      const r = await fetch(url, { signal });
-      if (!r.ok) throw new Error("Timezone API request failed");
-      const j = await r.json();
-      // total offset in seconds = rawOffset + dstOffset
-      const total = (j.rawOffset || 0) + (j.dstOffset || 0);
-      return +(total / 3600).toFixed(2);
+      const currentTab = document.querySelector(".calculator-tabs .tab.active").dataset.tab;
+      const formData = new FormData(e.target);
+      const data = Object.fromEntries(formData.entries());
+      
+      // --- DEBUG: Log form data ---
+      console.log("1. Form Data Submitted:", data);
+
+      // API auth details
+      const ASTRO_USER_ID = "642699";
+      const ASTRO_API_KEY = "86af5961c6dfcac90d4ae97401a974385dc7c6a3";
+      const GEOAPIFY_API_KEY = "55e9073809d4409fa8c39310584517f9"; // Your actual key
+      const auth = "Basic " + btoa(ASTRO_USER_ID + ":" + ASTRO_API_KEY);
+      
+      astroOutputDiv.innerHTML = '<p>Finding location and generating recommendation...</p>';
+      astroResultsDiv.style.display = 'block';
+
+      try {
+        const placeName = data.placeName;
+        const geoApiUrl = `https://api.geoapify.com/v1/geocode/search?text=${encodeURIComponent(placeName)}&apiKey=${GEOAPIFY_API_KEY}`;
+        
+        const geoResponse = await fetch(geoApiUrl);
+        if (!geoResponse.ok) {
+          throw new Error("Geocoding API request failed.");
+        }
+        
+        const geoResult = await geoResponse.json();
+
+        // --- DEBUG: Log Geoapify response ---
+        console.log("2. Geoapify API Response:", geoResult);
+
+        if (!geoResult.features || geoResult.features.length === 0) {
+          throw new Error(`Could not find the location: "${placeName}". Please try a more specific name (e.g., "City, Country").`);
+        }
+
+        const properties = geoResult.features[0].properties;
+        const latitude = properties.lat;
+        const longitude = properties.lon;
+        const timezoneOffsetSeconds = properties.timezone.offset_DST_seconds;
+        const timezoneOffsetHours = timezoneOffsetSeconds / 3600;
+        
+        // --- DEBUG: Log extracted coordinates ---
+        console.log(`3. Extracted Location: Latitude=${latitude}, Longitude=${longitude}, Timezone=${timezoneOffsetHours}`);
+
+        let fetchURL = "";
+        if (currentTab === "by-gemstone") {
+          fetchURL = "https://json.astrologyapi.com/v1/basic_gem_suggestion";
+        } else if (currentTab === "by-rudraksha") {
+          fetchURL = "https://json.astrologyapi.com/v1/rudraksha_suggestion";
+        }
+
+        const dob = new Date(data.dob);
+        let hour = 0, min = 0;
+        if (!data.no_time && data.tob) {
+          [hour, min] = data.tob.split(":").map(Number);
+        }
+
+        const payload = {
+          day: dob.getDate(),
+          month: dob.getMonth() + 1,
+          year: dob.getFullYear(),
+          hour: hour,
+          min: min,
+          lat: latitude,
+          lon: longitude,
+          tzone: timezoneOffsetHours
+        };
+        
+        // --- DEBUG: Log the payload for the Astrology API ---
+        console.log("4. Payload for Astrology API:", payload);
+
+        const res = await fetch(fetchURL, {
+          method: "POST",
+          headers: {
+            "authorization": auth,
+            "Content-Type": "application/json",
+            "Accept-Language": "en"
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (!res.ok) {
+          const errorData = await res.json();
+          throw new Error(errorData.message || errorData.error || res.statusText);
+        }
+
+        const result = await res.json();
+        
+        // --- DEBUG: Log the final result from the Astrology API ---
+        console.log("5. Astrology API Result:", result);
+
+        if (currentTab === "by-gemstone") {
+          displayResult(result);
+        } else if (currentTab === "by-rudraksha") {
+          displayRudrakshaResult(result);
+        }
+      } catch (err) {
+        console.error("Error during API call:", err);
+        astroOutputDiv.innerHTML = `<p><strong>An error occurred:</strong> ${err.message || err}. Please check the input and try again.</p>`;
+      }
     }
+  });
 
-    // Fallback: use Geoapify timezone (use Standard offset by default)
-    // (You can switch to DST offset if you have strong evidence DOB was in DST)
-    // Caller must provide properties.timezone
-    return null; // computed by caller from Geoapify properties
-  }
-
-  // Geocode place name with Geoapify
-  async function geocodePlace(placeName, signal) {
-    // Request feature collection (default) to access properties and timezone fields
-    const url =
-      `https://api.geoapify.com/v1/geocode/search?` +
-      `text=${encodeURIComponent(placeName)}&apiKey=${GEOAPIFY_API_KEY}`;
-    const res = await fetch(url, { signal });
-    if (!res.ok) throw new Error("Geocoding API request failed");
-    const data = await res.json();
-    if (!data.features || data.features.length === 0) {
-      throw new Error(
-        `Could not find the location: "${placeName}". Try a more specific name (e.g., "City, Country").`
-      );
-    }
-    const best = data.features;
-    const p = best.properties || {};
-    return {
-      lat: p.lat,
-      lon: p.lon,
-      timezone: p.timezone || null, // has offset_STD_seconds and offset_DST_seconds
-      label: p.formatted || placeName,
-    };
-  }
-
-  // Renderers
-  function renderGemstones(result) {
+  // Gemstone card display
+  function displayResult(data) {
     let output = `<div class="gemstone-card-container">`;
-    Object.entries(result || {}).forEach(([category, gem]) => {
+    Object.entries(data).forEach(([category, gem]) => {
       if (gem && gem.name) {
-        const catTitle = escapeHTML(
-          category.replace("_", " ").replace(/\b\w/g, (l) => l.toUpperCase())
-        );
-        output += `
+          output += `
           <div class="gemstone-card">
             <div class="gemstone-content">
-              <h2 class="gemstone-title">${escapeHTML(gem.name)} (${catTitle})</h2>
+              <h2 class="gemstone-title">${gem.name} (${category.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())})</h2>
               <p class="gemstone-description">
-                Represents <strong>${escapeHTML(gem.gem_deity || "N/A")}</strong>, helping overcome obstacles 
+                Represents <strong>${gem.gem_deity}</strong>, helping overcome obstacles 
                 and bringing stability. Provides protection and supports personal growth.
               </p>
               <ul class="gemstone-specs">
-                <li><strong>Metal:</strong> ${escapeHTML(gem.wear_metal || "N/A")}</li>
-                <li><strong>Finger:</strong> ${escapeHTML(gem.wear_finger || "N/A")} finger of right hand</li>
-                <li><strong>Wear Day:</strong> ${escapeHTML(gem.wear_day || "N/A")}</li>
-                <li><strong>Weight:</strong> ${escapeHTML(gem.weight_caret || "N/A")} carat</li>
-                <li><strong>Semi Gem:</strong> ${escapeHTML(gem.semi_gem || "N/A")}</li>
+                <li><strong>Metal:</strong> ${gem.wear_metal || 'N/A'}</li>
+                <li><strong>Finger:</strong> ${gem.wear_finger || 'N/A'} finger of right hand</li>
+                <li><strong>Wear Day:</strong> ${gem.wear_day || 'N/A'}</li>
+                <li><strong>Weight:</strong> ${gem.weight_caret || 'N/A'} carat</li>
+                <li><strong>Semi Gem:</strong> ${gem.semi_gem || 'N/A'}</li>
               </ul>
             </div>
             <a href="#" class="gemstone-footer">
@@ -167,151 +181,22 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
     output += `</div>`;
-    setResults(output);
+    astroOutputDiv.innerHTML = output;
+    astroResultsDiv.style.display = 'block';
   }
 
-  function renderRudraksha(result) {
-    const name = escapeHTML(result?.name || "Rudraksha");
-    const recommend = escapeHTML(result?.recommend || "");
-    const detail = escapeHTML(result?.detail || "");
+  // Rudraksha card display
+  function displayRudrakshaResult(data) {
     const output = `
       <div class="rudraksha-card">
         <div class="rudraksha-content">
-          <h2 class="rudraksha-tabs">${name}</h2>
-          <p class="rudraksha-recommend">${recommend}</p>
-          <p class="rudraksha-detail">${detail}</p>
+          <h2 class="rudraksha-tabs">${data.name}</h2>
+          <p class="rudraksha-recommend">${data.recommend}</p>
+          <p class="rudraksha-detail">${data.detail}</p>
         </div>
       </div>
     `;
-    setResults(output);
+    astroOutputDiv.innerHTML = output;
+    astroResultsDiv.style.display = 'block';
   }
-
-  // Submit handler
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    // Cancel any prior requests from earlier submit
-    if (inFlight.geo) inFlight.geo.abort();
-    if (inFlight.astro) inFlight.astro.abort();
-    inFlight.geo = new AbortController();
-    inFlight.astro = new AbortController();
-
-    try {
-      clearResults();
-      setResults("<p>Finding location and generating recommendation...</p>");
-
-      const fd = new FormData(form);
-      const data = Object.fromEntries(fd.entries());
-
-      // Basic validation
-      const placeName = (data.placeName || "").trim();
-      if (!placeName) throw new Error("Please enter a valid place name");
-      if (!data.dob) throw new Error("Please select a valid date of birth");
-
-      const dob = new Date(data.dob);
-      let hour = 0,
-        min = 0;
-      const noTime = fd.has("no_time");
-      if (!noTime && data.tob) {
-        const parts = String(data.tob).split(":");
-        if (parts.length === 2) {
-          hour = Number(parts) || 0;
-          min = Number(parts[1]) || 0;
-        }
-      }
-      dob.setHours(hour, min, 0, 0);
-
-      // 1) Geocoding
-      const { lat, lon, timezone } = await geocodePlace(
-        placeName,
-        inFlight.geo.signal
-      );
-
-      if (typeof lat !== "number" || typeof lon !== "number") {
-        throw new Error("Geocoding did not return valid coordinates");
-      }
-
-      // 2) Compute tzone (hours)
-      let tzoneHours;
-      if (GOOGLE_TZ_API_KEY) {
-        // precise per-DOB timestamp using Google TZ API
-        tzoneHours = await computeTzoneHours({
-          lat,
-          lon,
-          dobDate: dob,
-          hasTime: !noTime,
-          signal: inFlight.geo.signal,
-        });
-      } else {
-        // fallback: use Standard offset from Geoapify timezone
-        const std = timezone?.offset_STD_seconds;
-        const dst = timezone?.offset_DST_seconds;
-        // Choose STD by default; if time provided and STD absent but DST present, fall back to DST
-        const useSeconds =
-          typeof std === "number"
-            ? std
-            : typeof dst === "number"
-            ? dst
-            : 0;
-        tzoneHours = +(useSeconds / 3600).toFixed(2);
-      }
-
-      // 3) Astrology API
-      const fetchURL =
-        currentTab === "by-gemstone"
-          ? ENDPOINTS.gemstone
-          : ENDPOINTS.rudraksha;
-
-      const payload = {
-        day: dob.getDate(),
-        month: dob.getMonth() + 1,
-        year: dob.getFullYear(),
-        hour,
-        min,
-        lat,
-        lon,
-        tzone: tzoneHours,
-      };
-
-      const res = await fetch(fetchURL, {
-        method: "POST",
-        headers: {
-          authorization: authHeader(),
-          "Content-Type": "application/json",
-          "Accept-Language": "en",
-        },
-        body: JSON.stringify(payload),
-        signal: inFlight.astro.signal,
-      });
-
-      if (!res.ok) {
-        let errorText = res.statusText;
-        try {
-          const errorData = await res.json();
-          errorText = errorData.message || errorData.error || errorText;
-        } catch (_) {
-          // ignore
-        }
-        throw new Error(errorText);
-      }
-
-      const result = await res.json();
-      if (currentTab === "by-gemstone") {
-        renderGemstones(result);
-      } else {
-        renderRudraksha(result);
-      }
-    } catch (err) {
-      if (err?.name === "AbortError") return; // user navigated / new submit
-      setResults(
-        `<p><strong>An error occurred:</strong> ${escapeHTML(
-          err.message || String(err)
-        )}</p>`
-      );
-    } finally {
-      // clear controllers; new interactions will create fresh ones
-      inFlight.geo = null;
-      inFlight.astro = null;
-    }
-  });
 });
