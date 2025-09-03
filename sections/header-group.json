@@ -45,7 +45,9 @@
     },
     "header": {
       "type": "header",
-      "custom_css": [],
+      "custom_css": [
+        ".header__menu-item {font-size: 12px;}"
+      ],
       "settings": {
         "logo_position": "middle-left",
         "mobile_logo_position": "left",

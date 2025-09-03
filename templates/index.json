@@ -204,12 +204,7 @@
     },
     "featured_collection": {
       "type": "featured-collection",
-      "custom_css": [
-        "h2 {margin: 0 auto; width: fit-content; /* Or a specific width */}",
-        ".contains-card {/* padding: 32px; */}",
-        ".slider-buttons {display: none;}",
-        ".slider--desktop {max-height: ;}"
-      ],
+      "custom_css": [],
       "name": "New Arrivals",
       "settings": {
         "collection": "bracelets",
