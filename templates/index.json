@@ -217,7 +217,7 @@
         "collection": "bracelets",
         "products_to_show": 12,
         "title": "New Arrival",
-        "heading_size": "h1",
+        "heading_size": "h2",
         "description": "",
         "show_description": false,
         "description_style": "body",
