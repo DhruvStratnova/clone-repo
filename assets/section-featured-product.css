@@ -78,8 +78,11 @@
     z-index: 1;
 
 }
-  }
+.product__info-wrapper{
+  padding: 4rem;
 }
+  }
+
 
 
 .product__info-wrapper{
