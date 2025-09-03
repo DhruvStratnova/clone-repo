@@ -85,7 +85,7 @@
   }
 
   .featured-product:not(.product--no-media) > .product__info-wrapper {
-    padding: 0 7rem;
+    padding: 5rem 7rem;
   }
 
   .background-secondary .featured-product {
