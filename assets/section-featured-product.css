@@ -75,7 +75,26 @@
 }
 
 
+@media screen and (min-width: 500px) {
+    .background-secondary .featured-product:not(.product--no-media) > .product__info-wrapper {
+    padding: 5rem 5rem 5rem 5rem;
+  }
+
+  .background-secondary .featured-product:not(.product--no-media).product--right > .product__info-wrapper {
+    padding: 5rem 5rem 5rem 5rem;
+  }
+
+  .featured-product:not(.product--no-media) > .product__info-wrapper {
+    padding: 5rem 7rem;
+  }
+
+  .background-secondary .featured-product {
+    padding: 6rem 7rem;
+    position: relative;
+    z-index: 1;
+  }
+}
+
 .product__info-wrapper{
   padding: 4rem;
-  max-width:400px;
 }
