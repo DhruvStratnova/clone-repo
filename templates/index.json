@@ -838,7 +838,7 @@
       ],
       "name": "t:sections.multicolumn.presets.name",
       "settings": {
-        "title": "Certified Gems",
+        "title": "",
         "heading_size": "h2",
         "image_width": "third",
         "image_ratio": "circle",
