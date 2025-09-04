@@ -663,6 +663,7 @@
         },
         "button_QNjbJd": {
           "type": "button",
+          "disabled": true,
           "settings": {
             "button_label": "",
             "button_link": "",
@@ -691,32 +692,24 @@
     "collage_EmY7zc": {
       "type": "collage",
       "blocks": {
-        "image_UCXR3w": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/Frame_60_99c0c9ab-04c0-4742-84e1-739f9b548f03.png"
-          }
-        },
-        "product_NEitRD": {
-          "type": "product",
-          "settings": {
-            "product": "neelam-1",
-            "second_image": true
-          }
-        },
         "collection_BpyYhN": {
           "type": "collection",
+          "disabled": true,
           "settings": {
             "collection": "bracelets-pendants"
+          }
+        },
+        "image_zFYERx": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Certified_gems_2_8b510f51-751d-429a-a543-351c25d42c22.jpg"
           }
         }
       },
       "block_order": [
-        "image_UCXR3w",
-        "product_NEitRD",
-        "collection_BpyYhN"
+        "collection_BpyYhN",
+        "image_zFYERx"
       ],
-      "disabled": true,
       "custom_css": [
         "h2 {font-size: 30;}"
       ],
@@ -763,10 +756,7 @@
         "text_iYKLcx",
         "button_Gg8cxa"
       ],
-      "custom_css": [
-        ".section-template--24917146140974__image_with_text_MDPCtn-padding .image-with-text__grid {display: block !important; justify-content: center; text-align: center;}",
-        "img {width: 744px; height: 415px;}"
-      ],
+      "disabled": true,
       "name": "t:sections.image-with-text.presets.name",
       "settings": {
         "image": "shopify://shop_images/Certified_gems_2_8b510f51-751d-429a-a543-351c25d42c22.jpg",
