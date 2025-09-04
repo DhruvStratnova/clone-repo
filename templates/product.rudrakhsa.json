@@ -153,14 +153,14 @@
         "heading_VXrBTe": {
           "type": "heading",
           "settings": {
-            "heading": "Gemstones & You",
+            "heading": "Rudraksha & You",
             "heading_size": "h1"
           }
         },
         "text_GABa9L": {
           "type": "text",
           "settings": {
-            "text": "<p>Through the sacred lens of Vedic astrology, we come to realize that the divine rhythms of the universe are deeply intertwined with the celestial movements of the planets.</p><p>These sacred planets—the radiant Sun, gentle Moon, fiery Mars, wise Jupiter, graceful Venus, swift Mercury, and steadfast Saturn—along with the mystical shadow forces Rahu and Ketu, guide the course of our earthly journey.</p><p>Gemstones, created by divine will over countless ages, are imbued with the pure energies of these cosmic beings. As sacred vessels of planetary grace, they help harmonize and align our lives with the blessings of the universe, offering protection, strength, and spiritual upliftment.</p>",
+            "text": "<p>Rudraksha beads, sacred to Lord Shiva, hold spiritual power and protective energy. Their vibrations balance mind, body, and soul, fostering peace, focus, and resilience. Wearing Rudraksha reduces stress, sharpens intuition, and shields from negativity. From single to multi-Mukhi, each bead supports life aspects, guiding spiritual growth and inner strength.</p>",
             "text_style": "body"
           }
         },
@@ -168,7 +168,7 @@
           "type": "button",
           "settings": {
             "button_label": "Learn More",
-            "button_link": "shopify://pages/about-us",
+            "button_link": "shopify://collections/rudrasha",
             "button_style_secondary": true
           }
         }
@@ -180,9 +180,9 @@
       ],
       "name": "t:sections.image-with-text.presets.name",
       "settings": {
-        "image": "shopify://shop_images/sushil_kanya.jpg",
+        "image": "shopify://shop_images/ChatGPT_Image_Sep_2_2025_01_34_17_PM.png",
         "height": "adapt",
-        "desktop_image_width": "medium",
+        "desktop_image_width": "small",
         "layout": "image_first",
         "image_behavior": "none",
         "content_layout": "no-overlap",
