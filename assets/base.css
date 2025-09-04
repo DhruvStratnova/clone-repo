@@ -3645,3 +3645,8 @@ details-disclosure > details {
 .footer__content-top page-width{
   width: 100vw;
 } */
+
+
+.media--transparent{
+  justify-content: center;
+}
