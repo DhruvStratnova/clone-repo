@@ -206,7 +206,8 @@
         ".contains-card {/* padding: 32px; */}",
         ".slider-buttons {display: none;}",
         ".slider--desktop {/* max-height: ; */}",
-        ".product-grid {gap: 3rem;}"
+        ".product-grid {gap: 3rem;}",
+        "p {white-space: normal; /* Ensures text wraps */ overflow-wrap: break-word; /* Allows long words to break */}"
       ],
       "name": "New Arrivals",
       "settings": {
