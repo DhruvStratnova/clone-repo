@@ -890,8 +890,7 @@
         ".media--circle {padding: 40px; border-radius: 50%;}",
         ".media > img {width: 44px;}",
         "img {margin-left: 18px;}",
-        ".multicolumn-card {background: transparent; height: 260px;}",
-        ".button {border-radius: 9999px; border: 0 solid #e5e7eb; background: linear-gradient(90deg, #ef1278 0%, #f63c46 52.4%, #fe6914 100%); box-shadow: 0 4px 6px 0 rgba(168, 85, 247, 0.25), 0 10px 15px 0 rgba(168, 85, 247, 0.25);}"
+        ".multicolumn-card {background: transparent; height: 260px;}"
       ],
       "name": "t:sections.multicolumn.presets.name",
       "settings": {
