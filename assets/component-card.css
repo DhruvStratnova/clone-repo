@@ -601,3 +601,21 @@
     clip-path: polygon(var(--shape--blob-5));
   }
 }
+
+
+/* @media only screen and (min-width: 300px) {
+  .card--horizontal .card__heading,
+  .card--horizontal .price__container .price-item,
+  .card--horizontal__quick-add {
+    font-size: calc(var(--font-heading-scale) * 1.3rem);
+  }
+
+
+  .card-wrapper{
+    max-width:250px;
+  }
+
+  
+
+  
+} */
