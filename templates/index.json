@@ -679,9 +679,66 @@
         "padding_bottom": 16
       }
     },
+    "image_with_text_MDPCtn": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_knNxiX": {
+          "type": "heading",
+          "settings": {
+            "heading": "Image with text",
+            "heading_size": "h1"
+          }
+        },
+        "text_iYKLcx": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+            "text_style": "body"
+          }
+        },
+        "button_Gg8cxa": {
+          "type": "button",
+          "settings": {
+            "button_label": "Button label",
+            "button_link": "",
+            "button_style_secondary": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_knNxiX",
+        "text_iYKLcx",
+        "button_Gg8cxa"
+      ],
+      "name": "t:sections.image-with-text.presets.name",
+      "settings": {
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "layout": "text_first",
+        "image_behavior": "none",
+        "content_layout": "no-overlap",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "mobile_content_alignment": "left",
+        "section_color_scheme": "",
+        "color_scheme": "",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
     "multicolumn_rVVQLW": {
       "type": "multicolumn",
       "blocks": {
+        "column_QqHQfz": {
+          "type": "column",
+          "disabled": true,
+          "settings": {
+            "title": "Column",
+            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
         "column_RRajaV": {
           "type": "column",
           "settings": {
@@ -714,6 +771,7 @@
         }
       },
       "block_order": [
+        "column_QqHQfz",
         "column_RRajaV",
         "column_eRFf6U",
         "column_Uj3Ljt"
@@ -950,6 +1008,7 @@
     "collection_list_b7XdPw",
     "image_with_text_dMnjUt",
     "collage_EmY7zc",
+    "image_with_text_MDPCtn",
     "multicolumn_rVVQLW",
     "multicolumn_mLLTmr",
     "image_with_text_mJmbpt",
