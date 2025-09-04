@@ -711,11 +711,11 @@
         "image_zFYERx"
       ],
       "custom_css": [
-        "img {width: 744px; height: 415px;}",
+        "img {width: 744px; height: 415px; margin: auto;}",
         ".media--transparent {justify-content: center; height: 47vh;}",
-        ".collage-card {display: block; margin: auto; justify-content: center; align-items: center; height: 300px; border: 1px solid #ccc;}",
+        ".media {display: block;display: flex; justify-content: center;}",
         ".collage-card img {max-width: 100%; height: auto;}",
-        " .media{display: block; }"
+        ".collage-card {display: block; margin: auto; justify-content: center; align-items: center; height: 300px; border: 1px solid #ccc;}"
       ],
       "name": "t:sections.collage.presets.name",
       "settings": {
