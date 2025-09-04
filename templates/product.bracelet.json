@@ -147,14 +147,14 @@
         "heading_VXrBTe": {
           "type": "heading",
           "settings": {
-            "heading": "Gemstones & You",
+            "heading": "Bracelets & You",
             "heading_size": "h1"
           }
         },
         "text_GABa9L": {
           "type": "text",
           "settings": {
-            "text": "<p>Through the sacred lens of Vedic astrology, we come to realize that the divine rhythms of the universe are deeply intertwined with the celestial movements of the planets.</p><p>These sacred planets—the radiant Sun, gentle Moon, fiery Mars, wise Jupiter, graceful Venus, swift Mercury, and steadfast Saturn—along with the mystical shadow forces Rahu and Ketu, guide the course of our earthly journey.</p><p>Gemstones, created by divine will over countless ages, are imbued with the pure energies of these cosmic beings. As sacred vessels of planetary grace, they help harmonize and align our lives with the blessings of the universe, offering protection, strength, and spiritual upliftment.</p>",
+            "text": "<p>Bracelets are elegant accessories symbolizing love, strength, and style. Made from gold, silver, beads, or crystals, they suit every personality and occasion. Lightweight and comfortable, they pair easily with other jewelry. From minimalist to bold designs, bracelets enhance modern fashion while carrying sentimental and symbolic value in personal style.</p>",
             "text_style": "body"
           }
         },
@@ -162,7 +162,7 @@
           "type": "button",
           "settings": {
             "button_label": "Learn More",
-            "button_link": "shopify://pages/about-us",
+            "button_link": "shopify://collections/bracelets",
             "button_style_secondary": true
           }
         }
@@ -174,9 +174,9 @@
       ],
       "name": "t:sections.image-with-text.presets.name",
       "settings": {
-        "image": "shopify://shop_images/sushil_kanya.jpg",
+        "image": "shopify://shop_images/ChatGPT_Image_Sep_2_2025_01_52_53_PM.png",
         "height": "adapt",
-        "desktop_image_width": "medium",
+        "desktop_image_width": "small",
         "layout": "image_first",
         "image_behavior": "none",
         "content_layout": "no-overlap",
