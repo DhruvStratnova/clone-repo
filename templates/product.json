@@ -179,7 +179,7 @@
           "type": "button",
           "settings": {
             "button_label": "Learn More",
-            "button_link": "shopify://collections/south-sea-pearl-moti",
+            "button_link": "shopify://collections/gemstones",
             "button_style_secondary": true
           }
         }
