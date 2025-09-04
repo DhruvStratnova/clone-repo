@@ -764,8 +764,9 @@
         "button_Gg8cxa"
       ],
       "custom_css": [
+        ".image-with-text{all:revert;}",
         ".image-with-text__text-item {display: none;}",
-        ".image-with-text__media-item {width: 400px;}"
+        "img{width: 744px; height: 415px;}"
       ],
       "name": "t:sections.image-with-text.presets.name",
       "settings": {
