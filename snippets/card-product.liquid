@@ -42,7 +42,7 @@
   -%}
 
   <style>
-    .card-description-purpose-paragaph{
+    .card-description-purpose{
     font-size: 12px;
     {% comment %} min-height: 60px; {% endcomment %}
     }
@@ -181,7 +181,7 @@
             | replace: '"', ''
           %}
           <p class="card-description-purpose-paragaph">{{ purpose_pill_string }}</p>
-          {% comment %} </div> {% endcomment %}
+          </div>
           <div class="card-information">
             {%- if show_vendor -%}
               <span class="visually-hidden">{{ 'accessibility.vendor' | t }}</span>
