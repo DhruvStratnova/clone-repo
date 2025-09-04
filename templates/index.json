@@ -710,7 +710,10 @@
         "collection_BpyYhN",
         "image_zFYERx"
       ],
-      "custom_css": [],
+      "custom_css": [
+        "img {width: 744px; height: 415px; margin: auto;}",
+        ".media {display: flex; justify-content: center;}"
+      ],
       "name": "t:sections.collage.presets.name",
       "settings": {
         "heading": "",
