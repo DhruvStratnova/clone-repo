@@ -231,3 +231,23 @@
     display: list-item;
   }
 }
+
+.media--circle {
+  width: 64px; /* or your desired size */
+  height: 64px;
+  border-radius: 50%;
+  background: radial-gradient(96.56% 96.56% at 50% 3.44%, #F3E8FF 0%, #E4E7FB 100%);
+  display: flex;
+  align-items: center;    /* vertical centering */
+  justify-content: center;/* horizontal centering */
+  margin: 0 auto;         /* centers the circle block itself */
+  position: relative;
+  overflow: hidden;
+}
+
+.media--circle img {
+  width: 48px;        /* adjust for best icon-to-circle ratio */
+  height: 48px;
+  object-fit: contain;
+  display: block;
+}
