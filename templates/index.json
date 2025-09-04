@@ -635,6 +635,49 @@
         "padding_bottom": 24
       }
     },
+    "rich_text_PDq7Pp": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_qMPJQN": {
+          "type": "heading",
+          "settings": {
+            "heading": "Certfied Gems",
+            "heading_size": "h1"
+          }
+        },
+        "text_LHKyqh": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Genuine, certified gemstones guaranteed for authenticity and quality with government lab certifications.</p>"
+          }
+        },
+        "button_QNjbJd": {
+          "type": "button",
+          "settings": {
+            "button_label": "",
+            "button_link": "",
+            "button_style_secondary": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_qMPJQN",
+        "text_LHKyqh",
+        "button_QNjbJd"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
+    },
     "collage_EmY7zc": {
       "type": "collage",
       "blocks": {
@@ -711,7 +754,7 @@
         "button_Gg8cxa"
       ],
       "custom_css": [
-        ".image-with-text__text-item{display: none;}"
+        ".image-with-text__text-item {display: none;}"
       ],
       "name": "t:sections.image-with-text.presets.name",
       "settings": {
@@ -1010,6 +1053,7 @@
     "featured_product_patqWF",
     "collection_list_b7XdPw",
     "image_with_text_dMnjUt",
+    "rich_text_PDq7Pp",
     "collage_EmY7zc",
     "image_with_text_MDPCtn",
     "multicolumn_rVVQLW",
