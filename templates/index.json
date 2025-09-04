@@ -710,13 +710,7 @@
         "collection_BpyYhN",
         "image_zFYERx"
       ],
-      "custom_css": [
-        "img {width: 744px; height: 415px; margin: auto;}",
-        ".media--transparent {justify-content: center; height: 47vh;}",
-        ".media {display: block;}",
-        ".collage-card img {max-width: 100%; height: auto;}",
-        ".collage-card {display: block; margin: auto; justify-content: center; align-items: center; height: 300px; border: 1px solid #ccc;}"
-      ],
+      "custom_css": [],
       "name": "t:sections.collage.presets.name",
       "settings": {
         "heading": "",
