@@ -206,7 +206,7 @@
         ".contains-card {/* padding: 32px; */}",
         ".slider-buttons {display: none;}",
         ".slider--desktop {/* max-height: ; */}",
-        ".product-grid{gap: 3rem;}"
+        ".product-grid {gap: 3rem;}"
       ],
       "name": "New Arrivals",
       "settings": {
@@ -908,7 +908,7 @@
         "image_width": "third",
         "image_ratio": "circle",
         "button_label": "Contact Verification Support",
-        "button_link": "",
+        "button_link": "shopify://pages/contact",
         "columns_desktop": 3,
         "column_alignment": "center",
         "background_style": "primary",
