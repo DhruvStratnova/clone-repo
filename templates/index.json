@@ -851,7 +851,7 @@
         "column_VJKzn6": {
           "type": "column",
           "settings": {
-            "image": "shopify://shop_images/search.png",
+            "image": "shopify://shop_images/Vector_3.svg",
             "title": "Step 1: Locate Report Number",
             "text": "<p>Find the unique report number on your certificate (format: LAB-XXXXXXXX)<br/><br/></p>",
             "link_label": "",
@@ -861,7 +861,7 @@
         "column_ChH7QV": {
           "type": "column",
           "settings": {
-            "image": "shopify://shop_images/Vector_2.png",
+            "image": "shopify://shop_images/Vector_6843020c-c68c-4c90-9d06-55c85177993d.svg",
             "title": "Step 2: Visit Lab Website",
             "text": "<p>Go to the issuing laboratory's official verification portal online</p>",
             "link_label": "",
@@ -871,7 +871,7 @@
         "column_tdaaYH": {
           "type": "column",
           "settings": {
-            "image": "shopify://shop_images/Vector_3.png",
+            "image": "shopify://shop_images/Frame.svg",
             "title": "Step 3: Verify Details",
             "text": "<p>Enter report number to instantly verify gemstone details and authenticity</p>",
             "link_label": "",
