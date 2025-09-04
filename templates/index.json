@@ -714,7 +714,7 @@
         "h2 {margin: 0 auto; width: fit-content;}",
         "img {width: 744px; height: 415px;}",
         ".collage {all: revert;}",
-        ".media--transparent {justify-content: center; height: 55vh;}"
+        ".media--transparent {justify-content: center; height: 50vh;}"
       ],
       "name": "t:sections.collage.presets.name",
       "settings": {
