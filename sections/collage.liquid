@@ -5,23 +5,23 @@
 {{ 'component-deferred-media.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
-  .section-{{ section.id }}-padding {
-    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
-    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
-  }
+   .section-{{ section.id }}-padding {
+     padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+     padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+   }
 
-  @media screen and (min-width: 750px) {
-    .section-{{ section.id }}-padding {
-      padding-top: {{ section.settings.padding_top }}px;
-      padding-bottom: {{ section.settings.padding_bottom }}px;
-    }
-  }
+   @media screen and (min-width: 750px) {
+     .section-{{ section.id }}-padding {
+       padding-top: {{ section.settings.padding_top }}px;
+       padding-bottom: {{ section.settings.padding_bottom }}px;
+     }
+   }
 
 
- #collage-media-largeimg{
-    width:100px;
-    height:100px;
-  }
+  #collage-media-largeimg{
+     width:100px;
+     height:100px;
+   }
 {%- endstyle -%}
 
 <div class="color-{{ section.settings.color_scheme }} gradient isolate">
@@ -62,7 +62,7 @@
                         assign large_block = forloop.last
                       endif
 
-                      assign grid_space_desktop = settings.spacing_grid_horizontal | divided_by: 1 | append: 'px'
+                      assign grid_space_desktop = settings.spacing_grid_horizontal | divided_by: 2 | append: 'px'
                       assign grid_space_mobile = settings.spacing_grid_horizontal | divided_by: 4 | append: 'px'
                     -%}
                     {%- if large_block -%}
@@ -267,7 +267,7 @@
     {
       "type": "header",
       "content": "t:sections.collage.settings.header_layout.content"
-    },       
+    },
     {
       "type": "select",
       "id": "desktop_layout",
