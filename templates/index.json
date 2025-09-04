@@ -745,61 +745,68 @@
         "padding_bottom": 100
       }
     },
-    "multicolumn_AABYyC": {
+    "multicolumn_mLLTmr": {
       "type": "multicolumn",
       "blocks": {
-        "column_iA8aEk": {
+        "column_VJKzn6": {
           "type": "column",
           "settings": {
-            "title": "Column",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+            "image": "shopify://shop_images/search.png",
+            "title": "Guarantee of Purity",
+            "text": "<p>Each gem meets International quality standards.</p>",
             "link_label": "",
             "link": ""
           }
         },
-        "column_ypzUkW": {
+        "column_ChH7QV": {
           "type": "column",
           "settings": {
-            "title": "Column",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+            "image": "shopify://shop_images/Vector_2.png",
+            "title": "Aura Synchronized",
+            "text": "<p>Verified by certified gemological laboratories.</p>",
             "link_label": "",
             "link": ""
           }
         },
-        "column_6Ancb6": {
+        "column_tdaaYH": {
           "type": "column",
           "settings": {
-            "title": "Column",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+            "image": "shopify://shop_images/Vector_3.png",
+            "title": "Guaranteed",
+            "text": "<p>100% authenticity and pure guarantee.</p>",
             "link_label": "",
             "link": ""
           }
         }
       },
       "block_order": [
-        "column_iA8aEk",
-        "column_ypzUkW",
-        "column_6Ancb6"
+        "column_VJKzn6",
+        "column_ChH7QV",
+        "column_tdaaYH"
       ],
       "custom_css": [
-        "h2 {margin: 0 auto; width: fit-content;}"
+        "h2 {margin: 0 auto; width: fit-content;}",
+        ".media--transparent {background: linear-gradient(90deg, #f3e8ff 0%, #fce7f3 100%);}",
+        ".media--circle {padding: 40px; border-radius: 50%;}",
+        ".media > img {width: 44px;}",
+        "img {margin-left: 18px;}"
       ],
       "name": "t:sections.multicolumn.presets.name",
       "settings": {
-        "title": "How to Verify Your Certificate",
+        "title": "Certified Gems",
         "heading_size": "h2",
-        "image_width": "full",
-        "image_ratio": "adapt",
-        "button_label": "Button label",
+        "image_width": "third",
+        "image_ratio": "circle",
+        "button_label": "",
         "button_link": "",
         "columns_desktop": 3,
-        "column_alignment": "left",
+        "column_alignment": "center",
         "background_style": "primary",
-        "color_scheme": "",
+        "color_scheme": "scheme-c6323a96-20a5-4474-b039-727f2117b7fb",
         "columns_mobile": "1",
         "swipe_on_mobile": false,
-        "padding_top": 36,
-        "padding_bottom": 36
+        "padding_top": 40,
+        "padding_bottom": 100
       }
     },
     "image_with_text_mJmbpt": {
@@ -942,7 +949,7 @@
     "image_with_text_dMnjUt",
     "collage_EmY7zc",
     "multicolumn_rVVQLW",
-    "multicolumn_AABYyC",
+    "multicolumn_mLLTmr",
     "image_with_text_mJmbpt",
     "1754756233592eb8c3",
     "image_banner_WwmTHL"
