@@ -1,0 +1,249 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "image_banner_zpGQzQ": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_Nwhn7g": {
+          "type": "heading",
+          "settings": {
+            "heading": "Image banner",
+            "heading_size": "h1"
+          }
+        },
+        "text_TiJNKb": {
+          "type": "text",
+          "settings": {
+            "text": "Give customers details about the banner image(s) or content on the template.",
+            "text_style": "body"
+          }
+        },
+        "buttons_yt67QM": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "Button label",
+            "button_link_1": "",
+            "button_style_secondary_1": false,
+            "button_label_2": "Button label",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_Nwhn7g",
+        "text_TiJNKb",
+        "buttons_yt67QM"
+      ],
+      "custom_css": [
+        ".tabber_coll {}",
+        ".tabber_content {padding: 2rem; display: flex; justify-content: center;}",
+        ".tabcontent {background-color: #ffffff; border: 1px solid #eaeaea; border-radius: 12px; padding: 40px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); max-width: 1400px; margin: 2rem 2rem;}",
+        ".banner__media {width: 100%; aspect-ratio: 2560 / 1024;}"
+      ],
+      "name": "t:sections.image-banner.presets.name",
+      "settings": {
+        "image": "shopify://shop_images/ChatGPTImageSep3202511_27_09PM_1.jpg",
+        "image_overlay_opacity": 0,
+        "image_height": "adapt",
+        "image_behavior": "none",
+        "desktop_content_position": "middle-center",
+        "desktop_content_alignment": "center",
+        "show_text_box": true,
+        "color_scheme": "",
+        "stack_images_on_mobile": true,
+        "mobile_content_alignment": "center",
+        "show_text_below": true
+      }
+    },
+    "rich_text_dQCfcz": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_wb6zni": {
+          "type": "heading",
+          "settings": {
+            "heading": "All Products",
+            "heading_size": "h2"
+          }
+        }
+      },
+      "block_order": [
+        "heading_wb6zni"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "desktop_content_position": "left",
+        "content_alignment": "left",
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 12,
+        "padding_bottom": 0
+      }
+    },
+    "banner": {
+      "type": "main-collection-banner",
+      "disabled": true,
+      "settings": {
+        "show_collection_description": false,
+        "show_collection_image": false,
+        "color_scheme": "scheme-1"
+      }
+    },
+    "product-grid": {
+      "type": "main-collection-product-grid",
+      "settings": {
+        "products_per_page": 24,
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "color_scheme": "scheme-1",
+        "image_ratio": "adapt",
+        "image_shape": "default",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "standard",
+        "enable_filtering": true,
+        "filter_type": "horizontal",
+        "enable_sorting": true,
+        "padding_top": 12,
+        "padding_bottom": 36
+      }
+    },
+    "image_with_text_GGVXqL": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_b7m6wk": {
+          "type": "heading",
+          "settings": {
+            "heading": "Crystal & You",
+            "heading_size": "h1"
+          }
+        },
+        "text_bkKARH": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Crystals are natural stones known for their healing, spiritual, and energy-enhancing properties. Each crystal carries unique vibrations that promote positivity, balance, and protection. Used for meditation, wellness, and manifestation, crystals help reduce stress, boost focus, and attract harmony. Beautiful and powerful, they combine spiritual benefits with aesthetic appeal in daily life.</p>",
+            "text_style": "body"
+          }
+        },
+        "button_FGMQRB": {
+          "type": "button",
+          "settings": {
+            "button_label": "Learn More",
+            "button_link": "shopify://collections/crystal-rakhi",
+            "button_style_secondary": true
+          }
+        }
+      },
+      "block_order": [
+        "heading_b7m6wk",
+        "text_bkKARH",
+        "button_FGMQRB"
+      ],
+      "name": "t:sections.image-with-text.presets.name",
+      "settings": {
+        "image": "shopify://shop_images/ChatGPT_Image_Sep_2_2025_06_17_51_PM.png",
+        "height": "small",
+        "desktop_image_width": "small",
+        "layout": "image_first",
+        "image_behavior": "none",
+        "content_layout": "no-overlap",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "mobile_content_alignment": "left",
+        "section_color_scheme": "",
+        "color_scheme": "",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "collapsible_content_EtJFbL": {
+      "type": "collapsible-content",
+      "blocks": {
+        "collapsible_row_QLBGTF": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "What types of products does AstroAura offer?",
+            "icon": "none",
+            "row_content": "<p>AstroAura provides a wide range of spiritually aligned and astrology-focused products, including Rudraksha beads, gemstone jewellery, bracelets, malas, and crystal rakhis designed to enhance positivity, balance, and well-being.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_b34tJL": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Are AstroAura products authentic and natural?",
+            "icon": "none",
+            "row_content": "<p>Yes. Every product is carefully selected for its natural origin, authenticity, and astrological relevance. We ensure that gemstones, Rudraksha, and crystals are genuine, energizing, and free from synthetic substitutes.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_mDqahe": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How do AstroAura products support astrology?",
+            "icon": "none",
+            "row_content": "<p>Each product is chosen and designed based on planetary influences and Vedic astrology. Wearing or using the items helps harmonize planetary energies, balance personal vibrations, and promote overall well-being.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_m84QkB": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How should I use or wear AstroAura products?",
+            "icon": "none",
+            "row_content": "<p>Products like Rudraksha beads, malas, and bracelets can be worn daily or used during meditation. Crystal Rakhis can be tied during festivals and later worn as energy bracelets. Most items are pre-energized but can be further charged through mantra chanting or meditation.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_H8DydP": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "What is the shipping and return policy?",
+            "icon": "none",
+            "row_content": "<p>AstroAura ships securely across India and internationally. Returns are accepted within a specific period if the product is unused and in its original condition. We<br/>prioritize safe packaging and timely delivery to ensure your items arrive in<br/>perfect condition.</p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "collapsible_row_QLBGTF",
+        "collapsible_row_b34tJL",
+        "collapsible_row_mDqahe",
+        "collapsible_row_m84QkB",
+        "collapsible_row_H8DydP"
+      ],
+      "name": "t:sections.collapsible_content.presets.name",
+      "settings": {
+        "caption": "",
+        "heading": "FAQs",
+        "heading_size": "h1",
+        "heading_alignment": "center",
+        "layout": "none",
+        "container_color_scheme": "",
+        "color_scheme": "",
+        "open_first_collapsible_row": false,
+        "image_ratio": "adapt",
+        "desktop_layout": "image_second",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "image_banner_zpGQzQ",
+    "rich_text_dQCfcz",
+    "banner",
+    "product-grid",
+    "image_with_text_GGVXqL",
+    "collapsible_content_EtJFbL"
+  ]
+}
