@@ -42,17 +42,17 @@
   -%}
 
   <style>
-    .card-description-purpose {
-  font-size: 12px;
-  word-break: break-word;
-  overflow-wrap: break-word;
-  white-space: normal;
-  display: -webkit-box;
-  hyphens: auto;
-  -webkit-line-clamp: 2; /* Change to desired number of lines */
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
+      .card-description-purpose {
+    font-size: 12px;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Change to desired number of lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    hyphens: auto; /* Add hyphen at break */
+  }
     {% comment %} .product-card-wrapper{
     width: 400px;
     } {% endcomment %}
