@@ -187,6 +187,9 @@
         "collapsible_row_MzhJFm",
         "collapsible_row_MDcAxw"
       ],
+      "custom_css": [
+        "p{font-size: 12px;}"
+      ],
       "name": "t:sections.collapsible_content.presets.name",
       "settings": {
         "caption": "",
