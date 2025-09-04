@@ -614,10 +614,15 @@
   .card-wrapper{
     max-width:250px;
   } */
-.card-description-purpose{
+/* .card-description-purpose{
   max-width:150px;
-}
+} */
   
 
   
 } 
+
+p {
+  white-space: normal; /* Ensures text wraps */
+  overflow-wrap: break-word; /* Allows long words to break */
+}
