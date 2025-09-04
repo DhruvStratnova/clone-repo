@@ -5,27 +5,28 @@
 {{ 'component-deferred-media.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
-   .section-{{ section.id }}-padding {
-     padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
-     padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
-   }
-
-   @media screen and (min-width: 750px) {
      .section-{{ section.id }}-padding {
-       padding-top: {{ section.settings.padding_top }}px;
-       padding-bottom: {{ section.settings.padding_bottom }}px;
+       padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+       padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
      }
-   }
+
+     @media screen and (min-width: 750px) {
+       .section-{{ section.id }}-padding {
+         padding-top: {{ section.settings.padding_top }}px;
+         padding-bottom: {{ section.settings.padding_bottom }}px;
+       }
+     }
 
 
-  #collage-media-largeimg{
-     width:100px;
-     height:100px;
-   }
+    #collage-media-largeimg{
+       width:100px;
+       height:100px;
+     }
 
-   .page-width section-template--24917146140974__collage_EmY7zc-padding{
-
-   }
+     .section-template--24917146140974__collage_EmY7zc-padding{
+  all: unset;         /* inherited props -> inherit; others -> initial */
+    display: revert;
+     }
 {%- endstyle -%}
 
 <div class="color-{{ section.settings.color_scheme }} gradient isolate">
