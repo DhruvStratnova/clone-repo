@@ -754,11 +754,12 @@
         "button_Gg8cxa"
       ],
       "custom_css": [
-        ".image-with-text__text-item {display: none;}"
+        ".image-with-text__text-item {display: none;}",
+        ".image-with-text__media-item {width: 400px;}"
       ],
       "name": "t:sections.image-with-text.presets.name",
       "settings": {
-        "image": "shopify://shop_images/image_4662.png",
+        "image": "shopify://shop_images/image_4662_4d162a0e-30ab-494c-9b12-a8fd45889392.png",
         "height": "adapt",
         "desktop_image_width": "medium",
         "layout": "image_first",
