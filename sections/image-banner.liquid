@@ -584,7 +584,7 @@
           <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </button>
-      
+
       {% comment %} ... other buttons ... {% endcomment %}
     </div>
   </div>
@@ -592,32 +592,27 @@
   <div class="tabber_content">
     <div id="About" class="tabcontent">
       <div>
-        <p></p>
-        {{- collection.metafields.custom.about }}
+        <p>{{- collection.metafields.custom.about }}</p>
       </div>
     </div>
-    <div id="Clean & Care" class="tabcontent" >
+    <div id="Clean & Care" class="tabcontent">
       <div>
-        <p></p>
-        {{- collection.metafields.custom.clean_care }}
+        <p>{{- collection.metafields.custom.clean_care }}</p>
       </div>
     </div>
     <div id="Benefits" class="tabcontent">
       <div>
-        <p>  {{- collection.metafields.custom.benefits }}</p>
-      
+        <p>{{- collection.metafields.custom.benefits }}</p>
       </div>
     </div>
     <div id="Types" class="tabcontent">
       <div>
         <p>{{- collection.metafields.custom.types }}</p>
-        
       </div>
     </div>
     <div id="Quality & Price" class="tabcontent" style="display: block;">
       <div>
         <p>{{- collection.metafields.custom.quality_price }}</p>
-        
       </div>
     </div>
     {% comment %} ... other content divs ... {% endcomment %}
@@ -657,8 +652,6 @@
     }
   }
 </script>
-
-
 
 {% schema %}
 {
