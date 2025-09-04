@@ -171,7 +171,7 @@
         "text_GABa9L": {
           "type": "text",
           "settings": {
-            "text": "<p>Through the sacred lens of Vedic astrology, we come to realize that the divine rhythms of the universe are deeply intertwined with the celestial movements of the planets.</p><p>These sacred planets—the radiant Sun, gentle Moon, fiery Mars, wise Jupiter, graceful Venus, swift Mercury, and steadfast Saturn—along with the mystical shadow forces Rahu and Ketu, guide the course of our earthly journey.</p><p>Gemstones, created by divine will over countless ages, are imbued with the pure energies of these cosmic beings. As sacred vessels of planetary grace, they help harmonize and align our lives with the blessings of the universe, offering protection, strength, and spiritual upliftment.</p>",
+            "text": "<p>Vedic astrology links cosmic order with planetary motion—Sun, Moon, Mars, Jupiter, Venus, Mercury, Saturn, Rahu, and Ketu guiding human destiny. Gemstones, formed over millions of years, hold pure cosmic energies. Worn with faith, they channel planetary blessings, attracting harmony, protection, strength, and spiritual growth through their unique vibrational frequencies.</p>",
             "text_style": "body"
           }
         },
@@ -179,7 +179,7 @@
           "type": "button",
           "settings": {
             "button_label": "Learn More",
-            "button_link": "shopify://pages/about-us",
+            "button_link": "shopify://collections/south-sea-pearl-moti",
             "button_style_secondary": true
           }
         }
@@ -191,9 +191,9 @@
       ],
       "name": "t:sections.image-with-text.presets.name",
       "settings": {
-        "image": "shopify://shop_images/sushil_kanya.jpg",
+        "image": "shopify://shop_images/ChatGPT_Image_Sep_2_2025_01_42_55_PM.png",
         "height": "adapt",
-        "desktop_image_width": "medium",
+        "desktop_image_width": "small",
         "layout": "image_first",
         "image_behavior": "none",
         "content_layout": "no-overlap",
