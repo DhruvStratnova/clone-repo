@@ -254,6 +254,7 @@
 .button {
   all: unset;
   padding: 12px 32px 12px 33px;
+    margin: 1.5rem;
   color: #FFF;
 text-align: center;
 font-family: "Work Sans";
@@ -266,5 +267,5 @@ line-height: normal;
   background: linear-gradient(90deg, #ef1278 0%, #f63c46 52.4%, #fe6914 100%);
   box-shadow: 0 4px 6px 0 rgba(168, 85, 247, 0.25),
     0 10px 15px 0 rgba(168, 85, 247, 0.25);
-    margin: 1.5rem
+  
 }
