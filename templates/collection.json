@@ -203,13 +203,23 @@
             "row_content": "<p>Products like Rudraksha beads, malas, and bracelets can be worn daily or used during meditation. Crystal Rakhis can be tied during festivals and later worn as energy bracelets. Most items are pre-energized but can be further charged through mantra chanting or meditation.</p>",
             "page": ""
           }
+        },
+        "collapsible_row_H8DydP": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "What is the shipping and return policy?",
+            "icon": "none",
+            "row_content": "<p>AstroAura ships securely across India and internationally. Returns are accepted within a specific period if the product is unused and in its original condition. We<br/>prioritize safe packaging and timely delivery to ensure your items arrive in<br/>perfect condition.</p>",
+            "page": ""
+          }
         }
       },
       "block_order": [
         "collapsible_row_QLBGTF",
         "collapsible_row_b34tJL",
         "collapsible_row_mDqahe",
-        "collapsible_row_m84QkB"
+        "collapsible_row_m84QkB",
+        "collapsible_row_H8DydP"
       ],
       "name": "t:sections.collapsible_content.presets.name",
       "settings": {
