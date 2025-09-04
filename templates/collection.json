@@ -222,6 +222,7 @@
         "collapsible_row_m84QkB",
         "collapsible_row_H8DydP"
       ],
+      "disabled": true,
       "name": "t:sections.collapsible_content.presets.name",
       "settings": {
         "caption": "",
