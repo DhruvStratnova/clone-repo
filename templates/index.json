@@ -752,8 +752,8 @@
           "type": "column",
           "settings": {
             "image": "shopify://shop_images/search.png",
-            "title": "Guarantee of Purity",
-            "text": "<p>Each gem meets International quality standards.</p>",
+            "title": "Step 1: Locate Report Number",
+            "text": "<p>Find the unique report number on your certificate (format: LAB-XXXXXXXX)<br/><br/></p>",
             "link_label": "",
             "link": ""
           }
@@ -762,8 +762,8 @@
           "type": "column",
           "settings": {
             "image": "shopify://shop_images/Vector_2.png",
-            "title": "Aura Synchronized",
-            "text": "<p>Verified by certified gemological laboratories.</p>",
+            "title": "Step 2: Visit Lab Website",
+            "text": "<p>Go to the issuing laboratory's official verification portal online</p>",
             "link_label": "",
             "link": ""
           }
@@ -772,8 +772,8 @@
           "type": "column",
           "settings": {
             "image": "shopify://shop_images/Vector_3.png",
-            "title": "Guaranteed",
-            "text": "<p>100% authenticity and pure guarantee.</p>",
+            "title": "Step 3: Verify Details",
+            "text": "<p>Enter report number to instantly verify gemstone details and authenticity</p>",
             "link_label": "",
             "link": ""
           }
