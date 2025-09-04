@@ -764,10 +764,8 @@
         "button_Gg8cxa"
       ],
       "custom_css": [
-        ".image-with-text {all: revert;}",
-        ".image-with-text__text-item {display: none;}",
-        "img {width: 744px; height: 415px;}",
-        ".image-with-text__grid {display: flex; justify-content: center; align-items: center;}"
+        "/* Target the specific \"Image with text\" section to center the image */.section-template--24917146140974__image_with_text_MDPCtn-padding .image-with-text__grid {display: flex; justify-content: center;}",
+        "/* Hide the text block within that specific section */.section-template--24917146140974__image_with_text_MDPCtn-padding .image-with-text__text-item {display: none;}"
       ],
       "name": "t:sections.image-with-text.presets.name",
       "settings": {
