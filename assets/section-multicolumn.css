@@ -251,8 +251,3 @@
   object-fit: contain;
   display: block;
 }
-
-.button--primary {
-  border: none !important;
-  box-shadow: none !important;
-}
