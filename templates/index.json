@@ -704,7 +704,8 @@
       ],
       "custom_css": [
         ".collage-card {display: block; margin: auto; justify-content: center; align-items: center; max-width: 750px; height: 440px;}",
-        ".media--transparent {height: 50vh;}"
+        ".media--transparent {height: 50vh;}",
+        "img{max-width: 100%; height: auto; display: block; }"
       ],
       "name": "t:sections.collage.presets.name",
       "settings": {
