@@ -207,7 +207,9 @@
         ".slider-buttons {display: none;}",
         ".slider--desktop {/* max-height: ; */}",
         ".product-grid {gap: 3rem;}",
-        "p {white-space: normal; /* Ensures text wraps */ overflow-wrap: break-word; /* Allows long words to break */}"
+        ".card-description-purpose {min-height: 70px;}",
+        ".card__heading {min-height: 30px;}",
+        ".quick-add__submit {min-height: 55px;}"
       ],
       "name": "New Arrivals",
       "settings": {
