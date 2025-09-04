@@ -286,7 +286,9 @@
       "type": "featured-collection",
       "custom_css": [
         "h2 {margin: 0 auto; width: fit-content; /* Or a specific width */}",
+        ".contains-card {/* padding: 32px; */}",
         ".slider-buttons {display: none;}",
+        ".slider--desktop {/* max-height: ; */}",
         ".product-grid {gap: 3rem;}"
       ],
       "name": "Top Selling",
