@@ -703,9 +703,9 @@
         "image_zFYERx"
       ],
       "custom_css": [
-        ".collage-card {all: revert; display: block; margin: auto; justify-content: center; align-items: center; max-width: 750px; height: 440px; border-radius: 0;}",
-        ".media--transparent {all: revert; height: 440px;}",
-        "img {max-width: 100%; height: auto; display: block;}"
+        ".collage-card {all: revert; display: block; width: 450px; margin: auto; justify-content: center; align-items: center; max-width: 750px; height: 440px; border-radius: 0;}",
+        ".media--transparent {all: revert; margin: auto; width: 700px; height: 440px;}",
+        "img {margin: auto; max-width: 750px; height: auto; display: block;}"
       ],
       "name": "t:sections.collage.presets.name",
       "settings": {
