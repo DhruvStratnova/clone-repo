@@ -704,9 +704,9 @@
       ],
       "custom_css": [
         ".collage {all: revert;}",
-        ".collage-card {all: revert; margin: auto; }",
+        ".collage-card {all: revert; margin: auto;}",
         ".collage__item {all: revert; margin: auto;}",
-        ".media--transparent {all: revert; margin: auto;}",
+        ".media--transparent {all: revert; margin: auto; width: fit-content;}",
         ".media--transparent img {all: revert; margin: auto;}",
         "img {all: revert; margin: auto;}"
       ],
