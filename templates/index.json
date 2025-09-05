@@ -703,12 +703,12 @@
         "image_zFYERx"
       ],
       "custom_css": [
-        ".collage {all: revert; max-height: 450px; margin: auto; width: 750px;}",
-        ".collage-card {all: revert; margin: auto; width: 750px;}",
-        ".collage__item {all: revert; margin: auto; width: 750px;}",
-        ".media--transparent {all: revert; margin: auto; width: fit-content;}",
-        ".media--transparent img {all: revert; margin: auto; max-width: 750px;}",
-        "img {all: revert; margin: auto;}"
+        ".collage {all: revert;}",
+        ".collage-card {all: revert; display: block; width: 450px; margin: auto; justify-content: center; align-items: center; max-width: 750px; height: auto; border-radius: 0;}",
+        ".collage__item {all: revert; max-width: 750px;}",
+        ".media--transparent {all: revert; margin: auto; max-width: 700px; height: 440px;}",
+        ".media--transparent img {all: revert;}",
+        "img {all: revert; object-position: center; display: inline-block; align-self: center; margin: auto; max-width: 750px; height: auto; display: block;}"
       ],
       "name": "t:sections.collage.presets.name",
       "settings": {
