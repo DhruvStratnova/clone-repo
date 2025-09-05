@@ -51,7 +51,7 @@
       ],
       "name": "t:sections.image-banner.presets.name",
       "settings": {
-        "image": "shopify://shop_images/ChatGPTImageSep3202511_31_54PM.jpg",
+        "image": "shopify://shop_images/Bracelets_banner.png",
         "image_overlay_opacity": 0,
         "image_height": "adapt",
         "image_behavior": "none",
