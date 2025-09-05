@@ -705,7 +705,7 @@
       "custom_css": [
         ".collage {all: revert; max-height: 450px; margin: auto; width: 750px;}",
         ".collage-card {all: revert; margin: auto; width: 750px;}",
-        ".collage__item {all: revert; margin: auto; width: fit-content;}",
+        ".collage__item {all: revert; margin: auto; width: 750px;}",
         ".media--transparent {all: revert; margin: auto; width: fit-content;}",
         ".media--transparent img {all: revert; margin: auto; width: fit-content;}",
         "img {all: revert; margin: auto;}"
