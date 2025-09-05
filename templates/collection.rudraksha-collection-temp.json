@@ -52,7 +52,6 @@
       "name": "t:sections.image-banner.presets.name",
       "settings": {
         "image": "shopify://shop_images/Rudraksh_-_banner_3f3e1200-574a-434f-82fb-3da701149d6f.png",
-        "image_2": "shopify://shop_images/Mobi_3.png",
         "image_overlay_opacity": 0,
         "image_height": "adapt",
         "image_behavior": "none",
