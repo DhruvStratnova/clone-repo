@@ -703,7 +703,7 @@
         "image_zFYERx"
       ],
       "custom_css": [
-        ".collage-card {display: block; margin: auto; justify-content: center; align-items: center; max-width: 750px; height: 440px; border-radius: 0;}",
+        ".collage-card {all: revert; display: block; margin: auto; justify-content: center; align-items: center; max-width: 750px; height: 440px; border-radius: 0;}",
         ".media--transparent {all: revert; height: 440px;}",
         "img {max-width: 100%; height: auto; display: block;}"
       ],
