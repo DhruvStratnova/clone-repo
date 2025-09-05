@@ -715,8 +715,8 @@
         "mobile_layout": "column",
         "card_styles": "none",
         "color_scheme": "",
-        "padding_top": 16,
-        "padding_bottom": 16
+        "padding_top": 0,
+        "padding_bottom": 0
       }
     },
     "image_with_text_MDPCtn": {
