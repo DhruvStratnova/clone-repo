@@ -23,6 +23,7 @@
       "blocks": {
         "heading_7q6km8": {
           "type": "heading",
+          "disabled": true,
           "settings": {
             "heading": "Shipping  and Delivery Policy",
             "heading_size": "h1"
@@ -39,6 +40,38 @@
         "heading_7q6km8",
         "text_xtPwwF"
       ],
+      "disabled": true,
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    },
+    "rich_text_KjNmnc": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_MyRJVW": {
+          "type": "heading",
+          "settings": {
+            "heading": "Return and Replacement Policy",
+            "heading_size": "h1"
+          }
+        },
+        "text_3r9hNq": {
+          "type": "text",
+          "settings": {
+            "text": "<p>As of now, we do not accept returns or<br/>offer replacements. In the event of a damaged or incorrect delivery, customers<br/>are encouraged to contact us directly and we will assess on a case-by-case<br/>basis.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_MyRJVW",
+        "text_3r9hNq"
+      ],
       "name": "t:sections.rich-text.presets.name",
       "settings": {
         "desktop_content_position": "center",
@@ -52,6 +85,7 @@
   },
   "order": [
     "main",
-    "rich_text_8Ur4fE"
+    "rich_text_8Ur4fE",
+    "rich_text_KjNmnc"
   ]
 }
