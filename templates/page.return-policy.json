@@ -18,39 +18,6 @@
         "padding_bottom": 0
       }
     },
-    "rich_text_8Ur4fE": {
-      "type": "rich-text",
-      "blocks": {
-        "heading_7q6km8": {
-          "type": "heading",
-          "disabled": true,
-          "settings": {
-            "heading": "Shipping  and Delivery Policy",
-            "heading_size": "h1"
-          }
-        },
-        "text_xtPwwF": {
-          "type": "text",
-          "settings": {
-            "text": "<p>AstroAura Market is committed to providing reliable and transparent<br/>shipping services to all our customers. This Shipping & Delivery Policy<br/>outlines our standard practices for domestic and international shipments.</p><h3><strong> 1. Order Processing</strong></h3><p>All orders are processed within <strong>1–3 business days</strong> from the date of order confirmation Orders placed on weekends or public holidays will<br/>be processed on the next working day. Customers will receive an order confirmation email and, once dispatched, a shipping confirmation email with tracking details.</p><h3><strong> 2. Delivery Timelines Domestic (Within India):</strong> </h3><h6>Orders are usually delivered within 0–7 business days after dispatch.</h6><p>· <strong>International (Outside India):</strong> Orders are usually delivered within <strong>0–15 business days</strong> after dispatch.</p><p>· Delivery times are approximate and   may vary depending on the destination, courier partner, customs clearance, and other external factors.</p><h3><strong>3. Shipping Partners & Tracking</strong></h3><p>· We partner with reputable courier and logistics providers for both domestic and international deliveries.</p><p>· A tracking number will be shared with the customer once the order is dispatched, enabling real-time monitoring of shipment progress.</p><h3><strong>4. Customs, Duties, and Taxes</strong></h3><p>· <strong>For Domestic Orders:</strong> Prices include<br/>applicable GST. No additional charges are collected at the time of delivery.</p><p>·<strong>For International Orders:</strong> Customs duties,VAT, import taxes, or additional charges (if applicable) are the sole<br/>responsibility of the customer. AstroAura is not liable for these charges.</p><h3><strong>5. Address Accuracy</strong></h3><p>·Customers are responsible for providing complete and accurate shipping details at the time of checkout.</p><p>· AstroAura shall not be liable for delays or non-delivery arising from incorrect or incomplete address information provided by the customer.</p><h3><strong>6. Delivery Delays</strong></h3><p>· While we make every effort to ensure timely delivery, delays may occur due to circumstances beyond our control such as:</p><p>o  Courier or logistics delays</p><p>o  Customs clearance delays (for international shipments)</p><p>o  Natural disasters, strikes, or unforeseen disruptions</p><p>· AstroAura shall not be held liable for such delays.</p><h3><strong>7. Damaged, Missing, or Incorrect Products</strong></h3><p>· Customers must inspect their order upon delivery.</p><p>· Any complaints regarding damage, missing items, or incorrect products must be raised within <strong>24 hours of delivery</strong> by contacting us at <a href=\"mailto:support@astroaura.market\">support@astroaura.market</a>.</p><p>· Depending on the case, AstroAura Market may offer a replacement or refund at its sole discretion.</p><h3><strong> 8. Contact Information</strong></h3><p>For questions about shipping or delivery, please contact us at:</p><p><strong>Email:</strong> <a href=\"mailto:support@astroaura.market\">support@astroaura.market</a></p>"
-          }
-        }
-      },
-      "block_order": [
-        "heading_7q6km8",
-        "text_xtPwwF"
-      ],
-      "disabled": true,
-      "name": "t:sections.rich-text.presets.name",
-      "settings": {
-        "desktop_content_position": "center",
-        "content_alignment": "center",
-        "color_scheme": "",
-        "full_width": true,
-        "padding_top": 40,
-        "padding_bottom": 52
-      }
-    },
     "rich_text_7P3gkB": {
       "type": "rich-text",
       "blocks": {
@@ -85,7 +52,6 @@
   },
   "order": [
     "main",
-    "rich_text_8Ur4fE",
     "rich_text_7P3gkB"
   ]
 }
