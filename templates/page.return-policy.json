@@ -40,7 +40,6 @@
         "heading_7q6km8",
         "text_xtPwwF"
       ],
-      "disabled": true,
       "name": "t:sections.rich-text.presets.name",
       "settings": {
         "desktop_content_position": "center",
@@ -72,6 +71,7 @@
         "heading_MyRJVW",
         "text_3r9hNq"
       ],
+      "disabled": true,
       "name": "t:sections.rich-text.presets.name",
       "settings": {
         "desktop_content_position": "center",
