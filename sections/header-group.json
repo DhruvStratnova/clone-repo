@@ -46,9 +46,9 @@
     "header": {
       "type": "header",
       "custom_css": [
-        ".header__menu-item {font-size: 12px;}",
-        "a {font-size: 12px;}",
-        ".mega-menu__content {max-height: 300px; overflow-y: auto;}"
+        ".header__menu-item {font-size: 16px;}",
+        "a {font-size: 14px;}",
+        ".mega-menu__content {max-height: 350px; overflow-y: auto;}"
       ],
       "settings": {
         "logo_position": "middle-left",
