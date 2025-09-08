@@ -48,7 +48,7 @@
       "custom_css": [
         ".header__menu-item {font-size: 16px;}",
         "a {font-size: 14px;}",
-        ".mega-menu__content {max-height: 350px; overflow-y: auto;}"
+        ".mega-menu__content {max-height: 350px; overflow-y: auto; font-size: 14px;}"
       ],
       "settings": {
         "logo_position": "middle-left",
