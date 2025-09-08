@@ -208,7 +208,7 @@
         ".slider--desktop {/* max-height: ; */}",
         ".product-grid {gap: 3rem;}",
         ".card-description-purpose {min-height: 70px;}",
-        ".card__heading {min-height: 30px;}",
+        ".card__heading {min-height: 30px; font-size: 20px }",
         ".quick-add__submit {min-height: 55px;}"
       ],
       "name": "New Arrivals",
