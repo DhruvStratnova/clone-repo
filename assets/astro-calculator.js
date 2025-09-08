@@ -51,15 +51,8 @@ let placeInput, suggestionBox;
 // Function to inject suggestion dropdown after place input
 function addSuggestionDropdown() {
   placeInput = form.querySelector('input[name="placeName"]');
-  if (!placeInput) return;
-
-  // Remove old suggestion box if exists
-  if (suggestionBox) suggestionBox.remove();
-
-  // Ensure the container is positioned for absolute dropdown
-  if (placeInput.parentNode && placeInput.parentNode.style) {
-    placeInput.parentNode.style.position = placeInput.parentNode.style.position || 'relative';
-  }
+  if (!placeInput || placeInput.dataset.suggestInit === 'true') return;
+  placeInput.dataset.suggestInit = 'true';
 
   // Create hidden fields for selected coordinates and timezone (if not already present)
   const ensureHiddenField = (name) => {
@@ -76,69 +69,140 @@ function addSuggestionDropdown() {
   const hiddenLon = ensureHiddenField('placeLon');
   const hiddenTz  = ensureHiddenField('placeTzone');
 
+  // Create suggestion box as portal to body
   suggestionBox = document.createElement('div');
   suggestionBox.className = 'location-suggestions';
   suggestionBox.style.position = 'absolute';
   suggestionBox.style.background = '#fff';
   suggestionBox.style.border = '1px solid #ccc';
-  suggestionBox.style.zIndex = 1000;
-  suggestionBox.style.width = placeInput.offsetWidth + 'px';
+  suggestionBox.style.zIndex = 9999;
   suggestionBox.style.display = 'none';
-  suggestionBox.style.maxHeight = '220px';
+  suggestionBox.style.maxHeight = '240px';
   suggestionBox.style.overflowY = 'auto';
-  suggestionBox.style.left = (placeInput.offsetLeft || 0) + 'px';
-  suggestionBox.style.top = ((placeInput.offsetTop || 0) + placeInput.offsetHeight) + 'px';
+  document.body.appendChild(suggestionBox);
 
-  placeInput.parentNode.appendChild(suggestionBox);
+  // Positioning helper
+  const updatePosition = () => {
+    const rect = placeInput.getBoundingClientRect();
+    suggestionBox.style.width = rect.width + 'px';
+    suggestionBox.style.left = window.scrollX + rect.left + 'px';
+    suggestionBox.style.top = window.scrollY + rect.bottom + 'px';
+  };
 
-  placeInput.addEventListener('input', async function () {
-    const query = placeInput.value.trim();
-    if (query.length < 3) {
-      suggestionBox.style.display = 'none';
-      // Clear hidden fields if user starts typing a new query
-      hiddenLat.value = '';
-      hiddenLon.value = '';
-      hiddenTz.value = '';
-      return;
-    }
+  const clearHidden = () => {
+    hiddenLat.value = '';
+    hiddenLon.value = '';
+    hiddenTz.value = '';
+  };
+
+  let debounceTimer;
+  let currentIndex = -1;
+  let suggestionsData = [];
+  let inFlightController = null;
+
+  const renderSuggestions = (features) => {
+    suggestionBox.innerHTML = '';
+    currentIndex = -1;
+    suggestionsData = features;
+    features.forEach((feature, idx) => {
+      const item = document.createElement('div');
+      item.className = 'suggestion-item';
+      item.textContent = feature.properties.formatted;
+      item.style.padding = '8px 10px';
+      item.style.cursor = 'pointer';
+      item.addEventListener('mousedown', function (e) {
+        e.preventDefault();
+        applySelection(feature);
+      });
+      suggestionBox.appendChild(item);
+    });
+    suggestionBox.style.display = features.length ? 'block' : 'none';
+  };
+
+  const applySelection = (feature) => {
+    placeInput.value = feature.properties.formatted;
+    const lat = feature.properties.lat;
+    const lon = feature.properties.lon;
+    const tzProps = feature.properties.timezone || {};
+    const totalOffsetSeconds = (tzProps.offset_STD_seconds || 0) + (tzProps.offset_DST_seconds || 0);
+    const tzoneHours = totalOffsetSeconds ? (totalOffsetSeconds / 3600) : '';
+    hiddenLat.value = (lat != null ? String(lat) : '');
+    hiddenLon.value = (lon != null ? String(lon) : '');
+    hiddenTz.value = (tzoneHours !== '' ? String(tzoneHours) : '');
+    suggestionBox.style.display = 'none';
+  };
+
+  const fetchSuggestions = async (query) => {
     const GEOAPIFY_API_KEY = "55e9073809d4409fa8c39310584517f9";
     const url = `https://api.geoapify.com/v1/geocode/autocomplete?text=${encodeURIComponent(query)}&limit=5&apiKey=${GEOAPIFY_API_KEY}`;
-    const res = await fetch(url);
+    if (inFlightController) inFlightController.abort();
+    inFlightController = new AbortController();
+    let res;
+    try {
+      res = await fetch(url, { signal: inFlightController.signal });
+    } catch (e) {
+      // aborted or network error
+      return;
+    }
     const data = await res.json();
-    suggestionBox.innerHTML = '';
     if (data.features && data.features.length > 0) {
-      data.features.forEach(feature => {
-        const item = document.createElement('div');
-        item.className = 'suggestion-item';
-        item.textContent = feature.properties.formatted;
-        item.style.padding = '6px 10px';
-        item.style.cursor = 'pointer';
-        item.addEventListener('mousedown', function (e) {
-          e.preventDefault();
-          placeInput.value = feature.properties.formatted;
-          // Store coordinates and timezone
-          const lat = feature.properties.lat;
-          const lon = feature.properties.lon;
-          const tzProps = feature.properties.timezone || {};
-          const totalOffsetSeconds = (tzProps.offset_STD_seconds || 0) + (tzProps.offset_DST_seconds || 0);
-          const tzoneHours = totalOffsetSeconds ? (totalOffsetSeconds / 3600) : '';
-          hiddenLat.value = (lat != null ? String(lat) : '');
-          hiddenLon.value = (lon != null ? String(lon) : '');
-          hiddenTz.value = (tzoneHours !== '' ? String(tzoneHours) : '');
-          suggestionBox.style.display = 'none';
-        });
-        suggestionBox.appendChild(item);
-      });
-      suggestionBox.style.display = 'block';
+      renderSuggestions(data.features);
     } else {
       suggestionBox.style.display = 'none';
     }
+  };
+
+  placeInput.addEventListener('input', function () {
+    const query = placeInput.value.trim();
+    updatePosition();
+    if (query.length < 3) {
+      suggestionBox.style.display = 'none';
+      clearHidden();
+      return;
+    }
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => fetchSuggestions(query), 250);
   });
 
-  // Hide suggestions on blur
-  placeInput.addEventListener('blur', function () {
-    setTimeout(() => suggestionBox.style.display = 'none', 100);
+  placeInput.addEventListener('focus', function () {
+    const query = placeInput.value.trim();
+    updatePosition();
+    if (query.length >= 3) {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => fetchSuggestions(query), 0);
+    }
   });
+
+  // Keyboard navigation
+  placeInput.addEventListener('keydown', function (e) {
+    if (suggestionBox.style.display !== 'block') return;
+    const items = Array.from(suggestionBox.querySelectorAll('.suggestion-item'));
+    if (!items.length) return;
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      currentIndex = (currentIndex + 1) < items.length ? currentIndex + 1 : 0;
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      currentIndex = (currentIndex - 1) >= 0 ? currentIndex - 1 : items.length - 1;
+    } else if (e.key === 'Enter') {
+      if (currentIndex >= 0 && suggestionsData[currentIndex]) {
+        e.preventDefault();
+        applySelection(suggestionsData[currentIndex]);
+      }
+    }
+    items.forEach((el, i) => el.classList.toggle('active', i === currentIndex));
+  });
+
+  // Outside click handling
+  document.addEventListener('mousedown', function (e) {
+    if (!suggestionBox.contains(e.target) && e.target !== placeInput) {
+      suggestionBox.style.display = 'none';
+    }
+  });
+
+  // Reposition on scroll/resize
+  window.addEventListener('scroll', updatePosition, true);
+  window.addEventListener('resize', updatePosition);
 }
 
 // Call addSuggestionDropdown whenever form is rendered

@@ -386,6 +386,10 @@ input, select {
   background: #f3f4f6;
 }
 
+.location-suggestions .suggestion-item.active {
+  background: #e5e7eb;
+}
+
 
 /* 
 .calculator-form-containter{
