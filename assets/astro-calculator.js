@@ -56,6 +56,26 @@ function addSuggestionDropdown() {
   // Remove old suggestion box if exists
   if (suggestionBox) suggestionBox.remove();
 
+  // Ensure the container is positioned for absolute dropdown
+  if (placeInput.parentNode && placeInput.parentNode.style) {
+    placeInput.parentNode.style.position = placeInput.parentNode.style.position || 'relative';
+  }
+
+  // Create hidden fields for selected coordinates and timezone (if not already present)
+  const ensureHiddenField = (name) => {
+    let el = form.querySelector(`input[name="${name}"]`);
+    if (!el) {
+      el = document.createElement('input');
+      el.type = 'hidden';
+      el.name = name;
+      form.appendChild(el);
+    }
+    return el;
+  };
+  const hiddenLat = ensureHiddenField('placeLat');
+  const hiddenLon = ensureHiddenField('placeLon');
+  const hiddenTz  = ensureHiddenField('placeTzone');
+
   suggestionBox = document.createElement('div');
   suggestionBox.className = 'location-suggestions';
   suggestionBox.style.position = 'absolute';
@@ -64,6 +84,10 @@ function addSuggestionDropdown() {
   suggestionBox.style.zIndex = 1000;
   suggestionBox.style.width = placeInput.offsetWidth + 'px';
   suggestionBox.style.display = 'none';
+  suggestionBox.style.maxHeight = '220px';
+  suggestionBox.style.overflowY = 'auto';
+  suggestionBox.style.left = (placeInput.offsetLeft || 0) + 'px';
+  suggestionBox.style.top = ((placeInput.offsetTop || 0) + placeInput.offsetHeight) + 'px';
 
   placeInput.parentNode.appendChild(suggestionBox);
 
@@ -71,6 +95,10 @@ function addSuggestionDropdown() {
     const query = placeInput.value.trim();
     if (query.length < 3) {
       suggestionBox.style.display = 'none';
+      // Clear hidden fields if user starts typing a new query
+      hiddenLat.value = '';
+      hiddenLon.value = '';
+      hiddenTz.value = '';
       return;
     }
     const GEOAPIFY_API_KEY = "55e9073809d4409fa8c39310584517f9";
@@ -88,6 +116,15 @@ function addSuggestionDropdown() {
         item.addEventListener('mousedown', function (e) {
           e.preventDefault();
           placeInput.value = feature.properties.formatted;
+          // Store coordinates and timezone
+          const lat = feature.properties.lat;
+          const lon = feature.properties.lon;
+          const tzProps = feature.properties.timezone || {};
+          const totalOffsetSeconds = (tzProps.offset_STD_seconds || 0) + (tzProps.offset_DST_seconds || 0);
+          const tzoneHours = totalOffsetSeconds ? (totalOffsetSeconds / 3600) : '';
+          hiddenLat.value = (lat != null ? String(lat) : '');
+          hiddenLon.value = (lon != null ? String(lon) : '');
+          hiddenTz.value = (tzoneHours !== '' ? String(tzoneHours) : '');
           suggestionBox.style.display = 'none';
         });
         suggestionBox.appendChild(item);
@@ -136,27 +173,41 @@ switchTab = function(tabName) {
 
       try {
         const placeName = data.placeName;
-        const geoApiUrl = `https://api.geoapify.com/v1/geocode/search?text=${encodeURIComponent(placeName)}&apiKey=${GEOAPIFY_API_KEY}`;
-        
-        const geoResponse = await fetch(geoApiUrl);
-        if (!geoResponse.ok) {
-          throw new Error("Geocoding API request failed.");
+
+        // Prefer coordinates from suggestion selection if available
+        const selectedLat = parseFloat(data.placeLat || '');
+        const selectedLon = parseFloat(data.placeLon || '');
+        const selectedTz  = data.placeTzone !== undefined && data.placeTzone !== '' ? parseFloat(data.placeTzone) : undefined;
+
+        let latitude, longitude, timezoneOffsetHours;
+
+        if (!isNaN(selectedLat) && !isNaN(selectedLon)) {
+          latitude = selectedLat;
+          longitude = selectedLon;
+          timezoneOffsetHours = (selectedTz !== undefined && !isNaN(selectedTz)) ? selectedTz : undefined;
+        } else {
+          // Fallback: search endpoint to resolve coords and timezone
+          const geoApiUrl = `https://api.geoapify.com/v1/geocode/search?text=${encodeURIComponent(placeName)}&apiKey=${GEOAPIFY_API_KEY}`;
+          const geoResponse = await fetch(geoApiUrl);
+          if (!geoResponse.ok) {
+            throw new Error("Geocoding API request failed.");
+          }
+          const geoResult = await geoResponse.json();
+
+          // --- DEBUG: Log Geoapify response ---
+          console.log("2. Geoapify API Response:", geoResult);
+
+          if (!geoResult.features || geoResult.features.length === 0) {
+            throw new Error(`Could not find the location: "${placeName}". Please try a more specific name (e.g., "City, Country").`);
+          }
+
+          const properties = geoResult.features[0].properties;
+          latitude = properties.lat;
+          longitude = properties.lon;
+          const tzProps = properties.timezone || {};
+          const totalOffsetSeconds = (tzProps.offset_STD_seconds || 0) + (tzProps.offset_DST_seconds || 0);
+          timezoneOffsetHours = totalOffsetSeconds ? (totalOffsetSeconds / 3600) : undefined;
         }
-        
-        const geoResult = await geoResponse.json();
-
-        // --- DEBUG: Log Geoapify response ---
-        console.log("2. Geoapify API Response:", geoResult);
-
-        if (!geoResult.features || geoResult.features.length === 0) {
-          throw new Error(`Could not find the location: "${placeName}". Please try a more specific name (e.g., "City, Country").`);
-        }
-
-        const properties = geoResult.features[0].properties;
-        const latitude = properties.lat;
-        const longitude = properties.lon;
-        const timezoneOffsetSeconds = properties.timezone.offset_DST_seconds;
-        const timezoneOffsetHours = timezoneOffsetSeconds / 3600;
         
         // --- DEBUG: Log extracted coordinates ---
         console.log(`3. Extracted Location: Latitude=${latitude}, Longitude=${longitude}, Timezone=${timezoneOffsetHours}`);
@@ -182,7 +233,7 @@ switchTab = function(tabName) {
           min: min,
           lat: latitude,
           lon: longitude,
-          tzone: timezoneOffsetHours
+          tzone: (typeof timezoneOffsetHours === 'number' ? timezoneOffsetHours : 0)
         };
         
         // --- DEBUG: Log the payload for the Astrology API ---
