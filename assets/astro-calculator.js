@@ -1,518 +1,270 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Astrology Calculator with Location Autocomplete</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
 
-    body {
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-      color: #fff;
-      min-height: 100vh;
-      padding: 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+document.addEventListener("DOMContentLoaded", function () {
+  const tabs = document.querySelectorAll(".calculator-tabs .tab");
+  const form = document.getElementById("calculator-form");
+  const astroResultsDiv = document.getElementById("astro-results");
+  const astroOutputDiv = document.getElementById("astro-output");
 
-    .container {
-      width: 100%;
-      max-width: 800px;
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(10px);
-      border-radius: 15px;
-      padding: 30px;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    }
-
-    h1 {
-      text-align: center;
-      margin-bottom: 30px;
-      color: #e94560;
-      font-size: 2.5rem;
-    }
-
-    .calculator-tabs {
-      display: flex;
-      margin-bottom: 20px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .tab {
-      padding: 12px 24px;
-      cursor: pointer;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 5px 5px 0 0;
-      margin-right: 5px;
-      transition: all 0.3s ease;
-    }
-
-    .tab.active {
-      background: rgba(233, 69, 96, 0.2);
-      color: #e94560;
-      border-bottom: 2px solid #e94560;
-    }
-
-    .form-group {
-      margin-bottom: 20px;
-      position: relative;
-    }
-
-    input[type="text"],
-    input[type="date"],
-    input[type="time"] {
-      width: 100%;
-      padding: 12px 15px;
-      margin-bottom: 10px;
-      border: none;
-      border-radius: 5px;
-      background: rgba(255, 255, 255, 0.1);
-      color: #fff;
-      font-size: 16px;
-    }
-
-    input::placeholder {
-      color: rgba(255, 255, 255, 0.6);
-    }
-
-    label {
-      display: flex;
-      align-items: center;
-      margin-top: 5px;
-      font-size: 14px;
-      color: rgba(255, 255, 255, 0.7);
-    }
-
-    input[type="checkbox"] {
-      margin-right: 8px;
-    }
-
-    .rudraksha-btn {
-      width: 100%;
-      padding: 15px;
-      background: #e94560;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      font-size: 18px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-      margin-top: 10px;
-    }
-
-    .rudraksha-btn:hover {
-      background: #ff577f;
-    }
-
-    #astro-results {
-      margin-top: 30px;
-      display: none;
-    }
-
-    #astro-output {
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 10px;
-      padding: 20px;
-      margin-top: 20px;
-    }
-
-    .gemstone-card-container {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 20px;
-    }
-
-    .gemstone-card, .rudraksha-card {
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 10px;
-      padding: 20px;
-      margin-bottom: 20px;
-    }
-
-    .gemstone-title, .rudraksha-tabs {
-      color: #e94560;
-      margin-bottom: 15px;
-    }
-
-    .gemstone-description, .rudraksha-recommend {
-      margin-bottom: 15px;
-      line-height: 1.6;
-    }
-
-    .gemstone-specs {
-      list-style: none;
-      margin-bottom: 20px;
-    }
-
-    .gemstone-specs li {
-      padding: 5px 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .view-product-btn {
-      padding: 10px 20px;
-      background: #0f3460;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-
-    .view-product-btn:hover {
-      background: #1a5dad;
-    }
-
-    .location-autocomplete {
-      position: relative;
-    }
-
-    .suggestions-container {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
-      background: #1a1a2e;
-      border-radius: 0 0 5px 5px;
-      max-height: 200px;
-      overflow-y: auto;
-      z-index: 1000;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-    }
-
-    .suggestion-item {
-      padding: 10px 15px;
-      cursor: pointer;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      transition: background 0.2s ease;
-    }
-
-    .suggestion-item:hover {
-      background: rgba(233, 69, 96, 0.2);
-    }
-
-    .suggestion-item:last-child {
-      border-bottom: none;
-    }
-
-    .loading-indicator {
-      padding: 10px 15px;
-      color: rgba(255, 255, 255, 0.7);
-      font-style: italic;
-    }
-
-    @media (min-width: 768px) {
-      .gemstone-card-container {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h1>Astrology Calculator</h1>
-    
-    <div class="calculator-tabs">
-      <div class="tab active" data-tab="by-gemstone">Gemstone Recommendation</div>
-      <div class="tab" data-tab="by-rudraksha">Rudraksha Recommendation</div>
+  const commonFields = `
+    <div class="form-group">
+      <input type="text" name="name" placeholder="Enter your name" required>
     </div>
-    
-    <form id="calculator-form">
-      <div class="form-group">
-        <input type="text" name="name" placeholder="Enter your name" required>
-      </div>
-      <div class="form-group">
-        <input type="date" name="dob" required>
-        <input type="time" name="tob">
-        <label><input type="checkbox" name="no_time"> I don't have time of birth</label>
-      </div>
-      <div class="form-group location-autocomplete">
-        <input type="text" name="placeName" id="placeName" placeholder="Enter Birth Place (e.g., New Delhi, India)" required autocomplete="off">
-        <div class="suggestions-container" style="display: none;"></div>
-      </div>
-      <button type="submit" class="rudraksha-btn">Know your Gemstone</button>
-    </form>
-    
-    <div id="astro-results">
-      <h2>Your Recommendation</h2>
-      <div id="astro-output"></div>
+    <div class="form-group">
+      <input type="date" name="dob" required>
+      <input type="time" name="tob">
+      <label><input type="checkbox" name="no_time"> I don't have time of birth</label>
     </div>
-  </div>
+    <div class="form-group">
+      <input type="text" name="placeName" placeholder="Enter Birth Place (e.g., New Delhi, India)" required>
+    </div>
+  `;
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const tabs = document.querySelectorAll(".calculator-tabs .tab");
-      const form = document.getElementById("calculator-form");
-      const astroResultsDiv = document.getElementById("astro-results");
-      const astroOutputDiv = document.getElementById("astro-output");
-      const placeInput = document.getElementById("placeName");
-      const suggestionsContainer = document.querySelector(".suggestions-container");
+  const gemstoneFields = commonFields;
+  const rudrakshaFields = commonFields;
 
-      // Debounce function to limit API calls
-      function debounce(func, wait) {
-        let timeout;
-        return function executedFunction(...args) {
-          const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-          };
-          clearTimeout(timeout);
-          timeout = setTimeout(later, wait);
-        };
-      }
+  function switchTab(tabName) {
+    tabs.forEach(tab => tab.classList.remove("active"));
+    document.querySelector(`.tab[data-tab="${tabName}"]`).classList.add("active");
+    astroResultsDiv.style.display = 'none';
+    astroOutputDiv.innerHTML = '';
 
-      // Fetch location suggestions
-      const fetchSuggestions = debounce(async (query) => {
-        if (query.length < 3) {
-          suggestionsContainer.style.display = 'none';
-          return;
-        }
+    if (tabName === "by-gemstone") {
+      form.innerHTML = gemstoneFields + `<button type="submit" class="rudraksha-btn">Know your Gemstone</button>`;
+    } else {
+      form.innerHTML = rudrakshaFields + `<button type="submit" class="rudraksha-btn">Know your Rudraksha</button>`;
+    }
+  }
 
-        try {
-          suggestionsContainer.innerHTML = '<div class="loading-indicator">Loading suggestions...</div>';
-          suggestionsContainer.style.display = 'block';
+  // Default tab
+  switchTab("by-gemstone");
 
-          // Using Geoapify API for autocomplete
-          const GEOAPIFY_API_KEY = "YOUR_GEOAPIFY_API_KEY"; // Replace with your actual key
-          const response = await fetch(
-            `https://api.geoapify.com/v1/geocode/autocomplete?text=${encodeURIComponent(query)}&apiKey=${GEOAPIFY_API_KEY}`
-          );
+  // Tab switching
+  tabs.forEach(tab => {
+    tab.addEventListener("click", () => {
+      switchTab(tab.dataset.tab);
+    });
+  });
 
-          if (!response.ok) {
-            throw new Error("Autocomplete API request failed.");
-          }
 
-          const data = await response.json();
-          
-          if (data.features && data.features.length > 0) {
-            suggestionsContainer.innerHTML = '';
-            data.features.forEach(feature => {
-              const div = document.createElement('div');
-              div.className = 'suggestion-item';
-              div.textContent = feature.properties.formatted;
-              div.addEventListener('click', () => {
-                placeInput.value = feature.properties.formatted;
-                suggestionsContainer.style.display = 'none';
-              });
-              suggestionsContainer.appendChild(div);
-            });
-          } else {
-            suggestionsContainer.innerHTML = '<div class="suggestion-item">No results found</div>';
-          }
-        } catch (error) {
-          console.error("Error fetching suggestions:", error);
-          suggestionsContainer.innerHTML = '<div class="suggestion-item">Error loading suggestions</div>';
-        }
-      }, 300);
+let placeInput, suggestionBox;
 
-      // Event listener for place input
-      placeInput.addEventListener('input', (e) => {
-        fetchSuggestions(e.target.value);
-      });
+// Function to inject suggestion dropdown after place input
+function addSuggestionDropdown() {
+  placeInput = form.querySelector('input[name="placeName"]');
+  if (!placeInput) return;
 
-      // Hide suggestions when clicking outside
-      document.addEventListener('click', (e) => {
-        if (!placeInput.contains(e.target) && !suggestionsContainer.contains(e.target)) {
-          suggestionsContainer.style.display = 'none';
-        }
-      });
+  // Remove old suggestion box if exists
+  if (suggestionBox) suggestionBox.remove();
 
-      const commonFields = `
-        <div class="form-group">
-          <input type="text" name="name" placeholder="Enter your name" required>
-        </div>
-        <div class="form-group">
-          <input type="date" name="dob" required>
-          <input type="time" name="tob">
-          <label><input type="checkbox" name="no_time"> I don't have time of birth</label>
-        </div>
-        <div class="form-group location-autocomplete">
-          <input type="text" name="placeName" id="placeName" placeholder="Enter Birth Place (e.g., New Delhi, India)" required autocomplete="off">
-          <div class="suggestions-container" style="display: none;"></div>
-        </div>
-      `;
+  suggestionBox = document.createElement('div');
+  suggestionBox.className = 'location-suggestions';
+  suggestionBox.style.position = 'absolute';
+  suggestionBox.style.background = '#fff';
+  suggestionBox.style.border = '1px solid #ccc';
+  suggestionBox.style.zIndex = 1000;
+  suggestionBox.style.width = placeInput.offsetWidth + 'px';
+  suggestionBox.style.display = 'none';
 
-      const gemstoneFields = commonFields;
-      const rudrakshaFields = commonFields;
+  placeInput.parentNode.appendChild(suggestionBox);
 
-      function switchTab(tabName) {
-        tabs.forEach(tab => tab.classList.remove("active"));
-        document.querySelector(`.tab[data-tab="${tabName}"]`).classList.add("active");
-        astroResultsDiv.style.display = 'none';
-        astroOutputDiv.innerHTML = '';
-
-        if (tabName === "by-gemstone") {
-          form.innerHTML = gemstoneFields + `<button type="submit" class="rudraksha-btn">Know your Gemstone</button>`;
-        } else {
-          form.innerHTML = rudrakshaFields + `<button type="submit" class="rudraksha-btn">Know your Rudraksha</button>`;
-        }
-        
-        // Reattach event listeners after updating the form
-        const newPlaceInput = document.getElementById("placeName");
-        const newSuggestionsContainer = document.querySelector(".suggestions-container");
-        
-        newPlaceInput.addEventListener('input', (e) => {
-          fetchSuggestions(e.target.value);
-        });
-      }
-
-      // Default tab
-      switchTab("by-gemstone");
-
-      // Tab switching
-      tabs.forEach(tab => {
-        tab.addEventListener("click", () => {
-          switchTab(tab.dataset.tab);
-        });
-      });
-
-      // Form submit handler
-      document.addEventListener("submit", async function (e) {
-        if (e.target.id === "calculator-form") {
+  placeInput.addEventListener('input', async function () {
+    const query = placeInput.value.trim();
+    if (query.length < 3) {
+      suggestionBox.style.display = 'none';
+      return;
+    }
+    const GEOAPIFY_API_KEY = "55e9073809d4409fa8c39310584517f9";
+    const url = `https://api.geoapify.com/v1/geocode/autocomplete?text=${encodeURIComponent(query)}&limit=5&apiKey=${GEOAPIFY_API_KEY}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    suggestionBox.innerHTML = '';
+    if (data.features && data.features.length > 0) {
+      data.features.forEach(feature => {
+        const item = document.createElement('div');
+        item.className = 'suggestion-item';
+        item.textContent = feature.properties.formatted;
+        item.style.padding = '6px 10px';
+        item.style.cursor = 'pointer';
+        item.addEventListener('mousedown', function (e) {
           e.preventDefault();
-
-          const currentTab = document.querySelector(".calculator-tabs .tab.active").dataset.tab;
-          const formData = new FormData(e.target);
-          const data = Object.fromEntries(formData.entries());
-          
-          // API auth details
-          const ASTRO_USER_ID = "642699";
-          const ASTRO_API_KEY = "YOUR_ASTRO_API_KEY"; // Replace with your actual key
-          const GEOAPIFY_API_KEY = "YOUR_GEOAPIFY_API_KEY"; // Replace with your actual key
-          const auth = "Basic " + btoa(ASTRO_USER_ID + ":" + ASTRO_API_KEY);
-          
-          astroOutputDiv.innerHTML = '<p>Finding location and generating recommendation...</p>';
-          astroResultsDiv.style.display = 'block';
-
-          try {
-            const placeName = data.placeName;
-            const geoApiUrl = `https://api.geoapify.com/v1/geocode/search?text=${encodeURIComponent(placeName)}&apiKey=${GEOAPIFY_API_KEY}`;
-            
-            const geoResponse = await fetch(geoApiUrl);
-            if (!geoResponse.ok) {
-              throw new Error("Geocoding API request failed.");
-            }
-            
-            const geoResult = await geoResponse.json();
-
-            if (!geoResult.features || geoResult.features.length === 0) {
-              throw new Error(`Could not find the location: "${placeName}". Please try a more specific name (e.g., "City, Country").`);
-            }
-
-            const properties = geoResult.features[0].properties;
-            const latitude = properties.lat;
-            const longitude = properties.lon;
-            const timezoneOffsetSeconds = properties.timezone.offset_DST_seconds;
-            const timezoneOffsetHours = timezoneOffsetSeconds / 3600;
-            
-            let fetchURL = "";
-            if (currentTab === "by-gemstone") {
-              fetchURL = "https://json.astrologyapi.com/v1/basic_gem_suggestion";
-            } else if (currentTab === "by-rudraksha") {
-              fetchURL = "https://json.astrologyapi.com/v1/rudraksha_suggestion";
-            }
-
-            const dob = new Date(data.dob);
-            let hour = 0, min = 0;
-            if (!data.no_time && data.tob) {
-              [hour, min] = data.tob.split(":").map(Number);
-            }
-
-            const payload = {
-              day: dob.getDate(),
-              month: dob.getMonth() + 1,
-              year: dob.getFullYear(),
-              hour: hour,
-              min: min,
-              lat: latitude,
-              lon: longitude,
-              tzone: timezoneOffsetHours
-            };
-
-            const res = await fetch(fetchURL, {
-              method: "POST",
-              headers: {
-                "authorization": auth,
-                "Content-Type": "application/json",
-                "Accept-Language": "en"
-              },
-              body: JSON.stringify(payload)
-            });
-
-            if (!res.ok) {
-              const errorData = await res.json();
-              throw new Error(errorData.message || errorData.error || res.statusText);
-            }
-
-            const result = await res.json();
-            
-            if (currentTab === "by-gemstone") {
-              displayResult(result);
-            } else if (currentTab === "by-rudraksha") {
-              displayRudrakshaResult(result);
-            }
-          } catch (err) {
-            console.error("Error during API call:", err);
-            astroOutputDiv.innerHTML = `<p><strong>An error occurred:</strong> ${err.message || err}. Please check the input and try again.</p>`;
-          }
-        }
-      });
-
-      // Gemstone card display
-      function displayResult(data) {
-        let output = `<div class="gemstone-card-container">`;
-        Object.entries(data).forEach(([category, gem]) => {
-          if (gem && gem.name) {
-              output += `
-              <div class="gemstone-card">
-                <div class="gemstone-content">
-                  <h2 class="gemstone-title">${gem.name} (${category.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())})</h2>
-                  <p class="gemstone-description">
-                    Represents <strong>${gem.gem_deity}</strong>, helping overcome obstacles 
-                    and bringing stability. Provides protection and supports personal growth.
-                  </p>
-                  <ul class="gemstone-specs">
-                    <li><strong>Metal:</strong> ${gem.wear_metal || 'N/A'}</li>
-                    <li><strong>Finger:</strong> ${gem.wear_finger || 'N/A'} finger of right hand</li>
-                    <li><strong>Wear Day:</strong> ${gem.wear_day || 'N/A'}</li>
-                    <li><strong>Weight:</strong> ${gem.weight_caret || 'N/A'} carat</li>
-                    <li><strong>Semi Gem:</strong> ${gem.semi_gem || 'N/A'}</li>
-                  </ul>
-                </div>
-                <a href="/collections/all" class="gemstone-footer">
-                  <button class="view-product-btn">View Product</button>
-                </a>
-              </div>
-            `;
-          }
+          placeInput.value = feature.properties.formatted;
+          suggestionBox.style.display = 'none';
         });
-        output += `</div>`;
-        astroOutputDiv.innerHTML = output;
-        astroResultsDiv.style.display = 'block';
-      }
+        suggestionBox.appendChild(item);
+      });
+      suggestionBox.style.display = 'block';
+    } else {
+      suggestionBox.style.display = 'none';
+    }
+  });
 
-      // Rudraksha card display
-      function displayRudrakshaResult(data) {
-        const output = `
-          <div class="rudraksha-card">
-            <div class="rudraksha-content">
-              <h2 class="rudraksha-tabs">${data.name}</h2>
-              <p class="rudraksha-recommend">${data.recommend}</p>
-              <p class="rudraksha-detail">${data.detail}</p>
+  // Hide suggestions on blur
+  placeInput.addEventListener('blur', function () {
+    setTimeout(() => suggestionBox.style.display = 'none', 100);
+  });
+}
+
+// Call addSuggestionDropdown whenever form is rendered
+const origSwitchTab = switchTab;
+switchTab = function(tabName) {
+  origSwitchTab(tabName);
+  setTimeout(addSuggestionDropdown, 0);
+};
+
+
+
+  // Form submit handler
+  document.addEventListener("submit", async function (e) {
+    if (e.target.id === "calculator-form") {
+      e.preventDefault();
+
+      const currentTab = document.querySelector(".calculator-tabs .tab.active").dataset.tab;
+      const formData = new FormData(e.target);
+      const data = Object.fromEntries(formData.entries());
+      
+      // --- DEBUG: Log form data ---
+      console.log("1. Form Data Submitted:", data);
+
+      // API auth details
+      const ASTRO_USER_ID = "642699";
+      const ASTRO_API_KEY = "86af5961c6dfcac90d4ae97401a974385dc7c6a3";
+      const GEOAPIFY_API_KEY = "55e9073809d4409fa8c39310584517f9"; // Your actual key
+      const auth = "Basic " + btoa(ASTRO_USER_ID + ":" + ASTRO_API_KEY);
+      
+      astroOutputDiv.innerHTML = '<p>Finding location and generating recommendation...</p>';
+      astroResultsDiv.style.display = 'block';
+
+      try {
+        const placeName = data.placeName;
+        const geoApiUrl = `https://api.geoapify.com/v1/geocode/search?text=${encodeURIComponent(placeName)}&apiKey=${GEOAPIFY_API_KEY}`;
+        
+        const geoResponse = await fetch(geoApiUrl);
+        if (!geoResponse.ok) {
+          throw new Error("Geocoding API request failed.");
+        }
+        
+        const geoResult = await geoResponse.json();
+
+        // --- DEBUG: Log Geoapify response ---
+        console.log("2. Geoapify API Response:", geoResult);
+
+        if (!geoResult.features || geoResult.features.length === 0) {
+          throw new Error(`Could not find the location: "${placeName}". Please try a more specific name (e.g., "City, Country").`);
+        }
+
+        const properties = geoResult.features[0].properties;
+        const latitude = properties.lat;
+        const longitude = properties.lon;
+        const timezoneOffsetSeconds = properties.timezone.offset_DST_seconds;
+        const timezoneOffsetHours = timezoneOffsetSeconds / 3600;
+        
+        // --- DEBUG: Log extracted coordinates ---
+        console.log(`3. Extracted Location: Latitude=${latitude}, Longitude=${longitude}, Timezone=${timezoneOffsetHours}`);
+
+        let fetchURL = "";
+        if (currentTab === "by-gemstone") {
+          fetchURL = "https://json.astrologyapi.com/v1/basic_gem_suggestion";
+        } else if (currentTab === "by-rudraksha") {
+          fetchURL = "https://json.astrologyapi.com/v1/rudraksha_suggestion";
+        }
+
+        const dob = new Date(data.dob);
+        let hour = 0, min = 0;
+        if (!data.no_time && data.tob) {
+          [hour, min] = data.tob.split(":").map(Number);
+        }
+
+        const payload = {
+          day: dob.getDate(),
+          month: dob.getMonth() + 1,
+          year: dob.getFullYear(),
+          hour: hour,
+          min: min,
+          lat: latitude,
+          lon: longitude,
+          tzone: timezoneOffsetHours
+        };
+        
+        // --- DEBUG: Log the payload for the Astrology API ---
+        console.log("4. Payload for Astrology API:", payload);
+
+        const res = await fetch(fetchURL, {
+          method: "POST",
+          headers: {
+            "authorization": auth,
+            "Content-Type": "application/json",
+            "Accept-Language": "en"
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (!res.ok) {
+          const errorData = await res.json();
+          throw new Error(errorData.message || errorData.error || res.statusText);
+        }
+
+        const result = await res.json();
+        
+        // --- DEBUG: Log the final result from the Astrology API ---
+        console.log("5. Astrology API Result:", result);
+
+        if (currentTab === "by-gemstone") {
+          displayResult(result);
+        } else if (currentTab === "by-rudraksha") {
+          displayRudrakshaResult(result);
+        }
+      } catch (err) {
+        console.error("Error during API call:", err);
+        astroOutputDiv.innerHTML = `<p><strong>An error occurred:</strong> ${err.message || err}. Please check the input and try again.</p>`;
+      }
+    }
+  });
+
+  // Gemstone card display
+  function displayResult(data) {
+    let output = `<div class="gemstone-card-container">`;
+    Object.entries(data).forEach(([category, gem]) => {
+      if (gem && gem.name) {
+          output += `
+          <div class="gemstone-card">
+            <div class="gemstone-content">
+              <h2 class="gemstone-title">${gem.name} (${category.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())})</h2>
+              <p class="gemstone-description">
+                Represents <strong>${gem.gem_deity}</strong>, helping overcome obstacles 
+                and bringing stability. Provides protection and supports personal growth.
+              </p>
+              <ul class="gemstone-specs">
+                <li><strong>Metal:</strong> ${gem.wear_metal || 'N/A'}</li>
+                <li><strong>Finger:</strong> ${gem.wear_finger || 'N/A'} finger of right hand</li>
+                <li><strong>Wear Day:</strong> ${gem.wear_day || 'N/A'}</li>
+                <li><strong>Weight:</strong> ${gem.weight_caret || 'N/A'} carat</li>
+                <li><strong>Semi Gem:</strong> ${gem.semi_gem || 'N/A'}</li>
+              </ul>
             </div>
+            <a href="/collections/all" class="gemstone-footer">
+              <button class="view-product-btn">View Product</button>
+            </a>
           </div>
         `;
-        astroOutputDiv.innerHTML = output;
-        astroResultsDiv.style.display = 'block';
       }
     });
-  </script>
-</body>
-</html>
+    output += `</div>`;
+    astroOutputDiv.innerHTML = output;
+    astroResultsDiv.style.display = 'block';
+  }
+
+  // Rudraksha card display
+  function displayRudrakshaResult(data) {
+    const output = `
+      <div class="rudraksha-card">
+        <div class="rudraksha-content">
+          <h2 class="rudraksha-tabs">${data.name}</h2>
+          <p class="rudraksha-recommend">${data.recommend}</p>
+          <p class="rudraksha-detail">${data.detail}</p>
+        </div>
+      </div>
+    `;
+    astroOutputDiv.innerHTML = output;
+    astroResultsDiv.style.display = 'block';
+  }
+});
