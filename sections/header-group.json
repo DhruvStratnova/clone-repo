@@ -79,6 +79,7 @@
       "block_order": [
         "razorpay_cod_magic_checkout_affordability_block_YTVtFn"
       ],
+      "disabled": true,
       "settings": {
         "include_margins": true
       }
