@@ -66,6 +66,7 @@
       "block_order": [
         "kwikpass_kp_login_hqiRFz"
       ],
+      "disabled": true,
       "settings": {
         "include_margins": true
       }
