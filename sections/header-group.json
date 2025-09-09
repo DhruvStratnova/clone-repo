@@ -83,11 +83,27 @@
       "settings": {
         "include_margins": true
       }
+    },
+    "175740585609459ca5": {
+      "type": "apps",
+      "blocks": {
+        "kwikpass_kp_login_AbtrBy": {
+          "type": "shopify://apps/kwikpass/blocks/kp_login/603e209b-d585-47ff-8592-837a4faa325b",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "kwikpass_kp_login_AbtrBy"
+      ],
+      "settings": {
+        "include_margins": true
+      }
     }
   },
   "order": [
     "announcement-bar",
     "header",
-    "1757399482303df03c"
+    "1757399482303df03c",
+    "175740585609459ca5"
   ]
 }
