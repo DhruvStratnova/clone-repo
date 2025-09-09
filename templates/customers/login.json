@@ -29,6 +29,7 @@
       "block_order": [
         "otp_login_notify_app_section_block_9KJWia"
       ],
+      "disabled": true,
       "settings": {
         "include_margins": true
       }
@@ -49,6 +50,22 @@
         "razorpay_cod_magic_checkout_rtb_widget_3kKFFb",
         "razorpay_cod_magic_checkout_affordability_block_7td9Af"
       ],
+      "disabled": true,
+      "settings": {
+        "include_margins": true
+      }
+    },
+    "1757405603d2bb3c0a": {
+      "type": "apps",
+      "blocks": {
+        "kwikpass_kp_login_hqiRFz": {
+          "type": "shopify://apps/kwikpass/blocks/kp_login/603e209b-d585-47ff-8592-837a4faa325b",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "kwikpass_kp_login_hqiRFz"
+      ],
       "settings": {
         "include_margins": true
       }
@@ -57,6 +74,7 @@
   "order": [
     "main",
     "1757404982b2529bdf",
-    "17574053731c131d34"
+    "17574053731c131d34",
+    "1757405603d2bb3c0a"
   ]
 }
