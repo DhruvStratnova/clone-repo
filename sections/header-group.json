@@ -67,10 +67,26 @@
         "padding_top": 0,
         "padding_bottom": 0
       }
+    },
+    "1757399482303df03c": {
+      "type": "apps",
+      "blocks": {
+        "razorpay_cod_magic_checkout_affordability_block_YTVtFn": {
+          "type": "shopify://apps/razorpay-cod-magic-checkout/blocks/affordability-block/c13c688d-5c45-4054-b95f-1edd63faa705",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "razorpay_cod_magic_checkout_affordability_block_YTVtFn"
+      ],
+      "settings": {
+        "include_margins": true
+      }
     }
   },
   "order": [
     "announcement-bar",
-    "header"
+    "header",
+    "1757399482303df03c"
   ]
 }
