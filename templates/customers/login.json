@@ -32,10 +32,31 @@
       "settings": {
         "include_margins": true
       }
+    },
+    "17574053731c131d34": {
+      "type": "apps",
+      "blocks": {
+        "razorpay_cod_magic_checkout_rtb_widget_3kKFFb": {
+          "type": "shopify://apps/razorpay-cod-magic-checkout/blocks/rtb-widget/c13c688d-5c45-4054-b95f-1edd63faa705",
+          "settings": {}
+        },
+        "razorpay_cod_magic_checkout_affordability_block_7td9Af": {
+          "type": "shopify://apps/razorpay-cod-magic-checkout/blocks/affordability-block/c13c688d-5c45-4054-b95f-1edd63faa705",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "razorpay_cod_magic_checkout_rtb_widget_3kKFFb",
+        "razorpay_cod_magic_checkout_affordability_block_7td9Af"
+      ],
+      "settings": {
+        "include_margins": true
+      }
     }
   },
   "order": [
     "main",
-    "1757404982b2529bdf"
+    "1757404982b2529bdf",
+    "17574053731c131d34"
   ]
 }
