@@ -50,6 +50,7 @@
         "razorpay_cod_magic_checkout_rtb_widget_3kKFFb",
         "razorpay_cod_magic_checkout_affordability_block_7td9Af"
       ],
+      "disabled": true,
       "settings": {
         "include_margins": true
       }
