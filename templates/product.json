@@ -94,14 +94,6 @@
             "show_gift_card_recipient": true
           }
         },
-        "razorpay_cod_magic_checkout_rtb_widget_d7whHK": {
-          "type": "shopify://apps/razorpay-cod-magic-checkout/blocks/rtb-widget/c13c688d-5c45-4054-b95f-1edd63faa705",
-          "settings": {}
-        },
-        "razorpay_cod_magic_checkout_affordability_block_zDnRBR": {
-          "type": "shopify://apps/razorpay-cod-magic-checkout/blocks/affordability-block/c13c688d-5c45-4054-b95f-1edd63faa705",
-          "settings": {}
-        },
         "description": {
           "type": "description",
           "name": "Benefits",
@@ -126,8 +118,6 @@
         "custom_liquid_xmbRzx",
         "text_PPjNd7",
         "buy_buttons",
-        "razorpay_cod_magic_checkout_rtb_widget_d7whHK",
-        "razorpay_cod_magic_checkout_affordability_block_zDnRBR",
         "description",
         "share"
       ],
