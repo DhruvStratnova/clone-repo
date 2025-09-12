@@ -128,12 +128,31 @@
             "text_alignment_mobile": "center",
             "color_scheme": "scheme-1"
           }
+        },
+        "slide_mKQXcT": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/body_fa199828-44e3-4605-9dd6-7d783e040f37.jpg",
+            "image_overlay_opacity": 0,
+            "heading": "Image slide",
+            "heading_size": "h1",
+            "subheading": "Tell your brand's story through images",
+            "button_label": "Button label",
+            "link": "",
+            "button_style_secondary": false,
+            "show_text_box": true,
+            "box_align": "middle-center",
+            "text_alignment": "center",
+            "text_alignment_mobile": "center",
+            "color_scheme": "scheme-1"
+          }
         }
       },
       "block_order": [
         "slide_93RPaQ",
         "slide_FnJjtn",
-        "slide_BaHAmK"
+        "slide_BaHAmK",
+        "slide_mKQXcT"
       ],
       "custom_css": [
         "slideshow-component {position: relative; display: flex; flex-direction: column; margin: 0 0 4rem 0;}",
@@ -208,7 +227,7 @@
         ".slider--desktop {/* max-height: ; */}",
         ".product-grid {gap: 3rem;}",
         ".card-description-purpose {min-height: 70px;}",
-        ".card__heading {min-height: 30px; }",
+        ".card__heading {min-height: 30px;}",
         ".quick-add__submit {min-height: 55px;}"
       ],
       "name": "New Arrivals",
