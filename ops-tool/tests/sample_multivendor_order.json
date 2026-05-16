@@ -1,0 +1,66 @@
+{
+  "id": 5234567890124,
+  "name": "#1043",
+  "order_number": 1043,
+  "created_at": "2026-05-16T15:00:00+05:30",
+  "total_price": "2980.00",
+  "subtotal_price": "2980.00",
+  "total_discounts": "0.00",
+  "currency": "INR",
+  "financial_status": "pending",
+  "gateway": "Cash on Delivery (COD)",
+  "payment_gateway_names": ["Cash on Delivery (COD)"],
+  "email": "anita.gupta@example.com",
+  "phone": "+919876500001",
+  "customer": {
+    "id": 987655,
+    "first_name": "Anita",
+    "last_name": "Gupta",
+    "email": "anita.gupta@example.com",
+    "phone": "+919876500001"
+  },
+  "shipping_address": {
+    "first_name": "Anita",
+    "last_name": "Gupta",
+    "address1": "C-12, Lotus Heights",
+    "address2": "Sector 18",
+    "city": "Noida",
+    "province": "Uttar Pradesh",
+    "country": "India",
+    "zip": "201301",
+    "phone": "+919876500001"
+  },
+  "billing_address": {
+    "first_name": "Anita",
+    "last_name": "Gupta",
+    "address1": "C-12, Lotus Heights",
+    "address2": "Sector 18",
+    "city": "Noida",
+    "province": "Uttar Pradesh",
+    "country": "India",
+    "zip": "201301",
+    "phone": "+919876500001"
+  },
+  "line_items": [
+    {
+      "id": 33333,
+      "title": "Yellow Sapphire Ring (5 carat)",
+      "sku": "YSR-5CT",
+      "vendor": "Astrogems",
+      "quantity": 1,
+      "price": "1800.00",
+      "grams": 15,
+      "total_discount": "0.00"
+    },
+    {
+      "id": 44444,
+      "title": "9 Mukhi Rudraksha Mala",
+      "sku": "RUD-9M-MALA",
+      "vendor": "Rome Crystal and Gemstone",
+      "quantity": 1,
+      "price": "1180.00",
+      "grams": 80,
+      "total_discount": "0.00"
+    }
+  ]
+}
