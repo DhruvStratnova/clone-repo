@@ -96,6 +96,21 @@ def add_order_note(order_id: str | int, note: str, *, append: bool = True) -> di
     return r.json()
 
 
+def list_recent_orders(limit: int = 100) -> list[dict]:
+    """Recent orders with the fields the Ops Console needs."""
+    if not is_ready():
+        return []
+    fields = "id,name,created_at,financial_status,tags,total_price,currency,customer,shipping_address,line_items,payment_gateway_names"
+    r = requests.get(
+        f"{_base()}/orders.json",
+        headers=_headers(),
+        params={"status": "any", "limit": limit, "fields": fields},
+        timeout=30,
+    )
+    r.raise_for_status()
+    return r.json().get("orders", [])
+
+
 def find_unconfirmed_orders(*, pushed_tag: str = "ithink-pushed", confirmed_prefix: str = "vendor-confirmed") -> list[dict]:
     """Orders tagged as pushed to iThink but with no vendor-confirmed tag yet.
     Used by the escalation check. Scans recent open orders (low volume; fine to page once).

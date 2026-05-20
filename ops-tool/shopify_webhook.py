@@ -24,8 +24,11 @@ from datetime import datetime
 from pathlib import Path
 from typing import Optional
 
-from fastapi import FastAPI, Header, HTTPException, Request
+import secrets
+
+from fastapi import Depends, FastAPI, Header, HTTPException, Request, status
 from fastapi.responses import HTMLResponse
+from fastapi.security import HTTPBasic, HTTPBasicCredentials
 
 from ithink import (
     IThinkClient,
@@ -36,6 +39,8 @@ from ithink import (
 from aisensy import send_vendor_new_order
 from aisensy.sender import AiSensyClient
 import shopify_admin
+import dashboard as dashboard_mod
+from notify import notify_ops
 from confirm_token import confirm_url, verify_token
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s | %(message)s")
@@ -329,16 +334,46 @@ def vendor_confirm(o: str = "", v: str = "", t: str = ""):
         note=f"[ops] Vendor '{v}' CONFIRMED order availability via WhatsApp @ {ts}Z",
     )
     log.info("Vendor %s confirmed order %s", v, o)
+    # Notify admins (WhatsApp + email, all configured recipients)
+    try:
+        notify_ops("Vendor confirmed", f"{v} confirmed order {o} ✅")
+    except Exception as exc:
+        log.warning("Ops notify on confirm failed: %s", exc)
     return HTMLResponse(
         _CONFIRM_PAGE.format(tick="✓", title="Order Confirmed",
                              msg="Thank you — your confirmation has been recorded. Please dispatch the shipment.")
     )
 
 
+# ---------- Ops Console (password-protected dashboard) ----------
+_security = HTTPBasic(auto_error=True)
+
+
+def _require_admin(credentials: HTTPBasicCredentials = Depends(_security)) -> bool:
+    user = os.environ.get("DASHBOARD_USER", "admin")
+    pwd = os.environ.get("DASHBOARD_PASSWORD", "")
+    if not pwd:
+        raise HTTPException(status_code=503, detail="Dashboard password not set (DASHBOARD_PASSWORD)")
+    ok = secrets.compare_digest(credentials.username, user) and secrets.compare_digest(credentials.password, pwd)
+    if not ok:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid credentials",
+            headers={"WWW-Authenticate": "Basic"},
+        )
+    return True
+
+
+@app.get("/dashboard", response_class=HTMLResponse)
+def dashboard(refresh: int = 0, _: bool = Depends(_require_admin)):
+    data = dashboard_mod.get_data(force=bool(refresh))
+    return HTMLResponse(dashboard_mod.render_html(data))
+
+
 @app.post("/cron/check-unconfirmed")
 def check_unconfirmed(minutes: int = 60):
     """Escalation: orders pushed to iThink but not vendor-confirmed within `minutes`.
-    Wire to a Railway cron (e.g. every 30 min). Pings ops via WhatsApp if a number is set.
+    Wire to a Railway cron (e.g. every 30 min). Alerts all ops recipients (WhatsApp + email).
     """
     pending = shopify_admin.find_unconfirmed_orders()
     stale = []
@@ -352,19 +387,13 @@ def check_unconfirmed(minutes: int = 60):
         if ts and ts < cutoff:
             stale.append({"id": o.get("id"), "name": o.get("name")})
 
-    ops_number = os.environ.get("OPS_WHATSAPP", "")
     escalated = False
-    if stale and ops_number:
+    if stale:
+        names = ", ".join(s["name"] for s in stale)
         try:
-            names = ", ".join(s["name"] for s in stale)
-            AiSensyClient().send_template(
-                campaign_name=os.environ.get("AISENSY_OPS_CAMPAIGN_NAME", "aura_ai_ops_alert_1"),
-                destination=ops_number,
-                user_name="Aura Ops",
-                template_params=[f"{len(stale)} order(s) unconfirmed >{minutes}m: {names}"],
-            )
+            notify_ops("Unconfirmed orders", f"{len(stale)} order(s) unconfirmed >{minutes}m: {names}")
             escalated = True
         except Exception as exc:
-            log.warning("Ops escalation send failed: %s", exc)
+            log.warning("Ops escalation failed: %s", exc)
 
     return {"checked": len(pending), "stale": stale, "escalated": escalated}
