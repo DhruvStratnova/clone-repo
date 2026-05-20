@@ -370,8 +370,15 @@ def dashboard(refresh: int = 0, _: bool = Depends(_require_admin)):
     return HTMLResponse(dashboard_mod.render_html(data))
 
 
+def _check_cron_key(key: str) -> None:
+    expected = os.environ.get("CRON_SECRET", "")
+    if expected and not secrets.compare_digest(key or "", expected):
+        raise HTTPException(status_code=401, detail="bad cron key")
+
+
 @app.post("/cron/check-unconfirmed")
-def check_unconfirmed(minutes: int = 60):
+def check_unconfirmed(minutes: int = 60, key: str = ""):
+    _check_cron_key(key)
     """Escalation: orders pushed to iThink but not vendor-confirmed within `minutes`.
     Wire to a Railway cron (e.g. every 30 min). Alerts all ops recipients (WhatsApp + email).
     """
@@ -397,3 +404,74 @@ def check_unconfirmed(minutes: int = 60):
             log.warning("Ops escalation failed: %s", exc)
 
     return {"checked": len(pending), "stale": stale, "escalated": escalated}
+
+
+@app.post("/cron/track-shipments")
+def track_shipments(stalled_days: int = 3, key: str = ""):
+    _check_cron_key(key)
+    """Poll iThink for every active shipment and proactively alert ops on bad states.
+
+    De-duped via Shopify tags (Railway is stateless) so each order alerts once per state:
+      NDR  -> tag 'ndr-alerted'        (delivery failed — act to avoid RTO)
+      RTO  -> tag 'rto-alerted'        (returning — money at risk)
+      no pickup >24h -> 'nopickup-alerted'  (vendor/courier didn't pick up)
+      delivered -> tag 'delivered'     (stop tracking)
+    Wire to a Railway cron (e.g. every 2-4h).
+    """
+    orders = shopify_admin.list_recent_orders(limit=100)
+    active = []
+    awbs = []
+    for o in orders:
+        tags = [t.strip() for t in (o.get("tags") or "").split(",") if t.strip()]
+        if "ithink-pushed" not in tags or "delivered" in tags or "rto-alerted" in tags:
+            continue
+        order_awbs = [t[4:] for t in tags if t.startswith("awb-") and t != "awb-none"]
+        if not order_awbs:
+            continue
+        active.append((o, tags, order_awbs))
+        awbs.extend(order_awbs)
+
+    track_map = {}
+    if awbs:
+        try:
+            data = (IThinkClient().track_order(awbs).get("data") or {})
+            track_map = {str(k): v for k, v in data.items() if isinstance(v, dict)}
+        except Exception as exc:
+            log.warning("track-shipments: track_order failed: %s", exc)
+            return {"checked": 0, "error": str(exc)}
+
+    alerts = []
+    for o, tags, order_awbs in active:
+        order_id = o.get("id")
+        name = o.get("name", "")
+        track = track_map.get(order_awbs[0])
+        age_min = (datetime.utcnow().timestamp() - _to_ts(o.get("created_at", ""))) / 60
+        status_text, flag = dashboard_mod._classify(track, order_age_min=age_min)
+
+        alert_map = {
+            "ndr": ("ndr-alerted", "Delivery failed (NDR)", "⚠ confirm address/availability with customer to avoid RTO"),
+            "rto": ("rto-alerted", "RTO — returning", "💸 shipment returning to origin"),
+            "nopickup": ("nopickup-alerted", "No pickup >24h", "⏳ vendor/courier hasn't picked up"),
+        }
+        if flag in alert_map:
+            tag, label, detail = alert_map[flag]
+            if tag not in tags:
+                _record_to_shopify(order_id, tags=(tag,),
+                                   note=f"[ops] {label} — {status_text} @ {datetime.utcnow().isoformat()}Z")
+                try:
+                    notify_ops(label, f"Order {name} ({', '.join(order_awbs)}) — {status_text}. {detail}")
+                except Exception as exc:
+                    log.warning("track-shipments notify failed: %s", exc)
+                alerts.append({"order": name, "flag": flag, "status": status_text})
+        elif flag == "delivered" and "delivered" not in tags:
+            _record_to_shopify(order_id, tags=("delivered",),
+                               note=f"[ops] Delivered @ {datetime.utcnow().isoformat()}Z")
+
+    return {"checked": len(active), "alerts": alerts}
+
+
+def _to_ts(iso: str) -> float:
+    try:
+        return datetime.fromisoformat(iso.replace("Z", "+00:00")).timestamp()
+    except Exception:
+        return datetime.utcnow().timestamp()
