@@ -167,6 +167,7 @@ def send_vendor_new_order(
     payment_mode: str,
     amount: float,
     label_pdf_url: str,
+    confirm_url: Optional[str] = None,
     override_destination: Optional[str] = None,
     campaign_name: Optional[str] = None,
 ) -> dict:
@@ -201,6 +202,11 @@ def send_vendor_new_order(
         items_str,             # {{7}}
         payment_str,           # {{8}}
     ]
+    # If the template has a dynamic URL button ("Confirm Order"), its variable is
+    # passed as the next param. The button URL in AiSensy should be configured as
+    # the PUBLIC_BASE_URL prefix + this variable carrying ?o=..&v=..&t=..
+    if confirm_url:
+        template_params.append(confirm_url)
 
     client = AiSensyClient()
     return client.send_template(

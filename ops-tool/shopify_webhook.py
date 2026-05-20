@@ -25,6 +25,7 @@ from pathlib import Path
 from typing import Optional
 
 from fastapi import FastAPI, Header, HTTPException, Request
+from fastapi.responses import HTMLResponse
 
 from ithink import (
     IThinkClient,
@@ -33,6 +34,9 @@ from ithink import (
     split_order_by_vendor,
 )
 from aisensy import send_vendor_new_order
+from aisensy.sender import AiSensyClient
+import shopify_admin
+from confirm_token import confirm_url, verify_token
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s | %(message)s")
 log = logging.getLogger("aura-ops")
@@ -67,6 +71,38 @@ def _log_event(name: str, data: dict) -> Path:
     return path
 
 
+def _is_cod(order: dict) -> bool:
+    gateways = [g.lower() for g in (order.get("payment_gateway_names") or [])]
+    return any("cod" in g or "cash on delivery" in g for g in gateways)
+
+
+def _should_fulfill(order: dict) -> bool:
+    """Only push to iThink for orders that are actually committed:
+      - prepaid (Razorpay etc.): financial_status == 'paid'
+      - COD: allowed even though financial_status is 'pending'
+    Unpaid / abandoned / pending non-COD orders are skipped so we never ship
+    something that wasn't paid for.
+    """
+    fin = (order.get("financial_status") or "").lower()
+    if fin in ("paid", "partially_paid"):
+        return True
+    if _is_cod(order):
+        return True
+    return False
+
+
+def _record_to_shopify(order_id, *, tags=(), note: str = "") -> None:
+    """Best-effort durable record on the Shopify order (tags + timeline note)."""
+    try:
+        if tags:
+            shopify_admin.add_order_tag(order_id, *tags)
+        if note:
+            shopify_admin.add_order_note(order_id, note)
+    except Exception as exc:  # never let record-keeping break the webhook
+        log.warning("Failed to record to Shopify order %s: %s", order_id, exc)
+        _log_event(f"shopify_record_error_{order_id}", {"error": str(exc)})
+
+
 @app.get("/")
 def root():
     cfg = IThinkConfig.from_env()
@@ -75,7 +111,10 @@ def root():
         "ithink_ready": cfg.is_ready(),
         "ithink_missing": cfg.missing(),
         "ithink_env": "production" if "my.ithinklogistics" in cfg.base_url else "staging",
+        "default_courier": cfg.default_courier,
         "shopify_webhook_secret_set": bool(_shopify_secret()),
+        "shopify_admin_ready": shopify_admin.is_ready(),
+        "public_base_url_set": bool(os.environ.get("PUBLIC_BASE_URL")),
     }
 
 
@@ -104,8 +143,19 @@ async def order_created(
         raise HTTPException(status_code=400, detail="Invalid JSON")
 
     order_name = order.get("name") or order.get("id") or "<unknown>"
+    order_id = order.get("id")
     log.info("Received order webhook: %s (topic=%s)", order_name, x_shopify_topic)
     _log_event(f"shopify_order_{order_name}", order)
+
+    # Gate: only fulfil paid (Razorpay prepaid) or COD orders — never unpaid/abandoned.
+    if not _should_fulfill(order):
+        log.info("Skipping %s — not paid and not COD (financial_status=%s)",
+                 order_name, order.get("financial_status"))
+        return {
+            "status": "skipped_not_payable",
+            "order": order_name,
+            "financial_status": order.get("financial_status"),
+        }
 
     cfg = IThinkConfig.from_env()
     if not cfg.is_ready():
@@ -175,6 +225,12 @@ async def order_created(
 
                     if pdf_url:
                         shipping_addr = sub_order_dict.get("shipping_address") or {}
+                        # Per-order signed confirm link for the "Confirm Order" button.
+                        # Only sent once the AiSensy template actually has the button variable
+                        # (flip VENDOR_CONFIRM_BUTTON_ENABLED=1 after updating the template).
+                        v_confirm_url = None
+                        if order_id and os.environ.get("VENDOR_CONFIRM_BUTTON_ENABLED"):
+                            v_confirm_url = confirm_url(str(order_id), vendor_canon)
                         wa_resp = send_vendor_new_order(
                             vendor_canon=vendor_canon,
                             order_number=shipment["order"],
@@ -186,6 +242,7 @@ async def order_created(
                             payment_mode=shipment["payment_mode"],
                             amount=float(shipment["total_amount"]),
                             label_pdf_url=pdf_url,
+                            confirm_url=v_confirm_url,
                             override_destination=os.environ.get("WHATSAPP_TEST_OVERRIDE") or None,
                         )
                         _log_event(f"aisensy_whatsapp_{order_name}_{vendor_canon}", wa_resp)
@@ -198,6 +255,20 @@ async def order_created(
                                 order_name, vendor_canon, wa_exc)
                     whatsapp_result = {"sent": False, "error": str(wa_exc)}
                     _log_event(f"aisensy_error_{order_name}_{vendor_canon}", {"error": str(wa_exc)})
+
+            # Durable record on the Shopify order (survives Railway redeploys)
+            if order_id:
+                wa_ok = bool(whatsapp_result and whatsapp_result.get("sent"))
+                _record_to_shopify(
+                    order_id,
+                    tags=("ithink-pushed", f"awb-{awb}" if awb else "awb-none"),
+                    note=(
+                        f"[ops] iThink order created — vendor={vendor_canon}, "
+                        f"warehouse={warehouse_id}, AWB={awb or 'n/a'}, "
+                        f"WhatsApp-to-vendor={'sent' if wa_ok else 'not sent'} "
+                        f"@ {datetime.utcnow().isoformat()}Z"
+                    ),
+                )
 
             results.append({
                 "vendor": vendor_canon,
@@ -221,3 +292,79 @@ async def order_created(
     if any_failed and all(r["status"] == "failed" for r in results):
         raise HTTPException(status_code=502, detail={"order": order_name, "results": results})
     return {"status": "partial" if any_failed else "all_pushed", "order": order_name, "results": results}
+
+
+_CONFIRM_PAGE = """<!doctype html><html><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Order Confirmed</title>
+<style>
+  body{{margin:0;font-family:'Inter',system-ui,sans-serif;background:#0A0612;color:#F5ECDF;
+       display:flex;min-height:100vh;align-items:center;justify-content:center;text-align:center}}
+  .card{{background:rgba(20,14,31,.55);border:1px solid rgba(245,236,223,.16);border-radius:20px;
+        padding:40px 36px;max-width:380px}}
+  .tick{{font-size:46px;color:#D4A857}} h1{{font-size:22px;margin:14px 0 6px;font-weight:600}}
+  p{{color:rgba(245,236,223,.72);font-size:14px;line-height:1.5;margin:0}}
+  .muted{{margin-top:16px;font-size:12px;color:rgba(245,236,223,.42)}}
+</style></head><body><div class="card">
+  <div class="tick">{tick}</div><h1>{title}</h1><p>{msg}</p>
+  <div class="muted">Aura AI · Ops</div>
+</div></body></html>"""
+
+
+@app.get("/vendor/confirm", response_class=HTMLResponse)
+def vendor_confirm(o: str = "", v: str = "", t: str = ""):
+    """Vendor taps the 'Confirm Order' button in WhatsApp → lands here.
+    Records the confirmation durably on the Shopify order (tag + note)."""
+    if not (o and v and verify_token(o, v, t)):
+        return HTMLResponse(
+            _CONFIRM_PAGE.format(tick="⚠", title="Invalid or expired link",
+                                 msg="This confirmation link could not be verified."),
+            status_code=400,
+        )
+    ts = datetime.utcnow().isoformat()
+    _log_event(f"vendor_confirm_{o}_{v}", {"order_id": o, "vendor": v, "confirmed_at": ts})
+    _record_to_shopify(
+        o,
+        tags=(f"vendor-confirmed-{v.replace(' ', '-')}", "vendor-confirmed"),
+        note=f"[ops] Vendor '{v}' CONFIRMED order availability via WhatsApp @ {ts}Z",
+    )
+    log.info("Vendor %s confirmed order %s", v, o)
+    return HTMLResponse(
+        _CONFIRM_PAGE.format(tick="✓", title="Order Confirmed",
+                             msg="Thank you — your confirmation has been recorded. Please dispatch the shipment.")
+    )
+
+
+@app.post("/cron/check-unconfirmed")
+def check_unconfirmed(minutes: int = 60):
+    """Escalation: orders pushed to iThink but not vendor-confirmed within `minutes`.
+    Wire to a Railway cron (e.g. every 30 min). Pings ops via WhatsApp if a number is set.
+    """
+    pending = shopify_admin.find_unconfirmed_orders()
+    stale = []
+    cutoff = datetime.utcnow().timestamp() - minutes * 60
+    for o in pending:
+        created = o.get("created_at", "")
+        try:
+            ts = datetime.fromisoformat(created.replace("Z", "+00:00")).timestamp()
+        except Exception:
+            ts = 0
+        if ts and ts < cutoff:
+            stale.append({"id": o.get("id"), "name": o.get("name")})
+
+    ops_number = os.environ.get("OPS_WHATSAPP", "")
+    escalated = False
+    if stale and ops_number:
+        try:
+            names = ", ".join(s["name"] for s in stale)
+            AiSensyClient().send_template(
+                campaign_name=os.environ.get("AISENSY_OPS_CAMPAIGN_NAME", "aura_ai_ops_alert_1"),
+                destination=ops_number,
+                user_name="Aura Ops",
+                template_params=[f"{len(stale)} order(s) unconfirmed >{minutes}m: {names}"],
+            )
+            escalated = True
+        except Exception as exc:
+            log.warning("Ops escalation send failed: %s", exc)
+
+    return {"checked": len(pending), "stale": stale, "escalated": escalated}
