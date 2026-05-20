@@ -36,19 +36,41 @@ class IThinkConfig:
     @classmethod
     def from_env(cls) -> "IThinkConfig":
         env = os.environ.get("ITHINK_ENV", "staging").lower()
+        is_prod = env == "production"
         base_url = (
             "https://my.ithinklogistics.com/api_v3"
-            if env == "production"
+            if is_prod
             else "https://pre-alpha.ithinklogistics.com/api_v3"
         )
+
+        # In production, prefer the ITHINK_PROD_* values (falling back to the
+        # non-prefixed vars). In staging, use the non-prefixed vars directly.
+        def pick(prod_key: str, base_key: str, default: str = "") -> str:
+            if is_prod:
+                return os.environ.get(prod_key) or os.environ.get(base_key, default)
+            return os.environ.get(base_key, default)
+
+        access_token = pick("ITHINK_PROD_ACCESS_TOKEN", "ITHINK_ACCESS_TOKEN")
+        secret_key = pick("ITHINK_PROD_SECRET_KEY", "ITHINK_SECRET_KEY")
+
+        # Default pickup warehouse (fallback for unmapped vendors; per-vendor
+        # warehouses are resolved in vendor_router). In prod, prefer Ratanshree's
+        # prod warehouse over any stale staging ITHINK_PICKUP_ADDRESS_ID.
+        if is_prod:
+            pickup = os.environ.get("ITHINK_PROD_PICKUP_RATANSHREE") or os.environ.get("ITHINK_PICKUP_ADDRESS_ID", "")
+        else:
+            pickup = os.environ.get("ITHINK_PICKUP_ADDRESS_ID", "")
+
+        if is_prod:
+            return_id = os.environ.get("ITHINK_PROD_RETURN_ADDRESS_ID") or pickup
+        else:
+            return_id = os.environ.get("ITHINK_RETURN_ADDRESS_ID") or pickup
+
         return cls(
-            access_token=os.environ.get("ITHINK_ACCESS_TOKEN", ""),
-            secret_key=os.environ.get("ITHINK_SECRET_KEY", ""),
-            pickup_address_id=os.environ.get("ITHINK_PICKUP_ADDRESS_ID", ""),
-            return_address_id=os.environ.get(
-                "ITHINK_RETURN_ADDRESS_ID",
-                os.environ.get("ITHINK_PICKUP_ADDRESS_ID", ""),
-            ),
+            access_token=access_token,
+            secret_key=secret_key,
+            pickup_address_id=pickup,
+            return_address_id=return_id,
             base_url=base_url,
             default_courier=os.environ.get("ITHINK_DEFAULT_COURIER", "Delhivery"),
             default_service_type=os.environ.get("ITHINK_DEFAULT_SERVICE_TYPE", ""),
