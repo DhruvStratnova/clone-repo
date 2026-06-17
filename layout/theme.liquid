@@ -1,9 +1,19 @@
 <!doctype html>
+<!-- SNAPSHOT-BUMP-1779916413-V8 -->
+
 <html class="js" lang="{{ request.locale.iso_code }}">
   <head>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
+    {%- comment -%} Turbo: render link-click navigations ONCE from the fresh
+        response. The default cached-preview pass painted the destination at
+        its old scroll position then re-rendered ("loads twice" + lands
+        mid-page + jump to top). Back/forward restore still uses the cache. {%- endcomment -%}
+    <meta name="turbo-cache-control" content="no-preview">
+    {%- comment -%} AstroAura: the cart is the slide-up drawer only — kill the standalone /cart page {%- endcomment -%}
+    <script>if(location.pathname.replace(/\/+$/,'')==='/cart'){location.replace('/?cart=open');}</script>
     <meta name="theme-color" content="">
     <link rel="canonical" href="{{ canonical_url }}">
 
@@ -14,6 +24,35 @@
     {%- unless settings.type_header_font.system? and settings.type_body_font.system? -%}
       <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
     {%- endunless -%}
+
+    {%- comment -%} AstroAura: speed up asset + image loading {%- endcomment -%}
+    <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+    <link rel="dns-prefetch" href="https://cdn.shopify.com">
+
+    {%- comment -%}
+      AstroAura: smooth product-image reveal (no abrupt pop-in). Images are
+      VISIBLE BY DEFAULT and simply play a fade animation the moment they finish
+      loading — so nothing can ever be stuck hidden, including async-injected
+      cards (Customers Also Bought, quick view). A single capture-phase `load`
+      listener catches every product image regardless of when it enters the DOM.
+    {%- endcomment -%}
+    <style>
+      @keyframes aaImgIn{from{opacity:0}to{opacity:1}}
+      .aa-pcard__media img.aa-in,
+      .pcard .media img.aa-in{animation:aaImgIn .5s ease}
+    </style>
+    <script>
+      (function(){
+        function isCard(t){ return t && t.tagName === 'IMG' && t.matches && t.matches('.aa-pcard__media img, .pcard .media img'); }
+        document.addEventListener('load', function(e){ if(isCard(e.target)) e.target.classList.add('aa-in'); }, true);
+      })();
+    </script>
+
+    {%- comment -%} AstroAura: brand fonts available globally (used by the Aura quiz overlay) {%- endcomment -%}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Jost:wght@300;400;500;600;700;800&display=swap" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Jost:wght@300;400;500;600;700;800&display=swap"></noscript>
 
     <title>
       {{ page_title }}
@@ -255,15 +294,30 @@
       }
     {% endstyle %}
 
-    {{ 'base.css' | asset_url | stylesheet_tag }}
+    {{ 'astroaura-styles.css' | asset_url | stylesheet_tag }}
+    {{ 'aa-section-cards.css' | asset_url | stylesheet_tag }}
+    {{ 'aa-pcard-v6.css' | asset_url | stylesheet_tag }}
+    <link rel="stylesheet" href="{{ 'aa-drawer.css' | asset_url }}" media="print" onload="this.media='all'">
+    {{ 'aa-app.css' | asset_url | stylesheet_tag }}
+    <link rel="stylesheet" href="{{ 'aa-quiz-v4.css' | asset_url }}" media="print" onload="this.media='all'">
+    <script src="{{ 'aa-turbo.min.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'aa-turbo-init.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'aa-cart-v12.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'aa-media-arrows-v2.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'aa-app.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'aa-quiz-v7.js' | asset_url }}" defer="defer"></script>
+    <link rel="stylesheet" href="{{ 'aa-auth-v2.css' | asset_url }}" media="print" onload="this.media='all'">
+    {% render 'aa-auth-config' %}
+    <script src="{{ 'aa-auth-v2.js' | asset_url }}" defer="defer"></script>
+
     <link rel="stylesheet" href="{{ 'component-cart-items.css' | asset_url }}" media="print" onload="this.media='all'">
 
     {%- if settings.cart_type == 'drawer' -%}
-      {{ 'component-cart-drawer.css' | asset_url | stylesheet_tag }}
-      {{ 'component-cart.css' | asset_url | stylesheet_tag }}
-      {{ 'component-totals.css' | asset_url | stylesheet_tag }}
-      {{ 'component-price.css' | asset_url | stylesheet_tag }}
-      {{ 'component-discounts.css' | asset_url | stylesheet_tag }}
+      <link rel="stylesheet" href="{{ 'astroaura-cart-v8.css' | asset_url }}" media="print" onload="this.media='all'">
+      <link rel="stylesheet" href="{{ 'component-cart.css' | asset_url }}" media="print" onload="this.media='all'">
+      <link rel="stylesheet" href="{{ 'component-totals.css' | asset_url }}" media="print" onload="this.media='all'">
+      <link rel="stylesheet" href="{{ 'component-price.css' | asset_url }}" media="print" onload="this.media='all'">
+      <link rel="stylesheet" href="{{ 'component-discounts.css' | asset_url }}" media="print" onload="this.media='all'">
     {%- endif -%}
 
     {%- unless settings.type_body_font.system? -%}
@@ -296,9 +350,92 @@
         document.documentElement.classList.add('shopify-design-mode');
       }
     </script>
+    <link rel="stylesheet" href="{{ 'AIChatBotWidget.css' | asset_url }}" media="print" onload="this.media='all'">
+
+
+   <meta name="google-site-verification" content="87vUVrM1g0t-1uco09g2SKRI-su3KNATycKI0o1FOaU" />
+
+    {%- comment -%}
+      AstroAura: instant navigation for the in-app webview.
+      1) Speculation Rules — Chromium prefetches (and prerenders the likely next
+         product/collection) so a tap activates an already-built page (~instant).
+      2) JS fallback — for engines without Speculation Rules, prefetch the link's
+         HTML on touch/hover intent so the navigation is served from cache.
+      Cart / checkout / account are excluded (dynamic, must stay live).
+    {%- endcomment -%}
+    <script type="speculationrules">
+    {
+      "prerender": [
+        {
+          "source": "document",
+          "where": { "and": [
+            { "href_matches": "/*" },
+            { "not": { "href_matches": "/cart*" } },
+            { "not": { "href_matches": "/checkout*" } },
+            { "not": { "href_matches": "/account*" } },
+            { "not": { "href_matches": "/pages/account*" } },
+            { "not": { "href_matches": "/pages/orders*" } },
+            { "not": { "href_matches": "/products*" } },
+            { "not": { "href_matches": "*logout*" } },
+            { "not": { "selector_matches": "[data-no-prefetch]" } },
+            { "not": { "selector_matches": "[rel~=nofollow]" } }
+          ]},
+          "eagerness": "moderate"
+        }
+      ],
+      "prefetch": [
+        {
+          "source": "document",
+          "where": { "and": [
+            { "href_matches": "/*" },
+            { "not": { "href_matches": "/cart*" } },
+            { "not": { "href_matches": "/checkout*" } },
+            { "not": { "href_matches": "/account*" } },
+            { "not": { "href_matches": "*logout*" } },
+            { "not": { "selector_matches": "[data-no-prefetch]" } },
+            { "not": { "selector_matches": "[rel~=nofollow]" } }
+          ]},
+          "eagerness": "moderate"
+        }
+      ]
+    }
+    </script>
+    <script>
+      (function () {
+        var hasSpecRules = false;
+        try { hasSpecRules = HTMLScriptElement.supports && HTMLScriptElement.supports('speculationrules'); } catch (e) {}
+        if (hasSpecRules) return; // native engine is better; don't double-fetch
+        var seen = {};
+        var t;
+        function prefetch(href) {
+          if (seen[href]) return; seen[href] = 1;
+          var l = document.createElement('link');
+          l.rel = 'prefetch'; l.href = href; l.as = 'document';
+          document.head.appendChild(l);
+        }
+        function eligible(a) {
+          if (!a || !a.href || a.target === '_blank') return false;
+          if (a.origin !== location.origin) return false;
+          if (/\/(cart|checkout|account)(\/|$|\?)/.test(a.pathname)) return false;
+          if (a.hasAttribute('data-no-prefetch')) return false;
+          var raw = a.getAttribute('href') || '';
+          if (raw.charAt(0) === '#' || raw.indexOf('mailto:') === 0 || raw.indexOf('tel:') === 0) return false;
+          return true;
+        }
+        function onIntent(e) {
+          var a = e.target && e.target.closest && e.target.closest('a[href]');
+          if (!eligible(a)) return;
+          clearTimeout(t);
+          t = setTimeout(function () { prefetch(a.href); }, 55);
+        }
+        document.addEventListener('touchstart', onIntent, { passive: true, capture: true });
+        document.addEventListener('mouseover', onIntent, { passive: true, capture: true });
+      })();
+    </script>
+
   </head>
 
-  <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
+  <body class="gradient template-{{ template.name }}{% if template.suffix %} template-{{ template.name }}-{{ template.suffix }}{% endif %}{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
     <a class="skip-to-content-link button visually-hidden" href="#MainContent">
       {{ 'accessibility.skip_to_text' | t }}
     </a>
@@ -308,6 +445,8 @@
     {%- endif -%}
 
     {% sections 'header-group' %}
+    {%- if request.page_type == 'index' -%}{% render 'aa-catnav' %}{%- endif -%}
+    <div class="aa-loadbar" id="aa-loadbar" data-turbo-permanent data-loadbar aria-hidden="true"></div>
 
     <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
       {{ content_for_layout }}
@@ -372,5 +511,32 @@
     {%- if settings.cart_type == 'drawer' -%}
       <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
-  </body>
+    {% if settings.ai_chatbot_enabled %}
+    <script>
+      window.AI_CHATBOT_CONFIG = {
+        apiBase: {{ settings.ai_chatbot_api_base | json }},
+        apiPath: {{ settings.ai_chatbot_api_path | json }},
+        wsUrl: {{ settings.ai_chatbot_ws_url | json }},
+        title: {{ settings.ai_chatbot_title | json }},
+        welcome: {{ settings.ai_chatbot_welcome | json }},
+        position: {{ settings.ai_chatbot_position | json }},
+        width: {{ settings.ai_chatbot_width | json }},
+        maxHeight: {{ settings.ai_chatbot_max_height | json }},
+        logoUrl: {{ 'aa-logo-orb.svg' | asset_url | json }},
+        shopName: {{ shop.name | json }}
+      };
+    </script>
+    <link rel="stylesheet" href="{{ 'ai-chatbot-improved.css' | asset_url }}" media="print" onload="this.media='all'">
+    <script src="{{ 'ai-chatbot-improved.js' | asset_url }}" defer="defer"></script>
+    {% endif %}
+  
+{%- comment -%} Razorpay Magic Checkout wired DIRECTLY here (the official app
+  embed is intentionally OFF — using only this snippet avoids the double-load of
+  magic-shopify.js that broke the checkout hook). Reads the magic_checkout shop
+  metafields for config. Re-wired 2026-06-16. {%- endcomment -%}
+{% render 'razorpay-magic-checkout' %}
+{% render 'aa-app-shell' %}
+{% render 'aa-auth-popup' %}
+{% render 'aa-auth-account' %}
+</body>
 </html>

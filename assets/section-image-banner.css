@@ -566,7 +566,7 @@ justify-content: center;
   cursor: pointer;
   padding: 14px 16px;
   transition: 0.3s;
-  font-size: 17px;
+  font-size: 14px;
 }
 
 /* Change background color of buttons on hover */
@@ -625,7 +625,7 @@ justify-content: center;
   justify-content: space-evenly;
   flex-wrap: wrap;
   gap: 10px;
-  width:100%;
+  width:75%;
 }
 
 
@@ -637,3 +637,26 @@ justify-content: center;
   transform: rotate(180deg);
 }
 
+
+@media screen and (max-width: 749px) {
+  /* Enable horizontal scroll for tab header on mobile */
+  .listing-description-accordion .tabber_coll {
+    display: block; /* ensure it's a scroll container, not flex */
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap; /* keep children on one line */
+    -webkit-overflow-scrolling: touch; /* momentum scrolling on iOS */
+    touch-action: pan-x; /* allow horizontal touch panning */
+    overscroll-behavior-x: contain; /* prevent parent scroll hijack */
+  }
+  .listing-description-accordion .tabber_coll .tab {
+    display: inline-flex !important; /* inline for horizontal flow */
+    flex-wrap: nowrap;
+    gap: 10px;
+    white-space: nowrap;
+    width: max-content;
+  }
+  .listing-description-accordion .tabber_coll .tab .tablinks {
+    flex: 0 0 auto;
+  }
+}

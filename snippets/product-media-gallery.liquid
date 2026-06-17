@@ -25,6 +25,26 @@
     assign media_count = media_count | minus: variant_images.size | plus: 1
   endif
 
+  comment
+    AstroAura: detect 360 spin frames by filename "spin-*" or alt text "spin*".
+    Any matched frames get pulled out of the regular gallery and grouped into
+    a single interactive "spin slide" rendered first via aa-spin-viewer.
+  endcomment
+  assign aa_spin_frames = '' | split: ','
+  for media in product.media
+    if media.media_type == 'image'
+      assign aa_src_path = media.src | split: '?' | first | split: '/' | last | downcase
+      assign aa_alt_lower = media.alt | default: '' | downcase
+      if aa_src_path contains 'spin-' or aa_src_path contains 'spin_' or aa_alt_lower contains 'spin'
+        assign aa_spin_frames = aa_spin_frames | concat: media
+      endif
+    endif
+  endfor
+  if aa_spin_frames.size > 0
+    assign aa_has_spin = true
+    assign media_count = media_count | minus: aa_spin_frames.size | plus: 1
+  endif
+
   if media_count == 1 or single_media_visible
     assign single_media_visible_mobile = true
   endif
@@ -61,13 +81,23 @@
       class="product__media-list contains-media grid grid--peek list-unstyled slider slider--mobile"
       role="list"
     >
-      {%- if product.selected_or_first_available_variant.featured_media != null -%}
+      {%- if aa_has_spin -%}
+        {% render 'aa-spin-viewer', spin_frames: aa_spin_frames, section_id: section.id %}
+        {%- assign media_position = 1 -%}
+      {%- endif -%}
+
+      {%- if product.selected_or_first_available_variant.featured_media != null and aa_has_spin != true -%}
         {%- assign featured_media = product.selected_or_first_available_variant.featured_media -%}
         <li
           id="Slide-{{ section.id }}-{{ featured_media.id }}"
           class="product__media-item grid__item slider__slide is-active{% if single_media_visible %} product__media-item--single{% endif %}{% if featured_media.media_type != 'image' %} product__media-item--full{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
           data-media-id="{{ section.id }}-{{ featured_media.id }}"
         >
+          {%- if show_cert_stamp -%}
+            <div class="aa-img-stamp" aria-label="Certified authentic">
+              <span>Certified</span>
+            </div>
+          {%- endif -%}
           {%- assign media_position = 1 -%}
           {% render 'product-thumbnail',
             media: featured_media,
@@ -94,12 +124,26 @@
           {% continue %}
         {% endif %}
 
+        {%- comment -%} AstroAura: skip spin frames — they render inside the spin slide above {%- endcomment -%}
+        {%- if aa_has_spin -%}
+          {%- assign aa_loop_src = media.src | split: '?' | first | split: '/' | last | downcase -%}
+          {%- assign aa_loop_alt = media.alt | default: '' | downcase -%}
+          {%- if media.media_type == 'image' and aa_loop_src contains 'spin-' or aa_loop_src contains 'spin_' or aa_loop_alt contains 'spin' -%}
+            {%- continue -%}
+          {%- endif -%}
+        {%- endif -%}
+
         {%- unless media.id == product.selected_or_first_available_variant.featured_media.id -%}
           <li
             id="Slide-{{ section.id }}-{{ media.id }}"
             class="product__media-item grid__item slider__slide{% if single_media_visible %} product__media-item--single{% endif %}{% if product.selected_or_first_available_variant.featured_media == nil and forloop.index == 1 %} is-active{% endif %}{% if media.media_type != 'image' %} product__media-item--full{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
             data-media-id="{{ section.id }}-{{ media.id }}"
           >
+            {%- if show_cert_stamp and product.selected_or_first_available_variant.featured_media == nil and forloop.index == 1 -%}
+              <div class="aa-img-stamp" aria-label="Certified authentic">
+                <span>Certified</span>
+              </div>
+            {%- endif -%}
             {%- liquid
               assign media_position = media_position | default: 0 | plus: 1
               assign lazy_load = false
@@ -153,6 +197,115 @@
         </span>
       </button>
     </div>
+    {%- if media_count > 1 -%}
+      {%- comment -%} desktop arrows + counter (aa-media-arrows.js drives the thumbnails) {%- endcomment -%}
+      <button type="button" class="aa-marr aa-marr--l" aria-label="Previous image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <button type="button" class="aa-marr aa-marr--r" aria-label="Next image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+      <span class="aa-mcount" aria-hidden="true">1 / {{ media_count }}</span>
+      {%- comment -%} mobile-only slide dots (deal-card wireframe); synced to the slider scroll {%- endcomment -%}
+      <div class="aa-mdots" id="AaMdots-{{ section.id }}" aria-hidden="true">
+        {%- for i in (1..media_count) -%}<i{% if forloop.first %} class="on"{% endif %}></i>{%- endfor -%}
+      </div>
+      <script>
+        /* AA PDP gallery controller (dots + inline video).
+           SINGLETON that survives Turbo: this theme is a Turbo SPA, and Turbo
+           re-renders pages WITHOUT re-executing inline scripts, so anything
+           bound per-page silently dies on SPA navigations. All listeners live
+           on document (capture — scroll does not bubble) and re-resolve the
+           current DOM on every event; turbo:load re-inits the videos. */
+        (function () {
+          /* version the singleton — an old controller surviving a Turbo
+             navigation must NOT shadow newer logic */
+          var VERSION = 2;
+          if (window.__aaPdpGallery && window.__aaPdpGallery.v >= VERSION) {
+            window.__aaPdpGallery.init();
+            return;
+          }
+
+          function getList() { return document.querySelector('ul.product__media-list'); }
+          function getDots() { return document.querySelector('.aa-mdots'); }
+          function slides(list) { return [].slice.call(list.querySelectorAll('.product__media-item')); }
+          function activeIdx(list) {
+            var s = list.querySelector('.product__media-item');
+            if (!s || !s.clientWidth) return 0;
+            return Math.max(0, Math.round(list.scrollLeft / s.clientWidth));
+          }
+          function syncAll() {
+            var list = getList();
+            if (!list) return;
+            var sliderMode = list.scrollWidth - list.clientWidth > 10;
+            var idx = activeIdx(list);
+            var dots = getDots();
+            if (dots) {
+              var is = dots.querySelectorAll('i');
+              for (var k = 0; k < is.length; k++) is[k].classList.toggle('on', k === Math.min(idx, is.length - 1));
+            }
+            var all = slides(list);
+            list.querySelectorAll('deferred-media video').forEach(function (v) {
+              var li = v.closest('.product__media-item');
+              var onScreen;
+              if (sliderMode) {
+                onScreen = all.indexOf(li) === idx;
+              } else {
+                /* desktop stacked gallery: play while at least half on screen */
+                var r = li.getBoundingClientRect();
+                onScreen = r.top < window.innerHeight - r.height / 2 && r.bottom > r.height / 2;
+              }
+              v.__aaVisible = onScreen;
+              if (onScreen) { if (v.paused) v.play().catch(function () {}); }
+              else if (!v.paused) { v.pause(); }
+            });
+          }
+
+          function initVideos() {
+            var list = getList();
+            if (!list) return;
+            list.querySelectorAll('deferred-media').forEach(function (dm) {
+              try { dm.loadContent(false); } catch (e) { return; }
+              var v = dm.querySelector('video');
+              if (!v || v.__aaBound) return;
+              v.__aaBound = true;
+              v.muted = true; v.loop = true; v.autoplay = true;
+              v.setAttribute('muted', ''); v.setAttribute('playsinline', '');
+              v.removeAttribute('controls');
+              /* Dawn's pauseAllMedia() pauses it on slide change — resume if
+                 its slide is the active one */
+              v.addEventListener('pause', function () {
+                if (!v.__aaVisible) return;
+                setTimeout(function () {
+                  if (v.__aaVisible && v.paused) v.play().catch(function () {});
+                }, 60);
+              });
+            });
+            try { console.log('[AA-GALLERY] v2 ready — videos bound:', list.querySelectorAll('deferred-media video').length); } catch (e) {}
+            syncAll();
+          }
+
+          function init() {
+            if (window.customElements && customElements.whenDefined) {
+              customElements.whenDefined('deferred-media').then(initVideos);
+            } else {
+              initVideos();
+            }
+          }
+
+          window.__aaPdpGallery = { v: VERSION, init: init, sync: syncAll };
+
+          var ticking = false;
+          document.addEventListener('scroll', function () {
+            /* any scroll (the slider's horizontal OR the page's vertical on
+               desktop) re-syncs — syncAll is cheap and rAF-throttled */
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () { ticking = false; syncAll(); });
+          }, true);
+
+          document.addEventListener('turbo:load', init);
+          document.addEventListener('turbo:render', init);
+          init();
+        })();
+      </script>
+    {%- endif -%}
   </slider-component>
   {%- if first_3d_model -%}
     <button
@@ -330,3 +483,7 @@
     </slider-component>
   {%- endif -%}
 </media-gallery>
+
+{%- if aa_has_spin -%}
+  <script src="{{ 'aa-spin-viewer.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}

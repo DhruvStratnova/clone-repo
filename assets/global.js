@@ -1027,6 +1027,9 @@ class SlideshowComponent extends SliderComponent {
 
     const nextSlide = this.sliderItems[nextIndex];
     const currentSlide = this.sliderItems[currentIndex];
+    /* Turbo snapshot clones can construct this component with an empty/partial
+       slide list — the autorotate interval then throws every tick. Bail out. */
+    if (!nextSlide || !currentSlide) return;
 
     const animationClassIn = 'announcement-bar-slider--fade-in';
     const animationClassOut = 'announcement-bar-slider--fade-out';
@@ -1359,3 +1362,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
+
+

@@ -11,10 +11,307 @@
 >
   {{ 'section-main-product.css' | asset_url | stylesheet_tag }}
   {{ 'component-accordion.css' | asset_url | stylesheet_tag }}
+  {{ 'aa-pdp-v1.css' | asset_url | stylesheet_tag }}
+  {%- comment -%} LCP preload: start the hero image download immediately.
+      imagesrcset + imagesizes replicate product-thumbnail.liquid's formula
+      EXACTLY so the browser reuses this fetch for the gallery <img>
+      (a mismatched sizes string would double-download). {%- endcomment -%}
+  {%- liquid
+    assign aa_lcp = product.selected_or_first_available_variant.featured_media.preview_image | default: product.featured_image
+    assign aa_mw = 0.65
+    if section.settings.media_size == 'medium'
+      assign aa_mw = 0.55
+    elsif section.settings.media_size == 'small'
+      assign aa_mw = 0.45
+    endif
+    assign aa_dcols = 1
+    if section.settings.gallery_layout == 'columns' and product.media.size > 1
+      assign aa_dcols = 2
+    endif
+    assign aa_mcols = 1
+    if section.settings.mobile_thumbnails == 'columns' and product.media.size > 1
+      assign aa_mcols = 2
+    endif
+  -%}
+  {%- if aa_lcp -%}
+    {%- capture aa_lcp_sizes -%}(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | times: aa_mw | divided_by: aa_dcols | round }}px, (min-width: 990px) calc({{ aa_mw | times: 100 | divided_by: aa_dcols }}vw - 10rem), (min-width: 750px) calc((100vw - 11.5rem) / 2), calc(100vw / {{ aa_mcols }} - 4rem){%- endcapture -%}
+    <link
+      rel="preload"
+      as="image"
+      fetchpriority="high"
+      imagesrcset="{{ aa_lcp | image_url: width: 246 }} 246w, {{ aa_lcp | image_url: width: 493 }} 493w, {{ aa_lcp | image_url: width: 600 }} 600w, {{ aa_lcp | image_url: width: 713 }} 713w, {{ aa_lcp | image_url: width: 823 }} 823w, {{ aa_lcp | image_url: width: 990 }} 990w, {{ aa_lcp | image_url: width: 1100 }} 1100w, {{ aa_lcp | image_url: width: 1206 }} 1206w, {{ aa_lcp | image_url: width: 1346 }} 1346w, {{ aa_lcp | image_url: width: 1426 }} 1426w, {{ aa_lcp | image_url: width: 1646 }} 1646w, {{ aa_lcp | image_url: width: 1946 }} 1946w"
+      imagesizes="{{ aa_lcp_sizes }}"
+    >
+  {%- endif -%}
+{%- style -%}
+  /* ID-anchored PDP skin: (1,1,2)+!important outranks NitroPack's fontify
+     injection and every legacy class rule; inline so never minified/stale. */
+  #ProductInfo-{{ section.id }} .product__title h1,
+  #ProductInfo-{{ section.id }} .product__title h2.h1 {
+    font-family: 'Cormorant Garamond', Georgia, serif !important;
+    font-weight: 600 !important;
+    font-size: 40px !important;
+    line-height: 1.1 !important;
+    letter-spacing: -0.01em !important;
+  }
+  /* price row (deal-card wireframe): MRP strike, price, skewed OFF tag */
+  #ProductInfo-{{ section.id }} .price--large {
+    display: block !important; width: 100% !important;
+    background: none !important; border: 0 !important; padding: 0 !important;
+  }
+  #ProductInfo-{{ section.id }} .price--large .badge { display: none !important; }
+  #ProductInfo-{{ section.id }} .price--large .price__container { display: block !important; width: 100% !important; }
+  #ProductInfo-{{ section.id }} .price--large.price--on-sale .price__sale,
+  #ProductInfo-{{ section.id }} .price--large:not(.price--on-sale) .price__regular {
+    display: flex !important; align-items: center !important; gap: 10px !important;
+    flex-wrap: nowrap !important; width: 100% !important;
+  }
+  /* keep Dawn's on-sale visibility rules intact */
+  #ProductInfo-{{ section.id }} .price--large.price--on-sale .price__regular { display: none !important; }
+  #ProductInfo-{{ section.id }} .price--large:not(.price--on-sale) .price__sale { display: none !important; }
+  #ProductInfo-{{ section.id }} .price--large .price__sale > span { order: 1; }
+  #ProductInfo-{{ section.id }} .price--large .price__sale > .price-item--sale { order: 2; margin: 0 !important; }
+  #ProductInfo-{{ section.id }} .price--large .price__sale > .aa-pp-off { order: 3; }
+  #ProductInfo-{{ section.id }} .price--large .price-item--sale,
+  #ProductInfo-{{ section.id }} .price--large .price-item--last {
+    font-size: 30px !important; font-weight: 800 !important;
+    letter-spacing: -0.01em !important; color: #241019 !important;
+  }
+  #ProductInfo-{{ section.id }} .price--large s.price-item--regular {
+    font-size: 14px !important; color: #8a7480 !important; font-weight: 500 !important;
+  }
+  #ProductInfo-{{ section.id }} .price--large .aa-mrp {
+    font-style: normal; font-size: 14px; color: #8a7480; font-weight: 500;
+  }
+  #ProductInfo-{{ section.id }} .aa-pp-off {
+    display: inline-block; font-size: 11px; font-weight: 800; letter-spacing: .04em;
+    color: #fff; background: linear-gradient(96deg, #E9027A, #F58220);
+    border-radius: 7px; padding: 4px 9px; white-space: nowrap;
+    transform: skewX(-6deg);
+  }
+  #ProductInfo-{{ section.id }} .aa-pp-off > span { display: inline-block; transform: skewX(6deg); }
+  #ProductInfo-{{ section.id }} .product-form__submit {
+    background: #151013 !important; color: #fff !important;
+    border-radius: 999px !important; border: 0 !important;
+    font-weight: 800 !important; font-size: 14px !important;
+    letter-spacing: 0.06em !important; text-transform: uppercase !important;
+    padding-top: 18px !important; padding-bottom: 18px !important;
+    transform: none !important; width: 100% !important;
+  }
+  #ProductInfo-{{ section.id }} .shopify-payment-button__button,
+  #ProductInfo-{{ section.id }} .aa-buy-now-btn {
+    border-radius: 999px !important;
+    font-weight: 800 !important; font-size: 14px !important;
+    letter-spacing: 0.06em !important; text-transform: uppercase !important;
+    background: linear-gradient(100deg, #E9027A, #F58220) !important; color: #fff !important;
+    box-shadow: 0 8px 22px rgba(233, 2, 122, 0.28) !important;
+  }
+  /* variant options as cards with radio rings (wireframe B) */
+  #ProductInfo-{{ section.id }} fieldset.product-form__input--pill {
+    display: grid !important; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)) !important;
+    gap: 10px !important;
+  }
+  #ProductInfo-{{ section.id }} fieldset.product-form__input--pill .form__label {
+    grid-column: 1 / -1;
+  }
+  #ProductInfo-{{ section.id }} .product-form__input--pill input[type="radio"] + label {
+    position: relative !important; display: block !important; margin: 0 !important;
+    border: 1.5px solid rgba(36,16,25,.12) !important; background: #fff !important;
+    color: #241019 !important; border-radius: 16px !important; text-align: left !important;
+    font-size: 15px !important; font-weight: 700 !important; padding: 13px 38px 13px 15px !important;
+    box-shadow: none !important;
+    transition: border-color 200ms cubic-bezier(0.23,1,0.32,1), box-shadow 200ms cubic-bezier(0.23,1,0.32,1);
+  }
+  #ProductInfo-{{ section.id }} .product-form__input--pill input[type="radio"] + label::after {
+    content: ''; position: absolute; top: 13px; right: 13px;
+    width: 16px; height: 16px; border-radius: 50%; box-sizing: border-box;
+    border: 1.5px solid rgba(36,16,25,.25);
+    transition: border 180ms cubic-bezier(0.23,1,0.32,1);
+  }
+  #ProductInfo-{{ section.id }} .product-form__input--pill input[type="radio"]:checked + label {
+    background: #fff !important; color: #241019 !important;
+    border-color: #2B0F26 !important; box-shadow: 0 0 0 1px #2B0F26 !important;
+  }
+  #ProductInfo-{{ section.id }} .product-form__input--pill input[type="radio"]:checked + label::after {
+    border: 5px solid #2B0F26;
+  }
+  /* ---- accordions: compact wireframe spec ---- */
+  #ProductInfo-{{ section.id }} .collapsible-row-container {
+    margin: 0 0 9px !important;
+    background: none !important; background-image: none !important;
+    border: 0 !important; border-radius: 0 !important;
+    box-shadow: none !important; padding: 0 !important;
+  }
+  #ProductInfo-{{ section.id }} .collapsible-row-details {
+    background: #FFFFFF !important;
+    background-image: none !important;
+    border: 1px solid rgba(36,16,25,.09) !important;
+    border-radius: 14px !important;
+    box-shadow: none !important;
+    overflow: hidden;
+  }
+  #ProductInfo-{{ section.id }} .collapsible-row-summary {
+    display: flex !important; align-items: center !important; justify-content: space-between !important;
+    padding: 15px 18px !important; cursor: pointer; list-style: none;
+    background: none !important;
+  }
+  #ProductInfo-{{ section.id }} .collapsible-row-summary::-webkit-details-marker { display: none; }
+  #ProductInfo-{{ section.id }} .collapsible-row-title {
+    font-family: 'Plus Jakarta Sans', var(--font-body-family), system-ui, sans-serif !important;
+    font-size: 14px !important; font-weight: 700 !important;
+    color: #241019 !important; margin: 0 !important; letter-spacing: 0 !important;
+  }
+  #ProductInfo-{{ section.id }} .collapsible-row-icon {
+    width: 11px !important; height: 7px !important; color: #8a7480 !important;
+    transition: transform 240ms cubic-bezier(0.23,1,0.32,1);
+  }
+  #ProductInfo-{{ section.id }} .collapsible-row-details[open] .collapsible-row-icon { transform: rotate(180deg); }
+  #ProductInfo-{{ section.id }} .collapsible-row-content {
+    padding: 0 18px 15px !important;
+  }
+  #ProductInfo-{{ section.id }} .collapsible-row-content p {
+    font-size: 13.5px !important; line-height: 1.65 !important; color: #5d4a53 !important; margin: 0 !important;
+  }
+  /* ---- premium pass ---- */
+  /* quantity: hidden on PDP per approved wireframe B (form still posts qty 1;
+     the input stays in the DOM so Dawn's cart logic is untouched) */
+  #ProductInfo-{{ section.id }} .product-form__quantity { display: none !important; }
+  /* shipping line: quiet caption, not a shout */
+  #ProductInfo-{{ section.id }} .aa-shipping-line,
+  #ProductInfo-{{ section.id }} .product__text.inline-richtext {
+    font-size: 13px !important; color: #8a7480 !important; font-weight: 600 !important;
+  }
+  /* rhythm: tighten the column's vertical gaps */
+  #ProductInfo-{{ section.id }} > * { margin-top: 0 !important; }
+  #ProductInfo-{{ section.id }} .product-form__input { margin: 0 0 14px !important; }
+  #ProductInfo-{{ section.id }} .product__title { margin-bottom: 4px !important; }
+  #ProductInfo-{{ section.id }} .price--large { margin: 14px 0 2px !important; }
+  /* buy buttons: side-by-side row like the approved wireframe */
+  #ProductInfo-{{ section.id }} .product-form__buttons {
+    display: flex !important; gap: 10px !important; max-width: none !important; align-items: stretch !important;
+  }
+  #ProductInfo-{{ section.id }} .product-form__buttons > .product-form__submit { flex: 1 1 50% !important; margin: 0 !important; transform: none !important; width: auto !important; }
+  #ProductInfo-{{ section.id }} .product-form__buttons .shopify-payment-button { flex: 1 1 50% !important; margin: 0 !important; }
+  #ProductInfo-{{ section.id }} .product-form__buttons .shopify-payment-button button { height: 100% !important; min-height: 56px !important; transform: none !important; }
+  /* story card body text (NitroPack-proof) */
+  #ProductInfo-{{ section.id }} .aa-story blockquote { font-size: 14.5px !important; line-height: 1.7 !important; font-style: normal !important; }
+  @media screen and (max-width: 749px) {
+    /* gallery: full-bleed edge-to-edge slider, no peek, no thumbs, dots instead.
+       The bleed lives on the UL (a real block) — <media-gallery> is a custom
+       element and ignores width/margin unless forced to display:block. */
+    #MainProduct-{{ section.id }}.section-{{ section.id }}-padding { padding-top: 0 !important; }
+    #MainProduct-{{ section.id }} media-gallery {
+      display: block !important; width: 100% !important; max-width: 100% !important; margin: 0 !important;
+    }
+    /* slider-component is a custom element too — inline by default, which adds
+       stray line-box whitespace and breaks absolute positioning of the dots */
+    #MainProduct-{{ section.id }} slider-component {
+      display: block !important; position: relative !important; margin: 0 !important;
+    }
+    #MainProduct-{{ section.id }} .product { row-gap: 0 !important; }
+    #MainProduct-{{ section.id }} .product__media-wrapper { margin: 0 !important; padding: 0 !important; }
+    #MainProduct-{{ section.id }} .product__media-list {
+      width: 100vw !important; max-width: 100vw !important;
+      margin: 0 0 0 calc(50% - 50vw) !important;
+      padding: 0 !important; gap: 0 !important; column-gap: 0 !important;
+      scrollbar-width: none !important;
+      scroll-padding: 0 !important; scroll-padding-left: 0 !important;
+    }
+    #MainProduct-{{ section.id }} .product__media-list::-webkit-scrollbar { display: none !important; }
+    #MainProduct-{{ section.id }} .product__media-item {
+      /* the list is display:flex — flex-basis beats width there, so the
+         full-width slide MUST be set via flex, not width.
+         aspect-ratio pins every slide to a strict square: the video slide's
+         taller container was stretching all slides 12px past their images,
+         which put the dots/chips on the seam. */
+      flex: 0 0 100% !important;
+      width: 100% !important; max-width: 100% !important;
+      aspect-ratio: 1 / 1 !important; height: auto !important;
+      overflow: hidden !important;
+      padding: 0 !important; margin: 0 !important;
+      scroll-margin: 0 !important; scroll-snap-align: start !important;
+    }
+    /* media fills its square slide exactly — no slack above or below */
+    #MainProduct-{{ section.id }} .product__media-item > *:not(.aa-img-stamp),
+    #MainProduct-{{ section.id }} .product__media-item .product__media-container,
+    #MainProduct-{{ section.id }} .product__media-item .product__media,
+    #MainProduct-{{ section.id }} .product__media-item deferred-media {
+      display: block !important;
+      width: 100% !important; height: 100% !important; margin: 0 !important;
+    }
+    #MainProduct-{{ section.id }} .product__media-item img,
+    #MainProduct-{{ section.id }} .product__media-item video {
+      width: 100% !important; height: 100% !important; object-fit: cover !important;
+    }
+    /* the video slide's WHOLE wrapper chain is pinned absolutely to the slide
+       (position:relative, fixed square): any single intermediate with a
+       collapsed height (ratio padding removed, inline custom element, etc.)
+       zeroes a percentage chain — absolute inset:0 at EVERY level makes each
+       layer exactly the slide's box, so the video cannot end up 0×0 */
+    #MainProduct-{{ section.id }} .product__media-item--full > *:not(.aa-img-stamp),
+    #MainProduct-{{ section.id }} .product__media-item--full .product__media,
+    #MainProduct-{{ section.id }} .product__media-item--full deferred-media,
+    #MainProduct-{{ section.id }} .product__media-item--full video {
+      position: absolute !important; inset: 0 !important;
+      width: 100% !important; height: 100% !important;
+      padding: 0 !important; margin: 0 !important;
+      border-radius: 0 !important; border: 0 !important;
+    }
+    #MainProduct-{{ section.id }} .product__media-item--full video { object-fit: cover !important; z-index: 1; }
+    /* video slide: no play badge or poster button — it autoplays */
+    #MainProduct-{{ section.id }} .product__media-item .product__media-icon,
+    #MainProduct-{{ section.id }} .product__media-item .product__media-video-icon { display: none !important; }
+    /* video slide is non-interactive on mobile (autoplay loop — tapping must
+       NOT open the zoom modal); touches fall through to the slider so swiping
+       still works */
+    #MainProduct-{{ section.id }} .product__media-item--full { pointer-events: none !important; }
+    /* breathing room between image bottom and the first content row */
+    #MainProduct-{{ section.id }} .product__info-wrapper { padding-top: 14px !important; }
+    /* inline gallery video: clean frame, no poster button, no controls */
+    #MainProduct-{{ section.id }} .product__media-item .deferred-media__poster-button { display: none !important; }
+    #MainProduct-{{ section.id }} .product__media-item video {
+      display: block; width: 100% !important; height: 100% !important; object-fit: cover;
+    }
+    #MainProduct-{{ section.id }} .product__media-item .global-media-settings,
+    #MainProduct-{{ section.id }} .product__media-item .product__media,
+    #MainProduct-{{ section.id }} .product__media-item .deferred-media,
+    #MainProduct-{{ section.id }} .product__media-item img {
+      border-radius: 0 !important; border: 0 !important; box-shadow: none !important;
+    }
+    #MainProduct-{{ section.id }} .thumbnail-slider { display: none !important; }
+    #MainProduct-{{ section.id }} .slider-buttons { display: none !important; }
+    #ProductInfo-{{ section.id }} .product__title h1,
+    #ProductInfo-{{ section.id }} .product__title h2.h1 { font-size: 27px !important; }
+    #ProductInfo-{{ section.id }} .price--large .price-item--sale,
+    #ProductInfo-{{ section.id }} .price--large .price-item--last { font-size: 28px !important; }
+    #ProductInfo-{{ section.id }} .price--large s.price-item--regular,
+    #ProductInfo-{{ section.id }} .price--large .aa-mrp { font-size: 13px !important; }
+    #ProductInfo-{{ section.id }} .product-form__input--pill input[type="radio"] + label {
+      padding: 11px 34px 11px 13px !important; font-size: 14px !important;
+    }
+  }
+{%- endstyle -%}
   {{ 'component-price.css' | asset_url | stylesheet_tag }}
   {{ 'component-slider.css' | asset_url | stylesheet_tag }}
   {{ 'component-rating.css' | asset_url | stylesheet_tag }}
   {{ 'component-deferred-media.css' | asset_url | stylesheet_tag }}
+  {{ 'aa-product-page.css' | asset_url | stylesheet_tag }}
+  <script>
+    /* Aura AI — single-open accordion behavior */
+    document.addEventListener('DOMContentLoaded', function() {
+      var details = document.querySelectorAll('.collapsible-row-details');
+      details.forEach(function(d) {
+        d.addEventListener('toggle', function() {
+          if (d.open) {
+            details.forEach(function(other) {
+              if (other !== d && other.open) other.removeAttribute('open');
+            });
+          }
+        });
+      });
+    });
+
+  </script>
 
   {% unless product.has_only_default_variant %}
     {{ 'component-product-variant-picker.css' | asset_url | stylesheet_tag }}
@@ -77,27 +374,11 @@
   {% assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src' %}
   <div class="page-width">
     <div class="product product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}">
-      <div class="grid__item product__media-wrapper">
-        {% render 'product-media-gallery', variant_images: variant_images %}
+      <div class="grid__item product__media-wrapper aa-media-wrap" style="position: relative;">
+        {% render 'product-media-gallery', variant_images: variant_images, show_cert_stamp: true %}
       </div>
 
       <div class="product__info-wrapper grid__item{% if settings.page_width > 1400 and section.settings.media_size == "small" %} product__info-wrapper--extra-padding{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-        {% comment %} Purpose pill at the top of product details page {% endcomment %}
-        <div class="product-page-purpose-pill-container">
-          {% assign purpose_pill_string = product.metafields.custom.key_feature
-            | replace: '[', ''
-            | replace: ']', ''
-            | replace: '"', ''
-          %}
-          {% assign purpose_pill_array = purpose_pill_string | split: ',' %}
-
-          {% for pill in purpose_pill_array %}
-            <p class="product-page-purpose-pill">
-              {{ pill | strip }}
-            </p>
-          {% endfor %}
-        </div>
-
         <section
           id="ProductInfo-{{ section.id }}"
           class="product__info-container{% if section.settings.enable_sticky_info %} product__column-sticky{% endif %}"
@@ -117,6 +398,7 @@
                 </p>
 
               {%- when 'title' -%}
+                {% render 'aa-pdp-extras', part: 'top', product: product %}
                 <div class="product__title" {{ block.shopify_attributes }}>
                   <h1>{{ product.title | escape }}</h1>
                   {% comment %} <p>inventory-{{ product.available }}</p> {% endcomment %}
@@ -134,7 +416,10 @@
                     show_badges: true,
                     price_class: 'price--large'
                   -%}
+                  {% render 'aa-pdp-commerce', part: 'deal', product: product %}
                 </div>
+                {% render 'aa-pdp-extras', part: 'social', product: product %}
+
                 {% comment %} {{- product.metafields.custom.origin }} {% endcomment %}
                 {%- if product.quantity_price_breaks_configured? -%}
                   <div class="volume-pricing-note" id="Volume-Note-{{ section.id }}">
@@ -150,7 +435,7 @@
                     {%- elsif cart.duties_included -%}
                       {{ 'products.product.duties_included' | t }}
                     {%- endif -%}
-                    {%- if shop.shipping_policy.body != blank -%}
+                    {%- if shop.shipping_policy.body != blank -%} 
                       {{ 'products.product.shipping_policy_html' | t: link: shop.shipping_policy.url }}
                     {%- endif -%}
                   </div>
@@ -215,7 +500,9 @@
                 </p>
 
                 <div class="product__accordion accordion quick-add-hidden" {{ block.shopify_attributes }}>
-                  <details id="Details-{{ block.id }}-{{ section.id }}">
+          {% comment %}  {% endcomment %}
+          
+                  <details   id="Details-{{ block.id }}-{{ section.id }}">
                     <summary>
                       <div class="summary__title">
                         <h2 class="h4 accordion__title">
@@ -237,7 +524,7 @@
                 {% comment %} {%- when 'product.metafields.custom' -%} {% endcomment %}
                 {% comment %} {%- if product.metafields.custom -%} {% endcomment %}
                 <div class="product__accordion accordion quick-add-hidden" {{ block.shopify_attributes }}>
-                  <details id="Details-{{ block.id }}-{{ section.id }}">
+                  <details   id="Details-{{ block.id }}-{{ section.id }}"  >
                     <summary>
                       <div class="summary__title">
                         <h2 class="h4 accordion__title">Benefits</h2>
@@ -262,7 +549,7 @@
                   </details>
                 </div>
                 <div class="product__accordion accordion quick-add-hidden" {{ block.shopify_attributes }}>
-                  <details id="Details-{{ block.id }}-{{ section.id }}">
+                  <details   id="Details-{{ block.id }}-{{ section.id }}">
                     <summary>
                       <div class="summary__title">
                         <h2 class="h4 accordion__title">How to Use</h2>
@@ -431,29 +718,19 @@
                   -%}
                   {% # theme-check-enable %}
                   <span class="visually-hidden" id="quantity-label-{{ section.id }}">
-                    {%- if cart_qty > 0 -%}
-                      {{- 'products.product.quantity.in_cart_aria_label' | t: quantity: cart_qty -}}
-                    {%- else -%}
-                      {{- 'products.product.quantity.label' | t -}}
-                    {%- endif -%}
+                    {{- 'products.product.quantity.label' | t -}}
                   </span>
                   <label
                     class="quantity__label form__label"
                     for="Quantity-{{ section.id }}"
                     aria-labelledby="quantity-label-{{ section.id }}"
                   >
-                    <span
-                       aria-hidden="true">
-                      {{- 'products.product.quantity.label' | t -}}
-                    </span>
-                    <span class="quantity__rules-cart{% if cart_qty == 0 %} hidden{% endif %}" aria-hidden="true">
-                      {%- render 'loading-spinner' -%}
-                      <span
-                        >(
-                        {{- 'products.product.quantity.in_cart_html' | t: quantity: cart_qty -}}
-                        )</span
-                      >
-                    </span>
+                    {% if template.suffix == 'crystals' %}
+                    <span aria-hidden="true">Quantity in KG</span>
+                    {% else %}
+                    <span aria-hidden="true">{{ 'products.product.quantity.label' | t }}</span>
+                    {% endif %}
+                    {%- comment -%} AstroAura: removed the "(N in cart)" indicator — confusing on the product page {%- endcomment -%}
                   </label>
                   <div class="price-per-item__container">
                     <quantity-input class="quantity" data-url="{{ product.url }}" data-section="{{ section.id }}">
@@ -504,7 +781,7 @@
                         data-variant-id="{{ product.selected_or_first_available_variant.id }}"
                       >
                         {%- if product.selected_or_first_available_variant.quantity_price_breaks.size > 0 -%}
-                          {%- assign variant_price_compare = product.selected_or_first_available_variant.compare_at_price -%}
+                          {%- assign variant_price_compare = product.selected_or_first_available_variant.price | times: 2 -%}
                           <div class="price-per-item">
                             {%- if variant_price_compare -%}
                               <dl class="price-per-item--current">
@@ -525,6 +802,9 @@
                               <span class="price-per-item--current">
                                 {{- 'products.product.volume_pricing.price_at_each_html' | t: price: variant_price -}}
                               </span>
+
+    
+
                             {%- else -%}
                               {%- for price_break in volume_pricing_array -%}
                                 {%- if current_qty_for_volume_pricing >= price_break.minimum_quantity -%}
@@ -535,6 +815,10 @@
                                       | t: price: price_break_price
                                     -}}
                                   </span>
+
+
+
+
                                   {%- break -%}
                                 {%- endif -%}
                               {%- endfor -%}
@@ -544,7 +828,7 @@
                           {%- assign variant_price = product.selected_or_first_available_variant.price
                             | money_with_currency
                           -%}
-                          {%- assign variant_price_compare = product.selected_or_first_available_variant.compare_at_price -%}
+                          {%- assign variant_price_compare = product.selected_or_first_available_variant.price | times: 2 -%}
                           <div class="price-per-item">
                             {%- if variant_price_compare -%}
                               <dl class="price-per-item--current">
@@ -577,7 +861,13 @@
                         {%- endif -%}
                       </price-per-item>
                     {%- endif -%}
-                  </div>
+                  </div> 
+
+
+
+
+
+                  
                   <div class="quantity__rules caption" id="Quantity-Rules-{{ section.id }}">
                     {%- if product.selected_or_first_available_variant.quantity_rule.increment > 1 -%}
                       <span class="divider">
@@ -654,7 +944,7 @@
                   data-modal="#PopupModal-{{ block.id }}"
                   {{ block.shopify_attributes }}
                 >
-                  <button
+                  {% comment %} <button
                     id="ProductPopup-{{ block.id }}"
                     class="product-popup-modal__button link"
                     type="button"
@@ -662,6 +952,11 @@
                   >
                     {{ block.settings.text | default: block.settings.page.title | escape }}
                   </button>
+
+
+
+
+                  
                 </modal-opener>
               {%- when 'share' -%}
                 {% liquid
@@ -670,19 +965,80 @@
                 %}
 
               {%- when 'variant_picker' -%}
-                {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %}
+                {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %} {% endcomment %}
+
+
+
+
+
+                
+
+</modal-opener>
+   {%- when 'share' -%}
+  {% liquid
+    assign share_url = product.selected_variant.url | default: product.url | prepend: request.origin
+    render 'share-button', block: block, share_link: share_url
+  %}
+
+{%- when 'variant_picker' -%}
+  {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %}
+
+
+
+
+
+ 
+               
+
+
+
+
+{% comment %} </modal-opener>
+{%- when 'share' -%}
+  {% liquid
+    assign share_label = 'Origin'
+  %}
+  {% if product.title contains 'Pyramid' %}
+    {% liquid assign share_label = 'Size' %}
+  {% endif %}
+  {% liquid
+    assign share_url = product.selected_variant.url | default: product.url | prepend: request.origin
+    render 'share-button', block: block, share_link: share_url, share_label: share_label
+  %}
+{%- when 'variant_picker' -%}
+  {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %} {% endcomment %}
+
+
+
+
+
+
                 {% comment %} {% assign show_app = false %} {% endcomment %}
                 {% comment %}
                   {% for option in product.options_with_values %}
                   {% if option.selected_value == "ring" or option.selected_value == "pendant" %}
+
+
+
+                  
                 {% endcomment %}
+
+
+
+
+                
                 <div class="optionplus-widget-container"></div>
                 {% comment %}
                   {% endif %}
                   {% endfor %}
                 {% endcomment %}
 
+
+
+                
+
               {%- when 'buy_buttons' -%}
+                {% render 'aa-pdp-extras', part: 'preform', product: product %}
                 {%- render 'buy-buttons',
                   block: block,
                   product: product,
@@ -690,30 +1046,76 @@
                   section_id: section.id,
                   show_pickup_availability: true
                 -%}
+                {% render 'aa-pdp-commerce', part: 'post', product: product %}
+                {% render 'aa-aura-stories', product: product %}
+
+
+
+
+
+
+<style>
+  /* Desktop aur bada screen */
+  .responsive-button {
+    width: 74%;
+    padding: 16px 0;
+    background: black;
+    color: white;
+    font-size: 16px;
+    font-weight: normal;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    box-shadow: 0 1.5px 0 #0002;
+    transition: background 0.2s;
+    transform: translateY(-20px); /* Ab button ko 40px upar shift kiya */
+  }
+
+  /* Mobile devices */
+  @media screen and (max-width: 767px) {
+    .responsive-button {
+      width: 100%;
+      font-size: 14px;
+      padding: 14px 0;
+      transform: translateY(-20px); /* Mobile me 30px upar shift */
+    }
+  }
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
 
                 {% comment %} Collapsible Row description {% endcomment %}
-                {% comment %}
-                  <div class="collapsible-row-container">
-                    <details class="collapsible-row-details">
-                      <summary class="collapsible-row-summary">
-                        <h2 class="collapsible-row-title">Specifications</h2>
-                        <svg
-                          class="collapsible-row-icon"
-                          aria-hidden="true"
-                          focusable="false"
-                          role="presentation"
-                          viewBox="0 0 10 6"
-                        >
-                          <path d="M9 1L5 5 1 1" stroke="currentColor" stroke-width="2" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path>
-                        </svg>
-                      </summary>
-                      <div class="collapsible-row-content">
-                        <p>{{ product.metafields.custom.specifications }}</p>
-                      </div>
-                    </details>
-                  </div>
-                {% endcomment %}
-                <div class="collapsible-row-container">
+                  {% comment %} <div class="collapsible-row-container">
+                  <details class="collapsible-row-details">
+                    <summary class="collapsible-row-summary">
+                      <h2 class="collapsible-row-title">Specifications</h2>
+                      <svg
+                        class="collapsible-row-icon"
+                        aria-hidden="true"
+                        focusable="false"
+                        role="presentation"
+                        viewBox="0 0 10 6"
+                      >
+                        <path d="M9 1L5 5 1 1" stroke="currentColor" stroke-width="2" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path>
+                      </svg>
+                    </summary>
+                    <div class="collapsible-row-content">
+                      <p>{{ product.metafields.custom.specifications }}</p>
+                    </div>
+                  </details>
+                </div> {% endcomment %}
+ <div class="collapsible-row-container">
                   <details class="collapsible-row-details">
                     <summary class="collapsible-row-summary">
                       <h2 class="collapsible-row-title">Product Quality</h2>
@@ -733,7 +1135,7 @@
                   </details>
                 </div>
 
-                <div class="collapsible-row-container">
+                <div class="collapsible-row-container " >
                   <details class="collapsible-row-details">
                     <summary class="collapsible-row-summary">
                       <h2 class="collapsible-row-title">Authenticity</h2>
@@ -772,7 +1174,11 @@
                     </div>
                   </details>
                 </div>
-
+             
+                      {% comment %}         THIS IS THE CODE WHERE HOW TO USE SHOW FOR ALL {% endcomment %}
+             
+             
+                {% comment %} 
                 <div class="collapsible-row-container">
                   <details class="collapsible-row-details">
                     <summary class="collapsible-row-summary">
@@ -791,7 +1197,41 @@
                       <p>{{ product.metafields.custom.how_to_use }}</p>
                     </div>
                   </details>
-                </div>
+                </div> {% endcomment %}
+
+
+
+{% comment %} UPDATED CODE FOR CHANGE HOW TO USE TO HOW TO RECHARGE FOR PYRAMID {% endcomment %}
+               <div class="collapsible-row-container">
+  <details class="collapsible-row-details">
+    <summary class="collapsible-row-summary">
+      <h2 class="collapsible-row-title">
+        {% if product.title contains 'Pyramid' %}
+          How to Recharge
+        {% else %}
+          How to Use
+        {% endif %}
+      </h2>
+      <svg
+        class="collapsible-row-icon"
+        aria-hidden="true"
+        focusable="false"
+        role="presentation"
+        viewBox="0 0 10 6"
+      >
+        <path d="M9 1L5 5 1 1" stroke="currentColor" stroke-width="2" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+    </summary>
+    <div class="collapsible-row-content">
+      <p>{{ product.metafields.custom.how_to_use }}</p>
+    </div>
+  </details>
+</div>
+
+
+
+
+
 
                 <div class="collapsible-row-container">
                   <details class="collapsible-row-details">
@@ -812,8 +1252,11 @@
                     </div>
                   </details>
                 </div>
+   
+      
+  {% comment %}         THIS IS THE CODE WHERE BEST DAY TO USE   SHOW FOR ALL {% endcomment %}
 
-                <div class="collapsible-row-container">
+                {% comment %} <div class="collapsible-row-container">
                   <details class="collapsible-row-details">
                     <summary class="collapsible-row-summary">
                       <h2 class="collapsible-row-title">Best Day to Wear</h2>
@@ -831,7 +1274,36 @@
                       <p>{{ product.metafields.custom.best_day_to_wear }}</p>
                     </div>
                   </details>
-                </div>
+                </div> {% endcomment %}
+
+{% comment %}   
+ THIS BELOW CODE IS USED FOR REMOVE BEST DAY TO WEAR FOR PYRAMID  {% endcomment %}
+
+
+
+               {% unless product.title contains 'Pyramid' %}
+<div class="collapsible-row-container">
+  <details class="collapsible-row-details">
+    <summary class="collapsible-row-summary">
+      <h2 class="collapsible-row-title">Best Day to Wear</h2>
+      <svg
+        class="collapsible-row-icon"
+        aria-hidden="true"   
+        focusable="false"
+        role="presentation"
+        viewBox="0 0 10 6"
+      >
+        <path d="M9 1L5 5 1 1" stroke="currentColor" stroke-width="2" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+    </summary>
+    <div class="collapsible-row-content">
+      <p>{{ product.metafields.custom.best_day_to_wear }}</p>
+    </div>
+  </details>
+</div>
+{% endunless %}
+
+
 
                 <div class="collapsible-row-container">
                   <details class="collapsible-row-details">
@@ -1129,7 +1601,13 @@
   </div>
 </product-info>
 
-<script>
+{%- comment -%} Judge.me reviews styling — high-specificity overrides {%- endcomment -%}
+{%- render 'aa-judgeme-fix' -%}
+
+
+
+
+ <script>
   document.addEventListener("DOMContentLoaded", function () {
     const productId = "{{ product.id }}";
     const metafieldData = {{ product.metafields.optionPlus.Variant.value | default: empty | json }};
@@ -1191,7 +1669,9 @@
       }
     }
   });
-</script>
+</script> 
+
+{% render 'aa-pdp-dock', product: product %}
 
 {% schema %}
 {

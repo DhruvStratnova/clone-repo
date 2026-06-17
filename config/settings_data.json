@@ -9,8 +9,9 @@
  */
 {
   "current": {
-    "logo": "shopify://shop_images/logo.svg",
-    "logo_width": 200,
+    "logo": "shopify://shop_images/aura-ai-customer-account-logo_11454a84-13b1-4502-97af-586b1a806bdb.svg",
+    "ai_chatbot_ws_url": "https://nexaverse.tech",
+    "logo_width": 280,
     "favicon": "shopify://shop_images/Frame_2147223404.png",
     "type_header_font": "ovo_n4",
     "heading_scale": 100,
@@ -112,9 +113,9 @@
     "brand_image": "shopify://shop_images/logo_1.png",
     "brand_image_width": 170,
     "social_facebook_link": "",
-    "social_instagram_link": "http://instagram.com/shopify",
+    "social_instagram_link": "https://www.instagram.com/astroaura.market?igsh=NHEwYjl1dW52ajFx",
     "social_youtube_link": "",
-    "social_tiktok_link": "https://tiktok.com/@shopify",
+    "social_tiktok_link": "",
     "social_twitter_link": "",
     "social_snapchat_link": "",
     "social_pinterest_link": "",
@@ -124,10 +125,19 @@
     "predictive_search_show_vendor": false,
     "predictive_search_show_price": false,
     "currency_code_enabled": false,
-    "cart_type": "notification",
+    "cart_type": "drawer",
     "show_vendor": false,
     "show_cart_note": false,
     "cart_drawer_collection": "",
+    "ai_chatbot_enabled": false,
+    "ai_chatbot_api_base": "http://ec2-18-211-235-29.compute-1.amazonaws.com",
+    "ai_chatbot_api_path": "/api/user",
+    "ai_chatbot_title": "AstroAura Assistant",
+    "ai_chatbot_welcome": "Namaste! Main aapki AstroAura assistant hoon. Gemstone, Rudraksha, ya jyotish se jude koi bhi sawaal puchhiye — main madad ke liye yahaan hoon.",
+    "ai_chatbot_position": "bottom-right",
+    "ai_chatbot_width": 350,
+    "ai_chatbot_max_height": 600,
+    "_aa_snapshot_bump": "bump-1779916774",
     "theme_name": "Dawn",
     "sections": {
       "main-password-header": {
@@ -145,11 +155,6 @@
     },
     "content_for_index": [],
     "blocks": {
-      "14656832010101544780": {
-        "type": "shopify://apps/apo-product-options/blocks/app-embed-block/a1199153-7462-4b5b-8a80-f0eefba85e99",
-        "disabled": false,
-        "settings": {}
-      },
       "15119538188275799212": {
         "type": "shopify://apps/fontify/blocks/app-embed/334490e2-2153-4a2e-a452-e90bdeffa3cc",
         "disabled": false,
@@ -160,18 +165,18 @@
         "disabled": true,
         "settings": {}
       },
-      "3557650678667880288": {
-        "type": "shopify://apps/razorpay-cod-magic-checkout/blocks/magicx-script/c13c688d-5c45-4054-b95f-1edd63faa705",
+      "17844675666580048712": {
+        "type": "shopify://apps/razorpay-cod-magic-checkout/blocks/sso-script/c13c688d-5c45-4054-b95f-1edd63faa705",
         "disabled": true,
         "settings": {}
       },
       "15683396631634586217": {
         "type": "shopify://apps/inbox/blocks/chat/841fc607-4181-4ad1-842d-e24d7f8bad6b",
-        "disabled": false,
+        "disabled": true,
         "settings": {
           "button_color": "#000000",
-          "secondary_color": "#FFFFFF",
-          "ternary_color": "#6A6A6A",
+          "secondary_color": "#ffffff",
+          "ternary_color": "#6a6a6a",
           "button_icon": "team",
           "button_text": "support",
           "button_horizontal_position": "bottom_right",
@@ -179,8 +184,69 @@
           "greeting_message": ""
         }
       },
-      "17844675666580048712": {
-        "type": "shopify://apps/razorpay-cod-magic-checkout/blocks/sso-script/c13c688d-5c45-4054-b95f-1edd63faa705",
+      "14060646107696862457": {
+        "type": "shopify://apps/judge-me-reviews/blocks/judgeme_core/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+        "disabled": false,
+        "settings": {}
+      },
+      "15188581332139481108": {
+        "type": "shopify://apps/scala-descontos/blocks/cartButton/24748891-1ee0-454d-bfde-d80e65983c18",
+        "disabled": true,
+        "settings": {
+          "textSelector": "Proceed to checkout",
+          "textSelector2": "Check out, checkout, check-out",
+          "selector": ":is(button,input)[name=\"checkout\"]",
+          "message": "Checkout with discount",
+          "position": "before",
+          "customliquid": "{% comment %}\n<style>\nbutton {\n  background: #000000;\n}\n</style>\n{% endcomment %}"
+        }
+      },
+      "144831480468751239": {
+        "type": "shopify://apps/essential-upsell/blocks/app-embed/50627fd9-24fd-4250-8614-accc12826d80",
+        "disabled": true,
+        "settings": {}
+      },
+      "6097499278999377719": {
+        "type": "shopify://apps/globo-mega-menu/blocks/app-embed/7a00835e-fe40-45a5-a615-2eb4ab697b58",
+        "disabled": true,
+        "settings": {}
+      },
+      "17754088914158789468": {
+        "type": "shopify://apps/easysell-cod-form/blocks/app-embed/7bfd0a95-6839-4f02-b2ee-896832dbe67e",
+        "disabled": true,
+        "settings": {}
+      },
+      "12645029315662244871": {
+        "type": "shopify://apps/meteor-mega-menu/blocks/app_embed/9412d6a7-f8f8-4d65-b9ae-2737c2f0f45b",
+        "disabled": false,
+        "settings": {
+          "navigation_link_caret_style": "outline",
+          "navigation_link_spacing": 16,
+          "menu_vertical_padding": 0,
+          "menu_justify_content": "flex-start",
+          "menu_font_size": 16,
+          "menu_font_weight": "400",
+          "menu_text_transform": "none",
+          "menu_center_in_viewport": false,
+          "menu_vertical_offset": 10,
+          "menu_display_action": "hover",
+          "menu_display_delay": "0",
+          "menu_display_animation": "none",
+          "disable_desktop": false,
+          "mobile_breakpoint": 0,
+          "disable_mobile": false,
+          "desktop_nav_selector": "",
+          "mobile_nav_selector": "",
+          "addons_enabled": false
+        }
+      },
+      "4981902369724952902": {
+        "type": "shopify://apps/vo-product-options/blocks/embed-block/430cbd7b-bd20-4c16-ba41-db6f4c645164",
+        "disabled": false,
+        "settings": {}
+      },
+      "3557650678667880288": {
+        "type": "shopify://apps/razorpay-cod-magic-checkout/blocks/magicx-script/c13c688d-5c45-4054-b95f-1edd63faa705",
         "disabled": true,
         "settings": {}
       }
@@ -188,7 +254,7 @@
     "color_schemes": {
       "background-1": {
         "settings": {
-          "background": "#ffffff",
+          "background": "#f6f0e3",
           "background_gradient": "",
           "text": "#201616",
           "button": "#201616",
@@ -276,8 +342,8 @@
       },
       "scheme-d042d7b2-a9c1-4c2f-9f34-d12479533a88": {
         "settings": {
-          "background": "#faf5ff",
-          "background_gradient": "linear-gradient(90deg, #FAF5FF 0%, #FDF2F8 100%)",
+          "background": "#f6f0e3",
+          "background_gradient": "",
           "text": "#201616",
           "button": "#201616",
           "button_label": "#f9f4e9",
@@ -287,8 +353,8 @@
       },
       "scheme-c6323a96-20a5-4474-b039-727f2117b7fb": {
         "settings": {
-          "background": "#faf5ff",
-          "background_gradient": "linear-gradient(90deg, #FFF 0%, #FAF5FF 100%)",
+          "background": "#f6f0e3",
+          "background_gradient": "",
           "text": "#201616",
           "button": "#201616",
           "button_label": "#f9f4e9",
@@ -298,8 +364,8 @@
       },
       "scheme-ae31259b-1635-4508-b6f8-de409eaf58b0": {
         "settings": {
-          "background": "#ffffff",
-          "background_gradient": "linear-gradient(90deg, #FAF5FF 0%, #FDF2F8 100%)",
+          "background": "#f6f0e3",
+          "background_gradient": "",
           "text": "#201616",
           "button": "#201616",
           "button_label": "#f9f4e9",

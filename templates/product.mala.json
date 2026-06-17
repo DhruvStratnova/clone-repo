@@ -12,16 +12,12 @@
     "main": {
       "type": "main-product",
       "blocks": {
-        "vendor": {
-          "type": "text",
-          "disabled": true,
-          "settings": {
-            "text": "{{ product.vendor }}",
-            "text_style": "uppercase"
-          }
-        },
         "title": {
           "type": "title",
+          "settings": {}
+        },
+        "judge_me_reviews_preview_badge_3YLfRy": {
+          "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
           "settings": {}
         },
         "price": {
@@ -31,7 +27,7 @@
         "custom_liquid_HqbPfJ": {
           "type": "custom_liquid",
           "settings": {
-            "custom_liquid": "{%- assign origin = product.metafields.custom.origin\n  | replace: '[', ''\n  | replace: ']', ''\n  | replace: '\"', ''\n-%}\n<p>Origin: {{ origin }}</p>"
+            "custom_liquid": ""
           }
         },
         "variant_picker": {
@@ -65,10 +61,6 @@
             "image_selection_type": "single",
             "checkbox_display_type": "grid"
           }
-        },
-        "apo_product_options_app_block_igkije": {
-          "type": "shopify://apps/apo-product-options/blocks/app-block/a1199153-7462-4b5b-8a80-f0eefba85e99",
-          "settings": {}
         },
         "quantity_selector": {
           "type": "quantity_selector",
@@ -107,13 +99,12 @@
         }
       },
       "block_order": [
-        "vendor",
         "title",
+        "judge_me_reviews_preview_badge_3YLfRy",
         "price",
         "custom_liquid_HqbPfJ",
         "variant_picker",
         "option_plus_option_plus_block_qytF6m",
-        "apo_product_options_app_block_igkije",
         "quantity_selector",
         "custom_liquid_xmbRzx",
         "text_PPjNd7",
@@ -122,7 +113,9 @@
         "share"
       ],
       "custom_css": [
-        ".product__text {margin: 0; font-size: xx-small;}"
+        ".product__text {margin: 0; font-size: xx-small;}",
+        ".product__tax {display: none !important;}",
+        "a[href*=\"Ring_Size.pdf\"] {display: none !important;}"
       ],
       "settings": {
         "enable_sticky_info": true,
@@ -143,7 +136,7 @@
     "related-products": {
       "type": "related-products",
       "settings": {
-        "heading": "You may also like",
+        "heading": "Customers Also Bought",
         "heading_size": "h2",
         "products_to_show": 6,
         "columns_desktop": 6,
@@ -158,20 +151,40 @@
         "padding_bottom": 36
       }
     },
+    "1758806897b73a9307": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_review_widget_4jM9Be": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "review_data": "sample_data",
+            "max_width": 1200,
+            "show_shop_reviews": false,
+            "empty_state": "empty_widget"
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_review_widget_4jM9Be"
+      ],
+      "settings": {
+        "include_margins": true
+      }
+    },
     "image_with_text_BTVzcx": {
       "type": "image-with-text",
       "blocks": {
         "heading_VXrBTe": {
           "type": "heading",
           "settings": {
-            "heading": "Gemstones & You",
+            "heading": "Mala & You",
             "heading_size": "h1"
           }
         },
         "text_GABa9L": {
           "type": "text",
           "settings": {
-            "text": "<p>Vedic astrology links cosmic order with planetary motion—Sun, Moon, Mars, Jupiter, Venus, Mercury, Saturn, Rahu, and Ketu guiding human destiny. Gemstones, formed over millions of years, hold pure cosmic energies. Worn with faith, they channel planetary blessings, attracting harmony, protection, strength, and spiritual growth through their unique vibrational frequencies.</p>",
+            "text": "<p><strong>Malas</strong> are elegant accessories that profoundly symbolize <strong>meditation, mindfulness, and spiritual strength</strong>. Crafted from traditional materials, they are used for Japa practice (mantra repetition). These pieces effortlessly elevate modern style while carrying deep personal and symbolic value.</p>",
             "text_style": "body"
           }
         },
@@ -179,7 +192,7 @@
           "type": "button",
           "settings": {
             "button_label": "Learn More",
-            "button_link": "shopify://collections/gemstones",
+            "button_link": "shopify://collections/mala",
             "button_style_secondary": true
           }
         }
@@ -191,7 +204,7 @@
       ],
       "name": "t:sections.image-with-text.presets.name",
       "settings": {
-        "image": "shopify://shop_images/ChatGPT_Image_Sep_2_2025_01_42_55_PM.png",
+        "image": "shopify://shop_images/ChatGPT_Image_Oct_9_2025_07_30_38_PM.png",
         "height": "adapt",
         "desktop_image_width": "small",
         "layout": "image_first",
@@ -223,7 +236,7 @@
           "settings": {
             "heading": "How natural and authentic is this gemstone?",
             "icon": "none",
-            "row_content": "<p>All our stones are 100% natural and authentic. The healing stones have been sourced from top international mines from across the globe and certified by various labs.  <br/><br/></p>",
+            "row_content": "<p>All our stones are 100% natural and authentic. The healing stones have been sourced from top international mines from across the globe and certified by various labs.\u00a0\u00a0<br/><br/></p>",
             "page": ""
           }
         },
@@ -232,7 +245,7 @@
           "settings": {
             "heading": "What is the return policy and estimated delivery duration?",
             "icon": "none",
-            "row_content": "<p>We offer a hassle-free 7-day return policy. Additionally, you can expect delivery within 10 to 14 days. <br/><br/></p>",
+            "row_content": "<p>We offer a hassle-free 7-day return policy. Additionally, you can expect delivery within 10 to 14 days.\u00a0<br/><br/></p>",
             "page": ""
           }
         },
@@ -241,7 +254,7 @@
           "settings": {
             "heading": "How is this energized and how can i wear it?",
             "icon": "none",
-            "row_content": "<p><strong>How can crystals heal-</strong> All healing crystals correspond to different planets in our solar system, which is why each crystal vibrates at its unique frequency. These healing stones offer more than mere aesthetic value. At the right frequency the crystals directly affect the 7 chakras of the human body.  <br/><br/><br/><strong>What is energisation-</strong> When properly energised, the crystals vibrate at frequencies that align with the various chakras in our body. This process of ensuring the alignment of frequencies, known as the energization of a healing stone, enhances their therapeutic and psychic benefits. </p><p><br/><strong>How we help-</strong> At Astrotalk, we ensure that all our healing stones are sourced and energised by trusted experts and astrologers to guarantee their authenticity. Before delivery, all our healing stones are energised with pure intentions and energy by our esteemed astrologers, making them highly effective for our customers. </p>",
+            "row_content": "<p><strong>How can crystals heal-</strong>\u00a0All healing crystals correspond to different planets in our solar system, which is why each crystal vibrates at its unique frequency. These healing stones offer more than mere aesthetic value. At the right frequency the crystals directly affect the 7 chakras of the human body.\u00a0\u00a0<br/><br/><br/><strong>What is energisation-</strong>\u00a0When properly energised, the crystals vibrate at frequencies that align with the various chakras in our body. This process of ensuring the alignment of frequencies, known as the energization of a healing stone, enhances their therapeutic and psychic benefits.\u00a0</p><p><br/><strong>How we help-</strong>\u00a0At Astrotalk, we ensure that all our healing stones are sourced and energised by trusted experts and astrologers to guarantee their authenticity. Before delivery, all our healing stones are energised with pure intentions and energy by our esteemed astrologers, making them highly effective for our customers.\u00a0</p>",
             "page": ""
           }
         }
@@ -268,11 +281,17 @@
         "padding_top": 36,
         "padding_bottom": 36
       }
+    },
+    "aa_certify": {
+      "type": "aa-rd-certify",
+      "settings": {}
     }
   },
   "order": [
     "main",
+    "aa_certify",
     "related-products",
+    "1758806897b73a9307",
     "image_with_text_BTVzcx",
     "collapsible_content_FVzxxR"
   ]

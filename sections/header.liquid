@@ -73,6 +73,12 @@
       padding-bottom: 0.5rem;
       padding-top: 0.5rem;
     }
+    /* Bold desktop nav menu titles */
+    .header__menu-item,
+    .header__menu-item .list-menu__item,
+    .header__active-menu-item {
+      font-weight: 700;
+    }
   }
 </style>
 
@@ -115,11 +121,14 @@
 -%}
 
 {% liquid
+  comment
+    Dawn's <sticky-header> web component is intentionally DISABLED. Its JS pins
+    the header with its own position/transform on scroll, which fought the
+    header-GROUP sticky (.aa-sticky in aa-app.js) and made the offer bar and
+    header overlap on mobile. The group is now the single sticky unit. Do not
+    re-enable by switching this back to 'sticky-header'.
+  endcomment
   assign header_tag = 'div'
-
-  if section.settings.sticky_header_type != 'none'
-    assign header_tag = 'sticky-header'
-  endif
 %}
 
 <{{ header_tag }}
@@ -143,6 +152,7 @@
   <header class="header header--{{ section.settings.logo_position }} header--mobile-{{ section.settings.mobile_logo_position }} page-width{% if section.settings.menu_type_desktop == 'drawer' %} drawer-menu{% endif %}{% if section.settings.menu != blank %} header--has-menu{% endif %}{% if has_app_block %} header--has-app{% endif %}{% if social_links %} header--has-social{% endif %}{% if shop.customer_accounts_enabled %} header--has-account{% endif %}{% if localization_forms %} header--has-localizations{% endif %}">
     {%- liquid
       if section.settings.menu != blank
+        # force-rerender-V8Q4M2-20260527-2330 — touch to invalidate section cache
         render 'header-drawer'
       endif
 
@@ -155,30 +165,104 @@
       {%- if request.page_type == 'index' -%}
         <h1 class="header__heading">
       {%- endif -%}
-      <a href="{{ routes.root_url }}" class="header__heading-link link link--text focus-inset">
-        {%- if settings.logo != blank -%}
-          <div class="header__heading-logo-wrapper">
-            {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
-            {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
-            {% capture sizes %}(max-width: {{ settings.logo_width | times: 2 }}px) 50vw, {{ settings.logo_width }}px{% endcapture %}
-            {% capture widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{% endcapture %}
-            {{
-              settings.logo
-              | image_url: width: 600
-              | image_tag:
-                class: 'header__heading-logo motion-reduce',
-                widths: widths,
-                height: logo_height,
-                width: settings.logo_width,
-                alt: logo_alt,
-                sizes: sizes,
-                preload: true
-            }}
-          </div>
-        {%- else -%}
-          <span class="h2">{{ shop.name }}</span>
-        {%- endif -%}
+      <a href="{{ routes.root_url }}" class="header__heading-link link link--text focus-inset aa-logo-link">
+        <span class="aa-logo">
+          <span class="aa-logo__orb-wrap">
+            <img src="{{ 'aa-logo-orb.svg' | asset_url }}" alt="" class="aa-logo__orb" width="40" height="40" loading="eager" />
+          </span>
+          <span class="aa-logo__text">Aura AI</span>
+        </span>
       </a>
+      <style>
+        /* === Aura AI Header — warm parchment, premium === */
+        .shopify-section-header,
+        sticky-header.header-wrapper,
+        .header-wrapper {
+          background: #FBF6EE !important;
+          border: 0 !important;
+          box-shadow: none !important;
+          position: relative !important;
+        }
+        sticky-header.header-wrapper::before,
+        .header-wrapper::before {
+          content: '';
+          position: absolute;
+          top: 0; right: 0; bottom: 0;
+          width: 280px;
+          background: radial-gradient(circle at 90% 50%,
+            rgba(255, 184, 114, 0.20) 0%,
+            rgba(255, 154, 86, 0.10) 30%,
+            rgba(255, 123, 62, 0) 65%);
+          pointer-events: none;
+          z-index: 0;
+        }
+        .aa-logo-link {
+          text-decoration: none !important;
+          display: inline-flex !important;
+          align-items: center !important;
+        }
+        .aa-logo {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          line-height: 1;
+          flex-shrink: 0;
+          white-space: nowrap;
+        }
+        .aa-logo__text {
+          white-space: nowrap;
+          overflow: visible;
+          flex-shrink: 0;
+          line-height: 1;
+          display: inline-flex;
+          align-items: center;
+          font-family: 'Jost', system-ui, -apple-system, sans-serif;
+          font-size: 30px;
+          font-weight: 700;
+          letter-spacing: -0.01em;
+        }
+        /* Desktop: heavier, clearly-bold header logo */
+        @media screen and (min-width: 750px) {
+          .aa-logo__text { font-weight: 800; }
+        }
+        .aa-logo__orb-wrap {
+          width: 56px;
+          height: 56px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+          position: relative;
+        }
+        /* Orange halo glow — behind the orb only */
+        .aa-logo__orb-wrap::before {
+          content: '';
+          position: absolute;
+          inset: -4px;
+          border-radius: 50%;
+          background: radial-gradient(circle,
+            rgba(255, 138, 61, 0.70) 0%,
+            rgba(255, 138, 61, 0.38) 38%,
+            rgba(255, 138, 61, 0) 72%);
+          filter: blur(8px);
+          z-index: 0;
+          pointer-events: none;
+        }
+        .aa-logo__orb {
+          width: 42px;
+          height: 42px;
+          display: block;
+          position: relative;
+          z-index: 1;
+          filter: drop-shadow(0 0 10px rgba(255, 138, 61, 0.75)) drop-shadow(0 0 20px rgba(255, 138, 61, 0.45));
+        }
+        @media (max-width: 749px) {
+          .aa-logo__orb-wrap { width: 40px; height: 40px; }
+          .aa-logo__orb { width: 30px; height: 30px; }
+          .aa-logo { gap: 7px; }
+          .aa-logo__text { font-size: 22px; }
+        }
+      </style>
       {%- if request.page_type == 'index' -%}
         </h1>
       {%- endif -%}
@@ -199,28 +283,15 @@
         <h1 class="header__heading">
       {%- endif -%}
       <a href="{{ routes.root_url }}" class="header__heading-link link link--text focus-inset">
-        {%- if settings.logo != blank -%}
-          <div class="header__heading-logo-wrapper">
-            {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
-            {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
-            {% capture sizes %}(min-width: 750px) {{ settings.logo_width }}px, 50vw{% endcapture %}
-            {% capture widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{% endcapture %}
-            {{
-              settings.logo
-              | image_url: width: 600
-              | image_tag:
-                class: 'header__heading-logo',
-                widths: widths,
-                height: logo_height,
-                width: settings.logo_width,
-                alt: logo_alt,
-                sizes: sizes,
-                preload: true
-            }}
-          </div>
-        {%- else -%}
-          <span class="h2">{{ shop.name }}</span>
-        {%- endif -%}
+        <div class="header__heading-logo-wrapper">
+          <img
+            src="{{ 'aura-ai-logo.svg' | asset_url }}"
+            class="header__heading-logo"
+            width="{{ settings.logo_width }}"
+            alt="{{ shop.name | escape }}"
+            loading="eager"
+          >
+        </div>
       </a>
       {%- if request.page_type == 'index' -%}
         </h1>
@@ -253,11 +324,14 @@
       </div>
       {% render 'header-search', input_id: 'Search-In-Modal' %}
 
-      {%- if shop.customer_accounts_enabled -%}
+      {%- comment -%} Always render the account icon — Aura AI popup owns auth, even if Shopify accounts are disabled {%- endcomment -%}
+      {%- if true -%}
         <a
-          href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}"
+          href="/pages/account"
           class="header__icon header__icon--account link focus-inset{% if section.settings.menu != blank %} small-hide{% endif %}"
           rel="nofollow"
+          data-aa-au-trigger
+          data-logged-in="{% if customer %}true{% else %}false{% endif %}"
         >
           {%- if section.settings.enable_customer_avatar -%}
             <account-icon>

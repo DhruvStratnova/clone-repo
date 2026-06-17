@@ -14,10 +14,28 @@
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
   }
+
+  /* ---- Aura AI brand pass over Dawn address book (structure unchanged) ---- */
+  .aa-au-addrpage{max-width:920px;margin:0 auto}
+  .aa-au-addrpage h1{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:34px;color:#241019}
+  .aa-au-addrpage h2{font-family:'Cormorant Garamond',serif;font-weight:700;color:#241019}
+  .aa-au-addrpage > a[href]{color:#E9027A;font-weight:600;text-decoration:none}
+  .aa-au-addrpage [data-address] > ul,
+  .aa-au-addrpage ul[role="list"]{list-style:none;padding:0;display:grid;gap:14px}
+  @media screen and (min-width:750px){.aa-au-addrpage [data-address] > ul,.aa-au-addrpage ul[role="list"]{grid-template-columns:1fr 1fr}}
+  .aa-au-addrpage [data-address] > ul > li{background:linear-gradient(180deg,#fff,#FAF1E0 130%);border:1px solid rgba(36,16,25,.10);border-radius:16px;padding:18px;box-shadow:0 2px 10px rgba(74,43,46,.08)}
+  .aa-au-addrpage input[type="text"],
+  .aa-au-addrpage input[type="tel"],
+  .aa-au-addrpage select{border-radius:12px !important;border:1px solid rgba(36,16,25,.14) !important}
+  .aa-au-addrpage button[type="submit"],
+  .aa-au-addrpage button[aria-expanded]{background:linear-gradient(130deg,#E9027A,#F58220);color:#fff;border:0;border-radius:999px;padding:12px 22px;font-weight:700;cursor:pointer}
+  .aa-au-addrpage .address-delete,
+  .aa-au-addrpage button[name="cancel"]{background:#fff !important;color:#4a3a40 !important;border:1px solid rgba(36,16,25,.14) !important;border-radius:999px;padding:11px 20px}
 {%- endstyle -%}
+{{ 'aa-auth-v2.css' | asset_url | stylesheet_tag }}
 
 {%- paginate customer.addresses by 5 -%}
-  <div class="customer addresses section-{{ section.id }}-padding" data-customer-addresses>
+  <div class="customer addresses aa-au-addrpage section-{{ section.id }}-padding" data-customer-addresses>
     <h1>{{ 'customer.addresses.title' | t }}</h1>
     <a href="{{ routes.account_url }}">
       {{ 'customer.account.return' | t }}

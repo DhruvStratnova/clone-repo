@@ -12,27 +12,17 @@
     "main": {
       "type": "main-product",
       "blocks": {
-        "vendor": {
-          "type": "text",
-          "disabled": true,
-          "settings": {
-            "text": "{{ product.vendor }}",
-            "text_style": "uppercase"
-          }
-        },
         "title": {
           "type": "title",
+          "settings": {}
+        },
+        "judge_me_reviews_preview_badge_9TUERG": {
+          "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
           "settings": {}
         },
         "price": {
           "type": "price",
           "settings": {}
-        },
-        "custom_liquid_7JNmNw": {
-          "type": "custom_liquid",
-          "settings": {
-            "custom_liquid": "{%- assign origin = product.metafields.custom.origin\n  | replace: '[', ''\n  | replace: ']', ''\n  | replace: '\"', ''\n-%}\n<p>Origin: {{ origin }}</p>"
-          }
         },
         "variant_picker": {
           "type": "variant_picker",
@@ -65,20 +55,9 @@
             "checkbox_display_type": "grid"
           }
         },
-        "apo_product_options_app_block_igkije": {
-          "type": "shopify://apps/apo-product-options/blocks/app-block/a1199153-7462-4b5b-8a80-f0eefba85e99",
-          "settings": {}
-        },
         "quantity_selector": {
           "type": "quantity_selector",
           "settings": {}
-        },
-        "custom_liquid_xmbRzx": {
-          "type": "custom_liquid",
-          "disabled": true,
-          "settings": {
-            "custom_liquid": "<a href=\"https://cdn.shopify.com/s/files/1/0947/9467/8574/files/Ring_Size_Guide.pdf?v=1756296222\" target=\"_blank\" rel=\"noopener noreferrer\">\n  Ring Size Guide\n</a>"
-          }
         },
         "buy_buttons": {
           "type": "buy_buttons",
@@ -100,18 +79,18 @@
         }
       },
       "block_order": [
-        "vendor",
         "title",
+        "judge_me_reviews_preview_badge_9TUERG",
         "price",
-        "custom_liquid_7JNmNw",
         "variant_picker",
         "option_plus_option_plus_block_qytF6m",
-        "apo_product_options_app_block_igkije",
         "quantity_selector",
-        "custom_liquid_xmbRzx",
         "buy_buttons",
         "description",
         "share"
+      ],
+      "custom_css": [
+        ".product__tax {display: none !important;}"
       ],
       "settings": {
         "enable_sticky_info": true,
@@ -132,7 +111,7 @@
     "related-products": {
       "type": "related-products",
       "settings": {
-        "heading": "You may also like",
+        "heading": "Customers Also Bought",
         "heading_size": "h2",
         "products_to_show": 6,
         "columns_desktop": 6,
@@ -145,6 +124,312 @@
         "show_rating": false,
         "padding_top": 36,
         "padding_bottom": 36
+      }
+    },
+    "slideshow_bPUenW": {
+      "type": "slideshow",
+      "blocks": {
+        "slide_Fa67rU": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Healing_properties_1.png",
+            "image_mobile": "shopify://shop_images/section_5_8655b04c-3577-4258-b295-66987f1a64fa.png",
+            "image_overlay_opacity": 0,
+            "heading": "",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "link": "",
+            "button_style_secondary": false,
+            "show_text_box": true,
+            "box_align": "middle-center",
+            "text_alignment": "center",
+            "text_alignment_mobile": "center",
+            "color_scheme": ""
+          }
+        },
+        "slide_pMXFxG": {
+          "type": "slide",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/How_to_use.png",
+            "image_mobile": "shopify://shop_images/section_6_46648d00-e770-4e6f-bf9a-e27a4faec007.png",
+            "image_overlay_opacity": 0,
+            "heading": "",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "link": "",
+            "button_style_secondary": false,
+            "show_text_box": true,
+            "box_align": "middle-center",
+            "text_alignment": "center",
+            "text_alignment_mobile": "center",
+            "color_scheme": "scheme-1"
+          }
+        },
+        "slide_A9PGJx": {
+          "type": "slide",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/Why_Bring_Rudraksha_Into_Your_Life.png",
+            "image_mobile": "shopify://shop_images/section_7_e4e85468-1fac-4d13-95d5-974271a8d212.png",
+            "image_overlay_opacity": 0,
+            "heading": "",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "link": "",
+            "button_style_secondary": false,
+            "show_text_box": true,
+            "box_align": "middle-center",
+            "text_alignment": "center",
+            "text_alignment_mobile": "center",
+            "color_scheme": "scheme-1"
+          }
+        },
+        "slide_QaQmg4": {
+          "type": "slide",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/Water_Test_The_Truth_Revealed.png",
+            "image_mobile": "shopify://shop_images/div_9_a263b41d-b9b3-4ee0-81a0-b4b7b04287ae.png",
+            "image_overlay_opacity": 0,
+            "heading": "",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "link": "",
+            "button_style_secondary": false,
+            "show_text_box": true,
+            "box_align": "middle-center",
+            "text_alignment": "center",
+            "text_alignment_mobile": "center",
+            "color_scheme": "scheme-1"
+          }
+        }
+      },
+      "block_order": [
+        "slide_Fa67rU",
+        "slide_pMXFxG",
+        "slide_A9PGJx",
+        "slide_QaQmg4"
+      ],
+      "name": "t:sections.slideshow.presets.name",
+      "settings": {
+        "layout": "full_bleed",
+        "slide_height": "adapt_image",
+        "slider_visual": "counter",
+        "auto_rotate": true,
+        "change_slides_speed": 3,
+        "image_behavior": "none",
+        "show_text_below": true,
+        "accessibility_info": "Slideshow about our brand"
+      }
+    },
+    "slideshow_ciDkEL": {
+      "type": "slideshow",
+      "blocks": {
+        "slide_x8K3yQ": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/How_to_use.png",
+            "image_mobile": "shopify://shop_images/section_6_46648d00-e770-4e6f-bf9a-e27a4faec007.png",
+            "image_overlay_opacity": 0,
+            "heading": "",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "link": "",
+            "button_style_secondary": false,
+            "show_text_box": true,
+            "box_align": "middle-center",
+            "text_alignment": "center",
+            "text_alignment_mobile": "center",
+            "color_scheme": ""
+          }
+        },
+        "slide_tBEtkd": {
+          "type": "slide",
+          "disabled": true,
+          "settings": {
+            "image_overlay_opacity": 0,
+            "heading": "",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "link": "",
+            "button_style_secondary": false,
+            "show_text_box": true,
+            "box_align": "middle-center",
+            "text_alignment": "center",
+            "text_alignment_mobile": "center",
+            "color_scheme": ""
+          }
+        }
+      },
+      "block_order": [
+        "slide_x8K3yQ",
+        "slide_tBEtkd"
+      ],
+      "name": "t:sections.slideshow.presets.name",
+      "settings": {
+        "layout": "full_bleed",
+        "slide_height": "adapt_image",
+        "slider_visual": "counter",
+        "auto_rotate": false,
+        "change_slides_speed": 5,
+        "image_behavior": "none",
+        "show_text_below": true,
+        "accessibility_info": "Slideshow about our brand"
+      }
+    },
+    "slideshow_dtLqbq": {
+      "type": "slideshow",
+      "blocks": {
+        "slide_4tUyfi": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Why_Bring_Rudraksha_Into_Your_Life.png",
+            "image_mobile": "shopify://shop_images/section_7_e4e85468-1fac-4d13-95d5-974271a8d212.png",
+            "image_overlay_opacity": 0,
+            "heading": "",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "link": "",
+            "button_style_secondary": false,
+            "show_text_box": true,
+            "box_align": "middle-center",
+            "text_alignment": "center",
+            "text_alignment_mobile": "center",
+            "color_scheme": ""
+          }
+        },
+        "slide_Te6L74": {
+          "type": "slide",
+          "disabled": true,
+          "settings": {
+            "image_overlay_opacity": 0,
+            "heading": "",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "link": "",
+            "button_style_secondary": false,
+            "show_text_box": true,
+            "box_align": "middle-center",
+            "text_alignment": "center",
+            "text_alignment_mobile": "center",
+            "color_scheme": ""
+          }
+        }
+      },
+      "block_order": [
+        "slide_4tUyfi",
+        "slide_Te6L74"
+      ],
+      "name": "t:sections.slideshow.presets.name",
+      "settings": {
+        "layout": "full_bleed",
+        "slide_height": "adapt_image",
+        "slider_visual": "counter",
+        "auto_rotate": false,
+        "change_slides_speed": 5,
+        "image_behavior": "none",
+        "show_text_below": true,
+        "accessibility_info": "Slideshow about our brand"
+      }
+    },
+    "slideshow_gLGgpg": {
+      "type": "slideshow",
+      "blocks": {
+        "slide_zCGKRr": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Water_Test_The_Truth_Revealed.png",
+            "image_mobile": "shopify://shop_images/div_9_a263b41d-b9b3-4ee0-81a0-b4b7b04287ae.png",
+            "image_overlay_opacity": 0,
+            "heading": "",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "link": "",
+            "button_style_secondary": false,
+            "show_text_box": true,
+            "box_align": "middle-center",
+            "text_alignment": "center",
+            "text_alignment_mobile": "center",
+            "color_scheme": ""
+          }
+        },
+        "slide_RjQ9Af": {
+          "type": "slide",
+          "disabled": true,
+          "settings": {
+            "image_overlay_opacity": 0,
+            "heading": "",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "link": "",
+            "button_style_secondary": false,
+            "show_text_box": true,
+            "box_align": "middle-center",
+            "text_alignment": "center",
+            "text_alignment_mobile": "center",
+            "color_scheme": ""
+          }
+        }
+      },
+      "block_order": [
+        "slide_zCGKRr",
+        "slide_RjQ9Af"
+      ],
+      "name": "t:sections.slideshow.presets.name",
+      "settings": {
+        "layout": "full_bleed",
+        "slide_height": "adapt_image",
+        "slider_visual": "counter",
+        "auto_rotate": false,
+        "change_slides_speed": 5,
+        "image_behavior": "none",
+        "show_text_below": true,
+        "accessibility_info": "Slideshow about our brand"
+      }
+    },
+    "slideshow_mHQYmL": {
+      "type": "slideshow",
+      "name": "t:sections.slideshow.presets.name",
+      "settings": {
+        "layout": "grid",
+        "slide_height": "adapt_image",
+        "slider_visual": "counter",
+        "auto_rotate": false,
+        "change_slides_speed": 5,
+        "image_behavior": "none",
+        "show_text_below": true,
+        "accessibility_info": "Slideshow about our brand"
+      }
+    },
+    "1758874356394114cb": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_review_widget_MRCBBm": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "review_data": "sample_data",
+            "max_width": 1200,
+            "show_shop_reviews": false,
+            "empty_state": "empty_widget"
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_review_widget_MRCBBm"
+      ],
+      "settings": {
+        "include_margins": true
       }
     },
     "image_with_text_BTVzcx": {
@@ -257,11 +542,22 @@
         "padding_top": 36,
         "padding_bottom": 36
       }
+    },
+    "aa_certify": {
+      "type": "aa-rd-certify",
+      "settings": {}
     }
   },
   "order": [
     "main",
+    "aa_certify",
     "related-products",
+    "slideshow_bPUenW",
+    "slideshow_ciDkEL",
+    "slideshow_dtLqbq",
+    "slideshow_gLGgpg",
+    "slideshow_mHQYmL",
+    "1758874356394114cb",
     "image_with_text_BTVzcx",
     "collapsible_content_FVzxxR"
   ]

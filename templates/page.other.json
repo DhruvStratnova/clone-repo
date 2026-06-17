@@ -49,6 +49,7 @@
         "text_7DA68E",
         "button_C778xt"
       ],
+      "disabled": true,
       "name": "t:sections.image-with-text.presets.name",
       "settings": {
         "image": "shopify://shop_images/image_184.png",
@@ -65,10 +66,42 @@
         "padding_top": 36,
         "padding_bottom": 36
       }
+    },
+    "rich_text_GF6bre": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_Ey8nX8": {
+          "type": "heading",
+          "settings": {
+            "heading": "About Us",
+            "heading_size": "h1"
+          }
+        },
+        "text_mPCbGR": {
+          "type": "text",
+          "settings": {
+            "text": "<p>At <strong>AstroAura</strong>, we are your one-stop destination for all kinds of <strong>gemstones, crystals, rudraksha, and wellness products</strong>. Our collection features gemstones sourced from top mines and certified by leading labs. Each product is carefully prepared and energized with positive vibrations to maximize its benefits. </p><p>Browse our selection of <strong>bracelets, pendants, and accessories</strong> designed not only to elevate your style but also to help align your chakras and energies. </p><p>Whether you are looking for <strong>guidance, remedies, or simply tools to enhance your lifestyle</strong>, AstroAura has everything you need under one roof. </p><h3><strong>Customer Care</strong> </h3><p>Our support team is available <strong>Monday to Saturday, 10 AM – 7 PM</strong>, ready to answer your queries and guide you in making the right choice. </p><h3><strong>Our Commitment</strong> </h3><ul><li><strong>Authentic & Certified Products</strong> </li><li><strong>Transparent Information</strong> </li><li><strong>Trusted Shopping Experience</strong> </li></ul><p>Thank you for choosing <strong>AstroAura</strong> as your partner in spirituality and wellness. </p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_Ey8nX8",
+        "text_mPCbGR"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
     }
   },
   "order": [
     "main",
-    "image_with_text_r9XRxy"
+    "image_with_text_r9XRxy",
+    "rich_text_GF6bre"
   ]
 }

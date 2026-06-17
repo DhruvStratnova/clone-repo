@@ -1,9 +1,151 @@
 {% comment %}
-  Renders a header drawer menu for mobile and desktop.
-
-  Usage:
-  {% render 'header-drawer' %}
+  Aura AI mobile drawer — Astrotalk-style
+  Categories grid + Promo banners + Shop By Aura + Pages list + Social icons
 {% endcomment %}
+
+{%- comment -%}
+  Premium drawer slide animation — inline to bypass aa-drawer.css CDN cache.
+  Cache-bust marker: AA-DRAWER-PREMIUM-V8-20260528-0235 (REAL backdrop element, no pseudo, fade-out cleanup)
+{%- endcomment -%}
+<style>
+  @media (max-width: 749px) {
+    /* Drawer base — always in DOM, slides via transform */
+    html body header-drawer #menu-drawer,
+    html body header-drawer .menu-drawer,
+    html body header-drawer .aa-drawer {
+      display: block !important;
+      position: fixed !important;
+      top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important;
+      /* Cosmic-veil transition (approved 2026-06-12): full-screen takeover
+         revealed by a circle expanding FROM the hamburger. Layout unchanged. */
+      width: 100vw !important; max-width: none !important;
+      right: auto !important;
+      height: 100dvh !important; max-height: 100dvh !important;
+      background: #F8F4EA !important;
+      z-index: 2147483647 !important;
+      overflow-y: auto !important; overflow-x: hidden !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      padding: 6px 16px calc(96px + env(safe-area-inset-bottom)) !important;
+      box-sizing: border-box !important;
+      visibility: visible !important;
+      transform: none !important;
+      -webkit-transform: none !important;
+      opacity: 1 !important;
+      clip-path: circle(0px at 30px 34px) !important;
+      -webkit-clip-path: circle(0px at 30px 34px) !important;
+      pointer-events: none !important;
+      will-change: clip-path !important;
+      transition:
+        clip-path 420ms cubic-bezier(0.32, 0.72, 0, 1),
+        -webkit-clip-path 420ms cubic-bezier(0.32, 0.72, 0, 1) !important;
+    }
+    /* OPEN — covers [open] alone AND [open].menu-opening (Dawn adds it ~100ms later) */
+    html body header-drawer details[open] #menu-drawer,
+    html body header-drawer details[open] .menu-drawer,
+    html body header-drawer details[open] .aa-drawer,
+    html body header-drawer details[open].menu-opening #menu-drawer,
+    html body header-drawer details[open].menu-opening .menu-drawer,
+    html body header-drawer details[open].menu-opening .aa-drawer {
+      clip-path: circle(165% at 30px 34px) !important;
+      -webkit-clip-path: circle(165% at 30px 34px) !important;
+      visibility: visible !important;
+      pointer-events: auto !important;
+      transition:
+        clip-path 620ms cubic-bezier(0.32, 0.72, 0, 1),
+        -webkit-clip-path 620ms cubic-bezier(0.32, 0.72, 0, 1) !important;
+    }
+    /* FIRST-OPEN FIX: content inside a closed <details> is not rendered, so
+       the first click can paint the drawer directly in its open state with no
+       committed start value — the transition silently skips. @starting-style
+       supplies the transition origin for that first render. */
+    @starting-style {
+      html body header-drawer details[open] #menu-drawer,
+      html body header-drawer details[open] .menu-drawer,
+      html body header-drawer details[open] .aa-drawer,
+      html body header-drawer details[open].menu-opening #menu-drawer,
+      html body header-drawer details[open].menu-opening .menu-drawer,
+      html body header-drawer details[open].menu-opening .aa-drawer {
+        clip-path: circle(0px at 30px 34px) !important;
+        -webkit-clip-path: circle(0px at 30px 34px) !important;
+      }
+    }
+    /* Backdrop — REAL element (not pseudo) so opacity transitions out cleanly to 0
+       when the drawer closes. Pseudo backdrops were leaving residual shadow on Android. */
+    html body .aa-drawer__backdrop {
+      position: fixed !important;
+      inset: 0 !important;
+      background: rgba(20, 8, 32, 0.55) !important;
+      opacity: 0 !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
+      z-index: 2147483646 !important;
+      transition:
+        opacity 200ms cubic-bezier(0.22, 1, 0.36, 1),
+        visibility 0s linear 260ms !important;
+      will-change: opacity !important;
+    }
+    html body header-drawer:has(details[open]) ~ .aa-drawer__backdrop,
+    html body header-drawer details[open] ~ .aa-drawer__backdrop {
+      opacity: 1 !important;
+      visibility: visible !important;
+      pointer-events: auto !important;
+      transition:
+        opacity 200ms cubic-bezier(0.22, 1, 0.36, 1),
+        visibility 0s linear 0s !important;
+    }
+    /* Hard nuclear: belt-and-braces — if neither selector matches, force-hide */
+    html body header-drawer:not(:has(details[open])) ~ .aa-drawer__backdrop {
+      opacity: 0 !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
+    }
+    /* Header row — Categories centered, X button absolute top-right */
+    .aa-drawer__header-row {
+      padding: 18px 0 8px !important;
+      margin: 0 !important;
+      position: relative !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      min-height: 44px !important;
+    }
+    .aa-drawer__inner {
+      padding-top: 0 !important;
+    }
+    /* X close button — top-right of header row */
+    .aa-drawer__close {
+      position: absolute !important;
+      right: 0 !important;
+      top: 50% !important;
+      transform: translateY(-50%) !important;
+      background: transparent !important;
+      border: 0 !important;
+      padding: 8px !important;
+      cursor: pointer !important;
+      color: #1A1A1A !important;
+      border-radius: 50% !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      transition: background 180ms ease-out !important;
+      -webkit-tap-highlight-color: transparent !important;
+    }
+    .aa-drawer__close:hover,
+    .aa-drawer__close:focus-visible {
+      background: rgba(74, 25, 66, 0.08) !important;
+      outline: none !important;
+    }
+    .aa-drawer__close:active {
+      background: rgba(74, 25, 66, 0.14) !important;
+    }
+    .aa-drawer__close svg {
+      display: block !important;
+      width: 22px !important;
+      height: 22px !important;
+    }
+  }
+</style>
 
 <header-drawer data-breakpoint="{% if section.settings.menu_type_desktop == 'drawer' %}desktop{% else %}tablet{% endif %}">
   <details id="Details-menu-drawer-container" class="menu-drawer-container">
@@ -16,280 +158,683 @@
         {{- 'icon-close.svg' | inline_asset_content -}}
       </span>
     </summary>
-    <div id="menu-drawer" class="gradient menu-drawer motion-reduce color-{{ section.settings.menu_color_scheme }}">
-      <div class="menu-drawer__inner-container">
-        <div class="menu-drawer__navigation-container">
-          <nav class="menu-drawer__navigation">
-            <ul class="menu-drawer__menu has-submenu list-menu" role="list">
-              {%- for link in section.settings.menu.links -%}
-                <li>
-                  {%- if link.links != blank -%}
-                    <details id="Details-menu-drawer-menu-item-{{ forloop.index }}">
-                      <summary
-                        id="HeaderDrawer-{{ link.handle }}"
-                        class="menu-drawer__menu-item list-menu__item link link--text focus-inset{% if link.child_active %} menu-drawer__menu-item--active{% endif %}"
-                      >
-                        {{ link.title | escape }}
-                        <span class="svg-wrapper">
-                          {{- 'icon-arrow.svg' | inline_asset_content -}}
-                        </span>
-                        <span class="svg-wrapper">
-                          {{- 'icon-caret.svg' | inline_asset_content -}}
-                        </span>
-                      </summary>
-                      <div
-                        id="link-{{ link.handle | escape }}"
-                        class="menu-drawer__submenu has-submenu gradient motion-reduce"
-                        tabindex="-1"
-                      >
-                        <div class="menu-drawer__inner-submenu">
-                          <button class="menu-drawer__close-button link link--text focus-inset" aria-expanded="true">
-                            <span class="svg-wrapper">
-                              {{- 'icon-arrow.svg' | inline_asset_content -}}
-                            </span>
-                            {{ link.title | escape }}
-                          </button>
-                          <ul class="menu-drawer__menu list-menu" role="list" tabindex="-1">
-                            {%- for childlink in link.links -%}
-                              <li>
-                                {%- if childlink.links == blank -%}
-                                  <a
-                                    id="HeaderDrawer-{{ link.handle }}-{{ childlink.handle }}"
-                                    href="{{ childlink.url }}"
-                                    class="menu-drawer__menu-item link link--text list-menu__item focus-inset{% if childlink.current %} menu-drawer__menu-item--active{% endif %}"
-                                    {% if childlink.current %}
-                                      aria-current="page"
-                                    {% endif %}
-                                  >
-                                    {{ childlink.title | escape }}
-                                  </a>
-                                {%- else -%}
-                                  <details id="Details-menu-drawer-{{ link.handle }}-{{ childlink.handle }}">
-                                    <summary
-                                      id="HeaderDrawer-{{ link.handle }}-{{ childlink.handle }}"
-                                      class="menu-drawer__menu-item link link--text list-menu__item focus-inset"
-                                    >
-                                      {{ childlink.title | escape }}
-                                      <span class="svg-wrapper">
-                                        {{- 'icon-arrow.svg' | inline_asset_content -}}
-                                      </span>
-                                      <span class="svg-wrapper">
-                                        {{- 'icon-caret.svg' | inline_asset_content -}}
-                                      </span>
-                                    </summary>
-                                    <div
-                                      id="childlink-{{ childlink.handle | escape }}"
-                                      class="menu-drawer__submenu has-submenu gradient motion-reduce"
-                                    >
-                                      <button
-                                        class="menu-drawer__close-button link link--text focus-inset"
-                                        aria-expanded="true"
-                                      >
-                                        <span class="svg-wrapper">
-                                          {{- 'icon-arrow.svg' | inline_asset_content -}}
-                                        </span>
-                                        {{ childlink.title | escape }}
-                                      </button>
-                                      <ul
-                                        class="menu-drawer__menu list-menu"
-                                        role="list"
-                                        tabindex="-1"
-                                      >
-                                        {%- for grandchildlink in childlink.links -%}
-                                          <li>
-                                            <a
-                                              id="HeaderDrawer-{{ link.handle }}-{{ childlink.handle }}-{{ grandchildlink.handle }}"
-                                              href="{{ grandchildlink.url }}"
-                                              class="menu-drawer__menu-item link link--text list-menu__item focus-inset{% if grandchildlink.current %} menu-drawer__menu-item--active{% endif %}"
-                                              {% if grandchildlink.current %}
-                                                aria-current="page"
-                                              {% endif %}
-                                            >
-                                              {{ grandchildlink.title | escape }}
-                                            </a>
-                                          </li>
-                                        {%- endfor -%}
-                                      </ul>
-                                    </div>
-                                  </details>
-                                {%- endif -%}
-                              </li>
-                            {%- endfor -%}
-                          </ul>
-                        </div>
-                      </div>
-                    </details>
-                  {%- else -%}
-                    <a
-                      id="HeaderDrawer-{{ link.handle }}"
-                      href="{{ link.url }}"
-                      class="menu-drawer__menu-item list-menu__item link link--text focus-inset{% if link.current %} menu-drawer__menu-item--active{% endif %}"
-                      {% if link.current %}
-                        aria-current="page"
-                      {% endif %}
-                    >
-                      {{ link.title | escape }}
-                    </a>
-                  {%- endif -%}
-                </li>
-              {%- endfor -%}
-            </ul>
-          </nav>
-          <div class="menu-drawer__utility-links">
-            {%- if shop.customer_accounts_enabled -%}
-              <a
-                href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}"
-                class="menu-drawer__account link focus-inset h5 medium-hide large-up-hide"
-                rel="nofollow"
-              >
-                {%- if section.settings.enable_customer_avatar -%}
-                  <account-icon>
-                    {%- if customer and customer.has_avatar? -%}
-                      {{ customer | avatar }}
-                    {%- else -%}
-                      <span class="svg-wrapper">
-                        {{- 'icon-account.svg' | inline_asset_content -}}
-                      </span>
-                    {%- endif -%}
-                  </account-icon>
-                {%- else -%}
-                  <span class="svg-wrapper">
-                    {{- 'icon-account.svg' | inline_asset_content -}}
-                  </span>
-                {%- endif -%}
+    <div id="menu-drawer" class="gradient menu-drawer motion-reduce color-{{ section.settings.menu_color_scheme }} aa-drawer">
+      <div class="menu-drawer__inner-container aa-drawer__inner">
+
+        {%- liquid
+          assign utility_keywords = 'about,support,help,astro,calc,calculator,contact,track,blog'
+          assign utility_list = utility_keywords | split: ','
+
+          assign shop_by_handle = 'shop by aura'
+        -%}
+
+        {%- comment -%}
+          "Categories" title centered, X close button at top-right.
+        {%- endcomment -%}
+        <div class="aa-drawer__header-row">
+          <h2 class="aa-drawer__title aa-drawer__title--inline">Categories</h2>
+          <button
+            type="button"
+            class="aa-drawer__close"
+            aria-label="Close menu"
+            onclick="var d=this.closest('details');if(d){d.removeAttribute('open');d.classList.remove('menu-opening');}document.body.classList.remove('overflow-hidden-mobile','overflow-hidden-tablet','overflow-hidden');">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M18 6L6 18M6 6l12 12"/>
+            </svg>
+          </button>
+        </div>
+        <div class="aa-drawer__grid aa-st aa-s1">
+          {%- assign mala_passed = false -%}
+          {%- for link in section.settings.menu.links -%}
+            {%- if mala_passed -%}{%- continue -%}{%- endif -%}
+            {%- liquid
+              assign t_lower = link.title | downcase | strip
+              assign is_utility = false
+              for u in utility_list
+                if t_lower contains u
+                  assign is_utility = true
+                  break
+                endif
+              endfor
+              if is_utility
+                continue
+              endif
+
+              if t_lower == shop_by_handle
+                continue
+              endif
+            -%}
+
+            {%- if link.links != blank -%}
+              {%- for childlink in link.links -%}
+                {%- if mala_passed -%}{%- continue -%}{%- endif -%}
                 {%- liquid
-                  if customer
-                    echo 'customer.account_fallback' | t
-                  else
-                    echo 'customer.log_in' | t
+                  assign skip_titles = 'all products,all-products,view all,view-all,shop all,pyramid'
+                  assign cl_lower = childlink.title | downcase
+                  assign skip_list = skip_titles | split: ','
+                  assign should_skip = false
+                  for s in skip_list
+                    if cl_lower contains s
+                      assign should_skip = true
+                      break
+                    endif
+                  endfor
+                  if should_skip
+                    continue
+                  endif
+
+                  assign tile_image = nil
+                  if childlink.object.featured_image
+                    assign tile_image = childlink.object.featured_image
+                  elsif childlink.object.image
+                    assign tile_image = childlink.object.image
                   endif
                 -%}
-              </a>
-            {%- endif -%}
-            {%- if localization.available_countries or localization.available_languages -%}
-              <div class="menu-drawer__localization header-localization">
-                {%- if localization.available_countries and localization.available_countries.size > 1 -%}
-                  <localization-form>
-                    {%- form 'localization', id: 'HeaderCountryMobileForm', class: 'localization-form' -%}
-                      <div>
-                        <h2 class="visually-hidden" id="HeaderCountryMobileLabel">
-                          {{ 'localization.country_label' | t }}
-                        </h2>
-                        {%- render 'country-localization', localPosition: 'HeaderCountryMobile' -%}
-                      </div>
-                    {%- endform -%}
-                  </localization-form>
-                {% endif %}
-
-                {%- if localization.available_languages and localization.available_languages.size > 1 -%}
-                  <localization-form>
-                    {%- form 'localization', id: 'HeaderLanguageMobileForm', class: 'localization-form' -%}
-                      <div>
-                        <h2 class="visually-hidden" id="HeaderLanguageMobileLabel">
-                          {{ 'localization.language_label' | t }}
-                        </h2>
-                        {%- render 'language-localization', localPosition: 'HeaderLanguageMobile' -%}
-                      </div>
-                    {%- endform -%}
-                  </localization-form>
+                <a href="{{ childlink.url }}" class="aa-drawer__tile">
+                  <span class="aa-drawer__tile-circle">
+                    {%- if tile_image -%}
+                      {{ tile_image | image_url: width: 160 | image_tag:
+                        loading: 'eager',
+                        width: 80,
+                        height: 80,
+                        class: 'aa-drawer__tile-img',
+                        alt: childlink.title }}
+                    {%- else -%}
+                      <span class="aa-drawer__tile-placeholder">{{- childlink.title | slice: 0, 1 | upcase -}}</span>
+                    {%- endif -%}
+                  </span>
+                  <span class="aa-drawer__tile-label">{{ childlink.title | escape }}</span>
+                </a>
+                {%- assign cl_check = cl_lower | strip -%}
+                {%- if cl_check == 'mala' -%}
+                  {%- assign mala_passed = true -%}
                 {%- endif -%}
-              </div>
+              {%- endfor -%}
+            {%- else -%}
+              {%- liquid
+                assign tile_image = nil
+                if link.object.featured_image
+                  assign tile_image = link.object.featured_image
+                elsif link.object.image
+                  assign tile_image = link.object.image
+                endif
+              -%}
+              <a href="{{ link.url }}" class="aa-drawer__tile">
+                <span class="aa-drawer__tile-circle">
+                  {%- if tile_image -%}
+                    {{ tile_image | image_url: width: 160 | image_tag:
+                      loading: 'eager',
+                      width: 80,
+                      height: 80,
+                      class: 'aa-drawer__tile-img',
+                      alt: link.title }}
+                  {%- else -%}
+                    <span class="aa-drawer__tile-placeholder">{{- link.title | slice: 0, 1 | upcase -}}</span>
+                  {%- endif -%}
+                </span>
+                <span class="aa-drawer__tile-label">{{ link.title | escape }}</span>
+              </a>
+              {%- if t_lower == 'mala' -%}
+                {%- assign mala_passed = true -%}
+              {%- endif -%}
             {%- endif -%}
-            <ul class="list list-social list-unstyled" role="list">
-              {%- if settings.social_twitter_link != blank -%}
-                <li class="list-social__item">
-                  <a href="{{ settings.social_twitter_link }}" class="list-social__link link">
-                    <span class="svg-wrapper">
-                      {{- 'icon-twitter.svg' | inline_asset_content -}}
-                    </span>
-                    <span class="visually-hidden">{{ 'general.social.links.twitter' | t }}</span>
-                  </a>
-                </li>
-              {%- endif -%}
-              {%- if settings.social_facebook_link != blank -%}
-                <li class="list-social__item">
-                  <a href="{{ settings.social_facebook_link }}" class="list-social__link link">
-                    <span class="svg-wrapper">
-                      {{- 'icon-facebook.svg' | inline_asset_content -}}
-                    </span>
-                    <span class="visually-hidden">{{ 'general.social.links.facebook' | t }}</span>
-                  </a>
-                </li>
-              {%- endif -%}
-              {%- if settings.social_pinterest_link != blank -%}
-                <li class="list-social__item">
-                  <a href="{{ settings.social_pinterest_link }}" class="list-social__link link">
-                    <span class="svg-wrapper">
-                      {{- 'icon-pinterest.svg' | inline_asset_content -}}
-                    </span>
-                    <span class="visually-hidden">{{ 'general.social.links.pinterest' | t }}</span>
-                  </a>
-                </li>
-              {%- endif -%}
-              {%- if settings.social_instagram_link != blank -%}
-                <li class="list-social__item">
-                  <a href="{{ settings.social_instagram_link }}" class="list-social__link link">
-                    <span class="svg-wrapper">
-                      {{- 'icon-instagram.svg' | inline_asset_content -}}
-                    </span>
-                    <span class="visually-hidden">{{ 'general.social.links.instagram' | t }}</span>
-                  </a>
-                </li>
-              {%- endif -%}
-              {%- if settings.social_tiktok_link != blank -%}
-                <li class="list-social__item">
-                  <a href="{{ settings.social_tiktok_link }}" class="list-social__link link">
-                    <span class="svg-wrapper">
-                      {{- 'icon-tiktok.svg' | inline_asset_content -}}
-                    </span>
-                    <span class="visually-hidden">{{ 'general.social.links.tiktok' | t }}</span>
-                  </a>
-                </li>
-              {%- endif -%}
-              {%- if settings.social_tumblr_link != blank -%}
-                <li class="list-social__item">
-                  <a href="{{ settings.social_tumblr_link }}" class="list-social__link link">
-                    <span class="svg-wrapper">
-                      {{- 'icon-tumblr.svg' | inline_asset_content -}}
-                    </span>
-                    <span class="visually-hidden">{{ 'general.social.links.tumblr' | t }}</span>
-                  </a>
-                </li>
-              {%- endif -%}
-              {%- if settings.social_snapchat_link != blank -%}
-                <li class="list-social__item">
-                  <a href="{{ settings.social_snapchat_link }}" class="list-social__link link">
-                    <span class="svg-wrapper">
-                      {{- 'icon-snapchat.svg' | inline_asset_content -}}
-                    </span>
-                    <span class="visually-hidden">{{ 'general.social.links.snapchat' | t }}</span>
-                  </a>
-                </li>
-              {%- endif -%}
-              {%- if settings.social_youtube_link != blank -%}
-                <li class="list-social__item">
-                  <a href="{{ settings.social_youtube_link }}" class="list-social__link link">
-                    <span class="svg-wrapper">
-                      {{- 'icon-youtube.svg' | inline_asset_content -}}
-                    </span>
-                    <span class="visually-hidden">{{ 'general.social.links.youtube' | t }}</span>
-                  </a>
-                </li>
-              {%- endif -%}
-              {%- if settings.social_vimeo_link != blank -%}
-                <li class="list-social__item">
-                  <a href="{{ settings.social_vimeo_link }}" class="list-social__link link">
-                    <span class="svg-wrapper">
-                      {{- 'icon-vimeo.svg' | inline_asset_content -}}
-                    </span>
-                    <span class="visually-hidden">{{ 'general.social.links.vimeo' | t }}</span>
-                  </a>
-                </li>
-              {%- endif -%}
-            </ul>
-          </div>
+          {%- endfor -%}
+          {%- comment -%} AstroAura: Mani / Anklets / Vastu are not in the nav menu, hardcode them so they always appear in the drawer grid {%- endcomment -%}
+          {%- assign aa_mani = collections['mani'] -%}
+          <a href="/collections/mani" class="aa-drawer__tile">
+            <span class="aa-drawer__tile-circle">
+              {%- if aa_mani.image -%}{{ aa_mani.image | image_url: width: 160 | image_tag: loading: 'eager', width: 80, height: 80, class: 'aa-drawer__tile-img', alt: 'Mani' }}{%- else -%}<span class="aa-drawer__tile-placeholder">M</span>{%- endif -%}
+            </span>
+            <span class="aa-drawer__tile-label">Mani</span>
+          </a>
+          {%- assign aa_ank = collections['anklets'] -%}
+          <a href="/collections/anklets" class="aa-drawer__tile">
+            <span class="aa-drawer__tile-circle">
+              {%- if aa_ank.image -%}{{ aa_ank.image | image_url: width: 160 | image_tag: loading: 'eager', width: 80, height: 80, class: 'aa-drawer__tile-img', alt: 'Anklets' }}{%- else -%}<span class="aa-drawer__tile-placeholder">A</span>{%- endif -%}
+            </span>
+            <span class="aa-drawer__tile-label">Anklets</span>
+          </a>
+          {%- assign aa_vastu = collections['vastu'] -%}
+          <a href="/collections/vastu" class="aa-drawer__tile">
+            <span class="aa-drawer__tile-circle">
+              {%- if aa_vastu.image -%}{{ aa_vastu.image | image_url: width: 160 | image_tag: loading: 'eager', width: 80, height: 80, class: 'aa-drawer__tile-img', alt: 'Vastu' }}{%- else -%}<span class="aa-drawer__tile-placeholder">V</span>{%- endif -%}
+            </span>
+            <span class="aa-drawer__tile-label">Vastu</span>
+          </a>
+          {%- assign aa_combos = collections['combos'] -%}
+          <a href="/collections/combos" class="aa-drawer__tile">
+            <span class="aa-drawer__tile-circle">
+              {%- if aa_combos.image -%}{{ aa_combos.image | image_url: width: 160 | image_tag: loading: 'eager', width: 80, height: 80, class: 'aa-drawer__tile-img', alt: 'Combos' }}{%- else -%}<span class="aa-drawer__tile-placeholder">C</span>{%- endif -%}
+            </span>
+            <span class="aa-drawer__tile-label">Combos</span>
+          </a>
         </div>
+
+        {%- comment -%} ====== Section 2: Shop By Aura (colored pills) ====== {%- endcomment -%}
+        {%- liquid
+          assign shop_by_link = nil
+          for link in section.settings.menu.links
+            assign link_t = link.title | downcase | strip
+            if link_t == shop_by_handle
+              assign shop_by_link = link
+              break
+            endif
+          endfor
+        -%}
+
+        <h2 class="aa-drawer__title aa-orn aa-st aa-s2"><i aria-hidden="true">&#10022;</i><span>Shop By Aura</span><i aria-hidden="true">&#10022;</i></h2>
+        <div class="aa-drawer__purpose aa-st aa-s2">
+          <a href="/collections/love-1" class="aa-drawer__purpose-tile aa-purpose--love">
+            <span class="aa-drawer__purpose-img-wrap">
+              {%- if collections['love-1'].image -%}
+                <img src="{{ collections['love-1'].image | image_url: width: 280 }}" alt="For Love" class="aa-drawer__purpose-img" loading="eager">
+              {%- elsif collections['love-1'].featured_image -%}
+                <img src="{{ collections['love-1'].featured_image | image_url: width: 280 }}" alt="For Love" class="aa-drawer__purpose-img" loading="eager">
+              {%- else -%}
+                <span class="aa-drawer__purpose-label" aria-hidden="true">♥</span>
+              {%- endif -%}
+            </span>
+            <span class="aa-drawer__purpose-label">For Love</span>
+          </a>
+          <a href="/collections/health" class="aa-drawer__purpose-tile aa-purpose--health">
+            <span class="aa-drawer__purpose-img-wrap">
+              {%- if collections['health'].featured_image -%}
+                <img src="{{ collections['health'].featured_image | image_url: width: 280 }}" alt="For Health" class="aa-drawer__purpose-img" loading="eager">
+              {%- else -%}
+                <img src="https://cdn.shopify.com/s/files/1/0938/8843/3134/files/emerald-necklace.jpg" alt="For Health" class="aa-drawer__purpose-img" loading="eager">
+              {%- endif -%}
+            </span>
+            <span class="aa-drawer__purpose-label">For Health</span>
+          </a>
+          <a href="/collections/wealth" class="aa-drawer__purpose-tile aa-purpose--success">
+            <span class="aa-drawer__purpose-img-wrap">
+              {%- if collections['wealth'].featured_image -%}
+                <img src="{{ collections['wealth'].featured_image | image_url: width: 280 }}" alt="For Wealth" class="aa-drawer__purpose-img" loading="eager">
+              {%- else -%}
+                <img src="https://cdn.shopify.com/s/files/1/0938/8843/3134/files/sapphire-ring.jpg" alt="For Wealth" class="aa-drawer__purpose-img" loading="eager">
+              {%- endif -%}
+            </span>
+            <span class="aa-drawer__purpose-label">For Wealth</span>
+          </a>
+        </div>
+
+        {%- comment -%} ====== Section 4: Quick Links (wireframe A 2026-06-12) ======
+            Home + the menu's utility links (About Us / Track Order / Astro
+            Calculator). Log in removed per Dhruv. Icons mapped by title. {%- endcomment -%}
+        <h2 class="aa-drawer__title aa-orn aa-st aa-s3"><i aria-hidden="true">&#10022;</i><span>Quick Links</span><i aria-hidden="true">&#10022;</i></h2>
+        <ul class="aa-drawer__pages aa-st aa-s3" role="list">
+          {%- for link in section.settings.menu.links -%}
+            {%- liquid
+              assign t_lower = link.title | downcase | strip
+              assign is_utility = false
+              for u in utility_list
+                if t_lower contains u
+                  assign is_utility = true
+                  break
+                endif
+              endfor
+              unless is_utility
+                continue
+              endunless
+            -%}
+            <li>
+              <a href="{{ link.url }}" class="aa-drawer__page-link"{% if link.current %} aria-current="page"{% endif %}>
+                <i class="aa-pl-ic" aria-hidden="true">
+                  {%- if t_lower contains 'about' -%}
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01"/><path d="M11 12h1v4h1"/></svg>
+                  {%- elsif t_lower contains 'track' -%}
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8 12 3 3 8v8l9 5 9-5V8Z"/><path d="m3 8 9 5 9-5"/><path d="M12 13v8"/></svg>
+                  {%- elsif t_lower contains 'support' or t_lower contains 'help' or t_lower contains 'contact' -%}
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13a8 8 0 0 1 16 0"/><rect x="2.5" y="13" width="4" height="6" rx="2"/><rect x="17.5" y="13" width="4" height="6" rx="2"/></svg>
+                  {%- elsif t_lower contains 'calc' or t_lower contains 'astro' -%}
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M3.5 18.5C7 17 17 10 20.5 5.5"/></svg>
+                  {%- else -%}
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 2.2 6.8H21l-5.4 4 2 6.9-5.6-4.2-5.6 4.2 2-6.9-5.4-4h6.8L12 3Z"/></svg>
+                  {%- endif -%}
+                </i>
+                {{- link.title | escape -}}
+                <span class="aa-pl-arr" aria-hidden="true">&#8250;</span>
+              </a>
+            </li>
+            {%- if t_lower contains 'about' -%}
+              {%- comment -%} Track Order — hardcoded (no menu item exists);
+                  /pages/orders is where the account system's My Orders goes {%- endcomment -%}
+              <li>
+                <a href="/pages/orders" class="aa-drawer__page-link">
+                  <i class="aa-pl-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8 12 3 3 8v8l9 5 9-5V8Z"/><path d="m3 8 9 5 9-5"/><path d="M12 13v8"/></svg></i>
+                  Track Order
+                  <span class="aa-pl-arr" aria-hidden="true">&#8250;</span>
+                </a>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+
+        {%- comment -%} ====== Section 5: Social icons ====== {%- endcomment -%}
+        <div class="aa-drawer__social aa-st aa-s4">
+          {%- if settings.social_instagram_link != blank -%}
+            <a href="{{ settings.social_instagram_link }}" class="aa-drawer__social-link" aria-label="Instagram">
+              {{- 'icon-instagram.svg' | inline_asset_content -}}
+            </a>
+          {%- endif -%}
+          {%- if settings.social_facebook_link != blank -%}
+            <a href="{{ settings.social_facebook_link }}" class="aa-drawer__social-link" aria-label="Facebook">
+              {{- 'icon-facebook.svg' | inline_asset_content -}}
+            </a>
+          {%- endif -%}
+          {%- if settings.social_youtube_link != blank -%}
+            <a href="{{ settings.social_youtube_link }}" class="aa-drawer__social-link" aria-label="YouTube">
+              {{- 'icon-youtube.svg' | inline_asset_content -}}
+            </a>
+          {%- endif -%}
+          <a href="mailto:support@astroaura.market" class="aa-drawer__social-link" aria-label="Email">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+          </a>
+        </div>
+
       </div>
     </div>
   </details>
 </header-drawer>
+
+{%- comment -%} Real backdrop element — sibling of <header-drawer> so :has() / ~ selectors target it cleanly. {%- endcomment -%}
+<div class="aa-drawer__backdrop" aria-hidden="true"></div>
+
+<style>
+  /* === Aura AI mobile drawer — Astrotalk-style === */
+  .aa-drawer {
+    background: #F8F4EA !important;
+    color: #241019 !important;
+  }
+  .aa-drawer__inner {
+    padding: 18px 12px 50px !important;
+    /* single scroll container is #menu-drawer (100dvh); don't nest a second
+       scroll here with a static 100vh max-height — it clipped the bottom */
+    overflow: visible;
+    max-height: none;
+  }
+  .aa-drawer__title {
+    font-family: 'Cormorant Garamond', Georgia, serif !important;
+    font-size: 22px !important;
+    font-weight: 600 !important;
+    color: #1A1A1A !important;
+    text-align: center !important;
+    margin: 18px 0 18px !important;
+    letter-spacing: 0.3px;
+  }
+  .aa-drawer__title:first-of-type { margin-top: 6px !important; }
+
+  /* === Categories: 4-column tile grid (compact for 86vw drawer) === */
+  .aa-drawer__grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 16px 4px !important;
+    margin-bottom: 22px !important;
+    padding: 0 !important;
+  }
+  .aa-drawer__tile {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 8px !important;
+    text-decoration: none !important;
+    color: #1A1A1A !important;
+    transition: transform 180ms cubic-bezier(.22,.61,.36,1) !important;
+  }
+  .aa-drawer__tile:active { transform: scale(0.96) !important; }
+
+  .aa-drawer__tile-circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    /* Orange tint — soft cream → warm peach gradient */
+    background: radial-gradient(circle at 30% 30%, #FFF4E6 0%, #FAEFD9 60%, #F3DCB8 100%);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Layered orange rim — subtle inner ring + soft outer glow */
+    box-shadow:
+      inset 0 0 0 1.5px rgba(181, 142, 62, 0.35),
+      0 2px 8px rgba(36, 16, 25, 0.08);
+    transition: box-shadow 200ms ease-out, transform 200ms ease-out !important;
+  }
+  .aa-drawer__tile:hover .aa-drawer__tile-circle,
+  .aa-drawer__tile:focus-visible .aa-drawer__tile-circle {
+    box-shadow:
+      inset 0 0 0 2px rgba(181, 142, 62, 0.6),
+      0 4px 16px rgba(181, 142, 62, 0.3);
+    transform: translateY(-1px);
+  }
+  .aa-drawer__tile-img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block;
+  }
+  .aa-drawer__tile-placeholder {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 22px;
+    font-weight: 500;
+    color: #4A1942;
+  }
+  .aa-drawer__tile-label {
+    font-family: 'Cormorant Garamond', Georgia, serif !important;
+    font-size: 11.5px !important;
+    font-weight: 500 !important;
+    color: #1A1A1A !important;
+    text-align: center !important;
+    line-height: 1.2 !important;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    max-width: 100%;
+    padding: 0 2px;
+    transition: color 200ms ease-out !important;
+  }
+  .aa-drawer__tile:hover .aa-drawer__tile-label,
+  .aa-drawer__tile:focus-visible .aa-drawer__tile-label {
+    color: #C44A24 !important;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .aa-drawer__tile,
+    .aa-drawer__tile-circle,
+    .aa-drawer__tile-label { transition: none !important; }
+  }
+
+  /* === Promo banners — 3 rectangular tiles === */
+  .aa-drawer__promos {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 8px !important;
+    margin: 16px 0 24px !important;
+  }
+  .aa-drawer__promo {
+    aspect-ratio: 1 / 1;
+    border-radius: 8px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    padding: 10px 12px;
+    text-decoration: none !important;
+    color: #FFFFFF !important;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.18s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .aa-drawer__promo:hover { transform: translateY(-2px); }
+  .aa-drawer__promo--brown {
+    background: linear-gradient(135deg, #6B3E1F, #8B5A2B);
+  }
+  .aa-drawer__promo--orange {
+    background: linear-gradient(135deg, #C44A24, #E27937);
+  }
+  .aa-drawer__promo--dark {
+    background: linear-gradient(135deg, #2A1A0F, #4A2F1F);
+  }
+  .aa-drawer__promo-label {
+    font-family: 'Cormorant Garamond', Georgia, serif !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    color: #FFFFFF !important;
+    line-height: 1.15 !important;
+    letter-spacing: 0.3px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  }
+
+  /* === Shop By Aura — colored pills === */
+  .aa-drawer__purpose {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 8px !important;
+    margin-bottom: 24px !important;
+    padding: 0 !important;
+  }
+  .aa-drawer__purpose-tile {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+    padding: 0 0 10px !important;
+    border-radius: 14px !important;
+    text-decoration: none !important;
+    color: #1A1A1A !important;
+    aspect-ratio: auto !important;
+    gap: 8px !important;
+    overflow: hidden !important;
+    transition: transform 0.18s ease;
+  }
+  .aa-drawer__purpose-tile:hover { transform: translateY(-2px); }
+  .aa-drawer__purpose-img-wrap {
+    display: block !important;
+    width: 100% !important;
+    aspect-ratio: 1 / 1 !important;
+    overflow: hidden !important;
+    border-radius: 14px 14px 0 0 !important;
+  }
+  .aa-drawer__purpose-img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block !important;
+    margin: 0 !important;
+  }
+  .aa-drawer__purpose-label {
+    font-family: 'Cormorant Garamond', Georgia, serif !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    color: #1A1A1A !important;
+    text-align: center !important;
+    line-height: 1.1 !important;
+  }
+  .aa-purpose--money { background: #E8F1E0; }
+  .aa-purpose--love { background: #FBE6EC; }
+  .aa-purpose--health { background: #EFE0F2; }
+  .aa-purpose--success { background: #FCEAD0; }
+  .aa-purpose--peace { background: #DDEEF5; }
+  .aa-purpose--neutral { background: #F4EFE6; }
+
+  /* === Pages list — clean text rows === */
+  .aa-drawer__pages {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 6px 0 24px !important;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+  }
+  .aa-drawer__pages li {
+    list-style: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  }
+  .aa-drawer__page-link {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    padding: 14px 4px !important;
+    font-size: 13.5px !important;
+    font-weight: 600 !important;
+    color: #241019 !important;
+    text-decoration: none !important;
+    transition: color 0.18s ease;
+  }
+  .aa-pl-ic {
+    font-style: normal; flex: 0 0 22px; width: 22px; height: 22px;
+    display: inline-flex; align-items: center; justify-content: center;
+    color: #B58E3E;
+  }
+  .aa-pl-ic svg { width: 18px; height: 18px; }
+  .aa-pl-arr { margin-left: auto; color: #B58E3E; font-size: 16px; line-height: 1; }
+  .aa-drawer__page-link:active { background: rgba(36, 16, 25, 0.03); }
+  .aa-drawer__page-link:hover,
+  .aa-drawer__page-link[aria-current] {
+    color: #4A1942 !important;
+  }
+
+  /* === Social icons row === */
+  .aa-drawer__social {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 12px;
+    padding-top: 18px;
+  }
+  .aa-drawer__social-link {
+    width: 38px; height: 38px; border-radius: 50%;
+    border: 1px solid rgba(181, 142, 62, 0.4);
+    color: #4a3a42 !important;
+    transition: transform 160ms cubic-bezier(0.32, 0.72, 0, 1), color 0.18s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .aa-drawer__social-link:hover { color: #B58E3E !important; }
+  .aa-drawer__social-link:active { transform: scale(0.9); }
+  .aa-drawer__social-link svg {
+    width: 17px;
+    height: 17px;
+  }
+
+  /* Hide default Shopify drawer leftovers */
+  .aa-drawer .menu-drawer__navigation-container,
+  .aa-drawer .menu-drawer__utility-links { display: none !important; }
+
+  /* === Wireframe A (2026-06-12): kicker + ornament headings === */
+  .aa-kicker {
+    text-align: center; font-size: 9px; font-weight: 800;
+    letter-spacing: 0.26em; color: #B58E3E; text-transform: uppercase;
+    margin: 4px 0 -12px;
+  }
+  .aa-drawer__title.aa-orn {
+    display: flex !important; align-items: center; justify-content: center; gap: 10px;
+  }
+  .aa-drawer__title.aa-orn i { font-style: normal; font-size: 10px; color: #B58E3E; }
+  .aa-drawer__title.aa-orn::before,
+  .aa-drawer__title.aa-orn::after { content: ''; flex: 0 0 26px; height: 1px; }
+  .aa-drawer__title.aa-orn::before { background: linear-gradient(90deg, transparent, #B58E3E); }
+  .aa-drawer__title.aa-orn::after { background: linear-gradient(90deg, #B58E3E, transparent); }
+
+  /* === staggered cascade on open (menu-opening is the open-state class) === */
+  .aa-drawer .aa-st {
+    opacity: 0; transform: translateY(14px);
+    transition: opacity 420ms ease, transform 420ms cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  header-drawer details[open].menu-opening .aa-drawer .aa-st { opacity: 1; transform: translateY(0); }
+  header-drawer details[open].menu-opening .aa-drawer .aa-s1 { transition-delay: 200ms; }
+  header-drawer details[open].menu-opening .aa-drawer .aa-s2 { transition-delay: 280ms; }
+  header-drawer details[open].menu-opening .aa-drawer .aa-s3 { transition-delay: 360ms; }
+  header-drawer details[open].menu-opening .aa-drawer .aa-s4 { transition-delay: 440ms; }
+
+  @media (max-width: 749px) {
+    /* bottom tab bar slides away while the drawer is open */
+    #aa-tabbar { transition: transform 360ms cubic-bezier(0.32, 0.72, 0, 1); }
+    body:has(header-drawer details[open]) #aa-tabbar { transform: translateY(110%) !important; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .aa-drawer .aa-st { transition: none !important; opacity: 1 !important; transform: none !important; }
+  }
+
+  /* === Narrow phones — keep 4 cols, even smaller tiles === */
+  @media (max-width: 380px) {
+    .aa-drawer__grid {
+      grid-template-columns: repeat(4, 1fr) !important;
+      gap: 14px 2px !important;
+    }
+    .aa-drawer__tile-circle { width: 46px; height: 46px; }
+    .aa-drawer__tile-label { font-size: 10.5px !important; }
+    .aa-drawer__purpose { gap: 6px !important; }
+  }
+</style>
+
+<script>
+(function () {
+  // AstroAura mobile drawer — backdrop click + ESC-to-close + defensive cleanup.
+  // SINGLETON: inline scripts do not re-execute on Turbo navigations, so all
+  // listeners live on document and survive page swaps.
+  if (window.__aaDrawerCtl) return;
+  window.__aaDrawerCtl = true;
+  function getOpenDrawer() {
+    return document.querySelector('header-drawer details[open]');
+  }
+  function getBackdrop() {
+    return document.querySelector('.aa-drawer__backdrop');
+  }
+  function closeAaDrawer(d) {
+    if (!d) d = getOpenDrawer();
+    if (!d) return;
+    d.removeAttribute('open');
+    d.classList.remove('menu-opening');
+    document.body.classList.remove('overflow-hidden-mobile', 'overflow-hidden-tablet', 'overflow-hidden');
+    // Force backdrop to start fading immediately, even on browsers without :has() support
+    var bd = getBackdrop();
+    if (bd) {
+      bd.style.opacity = '0';
+      bd.style.pointerEvents = 'none';
+      // After the fade-out completes, clear the inline style so CSS takes over again
+      setTimeout(function () {
+        if (bd && !getOpenDrawer()) {
+          bd.style.opacity = '';
+          bd.style.pointerEvents = '';
+          bd.style.visibility = '';
+        }
+      }, 700);
+    }
+    // Belt-and-braces: clear any active state on other drawer-like overlays
+    document.querySelectorAll('cart-drawer.active, .drawer.active').forEach(function (el) {
+      el.classList.remove('active');
+    });
+  }
+  // Backdrop click closes the drawer
+  document.addEventListener('click', function (e) {
+    var bd = getBackdrop();
+    if (bd && (e.target === bd || bd.contains(e.target))) {
+      e.preventDefault();
+      e.stopPropagation();
+      closeAaDrawer();
+      return;
+    }
+  }, true);
+  // ESC key closes the drawer
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape' && e.key !== 'Esc') return;
+    closeAaDrawer();
+  });
+  // When the hamburger opens the drawer, make sure backdrop's inline styles
+  // from a previous close don't suppress it
+  document.addEventListener('click', function (e) {
+    var summary = document.querySelector('header-drawer summary');
+    if (summary && summary.contains(e.target)) {
+      var bd = getBackdrop();
+      if (bd) {
+        bd.style.opacity = '';
+        bd.style.pointerEvents = '';
+        bd.style.visibility = '';
+      }
+    }
+  }, true);
+  /* TURBO: never cache or restore a page with the menu open. An open-state
+     snapshot restores as details[open].menu-opening — the menu arrives
+     pre-opened, the first hamburger tap has nothing to animate, and the
+     "first open transition missing" bug appears. Close instantly (no
+     animation) before caching and after every render. */
+  function forceCloseInstant() {
+    var d = getOpenDrawer();
+    if (!d) return;
+    var drawer = d.querySelector('.aa-drawer');
+    if (drawer) {
+      drawer.style.transition = 'none';
+      requestAnimationFrame(function () { drawer.style.transition = ''; });
+    }
+    closeAaDrawer(d);
+  }
+  document.addEventListener('turbo:before-cache', forceCloseInstant);
+  document.addEventListener('turbo:load', forceCloseInstant);
+  document.addEventListener('turbo:render', forceCloseInstant);
+})();
+</script>

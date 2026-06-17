@@ -1,0 +1,1624 @@
+/* cache-bust 2026-06-11T17:20 — force new version hash (collection redesign) */
+/* ============================================================
+   COLLECTION + SEARCH PAGES — grid override.
+   Mobile: 2 cols. Desktop: auto-fill at 230px min.
+   Section liquid uses Dawn defaults — we override via CSS only.
+   ============================================================ */
+@media (max-width: 749px) {
+  body.template-collection ul#product-grid,
+  body.template-collection ul.product-grid,
+  body.template-search ul#product-grid,
+  body.template-search ul.product-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 14px !important;
+    list-style: none !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  body.template-collection ul.product-grid > li,
+  body.template-search ul.product-grid > li {
+    width: 100% !important;
+    min-width: 0 !important;
+    flex: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+}
+/* aa-pcard.css cache-bust 2026-05-27-23b */
+@media (min-width: 750px) {
+  /* Outer collection container — small inner padding so card box-shadows
+     have breathing room and the rightmost card's frame isn't clipped by
+     the viewport edge. */
+  html body.template-collection .collection.page-width,
+  html body.template-search .template-search__results.collection.page-width {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    box-sizing: border-box !important;
+  }
+  html body.template-search ul#product-grid,
+  html body.template-search ul.product-grid.grid,
+  html body.template-search ul.product-grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 24px !important;
+    list-style: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+  /* Collection grid: CONTAINED — space left/right, products in the middle
+     (approved redesign 2026-06-11). */
+  html body.template-collection ul#product-grid,
+  html body.template-collection ul.product-grid.grid,
+  html body.template-collection ul.product-grid {
+    display: grid !important;
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+    gap: 22px !important;
+    list-style: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 24px !important;
+    box-sizing: border-box !important;
+    overflow: visible !important;
+  }
+  /* Match Dawn's specificity (.grid--N-col-desktop .grid__item = 2 classes)
+     by stacking enough class hooks to win the cascade. */
+  html body.template-collection ul.product-grid.grid > li,
+  html body.template-collection ul.product-grid.grid > .grid__item,
+  html body.template-collection ul.product-grid > li.grid__item,
+  html body.template-search ul.product-grid.grid > li,
+  html body.template-search ul.product-grid.grid > .grid__item,
+  html body.template-search ul.product-grid > li.grid__item {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    flex: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+}
+/* Tablet: 3 columns inside the contained collection grid */
+@media (min-width: 750px) and (max-width: 1099px) {
+  html body.template-collection ul#product-grid,
+  html body.template-collection ul.product-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+}
+
+/* ============================================================
+   AstroAura — Wireframe Product Card (.aa-pcard)
+   Self-contained: CSS vars + grid + card + media + content + cta.
+   Mobile-first.
+   ============================================================ */
+
+:root {
+  --aa-bg:        #FBF6EE;
+  --aa-ink:       #1F0820;
+  --aa-muted:     #8A6F88;
+  --aa-hair:      #E8DDD0;
+  --aa-g-1:       #E9027A;
+  --aa-g-3:       #F04930;
+  --aa-g-5:       #F58220;
+  --aa-gradient:  linear-gradient(95deg, #E9027A 0%, #EC1F4F 30%, #F04930 60%, #F58220 100%);
+  --aa-font-disp: 'Fraunces', Georgia, serif;
+  --aa-font-ui:   'Plus Jakarta Sans', system-ui, sans-serif;
+  --aa-shadow-card: 0 1px 2px rgba(45,10,46,.04), 0 6px 20px rgba(45,10,46,.05);
+  --aa-shadow-card-hi: 0 1px 2px rgba(45,10,46,.04), 0 16px 38px rgba(45,10,46,.1);
+}
+
+/* ===== Product grid layout ===== */
+.aa-pgrid--grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+@media (min-width: 781px) {
+  .aa-pgrid--grid { grid-template-columns: repeat(3, 1fr); gap: 22px; }
+}
+@media (min-width: 1100px) {
+  .aa-pgrid--grid { grid-template-columns: repeat(var(--aa-cols, 5), 1fr); }
+}
+
+.aa-pgrid--slider {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  overflow-y: visible;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  padding-bottom: 10px;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+.aa-pgrid--slider::-webkit-scrollbar { display: none; }
+.aa-pgrid--slider .aa-pcard {
+  flex: 0 0 calc((100% - 12px) / 2);
+  scroll-snap-align: start;
+}
+@media (min-width: 781px) {
+  .aa-pgrid--slider { gap: 22px; }
+  .aa-pgrid--slider .aa-pcard {
+    flex: 0 0 calc((100% - 44px) / 3);
+    min-width: 220px;
+  }
+}
+@media (min-width: 1100px) {
+  .aa-pgrid--slider .aa-pcard {
+    flex: 0 0 calc((100% - (var(--aa-cols, 5) - 1) * 22px) / var(--aa-cols, 5));
+  }
+}
+
+/* ===== Card base ===== */
+.aa-pcard {
+  background: #FFFFFF;
+  border: 1px solid var(--aa-hair);
+  border-radius: 18px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--aa-shadow-card);
+  transition: transform 280ms cubic-bezier(.22,.61,.36,1), box-shadow 280ms;
+  position: relative;
+  min-width: 0;
+}
+.aa-pcard:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--aa-shadow-card-hi);
+}
+
+/* ===== Image media ===== */
+.aa-pcard__media {
+  display: block;
+  /* Even inset on all four sides so the frame reads as a balanced rounded square */
+  margin: 6px;
+  border-radius: 14px;
+  /* Square frame matches typical solo-product photos (bracelet, gem, rudraksha)
+     which are usually shot roughly 1:1. Filling both axes feels intentional. */
+  aspect-ratio: 1 / 1;
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 50% 38%, #FFFFFF 0%, #FAF6EE 80%);
+  border: 1px solid rgba(212,175,110,0.22);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.6) inset;
+}
+.aa-pcard__media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  /* COVER + zoom — fills the frame edge-to-edge AND scales the
+     bracelet/gem ~22% so the product reads bigger inside the frame.
+     The minor crop on extreme corners is invisible against the soft
+     studio backdrops these photos use. */
+  object-fit: cover;
+  object-position: center;
+  padding: 0;
+  box-sizing: border-box;
+  display: block;
+  transform: scale(1.22);
+  transform-origin: center;
+  transition: transform 700ms ease;
+}
+.aa-pcard:hover .aa-pcard__media img { transform: scale(1.28); }
+.aa-pcard.aa-fill .aa-pcard__media img { transform: scale(1.18); }
+.aa-pcard.aa-fill:hover .aa-pcard__media img { transform: scale(1.24); }
+.aa-pcard.aa-fill-strong .aa-pcard__media img { transform: scale(1.42); }
+.aa-pcard.aa-fill-strong:hover .aa-pcard__media img { transform: scale(1.48); }
+
+/* Quick-view button — the ONLY quick-view trigger on collection/search cards
+   (the image link itself navigates to the product). Hover-reveal pill on
+   desktop; hidden on mobile where quick-view falls back to the product page. */
+.aa-pcard__qv-btn {
+  position: absolute;
+  left: 50%;
+  bottom: 12px;
+  transform: translateX(-50%) translateY(8px);
+  background: rgba(36, 16, 25, .86);
+  color: #F6F0E3;
+  border: 0;
+  cursor: pointer;
+  font: 600 11px/1 'Jost', sans-serif;
+  letter-spacing: .03em;
+  padding: 8px 16px;
+  border-radius: 999px;
+  opacity: 0;
+  transition: opacity .25s ease, transform .25s ease;
+  white-space: nowrap;
+  z-index: 4;
+}
+.aa-pcard:hover .aa-pcard__qv-btn { opacity: 1; transform: translateX(-50%) translateY(0); }
+.aa-pcard__qv-btn:hover { background: rgba(36, 16, 25, 1); }
+@media (max-width: 768px) { .aa-pcard__qv-btn { display: none; } }
+
+/* Combo / multi-item / contextual photo cards — use CONTAIN so the full
+   composition (multiple bracelets, wider scenes) stays visible without
+   edges being cropped. Liquid adds .aa-pcard--wide-photo when product
+   title contains "combo"/"trio"/"+" or product type contains "combo". */
+/* Combo / wide-photo cards — use a landscape frame so the wider source
+   photo fills it cleanly without cropping the products at the edges.
+   Frame stays the same VISUAL size on mobile by capping max-height. */
+.aa-pcard--wide-photo .aa-pcard__media {
+  aspect-ratio: 4 / 3 !important;
+}
+.aa-pcard--wide-photo .aa-pcard__media img {
+  object-fit: cover !important;
+  object-position: center !important;
+  padding: 0 !important;
+  transform: scale(1) !important;
+}
+.aa-pcard--wide-photo:hover .aa-pcard__media img {
+  transform: scale(1.04) !important;
+}
+.aa-pcard__placeholder { display: block; }
+
+/* "Customers Also Bought" / related-products ONLY — make combo images fill the
+   frame (no white letterbox bands). Scoped so no other card grids change. */
+.related-products .aa-pcard__media,
+product-recommendations .aa-pcard__media,
+.related-products .aa-pcard--wide-photo .aa-pcard__media,
+product-recommendations .aa-pcard--wide-photo .aa-pcard__media {
+  aspect-ratio: 1 / 1 !important;
+}
+.related-products .aa-pcard__media img,
+product-recommendations .aa-pcard__media img {
+  object-fit: cover !important;
+  object-position: center !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* CERTIFIED stamp hidden on product cards — shows ONLY on product detail page main image */
+.aa-pcard__cert {
+  display: none !important;
+}
+
+/* ===== Badge & Heart ===== */
+.aa-pcard__badge {
+  position: absolute;
+  top: 10px; left: 10px;
+  background: var(--aa-gradient);
+  color: #FFFFFF;
+  font-family: var(--aa-font-ui);
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 5px 10px;
+  border-radius: 999px;
+  box-shadow: 0 4px 10px rgba(240,73,48,0.30);
+  z-index: 2;
+}
+.aa-pcard__heart {
+  position: absolute;
+  top: 10px; right: 10px;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.92);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--aa-ink);
+  z-index: 2;
+}
+
+/* ===== Content (category, title, divider, price) ===== */
+.aa-pcard__content {
+  padding: 12px 14px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+.aa-pcard__cat {
+  font-family: var(--aa-font-ui);
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  background: var(--aa-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-align: center;
+  margin: 0;
+}
+.aa-pcard__title {
+  font-family: var(--aa-font-disp);
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.25;
+  color: var(--aa-ink);
+  text-align: center;
+  min-height: 35px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin: 0;
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+.aa-pcard__title a { color: inherit; text-decoration: none; }
+.aa-pcard__divider {
+  display: block;
+  width: 28px; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(31,8,32,0.30), transparent);
+  align-self: center;
+  margin: 2px 0;
+}
+.aa-pcard__price-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 2px;
+}
+.aa-pcard__price {
+  font-family: var(--aa-font-disp);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--aa-ink);
+  letter-spacing: -0.3px;
+  white-space: nowrap;
+}
+.aa-pcard__strike {
+  font-family: var(--aa-font-ui);
+  font-size: 11px;
+  color: var(--aa-muted);
+  text-decoration: line-through;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* ===== Add to cart CTA ===== */
+.aa-pcard__form { margin: 0; margin-top: auto; position: relative; display: block; }
+.aa-pcard__cta {
+  margin-top: auto;
+  width: 100%;
+  background: var(--aa-ink);
+  color: var(--aa-bg);
+  border: 0;
+  border-radius: 999px;
+  padding: 10px 14px;
+  font-family: var(--aa-font-ui);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 200ms, transform 200ms, box-shadow 200ms;
+  display: block;
+}
+.aa-pcard__cta:hover {
+  background: linear-gradient(130deg, #E9027A 0%, #EC1F4F 32%, #F04930 64%, #F58220 100%) !important;
+  background-color: #E9027A !important;
+  color: #fff !important;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(233,2,122,0.30);
+}
+
+/* ===== Add-to-cart loading + success states ===== */
+.aa-pcard__cta--loading,
+.aa-pcard__cta--done {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  pointer-events: none;
+  transform: none;
+}
+.aa-pcard__cta--loading {
+  background: var(--aa-ink) !important;
+  color: var(--aa-bg) !important;
+}
+.aa-pcard__cta--done {
+  background: linear-gradient(130deg, #E9027A 0%, #EC1F4F 32%, #F04930 64%, #F58220 100%) !important;
+  color: #fff !important;
+  animation: aaCtaPop 0.32s ease;
+}
+.aa-cta-spinner {
+  width: 13px;
+  height: 13px;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  opacity: 0.9;
+  animation: aaCtaSpin 0.6s linear infinite;
+}
+.aa-cta-check {
+  position: relative;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+}
+.aa-cta-check::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 0;
+  width: 5px;
+  height: 9px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg) scale(0);
+  animation: aaCtaCheck 0.3s ease 0.05s forwards;
+}
+@keyframes aaCtaSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes aaCtaPop {
+  0% {
+    transform: scale(0.92);
+  }
+  55% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes aaCtaCheck {
+  0% {
+    transform: rotate(45deg) scale(0);
+  }
+  100% {
+    transform: rotate(45deg) scale(1);
+  }
+}
+
+/* ===== Qty stepper (when item in cart) ===== */
+.aa-pcard__qty {
+  display: none;
+  width: 100%;
+  margin-top: auto;
+  background: var(--aa-ink);
+  border-radius: 999px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px;
+  border: 0;
+  box-sizing: border-box;
+}
+.aa-pcard.aa-in-cart .aa-pcard__cta {
+  display: none !important;
+}
+.aa-pcard.aa-in-cart .aa-pcard__qty {
+  display: flex !important;
+}
+.aa-pcard__qty-btn {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: transparent;
+  color: #FFFFFF;
+  border: 0;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  padding: 0;
+}
+.aa-pcard__qty-btn:hover { background: rgba(255,255,255,0.18); }
+.aa-pcard__qty-num {
+  color: #FFFFFF;
+  font-family: var(--aa-font-ui);
+  font-size: 12px;
+  font-weight: 700;
+  flex: 1;
+  text-align: center;
+}
+
+/* ===== Override Dawn grid containers to use 2-col on mobile ===== */
+@media (max-width: 749px) {
+  .product-grid,
+  ul.product-grid,
+  .grid--3-col-tablet,
+  .grid--4-col-desktop,
+  .grid--5-col-desktop {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  .product-grid > .grid__item,
+  ul.product-grid > .grid__item {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    flex: none !important;
+    margin: 0 !important;
+  }
+}
+
+/* Force-hide empty qty stepper when card is NOT in cart (was rendering as empty pill) */
+.aa-pcard:not(.aa-in-cart) .aa-pcard__qty,
+article.aa-pcard:not(.aa-in-cart) .aa-pcard__qty {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+  overflow: hidden !important;
+}
+
+/* ============================================================
+   Mobile: horizontal slider for product grids (not 2-col grid)
+   ============================================================ */
+@media (max-width: 749px) {
+  /* Convert Dawn product-grid to horizontal slider on mobile — homepage
+     featured-collection only. EXCLUDED from collection/search pages
+     (those use the 2-col grid from earlier in this file). */
+  /* Homepage featured-collection — back to horizontal slider. */
+  body:not(.template-collection):not(.template-search) .product-grid,
+  body:not(.template-collection):not(.template-search) ul.product-grid,
+  body:not(.template-collection):not(.template-search) .grid--3-col-tablet,
+  body:not(.template-collection):not(.template-search) .grid--4-col-desktop,
+  body:not(.template-collection):not(.template-search) .grid--5-col-desktop {
+    display: flex !important;
+    grid-template-columns: none !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    overflow-y: visible !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    gap: 12px !important;
+    padding: 4px 16px 16px !important;
+    margin: 0 -16px !important;
+    list-style: none !important;
+  }
+  body:not(.template-collection):not(.template-search) .product-grid::-webkit-scrollbar,
+  body:not(.template-collection):not(.template-search) ul.product-grid::-webkit-scrollbar { display: none !important; }
+  /* vw-width sizing for homepage featured-collection sliders ONLY.
+     Excluded from template-collection / template-search where cards
+     use the 2-col grid layout from earlier rules. */
+  body:not(.template-collection):not(.template-search) .product-grid > .grid__item,
+  body:not(.template-collection):not(.template-search) ul.product-grid > .grid__item {
+    flex: 0 0 60vw !important;
+    width: 60vw !important;
+    min-width: 60vw !important;
+    max-width: 60vw !important;
+    scroll-snap-align: start !important;
+    margin: 0 !important;
+  }
+}
+@media (max-width: 400px) {
+  body:not(.template-collection):not(.template-search) .product-grid > .grid__item,
+  body:not(.template-collection):not(.template-search) ul.product-grid > .grid__item {
+    flex: 0 0 66vw !important;
+    width: 66vw !important;
+    min-width: 66vw !important;
+    max-width: 66vw !important;
+  }
+}
+
+/* NUKE the empty qty pill — multiple selectors, multiple properties */
+.aa-pcard .aa-pcard__qty,
+article.aa-pcard .aa-pcard__qty,
+.aa-pcard__qty {
+  display: none !important;
+}
+.aa-pcard.aa-in-cart .aa-pcard__qty,
+article.aa-pcard.aa-in-cart .aa-pcard__qty {
+  display: flex !important;
+}
+
+/* ============================================================
+   MOBILE: Cards 2x smaller, smaller ADD TO CART, scaled-down content
+   ============================================================ */
+@media (max-width: 400px) {
+  body:not(.template-collection):not(.template-search) .product-grid > .grid__item,
+  body:not(.template-collection):not(.template-search) ul.product-grid > .grid__item {
+    flex: 0 0 66vw !important;
+    width: 66vw !important;
+    min-width: 66vw !important;
+    max-width: 66vw !important;
+  }
+}
+
+/* NUKE the empty qty pill — multiple selectors, multiple properties */
+.aa-pcard .aa-pcard__qty,
+article.aa-pcard .aa-pcard__qty,
+.aa-pcard__qty {
+  display: none !important;
+}
+.aa-pcard.aa-in-cart .aa-pcard__qty,
+article.aa-pcard.aa-in-cart .aa-pcard__qty {
+  display: flex !important;
+}
+
+/* ============================================================
+   MOBILE: Cards 2x smaller, smaller ADD TO CART, scaled-down content
+   ============================================================ */
+@media (max-width: 400px) {
+  body:not(.template-collection):not(.template-search) .product-grid > .grid__item,
+  body:not(.template-collection):not(.template-search) ul.product-grid > .grid__item {
+    flex: 0 0 66vw !important;
+    width: 66vw !important;
+    min-width: 66vw !important;
+    max-width: 66vw !important;
+  }
+}
+
+/* NUKE the empty qty pill — multiple selectors, multiple properties */
+.aa-pcard .aa-pcard__qty,
+article.aa-pcard .aa-pcard__qty,
+.aa-pcard__qty {
+  display: none !important;
+}
+.aa-pcard.aa-in-cart .aa-pcard__qty,
+article.aa-pcard.aa-in-cart .aa-pcard__qty {
+  display: flex !important;
+}
+
+/* ============================================================
+   MOBILE: Cards 2x smaller, smaller ADD TO CART, scaled-down content
+   ============================================================ */
+@media (max-width: 400px) {
+  body:not(.template-collection):not(.template-search) .product-grid > .grid__item,
+  body:not(.template-collection):not(.template-search) ul.product-grid > .grid__item {
+    flex: 0 0 66vw !important;
+    width: 66vw !important;
+    min-width: 66vw !important;
+    max-width: 66vw !important;
+  }
+}
+
+/* NUKE the empty qty pill — multiple selectors, multiple properties */
+.aa-pcard .aa-pcard__qty,
+article.aa-pcard .aa-pcard__qty,
+.aa-pcard__qty {
+  display: none !important;
+}
+.aa-pcard.aa-in-cart .aa-pcard__qty,
+article.aa-pcard.aa-in-cart .aa-pcard__qty {
+  display: flex !important;
+}
+
+/* ============================================================
+   MOBILE: Cards 2x smaller, smaller ADD TO CART, scaled-down content
+   ============================================================ */
+@media (max-width: 749px) {
+  /* Homepage featured-collection slider — card width back to 42vw default. */
+  body:not(.template-collection):not(.template-search) .product-grid > .grid__item,
+  body:not(.template-collection):not(.template-search) ul.product-grid > .grid__item {
+    flex: 0 0 42vw !important;
+    width: 42vw !important;
+    min-width: 42vw !important;
+    max-width: 42vw !important;
+    scroll-snap-align: start !important;
+    margin: 0 !important;
+  }
+  /* Card itself — smaller radius, tighter padding */
+  body:not(.template-collection) .aa-pcard {
+    border-radius: 12px !important;
+  }
+  /* Image — smaller margin around it */
+  body:not(.template-collection) .aa-pcard__media {
+    margin: 4px 4px 0 !important;
+    border-radius: 8px !important;
+  }
+  /* Badge — smaller */
+  body:not(.template-collection) .aa-pcard__badge {
+    top: 6px !important; left: 6px !important;
+    font-size: 7.5px !important;
+    padding: 3px 6px !important;
+    letter-spacing: 0.1em !important;
+  }
+  /* Heart — smaller */
+  body:not(.template-collection) .aa-pcard__heart {
+    top: 6px !important; right: 6px !important;
+    width: 20px !important; height: 20px !important;
+  }
+  body:not(.template-collection) .aa-pcard__heart svg { width: 11px !important; height: 11px !important; }
+  /* Content — tighter padding */
+  body:not(.template-collection) .aa-pcard__content {
+    padding: 8px 8px 8px !important;
+    gap: 3px !important;
+  }
+  /* Category — smaller */
+  body:not(.template-collection) .aa-pcard__cat {
+    font-size: 7px !important;
+    letter-spacing: 0.12em !important;
+  }
+  /* Title — smaller font */
+  body:not(.template-collection) .aa-pcard__title {
+    font-size: 11px !important;
+    line-height: 1.2 !important;
+    min-height: 27px !important;
+  }
+  /* Divider — tighter */
+  body:not(.template-collection) .aa-pcard__divider {
+    width: 20px !important;
+    margin: 1px 0 !important;
+  }
+  /* Price — smaller */
+  body:not(.template-collection) .aa-pcard__price {
+    font-size: 12.5px !important;
+  }
+  body:not(.template-collection) .aa-pcard__strike {
+    font-size: 9px !important;
+  }
+  body:not(.template-collection) .aa-pcard__price-row { gap: 4px !important; margin-top: 0 !important; }
+  /* ADD TO CART button — much smaller pill */
+  body:not(.template-collection) .aa-pcard__cta {
+    padding: 6px 8px !important;
+    font-size: 8px !important;
+    letter-spacing: 0.08em !important;
+    margin-top: 6px !important;
+  }
+}
+@media (max-width: 400px) {
+  body:not(.template-collection):not(.template-search) .product-grid > .grid__item,
+  body:not(.template-collection):not(.template-search) ul.product-grid > .grid__item {
+    flex: 0 0 48vw !important;
+    width: 48vw !important;
+    min-width: 48vw !important;
+    max-width: 48vw !important;
+  }
+}
+
+/* MOBILE: ADD TO CART — narrower + taller, curved rectangle (not full-width pill).
+   Collection pages excluded: their mobile card (wireframe B) styles its own buttons. */
+@media (max-width: 749px) {
+  body:not(.template-collection) .aa-pcard__cta {
+    width: auto !important;
+    max-width: 70% !important;
+    padding: 12px 14px !important;
+    font-size: 8px !important;
+    border-radius: 12px !important;
+    margin: 8px auto 0 !important;
+    display: block !important;
+    align-self: center !important;
+  }
+  body:not(.template-collection) .aa-pcard__form { width: 100% !important; text-align: center !important; }
+}
+
+/* Hide the heart/wishlist icon on all product cards (mobile + desktop) */
+.aa-pcard__heart,
+article.aa-pcard .aa-pcard__heart {
+  display: none !important;
+}
+
+/* Prevent horizontal page overflow caused by slider negative margins.
+   Use `overflow-x: clip` instead of `hidden` — clip prevents horizontal
+   overflow WITHOUT creating a scroll container, so position: sticky
+   on the header still works on mobile. */
+@media (max-width: 749px) {
+  html, body { overflow-x: clip !important; max-width: 100% !important; }
+  .product-grid,
+  ul.product-grid,
+  .grid--3-col-tablet,
+  .grid--4-col-desktop,
+  .grid--5-col-desktop {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+}
+
+/* ============================================================
+   ADD TO CART — instant slide-in from right (cart page entrance only)
+   ============================================================ */
+body.template-cart,
+body[class*="template-cart"] {
+  animation: aa-cart-push-in 180ms cubic-bezier(0.32, 0.72, 0, 1) both;
+}
+@keyframes aa-cart-push-in {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(0); }
+}
+
+/* FIX: ADD TO CART button must stay visible even after add-to-cart click.
+   Since we redirect to /cart immediately, don't toggle the qty stepper state. */
+.aa-pcard .aa-pcard__cta:not(.aa-pcard__cta--plus),
+.aa-pcard.aa-in-cart .aa-pcard__cta:not(.aa-pcard__cta--plus),
+article.aa-pcard.aa-in-cart .aa-pcard__cta:not(.aa-pcard__cta--plus) {
+  display: block !important;
+  visibility: visible !important;
+}
+.aa-pcard .aa-pcard__qty,
+.aa-pcard.aa-in-cart .aa-pcard__qty,
+article.aa-pcard.aa-in-cart .aa-pcard__qty {
+  display: none !important;
+}
+
+/* ============================================================
+   HOMEPAGE "Collections" section (collection-list) — 3 per row, scaled down
+   ============================================================ */
+@media (max-width: 749px) {
+  /* Wrapper stays a normal block so heading sits on top, grid below */
+  .collection-list-wrapper {
+    display: block !important;
+    width: 100% !important;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+  .collection-list-wrapper .title-wrapper-with-link,
+  .collection-list-wrapper .title-wrapper {
+    display: block !important;
+    width: 100% !important;
+    text-align: center !important;
+    margin: 0 0 14px !important;
+  }
+  .collection-list-wrapper .collection-list-title {
+    text-align: center !important;
+    width: 100% !important;
+    margin: 0 !important;
+  }
+  /* The UL itself becomes the 3-col grid.
+     Specificity bumped to beat Dawn's .grid--1-col-tablet-down which
+     sets 1-col on mobile with !important. */
+  html body ul.collection-list,
+  html body ul.collection-list.grid,
+  html body ul.collection-list.grid.grid--1-col-tablet-down,
+  html body ul.collection-list.grid.grid--2-col-tablet-down,
+  html body .collection-list-wrapper ul.collection-list,
+  html body .collection-list-wrapper .collection-list {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+    scroll-snap-type: none !important;
+    gap: 8px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    list-style: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    transform: none !important;
+  }
+  /* Each item — full grid cell, no max-width */
+  .collection-list > li,
+  .collection-list > .grid__item,
+  ul.collection-list > .grid__item,
+  .collection-list .collection-list__item {
+    flex: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    scroll-snap-align: none !important;
+  }
+  /* Card chrome — tight, square media, small title */
+  .collection-list .card-wrapper,
+  .collection-list .card,
+  .collection-list .card.collection-card {
+    width: 100% !important;
+    border-radius: 10px !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
+    background: #FFFFFF !important;
+    border: 0 !important;
+    padding: 6px !important;
+  }
+  .collection-list .card__media,
+  .collection-list .media,
+  .collection-list .card.collection-card .card__media {
+    margin: 0 0 6px !important;
+    border-radius: 8px !important;
+    aspect-ratio: 1 / 1 !important;
+    overflow: hidden !important;
+  }
+  .collection-list .card__media img,
+  .collection-list .media img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+  .collection-list .card__content,
+  .collection-list .card__information,
+  .collection-list .card__inner {
+    padding: 4px 2px !important;
+    min-height: 0 !important;
+  }
+  .collection-list .card__heading,
+  .collection-list .card__heading a,
+  .collection-list h3,
+  .collection-list h2 {
+    font-size: 10.5px !important;
+    line-height: 1.2 !important;
+    text-align: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-weight: 600 !important;
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
+    hyphens: none !important;
+  }
+  /* Kill description text inside collection cards on mobile (it overflows narrow cells) */
+  .collection-list .card__description,
+  .collection-list p {
+    display: none !important;
+  }
+  /* Hide the right-arrow on tiny cards */
+  .collection-list .icon-arrow,
+  .collection-list .icon-wrap {
+    display: none !important;
+  }
+}
+
+/* ============================================================
+   COLLECTION PAGE LAYOUT — kill Dawn's vertical filter layout
+   that pushes the grid into a narrow left column.
+   Apply on both mobile and desktop.
+   ============================================================ */
+html body .facets-vertical {
+  display: block !important;
+  grid-template-columns: none !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+html body .facets-vertical .facets-wrapper,
+html body aside.facets-wrapper {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 0 16px !important;
+  padding: 0 16px !important;
+  box-sizing: border-box !important;
+}
+html body .product-grid-container,
+html body #ProductGridContainer {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+}
+html body .product-grid-container .collection,
+html body #ProductGridContainer .collection {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  padding: 0 16px !important;
+  box-sizing: border-box !important;
+}
+
+/* ============================================================
+   DESKTOP — collection/search grid cards have a minimum width
+   so they never collapse to thin vertical stripes.
+   ============================================================ */
+@media (min-width: 750px) {
+  /* SEARCH only — the collection grid layout is owned by the CONTAINED
+     rules at the top of this file (approved redesign 2026-06-11). Keeping
+     collection selectors out of this later block stops it from re-flattening
+     the centred max-width grid via file order. */
+  html body.template-search .product-grid,
+  html body.template-search ul.product-grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 24px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    width: 100% !important;
+  }
+  html body.template-collection .product-grid > li,
+  html body.template-collection .product-grid > .grid__item,
+  html body.template-search .product-grid > li,
+  html body.template-search .product-grid > .grid__item {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    flex: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  html body.template-collection .product-grid .aa-pcard,
+  html body.template-search .product-grid .aa-pcard {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+  html body.template-collection .product-grid .aa-pcard__media,
+  html body.template-search .product-grid .aa-pcard__media {
+    aspect-ratio: 1 / 1 !important;
+    width: 100% !important;
+  }
+  html body.template-collection .product-grid .aa-pcard__title,
+  html body.template-search .product-grid .aa-pcard__title {
+    font-size: 15px !important;
+    line-height: 1.3 !important;
+    min-height: 40px !important;
+  }
+  html body.template-collection .product-grid .aa-pcard__price,
+  html body.template-search .product-grid .aa-pcard__price {
+    font-size: 16px !important;
+  }
+  html body.template-collection .product-grid .aa-pcard__cta,
+  html body.template-search .product-grid .aa-pcard__cta {
+    padding: 12px 18px !important;
+    font-size: 11px !important;
+  }
+}
+
+/* ============================================================
+   COLLECTION / SEARCH PAGES — 2-per-row scroll-down, NO slider
+   ONLY applies to /collections/* and /search. Homepage featured-collection
+   (New Arrival, Top Selling) is left as a slider.
+   Hero (product detail page) gallery is untouched.
+   ============================================================ */
+@media (max-width: 749px) {
+  /* ULTRA-FORCE 2-col grid — beat every Dawn slider/grid class */
+  html body.template-collection ul.product-grid,
+  html body.template-collection ul#product-grid,
+  html body.template-collection .product-grid,
+  html body.template-collection .product-grid.slider,
+  html body.template-collection .product-grid.grid--peek,
+  html body.template-collection .grid.product-grid,
+  html body.template-collection .grid--1-col-tablet-down,
+  html body.template-collection .grid--2-col-tablet-down,
+  html body.template-search ul.product-grid,
+  html body.template-search .product-grid,
+  html body.template-list-collections .product-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    gap: 14px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    list-style: none !important;
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+    scroll-snap-type: none !important;
+    transform: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  /* Old rule keeps for compatibility */
+  /* NUKE every ancestor of the product grid on search/collection.
+     Some Dawn ancestor (likely .facets-container or its parent) is
+     constraining width — these rules force the full ancestor chain to
+     be 100% width with no flex/grid splits. */
+  html body.template-search main,
+  html body.template-search #MainContent,
+  html body.template-search .template-search,
+  html body.template-search .template-search > div,
+  html body.template-search .template-search > div > div,
+  html body.template-search .template-search > section,
+  html body.template-search .facets-container,
+  html body.template-search .product-grid-container,
+  html body.template-search #ProductGridContainer,
+  html body.template-search .template-search__results,
+  html body.template-search .template-search__results.collection,
+  html body.template-search .collection.page-width,
+  html body.template-collection main,
+  html body.template-collection #MainContent,
+  html body.template-collection .product-grid-container,
+  html body.template-collection #ProductGridContainer,
+  html body.template-collection .collection,
+  html body.template-collection .collection.page-width {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    flex-basis: auto !important;
+    flex: 1 1 100% !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    box-sizing: border-box !important;
+    grid-template-columns: none !important;
+  }
+  /* BRUTE-FORCE: set card width to calc(50vw - 18px) — half of viewport
+     minus container padding/gap. Beats every cascade because nothing else
+     uses vw math on these elements. */
+  html body.template-collection ul.product-grid > li,
+  html body.template-collection ul.product-grid > .grid__item,
+  html body.template-search ul.product-grid > li,
+  html body.template-search ul.product-grid > .grid__item,
+  html body.template-collection ul.product-grid > li > .aa-pcard,
+  html body.template-search ul.product-grid > li > .aa-pcard,
+  html body.template-collection ul.product-grid > .grid__item > .aa-pcard,
+  html body.template-search ul.product-grid > .grid__item > .aa-pcard,
+  html body.template-collection ul.product-grid > li > .card-wrapper,
+  html body.template-search ul.product-grid > li > .card-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    flex: 0 0 100% !important;
+    box-sizing: border-box !important;
+  }
+  body.template-collection .product-grid,
+  body.template-collection ul.product-grid,
+  body.template-search .product-grid,
+  body.template-search ul.product-grid,
+  body.template-list-collections .product-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 14px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    list-style: none !important;
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+    scroll-snap-type: none !important;
+    transform: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  /* Outer container — padding so cards don't clip the viewport edge */
+  body.template-collection .collection,
+  body.template-collection .collection .page-width,
+  body.template-collection #product-grid,
+  body.template-search .search__results {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+    box-sizing: border-box !important;
+  }
+  body.template-collection .product-grid > li,
+  body.template-collection .product-grid > .grid__item,
+  body.template-search .product-grid > li,
+  body.template-search .product-grid > .grid__item {
+    flex: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    scroll-snap-align: none !important;
+  }
+  /* Hide slider mechanics ONLY on collection/search pages */
+  body.template-collection slider-component .slider-buttons,
+  body.template-collection slider-component slider-counter,
+  body.template-collection slider-component slider-button,
+  body.template-search slider-component .slider-buttons,
+  body.template-search slider-component slider-counter,
+  body.template-search slider-component slider-button {
+    display: none !important;
+  }
+  body.template-collection slider-component,
+  body.template-search slider-component {
+    display: block !important;
+    overflow: visible !important;
+    width: 100% !important;
+  }
+  /* Card sizing tuned for 2-col density */
+  body.template-collection .product-grid .aa-pcard,
+  body.template-search .product-grid .aa-pcard {
+    border-radius: 16px !important;
+    overflow: hidden !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  body.template-collection .product-grid .aa-pcard__media,
+  body.template-search .product-grid .aa-pcard__media {
+    /* wireframe B (2026-06-12): full-bleed square image, no inner frame */
+    aspect-ratio: 1 / 1 !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+  }
+  body.template-collection .product-grid .aa-pcard__title,
+  body.template-search .product-grid .aa-pcard__title {
+    /* wireframe B: single line, ellipsis */
+    font-size: 12.5px !important;
+    line-height: 1.3 !important;
+    min-height: 0 !important;
+    display: block !important;
+  }
+  body.template-collection .product-grid .aa-pcard__title a,
+  body.template-search .product-grid .aa-pcard__title a {
+    display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  body.template-collection .product-grid .aa-pcard__content,
+  body.template-search .product-grid .aa-pcard__content {
+    padding: 9px 11px 12px !important;
+    gap: 2px !important;
+  }
+  body.template-collection .product-grid .aa-pcard__price-row,
+  body.template-search .product-grid .aa-pcard__price-row {
+    margin: 4px 0 0 !important;
+  }
+  body.template-collection .product-grid .aa-pcard__rate,
+  body.template-search .product-grid .aa-pcard__rate {
+    left: 8px !important; right: auto !important; bottom: 8px !important;
+  }
+  body.template-collection .product-grid .aa-pcard__price,
+  body.template-search .product-grid .aa-pcard__price {
+    font-size: 14px !important;
+  }
+  /* wireframe B: the inline full-width ADD pill is hidden on mobile —
+     adding happens via the floating "+" circle on the image */
+  body.template-collection .product-grid .aa-pcard__form--inline,
+  body.template-search .product-grid .aa-pcard__form--inline {
+    display: none !important;
+  }
+  body.template-collection .product-grid .aa-pcard__form--float,
+  body.template-search .product-grid .aa-pcard__form--float {
+    display: block !important; position: absolute !important;
+    right: 8px !important; bottom: 8px !important; z-index: 3 !important;
+    width: auto !important; margin: 0 !important; padding: 0 !important;
+  }
+  body.template-collection .product-grid .aa-pcard__cta--plus,
+  body.template-search .product-grid .aa-pcard__cta--plus {
+    width: 34px !important; height: 34px !important; max-width: none !important;
+    border-radius: 999px !important; border: 0 !important; cursor: pointer;
+    background: #2B0F26 !important; color: #fff !important;
+    font-size: 19px !important; line-height: 1 !important; font-weight: 600 !important;
+    display: flex !important; align-items: center !important; justify-content: center !important;
+    padding: 0 !important; margin: 0 !important; letter-spacing: 0 !important;
+    box-shadow: 0 4px 12px rgba(43, 15, 38, 0.35);
+    transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  body.template-collection .product-grid .aa-pcard__cta--plus:active,
+  body.template-search .product-grid .aa-pcard__cta--plus:active { transform: scale(0.92); }
+  /* wireframe B has no quick view on mobile — the image links to the product */
+  body.template-collection .product-grid .aa-pcard__qv-btn,
+  body.template-search .product-grid .aa-pcard__qv-btn { display: none !important; }
+}
+
+/* Astrotalk-style block reverted at user request — only spacing matters. */
+
+/* ============================================================
+   COLLECTION PAGE DESIGN (approved 2026-06-11) — scoped to
+   .template-collection so search/featured grids keep the base look.
+   Contained grid lives in main-collection-product-grid.liquid;
+   tab styles live in image-banner.liquid. This block: hero heading,
+   facets toolbar, and the collection card variant (aa_coll_card).
+   ============================================================ */
+
+/* ---- Collection heading: serif title + sub, centred ---- */
+.template-collection .collection-hero {
+  padding: 46px 20px 8px;
+  background: none;
+}
+.template-collection .collection-hero__inner {
+  display: block;
+  text-align: center;
+  padding: 0;
+}
+.template-collection h1.collection-hero__title,
+.template-collection .collection-hero__title {
+  /* !important: legacy blanket font rules in astroaura-styles.css use
+     !important on h1; class specificity + !important here settles it. */
+  font-family: 'Cormorant Garamond', Georgia, serif !important;
+  font-weight: 600;
+  font-size: 48px;
+  line-height: 1.12;
+  margin: 0;
+  text-align: center;
+  color: #241019;
+}
+.template-collection .collection-hero__description {
+  font-family: var(--aa-font-ui);
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: #8a7480;
+  max-width: 560px;
+  margin: 10px auto 0;
+}
+
+/* ---- Facets toolbar: plain black text filters + sort, hairlines ---- */
+.template-collection .facets-wrapper {
+  max-width: 1232px;
+  margin: 14px auto 26px;
+  padding: 0 24px;
+}
+.template-collection .facets__form {
+  /* Dawn's native grid (1fr max-content max-content) keeps filters, sort and
+     count on ONE row — do not change display here, it wraps the row. */
+  border-top: 1px solid rgba(36, 16, 25, 0.09);
+  border-bottom: 1px solid rgba(36, 16, 25, 0.09);
+  padding: 10px 2px;
+  align-items: center;
+}
+.template-collection .facets__heading { margin: 0 12px 0 0; align-self: baseline; font-size: 13.5px; line-height: 1.2; padding: 0; }
+.template-collection .facets__wrapper { align-items: baseline; align-self: center; margin: 0; }
+.template-collection .facets__form .product-count,
+.template-collection .product-count,
+.template-collection .product-count-vertical {
+  align-self: center;
+  margin: 0;
+}
+.template-collection .product-count .loading__spinner { display: none; }
+.template-collection .facets__heading {
+  font-family: var(--aa-font-ui);
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #8a7480;
+  margin: 0 6px 0 0;
+}
+.template-collection .facets__disclosure,
+.template-collection .facets__disclosure-vertical {
+  margin-right: 26px;
+}
+.template-collection .facets__summary {
+  background: none;
+  border: 0;
+  box-shadow: none;
+  padding: 8px 18px 8px 2px;
+  margin: 0;
+  position: relative;
+  font-family: var(--aa-font-ui);
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--aa-ink);
+  line-height: 1.2;
+  transition: opacity 0.2s;
+}
+.template-collection .facets__summary:hover { opacity: 0.65; }
+.template-collection .facets__summary .icon-caret,
+.template-collection .facets__summary svg {
+  width: 10px;
+  height: 10px;
+  margin: 0;
+  flex: 0 0 auto;
+  color: #6b5a62;
+}
+.template-collection .facet-filters.sorting {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0;
+  margin: 0;
+}
+.template-collection .facet-filters__field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.template-collection .facet-filters__label {
+  font-family: var(--aa-font-ui);
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--aa-ink);
+  margin: 0;
+}
+.template-collection .facet-filters__field .select,
+.template-collection .facet-filters__field select {
+  font-family: var(--aa-font-ui);
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--aa-ink);
+  background: none;
+  border: 0;
+}
+.template-collection .product-count__text {
+  font-family: var(--aa-font-ui);
+  font-size: 13.5px;
+  font-weight: 500;
+  color: #8a7480;
+}
+
+/* ---- Collection card variant ---- */
+.template-collection .aa-pcard { border-radius: 18px; }
+.template-collection .aa-pcard__media-wrap { position: relative; display: block; }
+.template-collection .aa-pcard__media {
+  margin: 0;
+  border-radius: 0;
+  border: 0;
+  box-shadow: none;
+}
+.template-collection .aa-pcard__media img { transform: scale(1.16); }
+.template-collection .aa-pcard:hover .aa-pcard__media img { transform: scale(1.24); }
+/* Neutralise the legacy fill-zoom classes on collection cards: object-fit
+   cover already fills the full-bleed frame, so the old 1.18/1.42 multipliers
+   (built for the framed layout) just crop the product out of view. */
+.template-collection .aa-pcard.aa-fill .aa-pcard__media img { transform: scale(1.08); }
+.template-collection .aa-pcard.aa-fill:hover .aa-pcard__media img { transform: scale(1.14); }
+.template-collection .aa-pcard.aa-fill-strong .aa-pcard__media img { transform: scale(1.02); }
+.template-collection .aa-pcard.aa-fill-strong:hover .aa-pcard__media img { transform: scale(1.08); }
+
+/* The floating "+" add form only exists for mobile collection cards */
+.aa-pcard__form--float { display: none; }
+
+
+.template-collection .aa-pcard__rate {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.95);
+  font-family: var(--aa-font-ui);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--aa-ink);
+  padding: 4px 9px;
+  border-radius: 999px;
+  box-shadow: 0 2px 8px rgba(36, 16, 25, 0.10);
+}
+.template-collection .aa-pcard__rate-star { color: #E8A23B; }
+.template-collection .aa-pcard__content {
+  padding: 14px 14px 16px;
+  text-align: center;
+  gap: 0;
+}
+.template-collection .aa-pcard__title {
+  font-size: 14.5px;
+  font-weight: 600;
+  line-height: 1.35;
+  min-height: 39px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 0;
+}
+.template-collection .aa-pcard__price-row {
+  justify-content: center;
+  align-items: baseline;
+  gap: 7px;
+  margin: 8px 0 12px;
+}
+.template-collection .aa-pcard__price { font-size: 16.5px; font-weight: 800; }
+.template-collection .aa-pcard__strike { font-size: 13px; }
+.template-collection .aa-pcard__pct {
+  font-family: var(--aa-font-ui);
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #1d8a4e;
+}
+/* Desktop-only: the full-width ADD pill under the price. Scoped to >=750px —
+   the mobile card (wireframe B) replaces this form with the floating "+",
+   and the display:block !important here was overriding the mobile hide. */
+@media (min-width: 750px) {
+  .template-collection .aa-pcard__form--inline {
+    margin-top: auto;
+    position: static !important;
+    inset: auto !important;
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  .template-collection .aa-pcard__cta--full {
+    background: #151013;
+    font-size: 13.5px;
+    letter-spacing: 0.04em;
+    padding: 13px 0 !important;
+    text-transform: uppercase;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    position: static !important;
+    display: block !important;
+    border-radius: 999px !important;
+  }
+}
+
+/* ---- Mobile (2-col grid preserved) ---- */
+@media screen and (max-width: 749px) {
+  .template-collection .collection-hero { padding: 30px 14px 4px; }
+  .template-collection .collection-hero__title { font-size: 32px; }
+  .template-collection .collection-hero__description { font-size: 13px; }
+  .template-collection .facets-wrapper { padding: 0 12px; margin: 10px auto 18px; }
+  .template-collection .aa-pcard__content { padding: 9px 11px 12px; gap: 2px; }
+  .template-collection .aa-pcard__title { font-size: 12.5px; min-height: 0; line-height: 1.3; }
+  .template-collection .aa-pcard__price { font-size: 14.5px; }
+  .template-collection .aa-pcard__strike { font-size: 11.5px; }
+  .template-collection .aa-pcard__pct { font-size: 11px; }
+  .template-collection .aa-pcard__rate { font-size: 11px; padding: 3px 8px; }
+}
+
+/* NitroPack's "fontify" app embed injects inline `font-family: Sora !important`
+   with a giant :not() selector chain that outranks normal theme rules. The
+   repeated-class selector below manufactures higher specificity to take the
+   collection title back. REAL fix: disable font optimization in NitroPack. */
+body.template-collection.template-collection.template-collection.template-collection.template-collection.template-collection.template-collection.template-collection.template-collection.template-collection.template-collection.template-collection.template-collection.template-collection.template-collection.template-collection.template-collection.template-collection.template-collection.template-collection.template-collection.template-collection.template-collection.template-collection h1.collection-hero__title {
+  font-family: 'Cormorant Garamond', Georgia, serif !important;
+  font-weight: 600 !important;
+}
+
+/* ---- Filter dropdown panel: compact white popup card ---- */
+.template-collection .facets__disclosure .facets__display {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  z-index: 80;
+  width: 330px;
+  max-height: 400px;
+  overflow-y: auto;
+  background: #FFFFFF;
+  border: 1px solid rgba(36, 16, 25, 0.10);
+  border-radius: 14px;
+  box-shadow: 0 18px 44px rgba(36, 16, 25, 0.16);
+  padding: 14px 18px 16px;
+}
+.template-collection .facets__disclosure { position: relative; }
+.template-collection .facets__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--aa-font-ui);
+  font-size: 12.5px;
+  color: #8a7480;
+  border-bottom: 1px solid rgba(36, 16, 25, 0.08);
+  padding-bottom: 10px;
+  margin-bottom: 6px;
+}
+.template-collection .facets__header a,
+.template-collection .facets__header .underlined-link {
+  color: var(--aa-ink);
+  font-weight: 600;
+  text-decoration: none;
+  text-underline-offset: initial;
+}
+.template-collection .facets__header a:hover { opacity: 0.65; }
+.template-collection .facets__header { background: none; }
+/* no underline on the open filter name (Dawn underlines the active summary) */
+.template-collection .facets__summary,
+.template-collection .facets__disclosure[open] .facets__summary,
+.template-collection .facets__summary:hover,
+.template-collection .facets__summary:focus {
+  text-decoration: none !important;
+  box-shadow: none !important;
+  outline: none;
+}
+.template-collection .facets-wrap { border: 0; padding: 0; margin: 0; }
+.template-collection .facets__list { padding: 0; }
+.template-collection .facets__item { padding: 4px 0; font-size: 13.5px; }
+
+
+/* ============================================================
+   DESKTOP MEDIA ARROWS (approved wireframe 2026-06-12) — one design for
+   product cards, quick view and the PDP gallery. aa-media-arrows.js drives
+   behaviour. Mobile (<750px) never shows them.
+   ============================================================ */
+/* hard-locked: generic homepage button rules were inflating these to the
+   full media box (the "white disc" bug) — every box property is explicit */
+.aa-marr, .aa-mcount { display: none !important; }
+@media (min-width: 750px) {
+  .aa-marr {
+    display: flex !important; align-items: center !important; justify-content: center !important;
+    position: absolute !important; top: 50% !important; bottom: auto !important;
+    transform: translateY(-50%) !important;
+    width: 36px !important; height: 36px !important;
+    min-width: 0 !important; max-width: 36px !important; max-height: 36px !important;
+    border-radius: 999px !important; border: 0 !important; cursor: pointer;
+    background: rgba(255, 255, 255, 0.92) !important;
+    -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+    box-shadow: 0 2px 10px rgba(36, 16, 25, 0.18) !important;
+    color: #241019 !important; z-index: 4; padding: 0 !important; margin: 0 !important;
+    transition: transform 160ms cubic-bezier(0.32, 0.72, 0, 1), opacity 200ms ease, background 200ms ease;
+  }
+  .aa-marr svg { width: 15px !important; height: 15px !important; }
+  .aa-marr:hover { background: #fff; }
+  .aa-marr:active { transform: translateY(-50%) scale(0.88) !important; }
+  .aa-marr--l { left: 10px !important; right: auto !important; }
+  .aa-marr--r { right: 10px !important; left: auto !important; }
+  /* cards: reveal on hover only */
+  .aa-pcard__media .aa-marr, .pcard .media .aa-marr { opacity: 0; pointer-events: none; }
+  .aa-pcard:hover .aa-pcard__media .aa-marr,
+  .pcard:hover .media .aa-marr { opacity: 1; pointer-events: auto; }
+  /* homepage card media needs to anchor them */
+  .pcard .media { position: relative; }
+  /* PDP gallery: anchor + frosted counter */
+  media-gallery slider-component { position: relative; display: block; }
+  media-gallery .aa-marr { opacity: 1; }
+  /* cycled (non-first) card images: kill the hero zoom so infographic /
+     secondary shots show un-cropped; cover on a square = exact fit */
+  .aa-pcard__media.aa-cycled img,
+  .aa-pcard.aa-fill .aa-pcard__media.aa-cycled img,
+  .aa-pcard.aa-fill-strong .aa-pcard__media.aa-cycled img,
+  .template-collection .aa-pcard__media.aa-cycled img,
+  .pcard .media.aa-cycled img,
+  .pcard.aa-fill .media.aa-cycled img,
+  .pcard.aa-fill-strong .media.aa-cycled img,
+  .pcard:hover .media.aa-cycled img {
+    transform: none !important;
+  }
+  .aa-mcount {
+    display: inline-flex !important; position: absolute; right: 12px; bottom: 12px; z-index: 4;
+    background: rgba(20, 10, 16, 0.45); color: #fff;
+    -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+    font-size: 11px; font-weight: 700; border-radius: 999px; padding: 5px 11px;
+  }
+}

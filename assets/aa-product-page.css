@@ -1,0 +1,775 @@
+/* ============================================================
+   Aura AI — Product page polish (clean v3 — 2026-05-18 1830)
+   NO Judge.me overrides. NO certificate overrides. NO review styling.
+   ============================================================ */
+
+:root {
+  --aa-purple: #4A1942;
+  --aa-purple-dark: #C44A24;
+  --aa-purple-soft: #FFF6EF;
+  --aa-ink: #1A1A1A;
+  --aa-ink-soft: #4A4A4A;
+  --aa-muted: #888;
+}
+
+/* ============================================================
+   BUY BUTTONS — premium minimal
+   ============================================================ */
+.product-form__submit.button,
+.shopify-payment-button__button {
+  border-radius: 10px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.3px !important;
+  font-size: 14.5px !important;
+  padding: 16px 24px !important;
+  min-height: 54px !important;
+  transition: all 0.18s ease !important;
+  text-transform: none !important;
+  font-family: 'Inter', -apple-system, sans-serif !important;
+}
+/* Add to cart button — solid black rectangle */
+.product-form__submit.button--primary,
+.product-form__submit.button,
+body.template-product .product-form__submit:not(.aa-buy-now-btn) {
+  background: #000000 !important;
+  background-color: #000000 !important;
+  background-image: none !important;
+  color: #FFFFFF !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+  width: 100% !important;
+  padding: 16px 22px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+  box-shadow: none !important;
+  outline: 0 !important;
+}
+.product-form__submit.button--primary::before,
+.product-form__submit.button--primary::after,
+.product-form__submit:not(.aa-buy-now-btn)::before,
+.product-form__submit:not(.aa-buy-now-btn)::after {
+  display: none !important;
+  content: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+.product-form__submit.button--primary:hover,
+.product-form__submit.button:hover,
+body.template-product .product-form__submit:not(.aa-buy-now-btn):hover {
+  background: #1F1F1F !important;
+  background-color: #1F1F1F !important;
+  color: #FFFFFF !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Buy Now button — orange gradient rectangle (formerly COD) */
+.aa-buy-now-btn,
+button.aa-buy-now-btn,
+.product-form__submit.aa-buy-now-btn,
+button.product-form__submit.button.button--full-width.button--primary.aa-buy-now-btn {
+  background: linear-gradient(135deg, #E9027A 0%, #F58220 100%) !important;
+  background-color: #F58220 !important;
+  color: #FFFFFF !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+  width: 100% !important;
+  padding: 16px 22px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+  box-shadow: none !important;
+  outline: 0 !important;
+  margin-top: 10px !important;
+}
+.aa-buy-now-btn::before,
+.aa-buy-now-btn::after {
+  display: none !important;
+  content: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+.aa-buy-now-btn:hover,
+button.product-form__submit.button.button--full-width.button--primary.aa-buy-now-btn:hover {
+  background: linear-gradient(135deg, #F58220 0%, #E9027A 100%) !important;
+  color: #FFFFFF !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+.button--secondary {
+  background: transparent !important;
+  color: var(--aa-ink) !important;
+  border: 1.5px solid var(--aa-ink) !important;
+  border-radius: 10px !important;
+}
+.button--secondary:hover {
+  background: var(--aa-ink) !important;
+  color: #FBF6EE !important;
+}
+.shopify-payment-button__button {
+  background: var(--aa-purple) !important;
+  color: #FBF6EE !important;
+  border: none !important;
+}
+.shopify-payment-button__button:hover {
+  background: var(--aa-purple-dark) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(196, 74, 36, 0.25) !important;
+}
+
+/* ============================================================
+   COUPON / FREE GIFT TAG
+   ============================================================ */
+.aa-coupon-tag {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 10px;
+  margin: 14px 0;
+  padding: 10px 14px;
+  background: linear-gradient(135deg, #FFF6E5 0%, #FFE9C2 100%);
+  border: 1px dashed #D4A04A;
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+}
+.aa-coupon-tag__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(212, 160, 74, 0.20);
+  color: #A86A1F;
+  flex-shrink: 0;
+}
+.aa-coupon-tag__text { display: flex; flex-direction: column; line-height: 1.25; }
+.aa-coupon-tag__text strong {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: #8C5A1A;
+}
+.aa-coupon-tag__sub { font-size: 13px; font-weight: 500; color: var(--aa-ink); margin-top: 1px; }
+
+/* ============================================================
+   COD BADGE — orange for brand consistency
+   ============================================================ */
+.aa-cod-badge {
+  display: flex !important;
+  align-items: center;
+  gap: 10px;
+  margin: 12px 0;
+  padding: 11px 16px;
+  background: #FFF6EF;
+  border: 1px dashed #4A1942;
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: #1A1A1A;
+}
+.aa-cod-badge svg { color: #4A1942; flex-shrink: 0; }
+.aa-cod-badge strong { font-weight: 700; }
+
+/* ============================================================
+   ACCORDIONS — clean
+   ============================================================ */
+.collapsible-row-container {
+  margin: 0 0 14px !important;
+  border: 1px solid rgba(184, 145, 90, 0.22) !important;
+  border-radius: 16px !important;
+  padding: 2px 22px !important;
+  background: linear-gradient(180deg, #FFFFFF 0%, #FBF6EC 100%) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 2px 4px rgba(74, 43, 46, 0.05),
+    0 12px 26px -10px rgba(74, 43, 46, 0.16) !important;
+  transition: box-shadow 0.28s cubic-bezier(.16,1,.3,1), transform 0.28s cubic-bezier(.16,1,.3,1), border-color 0.28s ease;
+}
+.collapsible-row-container:hover {
+  transform: translateY(-2px);
+  border-color: rgba(184, 145, 90, 0.42) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    0 4px 8px rgba(74, 43, 46, 0.06),
+    0 18px 38px -10px rgba(74, 43, 46, 0.20) !important;
+}
+.collapsible-row-container:has(.collapsible-row-details[open]) {
+  border-color: rgba(184, 145, 90, 0.5) !important;
+  background: linear-gradient(180deg, #FFFFFF 0%, #F7EFE0 100%) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    0 6px 12px rgba(74, 43, 46, 0.07),
+    0 22px 44px -10px rgba(74, 43, 46, 0.22) !important;
+}
+.collapsible-row-summary {
+  padding: 16px 0 !important;
+  cursor: pointer;
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  list-style: none;
+  transition: color 0.15s ease;
+}
+.collapsible-row-summary::-webkit-details-marker { display: none; }
+.collapsible-row-summary:hover { color: var(--aa-purple); }
+.collapsible-row-title {
+  font-family: 'Cormorant Garamond', Georgia, serif !important;
+  font-size: 17px !important;
+  font-weight: 600 !important;
+  margin: 0 !important;
+  letter-spacing: 0.2px;
+  color: inherit;
+}
+.collapsible-row-summary svg,
+.collapsible-row-summary .icon-caret {
+  width: 14px !important;
+  height: 14px !important;
+  transition: transform 0.22s ease;
+  color: var(--aa-muted);
+}
+.collapsible-row-details[open] > .collapsible-row-summary svg,
+.collapsible-row-details[open] > .collapsible-row-summary .icon-caret {
+  transform: rotate(180deg);
+  color: var(--aa-purple);
+}
+.collapsible-row-content {
+  padding: 0 0 18px !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 14px !important;
+  line-height: 1.7 !important;
+  color: var(--aa-ink-soft) !important;
+  animation: aaAccordionOpen 0.22s ease;
+}
+.collapsible-row-content p { margin: 0 0 10px !important; }
+.collapsible-row-content p:last-child { margin-bottom: 0 !important; }
+@keyframes aaAccordionOpen {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Judge.me styling now lives in snippets/aa-judgeme-fix.liquid */
+
+/* ============================================================
+   MYNTRA-STYLE MEGA DEAL BANNER (info-only, auto-applied at checkout)
+   ============================================================ */
+.aa-mega-deal {
+  margin: 14px 0;
+  padding: 14px 16px;
+  background: linear-gradient(135deg, #FFF6EF 0%, #FBF6EE 70%);
+  border: 1px solid #FFD8B0;
+  border-radius: 10px;
+}
+.aa-mega-deal__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.aa-mega-deal__left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.aa-mega-deal__badge {
+  display: inline-block;
+  padding: 4px 10px;
+  background: linear-gradient(135deg, #F58220 0%, #F04930 100%);
+  color: #FBF6EE;
+  border-radius: 4px;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 10.5px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.5px !important;
+  text-transform: uppercase;
+  box-shadow: 0 2px 4px rgba(245, 130, 32, 0.28);
+}
+.aa-mega-deal__price {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 15px !important;
+  font-weight: 500 !important;
+  color: #1A1A1A;
+}
+.aa-mega-deal__price strong {
+  font-weight: 700 !important;
+  color: #1A1A1A;
+  text-decoration: underline;
+  text-decoration-color: #4A1942;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+.aa-mega-deal__pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  background: #1A8C42;
+  color: #FBF6EE;
+  border-radius: 6px;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 12.5px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.2px !important;
+  white-space: nowrap;
+}
+.aa-mega-deal__hint {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px dashed rgba(0,0,0,0.10);
+  font-family: 'Inter', sans-serif !important;
+  font-size: 12px !important;
+  color: #666;
+}
+.aa-mega-deal__hint code {
+  display: inline-block;
+  padding: 1px 6px;
+  background: #FBF6EE;
+  border: 1px dashed #4A1942;
+  border-radius: 4px;
+  color: #C44A24;
+  font-family: 'SF Mono', Menlo, monospace !important;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.aa-mega-deal__details {
+  color: #FF4757 !important;
+  font-weight: 600 !important;
+  text-decoration: none !important;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.aa-mega-deal__details:hover { text-decoration: underline !important; }
+.aa-mega-deal__details-panel {
+  margin-top: 10px;
+  padding: 10px 12px;
+  background: #FBF6EE;
+  border: 1px dashed rgba(0,0,0,0.10);
+  border-radius: 6px;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 12.5px !important;
+  color: #555 !important;
+  line-height: 1.5 !important;
+}
+.aa-mega-deal__details-panel strong { color: #C44A24; }
+
+@media (max-width: 749px) {
+  .aa-mega-deal__inner { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .aa-mega-deal__pill { width: 100%; justify-content: center; }
+}
+
+/* ============================================================
+   PRODUCT PAGE — Astrotalk-style premium overhaul
+   ============================================================ */
+
+/* Right info column — proper spacing */
+.product__info-container { padding: 0 !important; }
+.product__info-container > * { margin-top: 12px !important; }
+.product__info-container > *:first-child { margin-top: 0 !important; }
+
+/* === TITLE — serif, prominent === */
+.product__title h1,
+.product__title h2 {
+  font-family: 'Cormorant Garamond', Georgia, serif !important;
+  font-size: 32px !important;
+  font-weight: 600 !important;
+  line-height: 1.15 !important;
+  letter-spacing: -0.5px !important;
+  margin: 0 0 10px !important;
+  color: #1A1A1A !important;
+}
+
+/* === TRAIT PILLS (Peace / Insight / Calmness) — brand colors === */
+.product-page-purpose-pill-container {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+  margin: 0 0 10px !important;
+}
+.product-page-purpose-pill {
+  display: inline-block !important;
+  padding: 6px 14px !important;
+  border-radius: 999px !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.3px !important;
+  margin: 0 !important;
+  line-height: 1.3 !important;
+}
+/* Trait pills — solid black so they stand out instead of blending into the cream */
+.product-page-purpose-pill:nth-child(odd),
+.product-page-purpose-pill:nth-child(even) {
+  background: #241019 !important;
+  color: #F4ECDC !important;
+}
+
+/* === "21 orders" line — matches Free Shipping style === */
+.aa-orders-line {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  color: #5A5A5A !important;
+  margin: 8px 0 !important;
+}
+.aa-orders-line svg { color: #4A1942 !important; flex-shrink: 0; }
+.aa-orders-line__emoji { font-size: 16px !important; line-height: 1 !important; }
+.aa-orders-line strong { font-weight: 700 !important; color: #1A1A1A !important; }
+
+/* === PRICE — inline strikethrough + current + discount === */
+.product__info-wrapper .price__container,
+.product__info-wrapper .price {
+  display: flex !important;
+  align-items: baseline !important;
+  flex-wrap: wrap !important;
+  gap: 10px !important;
+  margin: 12px 0 !important;
+}
+/* SCOPED TO PRODUCT PAGE ONLY — must not leak into collection cards */
+.product__info-wrapper .price__regular .price-item--regular,
+.product__info-wrapper .price__sale .price-item--sale,
+.product__info-wrapper .price-item--regular,
+.product .price__regular .price-item--regular,
+.product .price__sale .price-item--sale,
+.product .price-item--regular {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 26px !important;
+  font-weight: 700 !important;
+  color: #1A1A1A !important;
+}
+.product__info-wrapper .price__sale s.price-item--regular,
+.product__info-wrapper .price-item--regular.price__strikethrough,
+.product__info-wrapper s.price-item,
+.product .price__sale s.price-item--regular,
+.product .price-item--regular.price__strikethrough,
+.product s.price-item {
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  color: #999 !important;
+  text-decoration: line-through !important;
+}
+
+/* === STYLE/VARIANT SELECTOR BUTTONS === */
+.product-form__input--pill input[type="radio"] + label,
+.product-form__input--pill .product-form__input-radio-label,
+fieldset.product-form__input .product-form__input-radio-label {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 10px 18px !important;
+  min-width: 80px !important;
+  background: #FBF6EE !important;
+  color: #1A1A1A !important;
+  border: 1.5px solid rgba(0,0,0,0.15) !important;
+  border-radius: 8px !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.18s ease !important;
+  margin-right: 8px !important;
+  margin-bottom: 8px !important;
+}
+.product-form__input--pill input[type="radio"]:checked + label,
+.product-form__input--pill input[type="radio"]:checked + .product-form__input-radio-label {
+  background: #1A1A1A !important;
+  color: #FBF6EE !important;
+  border-color: #1A1A1A !important;
+}
+
+/* === LAST X UNITS LEFT — yellow alert badge === */
+.product__info-container [data-low-stock],
+.product__info-container .low-stock,
+.product__info-container .stock-alert {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  padding: 10px 14px !important;
+  background: #FFF4D6 !important;
+  border: 1px solid #FFD66B !important;
+  border-radius: 8px !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: #8C5A1A !important;
+}
+
+/* === ADD TO CART — single full-width premium pill === */
+.product-form__buttons,
+.product-form .product-form__buttons {
+  display: block !important;
+  margin: 16px 0 !important;
+}
+.product-form__submit.button--primary,
+button.product-form__submit.button.button--full-width.button--primary {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  background: linear-gradient(135deg, #F58220 0%, #F04930 100%) !important;
+  background-color: #F04930 !important;
+  color: #FBF6EE !important;
+  border: none !important;
+  outline: none !important;
+  border-radius: 14px !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  letter-spacing: 1px !important;
+  text-transform: uppercase !important;
+  padding: 18px 24px !important;
+  min-height: 56px !important;
+  transition: all 0.18s ease !important;
+  box-shadow: 0 6px 18px rgba(245, 130, 32, 0.28) !important;
+  text-shadow: none !important;
+}
+/* Kill Dawn's default button ::after pseudo-border */
+.product-form__submit.button::after,
+.product-form__submit.button::before,
+.product-form__submit.button--primary::after,
+.product-form__submit.button--primary::before {
+  display: none !important;
+  content: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+.product-form__submit.button--primary:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 10px 24px rgba(245, 130, 32, 0.36) !important;
+  filter: brightness(1.04);
+}
+
+/* Hide dynamic Buy Now buttons (Shop Pay etc) — keep flow clean */
+.shopify-payment-button,
+.shopify-payment-button__button { display: none !important; }
+
+/* === TRUST ROW — 3 cards in line below Add to Cart === */
+.aa-trust-row {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 10px !important;
+  margin: 0 0 14px !important;
+}
+.aa-trust-card {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 4px !important;
+  text-align: center !important;
+  padding: 14px 10px !important;
+  background: #FBF6EE !important;
+  border: 1px solid rgba(0,0,0,0.08) !important;
+  border-radius: 10px !important;
+  transition: all 0.18s ease !important;
+}
+.aa-trust-card:hover {
+  border-color: rgba(74, 25, 66, 0.30) !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.04) !important;
+}
+.aa-trust-card__icon {
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 50% !important;
+  background: rgba(74, 25, 66, 0.10) !important;
+  color: #4A1942 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin-bottom: 4px !important;
+}
+.aa-trust-card strong {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  color: #1A1A1A !important;
+  line-height: 1.2 !important;
+}
+.aa-trust-card span {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 10.5px !important;
+  color: #888 !important;
+  line-height: 1.2 !important;
+}
+
+/* Hide old elements that we replaced */
+.aa-trust-badges, .aa-cod-badge { display: none !important; }
+
+@media (max-width: 749px) {
+  .product__title h1, .product__title h2 { font-size: 26px !important; }
+  .aa-trust-badges { grid-template-columns: 1fr !important; }
+}
+
+/* === IMAGE WRAPPER === */
+.product__media-wrapper,
+.aa-media-wrap {
+  position: relative !important;
+  border-radius: 14px !important;
+}
+/* If grid stacking applied: keep stamp+gallery in same cell */
+.aa-media-wrap[style*="grid"] > media-gallery,
+.aa-media-wrap[style*="grid"] > .aa-img-stamp {
+  grid-area: stack !important;
+}
+.product__media,
+media-gallery .product__media {
+  border-radius: 14px !important;
+  overflow: hidden !important;
+}
+.product__media img { border-radius: 14px !important; }
+
+/* Bookmark removed */
+.aa-img-ribbon { display: none !important; }
+
+/* Make .product__media-item position: relative so JS-moved stamp anchors to it (new HTML) */
+.product__media-wrapper .product__media-item,
+.aa-media-wrap .product__media-item {
+  position: relative !important;
+}
+/* Stamp HARD-HIDDEN by default; only unhide inside .product__media-item
+   on product detail page (rule near end of this file). */
+.aa-img-stamp,
+.menu-drawer .aa-img-stamp,
+cart-drawer .aa-img-stamp,
+.menu-drawer__navigation .aa-img-stamp,
+header .aa-img-stamp,
+.search .aa-img-stamp,
+.featured-collection .aa-img-stamp,
+.aa-pcard .aa-img-stamp,
+.card .aa-img-stamp {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+/* Stamp default style — small TOP-LEFT corner badge, translucent so product
+   stays visible. Compact size keeps it from eating product real estate. */
+.aa-img-stamp {
+  position: absolute !important;
+  z-index: 5 !important;
+  width: 56px !important;
+  height: 56px !important;
+  margin: 0 !important;
+  top: 14px !important;
+  left: 14px !important;
+  bottom: auto !important;
+  right: auto !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 4px !important;
+  background: rgba(255, 255, 255, 0.88) !important;
+  color: #C44A24 !important;
+  border: 1.5px dashed #4A1942 !important;
+  border-radius: 50% !important;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08) !important;
+  transform: rotate(-10deg) !important;
+  pointer-events: none !important;
+  box-sizing: border-box !important;
+  backdrop-filter: blur(4px) !important;
+  -webkit-backdrop-filter: blur(4px) !important;
+}
+.aa-img-stamp span {
+  font-family: 'Cormorant Garamond', Georgia, serif !important;
+  font-size: 8.5px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.35px !important;
+  text-transform: uppercase !important;
+  text-align: center !important;
+  line-height: 1 !important;
+  display: block !important;
+}
+/* OLD HTML structure (stamp inside aa-img-stamp-anchor, sibling of media-gallery):
+   the anchor sits at TOP of .product__media-wrapper which has whitespace above the actual image.
+   Hide stamp in this case — JS-moved version will show it correctly. */
+.aa-img-stamp-anchor .aa-img-stamp {
+  display: none !important;
+}
+/* Stamp ONLY shows on the product detail page, inside the main product media wrapper.
+   Top-left corner, small + translucent so product remains visible. */
+body.template-product .product__media-wrapper .product__media-item .aa-img-stamp,
+body.template-product .product__media-wrapper .product__media .aa-img-stamp {
+  display: flex !important;
+  visibility: visible !important;
+  top: 14px !important;
+  left: 14px !important;
+  bottom: auto !important;
+  right: auto !important;
+}
+
+/* === HIDE only price-area Sale + Sold out badges (next to product price on detail page) === */
+.product .price__badge-sale,
+.product .price__badge-sold-out,
+.product .price .badge,
+span.badge.price__badge { display: none !important; }
+
+/* Sale badge styling lives in assets/component-card.css (loads globally) */
+
+/* All card price styling removed — uses pure theme defaults like hero/homepage */
+
+/* === E-COMMERCE STANDARD LAYOUT === */
+/* Tighten product info column to align like Myntra/Ajio */
+.product__info-container {
+  font-family: 'Inter', sans-serif !important;
+}
+/* Star rating row alignment (next to title area) */
+.product__info-container .rating,
+.product__info-container [class*="rating"]:not([class*="jdgm"]) {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  margin: 4px 0 !important;
+  font-size: 13px !important;
+}
+
+/* Variant picker fieldset legend (label) */
+.product-form__input legend,
+.product-form__input .form__label {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: #1A1A1A !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  margin-bottom: 6px !important;
+}
+
+/* Quantity selector — clean Amazon-style */
+quantity-input .quantity__button,
+.quantity__button {
+  background: transparent !important;
+  border: none !important;
+  color: #1A1A1A !important;
+  font-size: 18px !important;
+  font-weight: 400 !important;
+  cursor: pointer !important;
+}
+.quantity {
+  border: 1.5px solid rgba(0,0,0,0.15) !important;
+  border-radius: 8px !important;
+  width: 130px !important;
+}
+.quantity__input {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: #1A1A1A !important;
+  background: transparent !important;
+}
+
+@media (max-width: 749px) {
+  .aa-coupon-apply__inner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+  .aa-coupon-apply__btn { width: 100%; }
+}

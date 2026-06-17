@@ -1,0 +1,78 @@
+{%- comment -%}
+  Aura Stories — review spotlight fed by REAL Judge.me reviews.
+  The judgeme.widget metafield HTML is parsed client-side; if a product
+  has no reviews the card removes itself. Purely presentational.
+{%- endcomment -%}
+{%- assign aa_jdgm = product.metafields.judgeme.widget -%}
+{%- if aa_jdgm != blank -%}
+<div class="aa-story" id="AaStory" hidden>
+  <div class="aa-head">
+    <span class="aa-kick">AURA STORIES</span>
+    <span class="aa-ver">&#10003; VERIFIED PURCHASE</span>
+  </div>
+  <div class="aa-stars" data-aa-stars aria-hidden="true"></div>
+  <blockquote data-aa-quote></blockquote>
+  <div class="aa-strip">
+    <span class="aa-meta">
+      <span class="aa-av" data-aa-av></span>
+      <span class="aa-who"><b data-aa-who></b><span>Judge.me review</span></span>
+    </span>
+    <span class="aa-dots" data-aa-dots></span>
+    <span class="aa-arr">
+      <button type="button" data-aa-prev aria-label="Previous review">&#8249;</button>
+      <button type="button" data-aa-next aria-label="Next review">&#8250;</button>
+    </span>
+  </div>
+</div>
+<script type="text/template" id="AaStorySrc">{{ aa_jdgm }}</script>
+<script>
+(function () {
+  var src = document.getElementById('AaStorySrc');
+  var card = document.getElementById('AaStory');
+  if (!src || !card) return;
+  var html = src.textContent || '';
+  var bodyRe = /jdgm-rev__body[^>]*>([\s\S]*?)<\/div>/g;
+  var authRe = /jdgm-rev__author[^>]*>([\s\S]*?)<\/span>/g;
+  var strip = function (s) {
+    var d = document.createElement('div');
+    d.innerHTML = s;
+    return (d.textContent || '').replace(/\s+/g, ' ').trim();
+  };
+  var bodies = [], authors = [], m;
+  while ((m = bodyRe.exec(html)) && bodies.length < 5) bodies.push(strip(m[1]));
+  while ((m = authRe.exec(html)) && authors.length < 5) authors.push(strip(m[1]));
+  var stories = [];
+  for (var i = 0; i < bodies.length; i++) {
+    if (bodies[i] && bodies[i].length > 20) stories.push({ q: bodies[i], w: authors[i] || 'Aura customer' });
+  }
+  stories = stories.slice(0, 3);
+  if (!stories.length) { card.remove(); src.remove(); return; }
+
+  var qEl = card.querySelector('[data-aa-quote]');
+  var whoEl = card.querySelector('[data-aa-who]');
+  var avEl = card.querySelector('[data-aa-av]');
+  var dotsEl = card.querySelector('[data-aa-dots]');
+  card.querySelector('[data-aa-stars]').innerHTML = '★★★★★';
+  dotsEl.innerHTML = stories.map(function () { return '<i></i>'; }).join('');
+  var idx = 0;
+  function show(n, instant) {
+    idx = (n + stories.length) % stories.length;
+    var paint = function () {
+      qEl.textContent = stories[idx].q;
+      whoEl.textContent = stories[idx].w;
+      avEl.textContent = (stories[idx].w[0] || 'A').toUpperCase();
+      dotsEl.querySelectorAll('i').forEach(function (d, k) { d.classList.toggle('on', k === idx); });
+      qEl.classList.remove('aa-swap');
+    };
+    if (instant) { paint(); return; }
+    qEl.classList.add('aa-swap');
+    setTimeout(paint, 220);
+  }
+  card.querySelector('[data-aa-prev]').addEventListener('click', function () { show(idx - 1); });
+  card.querySelector('[data-aa-next]').addEventListener('click', function () { show(idx + 1); });
+  show(0, true);
+  card.hidden = false;
+  src.remove();
+})();
+</script>
+{%- endif -%}

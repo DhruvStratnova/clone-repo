@@ -1,0 +1,23 @@
+{%- liquid
+  assign coll = collections[section.settings.collection]
+  assign limit = section.settings.count | default: 16
+-%}
+<section class="sec">
+  <div class="wrap wide">
+    <div class="sh" data-rise><h2 style="font-family:'Cormorant Garamond',Georgia,serif !important;font-weight:600">{{ section.settings.heading | default: 'Our Products' }}</h2></div>
+    <div class="pgrid" data-rise>
+      {%- for product in coll.products limit: limit -%}
+        {%- render 'aa-rd-card', product: product -%}
+      {%- else -%}
+        {%- for product in collections.all.products limit: 16 -%}{%- render 'aa-rd-card', product: product -%}{%- endfor -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+{"name":"AA Product Grid","settings":[
+  {"type":"text","id":"heading","label":"Heading","default":"Our Products"},
+  {"type":"collection","id":"collection","label":"Collection"},
+  {"type":"range","id":"count","min":4,"max":36,"step":1,"label":"Products","default":16}
+],"presets":[{"name":"AA Product Grid"}]}
+{% endschema %}

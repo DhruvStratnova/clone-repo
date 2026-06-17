@@ -64,33 +64,8 @@
         "show_text_below": true
       }
     },
-    "rich_text_dQCfcz": {
-      "type": "rich-text",
-      "blocks": {
-        "heading_wb6zni": {
-          "type": "heading",
-          "settings": {
-            "heading": "All Products",
-            "heading_size": "h2"
-          }
-        }
-      },
-      "block_order": [
-        "heading_wb6zni"
-      ],
-      "name": "t:sections.rich-text.presets.name",
-      "settings": {
-        "desktop_content_position": "left",
-        "content_alignment": "left",
-        "color_scheme": "",
-        "full_width": true,
-        "padding_top": 12,
-        "padding_bottom": 0
-      }
-    },
     "banner": {
       "type": "main-collection-banner",
-      "disabled": true,
       "settings": {
         "show_collection_description": false,
         "show_collection_image": false,
@@ -240,7 +215,6 @@
   },
   "order": [
     "image_banner_zpGQzQ",
-    "rich_text_dQCfcz",
     "banner",
     "product-grid",
     "image_with_text_GGVXqL",

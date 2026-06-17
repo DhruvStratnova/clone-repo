@@ -7,6 +7,58 @@
 
 
 
+/* COD and Prepaid 20% banner gap reduce */
+button + div,
+div + button {
+    margin-top: 6px !important;
+    margin-bottom: 6px !important;
+}
+
+/* Sab buttons ek jaisa dikhe aur ek line me ho */
+.responsive-button {
+  display: block;
+  width: 100%;
+  padding: 14px 0;
+  font-size: 20px;
+  border-radius: 5px;
+  border: 2px solid #231815;
+  letter-spacing: .03em;
+  cursor: pointer;
+  margin-top: 16px;
+  margin-bottom: 0;
+  font-family: inherit;
+  text-align: center;
+  transition: background 0.2s, color 0.2s, border 0.2s;
+}
+
+/* First button ke liye margin-top ko zero kar dein */
+.responsive-button:first-child {
+  margin-top: 0;
+}
+
+/* 20% OFF wale (last) button ko aur upar le aao */
+.promo-btn {
+  margin-top: -10px !important;   /* Yahan margin-top ko -10px ya aapke hisaab se aur negative bhi kar sakte hain */
+  margin-bottom: 0 !important;
+}
+
+/* Yeh dono buttons ke between space dalega */
+button.responsive-button {
+  margin-top: 16px;
+}
+
+button.responsive-button + div {
+  margin-top: 16px;
+}
+
+.cash-on-delivery {
+  margin-bottom: 16px;
+}
+
+
+
+
+
 
 :root {
   --alpha-button-background: 1;
@@ -3641,8 +3693,146 @@ details-disclosure > details {
 }
 
 
-/* 
-.footer__content-top page-width{
-  width: 100vw;
-} */
 
+
+
+
+
+
+
+
+
+
+
+
+
+/* AstroAura: cart page mobile alignment — center title, stack continue-shopping above */
+@media screen and (max-width: 749px) {
+  .title-wrapper-with-link {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1.2rem;
+    margin: 2rem 0 2rem;
+  }
+  .title-wrapper-with-link .title,
+  .title-wrapper-with-link .title--primary {
+    width: 100%;
+    text-align: center;
+    margin: 0;
+  }
+  .title-wrapper-with-link a,
+  .title-wrapper-with-link .underlined-link,
+  .title-wrapper-with-link .link-with-icon {
+    margin: 0;
+  }
+}
+
+/* AstroAura: Our Products section — grid layout (2 cols mobile, 4 cols desktop), not slider */
+.aa-our-products-section .aa-our-products__rail,
+.aa-our-products-section .aa-our-products__rail--slider {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  overflow: visible !important;
+  scroll-snap-type: none !important;
+  padding-left: 1.2rem;
+  padding-right: 1.2rem;
+}
+@media (min-width: 750px) {
+  .aa-our-products-section .aa-our-products__rail,
+  .aa-our-products-section .aa-our-products__rail--slider {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+}
+.aa-our-products-section .aa-our-products__cell {
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  flex: none !important;
+  scroll-snap-align: none !important;
+}
+.aa-our-products-section .slider-buttons,
+.aa-our-products-section .slider-counter {
+  display: none !important;
+}
+
+/* AstroAura: align Add to Cart buttons across all product cards regardless of
+   title line count. Each card becomes a flex column; price + cart-button stick
+   to the bottom so 1-line and 2-line titles produce identical bottom-edge
+   alignment. Works at every viewport (mobile 2-col, tablet/desktop 4-col). */
+.aa-our-products-section .aa-our-products__cell > .card-wrapper,
+.aa-our-products-section .aa-our-products__cell > .card,
+.aa-our-products-section .aa-our-products__cell > product-form,
+.aa-our-products-section .aa-our-products__cell > div {
+  height: 100%;
+}
+.aa-our-products-section .aa-our-products__cell .card-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.aa-our-products-section .aa-our-products__cell .card,
+.aa-our-products-section .aa-our-products__cell .card__inner {
+  height: 100%;
+}
+.aa-our-products-section .aa-our-products__cell .card__content,
+.aa-our-products-section .aa-our-products__cell .card-information,
+.aa-our-products-section .aa-our-products__cell .card__information {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  height: 100%;
+}
+/* Reserve consistent space for the product title so 1-line and 2-line titles
+   share the same vertical rhythm. ~2 lines of body text. */
+.aa-our-products-section .aa-our-products__cell .card__heading,
+.aa-our-products-section .aa-our-products__cell .card-information .card__heading,
+.aa-our-products-section .aa-our-products__cell h3.card__heading,
+.aa-our-products-section .aa-our-products__cell .card-information > a {
+  min-height: 3.2em;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  text-align: center;
+}
+/* Push the Add to Cart button block to the bottom of the card */
+.aa-our-products-section .aa-our-products__cell product-form,
+.aa-our-products-section .aa-our-products__cell .product-form,
+.aa-our-products-section .aa-our-products__cell .quick-add,
+.aa-our-products-section .aa-our-products__cell .card__cart-button,
+.aa-our-products-section .aa-our-products__cell .aa-our-products__atc {
+  margin-top: auto;
+}
+/* Keep "ADD TO CART" text on a single line at every viewport. Reduce font
+   and tighten padding on mobile so it fits inside the narrow 2-col card. */
+.aa-our-products-section .aa-our-products__cell .aa-our-products__atc,
+.aa-our-products-section .aa-our-products__cell button[name="add"],
+.aa-our-products-section .aa-our-products__cell .product-form__submit,
+.aa-our-products-section .aa-our-products__cell .quick-add__submit,
+.aa-our-products-section .aa-our-products__cell .card__cart-button {
+  white-space: nowrap !important;
+  letter-spacing: 0.04em;
+  padding-left: 0.9rem !important;
+  padding-right: 0.9rem !important;
+}
+.aa-our-products-section .aa-our-products__cell .aa-our-products__atc span,
+.aa-our-products-section .aa-our-products__cell button[name="add"] span,
+.aa-our-products-section .aa-our-products__cell .product-form__submit span,
+.aa-our-products-section .aa-our-products__cell .quick-add__submit span {
+  white-space: nowrap !important;
+  display: inline-block;
+}
+@media screen and (max-width: 480px) {
+  .aa-our-products-section .aa-our-products__cell .aa-our-products__atc,
+  .aa-our-products-section .aa-our-products__cell button[name="add"],
+  .aa-our-products-section .aa-our-products__cell .product-form__submit,
+  .aa-our-products-section .aa-our-products__cell .quick-add__submit,
+  .aa-our-products-section .aa-our-products__cell .card__cart-button {
+    font-size: 1.1rem !important;
+    padding-left: 0.6rem !important;
+    padding-right: 0.6rem !important;
+    letter-spacing: 0.02em;
+  }
+}

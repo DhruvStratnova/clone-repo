@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 130" fill="none">
+  <!-- Orb on left -->
+  <g transform="translate(-25, 4)">
+    <path d="M80.999 47.5273C97.0434 47.5273 110.072 60.7102 110.072 77C110.072 93.2898 97.0434 106.473 80.999 106.473C64.9547 106.473 51.9258 93.2898 51.9258 77C51.9258 60.7103 64.9547 47.5274 80.999 47.5273Z" fill="url(#orbGrad)" stroke="white" stroke-width="2"/>
+    <path d="M89.1429 99.6702C110.603 91.7556 124.354 75.1901 119.857 62.6702C115.36 50.1503 94.3174 46.4169 72.8571 54.3315C51.3969 62.2461 37.6457 78.8115 42.1429 91.3315C46.64 103.851 67.6826 107.585 89.1429 99.6702Z" stroke="white" stroke-width="2"/>
+    <path d="M68.9178 91.5902C83.2315 103.76 100.244 107.094 106.917 99.0365C113.589 90.9789 107.395 74.581 93.0813 62.4109C78.7676 50.2408 61.7549 46.907 55.0823 54.9647C48.4097 63.0223 54.6041 79.4201 68.9178 91.5902Z" stroke="white" stroke-width="1.5"/>
+    <circle cx="118.017" cy="77.0003" r="2.27" fill="#ffffff"/>
+    <circle cx="48.419" cy="88.428" r="2.0" fill="#228B22"/>
+    <circle cx="105.56" cy="100.797" r="2.0" fill="#FFFFCC"/>
+    <circle cx="91.92" cy="98.22" r="2.7" fill="#191970"/>
+    <circle cx="109.283" cy="52.876" r="3.5" fill="#FF8000"/>
+    <circle cx="58.45" cy="102.71" r="3.7" fill="#FFFF00"/>
+  </g>
+
+  <!-- "Aura AI" text — clean modern sans-serif -->
+  <text x="135" y="80"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+        font-size="48"
+        font-weight="600"
+        letter-spacing="-1.2"
+        fill="currentColor">Aura AI</text>
+
+  <defs>
+    <linearGradient id="orbGrad" x1="76.1122" y1="107.473" x2="99.6721" y2="57.685" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0950DE"/>
+      <stop offset="0.24" stop-color="#223CCE" stop-opacity="0.8"/>
+      <stop offset="0.47" stop-color="#7D5AC8"/>
+      <stop offset="0.68" stop-color="#BC5596"/>
+      <stop offset="0.86" stop-color="#EA5684"/>
+      <stop offset="1" stop-color="#FC8E64"/>
+    </linearGradient>
+  </defs>
+</svg>

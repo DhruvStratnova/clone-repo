@@ -1,0 +1,40 @@
+{%- comment -%}
+  Aura AI auth config. Wired to the live Supabase project (same one the quiz uses).
+
+  SAFE BY DEFAULT: ENABLED=false, so the account icon behaves exactly as Shopify
+  default for real visitors. To test the REAL phone-OTP flow on the live store
+  without affecting anyone, add ?aa_auth_preview=1 to any URL (sends a real SMS).
+
+  TO GO LIVE FOR EVERYONE: set ENABLED = true.
+{%- endcomment -%}
+<script>
+  (function () {
+    var preview = location.search.indexOf('aa_auth_preview=1') > -1;
+
+    var SUPABASE_URL = 'https://ieakxiipnpwvyvpsjnkl.supabase.co';
+    var PROJECT_REF  = 'ieakxiipnpwvyvpsjnkl';
+    var ANON_KEY     = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImllYWt4aWlwbnB3dnl2cHNqbmtsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTUxOTA4NzcsImV4cCI6MjA3MDc2Njg3N30.R_seea1Eefbitn2ZI-ye0oASLsoazA7lynGTk7B1pH4';
+
+    var ENABLED = true; // <-- live for all visitors (account icon opens our popup, never Shopify login)
+
+    // Send via OTPWidget (the @msg91comm/sendotp object your app uses) -> reqId,
+    // verify with the already-deployed msg91-verify-token-v1 (widget verify). No new deploy.
+    window.AA_AUTH_CONFIG = {
+      enabled: ENABLED || preview,
+      demo: false,
+      supabaseUrl: SUPABASE_URL,
+      projectRef: PROJECT_REF,
+      anonKey: ANON_KEY,
+      sendOtpUrl: SUPABASE_URL + '/functions/v1/send-otp-v2',
+      verifyUrl: SUPABASE_URL + '/functions/v1/msg91-verify-token-v1',
+      msg91WidgetId: '356b776c4e50333131353237',
+      msg91TokenAuth: '479288TzoS0bFWCte69230125P1',
+      headers: { 'apikey': ANON_KEY, 'Authorization': 'Bearer ' + ANON_KEY },
+      successUrl: '',      // '' = close popup + reload to reflect logged-in state
+      appSignature: '',
+      ordersUrl: '',
+      profileUrl: '',
+      productImagesUrl: '{{ 'aa-product-images.json' | asset_url }}'  // static product_id -> image map (fast)
+    };
+  })();
+</script>

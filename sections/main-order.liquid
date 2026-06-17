@@ -12,12 +12,23 @@
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
   }
-{%- endstyle -%}
 
-<div class="customer order section-{{ section.id }}-padding">
+  /* ---- Aura AI brand pass over the order detail page (structure unchanged) ---- */
+  .aa-au-orderpage{max-width:960px;margin:0 auto}
+  .aa-au-orderpage h1,.aa-au-orderpage h2,.aa-au-orderpage h3{font-family:'Cormorant Garamond',serif;color:#241019}
+  .aa-au-orderpage h1{font-weight:700;font-size:32px}
+  .aa-au-orderpage > div > a[href]{color:#E9027A;font-weight:600;text-decoration:none}
+  .aa-au-orderpage table{border-radius:14px;overflow:hidden;background:linear-gradient(180deg,#fff,#FAF1E0 140%);border:1px solid rgba(36,16,25,.10)}
+  .aa-au-orderpage th{font-family:'Jost',sans-serif;color:#4a3a40}
+  .aa-au-orderpage .order-summary,
+  .aa-au-orderpage [class*="address"]{background:#fff;border:1px solid rgba(36,16,25,.10);border-radius:16px;padding:18px}
+{%- endstyle -%}
+{{ 'aa-auth-v2.css' | asset_url | stylesheet_tag }}
+
+<div class="customer order aa-au-orderpage section-{{ section.id }}-padding">
   <div>
     <h1 class="customer__title">{{ 'customer.account.title' | t }}</h1>
-    <a href="{{ routes.account_url }}">{{ 'customer.account.return' | t }}</a>
+    <a href="/pages/account">{{ 'customer.account.return' | t }}</a>
   </div>
 
   <div>

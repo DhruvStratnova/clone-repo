@@ -93,6 +93,14 @@
     >
     <label for="{{ input_id }}">
       {{ value -}}
+      {%- comment -%} AstroAura: price add-on label on capping / X-ray options {%- endcomment -%}
+      {%- assign aa_vlc = value | downcase -%}
+      {%- unless aa_vlc contains 'without' -%}
+        {%- if aa_vlc contains 'silver brass' -%}<span class="aa-vp-addon">+&#8377;30</span>
+        {%- elsif aa_vlc contains 'silver capping' -%}<span class="aa-vp-addon">+&#8377;1,200</span>
+        {%- elsif aa_vlc contains 'x-ray certificate' -%}<span class="aa-vp-addon">+&#8377;500</span>
+        {%- endif -%}
+      {%- endunless -%}
       {{ label_unavailable }}
     </label>
   {%- elsif picker_type == 'dropdown' or picker_type == 'swatch_dropdown' -%}

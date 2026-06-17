@@ -1,0 +1,64 @@
+<section class="sec aa-rev"><div class="wrap"><div class="rtop" data-rise>
+  {%- if section.settings.dev != blank -%}<span class="dev">{{ section.settings.dev }}</span>{%- endif -%}
+  <h2 style="font-family:'Cormorant Garamond',Georgia,serif !important;font-weight:600">{{ section.settings.heading | default: 'Let customers speak for us' }}</h2>
+  <div class="rstars">★★★★★</div>
+  {%- if section.settings.sub != blank -%}<div class="rc">{{ section.settings.sub }}</div>{%- endif -%}
+</div></div>
+
+  {%- comment -%} Real reviews pulled from Judge.me (its widget JS is loaded site-wide). The
+    carousel auto-renders site-wide reviews; the manual blocks below act as a fallback only
+    if Judge.me hasn't rendered yet. {%- endcomment -%}
+  <div class="wrap aa-rev__live" data-rise>
+    <div class="jdgm-carousel-wrapper">
+      <div class="jdgm-carousel"></div>
+    </div>
+  </div>
+
+  <div class="fb aa-rev__fallback" data-rise>
+    <div class="sld">
+      {%- for block in section.blocks -%}
+        <div class="rcard" {{ block.shopify_attributes }}>
+          <div class="rs">★★★★★</div>
+          <p class="rq">{{ block.settings.quote }}</p>
+          <div class="who"><span class="av">{{ block.settings.name | slice: 0 }}</span><div><b>{{ block.settings.name }}</b><span>Verified buyer · {{ block.settings.product }}</span></div></div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+
+<style>
+  /* Judge.me carousel: tidy + brand-fit, and hide the manual fallback once Judge.me renders */
+  .aa-rev .jdgm-carousel-wrapper { border: 0 !important; background: transparent !important; max-width: 1240px; margin: 0 auto; padding: 0 24px; }
+  .aa-rev .jdgm-carousel-title-and-link { display: none !important; }
+  .aa-rev .jdgm-carousel { background: transparent !important; }
+  .aa-rev:has(.jdgm-carousel .jdgm-carousel-item) .aa-rev__fallback,
+  .aa-rev:has(.jdgm-carousel .jdgm-rev) .aa-rev__fallback { display: none; }
+</style>
+
+<script>
+  /* re-render Judge.me after Turbo SPA navigations so the carousel shows on the homepage */
+  (function () {
+    function renderJM() {
+      try {
+        if (window.jdgm) {
+          if (typeof jdgm.customizeBadges === 'function') jdgm.customizeBadges();
+          if (typeof jdgm.batchRenderBadges === 'function') jdgm.batchRenderBadges();
+          if (jdgm.SETTINGS && typeof jdgm.docReadyFn === 'function') jdgm.docReadyFn();
+        }
+      } catch (e) {}
+    }
+    document.addEventListener('turbo:load', function () { setTimeout(renderJM, 60); });
+  })();
+</script>
+</section>
+{% schema %}
+{"name":"AA Testimonials","max_blocks":24,"settings":[
+  {"type":"text","id":"dev","label":"Devanagari accent"},
+  {"type":"text","id":"heading","label":"Heading","default":"Let customers speak for us"},
+  {"type":"text","id":"sub","label":"Sub line","default":"from 14,249 verified reviews"}
+],"blocks":[{"type":"review","name":"Review (fallback)","settings":[
+  {"type":"textarea","id":"quote","label":"Quote"},
+  {"type":"text","id":"name","label":"Name"},
+  {"type":"text","id":"product","label":"Product"}
+]}],"presets":[{"name":"AA Testimonials","blocks":[{"type":"review"},{"type":"review"},{"type":"review"},{"type":"review"}]}]}
+{% endschema %}

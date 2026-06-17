@@ -1,0 +1,28 @@
+<section class="sec tight"><div class="wrap" data-rise>
+  <div class="iwt{% if section.settings.reverse %} rev{% endif %}">
+    <div class="txt">
+      {%- if section.settings.dev != blank -%}<span class="dev">{{ section.settings.dev }}</span>{%- endif -%}
+      <h3 style="font-family:'Cormorant Garamond',Georgia,serif !important;font-weight:600">{{ section.settings.heading }}</h3>
+      <p>{{ section.settings.text }}</p>
+      {%- if section.settings.btn_label != blank -%}
+        <div><a class="{% if section.settings.btn_ghost %}btn-ghost{% else %}btn{% endif %}" href="{{ section.settings.btn_url | default: '#' }}">{{ section.settings.btn_label }} {% render 'aa-rd-icon', name: 'arrow-right' %}</a></div>
+      {%- endif -%}
+    </div>
+    {%- assign pic = '' -%}{%- if section.settings.image_asset != blank -%}{%- assign pic = section.settings.image_asset | asset_url -%}{%- elsif section.settings.bg_url != blank -%}{%- assign pic = section.settings.bg_url -%}{%- elsif section.settings.image != blank -%}{%- assign pic = section.settings.image | image_url: width: 1400 -%}{%- endif -%}
+    <div class="pic">{% if pic != blank %}<img class="pic-img" src="{{ pic }}" alt="{{ section.settings.heading | escape }}" loading="lazy">{% endif %}</div>
+  </div>
+</div></section>
+{% schema %}
+{"name":"AA Image + Text","settings":[
+  {"type":"text","id":"dev","label":"Devanagari accent"},
+  {"type":"text","id":"heading","label":"Heading","default":"Spiritual Essential"},
+  {"type":"textarea","id":"text","label":"Text"},
+  {"type":"text","id":"btn_label","label":"Button label"},
+  {"type":"url","id":"btn_url","label":"Button link"},
+  {"type":"checkbox","id":"btn_ghost","label":"Ghost (outline) button","default":false},
+  {"type":"image_picker","id":"image","label":"Image"},
+  {"type":"text","id":"image_asset","label":"Image asset filename"},
+  {"type":"text","id":"bg_url","label":"Image URL (fallback)"},
+  {"type":"checkbox","id":"reverse","label":"Image on left","default":false}
+],"presets":[{"name":"AA Image + Text"}]}
+{% endschema %}

@@ -1,0 +1,215 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "image_banner_zpGQzQ": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_Nwhn7g": {
+          "type": "heading",
+          "settings": {
+            "heading": "Image banner",
+            "heading_size": "h1"
+          }
+        },
+        "text_TiJNKb": {
+          "type": "text",
+          "settings": {
+            "text": "Give customers details about the banner image(s) or content on the template.",
+            "text_style": "body"
+          }
+        },
+        "buttons_yt67QM": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "Button label",
+            "button_link_1": "",
+            "button_style_secondary_1": false,
+            "button_label_2": "Button label",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_Nwhn7g",
+        "text_TiJNKb",
+        "buttons_yt67QM"
+      ],
+      "custom_css": [
+        ".tablinks {background: transparent;}",
+        ".tabber_content {padding: 2rem; display: flex; justify-content: center;}",
+        ".tabcontent {background-color: #ffffff; border: 1px solid #eaeaea; border-radius: 12px; padding: 40px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); max-width: 1400px; margin: 2rem 2rem;}",
+        ".banner__media {width: 100%;}",
+        ".tablinks:hover {font-weight: bold;}"
+      ],
+      "name": "t:sections.image-banner.presets.name",
+      "settings": {
+        "image": "shopify://shop_images/banner_1_0ab4286a-48e7-4760-9367-06736d9aab60.png",
+        "image_2": "shopify://shop_images/mobile_banner.png",
+        "image_overlay_opacity": 0,
+        "image_height": "adapt",
+        "image_behavior": "none",
+        "desktop_content_position": "middle-center",
+        "desktop_content_alignment": "center",
+        "show_text_box": true,
+        "color_scheme": "",
+        "stack_images_on_mobile": true,
+        "mobile_content_alignment": "center",
+        "show_text_below": true
+      }
+    },
+    "banner": {
+      "type": "main-collection-banner",
+      "settings": {
+        "show_collection_description": false,
+        "show_collection_image": false,
+        "color_scheme": "scheme-1"
+      }
+    },
+    "product-grid": {
+      "type": "main-collection-product-grid",
+      "settings": {
+        "products_per_page": 24,
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "color_scheme": "scheme-1",
+        "image_ratio": "adapt",
+        "image_shape": "default",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "standard",
+        "enable_filtering": true,
+        "filter_type": "horizontal",
+        "enable_sorting": true,
+        "padding_top": 12,
+        "padding_bottom": 36
+      }
+    },
+    "image_with_text_GGVXqL": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_b7m6wk": {
+          "type": "heading",
+          "settings": {
+            "heading": "Crystal Trees & You",
+            "heading_size": "h1"
+          }
+        },
+        "text_bkKARH": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Crystal trees are powerful symbols of growth, abundance, and positivity. Made from natural gemstones, they enhance harmony, attract prosperity, and balance the energy of any space \u2014 blending spiritual benefits with elegant d\u00e9cor.</p>",
+            "text_style": "body"
+          }
+        },
+        "button_FGMQRB": {
+          "type": "button",
+          "settings": {
+            "button_label": "Learn More",
+            "button_link": "shopify://collections/crystal-trees",
+            "button_style_secondary": true
+          }
+        }
+      },
+      "block_order": [
+        "heading_b7m6wk",
+        "text_bkKARH",
+        "button_FGMQRB"
+      ],
+      "name": "t:sections.image-with-text.presets.name",
+      "settings": {
+        "image": "shopify://shop_images/40209.jpg",
+        "height": "adapt",
+        "desktop_image_width": "small",
+        "layout": "image_first",
+        "image_behavior": "none",
+        "content_layout": "no-overlap",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "mobile_content_alignment": "left",
+        "section_color_scheme": "",
+        "color_scheme": "",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "collapsible_content_EtJFbL": {
+      "type": "collapsible-content",
+      "blocks": {
+        "collapsible_row_QLBGTF": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "What are its benefits?",
+            "icon": "none",
+            "row_content": "<p>Crystal trees attract wealth, positivity, and harmony. They balance energy, reduce stress, boost focus, and bring good luck and spiritual growth to your space.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_b34tJL": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How natural and authentic is this crystals trees?",
+            "icon": "none",
+            "row_content": "<p>AstroAura uses only authentic crystals, carefully selected for their natural colors and powerful energy properties, ensuring each Crystal Tree radiates lasting positivity and harmony.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_mDqahe": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "What is the return policy and estimated delivery duration?",
+            "icon": "none",
+            "row_content": "<p>We ensure safe delivery across India and abroad. Returns are allowed within the return period if unused and untied.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_m84QkB": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How is this energized and how can i wear it?",
+            "icon": "none",
+            "row_content": "<p>Crystal trees are carefully handcrafted and energized before reaching you. They can be placed in your home or workspace to attract positive energy, abundance, and harmony.</p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "collapsible_row_QLBGTF",
+        "collapsible_row_b34tJL",
+        "collapsible_row_mDqahe",
+        "collapsible_row_m84QkB"
+      ],
+      "name": "t:sections.collapsible_content.presets.name",
+      "settings": {
+        "caption": "",
+        "heading": "FAQs",
+        "heading_size": "h1",
+        "heading_alignment": "center",
+        "layout": "none",
+        "container_color_scheme": "",
+        "color_scheme": "",
+        "open_first_collapsible_row": false,
+        "image_ratio": "adapt",
+        "desktop_layout": "image_second",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "image_banner_zpGQzQ",
+    "banner",
+    "product-grid",
+    "image_with_text_GGVXqL",
+    "collapsible_content_EtJFbL"
+  ]
+}

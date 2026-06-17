@@ -26,9 +26,25 @@
       }
     }
 
-    .tabber_content{
-      p, h3, ul, ol{
-        font-size:14px;
+  {%- endstyle -%}
+{%- endif -%}
+
+{%- if section.settings.image_height == 'adapt' and section.settings.image_2 != blank -%}
+  {%- style -%}
+    /* On mobile, when a mobile image exists, adapt padding to its aspect ratio */
+    @media screen and (max-width: 749px) {
+      #Banner-{{ section.id }}.has-mobile-image::before,
+      #Banner-{{ section.id }}.has-mobile-image .banner__media::before,
+      #Banner-{{ section.id }}.has-mobile-image:not(.banner--mobile-bottom) .banner__content::before {
+        padding-bottom: {{ 1 | divided_by: section.settings.image_2.aspect_ratio | times: 100 }}% !important;
+        content: '';
+        display: block;
+      }
+      /* Ensure the mobile media container adapts exactly to the mobile image ratio */
+      #Banner-{{ section.id }}.has-mobile-image .banner__media--mobile::before {
+        padding-bottom: {{ 1 | divided_by: section.settings.image_2.aspect_ratio | times: 100 }}% !important;
+        content: '';
+        display: block;
       }
     }
   {%- endstyle -%}
@@ -37,6 +53,138 @@
 {%- style -%}
   #Banner-{{ section.id }}::after {
     opacity: {{ section.settings.image_overlay_opacity | divided_by: 100.0 }};
+  }
+{%- endstyle -%}
+
+{%- style -%}
+  /* Swap images only when mobile image exists */
+  @media screen and (max-width: 749px) {
+    #Banner-{{ section.id }}.has-mobile-image .banner__media--desktop { display: none !important; }
+    #Banner-{{ section.id }}.has-mobile-image .banner__media--mobile {
+      display: block !important;
+      width: 100% !important;
+      flex: 0 0 100% !important;
+      max-width: 100% !important;
+      order: 1 !important;
+    }
+    #Banner-{{ section.id }}.has-mobile-image .banner__media--mobile.banner__media-half {
+      width: 100% !important;
+      flex: 0 0 100% !important;
+      max-width: 100% !important;
+    }
+    #Banner-{{ section.id }}.has-mobile-image .banner__media--desktop { order: 2 !important; }
+    #Banner-{{ section.id }}.has-mobile-image .banner__media--mobile img { width: 100% !important; height: auto !important; opacity: 1 !important; visibility: visible !important; }
+  }
+  @media screen and (min-width: 750px) {
+    #Banner-{{ section.id }}.has-mobile-image .banner__media--desktop { display: block !important; }
+    #Banner-{{ section.id }}.has-mobile-image .banner__media--mobile { display: none !important; }
+  }
+{%- endstyle -%}
+
+{%- style -%}
+  /* Collection info tabs — sober editorial style (approved 2026-06-11):
+     quiet uppercase text tabs on a hairline, gradient underline on the
+     active tab, panel is a centred reading column on the page background. */
+  .listing-description-accordion {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  .listing-description-accordion .tabber_coll .tab {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    border-bottom: 1px solid rgba(36, 16, 25, 0.09);
+  }
+  .listing-description-accordion .tablinks {
+    font-family: var(--aa-font-ui, system-ui, sans-serif);
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: #8a7480;
+    background: none;
+    border: 0;
+    padding: 10px 2px 14px;
+    cursor: pointer;
+    position: relative;
+    transition: color 0.2s;
+  }
+  .listing-description-accordion .tablinks .caret { display: none; }
+  .listing-description-accordion .tablinks::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: -1px;
+    height: 2px;
+    background: linear-gradient(100deg, #E9027A, #F58220);
+    transform: scaleX(0);
+    transition: transform 0.25s ease;
+  }
+  .listing-description-accordion .tablinks:hover { color: #241019; }
+  .listing-description-accordion .tablinks.active { color: #241019; }
+  .listing-description-accordion .tablinks.active::after { transform: scaleX(1); }
+  /* !important needed: per-template section custom_css injects an old
+     white-card .tabcontent style with an ID selector we cannot beat, and
+     the legacy rules in section-image-banner.css set float/hover greys. */
+  .listing-description-accordion .tabcontent {
+    max-width: 680px !important;
+    margin: 0 auto !important;
+    padding: 26px 0 30px !important;
+    text-align: center !important;
+    background: none !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+  }
+  .listing-description-accordion .tabber_content {
+    padding: 0 !important;
+    display: block !important;
+  }
+  .listing-description-accordion .tablinks,
+  .listing-description-accordion .tablinks:hover,
+  .listing-description-accordion .tablinks.active {
+    background: none !important;
+    float: none !important;
+  }
+  .listing-description-accordion .tabc-title {
+    font-family: var(--font-heading-family, Georgia, serif);
+    font-weight: 400;
+    font-size: 24px;
+    color: #241019;
+    margin: 0 0 4px;
+  }
+  .listing-description-accordion .tabber_content p,
+  .listing-description-accordion .tabber_content h3,
+  .listing-description-accordion .tabber_content ul,
+  .listing-description-accordion .tabber_content ol {
+    font-size: 14.5px;
+    line-height: 1.75;
+    color: #5d4a53;
+  }
+  /* Mobile-only horizontal scroll for tab header */
+  @media screen and (max-width: 749px) {
+    .listing-description-accordion {
+      padding: 0 14px;
+    }
+    .listing-description-accordion .tabber_coll {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .listing-description-accordion .tabber_coll .tab {
+      display: inline-flex;
+      justify-content: flex-start;
+      gap: 22px;
+      white-space: nowrap;
+      width: max-content;
+      min-width: 100%;
+    }
+    .listing-description-accordion .tabber_coll .tab .tablinks {
+      flex: 0 0 auto;
+    }
+    .listing-description-accordion .tabcontent {
+      padding: 20px 6px 24px;
+    }
+    .listing-description-accordion .tabc-title { font-size: 20px; }
   }
 {%- endstyle -%}
 
@@ -64,10 +212,10 @@
 
 <div
   id="Banner-{{ section.id }}"
-  class="banner banner--content-align-{{ section.settings.desktop_content_alignment }} banner--content-align-mobile-{{ section.settings.mobile_content_alignment }} banner--{{ section.settings.image_height }}{% if section.settings.stack_images_on_mobile and section.settings.image != blank and section.settings.image_2 != blank %} banner--stacked{% endif %}{% if section.settings.image_height == 'adapt' and section.settings.image != blank %} banner--adapt{% endif %}{% if section.settings.show_text_below %} banner--mobile-bottom{%- endif -%}{% if section.settings.show_text_box == false %} banner--desktop-transparent{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
+  class="banner banner--content-align-{{ section.settings.desktop_content_alignment }} banner--content-align-mobile-{{ section.settings.mobile_content_alignment }} banner--{{ section.settings.image_height }}{% if section.settings.stack_images_on_mobile and section.settings.image != blank and section.settings.image_2 != blank %} banner--stacked{% endif %}{% if section.settings.image_height == 'adapt' and section.settings.image != blank %} banner--adapt{% endif %}{% if section.settings.show_text_below %} banner--mobile-bottom{%- endif -%}{% if section.settings.show_text_box == false %} banner--desktop-transparent{% endif %}{% if section.settings.image_2 != blank %} has-mobile-image{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
 >
   {%- if section.settings.image != blank -%}
-    <div class="banner__media media{% if section.settings.image == blank and section.settings.image_2 == blank %} placeholder{% endif %}{% if section.settings.image_2 != blank %} banner__media-half{% endif %}{% if section.settings.image_behavior != 'none' %} animate--{{ section.settings.image_behavior }}{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+    <div class="banner__media media banner__media--desktop{% if section.settings.image == blank and section.settings.image_2 == blank %} placeholder{% endif %}{% if section.settings.image_2 != blank %} banner__media-half{% endif %}{% if section.settings.image_behavior != 'none' %} animate--{{ section.settings.image_behavior }}{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
       {%- liquid
         assign image_height = section.settings.image.width | divided_by: section.settings.image.aspect_ratio
         if section.settings.image_2 != blank
@@ -99,7 +247,7 @@
     </div>
   {%- endif -%}
   {%- if section.settings.image_2 != blank -%}
-    <div class="banner__media media{% if section.settings.image != blank %} banner__media-half{% endif %}{% if section.settings.image_behavior != 'none' %} animate--{{ section.settings.image_behavior }}{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+    <div class="banner__media media banner__media--mobile{% if section.settings.image != blank %} banner__media-half{% endif %}{% if section.settings.image_behavior != 'none' %} animate--{{ section.settings.image_behavior }}{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
       {%- liquid
         assign image_height_2 = section.settings.image_2.width | divided_by: section.settings.image_2.aspect_ratio
         if section.settings.image != blank
@@ -557,6 +705,8 @@
 
 {% comment %} <div class="listing-description-accordion-container"></div> {% endcomment %}
 
+
+
 <div class="listing-description-accordion">
   <div class="tabber_coll">
     <div class="tab">
@@ -566,7 +716,7 @@
           <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </button>
-      <button class="tablinks active" onclick="tabAccordion(event, 'Quality & Price')">
+      <button class="tablinks" onclick="tabAccordion(event, 'Quality & Price')">
         Quality &amp; Price
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="caret">
           <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -598,6 +748,7 @@
   <div class="tabber_content">
     <div id="About" class="tabcontent">
       <div>
+        <h3 class="tabc-title">About</h3>
         <p>
           {{- collection.metafields.custom.about }}
         </p>
@@ -605,6 +756,7 @@
     </div>
     <div id="Clean & Care" class="tabcontent">
       <div>
+        <h3 class="tabc-title">Clean &amp; Care</h3>
         <p>
           {{- collection.metafields.custom.clean_care }}
         </p>
@@ -612,6 +764,7 @@
     </div>
     <div id="Benefits" class="tabcontent">
       <div>
+        <h3 class="tabc-title">Benefits</h3>
         <p>
           {{- collection.metafields.custom.benefits }}
         </p>
@@ -619,13 +772,15 @@
     </div>
     <div id="Types" class="tabcontent">
       <div>
+        <h3 class="tabc-title">Types</h3>
         <p>
           {{- collection.metafields.custom.types }}
         </p>
       </div>
     </div>
-    <div id="Quality & Price" class="tabcontent" style="display: block;">
+    <div id="Quality & Price" class="tabcontent">
       <div>
+        <h3 class="tabc-title">Quality &amp; Price</h3>
         <p>
           {{- collection.metafields.custom.quality_price }}
         </p>
@@ -686,7 +841,7 @@
     {
       "type": "image_picker",
       "id": "image_2",
-      "label": "t:sections.image-banner.settings.image_2.label"
+      "label": "Mobile image"
     },
     {
       "type": "range",

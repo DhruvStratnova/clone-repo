@@ -1,0 +1,945 @@
+/* ============================================================
+   Aura AI — Product card v8 (mobile fixes + new build)
+   Build: 2026-05-19-v8-mobile-fixes
+   ============================================================ */
+
+/* === WIDER CARDS — desktop fallback grid for HOMEPAGE featured-collection,
+   related-products and any non-collection/non-search context.
+   Exclude template-collection and template-search — those pages use
+   aa-pcard.css's auto-fill grid (4-5 cards). Without this exclusion these
+   flex rules win the cascade (later file load) and collapse the cards to
+   1 column. PERMANENT FIX 2026-05-27. */
+@media screen and (min-width: 990px) {
+  html body:not(.template-collection):not(.template-search) .product-grid.grid--6-col-desktop > .grid__item,
+  html body:not(.template-collection):not(.template-search) .product-grid.grid--5-col-desktop > .grid__item,
+  html body:not(.template-collection):not(.template-search) .product-grid.grid--4-col-desktop > .grid__item,
+  html body:not(.template-collection):not(.template-search) ul.product-grid > .grid__item {
+    flex: 0 0 calc((100% - 72px) / 4) !important;
+    max-width: calc((100% - 72px) / 4) !important;
+    min-width: 0 !important;
+    scroll-snap-align: start !important;
+  }
+}
+@media screen and (min-width: 750px) and (max-width: 989px) {
+  html body:not(.template-collection):not(.template-search) .product-grid > .grid__item {
+    flex: 0 0 calc((100% - 40px) / 3) !important;
+    max-width: calc((100% - 40px) / 3) !important;
+  }
+}
+@media screen and (max-width: 749px) {
+  html body:not(.template-collection):not(.template-search) .product-grid > .grid__item {
+    flex: 0 0 calc((100% - 14px) / 2) !important;
+    max-width: calc((100% - 14px) / 2) !important;
+  }
+}
+
+
+/* === CARD WRAPPER — BEIGE bg (Astrotalk style) === */
+.card-wrapper.product-card-wrapper {
+  background: #FBF6EC !important;
+  /* clearly-visible warm hairline on ALL four sides (was ~5% black = invisible,
+     so the right edge read as "no frame") + an even ambient ring so every edge
+     is defined, not just the bottom where the drop-shadow falls */
+  border: 1px solid rgba(184,145,90,0.55) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 0 0 1px rgba(184,145,90,0.18), 0 2px 6px rgba(60,40,15,0.06), 0 12px 26px rgba(60,40,15,0.10) !important;
+  transition: transform 0.22s cubic-bezier(.22,.61,.36,1),
+              box-shadow 0.22s cubic-bezier(.22,.61,.36,1),
+              border-color 0.22s ease !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+  position: relative !important;
+  contain: layout !important;
+}
+/* Also ensure the inner .card is positioned context for absolute children */
+.card-wrapper.product-card-wrapper > .card {
+  position: relative !important;
+}
+.card-wrapper.product-card-wrapper:hover {
+  transform: translateY(-3px) !important;
+  border-color: rgba(74, 25, 66, 0.30) !important;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05), 0 14px 30px rgba(74, 25, 66, 0.14) !important;
+}
+
+.card-wrapper.product-card-wrapper .card,
+.card-wrapper.product-card-wrapper .card__inner {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+.card-wrapper.product-card-wrapper .card {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+}
+
+/* Hide duplicate inner title overlay */
+.card-wrapper.product-card-wrapper .card__inner > .card__content {
+  display: none !important;
+}
+
+/* === IMAGE FRAME — minimal margin, image fills the frame === */
+html body .card-wrapper.product-card-wrapper .card__inner {
+  border-radius: 14px !important;
+  overflow: hidden !important;
+  margin-top: 4px !important;
+  margin-right: 4px !important;
+  margin-bottom: 4px !important;
+  margin-left: 4px !important;
+  background: #FFFFFF !important;
+  position: relative !important;
+  aspect-ratio: 1 / 1 !important;
+  padding-bottom: 0 !important;
+  flex-shrink: 0 !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04) !important;
+  box-sizing: border-box !important;
+  width: auto !important;
+  max-width: none !important;
+}
+.card-wrapper.product-card-wrapper .card__media {
+  background: transparent !important;
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  position: relative !important;
+  inset: 0 !important;
+}
+.card-wrapper.product-card-wrapper .card__media .media,
+.card-wrapper.product-card-wrapper .card__media .media--transparent {
+  width: 100% !important;
+  height: 100% !important;
+  padding: 0 !important;
+}
+.card-wrapper.product-card-wrapper .card__media img,
+.card-wrapper.product-card-wrapper .card__media picture img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important; /* fills frame edge-to-edge */
+  object-position: center !important;
+  border-radius: 0 !important;
+  opacity: 1 !important;
+  position: absolute !important;
+  inset: 0 !important;
+  padding: 0 !important;
+}
+
+/* HOVER */
+.card-wrapper.product-card-wrapper .media--hover-effect img,
+.card-wrapper.product-card-wrapper:hover .media--hover-effect img {
+  opacity: 1 !important;
+  transition: transform 0.4s cubic-bezier(.22,.61,.36,1) !important;
+}
+.card-wrapper.product-card-wrapper:hover .media--hover-effect img {
+  transform: scale(1.04) !important;
+}
+.card-wrapper.product-card-wrapper .media--hover-effect > img + img,
+.card-wrapper.product-card-wrapper .media > img + img,
+.card-wrapper.product-card-wrapper .media picture:nth-of-type(2) {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+/* === CONTENT — compact, no auto-push wasted space === */
+.card-wrapper.product-card-wrapper .card > .card__content {
+  padding: 14px 16px 14px 16px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+  flex-grow: 0 !important; /* don't stretch; let content size naturally */
+}
+.card-wrapper.product-card-wrapper .card > .card__content .card__information {
+  padding: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+  flex-grow: 0 !important;
+}
+
+/* === TITLE — CENTERED === */
+.card-wrapper.product-card-wrapper .card__content .card__heading {
+  font-family: 'Inter', -apple-system, sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  line-height: 1.3 !important;
+  text-align: center !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+  hyphens: none !important;
+}
+.card-wrapper.product-card-wrapper .card__content .card__heading a {
+  color: #1A1A1A !important;
+  letter-spacing: -0.2px !important;
+  text-align: center !important;
+  display: block !important;
+}
+
+/* === DESCRIPTION — hidden (matches Astrotalk inspiration, prevents button overlap) === */
+.card-wrapper.product-card-wrapper .card-description-purpose,
+.card-wrapper.product-card-wrapper .card-description-purpose p {
+  display: none !important;
+}
+
+/* Hide rating */
+.card-wrapper.product-card-wrapper .rating,
+.card-wrapper.product-card-wrapper .rating-text,
+.card-wrapper.product-card-wrapper .rating-count,
+.aa-rating-pill {
+  display: none !important;
+}
+
+/* === COMPACT LAYOUT — title centered, price bottom-left, VIEW bottom-right === */
+.card-wrapper.product-card-wrapper .card__content {
+  position: relative !important;
+  display: flex !important;
+  flex-direction: column !important;
+  flex-grow: 1 !important;
+  padding: 10px 14px 10px 14px !important;
+  gap: 6px !important;
+  min-height: 80px !important;
+}
+.card-wrapper.product-card-wrapper .card__content .card__information {
+  display: flex !important;
+  flex-direction: column !important;
+  flex-grow: 1 !important;
+  padding: 0 !important;
+  gap: 4px !important;
+  min-width: 0 !important;
+}
+/* Bottom price row — left-aligned, room for tiny button on right */
+.card-wrapper.product-card-wrapper .card__content .card-information {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  margin-top: auto !important;
+  padding: 0 42px 0 0 !important;
+}
+.card-wrapper.product-card-wrapper .price {
+  margin: 0 !important;
+  padding: 0 !important;
+  text-align: left !important;
+  align-self: flex-start !important;
+}
+.card-wrapper.product-card-wrapper .card__content .caption-large {
+  display: none !important;
+}
+.card-wrapper.product-card-wrapper .price__container {
+  display: flex !important;
+  align-items: baseline !important;
+  gap: 6px !important;
+  flex-wrap: wrap !important;
+}
+.card-wrapper.product-card-wrapper .price:not(.price--on-sale) .price__sale {
+  display: none !important;
+}
+.card-wrapper.product-card-wrapper .price.price--on-sale .price__regular {
+  display: none !important;
+}
+.card-wrapper.product-card-wrapper .price:not(.price--on-sale) .price__regular,
+.card-wrapper.product-card-wrapper .price.price--on-sale .price__sale {
+  display: flex !important;
+  align-items: baseline !important;
+  gap: 6px !important;
+  flex-wrap: wrap !important;
+}
+.card-wrapper.product-card-wrapper .price br,
+.card-wrapper.product-card-wrapper .price .price-item--discount {
+  display: none !important;
+}
+
+/* CURRENT price — compact */
+.card-wrapper.product-card-wrapper .price__regular .price-item--regular,
+.card-wrapper.product-card-wrapper .price__sale .price-item--sale,
+.card-wrapper.product-card-wrapper .price-item--regular,
+.card-wrapper.product-card-wrapper .price-item--sale {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  color: #1A1A1A !important;
+  font-variant-numeric: tabular-nums !important;
+  letter-spacing: -0.2px !important;
+  line-height: 1.2 !important;
+  white-space: nowrap !important;
+}
+/* STRIKETHROUGH original — smaller */
+.card-wrapper.product-card-wrapper s.price-item--regular,
+.card-wrapper.product-card-wrapper .price-item--regular.price__strikethrough,
+.card-wrapper.product-card-wrapper s.price-item {
+  font-size: 10.5px !important;
+  font-weight: 400 !important;
+  color: #999 !important;
+  text-decoration: line-through !important;
+  font-variant-numeric: tabular-nums !important;
+  margin: 0 !important;
+  letter-spacing: 0 !important;
+  white-space: nowrap !important;
+}
+
+/* VIEW button — absolute bottom-right, vertically aligned with price */
+.card-wrapper.product-card-wrapper .quick-add {
+  position: absolute !important;
+  right: 14px !important;
+  bottom: 10px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: auto !important;
+  z-index: 2 !important;
+}
+
+/* VIEW BUTTON styling */
+.card-wrapper.product-card-wrapper .quick-add__submit.button {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0 !important;
+  width: auto !important;
+  min-width: 0 !important;
+  background: #1A1A1A !important;
+  color: #FFFFFF !important;
+  border: none !important;
+  border-radius: 5px !important;
+  padding: 4px 9px !important;
+  min-height: 22px !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.6px !important;
+  text-transform: uppercase !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12) !important;
+  transition: background 0.18s ease, transform 0.18s cubic-bezier(.22,.61,.36,1),
+              box-shadow 0.18s ease !important;
+  text-decoration: none !important;
+  cursor: pointer !important;
+}
+/* Hide the arrow icon entirely (keep .aa-cta-plus visible) */
+.card-wrapper.product-card-wrapper .aa-cta-arrow,
+.card-wrapper.product-card-wrapper .quick-add__submit svg:not(.aa-cta-plus) {
+  display: none !important;
+}
+.card-wrapper.product-card-wrapper .quick-add__submit.button:hover {
+  background: #1A1A1A !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18) !important;
+}
+.card-wrapper.product-card-wrapper .quick-add__submit.button:active {
+  transform: translateY(0) scale(0.98) !important;
+  background: #000000 !important;
+}
+.card-wrapper.product-card-wrapper .quick-add__submit.button:focus-visible {
+  outline: 2px solid #1A1A1A !important;
+  outline-offset: 2px !important;
+}
+.card-wrapper.product-card-wrapper .quick-add__submit.button::before,
+.card-wrapper.product-card-wrapper .quick-add__submit.button::after {
+  display: none !important;
+  content: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+.aa-cta-text { line-height: 1 !important; }
+.aa-cta-arrow {
+  flex-shrink: 0;
+  width: 10px !important;
+  height: 10px !important;
+  transition: transform 0.18s ease;
+}
+.card-wrapper.product-card-wrapper .quick-add__submit.button:hover .aa-cta-arrow {
+  transform: translateX(2px);
+}
+
+/* Kill all link underlines */
+.card-wrapper.product-card-wrapper a,
+.card-wrapper.product-card-wrapper a:hover,
+.card-wrapper.product-card-wrapper a span,
+.card-wrapper.product-card-wrapper .full-unstyled-link,
+.card-wrapper.product-card-wrapper.underline-links-hover a {
+  text-decoration: none !important;
+  text-underline-offset: 0 !important;
+}
+
+/* Hide Dawn's default sale/sold-out badge (cashback ribbon used instead) */
+.card-wrapper.product-card-wrapper .card__badge {
+  display: none !important;
+}
+
+/* === MOBILE === */
+@media (max-width: 749px) {
+  .card-wrapper.product-card-wrapper .card > .card__content { padding: 12px 14px !important; column-gap: 10px !important; }
+  .card-wrapper.product-card-wrapper .card > .card__content .card__heading,
+  .card-wrapper.product-card-wrapper .card > .card__content .card__heading a {
+    font-size: 14px !important;
+  }
+  .card-wrapper.product-card-wrapper .card-description-purpose,
+  .card-wrapper.product-card-wrapper .card-description-purpose p {
+    font-size: 11.5px !important;
+  }
+  .card-wrapper.product-card-wrapper .price__regular .price-item--regular,
+  .card-wrapper.product-card-wrapper .price__sale .price-item--sale,
+  .card-wrapper.product-card-wrapper .price-item--regular {
+    font-size: 15px !important;
+  }
+  .card-wrapper.product-card-wrapper .quick-add__submit.button {
+    padding: 9px 14px !important;
+    font-size: 11px !important;
+    min-height: 34px !important;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .card-wrapper.product-card-wrapper,
+  .card-wrapper.product-card-wrapper *,
+  .card-wrapper.product-card-wrapper .media--hover-effect img,
+  .card-wrapper.product-card-wrapper .quick-add__submit.button {
+    transition: none !important;
+    transform: none !important;
+  }
+  .card-wrapper.product-card-wrapper:hover {
+    transform: none !important;
+  }
+}
+/* cache-bust 1779143259 */
+/* push-bust 1779143890141913000 */
+/* bust 1779146306056688000 */
+/* b 1779146527492252000 */
+
+/* ============================================================
+   FINAL OVERRIDES — guarantee consistency across all sections
+   ============================================================ */
+html body .card-wrapper.product-card-wrapper .card__content .card__heading,
+html body .card-wrapper.product-card-wrapper .card__content .card__heading a {
+  text-align: center !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  color: #1A1A1A !important;
+  line-height: 1.35 !important;
+}
+html body .card-wrapper.product-card-wrapper .card-description-purpose {
+  display: none !important;
+}
+/* card__content: balanced breathing room */
+html body .card-wrapper.product-card-wrapper .card__content {
+  position: relative !important;
+  padding-top: 10px !important;
+  padding-bottom: 58px !important;
+  padding-left: 18px !important;
+  padding-right: 18px !important;
+  min-height: 90px !important;
+}
+/* Title hugs the TOP — no extra spacing */
+html body .card-wrapper.product-card-wrapper .card__content .card__information {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+  flex-grow: 0 !important;
+}
+html body .card-wrapper.product-card-wrapper .card__content .card__heading {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+/* PRICE — absolute BOTTOM-LEFT corner of card */
+html body .card-wrapper.product-card-wrapper .card__content .card-information {
+  position: absolute !important;
+  left: 14px !important;
+  bottom: 14px !important;
+  right: auto !important;
+  top: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: auto !important;
+  max-width: calc(100% - 90px) !important;
+}
+/* VIEW BUTTON — absolute BOTTOM-RIGHT corner of card */
+html body .card-wrapper.product-card-wrapper .quick-add {
+  position: absolute !important;
+  right: 14px !important;
+  bottom: 14px !important;
+  left: auto !important;
+  top: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: auto !important;
+  z-index: 5 !important;
+}
+html body .card-wrapper.product-card-wrapper .quick-add__submit.button {
+  background: #1A1A1A !important;
+  color: #FFFFFF !important;
+  padding: 4px 10px !important;
+  min-height: 22px !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.5px !important;
+  text-transform: uppercase !important;
+  border-radius: 5px !important;
+}
+html body .card-wrapper.product-card-wrapper .aa-cta-arrow,
+html body .card-wrapper.product-card-wrapper .quick-add__submit svg:not(.aa-cta-plus) {
+  display: none !important;
+}
+/* final-bust 1779146859628485000 */
+/* corners 1779147011577918000 */
+
+/* ============================================================
+   QUICK VIEW TRIGGER — invisible button overlaying the image
+   ============================================================ */
+html body .card-wrapper.product-card-wrapper .card__inner {
+  cursor: pointer;
+}
+html body .card-wrapper.product-card-wrapper .aa-quickview-trigger {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 3 !important;
+  background: transparent !important;
+  border: none !important;
+  cursor: pointer !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  opacity: 0;
+  transition: opacity 0.22s ease;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+}
+html body .card-wrapper.product-card-wrapper:hover .aa-quickview-trigger {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.50) !important;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+html body .card-wrapper.product-card-wrapper .aa-quickview-hint {
+  background: rgba(26, 26, 26, 0.85);
+  color: #FFFFFF;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  transform: translateY(6px);
+  transition: transform 0.22s cubic-bezier(.22,.61,.36,1);
+  pointer-events: none;
+}
+html body .card-wrapper.product-card-wrapper:hover .aa-quickview-hint {
+  transform: translateY(0);
+}
+
+/* ============================================================
+   CUSTOMERS ALSO BOUGHT — convert grid → horizontal slider
+   ============================================================ */
+.related-products,
+product-recommendations.related-products {
+  padding-top: 24px !important;
+  padding-bottom: 24px !important;
+}
+.related-products__heading {
+  text-align: center !important;
+  margin-bottom: 20px !important;
+}
+.related-products .grid.product-grid {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  overflow-x: auto !important;
+  overflow-y: visible !important;
+  scroll-snap-type: x mandatory !important;
+  scroll-behavior: smooth !important;
+  gap: 20px !important;
+  padding: 10px 4px 18px 4px !important;
+  margin: 0 !important;
+  grid-template-columns: none !important;
+  list-style: none !important;
+  -webkit-overflow-scrolling: touch !important;
+}
+/* Hide scrollbar but allow scroll */
+.related-products .grid.product-grid::-webkit-scrollbar { height: 6px; }
+.related-products .grid.product-grid::-webkit-scrollbar-track { background: transparent; }
+.related-products .grid.product-grid::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.10);
+  border-radius: 999px;
+}
+.related-products .grid.product-grid::-webkit-scrollbar-thumb:hover {
+  background: rgba(74, 25, 66, 0.45);
+}
+.related-products .grid.product-grid > .grid__item {
+  flex: 0 0 auto !important;
+  width: 260px !important;
+  max-width: 260px !important;
+  min-width: 0 !important;
+  scroll-snap-align: start !important;
+  margin: 0 !important;
+}
+@media screen and (min-width: 990px) {
+  .related-products .grid.product-grid > .grid__item {
+    width: 280px !important;
+    max-width: 280px !important;
+  }
+}
+
+/* === Customer also bought — slider nav arrows === */
+.aa-rec-slider-wrap {
+  position: relative;
+}
+.aa-rec-slider-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 4;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.55);
+  -webkit-backdrop-filter: blur(14px) saturate(1.5);
+  backdrop-filter: blur(14px) saturate(1.5);
+  border: 1px solid rgba(255,255,255,0.7);
+  color: #1A1A1A;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10), inset 0 1px 0 rgba(255,255,255,0.6);
+  transition: background 0.18s ease, transform 0.18s cubic-bezier(.22,.61,.36,1);
+  -webkit-tap-highlight-color: transparent;
+  padding: 0;
+}
+.aa-rec-slider-arrow svg {
+  width: 14px;
+  height: 14px;
+}
+.aa-rec-slider-arrow:hover {
+  background: rgba(255,255,255,0.85);
+  transform: translateY(-50%) scale(1.06);
+}
+.aa-rec-slider-arrow:active {
+  transform: translateY(-50%) scale(0.94);
+}
+.aa-rec-slider-arrow--prev { left: 8px; }
+.aa-rec-slider-arrow--next { right: 8px; }
+@media (max-width: 749px) {
+  .aa-rec-slider-arrow { width: 26px; height: 26px; }
+  .aa-rec-slider-arrow svg { width: 12px; height: 12px; }
+}
+
+/* ============================================================
+   PER-SECTION ASPECT RATIOS
+   Reads data-aspect from card wrapper (set by section.settings.image_ratio):
+     - "square"   → 1:1 (single items, bracelets, pendants)
+     - "portrait" → 3:4 (tall products)
+     - "adapt"    → 4:3 (combos, landscape product photos)
+   ============================================================ */
+html body .card-wrapper.product-card-wrapper[data-aspect="square"] .card__inner {
+  aspect-ratio: 1 / 1 !important;
+}
+html body .card-wrapper.product-card-wrapper[data-aspect="portrait"] .card__inner {
+  aspect-ratio: 3 / 4 !important;
+}
+html body .card-wrapper.product-card-wrapper[data-aspect="adapt"] .card__inner {
+  aspect-ratio: 4 / 3 !important;
+}
+/* For combo sections specifically (where photos are landscape) — target by section if needed */
+html body .card-wrapper.product-card-wrapper[data-section*="combo"] .card__inner,
+html body .card-wrapper.product-card-wrapper[data-section*="customers-also-bought"] .card__inner {
+  aspect-ratio: 4 / 3 !important;
+}
+
+/* ADD button plus icon — must be visible (overrides earlier "hide all svgs in quick-add submit") */
+html body .card-wrapper.product-card-wrapper .quick-add__submit svg.aa-cta-plus {
+  display: inline-block !important;
+  width: 11px !important;
+  height: 11px !important;
+  margin-left: 4px !important;
+  flex-shrink: 0 !important;
+  vertical-align: middle !important;
+}
+
+/* === Fix orphan punctuation wrapping (e.g., "1 Mukhi\n(Rameswaram\n)") === */
+.card__heading, .product__title, .aa-circle-card__title,
+.card-wrapper .card__heading, .card-wrapper .card__heading a,
+[class*="card"] .card__heading {
+  text-wrap: pretty !important;
+  -webkit-hyphens: none !important;
+  hyphens: none !important;
+  overflow-wrap: normal !important;
+}
+
+/* ============================================================
+   MOBILE OPTIMIZATIONS (< 749px)
+   - Hide Quick View trigger
+   - Hide AI chatbot
+   - Refine card sizing
+   - Polish ADD button
+   ============================================================ */
+@media (max-width: 749px) {
+  /* HIDE Quick View on mobile (image tap goes straight to product page instead) */
+  html body .card-wrapper.product-card-wrapper .aa-quickview-trigger,
+  html body .aa-quickview-hint {
+    display: none !important;
+  }
+  /* Make image clickable to product page on mobile (workaround since quick view is gone) */
+  html body .card-wrapper.product-card-wrapper .card__inner {
+    cursor: default !important;
+  }
+
+  /* HIDE Quick View modal entirely on mobile (in case it gets opened by any other trigger) */
+  html body #aa-qv-root {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
+  /* HIDE AI Chatbot on mobile */
+  html body .aa-chat,
+  html body [class*="aa-chat"],
+  html body #shopify-block-AIChatBot,
+  html body [id*="AIChatBot"],
+  html body [class*="ai-chatbot"] {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
+  /* PRODUCT CARD on mobile — 2 columns, tighter spacing.
+     EXCLUDE collection/search — those use aa-pcard.css grid (2-col mobile
+     already handled there). Without exclusion this rule wins cascade and
+     forces 50% width on desktop too. */
+  html body:not(.template-collection):not(.template-search) .product-grid > .grid__item {
+    flex: 0 0 calc((100% - 12px) / 2) !important;
+    max-width: calc((100% - 12px) / 2) !important;
+  }
+  html body .card-wrapper.product-card-wrapper {
+    border-radius: 12px !important;
+  }
+  html body .card-wrapper.product-card-wrapper .card__inner {
+    border-radius: 10px !important;
+    margin: 3px !important;
+  }
+  html body .card-wrapper.product-card-wrapper .card > .card__content,
+  html body .card-wrapper.product-card-wrapper .card__content {
+    padding: 10px 12px 10px 12px !important;
+    min-height: 76px !important;
+  }
+  html body .card-wrapper.product-card-wrapper .card__content .card__heading {
+    font-size: 12px !important;
+    line-height: 1.3 !important;
+  }
+  /* Price font + button on mobile */
+  html body .card-wrapper.product-card-wrapper .price-item--regular,
+  html body .card-wrapper.product-card-wrapper .price-item--sale {
+    font-size: 12.5px !important;
+  }
+  html body .card-wrapper.product-card-wrapper s.price-item--regular,
+  html body .card-wrapper.product-card-wrapper s.price-item {
+    font-size: 10px !important;
+  }
+  html body .card-wrapper.product-card-wrapper .card__content .card-information {
+    padding: 0 38px 0 0 !important;
+  }
+  html body .card-wrapper.product-card-wrapper .quick-add {
+    right: 10px !important;
+    bottom: 10px !important;
+  }
+  html body .card-wrapper.product-card-wrapper .quick-add__submit.button {
+    padding: 3px 7px !important;
+    font-size: 9px !important;
+    min-height: 20px !important;
+    border-radius: 4px !important;
+  }
+  html body .card-wrapper.product-card-wrapper .quick-add__submit svg.aa-cta-plus {
+    width: 9px !important;
+    height: 9px !important;
+  }
+
+  /* Related products slider — better mobile cards */
+  .related-products .grid.product-grid > .grid__item {
+    width: 165px !important;
+    max-width: 165px !important;
+    min-width: 165px !important;
+  }
+}
+
+/* Hide AI chatbot on tablet too if you want — uncomment to apply */
+/*
+@media (max-width: 1023px) {
+  html body .aa-chat, html body [class*="aa-chat"] { display: none !important; }
+}
+*/
+
+/* Mobile image link — desktop hides, mobile shows as full-cover link */
+.aa-mobile-image-link {
+  display: none;
+}
+@media (max-width: 749px) {
+  html body .card-wrapper.product-card-wrapper .aa-mobile-image-link {
+    display: block !important;
+    position: absolute !important;
+    inset: 0 !important;
+    z-index: 4 !important;
+  }
+}
+
+/* ============================================================
+   MOBILE FIXES — comprehensive
+   ============================================================ */
+@media (max-width: 749px) {
+  /* === Customer Also Bought slider — proper sized cards, no overlap === */
+  html body .related-products .grid.product-grid {
+    padding-bottom: 12px !important;
+  }
+  html body .related-products .grid.product-grid > .grid__item {
+    width: 175px !important;
+    max-width: 175px !important;
+    min-width: 175px !important;
+  }
+  /* Cards inside related slider — full vertical layout, no ADD button cropping title */
+  html body .related-products .card-wrapper.product-card-wrapper .card > .card__content,
+  html body .related-products .card-wrapper.product-card-wrapper .card__content {
+    min-height: 0 !important;
+    padding-bottom: 38px !important;
+  }
+  html body .related-products .card-wrapper.product-card-wrapper .card__heading {
+    font-size: 11.5px !important;
+    -webkit-line-clamp: 2 !important;
+    margin-bottom: 4px !important;
+  }
+  html body .related-products .card-wrapper.product-card-wrapper .card-information {
+    padding-right: 38px !important;
+  }
+  html body .related-products .card-wrapper.product-card-wrapper .quick-add {
+    right: 8px !important;
+    bottom: 8px !important;
+  }
+
+  /* === Hero/featured collection — show 1.5 cards visible, swipe to see more === */
+  html body [class*="featured-collection"] .slider,
+  html body [class*="featured-collection"] ul.slider {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    gap: 12px !important;
+    padding: 4px 4px 16px 4px !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  html body [class*="featured-collection"] .slider > .grid__item,
+  html body [class*="featured-collection"] .slider__slide {
+    flex: 0 0 60% !important;
+    max-width: 60% !important;
+    min-width: 60% !important;
+    scroll-snap-align: start !important;
+  }
+
+  /* === Product page main-product mobile fixes === */
+  /* Certified stamp — smaller mobile, top-left corner, compact */
+  html body .aa-img-stamp {
+    width: 48px !important;
+    height: 48px !important;
+    top: 10px !important;
+    left: 10px !important;
+    bottom: auto !important;
+    right: auto !important;
+    padding: 3px !important;
+  }
+  html body .aa-img-stamp span {
+    font-size: 7.5px !important;
+  }
+  /* Product info — centered alignment */
+  html body .product__info-wrapper {
+    text-align: left !important;
+    padding: 16px 0 !important;
+  }
+  html body .product__info-wrapper .product-page-purpose-pill-container {
+    justify-content: flex-start !important;
+  }
+  /* Title smaller on mobile */
+  html body .product__title h1,
+  html body .product__title h2 {
+    font-size: 22px !important;
+    line-height: 1.2 !important;
+  }
+
+  /* === FOOTER — proper mobile alignment === */
+  html body .aa-footer__inner {
+    grid-template-columns: 1fr 1fr !important;
+    padding: 30px 16px 20px 16px !important;
+    gap: 18px 12px !important;
+  }
+  html body .aa-footer__brand {
+    grid-column: 1 / -1 !important;
+    text-align: center !important;
+    padding-right: 0 !important;
+  }
+  html body .aa-footer__logo {
+    justify-content: center !important;
+  }
+  html body .aa-footer__tagline {
+    margin: 0 auto 14px !important;
+    max-width: 100% !important;
+    font-size: 13px !important;
+  }
+  html body .aa-footer__social {
+    justify-content: center !important;
+  }
+  html body .aa-footer__heading {
+    font-size: 15px !important;
+    margin-bottom: 10px !important;
+  }
+  html body .aa-footer__links a {
+    font-size: 12px !important;
+  }
+  html body .aa-footer__links {
+    gap: 7px !important;
+  }
+  html body .aa-footer__bottom-inner {
+    text-align: center !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 4px !important;
+  }
+}
+/* push 1779190178949032000 */
+
+/* ============================================================
+   SALE BANNER — small static tag, top-left of card image.
+   Black bg / white text. Overlays the image (no layout shift),
+   above the quickview overlay (z-index 3), non-interactive so it
+   never blocks the quickview tap. Renders only when on sale.
+   ============================================================ */
+html body .card-wrapper.product-card-wrapper .card__inner { position: relative !important; }
+html body .card-wrapper.product-card-wrapper .aa-sale-banner {
+  position: absolute !important;
+  top: 10px !important;
+  left: 10px !important;
+  z-index: 4 !important;
+  display: inline-block !important;
+  padding: 4px 10px !important;
+  background: #111111 !important;
+  color: #ffffff !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  line-height: 1 !important;
+  border-radius: 4px !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18) !important;
+  pointer-events: none !important;
+}
+@media (max-width: 749px) {
+  html body .card-wrapper.product-card-wrapper .aa-sale-banner {
+    top: 8px !important;
+    left: 8px !important;
+    font-size: 10px !important;
+    padding: 3px 8px !important;
+  }
+}

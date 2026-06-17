@@ -1,0 +1,33 @@
+<section class="sec"><div class="wrap" data-rise>
+  <div class="cert">
+    <div>
+      {%- if section.settings.dev != blank -%}<span class="dev">{{ section.settings.dev }}</span>{%- endif -%}
+      <h3 style="font-family:'Cormorant Garamond',Georgia,serif !important;font-weight:600">{{ section.settings.heading | default: 'Certified Gems, Verified Trust' }}</h3>
+      <p>{{ section.settings.text }}</p>
+      <ul>
+        {%- for block in section.blocks -%}
+          <li>{% render 'aa-rd-icon', name: 'check' %} {{ block.settings.text }}</li>
+        {%- endfor -%}
+      </ul>
+      {%- if section.settings.btn_label != blank -%}<a class="btn" href="{{ section.settings.btn_url | default: '#' }}">{{ section.settings.btn_label }} {% render 'aa-rd-icon', name: 'arrow-right' %}</a>{%- endif -%}
+    </div>
+    {%- assign cimg = '' -%}{%- if section.settings.image_asset != blank -%}{%- assign cimg = section.settings.image_asset | asset_url -%}{%- elsif section.settings.bg_url != blank -%}{%- assign cimg = section.settings.bg_url -%}{%- elsif section.settings.image != blank -%}{%- assign cimg = section.settings.image | image_url: width: 1100 -%}{%- endif -%}
+    <div class="frame"><span class="seal">{% render 'aa-rd-icon', name: 'check' %} {{ section.settings.seal | default: 'Lab Verified' }}</span>{% if cimg != blank %}<img width="1000" height="640" src="{{ cimg }}" alt="Certificate">{% endif %}</div>
+  </div>
+</div></section>
+{% schema %}
+{"name":"AA Certified","max_blocks":5,"settings":[
+  {"type":"text","id":"dev","label":"Devanagari accent"},
+  {"type":"text","id":"heading","label":"Heading","default":"Certified Gems, Verified Trust"},
+  {"type":"textarea","id":"text","label":"Text"},
+  {"type":"text","id":"btn_label","label":"Button label","default":"Verify a certificate"},
+  {"type":"url","id":"btn_url","label":"Button link"},
+  {"type":"image_picker","id":"image","label":"Certificate image"},
+  {"type":"text","id":"image_asset","label":"Image asset filename"},
+  {"type":"text","id":"bg_url","label":"Certificate image URL (fallback)"},
+  {"type":"text","id":"seal","label":"Seal label","default":"Lab Verified"}
+],"blocks":[{"type":"point","name":"Point","settings":[
+  {"type":"text","id":"icon","label":"Phosphor icon class","default":"ph-seal-check"},
+  {"type":"text","id":"text","label":"Text"}
+]}],"presets":[{"name":"AA Certified","blocks":[{"type":"point"},{"type":"point"},{"type":"point"}]}]}
+{% endschema %}

@@ -69,33 +69,149 @@
             if product.selected_or_first_available_variant.quantity_rule.min > product.selected_or_first_available_variant.inventory_quantity and check_against_inventory
               assign quantity_rule_soldout = true
             endif
-          -%}
-          <button
-            id="ProductSubmitButton-{{ section_id }}"
-            type="submit"
-            name="add"
-            class="product-form__submit button button--full-width {% if show_dynamic_checkout %}button--secondary{% else %}button--primary{% endif %}"
-            {% if product.selected_or_first_available_variant.available == false
-              or quantity_rule_soldout
-              or product.selected_or_first_available_variant == null
-            %}
-              disabled
-            {% endif %}
-          >
-            <span>
-              {%- if product.selected_or_first_available_variant == null -%}
-                {{ 'products.product.unavailable' | t }}
-              {%- elsif product.selected_or_first_available_variant.available == false or quantity_rule_soldout -%}
-                {{ 'products.product.sold_out' | t }}
-              {%- else -%}
-                {{ 'products.product.add_to_cart' | t }}
-              {%- endif -%}
-            </span>
-            {%- render 'loading-spinner' -%}
-          </button>
-          {%- if show_dynamic_checkout -%}
-            {{ form | payment_button }}
-          {%- endif -%}
+          -%}         
+<button
+  id="ProductSubmitButton-{{ section_id }}"
+  type="submit"
+  name="add"
+  class="product-form__submit button button--full-width {% if show_dynamic_checkout %}button--secondary{% else %}button--primary{% endif %}"
+  {% if product.selected_or_first_available_variant.available == false
+    or quantity_rule_soldout
+    or product.selected_or_first_available_variant == null
+  %}
+    disabled
+  {% endif %}
+>
+  <span>
+    {%- if product.selected_or_first_available_variant == null -%}
+      {{ 'products.product.unavailable' | t }}
+    {%- elsif product.selected_or_first_available_variant.available == false or quantity_rule_soldout -%}
+      {{ 'products.product.sold_out' | t }}
+    {%- else -%}
+      {{ 'products.product.add_to_cart' | t }}
+    {%- endif -%}
+  </span>
+  {%- render 'loading-spinner' -%}
+</button>
+
+
+
+
+
+          {%- comment -%}
+            Buy Now — opens the Razorpay Magic Checkout "Review And Pay" overlay
+            instantly, for ONLY this product. Same overlay that opens when the
+            cart's "Check out" button is pressed.
+            Flow on click:
+              1. POST /cart/clear.js   — silently wipe existing cart
+              2. POST /cart/add.js     — silently add ONLY this variant
+              3. Find the cart's real "checkout" button (which Razorpay's
+                 magic-shopify.js has hooked) and programmatically click it.
+                 → Razorpay intercepts → overlay opens for just this product.
+              4. Fallback (if hook fails): submit a name="checkout" form so
+                 Shopify still routes via /checkout (Razorpay also hooks that).
+          {%- endcomment -%}
+<button
+  type="button"
+  class="product-form__submit button button--full-width button--primary aa-buy-now-btn rzp-magic-buy-now magicx-buy-now shopify-payment-button__button"
+  data-rzp-magic-checkout="true"
+  data-aa-buy-now-variant="{{ product.selected_or_first_available_variant.id }}"
+  id="aa-buy-now-btn-{{ section_id }}">
+  Buy Now
+</button>
+<script>
+  (function() {
+    var btn = document.getElementById('aa-buy-now-btn-{{ section_id }}');
+    if (!btn) return;
+
+    // Always read the CURRENT selected variant id at click time — the variant
+    // picker updates the product form's <input name="id"> dynamically, but the
+    // server-rendered data-attribute is frozen to the page-load variant.
+    function getCurrentVariantId() {
+      var mainForm = document.querySelector('product-form form[action*="/cart/add"], form[action*="/cart/add"]');
+      if (mainForm) {
+        var inp = mainForm.querySelector('input[name="id"]');
+        if (inp && inp.value) return inp.value;
+      }
+      var vs = document.querySelector('variant-selects, variant-radios');
+      if (vs) {
+        var current = vs.querySelector('input[name="id"][checked], input[name="id"]:checked');
+        if (current && current.value) return current.value;
+      }
+      return btn.getAttribute('data-aa-buy-now-variant');
+    }
+
+    // Re-render the cart drawer from the /cart/add.js `sections` response so the
+    // real #CartDrawer-Checkout button (which Razorpay Magic Checkout has hooked)
+    // is guaranteed present + enabled before we click it. This removes the race
+    // that made Buy Now "sometimes work" and otherwise fall through to the native
+    // Shopify checkout page.
+    function swapDrawer(addJson) {
+      try {
+        var html = addJson && addJson.sections && addJson.sections['cart-drawer'];
+        if (!html) return;
+        var drawer = document.querySelector('cart-drawer');
+        if (!drawer) return;
+        var tmp = document.createElement('div'); tmp.innerHTML = html;
+        var fresh = tmp.querySelector('cart-drawer');
+        if (!fresh) { var w = tmp.querySelector('[id^="shopify-section-"]'); fresh = w ? w.querySelector('cart-drawer') : null; }
+        if (fresh) { drawer.innerHTML = fresh.innerHTML; drawer.classList.remove('is-empty'); }
+      } catch (err) {}
+    }
+
+    // Click the MC-hooked checkout button once it exists + is enabled. Razorpay's
+    // hook intercepts the click and opens its overlay. NEVER navigate to the
+    // native /checkout — if the button truly never appears, open the cart drawer
+    // so the customer can tap Check out themselves.
+    function openMagicCheckout(reset) {
+      var tries = 0;
+      (function tick() {
+        var el = document.querySelector('#CartDrawer-Checkout, button[name="checkout"], .cart__checkout-button');
+        if (el && !el.disabled) { el.click(); reset(); return; }
+        if (tries++ < 30) { setTimeout(tick, 70); return; }   // up to ~2.1s
+        var opener = document.querySelector('[aria-controls="CartDrawer"], #cart-icon-bubble, a[href$="/cart"], .header__icon--cart');
+        if (opener) opener.click();
+        reset();
+      })();
+    }
+
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      if (btn._aaBusy) return;
+      btn._aaBusy = true; btn.style.pointerEvents = 'none';
+      function reset() { btn._aaBusy = false; btn.style.pointerEvents = ''; }
+      var variantId = getCurrentVariantId();
+
+      // 1. clear cart  2. add ONLY this variant (request the cart-drawer section)
+      // 3. swap the fresh drawer HTML in  4. click the MC-hooked checkout button
+      fetch('/cart/clear.js', {
+        method: 'POST', credentials: 'same-origin',
+        headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' }
+      })
+      .then(function() {
+        var fd = new FormData();
+        fd.append('id', variantId);
+        fd.append('quantity', '1');
+        fd.append('sections', 'cart-drawer');
+        fd.append('sections_url', '/');
+        return fetch('/cart/add.js', {
+          method: 'POST', credentials: 'same-origin',
+          headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+          body: fd
+        });
+      })
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        swapDrawer(data);
+        requestAnimationFrame(function () { openMagicCheckout(reset); });
+      })
+      .catch(function() { reset(); });
+    });
+  })();
+</script>
+
+
+
         </div>
       {%- endform -%}
     </product-form>

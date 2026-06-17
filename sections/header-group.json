@@ -14,28 +14,36 @@
     "announcement-bar": {
       "type": "announcement-bar",
       "blocks": {
+        "announcement_prepaid25": {
+          "type": "announcement",
+          "settings": {
+            "text": "🎁 Grab 25% off on all prepaid orders",
+            "link": ""
+          }
+        },
         "announcement-bar-0": {
           "type": "announcement",
           "settings": {
-            "text": "New Energies Have Arrived",
+            "text": "💳 Cash on Delivery Available",
             "link": ""
           }
         },
         "announcement_KU66py": {
           "type": "announcement",
           "settings": {
-            "text": "SIGN UP FOR 10% OFF YOUR FIRST PURCHASE",
+            "text": "🚚 Free Shipping",
             "link": ""
           }
         }
       },
       "block_order": [
+        "announcement_prepaid25",
         "announcement-bar-0",
         "announcement_KU66py"
       ],
       "settings": {
         "auto_rotate": true,
-        "change_slides_speed": 5,
+        "change_slides_speed": 3,
         "color_scheme": "accent-2",
         "show_line_separator": true,
         "show_social": false,
@@ -46,7 +54,7 @@
     "header": {
       "type": "header",
       "custom_css": [
-        ".header__menu-item {font-size: 16px;}",
+        ".header__menu-item {font-size: 12px; margin-bottom: 5px;}",
         "a {font-size: 14px;}",
         ".mega-menu__content {max-height: 350px; overflow-y: auto; font-size: 14px;}",
         ".menu-drawer__menu-item {font-size: 18px;}"

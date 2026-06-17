@@ -9,116 +9,42 @@
  */
 {
   "sections": {
-    "rich_text_TEVXgm": {
-      "type": "rich-text",
-      "blocks": {
-        "heading_PeaWcN": {
-          "type": "heading",
-          "settings": {
-            "heading": "Rudraksha",
-            "heading_size": "h1"
-          }
-        },
-        "text_hmEr9V": {
-          "type": "text",
-          "settings": {
-            "text": "<p><em><strong>Rudraksha refers to the sacred seed of the Rudraksha tree (Elaeocarpus ganitrus), found primarily in Southeast Asia and the Himalayan region. These seeds hold deep spiritual significance in Hinduism and are often worn as malas or beads for meditation and prayer.</strong></em></p>"
-          }
-        }
-      },
-      "block_order": [
-        "heading_PeaWcN",
-        "text_hmEr9V"
-      ],
-      "disabled": true,
-      "settings": {
-        "desktop_content_position": "center",
-        "content_alignment": "center",
-        "color_scheme": "accent-3",
-        "full_width": true,
-        "padding_top": 48,
-        "padding_bottom": 32
-      }
-    },
-    "collage_Ji34he": {
-      "type": "collage",
-      "blocks": {
-        "image_npPA7A": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/99.jpg"
-          }
-        },
-        "image_Ur8hUb": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/HD-wallpaper-rudraksham-bholenath-kedarnath-lord-shiva-mahadev-pick-up-hand-rudraksh-shiv.jpg"
-          }
-        }
-      },
-      "block_order": [
-        "image_npPA7A",
-        "image_Ur8hUb"
-      ],
-      "disabled": true,
-      "settings": {
-        "heading": "",
-        "heading_size": "h0",
-        "desktop_layout": "right",
-        "mobile_layout": "collage",
-        "card_styles": "none",
-        "color_scheme": "",
-        "padding_top": 32,
-        "padding_bottom": 60
-      }
+    "cosmos_aa": {
+      "type": "aa-rd-cosmos",
+      "settings": {}
     },
     "slideshow_PLf6zm": {
       "type": "slideshow",
       "blocks": {
-        "slide_93RPaQ": {
+        "slide_tXFfw7": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/Banner_1.png",
+            "image": "shopify://shop_images/GemsAura_banner2.jpg",
+            "image_mobile": "shopify://shop_images/GemsAura_phonebanner2.jpg",
             "image_overlay_opacity": 0,
-            "heading": "Image slide",
-            "heading_size": "h2",
-            "subheading": "Tell your brand's story through images",
-            "button_label": "Button label",
-            "link": "",
+            "heading": "",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "link": "shopify://collections/rudrasha",
             "button_style_secondary": false,
-            "show_text_box": true,
+            "show_text_box": false,
             "box_align": "middle-center",
             "text_alignment": "center",
             "text_alignment_mobile": "center",
-            "color_scheme": ""
+            "color_scheme": "scheme-1"
           }
         },
-        "slide_FnJjtn": {
+        "slide_HTLxGt": {
           "type": "slide",
+          "disabled": true,
           "settings": {
-            "image": "shopify://shop_images/Banner_4_1.png",
+            "image": "shopify://shop_images/rudraksha_diwali_desktop.png",
+            "image_mobile": "shopify://shop_images/Rudraksah_mobile_diwlai.png",
             "image_overlay_opacity": 0,
-            "heading": "Image slide",
+            "heading": "",
             "heading_size": "h1",
-            "subheading": "Tell your brand's story through images",
-            "button_label": "Button label",
-            "link": "",
-            "button_style_secondary": false,
-            "show_text_box": true,
-            "box_align": "middle-center",
-            "text_alignment": "center",
-            "text_alignment_mobile": "center",
-            "color_scheme": ""
-          }
-        },
-        "slide_BaHAmK": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/Banner_5.png",
-            "image_overlay_opacity": 0,
-            "heading": "Image slide",
-            "heading_size": "h1",
-            "subheading": "Tell your brand's story through images",
+            "subheading": "",
             "button_label": "",
             "link": "",
             "button_style_secondary": false,
@@ -129,18 +55,57 @@
             "color_scheme": "scheme-1"
           }
         },
-        "slide_mKQXcT": {
+        "slide_93RPaQ": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/body_fa199828-44e3-4605-9dd6-7d783e040f37.jpg",
+            "image": "shopify://shop_images/GemsAura_banner1.jpg",
+            "image_mobile": "shopify://shop_images/GemsAura_phonebanner1.jpg",
             "image_overlay_opacity": 0,
-            "heading": "Image slide",
-            "heading_size": "h1",
-            "subheading": "Tell your brand's story through images",
-            "button_label": "Button label",
-            "link": "",
+            "heading": "",
+            "heading_size": "h2",
+            "subheading": "",
+            "button_label": "",
+            "link": "shopify://collections/bracelets",
             "button_style_secondary": false,
-            "show_text_box": true,
+            "show_text_box": false,
+            "box_align": "middle-center",
+            "text_alignment": "center",
+            "text_alignment_mobile": "center",
+            "color_scheme": ""
+          }
+        },
+        "slide_FnJjtn": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/GemsAura_banner6.jpg",
+            "image_mobile": "shopify://shop_images/GemsAura_phonebanner6.jpg",
+            "image_overlay_opacity": 0,
+            "heading": "",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "link": "shopify://collections/gemstones",
+            "button_style_secondary": false,
+            "show_text_box": false,
+            "box_align": "middle-center",
+            "text_alignment": "center",
+            "text_alignment_mobile": "center",
+            "color_scheme": ""
+          }
+        },
+        "slide_BaHAmK": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/GemsAura_banner5.jpg",
+            "image_mobile": "shopify://shop_images/GemsAura_phonebanner5.jpg",
+            "image_overlay_opacity": 0,
+            "heading": "",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "link": "shopify://collections/crystal-rakhi",
+            "button_style_secondary": false,
+            "show_text_box": false,
             "box_align": "middle-center",
             "text_alignment": "center",
             "text_alignment_mobile": "center",
@@ -149,10 +114,11 @@
         }
       },
       "block_order": [
+        "slide_tXFfw7",
+        "slide_HTLxGt",
         "slide_93RPaQ",
         "slide_FnJjtn",
-        "slide_BaHAmK",
-        "slide_mKQXcT"
+        "slide_BaHAmK"
       ],
       "custom_css": [
         "slideshow-component {position: relative; display: flex; flex-direction: column; margin: 0 0 4rem 0;}",
@@ -170,913 +136,385 @@
         "accessibility_info": ""
       }
     },
-    "image_with_text_tz9Af9": {
-      "type": "image-with-text",
-      "blocks": {
-        "heading_hKWUGD": {
-          "type": "heading",
-          "settings": {
-            "heading": "<strong>Spiritual Essential</strong>",
-            "heading_size": "h2"
-          }
-        },
-        "text_Fka4eU": {
-          "type": "text",
-          "settings": {
-            "text": "<p>A sacred seed, Rudraksha provides divine protection, inner peace, and clarity for a journey towards enlightenment and balance.</p><p><strong>Divine Protection & Spiritual Shield.</strong></p><p><strong>Inner Peace and Mental Clarity.</strong></p><p><strong>Enlightenment & Spiritual Balance.</strong></p>",
-            "text_style": "body"
-          }
-        },
-        "button_nbyXaA": {
-          "type": "button",
-          "settings": {
-            "button_label": "Spiritual Essential",
-            "button_link": "shopify://collections/rudrasha",
-            "button_style_secondary": false
-          }
-        }
-      },
-      "block_order": [
-        "heading_hKWUGD",
-        "text_Fka4eU",
-        "button_nbyXaA"
-      ],
-      "custom_css": [],
+    "ts_aa": {
+      "type": "aa-rd-slider",
       "settings": {
-        "image": "shopify://shop_images/Rudraksha-1ITG-1751784213116.avif",
-        "height": "medium",
-        "desktop_image_width": "medium",
-        "layout": "text_first",
-        "image_behavior": "none",
-        "content_layout": "no-overlap",
-        "desktop_content_position": "middle",
-        "desktop_content_alignment": "left",
-        "mobile_content_alignment": "center",
-        "section_color_scheme": "",
-        "color_scheme": "accent-1",
-        "padding_top": 0,
-        "padding_bottom": 48
-      }
-    },
-    "featured_collection": {
-      "type": "featured-collection",
-      "custom_css": [
-        "h2 {margin: 0 auto; width: fit-content; /* Or a specific width */}",
-        ".contains-card {/* padding: 32px; */}",
-        ".slider-buttons {display: none;}",
-        ".slider--desktop {/* max-height: ; */}",
-        ".product-grid {gap: 3rem;}",
-        ".card-description-purpose {min-height: 70px;}",
-        ".card__heading {min-height: 30px;}",
-        ".quick-add__submit {min-height: 55px;}"
-      ],
-      "name": "New Arrivals",
-      "settings": {
-        "collection": "new-arrival",
-        "products_to_show": 12,
-        "title": "New Arrival",
-        "heading_size": "h2",
-        "description": "",
-        "show_description": false,
-        "description_style": "body",
-        "columns_desktop": 6,
-        "enable_desktop_slider": true,
-        "full_width": true,
-        "show_view_all": false,
-        "view_all_style": "solid",
-        "color_scheme": "background-1",
-        "image_ratio": "square",
-        "image_shape": "default",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false,
-        "quick_add": "standard",
-        "columns_mobile": "2",
-        "swipe_on_mobile": true,
-        "padding_top": 8,
-        "padding_bottom": 8
-      }
-    },
-    "image_with_text_DYDtwA": {
-      "type": "image-with-text",
-      "blocks": {
-        "heading_c6fF64": {
-          "type": "heading",
-          "settings": {
-            "heading": "Our shop",
-            "heading_size": "h2"
-          }
-        },
-        "text_PLAK8A": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Gemstone, Rudraksha, and Crystal Bracelets combine beauty, energy, and spirituality. Rudraksha brings peace, gemstones attract prosperity, and crystals enhance healing vibrations. Wear them to elevate your aura and invite positivity into your life.</p>",
-            "text_style": "body"
-          }
-        },
-        "button_L7GN3F": {
-          "type": "button",
-          "settings": {
-            "button_label": "Shop all",
-            "button_link": "shopify://collections/all",
-            "button_style_secondary": false
-          }
-        }
-      },
-      "block_order": [
-        "heading_c6fF64",
-        "text_PLAK8A",
-        "button_L7GN3F"
-      ],
-      "settings": {
-        "image": "shopify://shop_images/ChatGPT_Image_Sep_3_2025_06_35_01_PM.png",
-        "height": "adapt",
-        "desktop_image_width": "small",
-        "layout": "text_first",
-        "image_behavior": "none",
-        "content_layout": "no-overlap",
-        "desktop_content_position": "middle",
-        "desktop_content_alignment": "left",
-        "mobile_content_alignment": "center",
-        "section_color_scheme": "",
-        "color_scheme": "accent-1",
-        "padding_top": 56,
-        "padding_bottom": 60
-      }
-    },
-    "featured_collection_6N6qke": {
-      "type": "featured-collection",
-      "custom_css": [
-        "h2 {margin: 0 auto; width: fit-content; /* Or a specific width */}",
-        ".contains-card {/* padding: 32px; */}",
-        ".slider-buttons {display: none;}",
-        ".slider--desktop {/* max-height: ; */}",
-        ".product-grid {gap: 3rem;}",
-        ".card-description-purpose {min-height: 70px;}",
-        ".card__heading {min-height: 30px;}",
-        ".quick-add__submit {min-height: 55px;}"
-      ],
-      "name": "Top Selling",
-      "settings": {
+        "heading": "Top Selling",
         "collection": "top-selling",
-        "products_to_show": 9,
-        "title": "Top Selling",
-        "heading_size": "h2",
-        "description": "",
-        "show_description": false,
-        "description_style": "body",
-        "columns_desktop": 6,
-        "enable_desktop_slider": true,
-        "full_width": true,
-        "show_view_all": false,
-        "view_all_style": "solid",
-        "color_scheme": "background-1",
-        "image_ratio": "square",
-        "image_shape": "default",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false,
-        "quick_add": "standard",
-        "columns_mobile": "2",
-        "swipe_on_mobile": true,
-        "padding_top": 0,
-        "padding_bottom": 0
+        "count": 50,
+        "view_url": "",
+        "view_label": "View all products"
       }
     },
-    "collection_list_ctAMFr": {
-      "type": "collection-list",
-      "blocks": {
-        "featured_collection_LQkKG4": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "rudraksha-mala"
-          }
-        },
-        "featured_collection_WQxCBX": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "rudrasha"
-          }
-        },
-        "featured_collection_qmmMtM": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "gemstones"
-          }
-        },
-        "featured_collection_Npy7LD": {
-          "type": "featured_collection",
-          "disabled": true,
-          "settings": {
-            "collection": "mission-pattern-remedies"
-          }
-        },
-        "featured_collection_xY3HpY": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "crystal-rakhi"
-          }
-        },
-        "featured_collection_qceXDX": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "bracelets"
-          }
-        }
-      },
-      "block_order": [
-        "featured_collection_LQkKG4",
-        "featured_collection_WQxCBX",
-        "featured_collection_qmmMtM",
-        "featured_collection_Npy7LD",
-        "featured_collection_xY3HpY",
-        "featured_collection_qceXDX"
-      ],
-      "custom_css": [
-        "h2 {margin: 0 auto; width: fit-content; /* Or a specific width */}",
-        "p {font-size: 10px;}",
-        ".card {flex-shrink: 0; border-radius: 24px; border: 1px solid rgba(255, 255, 255, 0.6); background: rgba(255, 255, 255, 0.9); box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.1), 0 10px 15px 0 rgba(0, 0, 0, 0.1);}",
-        ".card__media {border-radius: 16px; border: 0 solid #e5e7eb;}"
-      ],
-      "name": "t:sections.collection-list.presets.name",
+    "spiritual_aa": {
+      "type": "aa-rd-imgtext",
       "settings": {
-        "title": "Collections",
-        "heading_size": "h2",
-        "image_ratio": "square",
-        "columns_desktop": 5,
-        "color_scheme": "scheme-c6323a96-20a5-4474-b039-727f2117b7fb",
-        "show_view_all": false,
-        "columns_mobile": "1",
-        "swipe_on_mobile": false,
-        "padding_top": 36,
-        "padding_bottom": 100
+        "dev": "॥ रुद्राक्ष ॥",
+        "heading": "Spiritual Essential",
+        "text": "A sacred seed, Rudraksha carries divine protection, inner peace and clarity for a steady journey toward balance and enlightenment.",
+        "btn_label": "Shop Rudraksha",
+        "btn_url": "shopify://collections/rudrasha",
+        "btn_ghost": false,
+        "image": "shopify://shop_images/Gemini_Generated_Image_kasoikasoikasoik-clean_3709f244-f751-4e5b-8e3d-79631cc8bc58.png",
+        "image_asset": "aa-spiritual.jpg",
+        "bg_url": "https://cdn.shopify.com/s/files/1/0947/9467/8574/files/Gemini_Generated_Image_kasoikasoikasoik-clean_3709f244-f751-4e5b-8e3d-79631cc8bc58.png",
+        "reverse": false
       }
     },
-    "collection_list_XLNAUt": {
-      "type": "collection-list",
+    "combos_aa": {
+      "type": "aa-rd-slider",
+      "settings": {
+        "heading": "Combos",
+        "collection": "combos",
+        "count": 12,
+        "view_url": "shopify://collections/combos",
+        "view_label": "View all combos"
+      }
+    },
+    "mani_aa": {
+      "type": "aa-rd-slider",
+      "settings": {
+        "heading": "New Arrivals",
+        "collection": "new-arrivals",
+        "count": 24,
+        "view_url": "shopify://collections/new-arrivals",
+        "view_label": "View all New Arrivals"
+      }
+    },
+    "ourshop_aa": {
+      "type": "aa-rd-imgtext",
+      "settings": {
+        "dev": "॥ शुभ लाभ ॥",
+        "heading": "Our Shop",
+        "text": "Gemstones, Rudraksha and crystal bracelets where beauty meets energy. Rudraksha brings peace, gemstones invite prosperity, crystals lift your healing vibration.",
+        "btn_label": "Shop all",
+        "btn_url": "shopify://collections/all",
+        "btn_ghost": true,
+        "image": "shopify://shop_images/Gemini_Generated_Image_qsy7npqsy7npqsy7-clean_f04445ca-f971-40f7-9dbf-c0e1c9eadc19.png",
+        "image_asset": "aa-ourshop.jpg",
+        "bg_url": "https://cdn.shopify.com/s/files/1/0947/9467/8574/files/Gemini_Generated_Image_qsy7npqsy7npqsy7-clean_f04445ca-f971-40f7-9dbf-c0e1c9eadc19.png",
+        "reverse": true
+      }
+    },
+    "aura_aa": {
+      "type": "aa-rd-purpose",
       "blocks": {
-        "featured_collection_cipx4n": {
-          "type": "featured_collection",
+        "tile_0": {
+          "type": "tile",
           "settings": {
-            "collection": "money"
+            "label": "Love",
+            "collection": "love-1"
           }
         },
-        "featured_collection_yUYkDi": {
-          "type": "featured_collection",
+        "tile_1": {
+          "type": "tile",
           "settings": {
-            "collection": "health"
-          }
-        },
-        "featured_collection_LDdpWr": {
-          "type": "featured_collection",
-          "settings": {
+            "label": "Wealth",
             "collection": "wealth"
           }
+        },
+        "tile_2": {
+          "type": "tile",
+          "settings": {
+            "label": "Health",
+            "collection": "health"
+          }
         }
       },
       "block_order": [
-        "featured_collection_cipx4n",
-        "featured_collection_yUYkDi",
-        "featured_collection_LDdpWr"
+        "tile_0",
+        "tile_1",
+        "tile_2"
       ],
-      "custom_css": [
-        ".collection-list {justify-content: center;}",
-        "h2 {margin: 0 auto; width: fit-content; /* Or a specific width */}",
-        ".card-wrapper {padding: 12px; border-radius: 24px; border: 1px solid rgba(255, 255, 255, 0.6); background: rgba(255, 255, 255, 0.9); box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.1), 0 10px 15px 0 rgba(0, 0, 0, 0.1);}"
-      ],
-      "name": "t:sections.collection-list.presets.name",
       "settings": {
-        "title": "Shop By Purpose",
-        "heading_size": "h2",
-        "image_ratio": "adapt",
-        "columns_desktop": 6,
-        "color_scheme": "",
-        "show_view_all": false,
-        "columns_mobile": "2",
-        "swipe_on_mobile": false,
-        "padding_top": 36,
-        "padding_bottom": 32
+        "dev": "॥ अपनी राशि चुनें ॥",
+        "heading": "Shop by Aura"
       }
     },
-    "featured_product_patqWF": {
-      "type": "featured-product",
-      "blocks": {
-        "text_CmceHM": {
-          "type": "text",
-          "settings": {
-            "text": "Featured Product",
-            "text_style": "uppercase"
-          }
-        },
-        "title_QRRHVN": {
-          "type": "title",
-          "settings": {
-            "heading_size": "h2"
-          }
-        },
-        "text_nYnqXU": {
-          "type": "text",
-          "settings": {
-            "text": "Experience the transformative power of our hand-selected Amethyst crystal. Known as the stone of spiritual protection and purification, this premium grade crystal enhances meditation and promotes inner peace.",
-            "text_style": "body"
-          }
-        },
-        "price_qQVDPX": {
-          "type": "price",
-          "disabled": true,
-          "settings": {}
-        },
-        "variant_picker_J7hUqP": {
-          "type": "variant_picker",
-          "disabled": true,
-          "settings": {
-            "picker_type": "button",
-            "swatch_shape": "circle"
-          }
-        },
-        "quantity_selector_DicrcN": {
-          "type": "quantity_selector",
-          "disabled": true,
-          "settings": {}
-        },
-        "buy_buttons_TxXFzQ": {
-          "type": "buy_buttons",
-          "disabled": true,
-          "settings": {
-            "show_dynamic_checkout": true,
-            "show_gift_card_recipient": true
-          }
-        },
-        "share_yjW6JL": {
-          "type": "share",
-          "settings": {
-            "share_label": "Share"
-          }
-        }
-      },
-      "block_order": [
-        "text_CmceHM",
-        "title_QRRHVN",
-        "text_nYnqXU",
-        "price_qQVDPX",
-        "variant_picker_J7hUqP",
-        "quantity_selector_DicrcN",
-        "buy_buttons_TxXFzQ",
-        "share_yjW6JL"
-      ],
-      "custom_css": [
-        ".product__info-wrapper {align-content: center; border-radius: 24px; height: 400px; border: 1px solid rgba(255, 255, 255, 0.3); background: rgba(255, 255, 255, 0.92); box-shadow: 0 25px 50px 0 rgba(0, 0, 0, 0.25); /* padding:rem; */}",
-        "p {font-size: 12px;}",
-        ".featured-product {align-items: center;}",
-        ".caption-with-letter-spacing {margin-bottom: 1rem; border-radius: 9999px; border: 1px solid rgba(249, 168, 212, 0.3); background: rgba(0, 0, 0, 0); padding: 10px 12px 7.997px 17px; display: inline-block;}"
-      ],
-      "name": "t:sections.featured-product.presets.name",
+    "products_aa": {
+      "type": "aa-rd-grid",
       "settings": {
-        "product": "amethyst-premium",
-        "color_scheme": "",
-        "secondary_background": false,
-        "media_size": "small",
-        "constrain_to_viewport": true,
-        "media_fit": "contain",
-        "media_position": "right",
-        "image_zoom": "none",
-        "hide_variants": false,
-        "enable_video_looping": false,
-        "padding_top": 0,
-        "padding_bottom": 36
+        "heading": "Our Products",
+        "collection": "our-products",
+        "count": 34
       }
     },
-    "collection_list_b7XdPw": {
-      "type": "collection-list",
+    "why_aa": {
+      "type": "aa-rd-why",
       "blocks": {
-        "featured_collection_XFCa6g": {
-          "type": "featured_collection",
+        "promise_0": {
+          "type": "promise",
           "settings": {
-            "collection": "rudraksha-mala"
+            "title": "Charged by Top Astrologers",
+            "text": "Every stone is energised by hand with pure intention for genuine spiritual effect."
           }
         },
-        "featured_collection_89cqFw": {
-          "type": "featured_collection",
+        "promise_1": {
+          "type": "promise",
           "settings": {
-            "collection": "rudrasha"
+            "title": "100% Natural & Authentic",
+            "text": "Sourced from the world's finest mines, original and untreated every time."
           }
         },
-        "featured_collection_cc6Wnd": {
-          "type": "featured_collection",
+        "promise_2": {
+          "type": "promise",
           "settings": {
-            "collection": "gemstones"
+            "title": "Certified by Govt Labs",
+            "text": "Verified by trusted gemologists through strict, repeated quality screening."
           }
         },
-        "featured_collection_Bxiq68": {
-          "type": "featured_collection",
+        "promise_3": {
+          "type": "promise",
           "settings": {
-            "collection": "mission-pattern-remedies"
-          }
-        },
-        "featured_collection_UyFhPR": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "crystal-rakhi"
-          }
-        },
-        "featured_collection_gjKN6a": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "bracelets"
+            "title": "Hand Crafted by Artisans",
+            "text": "Finished by skilled artisans for brilliance you can see and feel."
           }
         }
       },
       "block_order": [
-        "featured_collection_XFCa6g",
-        "featured_collection_89cqFw",
-        "featured_collection_cc6Wnd",
-        "featured_collection_Bxiq68",
-        "featured_collection_UyFhPR",
-        "featured_collection_gjKN6a"
+        "promise_0",
+        "promise_1",
+        "promise_2",
+        "promise_3"
       ],
-      "disabled": true,
-      "custom_css": [
-        "h2 {margin: 0 auto; width: fit-content; /* Or a specific width */}",
-        "p {font-size: 10px;}"
-      ],
-      "name": "t:sections.collection-list.presets.name",
       "settings": {
-        "title": "Aura-synchronized treasures",
-        "heading_size": "h2",
-        "image_ratio": "square",
-        "columns_desktop": 5,
-        "color_scheme": "",
-        "show_view_all": false,
-        "columns_mobile": "1",
-        "swipe_on_mobile": false,
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
-    "image_with_text_dMnjUt": {
-      "type": "image-with-text",
-      "blocks": {
-        "heading_jw44BV": {
-          "type": "heading",
-          "settings": {
-            "heading": "Why AstroAura",
-            "heading_size": "h2"
-          }
-        },
-        "text_x3JxKH": {
-          "type": "text",
-          "settings": {
-            "text": "<h4>At AstroAura, Every healing stone is authentically sourced and energised with pure intentions by our expert astrologers to ensure maximum effectiveness.</h4><h4><strong>Charged for you by Top Astros</strong><br/></h4><h4>Expert astrologers energize each stone with pure intentions for maximum spiritual effectiveness.</h4><h4><strong>100% Natural & Authentic</strong><br/></h4><h4>All our stone are 100% authentic and original , sourced from top international mines across the globe.</h4><h4><strong>Certified by  Govt Labs</strong></h4><h4>Certified by trusted expert at the gemology lab. Passed multiple screening for original and quality.</h4><h4><strong>Hand Crafted by Artisans</strong></h4><h4>Expertly crafted by   artisans, using genuine     crystal polished to perfections for unmatched brilliance and details.</h4>",
-            "text_style": "subtitle"
-          }
-        },
-        "button_9T4M69": {
-          "type": "button",
-          "settings": {
-            "button_label": "",
-            "button_link": "",
-            "button_style_secondary": false
-          }
-        }
-      },
-      "block_order": [
-        "heading_jw44BV",
-        "text_x3JxKH",
-        "button_9T4M69"
-      ],
-      "custom_css": [
-        "h2 {margin: 0 auto; width: fit-content;}"
-      ],
-      "name": "t:sections.image-with-text.presets.name",
-      "settings": {
+        "heading": "Why Aura AI",
         "image": "shopify://shop_images/why_astroaura.png",
-        "height": "adapt",
-        "desktop_image_width": "medium",
-        "layout": "text_first",
-        "image_behavior": "none",
-        "content_layout": "overlap",
-        "desktop_content_position": "middle",
-        "desktop_content_alignment": "left",
-        "mobile_content_alignment": "left",
-        "section_color_scheme": "scheme-d042d7b2-a9c1-4c2f-9f34-d12479533a88",
-        "color_scheme": "scheme-ae31259b-1635-4508-b6f8-de409eaf58b0",
-        "padding_top": 12,
-        "padding_bottom": 24
+        "image_asset": "aa-amethyst.jpg",
+        "bg_url": "https://cdn.shopify.com/s/files/1/0947/9467/8574/files/why_astroaura.png",
+        "footer": ""
       }
     },
-    "rich_text_PDq7Pp": {
-      "type": "rich-text",
+    "certified_aa": {
+      "type": "aa-rd-certified",
       "blocks": {
-        "heading_qMPJQN": {
-          "type": "heading",
+        "point_0": {
+          "type": "point",
           "settings": {
-            "heading": "Certfied Gems",
-            "heading_size": "h2"
+            "icon": "ph-seal-check",
+            "text": "MGTL & Govt of India recognised reports"
           }
         },
-        "text_LHKyqh": {
-          "type": "text",
+        "point_1": {
+          "type": "point",
           "settings": {
-            "text": "<p>Genuine, certified gemstones guaranteed for authenticity and quality with government lab certifications.</p>"
+            "icon": "ph-shield-check",
+            "text": "ISO 9001:2008 certified testing"
           }
         },
-        "button_QNjbJd": {
-          "type": "button",
-          "disabled": true,
+        "point_2": {
+          "type": "point",
           "settings": {
-            "button_label": "",
-            "button_link": "",
-            "button_style_secondary": false,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
+            "icon": "ph-magnifying-glass",
+            "text": "Verify your report number online anytime"
           }
         }
       },
       "block_order": [
-        "heading_qMPJQN",
-        "text_LHKyqh",
-        "button_QNjbJd"
+        "point_0",
+        "point_1",
+        "point_2"
       ],
-      "name": "t:sections.rich-text.presets.name",
       "settings": {
-        "desktop_content_position": "center",
-        "content_alignment": "center",
-        "color_scheme": "",
-        "full_width": true,
-        "padding_top": 40,
-        "padding_bottom": 40
-      }
-    },
-    "collage_EmY7zc": {
-      "type": "collage",
-      "blocks": {
-        "image_zFYERx": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/Certified_gems_2_8b510f51-751d-429a-a543-351c25d42c22.jpg"
-          }
-        }
-      },
-      "block_order": [
-        "image_zFYERx"
-      ],
-      "custom_css": [
-        ".collage {all: revert;}",
-        ".collage-card {all: revert;}",
-        ".collage__item {all: revert;}",
-        ".media--transparent {all: revert; display: flex; justify-content: center;}",
-        ".media--transparent img {all: revert; width: 100%; max-width: 750px; max-height: 440px;}",
-        "img {all: revert;}"
-      ],
-      "name": "t:sections.collage.presets.name",
-      "settings": {
-        "heading": "",
-        "heading_size": "h2",
-        "desktop_layout": "left",
-        "mobile_layout": "column",
-        "card_styles": "none",
-        "color_scheme": "",
-        "padding_top": 0,
-        "padding_bottom": 0
-      }
-    },
-    "image_with_text_MDPCtn": {
-      "type": "image-with-text",
-      "blocks": {
-        "heading_knNxiX": {
-          "type": "heading",
-          "settings": {
-            "heading": "",
-            "heading_size": "h1"
-          }
-        },
-        "text_iYKLcx": {
-          "type": "text",
-          "settings": {
-            "text": "",
-            "text_style": "body"
-          }
-        },
-        "button_Gg8cxa": {
-          "type": "button",
-          "settings": {
-            "button_label": "",
-            "button_link": "",
-            "button_style_secondary": false
-          }
-        }
-      },
-      "block_order": [
-        "heading_knNxiX",
-        "text_iYKLcx",
-        "button_Gg8cxa"
-      ],
-      "disabled": true,
-      "name": "t:sections.image-with-text.presets.name",
-      "settings": {
+        "dev": "",
+        "heading": "Certified Gems, Verified Trust",
+        "text": "Every gemstone arrives with a government-recognised lab report, so you always know exactly what you are wearing.",
+        "btn_label": "",
+        "btn_url": "shopify://pages/contact",
         "image": "shopify://shop_images/Certified_gems_2_8b510f51-751d-429a-a543-351c25d42c22.jpg",
-        "height": "adapt",
-        "desktop_image_width": "medium",
-        "layout": "image_first",
-        "image_behavior": "none",
-        "content_layout": "no-overlap",
-        "desktop_content_position": "top",
-        "desktop_content_alignment": "left",
-        "mobile_content_alignment": "left",
-        "section_color_scheme": "",
-        "color_scheme": "",
-        "padding_top": 0,
-        "padding_bottom": 0
+        "image_asset": "aa-certified.jpg",
+        "bg_url": "https://cdn.shopify.com/s/files/1/0947/9467/8574/files/Certified_gems_2_8b510f51-751d-429a-a543-351c25d42c22.jpg",
+        "seal": "Lab Verified"
       }
     },
-    "multicolumn_rVVQLW": {
-      "type": "multicolumn",
+    "steps_aa": {
+      "type": "aa-rd-steps",
       "blocks": {
-        "column_QqHQfz": {
-          "type": "column",
-          "disabled": true,
+        "step_0": {
+          "type": "step",
           "settings": {
-            "title": "Column",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
-            "link_label": "",
-            "link": ""
+            "title": "Locate Report Number",
+            "text": "Find the unique number on your certificate (format LAB-XXXXXXXX)."
           }
         },
-        "column_RRajaV": {
-          "type": "column",
+        "step_1": {
+          "type": "step",
           "settings": {
-            "image": "shopify://shop_images/Vector_2.svg",
-            "title": "Guarantee of Purity",
-            "text": "<p>Each gem meets International quality standards.</p>",
-            "link_label": "",
-            "link": ""
+            "title": "Visit Lab Website",
+            "text": "Open the issuing laboratory's official verification portal."
           }
         },
-        "column_eRFf6U": {
-          "type": "column",
+        "step_2": {
+          "type": "step",
           "settings": {
-            "image": "shopify://shop_images/Vector_1.svg",
-            "title": "Aura Synchronized",
-            "text": "<p>Verified by certified gemological laboratories.</p>",
-            "link_label": "",
-            "link": ""
-          }
-        },
-        "column_Uj3Ljt": {
-          "type": "column",
-          "settings": {
-            "image": "shopify://shop_images/Vector.svg",
-            "title": "Guaranteed",
-            "text": "<p>100% authenticity and pure guarantee.</p>",
-            "link_label": "",
-            "link": ""
+            "title": "Verify Details",
+            "text": "Enter the number to instantly confirm your gemstone is genuine."
           }
         }
       },
       "block_order": [
-        "column_QqHQfz",
-        "column_RRajaV",
-        "column_eRFf6U",
-        "column_Uj3Ljt"
+        "step_0",
+        "step_1",
+        "step_2"
       ],
-      "custom_css": [
-        "h2 {margin: 0 auto; width: fit-content;}",
-        ".multicolumn-card {background: rgba(255, 255, 255, 0.9); box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.1), 0 10px 15px 0 rgba(0, 0, 0, 0.1);}",
-        ".media {display: block; background-color: rgba(var(--color-foreground), 0.1); position: relative; overflow: hidden;}",
-        ".media--transparent {background: linear-gradient(90deg, #f3e8ff 0%, #fce7f3 100%);}",
-        ".media--circle {padding: 40px; border-radius: 50%;}",
-        ".media > img {width: 44px;}",
-        "img {margin-left: 18px;}"
-      ],
-      "name": "t:sections.multicolumn.presets.name",
       "settings": {
-        "title": "",
-        "heading_size": "h2",
-        "image_width": "third",
-        "image_ratio": "circle",
-        "button_label": "",
-        "button_link": "",
-        "columns_desktop": 3,
-        "column_alignment": "center",
-        "background_style": "primary",
-        "color_scheme": "scheme-c6323a96-20a5-4474-b039-727f2117b7fb",
-        "columns_mobile": "1",
-        "swipe_on_mobile": false,
-        "padding_top": 40,
-        "padding_bottom": 52
+        "heading": "How to Verify Your Certificate",
+        "cta_label": "Contact Verification Support",
+        "cta_url": "shopify://pages/contact"
       }
     },
-    "multicolumn_mLLTmr": {
-      "type": "multicolumn",
+    "testimonials_aa": {
+      "type": "aa-rd-testimonials",
       "blocks": {
-        "column_VJKzn6": {
-          "type": "column",
+        "review_0": {
+          "type": "review",
           "settings": {
-            "image": "shopify://shop_images/Vector_3.svg",
-            "title": "Step 1: Locate Report Number",
-            "text": "<p>Find the unique report number on your certificate (format: LAB-XXXXXXXX)<br/><br/></p>",
-            "link_label": "",
-            "link": ""
+            "quote": "Such a vibrant piece. It instantly brightened my space and the energy feels genuinely calming. The packaging was beautiful too.",
+            "name": "Karan Sharma",
+            "product": "Citrine Crystal Tree"
           }
         },
-        "column_ChH7QV": {
-          "type": "column",
+        "review_1": {
+          "type": "review",
           "settings": {
-            "image": "shopify://shop_images/Vector_6843020c-c68c-4c90-9d06-55c85177993d.svg",
-            "title": "Step 2: Visit Lab Website",
-            "text": "<p>Go to the issuing laboratory's official verification portal online</p>",
-            "link_label": "",
-            "link": ""
+            "quote": "Not just décor, it genuinely helps me focus during meditation. You feel the difference within a few days of wearing it.",
+            "name": "Siddharth Kumar",
+            "product": "Amethyst Bracelet"
           }
         },
-        "column_tdaaYH": {
-          "type": "column",
+        "review_2": {
+          "type": "review",
           "settings": {
-            "image": "shopify://shop_images/Frame.svg",
-            "title": "Step 3: Verify Details",
-            "text": "<p>Enter report number to instantly verify gemstone details and authenticity</p>",
-            "link_label": "",
-            "link": ""
+            "quote": "Perfect addition to my altar. I can feel the warmth, and the lab certificate gave me real confidence in buying it.",
+            "name": "Saurav Joshi",
+            "product": "Pyrite Couple Combo"
+          }
+        },
+        "review_3": {
+          "type": "review",
+          "settings": {
+            "quote": "Ordered the Dhan Yog bracelet and the craftsmanship is lovely. Clean beads, comfortable fit, wear it every single day.",
+            "name": "Meera Nair",
+            "product": "Dhan Yog Bracelet"
+          }
+        },
+        "review_4": {
+          "type": "review",
+          "settings": {
+            "quote": "The rudraksha mala feels genuinely energising. Wore it a week and my sleep improved.",
+            "name": "Ananya Reddy",
+            "product": "Rudraksha Mala"
+          }
+        },
+        "review_5": {
+          "type": "review",
+          "settings": {
+            "quote": "Gemstone quality is top notch and the lab certificate was included. Even better in person.",
+            "name": "Rohan Mehta",
+            "product": "Yellow Sapphire"
+          }
+        },
+        "review_6": {
+          "type": "review",
+          "settings": {
+            "quote": "Beautiful bracelet and the packaging felt so premium. Already planning my next order.",
+            "name": "Priya Iyer",
+            "product": "7 Chakra Bracelet"
+          }
+        },
+        "review_7": {
+          "type": "review",
+          "settings": {
+            "quote": "Fast delivery and the crystal tree looks stunning on my work desk. Worth every rupee.",
+            "name": "Aditya Verma",
+            "product": "Amethyst Crystal Tree"
+          }
+        },
+        "review_8": {
+          "type": "review",
+          "settings": {
+            "quote": "I was skeptical but the calm in the room is real since I placed the pyramid. Highly recommend.",
+            "name": "Neha Gupta",
+            "product": "Vastu Pyramid"
+          }
+        },
+        "review_9": {
+          "type": "review",
+          "settings": {
+            "quote": "Authentic and properly activated. The pandit ji activation video was a lovely touch.",
+            "name": "Vikram Singh",
+            "product": "5 Mukhi Rudraksha"
+          }
+        },
+        "review_10": {
+          "type": "review",
+          "settings": {
+            "quote": "My mind feels lighter since I started wearing the citrine. Such a lovely, genuine piece.",
+            "name": "Sneha Desai",
+            "product": "Citrine Bracelet"
+          }
+        },
+        "review_11": {
+          "type": "review",
+          "settings": {
+            "quote": "Best spiritual store I have found online. Genuine products and the support team is so helpful.",
+            "name": "Arjun Nair",
+            "product": "Navratna Pendant"
           }
         }
       },
       "block_order": [
-        "column_VJKzn6",
-        "column_ChH7QV",
-        "column_tdaaYH"
+        "review_0",
+        "review_1",
+        "review_2",
+        "review_3",
+        "review_4",
+        "review_5",
+        "review_6",
+        "review_7",
+        "review_8",
+        "review_9",
+        "review_10",
+        "review_11"
       ],
-      "custom_css": [
-        "h2 {margin: 0 auto; width: fit-content;}",
-        ".media--transparent {background: linear-gradient(90deg, #f3e8ff 0%, #fce7f3 100%);}",
-        ".media--circle {padding: 40px; border-radius: 50%;}",
-        ".media > img {width: 44px;}",
-        "img {margin-left: 18px;}",
-        ".multicolumn-card {background: transparent; height: 260px;}"
-      ],
-      "name": "t:sections.multicolumn.presets.name",
       "settings": {
-        "title": "How to Verify Your Certificate",
-        "heading_size": "h2",
-        "image_width": "third",
-        "image_ratio": "circle",
-        "button_label": "Contact Verification Support",
-        "button_link": "shopify://pages/contact",
-        "columns_desktop": 3,
-        "column_alignment": "center",
-        "background_style": "primary",
-        "color_scheme": "scheme-c6323a96-20a5-4474-b039-727f2117b7fb",
-        "columns_mobile": "1",
-        "swipe_on_mobile": false,
-        "padding_top": 0,
-        "padding_bottom": 36
+        "dev": "",
+        "heading": "Let customers speak for us",
+        "sub": "from 14,249 verified reviews"
       }
     },
-    "image_with_text_mJmbpt": {
-      "type": "image-with-text",
-      "blocks": {
-        "heading_EGdkDe": {
-          "type": "heading",
-          "settings": {
-            "heading": "Certified Gems",
-            "heading_size": "h2"
-          }
-        },
-        "text_6qCVAe": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Genuine, certified gemstones guaranteed for authenticity and quality.</p>",
-            "text_style": "body"
-          }
-        },
-        "button_c3yhNn": {
-          "type": "button",
-          "settings": {
-            "button_label": "",
-            "button_link": "",
-            "button_style_secondary": false
-          }
-        }
-      },
-      "block_order": [
-        "heading_EGdkDe",
-        "text_6qCVAe",
-        "button_c3yhNn"
-      ],
-      "disabled": true,
-      "name": "t:sections.image-with-text.presets.name",
+    "collage_aa": {
+      "type": "aa-rd-collage",
       "settings": {
-        "image": "shopify://shop_images/Certified_gems_2.jpg",
-        "height": "adapt",
-        "desktop_image_width": "medium",
-        "layout": "text_first",
-        "image_behavior": "none",
-        "content_layout": "no-overlap",
-        "desktop_content_position": "top",
-        "desktop_content_alignment": "left",
-        "mobile_content_alignment": "left",
-        "section_color_scheme": "",
-        "color_scheme": "",
-        "padding_top": 36,
-        "padding_bottom": 36
+        "heading": "Ancient Energy, Worn with Grace"
       }
     },
-    "1754756233592eb8c3": {
-      "type": "apps",
-      "blocks": {
-        "testimonials_slider_carousel_widget_block_YPkXY7": {
-          "type": "shopify://apps/testimonials-slider/blocks/carousel-widget-block/cd756d38-7c3d-4332-af00-4ff87263e921",
-          "name": "Testimonials",
-          "settings": {
-            "themeId": "dark",
-            "configNumber": "10",
-            "autoscroll": true,
-            "showAvatar": true
-          }
-        }
-      },
-      "block_order": [
-        "testimonials_slider_carousel_widget_block_YPkXY7"
-      ],
-      "custom_css": [],
+    "dhanyog_aa": {
+      "type": "aa-rd-dhanyog",
       "settings": {
-        "include_margins": true
-      }
-    },
-    "image_banner_WwmTHL": {
-      "type": "image-banner",
-      "blocks": {
-        "heading_Dfe33i": {
-          "type": "heading",
-          "settings": {
-            "heading": "Image banner",
-            "heading_size": "h1"
-          }
-        },
-        "text_n8MhxD": {
-          "type": "text",
-          "settings": {
-            "text": "Give customers details about the banner image(s) or content on the template.",
-            "text_style": "body"
-          }
-        },
-        "buttons_zPM9wE": {
-          "type": "buttons",
-          "settings": {
-            "button_label_1": "Button label",
-            "button_link_1": "",
-            "button_style_secondary_1": false,
-            "button_label_2": "Button label",
-            "button_link_2": "",
-            "button_style_secondary_2": false
-          }
-        }
-      },
-      "block_order": [
-        "heading_Dfe33i",
-        "text_n8MhxD",
-        "buttons_zPM9wE"
-      ],
-      "disabled": true,
-      "custom_css": [
-        ".tabber_coll .tab {display: none; /* visibility: hidden; */ justify-content: space-evenly; flex-wrap: wrap; gap: 10px; width: 100%;}"
-      ],
-      "name": "t:sections.image-banner.presets.name",
-      "settings": {
-        "image": "shopify://shop_images/before__footet_ebb47e8e-851c-4a92-8a63-1954585bf351.jpg",
-        "image_overlay_opacity": 0,
-        "image_height": "adapt",
-        "image_behavior": "none",
-        "desktop_content_position": "middle-center",
-        "desktop_content_alignment": "center",
-        "show_text_box": true,
-        "color_scheme": "",
-        "stack_images_on_mobile": true,
-        "mobile_content_alignment": "center",
-        "show_text_below": true
+        "eyebrow": "॥ धन योग ॥",
+        "heading": "The Dhan Yog Bracelet",
+        "body": "Strung with citrine, tiger eye and the sacred Dhan Yog bead, worn to draw wealth, abundance and balanced energy into everyday life.",
+        "cta": "Discover the Bracelet",
+        "product_url": "shopify://products/dhan-yog-bracelet"
       }
     }
   },
   "order": [
-    "rich_text_TEVXgm",
-    "collage_Ji34he",
+    "cosmos_aa",
     "slideshow_PLf6zm",
-    "image_with_text_tz9Af9",
-    "featured_collection",
-    "image_with_text_DYDtwA",
-    "featured_collection_6N6qke",
-    "collection_list_ctAMFr",
-    "collection_list_XLNAUt",
-    "featured_product_patqWF",
-    "collection_list_b7XdPw",
-    "image_with_text_dMnjUt",
-    "rich_text_PDq7Pp",
-    "collage_EmY7zc",
-    "image_with_text_MDPCtn",
-    "multicolumn_rVVQLW",
-    "multicolumn_mLLTmr",
-    "image_with_text_mJmbpt",
-    "1754756233592eb8c3",
-    "image_banner_WwmTHL"
+    "ts_aa",
+    "aura_aa",
+    "ourshop_aa",
+    "mani_aa",
+    "combos_aa",
+    "spiritual_aa",
+    "collage_aa",
+    "dhanyog_aa",
+    "products_aa",
+    "why_aa",
+    "certified_aa",
+    "steps_aa",
+    "testimonials_aa"
   ]
 }

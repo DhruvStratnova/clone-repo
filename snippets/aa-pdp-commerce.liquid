@@ -1,0 +1,85 @@
+{%- comment -%}
+  AA PDP commerce stack (deal-card wireframe approved 2026-06-12).
+  part 'deal' -> "Prepaid Deal" card; renders INSIDE the #price wrapper so the
+                 deal price re-computes when Dawn re-renders on variant change.
+  part 'post' -> Delivery & Services checklist
+                 + "Goes well with" cross-sell with instant drawer add.
+{%- endcomment -%}
+
+{%- if part == 'deal' -%}
+  {%- liquid
+    comment
+      exact 25% off the CURRENT variant price, rounded to the nearest whole
+      rupee (prices are in paise: /100 -> rupees, round, *100 -> paise)
+    endcomment
+    assign aa_dp = product.selected_or_first_available_variant.price
+    assign aa_deal = aa_dp | times: 0.75 | divided_by: 100.0 | round | times: 100
+    assign aa_extra = aa_dp | minus: aa_deal
+  -%}
+  <div class="aa-deal">
+    <span class="aa-deal-badge">&#10022; Prepaid Deal</span>
+    <div class="aa-deal-top">
+      <span class="aa-deal-l">
+        <span class="aa-deal-get">Get at <b>{{ aa_deal | money_without_trailing_zeros }}</b></span>
+        <span class="aa-deal-tag">When you pay online at checkout</span>
+      </span>
+      <span class="aa-deal-chip">Extra {{ aa_extra | money_without_trailing_zeros }} Off</span>
+    </div>
+  </div>
+
+{%- elsif part == 'post' -%}
+  <div class="aa-dsv">
+    <div class="aa-dsv-h">Delivery &amp; Services</div>
+    <div class="aa-dsv-row">
+      <span class="aa-dsv-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8 12 3 3 8v8l9 5 9-5V8Z"/><path d="m3 8 9 5 9-5"/><path d="M12 13v8"/></svg></span>
+      <b>Free shipping across India</b>
+    </div>
+    <div class="aa-dsv-row">
+      <span class="aa-dsv-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.6"/></svg></span>
+      <b>Pay on Delivery is available</b>
+    </div>
+    <div class="aa-dsv-row">
+      <span class="aa-dsv-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg></span>
+      <b>Hassle free 7 days Return &amp; Exchange</b>
+    </div>
+    <div class="aa-dsv-row">
+      <span class="aa-dsv-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5.5"/><path d="m8.8 12.5-1.3 7 4.5-2.7 4.5 2.7-1.3-7"/></svg></span>
+      <b>Lab certified with authenticity certificate</b>
+    </div>
+  </div>
+
+  <div class="aa-gww" id="AaGww" hidden>
+    <div class="aa-gww-h">Goes well with</div>
+    <div class="aa-gww-list" id="AaGwwList"></div>
+  </div>
+
+<script>
+(function () {
+  /* Each row is a REAL /cart/add form. aa-cart-v9.js intercepts that submit
+     (capture-phase) and runs the SAME handleAdd pipeline as every other
+     add-to-cart on the site: instant drawer open + optimistic line item +
+     bubble update + one round trip. No custom cart code here.
+     .aa-rd-card on the row + .nm on the title + the product link are what
+     aa-cart-v9's readCardInfo() reads to build the optimistic row. */
+  fetch('/recommendations/products.json?product_id={{ product.id }}&limit=2&intent=related')
+    .then(function (r) { return r.json(); })
+    .then(function (d) {
+      var ps = (d.products || []).filter(function (p) { return p.available; }).slice(0, 2);
+      if (!ps.length) return;
+      var list = document.getElementById('AaGwwList');
+      ps.forEach(function (p) {
+        var img = p.featured_image || '';
+        if (img) img += (img.indexOf('?') > -1 ? '&' : '?') + 'width=96';
+        var url = (p.url || ('/products/' + p.handle)).split('?')[0];
+        var row = document.createElement('div');
+        row.className = 'aa-gww-item aa-rd-card';
+        row.innerHTML = '<a href="' + url + '"><img src="' + img + '" width="48" height="48" loading="lazy"></a>'
+          + '<div class="aa-gww-t"><b class="nm">' + p.title + '</b><span>Rs. ' + Math.round(p.price / 100).toLocaleString('en-IN') + '</span></div>'
+          + '<form action="/cart/add" method="post"><input type="hidden" name="id" value="' + p.variants[0].id + '"><button type="submit">ADD</button></form>';
+        list.appendChild(row);
+      });
+      document.getElementById('AaGww').hidden = false;
+    }).catch(function(){});
+})();
+</script>
+{%- endif -%}
