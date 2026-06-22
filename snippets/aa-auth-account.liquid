@@ -1,0 +1,51 @@
+{%- comment -%}
+  Post-login account UI: dropdown menu (anchored to header account icon) +
+  Profile overlay + My Orders overlay. Driven by aa-auth.js, shown only when
+  a Supabase session exists. data-turbo-permanent so it survives SPA nav.
+{%- endcomment -%}
+{%- assign aa_logo = 'aa-logo-orb.svg' | asset_url -%}
+<div class="aa-au" id="aa-au-acct" data-turbo-permanent>
+
+  {%- comment -%} ---- dropdown menu ---- {%- endcomment -%}
+  <div class="aa-au-menu" id="aa-au-menu" hidden>
+    <div class="aa-au-menu__bg" data-acct-close></div>
+    <div class="aa-au-menu__card" role="menu">
+      <div class="aa-au-menu__head">
+        <span class="aa-au-menu__av" data-acct-initial>A</span>
+        <span>
+          <span class="aa-au-menu__nm" data-acct-name>Aura Member</span>
+          <span class="aa-au-menu__ph" data-acct-phone></span>
+        </span>
+      </div>
+      <button class="aa-au-menu__item" type="button" data-acct-profile>
+        <span class="aa-au-mic"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></span>
+        <span class="aa-au-mlbl">Profile</span>
+        <svg class="aa-au-mchev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+      </button>
+      <button class="aa-au-menu__item" type="button" data-acct-orders>
+        <span class="aa-au-mic"><svg viewBox="0 0 24 24"><path d="M6 2h12l-1 7H7z"/><path d="M5 9h14l1 11H4z"/></svg></span>
+        <span class="aa-au-mlbl">My Orders</span>
+        <svg class="aa-au-mchev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+      </button>
+      <button class="aa-au-menu__item aa-au-menu__out" type="button" data-acct-logout>
+        <span class="aa-au-mic"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg></span>
+        <span class="aa-au-mlbl">Logout</span>
+      </button>
+    </div>
+  </div>
+
+  {%- comment -%} ---- Profile + Orders overlay (slides up) ---- {%- endcomment -%}
+  <div class="aa-au-view" id="aa-au-view" hidden>
+    <div class="aa-au-view__bg" data-view-close></div>
+    <div class="aa-au-view__panel">
+      <div class="aa-au-view__bar">
+        <button class="aa-au-view__back" type="button" data-view-close aria-label="Close">
+          <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <span class="aa-au-view__title" data-view-title>Profile</span>
+      </div>
+      <div class="aa-au-view__body" data-view-body></div>
+    </div>
+  </div>
+
+</div>

@@ -4,33 +4,25 @@ class CartDrawer extends HTMLElement {
 
     this.addEventListener('keyup', (evt) => evt.code === 'Escape' && this.close());
     this.querySelector('#CartDrawer-Overlay').addEventListener('click', this.close.bind(this));
+    // AstroAura: tap anywhere outside the inner panel closes the drawer
+    this.addEventListener('click', (e) => {
+      if (!e.target.closest('.drawer__inner')) this.close();
+    });
     this.setHeaderCartIconAccessibility();
   }
 
   setHeaderCartIconAccessibility() {
-    const cartLink = document.querySelector('#cart-icon-bubble');
-    if (!cartLink) return;
-
-    cartLink.setAttribute('role', 'button');
-    cartLink.setAttribute('aria-haspopup', 'dialog');
-    cartLink.addEventListener('click', (event) => {
-      event.preventDefault();
-      this.open(cartLink);
-    });
-    cartLink.addEventListener('keydown', (event) => {
-      if (event.code.toUpperCase() === 'SPACE') {
-        event.preventDefault();
-        this.open(cartLink);
-      }
-    });
+    // Intentionally do NOT intercept the cart-icon click here.
+    // Cart icon must navigate to the full /cart page.
+    // The drawer is opened programmatically only by ADD TO CART (aa-cart.js).
   }
 
   open(triggeredBy) {
     if (triggeredBy) this.setActiveElement(triggeredBy);
     const cartDrawerNote = this.querySelector('[id^="Details-"] summary');
     if (cartDrawerNote && !cartDrawerNote.hasAttribute('role')) this.setSummaryAccessibility(cartDrawerNote);
-    // here the animation doesn't seem to always get triggered. A timeout seem to help
-    setTimeout(() => {
+    // INSTANT: add classes in the same animation frame, no setTimeout delay.
+    requestAnimationFrame(() => {
       this.classList.add('animate', 'active');
     });
 
@@ -85,6 +77,10 @@ class CartDrawer extends HTMLElement {
 
     setTimeout(() => {
       this.querySelector('#CartDrawer-Overlay').addEventListener('click', this.close.bind(this));
+    // AstroAura: tap anywhere outside the inner panel closes the drawer
+    this.addEventListener('click', (e) => {
+      if (!e.target.closest('.drawer__inner')) this.close();
+    });
       this.open();
     });
   }

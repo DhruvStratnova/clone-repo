@@ -96,6 +96,7 @@
           <span class="visually-hidden visually-hidden--inline">{{ 'products.product.price.regular_price' | t }}</span>
 
           <span>
+            {%- if price_class == 'price--large' -%}<em class="aa-mrp">MRP</em> {% endif %}
             <s class="price-item price-item--regular">
               {% if settings.currency_code_enabled %}
                 {{ compare_at_price | money_with_currency }}
@@ -110,24 +111,15 @@
           {{ money_price }}
         </span>
 
-        <br>
-
         {%- comment -%}
-          First, get the raw numerical values for price.
-          We use 'variant.price' if it exists, falling back to 'product.price'.
-          This avoids the 'Integer with String' error.
+          PDP only: skewed "% OFF!" tag, computed from the CURRENT variant so
+          it re-renders correctly on variant change.
         {%- endcomment -%}
-        {%- assign current_price_num = variant.price | default: product.price -%}
-        {%- assign compare_price_num = variant.compare_at_price | default: product.compare_at_price -%}
-
-        {%- comment -%} Now, perform the comparison and calculation using the numbers. {%- endcomment -%}
-        {%- if compare_price_num > current_price_num -%}
-          {%- assign savings = compare_price_num | minus: current_price_num -%}
-          {%- assign discount = savings | times: 100.0 | divided_by: compare_price_num | round -%}
-          <span class="price-item--discount">({{ discount }}% Off)</span>
+        {%- if price_class == 'price--large' and compare_at_price > price -%}
+          {%- assign aa_savings = compare_at_price | minus: price -%}
+          {%- assign aa_discount = aa_savings | times: 100.0 | divided_by: compare_at_price | round -%}
+          <span class="aa-pp-off"><span>{{ aa_discount }}% OFF!</span></span>
         {%- endif -%}
-
-
       </div>
       {%- if product.selected_or_first_available_variant.unit_price_measurement -%}
         {% render 'unit-price',

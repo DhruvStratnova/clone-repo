@@ -1,0 +1,50 @@
+{%- comment -%}
+  Aura AI login popup. Rendered once in theme.liquid (data-turbo-permanent).
+  Behaviour wired by aa-auth.js. Two renderings share one flow:
+  desktop = split modal, mobile = bottom sheet (toggled purely by CSS).
+{%- endcomment -%}
+{%- assign aa_logo = 'aa-logo-orb.svg' | asset_url -%}
+<div class="aa-au aa-au-pop" id="aa-au-pop" aria-hidden="true" data-turbo-permanent>
+  <div class="aa-au-pop__scrim" data-aa-au-close></div>
+  <div class="aa-au-pop__wrap">
+
+    {%- comment -%} ---------- DESKTOP split modal ---------- {%- endcomment -%}
+    <div class="aa-au-modal" role="dialog" aria-modal="true" aria-label="Sign in to Aura AI">
+      <button class="aa-au-modal__close" type="button" data-aa-au-close aria-label="Close">&times;</button>
+      <div class="aa-au-left">
+        <div class="aa-au-brand">
+          <img class="aa-au-brandlogo" src="{{ aa_logo }}" width="48" height="48" alt="Aura AI">
+          <span class="aa-au-wm">Aura AI</span>
+        </div>
+        <h3 class="aa-au-head">Login now &amp; unlock your cosmic rewards</h3>
+        <div class="aa-au-cards">
+          <div class="aa-au-card">
+            <span class="aa-au-ic"><svg viewBox="0 0 24 24"><path d="M12 2l2.6 6.2L21 9l-5 4.6L17.5 21 12 17l-5.5 4L8 13.6 3 9l6.4-.8z"/></svg></span>
+            <div class="aa-au-ct">Matched to You</div>
+            <div class="aa-au-cd">Remedies guided by your birth chart</div>
+          </div>
+          <div class="aa-au-card">
+            <span class="aa-au-ic"><svg viewBox="0 0 24 24"><path d="M12 2l8 3v6c0 5-3.5 8.5-8 11-4.5-2.5-8-6-8-11V5z"/><path d="M9 12l2 2 4-4.5"/></svg></span>
+            <div class="aa-au-ct">Energised &amp; Real</div>
+            <div class="aa-au-cd">Lab-certified, ritually activated</div>
+          </div>
+          <div class="aa-au-card">
+            <span class="aa-au-ic"><svg viewBox="0 0 24 24"><path d="M3 7h11v8H3z"/><path d="M14 10h4l3 3v2h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg></span>
+            <div class="aa-au-ct">Track &amp; Reorder</div>
+            <div class="aa-au-cd">Live order updates, one-tap reorder</div>
+          </div>
+        </div>
+      </div>
+      <div class="aa-au-right" data-aa-au-scope="desktop">
+        {%- render 'aa-auth-steps', scope: 'd', desktop: true -%}
+      </div>
+    </div>
+
+    {%- comment -%} ---------- MOBILE bottom sheet ---------- {%- endcomment -%}
+    <div class="aa-au-sheet" role="dialog" aria-modal="true" aria-label="Sign in to Aura AI" data-aa-au-scope="mobile">
+      <div class="aa-au-grab"></div>
+      {%- render 'aa-auth-steps', scope: 'm', desktop: false -%}
+    </div>
+
+  </div>
+</div>

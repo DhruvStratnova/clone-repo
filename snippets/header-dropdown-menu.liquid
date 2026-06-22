@@ -32,6 +32,8 @@
                 tabindex="-1"
               >
                 {%- for childlink in link.links -%}
+                  {%- assign cl_lower = childlink.title | downcase -%}
+                  {%- if cl_lower contains 'pyramid' -%}{%- continue -%}{%- endif -%}
                   <li>
                     {%- if childlink.links == blank -%}
                       <a

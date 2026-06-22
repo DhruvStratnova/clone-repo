@@ -1,0 +1,62 @@
+{%- comment -%} AstroAura redesign product card with quick-view. Params: product, cat {%- endcomment -%}
+{%- liquid
+  assign p = product
+  assign cprice = p.compare_at_price
+  assign price = p.price
+  assign off = 0
+  if cprice > price
+    assign off = cprice | minus: price | times: 100.0 | divided_by: cprice | round
+  endif
+  assign is_pyramid = false
+  if p.title contains 'Pyramid' or p.title contains 'pyramid' or p.type contains 'Pyramid'
+    assign is_pyramid = true
+  endif
+  assign aa_is_combo = false
+  if p.type == 'Combo' or p.title contains 'Combo' or p.title contains 'Trio'
+    assign aa_is_combo = true
+  endif
+-%}
+{%- unless is_pyramid -%}
+<article class="pcard{% if p.type == 'Mani' or p.type == 'Vastu' or aa_is_combo %} aa-fill{% elsif p.type == 'Anklet' %} aa-fill-strong{% endif %}">
+  <div class="media"{% if p.images.size > 1 %} data-aa-imgs='[{% for im in p.images limit: 4 %}"{{ im | image_url: width: 600 }}"{% unless forloop.last %},{% endunless %}{% endfor %}]'{% endif %}>
+    {%- if p.images.size > 1 -%}
+      <button type="button" class="aa-marr aa-marr--l" aria-label="Previous image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <button type="button" class="aa-marr aa-marr--r" aria-label="Next image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+    {%- endif -%}
+    <a href="{{ p.url }}" class="media__link" aria-label="{{ p.title | escape }}">
+      {%- assign aa_is_new = false -%}
+      {%- if p.tags contains 'new arrival' or p.tags contains 'New Arrival' or p.tags contains 'new-arrival' -%}{%- assign aa_is_new = true -%}{%- endif -%}
+      {%- if aa_is_combo -%}<span class="badge">Best Value</span>{%- elsif aa_is_new -%}<span class="badge">New Arrival</span>{%- elsif off > 0 -%}<span class="badge">-{{ off }}%</span>{%- endif -%}
+      {%- if p.featured_media -%}{{ p.featured_media | image_url: width: 600 | image_tag: loading: 'lazy', decoding: 'async', widths: '165,200,300,440,600', width: 600, height: 600, sizes: '(max-width: 749px) 45vw, 230px', alt: '' }}{%- endif -%}
+      {%- assign aa_rv = p.metafields.reviews.rating.value.rating | default: 0 -%}
+      {%- assign aa_rc = p.metafields.reviews.rating_count.value | default: 0 | plus: 0 -%}
+      {%- if aa_rc > 0 and p.metafields.reviews.rating.value != blank -%}<span class="rate" aria-label="Rated {{ aa_rv }} out of 5"><span class="rate-star" aria-hidden="true">&#9733;</span>{{ aa_rv | round: 2 }}</span>{%- endif -%}
+    </a>
+    <modal-opener class="qv-btn" data-modal="#QuickAdd-{{ p.id }}">
+      <button type="button" class="media-btn qv-btn__b" data-product-url="{{ p.url }}" data-aa-features="{{ p.metafields.custom.key_feature | escape }}" aria-haspopup="dialog" aria-label="Quick view {{ p.title | escape }}">Quick view</button>
+    </modal-opener>
+    <div class="loading__spinner hidden">{%- render 'loading-spinner' -%}</div>
+  </div>
+  <div class="body">
+    <div class="nm"><a href="{{ p.url }}">{{ p.title }}</a></div>
+    <div class="price-row">
+      <span class="price">{{ price | money }}</span>
+      {%- if cprice > price -%}<span class="was">{{ cprice | money }}</span><span class="pct">{{ off }}% off</span>{%- endif -%}
+    </div>
+    {%- if p.available -%}
+      <form class="aa-rd-form" data-aa-rd-cart action="/cart/add" method="post">
+        <input type="hidden" name="id" value="{{ p.selected_or_first_available_variant.id }}">
+        <button type="submit" class="add">Add to cart</button>
+      </form>
+    {%- else -%}
+      <span class="add add--sold">Sold out</span>
+    {%- endif -%}
+  </div>
+  <quick-add-modal id="QuickAdd-{{ p.id }}" class="quick-add-modal">
+    <div role="dialog" aria-modal="true" aria-label="{{ p.title | escape }}" tabindex="-1">
+      <button id="ModalClose-{{ p.id }}" type="button" class="quick-add-modal__toggle" aria-label="Close" onclick="this.closest('quick-add-modal').hide(true)">&#10005;</button>
+      <div id="QuickAddInfo-{{ p.id }}" class="quick-add-modal__content"></div>
+    </div>
+  </quick-add-modal>
+</article>
+{%- endunless -%}

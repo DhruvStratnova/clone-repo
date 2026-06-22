@@ -2,13 +2,29 @@
 {{ 'component-slider.css' | asset_url | stylesheet_tag }}
 {{ 'component-slideshow.css' | asset_url | stylesheet_tag }}
 
+
+
+<style>
+  .posrel{position:relative;}
+  .posrel .posoverlay{position:absolute; top:0; bottom:0; left:0; right:0;}
+    </style>
+
+
+
+
 {%- if section.settings.slide_height == 'adapt_image' and section.blocks.first.settings.image != blank -%}
+  {%- liquid
+    assign mobile_ratio = section.blocks.first.settings.image.aspect_ratio
+    if section.blocks.first.settings.image_mobile != blank
+      assign mobile_ratio = section.blocks.first.settings.image_mobile.aspect_ratio
+    endif
+  -%}
   {%- style -%}
     @media screen and (max-width: 749px) {
       #Slider-{{ section.id }}::before,
       #Slider-{{ section.id }} .media::before,
       #Slider-{{ section.id }}:not(.banner--mobile-bottom) .banner__content::before {
-        padding-bottom: {{ 1 | divided_by: section.blocks.first.settings.image.aspect_ratio | times: 100 }}%;
+        padding-bottom: {{ 1 | divided_by: mobile_ratio | times: 100 }}%;
         content: '';
         display: block;
       }
@@ -131,7 +147,12 @@
         <div class="slideshow__media banner__media media{% if block.settings.image == blank %} placeholder{% endif %}{% if section.settings.image_behavior != 'none' %} animate--{{ section.settings.image_behavior }}{% endif %}">
           {%- if block.settings.image -%}
             {%- liquid
-              assign height = block.settings.image.width | divided_by: block.settings.image.aspect_ratio | round
+              assign desktop_height = block.settings.image.width | divided_by: block.settings.image.aspect_ratio | round
+              if block.settings.image_mobile != blank
+                assign mobile_height = block.settings.image_mobile.width | divided_by: block.settings.image_mobile.aspect_ratio | round
+              else
+                assign mobile_height = desktop_height
+              endif
               if section.settings.image_behavior == 'ambient'
                 assign sizes = '120vw'
                 assign widths = '450, 660, 900, 1320, 1800, 2136, 2400, 3600, 7680'
@@ -144,18 +165,35 @@
                 assign fetch_priority = 'high'
               endif
             -%}
-            {%- if forloop.first %}
+            {%- comment -%} Desktop image {%- endcomment -%}
+            {%- if forloop.first -%}
               {{
                 block.settings.image
                 | image_url: width: 3840
-                | image_tag: height: height, sizes: sizes, widths: widths, fetchpriority: fetch_priority
+                | image_tag: class: 'slideshow__image desktop-image small-hide', height: desktop_height, sizes: sizes, widths: widths, fetchpriority: fetch_priority
               }}
             {%- else -%}
               {{
                 block.settings.image
                 | image_url: width: 3840
-                | image_tag: loading: 'lazy', height: height, sizes: sizes, widths: widths
+                | image_tag: class: 'slideshow__image desktop-image small-hide', loading: 'lazy', height: desktop_height, sizes: sizes, widths: widths
               }}
+            {%- endif -%}
+            {%- comment -%} Mobile image (shown under 750px) {%- endcomment -%}
+            {%- if block.settings.image_mobile != blank -%}
+              {%- if forloop.first -%}
+                {{
+                  block.settings.image_mobile
+                  | image_url: width: 3840
+                  | image_tag: class: 'slideshow__image mobile-image medium-hide large-up-hide', height: mobile_height, sizes: sizes, widths: widths, fetchpriority: fetch_priority
+                }}
+              {%- else -%}
+                {{
+                  block.settings.image_mobile
+                  | image_url: width: 3840
+                  | image_tag: class: 'slideshow__image mobile-image medium-hide large-up-hide', loading: 'lazy', height: mobile_height, sizes: sizes, widths: widths
+                }}
+              {%- endif -%}
             {%- endif -%}
           {%- else -%}
             {%- assign placeholder_slide = forloop.index | modulo: 2 -%}
@@ -165,35 +203,59 @@
               {{ 'hero-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
             {%- endif -%}
           {%- endif -%}
+
+
+
+{% if block.settings.link %}
+    <a href="{{ block.settings.link }}"></a>
+{%- endif -%}
+
+
+
+
         </div>
-        {% comment %} <div class="slideshow__text-wrapper banner__content banner__content--{{ block.settings.box_align }} page-width{% if block.settings.show_text_box == false %} banner--desktop-transparent{% endif %}{% if settings.animations_reveal_on_scroll and forloop.index == 1 %} scroll-trigger animate--slide-in{% endif %}">
-          <div class="slideshow__text banner__box content-container content-container--full-width-mobile color-{{ block.settings.color_scheme }} gradient slideshow__text--{{ block.settings.text_alignment }} slideshow__text-mobile--{{ block.settings.text_alignment_mobile }}">
-            {%- if block.settings.heading != blank -%}
-              <h2 class="banner__heading inline-richtext {{ block.settings.heading_size }}">
-                {{ block.settings.heading }}
-              </h2>
-            {%- endif -%}
-            {%- if block.settings.subheading != blank -%}
-              <div class="banner__text rte">
-                <p>{{ block.settings.subheading }}</p>
-              </div>
-            {%- endif -%}
-            {%- if block.settings.button_label != blank -%}
-              <div class="banner__buttons">
-                <a
-                  {% if block.settings.link %}
-                    href="{{ block.settings.link }}"
-                  {% else %}
-                    role="link" aria-disabled="true"
-                  {% endif %}
-                  class="button {% if block.settings.button_style_secondary %}button--secondary{% else %}button--primary{% endif %}"
-                >
-                  {{- block.settings.button_label | escape -}}
-                </a>
-              </div>
-            {%- endif -%}
-          </div>
-        </div> {% endcomment %}
+        <div class="slideshow__text-wrapper posrel banner__content banner__content--{{ block.settings.box_align }} page-width{% if block.settings.show_text_box == false %} banner--desktop-transparent{% endif %}{% if settings.animations_reveal_on_scroll and forloop.index == 1 %} scroll-trigger animate--slide-in{% endif %}">
+  <div class="slideshow__text banner__box content-container content-container--full-width-mobile color-{{ block.settings.color_scheme }} gradient slideshow__text--{{ block.settings.text_alignment }} slideshow__text-mobile--{{ block.settings.text_alignment_mobile }}">
+
+
+
+
+     {% if block.settings.link %}
+    <a href="{{ block.settings.link }}" class="posoverlay"> </a>
+{%- endif -%}
+
+
+
+
+    {%- if block.settings.heading != blank -%}
+      <h2 class="banner__heading inline-richtext {{ block.settings.heading_size }}">
+        {{ block.settings.heading }}
+      </h2>
+    {%- endif -%}
+
+    {%- if block.settings.subheading != blank -%}
+      <div class="banner__text rte">
+        <p>{{ block.settings.subheading }}</p>
+      </div>
+    {%- endif -%}
+
+    {%- if block.settings.button_label != blank -%}
+      <div class="banner__buttons">
+        <a
+          {% if block.settings.link %}
+            href="{{ block.settings.link }}"
+          {% else %}
+            role="link" aria-disabled="true"
+          {% endif %}
+          class="button {% if block.settings.button_style_secondary %}button--secondary{% else %}button--primary{% endif %}"
+        >
+          {{- block.settings.button_label | escape -}}
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
       </div>
     {%- endfor -%}
   </div>
@@ -402,6 +464,11 @@
           "type": "image_picker",
           "id": "image",
           "label": "t:sections.slideshow.blocks.slide.settings.image.label"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_mobile",
+          "label": "Mobile image (optional)"
         },
         {
           "type": "range",

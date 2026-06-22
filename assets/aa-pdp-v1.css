@@ -1,0 +1,325 @@
+/* ============================================================
+   AA PDP v1 (approved wireframe 2026-06-11) — PRESENTATIONAL ONLY.
+   Scoped to body.template-product. Restyles Dawn's existing price,
+   variant pills and buy buttons; adds chips, social line, timer,
+   scarcity, trust row, Aura Stories and the floating dock.
+   No pricing/variant logic lives here — Dawn's JS is untouched.
+   ============================================================ */
+:root {
+  --aa-eo: cubic-bezier(0.23, 1, 0.32, 1);
+  --aa-eio: cubic-bezier(0.77, 0, 0.175, 1);
+  --aa-pdp-gold: #B58E3E;
+  --aa-pdp-hair: rgba(36, 16, 25, 0.09);
+  --aa-pdp-muted: #8a7480;
+  --aa-pdp-grad: linear-gradient(100deg, #E9027A, #F58220);
+}
+
+/* ---- title ---- */
+/* repeated-class armor: NitroPack's fontify injects Sora !important with a
+   massive :not() chain; this manufactures higher specificity. */
+body.template-product.template-product.template-product.template-product.template-product.template-product.template-product.template-product.template-product.template-product.template-product.template-product.template-product.template-product.template-product.template-product.template-product.template-product.template-product.template-product.template-product.template-product.template-product.template-product .product__title h1,
+body.template-product.template-product.template-product.template-product.template-product.template-product.template-product.template-product.template-product.template-product.template-product.template-product.template-product.template-product.template-product.template-product.template-product.template-product.template-product.template-product.template-product.template-product.template-product.template-product .product__title h2.h1,
+body.template-product .product__title h1,
+body.template-product .product__title h2.h1 {
+  font-family: 'Cormorant Garamond', Georgia, serif !important;
+  font-weight: 600 !important;
+  font-size: 40px !important;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+/* ---- chips + social proof ---- */
+.aa-pdp-chips { display: flex; gap: 8px; flex-wrap: wrap; margin: 0 0 12px; }
+.aa-pdp-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 7px 13px; border-radius: 999px; color: #5d4a53;
+  background: #fff; box-shadow: 0 1px 2px rgba(36, 16, 25, 0.06);
+}
+.aa-pdp-chip::before {
+  content: ''; width: 5px; height: 5px; border-radius: 50%; background: #B58E3E; flex: 0 0 auto;
+}
+.aa-pdp-social {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 13px; color: #9a5b2a; font-weight: 600; margin: 10px 0 2px;
+}
+.aa-pdp-social .aa-dot {
+  width: 7px; height: 7px; border-radius: 50%; background: var(--aa-pdp-grad);
+  animation: aaPulse 1.8s var(--aa-eio) infinite;
+}
+@keyframes aaPulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.82); } }
+
+/* ---- price (Dawn markup, restyled) ---- */
+body.template-product .price--large .price-item--sale,
+body.template-product .price--large .price-item--last {
+  font-size: 34px; font-weight: 800; letter-spacing: -0.02em; color: #241019;
+}
+body.template-product .price--large .price-item--regular { color: #b3a39a; }
+body.template-product .price__badge-sale { background: var(--aa-pdp-grad); color: #fff; border: 0; border-radius: 999px; }
+
+.aa-pdp-cashnote { font-size: 12.5px; color: var(--aa-pdp-muted); margin: 6px 0 10px; }
+.aa-pdp-cashnote b { color: #9a5b2a; }
+.aa-pdp-timer {
+  display: inline-flex; align-items: center; gap: 9px;
+  font-size: 12.5px; font-weight: 700; color: #2B0F26;
+  background: #fff; border: 1px solid rgba(181, 142, 62, 0.4);
+  padding: 7px 15px; border-radius: 999px; margin: 2px 0 14px;
+}
+.aa-pdp-timer .aa-t { font-variant-numeric: tabular-nums; color: #8a3a4d; min-width: 64px; }
+
+/* ---- variant pills (Dawn's real picker, reskinned) ---- */
+body.template-product .product-form__input--pill input[type="radio"] + label {
+  border: 1.5px solid var(--aa-pdp-hair);
+  background: #fff;
+  border-radius: 999px;
+  font-size: 13.5px; font-weight: 700;
+  padding: 11px 20px;
+  transition: transform 160ms var(--aa-eo), background 200ms ease, color 200ms ease, border-color 200ms ease;
+}
+body.template-product .product-form__input--pill input[type="radio"] + label:active { transform: scale(0.97); }
+body.template-product .product-form__input--pill input[type="radio"]:checked + label {
+  background: #2B0F26; color: #fff; border-color: #2B0F26;
+}
+body.template-product .product-form__input--pill .form__label,
+body.template-product .product-form__input .form__label {
+  font-size: 11px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--aa-pdp-muted);
+}
+
+/* ---- scarcity + trust ---- */
+.aa-pdp-scarcity { font-size: 12.5px; color: #8a3a4d; font-weight: 700; margin: 14px 0 4px; }
+.aa-pdp-scarcity .aa-bar { height: 5px; background: rgba(138, 58, 77, 0.12); border-radius: 999px; margin-top: 7px; overflow: hidden; }
+.aa-pdp-scarcity .aa-fill { height: 100%; background: linear-gradient(90deg, #8a3a4d, #E9027A); border-radius: 999px; }
+.aa-pdp-trust { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; margin: 16px 0 14px; }
+.aa-pdp-trust .aa-tr { background: #fff; border: 1px solid var(--aa-pdp-hair); border-radius: 14px; padding: 12px 8px; text-align: center; }
+.aa-pdp-trust b { display: block; font-size: 12px; margin-bottom: 2px; }
+.aa-pdp-trust span { font-size: 10.5px; color: var(--aa-pdp-muted); }
+
+/* ---- buy buttons (Dawn markup, reskinned) ---- */
+body.template-product .product-form__submit {
+  background: #151013 !important; color: #fff !important;
+  border-radius: 999px !important; border: 0 !important;
+  font-weight: 800 !important; font-size: 14px !important; letter-spacing: 0.06em !important;
+  text-transform: uppercase; padding-top: 18px; padding-bottom: 18px;
+  transition: transform 160ms var(--aa-eo), box-shadow 240ms var(--aa-eo) !important;
+}
+body.template-product .product-form__submit:active { transform: scale(0.97); }
+body.template-product .shopify-payment-button__button--unbranded {
+  background: var(--aa-pdp-grad) !important; color: #fff !important;
+  border-radius: 999px !important; font-weight: 800 !important;
+  font-size: 14px !important; letter-spacing: 0.06em !important; text-transform: uppercase;
+  box-shadow: 0 8px 22px rgba(233, 2, 122, 0.28);
+  transition: transform 160ms var(--aa-eo), box-shadow 240ms var(--aa-eo) !important;
+}
+body.template-product .shopify-payment-button__button--unbranded:active { transform: scale(0.97); }
+@media (hover: hover) and (pointer: fine) {
+  body.template-product .shopify-payment-button__button--unbranded:hover { box-shadow: 0 12px 30px rgba(233, 2, 122, 0.42); }
+}
+
+/* ---- Aura Stories (clean card) ---- */
+.aa-story {
+  background: #FFFFFF;
+  border: 1px solid var(--aa-pdp-hair);
+  border-radius: 18px;
+  padding: 20px 22px 14px;
+  margin: 22px 0 6px;
+}
+.aa-story .aa-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.aa-story .aa-kick { font-size: 10px; font-weight: 800; letter-spacing: 0.22em; color: var(--aa-pdp-gold); }
+.aa-story .aa-ver {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 9.5px; font-weight: 800; letter-spacing: 0.06em; color: #1d8a4e;
+  border: 1px solid rgba(29, 138, 78, 0.28); padding: 4px 10px; border-radius: 999px; white-space: nowrap;
+}
+.aa-story .aa-stars { color: #E8A23B; font-size: 13px; letter-spacing: 2px; margin-bottom: 8px; }
+.aa-story blockquote {
+  font-size: 14.5px; font-weight: 500; line-height: 1.7; color: #3a2c34;
+  border: 0; margin: 0 0 14px; padding: 0 0 0 14px;
+  border-left: 2px solid rgba(181, 142, 62, 0.5);
+  font-style: normal;
+  transition: opacity 220ms ease, filter 220ms ease;
+}
+.aa-story blockquote.aa-swap { opacity: 0; filter: blur(3px); }
+.aa-story .aa-strip { display: flex; align-items: center; gap: 12px; border-top: 1px solid var(--aa-pdp-hair); padding-top: 12px; }
+.aa-story .aa-meta { display: flex; align-items: center; gap: 9px; min-width: 0; }
+.aa-story .aa-av {
+  width: 28px; height: 28px; border-radius: 50%; background: #2B0F26;
+  display: flex; align-items: center; justify-content: center;
+  color: #F6E9D4; font-weight: 800; font-size: 11.5px; flex: 0 0 auto;
+}
+.aa-story .aa-who b { display: block; font-size: 12.5px; line-height: 1.2; }
+.aa-story .aa-who span { color: var(--aa-pdp-muted); font-size: 10.5px; }
+.aa-story .aa-dots { display: flex; gap: 5px; margin-left: auto; }
+.aa-story .aa-dots i { width: 6px; height: 6px; border-radius: 999px; background: rgba(36, 16, 25, 0.14); transition: width 240ms var(--aa-eo), background 240ms ease; }
+.aa-story .aa-dots i.on { background: var(--aa-pdp-gold); width: 16px; }
+.aa-story .aa-arr { display: flex; gap: 6px; }
+.aa-story .aa-arr button {
+  width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--aa-pdp-hair);
+  background: #fff; font-size: 12px; cursor: pointer; color: #241019;
+  transition: transform 160ms var(--aa-eo), border-color 200ms ease;
+}
+.aa-story .aa-arr button:active { transform: scale(0.92); }
+@media (hover: hover) { .aa-story .aa-arr button:hover { border-color: var(--aa-pdp-gold); } }
+
+/* ---- floating Aura Dock ---- */
+.aa-dock {
+  position: fixed; left: 50%; bottom: 18px; z-index: 600;
+  transform: translateX(-50%) translateY(160%);
+  display: flex; align-items: center; gap: 14px;
+  background: rgba(28, 16, 24, 0.93);
+  -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+  color: #F6E9D4; border-radius: 999px; padding: 9px 10px 9px 9px;
+  box-shadow: 0 18px 50px rgba(20, 8, 16, 0.45);
+  border: 1px solid rgba(246, 233, 212, 0.14);
+  transition: transform 380ms var(--aa-eo);
+  max-width: calc(100vw - 24px);
+}
+.aa-dock.aa-show { transform: translateX(-50%) translateY(0); }
+.aa-dock img { width: 46px; height: 46px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(246, 233, 212, 0.35); flex: 0 0 auto; }
+.aa-dock .aa-dn { font-size: 12.5px; font-weight: 700; line-height: 1.25; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 180px; }
+.aa-dock .aa-dp { font-size: 11.5px; color: rgba(246, 233, 212, 0.7); white-space: nowrap; }
+.aa-dock .aa-dp b { color: #fff; font-size: 13px; }
+.aa-dock .aa-dt { font-size: 10.5px; color: #F0A35E; font-variant-numeric: tabular-nums; }
+.aa-dock .aa-dbuy {
+  border: 0; cursor: pointer; font-family: inherit; font-weight: 800; font-size: 12.5px; letter-spacing: 0.07em;
+  color: #fff; background: var(--aa-pdp-grad); border-radius: 999px; padding: 13px 26px;
+  text-transform: uppercase; white-space: nowrap;
+  transition: transform 160ms var(--aa-eo);
+}
+.aa-dock .aa-dcart {
+  border: 1px solid rgba(246, 233, 212, 0.35); background: none; color: #F6E9D4; cursor: pointer;
+  border-radius: 999px; padding: 12px 18px; font-family: inherit; font-weight: 700; font-size: 12px; white-space: nowrap;
+  transition: transform 160ms var(--aa-eo);
+}
+.aa-dock .aa-dbuy:active, .aa-dock .aa-dcart:active { transform: scale(0.95); }
+
+/* ============================================================
+   MOBILE — first-class pass
+   ============================================================ */
+@media screen and (max-width: 749px) {
+  body.template-product .product__title h1,
+  body.template-product .product__title h2.h1 { font-size: 27px; }
+  body.template-product .price--large .price-item--sale,
+  body.template-product .price--large .price-item--last { font-size: 28px; }
+  .aa-pdp-chips { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; padding-bottom: 2px; }
+  .aa-pdp-chips::-webkit-scrollbar { display: none; }
+  .aa-pdp-chip { flex: 0 0 auto; }
+  .aa-pdp-social { font-size: 12px; }
+  .aa-pdp-timer { font-size: 12px; padding: 6px 13px; }
+  .aa-pdp-trust { gap: 7px; }
+  .aa-pdp-trust .aa-tr { padding: 10px 5px; border-radius: 12px; }
+  .aa-pdp-trust b { font-size: 11px; }
+  .aa-pdp-trust span { font-size: 9.5px; }
+  .aa-story { padding: 16px 16px 12px; }
+  .aa-story blockquote { font-size: 13.5px; }
+  body.template-product .product-form__input--pill input[type="radio"] + label { padding: 10px 16px; font-size: 13px; }
+  /* dock: full-width compact capsule ABOVE the app tab bar */
+  .aa-dock {
+    bottom: calc(var(--aa-tabbar-h, 56px) + env(safe-area-inset-bottom, 0px) + 10px);
+    width: calc(100vw - 20px); gap: 10px; padding: 8px;
+  }
+  .aa-dock .aa-dn { display: none; }
+  .aa-dock .aa-dp { font-size: 11px; }
+  .aa-dock .aa-dinfo { min-width: 0; }
+  .aa-dock .aa-dbuy { padding: 12px 18px; font-size: 12px; flex: 1 1 auto; }
+  .aa-dock .aa-dcart { padding: 11px 14px; font-size: 11.5px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aa-pdp-social .aa-dot { animation: none; }
+  .aa-dock { transition: opacity 200ms ease; }
+  .aa-story blockquote { transition: opacity 200ms ease; }
+}
+
+/* ---- commerce stack (prepaid deal card / delivery & services / cross-sell) ---- */
+.aa-deal {
+  position: relative; background: #FFFCF6;
+  border: 1px solid rgba(181, 142, 62, 0.35); border-radius: 16px;
+  margin: 22px 0 4px;
+}
+.aa-deal-badge {
+  position: absolute; top: -11px; left: 14px;
+  background: linear-gradient(96deg, #E9027A, #F58220); color: #fff;
+  font-size: 10px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase;
+  padding: 5px 13px; border-radius: 999px;
+  box-shadow: 0 3px 10px rgba(233, 2, 122, 0.3);
+}
+.aa-deal-top { display: flex; align-items: center; gap: 14px; padding: 21px 16px 15px; }
+.aa-deal-l { min-width: 0; }
+.aa-deal-get { display: block; font-size: 16px; font-weight: 700; color: #241019; }
+.aa-deal-get b {
+  font-size: 21px; font-weight: 800; color: #241019;
+  border-bottom: 2.5px solid #B58E3E; padding-bottom: 1px;
+}
+.aa-deal-tag { display: block; font-size: 11.5px; font-weight: 600; color: #8a7480; margin-top: 7px; }
+.aa-deal-chip {
+  margin-left: auto; flex: 0 0 auto;
+  background: rgba(181, 142, 62, 0.14); color: #6b4f1a;
+  border: 1px solid rgba(181, 142, 62, 0.3); border-radius: 10px;
+  font-size: 12px; font-weight: 800; padding: 8px 13px; white-space: nowrap;
+}
+
+/* mobile gallery slide dots — frosted capsule riding on the image (approved
+   wireframe A): the capsule is its own surface, so it reads cleanly on any
+   photo and can never collide with the content below */
+.aa-mdots { display: none; }
+@media screen and (max-width: 749px) {
+  .aa-mdots {
+    display: flex; gap: 6px; align-items: center;
+    position: absolute; left: 50%; bottom: 16px; transform: translateX(-50%);
+    background: rgba(20, 10, 16, 0.35);
+    -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+    border-radius: 999px; padding: 7px 11px;
+    z-index: 2; pointer-events: none;
+  }
+  .aa-mdots i {
+    width: 6px; height: 6px; border-radius: 999px;
+    background: rgba(255, 255, 255, 0.5);
+    transition: background 200ms ease, width 200ms var(--aa-eo, cubic-bezier(0.23,1,0.32,1));
+  }
+  .aa-mdots i.on { background: #fff; width: 14px; }
+}
+
+.aa-dsv { margin: 18px 0 4px; }
+.aa-dsv-h { font-size: 15px; font-weight: 800; color: #241019; margin-bottom: 12px; }
+.aa-dsv-row { display: flex; align-items: center; gap: 13px; margin-bottom: 13px; }
+.aa-dsv-ic { position: relative; flex: 0 0 auto; width: 30px; height: 30px; color: #3b2a33; }
+.aa-dsv-ic svg { width: 26px; height: 26px; }
+.aa-dsv-ic::after {
+  content: '✓'; position: absolute; right: -4px; bottom: -3px;
+  width: 14px; height: 14px; border-radius: 50%;
+  background: #1d8a4e; color: #fff; font-size: 9px; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  border: 1.5px solid rgb(var(--color-background, 243 237 226));
+}
+.aa-dsv-row b { font-size: 13.5px; font-weight: 700; color: #241019; }
+
+.aa-gww { margin: 0 0 6px; }
+.aa-gww-h { font-size: 12px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: #8a7480; margin-bottom: 9px; }
+.aa-gww-item {
+  display: flex; align-items: center; gap: 11px;
+  background: #fff; border: 1px solid rgba(36, 16, 25, 0.09);
+  border-radius: 14px; padding: 9px 12px; margin-bottom: 8px;
+}
+.aa-gww-item img { width: 48px; height: 48px; border-radius: 10px; object-fit: cover; flex: 0 0 auto; }
+.aa-gww-item form { display: contents; }
+.aa-gww-t { min-width: 0; }
+.aa-gww-t b { display: block; font-size: 12.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.aa-gww-t span { font-size: 12px; font-weight: 700; color: #241019; }
+.aa-gww-item button {
+  margin-left: auto; border: 1.5px solid #241019; background: none; color: #241019;
+  font-family: inherit; font-weight: 800; font-size: 11px; letter-spacing: 0.05em;
+  border-radius: 999px; padding: 8px 16px; cursor: pointer; flex: 0 0 auto;
+}
+@media screen and (max-width: 749px) {
+  .aa-deal { margin-top: 20px; }
+  .aa-deal-top { gap: 11px; padding: 19px 14px 13px; }
+  .aa-deal-get { font-size: 15px; }
+  .aa-deal-get b { font-size: 19px; }
+  .aa-deal-tag { font-size: 11px; margin-top: 6px; }
+  .aa-deal-chip { font-size: 11px; padding: 7px 11px; }
+  .aa-dsv { margin-top: 16px; }
+  .aa-dsv-ic { width: 27px; height: 27px; }
+  .aa-dsv-ic svg { width: 23px; height: 23px; }
+  .aa-dsv-row { gap: 12px; margin-bottom: 12px; }
+  .aa-dsv-row b { font-size: 12.5px; }
+}

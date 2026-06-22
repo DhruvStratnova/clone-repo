@@ -26,6 +26,11 @@ if (!customElements.get('product-form')) {
         this.submitButton.setAttribute('aria-disabled', true);
         this.submitButton.classList.add('loading');
         this.querySelector('.loading__spinner').classList.remove('hidden');
+        // AstroAura: open cart drawer immediately so its slide-up runs in
+        // parallel with the network fetch — feels instant instead of laggy.
+        if (this.cart && typeof this.cart.open === 'function') {
+          try { this.cart.open(); } catch (e) {}
+        }
 
         const config = fetchConfig('javascript');
         config.headers['X-Requested-With'] = 'XMLHttpRequest';

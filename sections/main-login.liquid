@@ -12,13 +12,23 @@
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
   }
+
+  /* ---- Aura AI brand pass over the classic login page (OTP app mounts here) ---- */
+  .aa-au-loginpage{max-width:460px;margin:0 auto}
+  .aa-au-loginpage h1{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:32px;color:#241019;text-align:center}
+  .aa-au-loginpage h2,.aa-au-loginpage h3{font-family:'Cormorant Garamond',serif;color:#241019}
+  .aa-au-loginpage input[type="email"],
+  .aa-au-loginpage input[type="password"]{border-radius:12px !important;border:1px solid rgba(36,16,25,.14) !important}
+  .aa-au-loginpage button{background:linear-gradient(130deg,#E9027A,#F58220) !important;color:#fff !important;border:0 !important;border-radius:999px !important;padding:14px 22px !important;font-weight:700 !important;cursor:pointer}
+  .aa-au-loginpage a{color:#E9027A;font-weight:600;text-decoration:none}
 {%- endstyle -%}
+{{ 'aa-auth-v2.css' | asset_url | stylesheet_tag }}
 
 {%- if section.settings.enable_shop_login_button == false -%}
   {%- assign hide_shop_login_button = true -%}
 {%- endif -%}
 
-<div class="customer login section-{{ section.id }}-padding">
+<div class="customer login aa-au-loginpage section-{{ section.id }}-padding">
   <h1 id="recover" tabindex="-1">
     {{ 'customer.recover_password.title' | t }}
   </h1>

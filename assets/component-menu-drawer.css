@@ -241,3 +241,28 @@ details[open].menu-opening > .menu-drawer__submenu {
     transition: none !important;
   }
 }
+
+/* AstroAura: PREMIUM slide-in menu drawer.
+   Always rendered (visibility:visible + pointer-events:none) so first open
+   doesn't snap. Slide + fade combo, 850ms Apple-style ease. */
+@media screen and (max-width: 990px) {
+  .menu-drawer,
+  .menu-drawer__submenu {
+    visibility: visible !important;
+    pointer-events: none;
+    transform: translateX(-100%) !important;
+    opacity: 0.35;
+    transition: transform 850ms cubic-bezier(0.32, 0.72, 0, 1),
+                opacity 600ms cubic-bezier(0.22, 1, 0.36, 1) !important;
+    will-change: transform, opacity;
+  }
+  .js details[open].menu-opening > .menu-drawer,
+  details[open].menu-opening > .menu-drawer__submenu {
+    transform: translateX(0) !important;
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .menu-drawer__submenu {
+    transform: translateX(100%) !important;
+  }
+}

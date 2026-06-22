@@ -9,6 +9,15 @@
   {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %}
 {% endcomment %}
 {%- unless product.has_only_default_variant -%}
+  {%- comment -%} AstroAura: add-on labels + making-time note styling {%- endcomment -%}
+  <style>
+    .aa-vp-addon{ font-weight:600; font-size:.8em; opacity:.65; margin-left:.4em; white-space:nowrap; }
+    .aa-making-note{ display:none; margin:2px 0 4px; padding:0;
+      font-size:11px; font-weight:600; line-height:1.3; color:#9a5a2a; }
+    /* show ONLY for 'With Silver Capping' (not Brass, not Without) */
+    variant-selects:has(input:checked[value*="Silver Capping"]:not([value*="Without"])) .aa-making-note,
+    variant-radios:has(input:checked[value*="Silver Capping"]:not([value*="Without"])) .aa-making-note{ display:block; }
+  </style>
   <variant-selects
     id="variant-selects-{{ section.id }}"
     data-section="{{ section.id }}"
@@ -52,6 +61,13 @@
             picker_type: picker_type
           %}
         </fieldset>
+        {%- comment -%} AstroAura: making-time note, shown only when a capping option is chosen {%- endcomment -%}
+        {%- assign aa_optvals = option.values | join: ' | ' | downcase -%}
+        {%- if aa_optvals contains 'silver capping' or aa_optvals contains 'silver brass' -%}
+          <p class="aa-making-note" data-aa-making>
+            &ldquo;Handcrafted to order. Please allow 2 to 3 days of making time.&rdquo;
+          </p>
+        {%- endif -%}
       {%- else -%}
         <div class="product-form__input product-form__input--dropdown">
           <label class="form__label" for="Option-{{ section.id }}-{{ forloop.index0 }}">

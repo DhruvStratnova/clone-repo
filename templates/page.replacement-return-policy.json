@@ -17,41 +17,9 @@
         "padding_top": 0,
         "padding_bottom": 0
       }
-    },
-    "rich_text_r4drYJ": {
-      "type": "rich-text",
-      "blocks": {
-        "heading_mLrNwd": {
-          "type": "heading",
-          "settings": {
-            "heading": "Return & Replacement Policy",
-            "heading_size": "h1"
-          }
-        },
-        "text_WPGBNe": {
-          "type": "text",
-          "settings": {
-            "text": "<p>As of now, we do not accept returns or<br/>offer replacements. In the event of a damaged or incorrect delivery, customers<br/>are encouraged to contact us directly and we will assess on a case-by-case<br/>basis.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "heading_mLrNwd",
-        "text_WPGBNe"
-      ],
-      "name": "t:sections.rich-text.presets.name",
-      "settings": {
-        "desktop_content_position": "center",
-        "content_alignment": "center",
-        "color_scheme": "",
-        "full_width": true,
-        "padding_top": 40,
-        "padding_bottom": 52
-      }
     }
   },
   "order": [
-    "main",
-    "rich_text_r4drYJ"
+    "main"
   ]
 }

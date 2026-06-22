@@ -16,6 +16,13 @@
         "label": "t:settings_schema.logo.settings.logo_image.label"
       },
       {
+        "type": "text",
+        "id": "ai_chatbot_ws_url",
+        "label": "WebSocket URL",
+        "info": "Example: wss://your-api.example.com/ws",
+        "default": "wss://nexaverse.tech/api/user/ws"
+      },
+      {
         "type": "range",
         "id": "logo_width",
         "min": 50,
@@ -1449,6 +1456,80 @@
         "id": "cart_color_scheme",
         "label": "t:sections.all.colors.label",
         "default": "scheme-1"
+      }
+    ]
+  },
+  {
+    "name": "AI Chatbot",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "ai_chatbot_enabled",
+        "label": "Enable AI Chatbot",
+        "default": false
+      },
+      {
+        "type": "text",
+        "id": "ai_chatbot_api_base",
+        "label": "Chat API Base URL",
+        "info": "Example: https://your-api.example.com",
+        "default": "http://localhost:8000"
+      },
+      {
+        "type": "text",
+        "id": "ai_chatbot_api_path",
+        "label": "Chat API Path",
+        "info": "Example: /chat or /v1/messages",
+        "default": "/chat"
+      },
+      {
+        "type": "text",
+        "id": "ai_chatbot_api_key",
+        "label": "API Key (optional)",
+        "info": "If your API needs a key, add it here.",
+        "default": "YourAPIKey"
+      },
+      {
+        "type": "text",
+        "id": "ai_chatbot_title",
+        "label": "Widget Title",
+        "default": "Ask AstroAura"
+      },
+      {
+        "type": "text",
+        "id": "ai_chatbot_welcome",
+        "label": "Welcome Message",
+        "default": "Hi! How can I help you today?"
+      },
+      {
+        "type": "select",
+        "id": "ai_chatbot_position",
+        "label": "Widget Position",
+        "options": [
+          { "value": "bottom-right", "label": "Bottom right" },
+          { "value": "bottom-left", "label": "Bottom left" }
+        ],
+        "default": "bottom-right"
+      },
+      {
+        "type": "range",
+        "id": "ai_chatbot_width",
+        "min": 280,
+        "max": 420,
+        "step": 10,
+        "unit": "px",
+        "label": "Widget width",
+        "default": 320
+      },
+      {
+        "type": "range",
+        "id": "ai_chatbot_max_height",
+        "min": 360,
+        "max": 720,
+        "step": 20,
+        "unit": "px",
+        "label": "Widget max height",
+        "default": 500
       }
     ]
   },

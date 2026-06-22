@@ -48,6 +48,28 @@
       </div>
     {%- endunless -%}
 
+    <style>
+      /* HARD FORCE 3-col mobile grid — beats every other CSS source */
+      @media (max-width: 749px) {
+        #Slider-{{ section.id }} {
+          display: grid !important;
+          grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+          gap: 8px !important;
+          padding: 0 !important;
+          margin: 0 !important;
+          width: 100% !important;
+          max-width: 100% !important;
+          list-style: none !important;
+          overflow: visible !important;
+        }
+        #Slider-{{ section.id }} > li {
+          width: 100% !important;
+          max-width: 100% !important;
+          flex: none !important;
+          margin: 0 !important;
+        }
+      }
+    </style>
     <slider-component class="slider-mobile-gutter{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
       <ul
         class="collection-list contains-card contains-card--collection{% if settings.card_style == 'standard' %} contains-card--standard{% endif %} grid grid--{{ section.settings.columns_desktop }}-col-desktop grid--{{ section.settings.columns_mobile }}-col-tablet-down{% if section.settings.swipe_on_mobile %} slider slider--tablet grid--peek{% endif %} collection-list--{{ section.blocks.size }}-items"

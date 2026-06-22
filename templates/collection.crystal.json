@@ -44,14 +44,16 @@
         "buttons_yt67QM"
       ],
       "custom_css": [
-        ".tabber_coll {}",
+        ".tablinks {background: transparent;}",
         ".tabber_content {padding: 2rem; display: flex; justify-content: center;}",
         ".tabcontent {background-color: #ffffff; border: 1px solid #eaeaea; border-radius: 12px; padding: 40px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); max-width: 1400px; margin: 2rem 2rem;}",
-        ".banner__media {width: 100%; aspect-ratio: 2560 / 1024;}"
+        ".banner__media {width: 100%;}",
+        ".tablinks:hover {font-weight: bold;}"
       ],
       "name": "t:sections.image-banner.presets.name",
       "settings": {
-        "image": "shopify://shop_images/Crystal_-_banner_635463d7-a678-4d97-88b0-5cc2ffb14c58.png",
+        "image": "shopify://shop_images/GemsAura_banner4.jpg",
+        "image_2": "shopify://shop_images/GemsAura_phonebanner4.jpg",
         "image_overlay_opacity": 0,
         "image_height": "adapt",
         "image_behavior": "none",
@@ -64,33 +66,8 @@
         "show_text_below": true
       }
     },
-    "rich_text_dQCfcz": {
-      "type": "rich-text",
-      "blocks": {
-        "heading_wb6zni": {
-          "type": "heading",
-          "settings": {
-            "heading": "All Products",
-            "heading_size": "h2"
-          }
-        }
-      },
-      "block_order": [
-        "heading_wb6zni"
-      ],
-      "name": "t:sections.rich-text.presets.name",
-      "settings": {
-        "desktop_content_position": "left",
-        "content_alignment": "left",
-        "color_scheme": "",
-        "full_width": true,
-        "padding_top": 12,
-        "padding_bottom": 0
-      }
-    },
     "banner": {
       "type": "main-collection-banner",
-      "disabled": true,
       "settings": {
         "show_collection_description": false,
         "show_collection_image": false,
@@ -230,7 +207,6 @@
   },
   "order": [
     "image_banner_zpGQzQ",
-    "rich_text_dQCfcz",
     "banner",
     "product-grid",
     "image_with_text_GGVXqL",

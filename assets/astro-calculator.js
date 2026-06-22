@@ -1,385 +1,494 @@
+/* AstroAura — Astro Calculator
+   Form posts to Supabase Edge Function: public-remedies-api
+   Renders intro (markdown), action items, hero product card + more product cards.
+*/
 
-document.addEventListener("DOMContentLoaded", function () {
-  const tabs = document.querySelectorAll(".calculator-tabs .tab");
-  const form = document.getElementById("calculator-form");
-  const astroResultsDiv = document.getElementById("astro-results");
-  const astroOutputDiv = document.getElementById("astro-output");
+function aaCalcInit() {
+  var tabs = document.querySelectorAll('.calculator-tabs .tab');
+  var form = document.getElementById('calculator-form');
+  if (!form || form.dataset.aaCalcReady) return;   /* run only on the calculator page; never double-init under Turbo/prerender */
+  form.dataset.aaCalcReady = '1';
+  var astroResultsDiv = document.getElementById('astro-results');
+  var astroOutputDiv = document.getElementById('astro-output');
 
-  const commonFields = `
-    <div class="form-group">
-      <input type="text" name="name" placeholder="Enter your name" required>
-    </div>
-    <div class="form-group">
-      <input type="date" name="dob" required>
-      <input type="time" name="tob">
-      <label><input type="checkbox" name="no_time"> I don't have time of birth</label>
-    </div>
-    <div class="form-group">
-      <input type="text" name="placeName" placeholder="Enter Birth Place (e.g., New Delhi, India)" required>
-    </div>
-  `;
+  // -----------------------------------------------------------------
+  // API config
+  // -----------------------------------------------------------------
+  var REMEDIES_API_URL = 'https://ieakxiipnpwvyvpsjnkl.supabase.co/functions/v1/public-remedies-api';
+  var REMEDIES_API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImllYWt4aWlwbnB3dnl2cHNqbmtsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTUxOTA4NzcsImV4cCI6MjA3MDc2Njg3N30.R_seea1Eefbitn2ZI-ye0oASLsoazA7lynGTk7B1pH4';
+  var GEOAPIFY_API_KEY = '55e9073809d4409fa8c39310584517f9';
 
-  const gemstoneFields = commonFields;
-  const rudrakshaFields = commonFields;
+  // -----------------------------------------------------------------
+  // Form template (rendered per-tab)
+  // -----------------------------------------------------------------
+  var formFields = '\
+    <div class="aa-calc-grid">\
+      <div class="form-group">\
+        <label for="aa-name">Name</label>\
+        <input type="text" id="aa-name" name="name" placeholder="Your full name" required>\
+      </div>\
+      <div class="form-group">\
+        <label for="aa-phone">Phone Number</label>\
+        <input type="tel" id="aa-phone" name="phone" placeholder="98xxxxxxxx" inputmode="numeric" required>\
+      </div>\
+      <div class="form-group">\
+        <label for="dob">Date of Birth</label>\
+        <div class="aa-input-wrap">\
+          <input type="text" id="dob" name="dob" placeholder="DD/MM/YYYY" inputmode="numeric" autocomplete="bday" required>\
+          <button type="button" class="aa-input-icon" data-aa-picker="date" aria-label="Pick date">\
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>\
+          </button>\
+          <input type="date" class="aa-hidden-picker" data-target="dob" tabindex="-1" aria-hidden="true">\
+        </div>\
+      </div>\
+      <div class="form-group">\
+        <label for="tob">Time of Birth</label>\
+        <div class="aa-input-wrap">\
+          <input type="text" id="tob" name="tob" placeholder="HH:MM" inputmode="numeric">\
+          <button type="button" class="aa-input-icon" data-aa-picker="time" aria-label="Pick time">\
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>\
+          </button>\
+          <input type="time" class="aa-hidden-picker" data-target="tob" tabindex="-1" aria-hidden="true">\
+        </div>\
+        <label class="checkbox-row"><input type="checkbox" name="no_time"> I don\'t have time of birth</label>\
+      </div>\
+    </div>\
+    <div class="form-group">\
+      <label for="place">Place of Birth</label>\
+      <input type="text" id="place" name="placeName" placeholder="City, Country — e.g. New Delhi, India" required>\
+    </div>\
+  ';
 
   function switchTab(tabName) {
-    tabs.forEach(tab => tab.classList.remove("active"));
-    document.querySelector(`.tab[data-tab="${tabName}"]`).classList.add("active");
+    tabs.forEach(function (tab) { tab.classList.remove('active'); });
+    var activeTab = document.querySelector('.tab[data-tab="' + tabName + '"]');
+    if (activeTab) activeTab.classList.add('active');
     astroResultsDiv.style.display = 'none';
     astroOutputDiv.innerHTML = '';
 
-    if (tabName === "by-gemstone") {
-      form.innerHTML = gemstoneFields + `<button type="submit" class="rudraksha-btn">Know your Gemstone</button>`;
-    } else {
-      form.innerHTML = rudrakshaFields + `<button type="submit" class="rudraksha-btn">Know your Rudraksha</button>`;
-    }
+    var btnLabel = tabName === 'by-rudraksha' ? 'Know your Rudraksha' : 'Know your Gemstone';
+    form.innerHTML = formFields + '<button type="submit" class="rudraksha-btn aa-calc-cta">' + btnLabel + '</button>';
   }
 
-  // Default tab
-  switchTab("by-gemstone");
-
-  // Tab switching
-  tabs.forEach(tab => {
-    tab.addEventListener("click", () => {
-      switchTab(tab.dataset.tab);
-    });
+  tabs.forEach(function (tab) {
+    tab.addEventListener('click', function () { switchTab(tab.dataset.tab); });
   });
 
+  // -----------------------------------------------------------------
+  // Geoapify place autocomplete (optional — pob is free-form)
+  // -----------------------------------------------------------------
+  var placeInput, suggestionBox;
+  function addSuggestionDropdown() {
+    placeInput = form.querySelector('input[name="placeName"]');
+    if (!placeInput || placeInput.dataset.suggestInit === 'true') return;
+    placeInput.dataset.suggestInit = 'true';
 
-let placeInput, suggestionBox;
+    suggestionBox = document.createElement('div');
+    suggestionBox.className = 'location-suggestions';
+    suggestionBox.style.cssText = 'position:absolute;background:#fff;border:1px solid #ccc;z-index:9999;display:none;max-height:240px;overflow-y:auto;';
+    document.body.appendChild(suggestionBox);
 
-// Function to inject suggestion dropdown after place input
-function addSuggestionDropdown() {
-  placeInput = form.querySelector('input[name="placeName"]');
-  if (!placeInput || placeInput.dataset.suggestInit === 'true') return;
-  placeInput.dataset.suggestInit = 'true';
-
-  // Create hidden fields for selected coordinates and timezone (if not already present)
-  const ensureHiddenField = (name) => {
-    let el = form.querySelector(`input[name="${name}"]`);
-    if (!el) {
-      el = document.createElement('input');
-      el.type = 'hidden';
-      el.name = name;
-      form.appendChild(el);
+    function updatePosition() {
+      var rect = placeInput.getBoundingClientRect();
+      suggestionBox.style.width = rect.width + 'px';
+      suggestionBox.style.left = (window.scrollX + rect.left) + 'px';
+      suggestionBox.style.top = (window.scrollY + rect.bottom) + 'px';
     }
-    return el;
-  };
-  const hiddenLat = ensureHiddenField('placeLat');
-  const hiddenLon = ensureHiddenField('placeLon');
-  const hiddenTz  = ensureHiddenField('placeTzone');
 
-  // Create suggestion box as portal to body
-  suggestionBox = document.createElement('div');
-  suggestionBox.className = 'location-suggestions';
-  suggestionBox.style.position = 'absolute';
-  suggestionBox.style.background = '#fff';
-  suggestionBox.style.border = '1px solid #ccc';
-  suggestionBox.style.zIndex = 9999;
-  suggestionBox.style.display = 'none';
-  suggestionBox.style.maxHeight = '240px';
-  suggestionBox.style.overflowY = 'auto';
-  document.body.appendChild(suggestionBox);
+    var debounceTimer;
+    var currentIndex = -1;
+    var suggestionsData = [];
+    var inFlightController = null;
 
-  // Positioning helper
-  const updatePosition = () => {
-    const rect = placeInput.getBoundingClientRect();
-    suggestionBox.style.width = rect.width + 'px';
-    suggestionBox.style.left = window.scrollX + rect.left + 'px';
-    suggestionBox.style.top = window.scrollY + rect.bottom + 'px';
-  };
-
-  const clearHidden = () => {
-    hiddenLat.value = '';
-    hiddenLon.value = '';
-    hiddenTz.value = '';
-  };
-
-  let debounceTimer;
-  let currentIndex = -1;
-  let suggestionsData = [];
-  let inFlightController = null;
-
-  const renderSuggestions = (features) => {
-    suggestionBox.innerHTML = '';
-    currentIndex = -1;
-    suggestionsData = features;
-    features.forEach((feature, idx) => {
-      const item = document.createElement('div');
-      item.className = 'suggestion-item';
-      item.textContent = feature.properties.formatted;
-      item.style.padding = '8px 10px';
-      item.style.cursor = 'pointer';
-      item.addEventListener('mousedown', function (e) {
-        e.preventDefault();
-        applySelection(feature);
+    function renderSuggestions(features) {
+      suggestionBox.innerHTML = '';
+      currentIndex = -1;
+      suggestionsData = features;
+      features.forEach(function (feature) {
+        var item = document.createElement('div');
+        item.className = 'suggestion-item';
+        item.textContent = feature.properties.formatted;
+        item.style.cssText = 'padding:8px 10px;cursor:pointer;';
+        item.addEventListener('mousedown', function (e) {
+          e.preventDefault();
+          placeInput.value = feature.properties.formatted;
+          suggestionBox.style.display = 'none';
+        });
+        suggestionBox.appendChild(item);
       });
-      suggestionBox.appendChild(item);
-    });
-    suggestionBox.style.display = features.length ? 'block' : 'none';
-  };
-
-  const applySelection = (feature) => {
-    placeInput.value = feature.properties.formatted;
-    const lat = feature.properties.lat;
-    const lon = feature.properties.lon;
-    const tzProps = feature.properties.timezone || {};
-    const totalOffsetSeconds = (tzProps.offset_STD_seconds || 0) + (tzProps.offset_DST_seconds || 0);
-    const tzoneHours = totalOffsetSeconds ? (totalOffsetSeconds / 3600) : '';
-    hiddenLat.value = (lat != null ? String(lat) : '');
-    hiddenLon.value = (lon != null ? String(lon) : '');
-    hiddenTz.value = (tzoneHours !== '' ? String(tzoneHours) : '');
-    suggestionBox.style.display = 'none';
-  };
-
-  const fetchSuggestions = async (query) => {
-    const GEOAPIFY_API_KEY = "55e9073809d4409fa8c39310584517f9";
-    const url = `https://api.geoapify.com/v1/geocode/autocomplete?text=${encodeURIComponent(query)}&limit=5&apiKey=${GEOAPIFY_API_KEY}`;
-    if (inFlightController) inFlightController.abort();
-    inFlightController = new AbortController();
-    let res;
-    try {
-      res = await fetch(url, { signal: inFlightController.signal });
-    } catch (e) {
-      // aborted or network error
-      return;
+      suggestionBox.style.display = features.length ? 'block' : 'none';
     }
-    const data = await res.json();
-    if (data.features && data.features.length > 0) {
-      renderSuggestions(data.features);
-    } else {
-      suggestionBox.style.display = 'none';
-    }
-  };
 
-  placeInput.addEventListener('input', function () {
-    const query = placeInput.value.trim();
-    updatePosition();
-    if (query.length < 3) {
-      suggestionBox.style.display = 'none';
-      clearHidden();
-      return;
+    function fetchSuggestions(query) {
+      var url = 'https://api.geoapify.com/v1/geocode/autocomplete?text=' + encodeURIComponent(query) + '&limit=5&apiKey=' + GEOAPIFY_API_KEY;
+      if (inFlightController) inFlightController.abort();
+      inFlightController = new AbortController();
+      fetch(url, { signal: inFlightController.signal })
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          if (data.features && data.features.length > 0) renderSuggestions(data.features);
+          else suggestionBox.style.display = 'none';
+        })
+        .catch(function () {});
     }
-    clearTimeout(debounceTimer);
-    debounceTimer = setTimeout(() => fetchSuggestions(query), 250);
-  });
 
-  placeInput.addEventListener('focus', function () {
-    const query = placeInput.value.trim();
-    updatePosition();
-    if (query.length >= 3) {
+    placeInput.addEventListener('input', function () {
+      var query = placeInput.value.trim();
+      updatePosition();
+      if (query.length < 3) { suggestionBox.style.display = 'none'; return; }
       clearTimeout(debounceTimer);
-      debounceTimer = setTimeout(() => fetchSuggestions(query), 0);
-    }
-  });
+      debounceTimer = setTimeout(function () { fetchSuggestions(query); }, 250);
+    });
+    placeInput.addEventListener('focus', function () {
+      var query = placeInput.value.trim();
+      updatePosition();
+      if (query.length >= 3) fetchSuggestions(query);
+    });
+    placeInput.addEventListener('keydown', function (e) {
+      if (suggestionBox.style.display !== 'block') return;
+      var items = Array.prototype.slice.call(suggestionBox.querySelectorAll('.suggestion-item'));
+      if (!items.length) return;
+      if (e.key === 'ArrowDown') { e.preventDefault(); currentIndex = (currentIndex + 1) < items.length ? currentIndex + 1 : 0; }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); currentIndex = (currentIndex - 1) >= 0 ? currentIndex - 1 : items.length - 1; }
+      else if (e.key === 'Enter') {
+        if (currentIndex >= 0 && suggestionsData[currentIndex]) {
+          e.preventDefault();
+          placeInput.value = suggestionsData[currentIndex].properties.formatted;
+          suggestionBox.style.display = 'none';
+        }
+      }
+      items.forEach(function (el, i) { el.classList.toggle('active', i === currentIndex); });
+    });
+    document.addEventListener('mousedown', function (e) {
+      if (!suggestionBox.contains(e.target) && e.target !== placeInput) suggestionBox.style.display = 'none';
+    });
+    window.addEventListener('scroll', updatePosition, true);
+    window.addEventListener('resize', updatePosition);
+  }
 
-  // Keyboard navigation
-  placeInput.addEventListener('keydown', function (e) {
-    if (suggestionBox.style.display !== 'block') return;
-    const items = Array.from(suggestionBox.querySelectorAll('.suggestion-item'));
-    if (!items.length) return;
-    if (e.key === 'ArrowDown') {
-      e.preventDefault();
-      currentIndex = (currentIndex + 1) < items.length ? currentIndex + 1 : 0;
-    } else if (e.key === 'ArrowUp') {
-      e.preventDefault();
-      currentIndex = (currentIndex - 1) >= 0 ? currentIndex - 1 : items.length - 1;
-    } else if (e.key === 'Enter') {
-      if (currentIndex >= 0 && suggestionsData[currentIndex]) {
-        e.preventDefault();
-        applySelection(suggestionsData[currentIndex]);
+  function setupMobileDateTimePlaceholders() {
+    // DOB and ToB: text inputs with live auto-formatting + a sibling
+    // calendar/clock icon that opens the native picker (best of both).
+    var dateInput = form.querySelector('#dob');
+    var timeInput = form.querySelector('#tob');
+    if (dateInput && dateInput.dataset.autoFmtInit !== 'true') {
+      dateInput.dataset.autoFmtInit = 'true';
+      dateInput.addEventListener('input', function () {
+        var digits = dateInput.value.replace(/\D/g, '').slice(0, 8);
+        var out = digits;
+        if (digits.length > 4) out = digits.slice(0, 2) + '/' + digits.slice(2, 4) + '/' + digits.slice(4);
+        else if (digits.length > 2) out = digits.slice(0, 2) + '/' + digits.slice(2);
+        dateInput.value = out;
+      });
+    }
+    if (timeInput && timeInput.dataset.autoFmtInit !== 'true') {
+      timeInput.dataset.autoFmtInit = 'true';
+      timeInput.addEventListener('input', function () {
+        var digits = timeInput.value.replace(/\D/g, '').slice(0, 4);
+        var out = digits;
+        if (digits.length > 2) out = digits.slice(0, 2) + ':' + digits.slice(2);
+        timeInput.value = out;
+      });
+    }
+    // Wire icon → hidden picker → visible text input
+    form.querySelectorAll('.aa-input-icon').forEach(function (btn) {
+      if (btn.dataset.pickerInit === 'true') return;
+      btn.dataset.pickerInit = 'true';
+      var kind = btn.getAttribute('data-aa-picker');
+      var target = form.querySelector('#' + (kind === 'date' ? 'dob' : 'tob'));
+      var picker = form.querySelector('.aa-hidden-picker[data-target="' + (kind === 'date' ? 'dob' : 'tob') + '"]');
+      if (!target || !picker) return;
+      btn.addEventListener('click', function () {
+        // Pre-fill the picker if the text field has a valid value
+        if (kind === 'date') {
+          var iso = parseDateInput(target.value);
+          if (iso) picker.value = iso;
+        } else {
+          var t = parseTimeInput(target.value);
+          if (t) picker.value = t;
+        }
+        if (typeof picker.showPicker === 'function') {
+          try { picker.showPicker(); return; } catch (e) {}
+        }
+        // Fallback: focus the hidden input (mobile shows picker on focus)
+        picker.focus();
+        picker.click();
+      });
+      picker.addEventListener('change', function () {
+        if (kind === 'date' && picker.value) {
+          var parts = picker.value.split('-'); // YYYY-MM-DD
+          target.value = parts[2] + '/' + parts[1] + '/' + parts[0];
+        } else if (kind === 'time' && picker.value) {
+          target.value = picker.value;
+        }
+      });
+    });
+  }
+  // Parse user-typed DD/MM/YYYY → YYYY-MM-DD for the API
+  function parseDateInput(raw) {
+    if (!raw) return '';
+    var s = String(raw).trim();
+    var m = s.match(/^(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{2,4})$/);
+    if (m) {
+      var d = m[1].padStart(2, '0'), mo = m[2].padStart(2, '0'), y = m[3];
+      if (y.length === 2) y = (parseInt(y, 10) > 30 ? '19' : '20') + y;
+      return y + '-' + mo + '-' + d;
+    }
+    // already ISO?
+    if (/^\d{4}-\d{2}-\d{2}$/.test(s)) return s;
+    return '';
+  }
+  function parseTimeInput(raw) {
+    if (!raw) return '';
+    var s = String(raw).trim();
+    var m = s.match(/^(\d{1,2})[:\.]?(\d{2})\s*(am|pm)?$/i);
+    if (m) {
+      var h = parseInt(m[1], 10);
+      var mn = m[2];
+      var ampm = (m[3] || '').toLowerCase();
+      if (ampm === 'pm' && h < 12) h += 12;
+      if (ampm === 'am' && h === 12) h = 0;
+      return String(h).padStart(2, '0') + ':' + mn;
+    }
+    return '';
+  }
+
+  // Patch switchTab to wire up post-render extras
+  var origSwitchTab = switchTab;
+  switchTab = function (tabName) {
+    origSwitchTab(tabName);
+    setTimeout(function () { addSuggestionDropdown(); setupMobileDateTimePlaceholders(); }, 0);
+  };
+  switchTab('by-gemstone');
+
+  // -----------------------------------------------------------------
+  // Helpers
+  // -----------------------------------------------------------------
+  // Normalise user phone → E.164. Indian 10-digit auto-prefixed with +91.
+  function normalizePhone(raw) {
+    if (!raw) return '';
+    var s = String(raw).replace(/[^\d+]/g, '');
+    if (s.indexOf('+') === 0) return s;
+    if (s.length === 10) return '+91' + s;
+    if (s.length === 12 && s.indexOf('91') === 0) return '+' + s;
+    if (s.length >= 11) return '+' + s;
+    return s;
+  }
+
+  function escapeHtml(str) {
+    return String(str == null ? '' : str)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+
+  // Smarter markdown → HTML.
+  // - Lines starting with "- " become structured list items
+  // - "- **Label:** value" becomes a key/value row with a styled label
+  // - **bold** / *italic* / inline `code` rendered
+  // - Blank lines split paragraphs cleanly
+  function renderMarkdown(md) {
+    if (!md) return '';
+    var lines = String(md).split('\n');
+    var out = [];
+    var inList = false;
+    function inline(s) {
+      s = escapeHtml(s);
+      s = s.replace(/`([^`]+?)`/g, '<code>$1</code>');
+      s = s.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+      s = s.replace(/(^|[^*])\*(?!\s)([^*]+?)\*(?!\*)/g, '$1<em>$2</em>');
+      return s;
+    }
+    function openList() { if (!inList) { out.push('<ul class="aa-md-list">'); inList = true; } }
+    function closeList() { if (inList) { out.push('</ul>'); inList = false; } }
+    for (var i = 0; i < lines.length; i++) {
+      var raw = lines[i];
+      var trim = raw.replace(/\s+$/, '');
+      var bulletMatch = trim.match(/^\s*[-•]\s+(.*)$/);
+      if (bulletMatch) {
+        openList();
+        var content = bulletMatch[1];
+        // "- **Label:** rest"  →  <li><span class="md-key">Label</span> rest</li>
+        var kv = content.match(/^\*\*([^*]+?):\*\*\s*(.*)$/);
+        if (kv) {
+          out.push('<li class="aa-md-kv"><span class="aa-md-key">' + escapeHtml(kv[1]) + '</span><span class="aa-md-val">' + inline(kv[2]) + '</span></li>');
+        } else {
+          out.push('<li>' + inline(content) + '</li>');
+        }
+        continue;
+      }
+      closeList();
+      if (trim === '') { continue; }
+      // Lead-paragraph (first non-empty, all-bold) → render as heading
+      if (/^\*\*[\s\S]+\*\*$/.test(trim) && out.length === 0) {
+        out.push('<h4 class="aa-md-lead">' + inline(trim.replace(/^\*\*|\*\*$/g, '')) + '</h4>');
+      } else {
+        out.push('<p>' + inline(trim) + '</p>');
       }
     }
-    items.forEach((el, i) => el.classList.toggle('active', i === currentIndex));
-  });
+    closeList();
+    return out.join('\n');
+  }
 
-  // Outside click handling
-  document.addEventListener('mousedown', function (e) {
-    if (!suggestionBox.contains(e.target) && e.target !== placeInput) {
-      suggestionBox.style.display = 'none';
+  function inrFormat(amount) {
+    if (amount == null) return '';
+    try { return '₹' + Number(amount).toLocaleString('en-IN'); } catch (e) { return '₹' + amount; }
+  }
+
+  function productCardHtml(p, isHero) {
+    if (!p) return '';
+    var price = p.price_inr != null ? '<div class="aa-rem-card__price">' + escapeHtml(inrFormat(p.price_inr)) + '</div>' : '';
+    var tag = p.tag ? '<span class="aa-rem-card__tag">' + escapeHtml(p.tag) + '</span>' : '';
+    var benefits = '';
+    if (isHero && p.benefits && p.benefits.length) {
+      benefits = '<ul class="aa-rem-card__benefits">' +
+        p.benefits.map(function (b) { return '<li>' + escapeHtml(b) + '</li>'; }).join('') + '</ul>';
     }
-  });
+    var howWear = p.how_to_wear ? '<div class="aa-rem-card__how"><strong>How to wear:</strong> ' + escapeHtml(p.how_to_wear) + '</div>' : '';
+    var howSolves = p.how_it_solves ? '<div class="aa-rem-card__how"><strong>How it helps:</strong> ' + escapeHtml(p.how_it_solves) + '</div>' : '';
+    var reason = p.reason ? '<div class="aa-rem-card__reason">' + escapeHtml(p.reason) + '</div>' : '';
+    var shopBtn = p.shop_url ? '<a href="' + escapeHtml(p.shop_url) + '" class="aa-rem-card__cta">View product →</a>' : '';
+    var img = p.image_url ? '<div class="aa-rem-card__media"><img src="' + escapeHtml(p.image_url) + '" alt="' + escapeHtml(p.name || '') + '" loading="lazy"></div>' : '';
+    return '<div class="aa-rem-card' + (isHero ? ' aa-rem-card--hero' : '') + '">' +
+      img +
+      '<div class="aa-rem-card__body">' +
+        tag +
+        '<div class="aa-rem-card__cat">' + escapeHtml(p.category || '') + '</div>' +
+        '<h3 class="aa-rem-card__name">' + escapeHtml(p.name || '') + '</h3>' +
+        price +
+        reason +
+        benefits +
+        howWear +
+        howSolves +
+        shopBtn +
+      '</div>' +
+    '</div>';
+  }
 
-  // Reposition on scroll/resize
-  window.addEventListener('scroll', updatePosition, true);
-  window.addEventListener('resize', updatePosition);
+  function renderRemedies(data) {
+    var intro = data && data.intro ? '<div class="aa-rem-intro">' + renderMarkdown(data.intro) + '</div>' : '';
+    var actions = '';
+    if (data && data.action_items && data.action_items.length) {
+      actions = '<div class="aa-rem-actions"><h3>Action items</h3><ul>' +
+        data.action_items.map(function (a) { return '<li>' + renderMarkdown(a).replace(/^<p>|<\/p>$/g, '') + '</li>'; }).join('') +
+        '</ul></div>';
+    }
+    var hero = data && data.hero ? '<div class="aa-rem-hero-wrap">' + productCardHtml(data.hero, true) + '</div>' : '';
+    var moreList = '';
+    if (data && data.more && data.more.length) {
+      moreList = '<div class="aa-rem-more"><h3>More aligned picks</h3><div class="aa-rem-more__grid">' +
+        data.more.map(function (p) { return productCardHtml(p, false); }).join('') +
+        '</div></div>';
+    }
+    astroOutputDiv.innerHTML = intro + actions + hero + moreList;
+    astroResultsDiv.style.display = 'block';
+    astroResultsDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // -----------------------------------------------------------------
+  // Submit → call remedies API
+  // -----------------------------------------------------------------
+  form.addEventListener('submit', function (e) {
+    if (e.target && e.target.id !== 'calculator-form') return;
+    e.preventDefault();
+
+    var formData = new FormData(e.target);
+    var data = Object.fromEntries(formData.entries());
+    var currentTab = (document.querySelector('.calculator-tabs .tab.active') || {}).dataset
+      ? document.querySelector('.calculator-tabs .tab.active').dataset.tab
+      : 'by-gemstone';
+
+    var phone = normalizePhone(data.phone);
+    if (!phone || phone.replace(/\D/g, '').length < 10) {
+      astroOutputDiv.innerHTML = '<p class="aa-rem-error">Please enter a valid phone number.</p>';
+      astroResultsDiv.style.display = 'block';
+      return;
+    }
+    var dobIso = parseDateInput(data.dob);
+    if (!dobIso) {
+      astroOutputDiv.innerHTML = '<p class="aa-rem-error">Please enter your date of birth as DD/MM/YYYY (e.g. 18/10/1995).</p>';
+      astroResultsDiv.style.display = 'block';
+      return;
+    }
+    var tob = '12:00';
+    if (!data.no_time && data.tob) {
+      var parsed = parseTimeInput(data.tob);
+      if (!parsed) {
+        astroOutputDiv.innerHTML = '<p class="aa-rem-error">Please enter time of birth as HH:MM (24h, e.g. 14:30).</p>';
+        astroResultsDiv.style.display = 'block';
+        return;
+      }
+      tob = parsed;
+    }
+
+    var body = {
+      phone: phone,
+      dob: dobIso,
+      tob: tob,
+      pob: data.placeName || '',
+      name: data.name || 'Web user',
+      language: 'en'
+    };
+    // Steer the API toward gemstone vs rudraksha focus
+    if (currentTab === 'by-rudraksha') body.question = 'Which Rudraksha should I wear, and how does it help me?';
+    else body.question = 'Which Gemstone suits my chart, and how does it help me?';
+
+    astroOutputDiv.innerHTML = '<div class="aa-rem-loading"><span class="aa-rem-spinner"></span> Generating your personalised recommendation… <em>(may take 20–30 seconds the first time)</em></div>';
+    astroResultsDiv.style.display = 'block';
+
+    fetch(REMEDIES_API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': REMEDIES_API_KEY,
+        'Authorization': 'Bearer ' + REMEDIES_API_KEY
+      },
+      body: JSON.stringify(body)
+    })
+      .then(function (res) {
+        if (!res.ok) {
+          return res.text().then(function (t) {
+            var parsed = null;
+            try { parsed = JSON.parse(t); } catch (e) {}
+            var error = new Error('API ' + res.status);
+            error.status = res.status;
+            error.body = parsed || t;
+            throw error;
+          });
+        }
+        return res.json();
+      })
+      .then(function (json) {
+        if (!json || json.shown === false) {
+          astroOutputDiv.innerHTML = '<p class="aa-rem-error">No recommendation available for this profile. Please try again with valid birth details.</p>';
+          return;
+        }
+        renderRemedies(json);
+      })
+      .catch(function (err) {
+        console.error('[astro-calc] error', err);
+        var html;
+        var AURA_AI_URL = 'https://play.google.com/store/apps/details?id=com.astroaura.auraai';
+        if (err && err.status === 429) {
+          html = '<div class="aa-rem-limit">' +
+            '<p class="aa-rem-limit__title"><strong>You\'ve reached the hourly limit.</strong></p>' +
+            '<div class="aa-rem-limit__cta">' +
+              '<p class="aa-rem-limit__pitch">Can\'t wait? Get an instant personalised reading on the <strong>Aura AI</strong> app — <em>your first question is free</em>.</p>' +
+              '<a href="' + AURA_AI_URL + '" target="_blank" rel="noopener" class="aa-rem-aura-btn">Open Aura AI →</a>' +
+            '</div>' +
+          '</div>';
+        } else {
+          html = '<p class="aa-rem-error">Something went wrong fetching your recommendation. Please try again in a moment.</p>';
+        }
+        astroOutputDiv.innerHTML = html;
+      });
+  });
 }
 
-// Call addSuggestionDropdown whenever form is rendered
-const origSwitchTab = switchTab;
-switchTab = function(tabName) {
-  origSwitchTab(tabName);
-  setTimeout(addSuggestionDropdown, 0);
-};
-
-
-
-  // Form submit handler
-  document.addEventListener("submit", async function (e) {
-    if (e.target.id === "calculator-form") {
-      e.preventDefault();
-
-      const currentTab = document.querySelector(".calculator-tabs .tab.active").dataset.tab;
-      const formData = new FormData(e.target);
-      const data = Object.fromEntries(formData.entries());
-      
-      // --- DEBUG: Log form data ---
-      console.log("1. Form Data Submitted:", data);
-
-      // API auth details
-      const ASTRO_USER_ID = "642699";
-      const ASTRO_API_KEY = "86af5961c6dfcac90d4ae97401a974385dc7c6a3";
-      const GEOAPIFY_API_KEY = "55e9073809d4409fa8c39310584517f9"; // Your actual key
-      const auth = "Basic " + btoa(ASTRO_USER_ID + ":" + ASTRO_API_KEY);
-      
-      astroOutputDiv.innerHTML = '<p>Finding location and generating recommendation...</p>';
-      astroResultsDiv.style.display = 'block';
-
-      try {
-        const placeName = data.placeName;
-
-        // Prefer coordinates from suggestion selection if available
-        const selectedLat = parseFloat(data.placeLat || '');
-        const selectedLon = parseFloat(data.placeLon || '');
-        const selectedTz  = data.placeTzone !== undefined && data.placeTzone !== '' ? parseFloat(data.placeTzone) : undefined;
-
-        let latitude, longitude, timezoneOffsetHours;
-
-        if (!isNaN(selectedLat) && !isNaN(selectedLon)) {
-          latitude = selectedLat;
-          longitude = selectedLon;
-          timezoneOffsetHours = (selectedTz !== undefined && !isNaN(selectedTz)) ? selectedTz : undefined;
-        } else {
-          // Fallback: search endpoint to resolve coords and timezone
-          const geoApiUrl = `https://api.geoapify.com/v1/geocode/search?text=${encodeURIComponent(placeName)}&apiKey=${GEOAPIFY_API_KEY}`;
-          const geoResponse = await fetch(geoApiUrl);
-          if (!geoResponse.ok) {
-            throw new Error("Geocoding API request failed.");
-          }
-          const geoResult = await geoResponse.json();
-
-          // --- DEBUG: Log Geoapify response ---
-          console.log("2. Geoapify API Response:", geoResult);
-
-          if (!geoResult.features || geoResult.features.length === 0) {
-            throw new Error(`Could not find the location: "${placeName}". Please try a more specific name (e.g., "City, Country").`);
-          }
-
-          const properties = geoResult.features[0].properties;
-          latitude = properties.lat;
-          longitude = properties.lon;
-          const tzProps = properties.timezone || {};
-          const totalOffsetSeconds = (tzProps.offset_STD_seconds || 0) + (tzProps.offset_DST_seconds || 0);
-          timezoneOffsetHours = totalOffsetSeconds ? (totalOffsetSeconds / 3600) : undefined;
-        }
-        
-        // --- DEBUG: Log extracted coordinates ---
-        console.log(`3. Extracted Location: Latitude=${latitude}, Longitude=${longitude}, Timezone=${timezoneOffsetHours}`);
-
-        let fetchURL = "";
-        if (currentTab === "by-gemstone") {
-          fetchURL = "https://json.astrologyapi.com/v1/basic_gem_suggestion";
-        } else if (currentTab === "by-rudraksha") {
-          fetchURL = "https://json.astrologyapi.com/v1/rudraksha_suggestion";
-        }
-
-        const dob = new Date(data.dob);
-        let hour = 0, min = 0;
-        if (!data.no_time && data.tob) {
-          [hour, min] = data.tob.split(":").map(Number);
-        }
-
-        const payload = {
-          day: dob.getDate(),
-          month: dob.getMonth() + 1,
-          year: dob.getFullYear(),
-          hour: hour,
-          min: min,
-          lat: latitude,
-          lon: longitude,
-          tzone: (typeof timezoneOffsetHours === 'number' ? timezoneOffsetHours : 0)
-        };
-        
-        // --- DEBUG: Log the payload for the Astrology API ---
-        console.log("4. Payload for Astrology API:", payload);
-
-        const res = await fetch(fetchURL, {
-          method: "POST",
-          headers: {
-            "authorization": auth,
-            "Content-Type": "application/json",
-            "Accept-Language": "en"
-          },
-          body: JSON.stringify(payload)
-        });
-
-        if (!res.ok) {
-          const errorData = await res.json();
-          throw new Error(errorData.message || errorData.error || res.statusText);
-        }
-
-        const result = await res.json();
-        
-        // --- DEBUG: Log the final result from the Astrology API ---
-        console.log("5. Astrology API Result:", result);
-
-        if (currentTab === "by-gemstone") {
-          displayResult(result);
-        } else if (currentTab === "by-rudraksha") {
-          displayRudrakshaResult(result);
-        }
-      } catch (err) {
-        console.error("Error during API call:", err);
-        astroOutputDiv.innerHTML = `<p><strong>An error occurred:</strong> ${err.message || err}. Please check the input and try again.</p>`;
-      }
-    }
-  });
-
-  // Gemstone card display
-  function displayResult(data) {
-    let output = `<div class="gemstone-card-container">`;
-    Object.entries(data).forEach(([category, gem]) => {
-      if (gem && gem.name) {
-          output += `
-          <div class="gemstone-card">
-            <div class="gemstone-content">
-              <h2 class="gemstone-title">${gem.name} (${category.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())})</h2>
-              <p class="gemstone-description">
-                Represents <strong>${gem.gem_deity}</strong>, helping overcome obstacles 
-                and bringing stability. Provides protection and supports personal growth.
-              </p>
-              <ul class="gemstone-specs">
-                <li><strong>Metal:</strong> ${gem.wear_metal || 'N/A'}</li>
-                <li><strong>Finger:</strong> ${gem.wear_finger || 'N/A'} finger of right hand</li>
-                <li><strong>Wear Day:</strong> ${gem.wear_day || 'N/A'}</li>
-                <li><strong>Weight:</strong> ${gem.weight_caret || 'N/A'} carat</li>
-                <li><strong>Semi Gem:</strong> ${gem.semi_gem || 'N/A'}</li>
-              </ul>
-            </div>
-            <a href="/collections/all" class="gemstone-footer">
-              <button class="view-product-btn">View Product</button>
-            </a>
-          </div>
-        `;
-      }
-    });
-    output += `</div>`;
-    astroOutputDiv.innerHTML = output;
-    astroResultsDiv.style.display = 'block';
-  }
-
-  // Rudraksha card display
-  function displayRudrakshaResult(data) {
-    const output = `
-      <div class="rudraksha-card">
-        <div class="rudraksha-content">
-          <h2 class="rudraksha-tabs">${data.name}</h2>
-          <p class="rudraksha-recommend">${data.recommend}</p>
-          <p class="rudraksha-detail">${data.detail}</p>
-        </div>
-      </div>
-    `;
-    astroOutputDiv.innerHTML = output;
-    astroResultsDiv.style.display = 'block';
-  }
-});
+/* Bootstrap: the form fields are injected by aaCalcInit(). It must run on the
+   first load AND on every Turbo SPA navigation / prerender activation —
+   DOMContentLoaded alone never fires on a Turbo visit, which left the form
+   empty until a hard reload. The in-function guard makes re-entry a no-op. */
+if (document.readyState !== 'loading') aaCalcInit();
+else document.addEventListener('DOMContentLoaded', aaCalcInit);
+document.addEventListener('turbo:load', aaCalcInit);
+document.addEventListener('turbo:render', aaCalcInit);

@@ -1,0 +1,22 @@
+{%- assign st = "font-family:'Cormorant Garamond',Georgia,serif !important;font-weight:600" -%}
+{%- assign tiles = "aa-life-1.jpg|cg-a|5_mukhi_nepali,aa-life-2.jpg|cg-b|citrine-tree-300-beads,aa-life-4.jpg|cg-c|amethyst,aa-life-3.jpg|cg-d|amethyst-pendant-ratan,aa-life-5.jpg|cg-e|aventurine-jap-mala-108-beads" | split: "," -%}
+<section class="sec"><div class="wrap">
+  <div class="sh" data-rise><h2 style="{{ st }}">{{ section.settings.heading | default: 'Ancient Energy, Worn with Grace' }}</h2></div>
+  <div class="collage" data-rise>
+    {%- for t in tiles -%}
+      {%- assign parts = t | split: "|" -%}
+      {%- assign prod = all_products[parts[2]] -%}
+      <modal-opener class="cg {{ parts[1] }}" data-modal="#QuickAdd-cg{{ forloop.index }}">
+        <button type="button" class="cg-btn" data-product-url="{{ prod.url | default: '#' }}" data-aa-features="{{ prod.metafields.custom.key_feature | escape }}" aria-haspopup="dialog" aria-label="Quick view {{ prod.title | escape }}">
+          <img src="{{ parts[0] | asset_url }}" alt="{{ prod.title | default: 'AstroAura' | escape }}" loading="lazy">
+          <span class="qv-hint">Quick view</span>
+          <div class="loading__spinner hidden">{%- render 'loading-spinner' -%}</div>
+        </button>
+      </modal-opener>
+      <quick-add-modal id="QuickAdd-cg{{ forloop.index }}" class="quick-add-modal"><div role="dialog" aria-modal="true" tabindex="-1"><button id="ModalClose-cg{{ forloop.index }}" type="button" class="quick-add-modal__toggle" aria-label="Close" onclick="this.closest('quick-add-modal').hide(true)">&#10005;</button><div id="QuickAddInfo-cg{{ forloop.index }}" class="quick-add-modal__content"></div></div></quick-add-modal>
+    {%- endfor -%}
+  </div>
+</div></section>
+{% schema %}
+{"name":"AA Lifestyle Collage","settings":[{"type":"text","id":"heading","label":"Heading","default":"Ancient Energy, Worn with Grace"}],"presets":[{"name":"AA Lifestyle Collage"}]}
+{% endschema %}

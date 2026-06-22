@@ -2,6 +2,13 @@
 {{ 'component-card.css' | asset_url | stylesheet_tag }}
 {{ 'component-price.css' | asset_url | stylesheet_tag }}
 
+{%- comment -%} AstroAura quick-view (desktop) for collection-grid cards {%- endcomment -%}
+{{ 'aa-quickview-v2.css' | asset_url | stylesheet_tag }}
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&display=swap">
+{{ 'quick-add.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'quick-add.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'aa-rd-quickview-v5.js' | asset_url }}" defer="defer"></script>
+
 {% if section.settings.image_shape == 'blob' %}
   {{ 'mask-blobs.css' | asset_url | stylesheet_tag }}
 {%- endif -%}
@@ -37,7 +44,8 @@
 {%- endstyle -%}
 
 <div class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}">
-  {%- paginate collection.products by section.settings.products_per_page -%}
+  {%- comment -%} AA: show ALL products on one page (no 1·2·3 pagination); JS "View more" reveals 7 rows at a time. 250 = Shopify paginate max, every collection is well under it. {%- endcomment -%}
+  {%- paginate collection.products by 250 -%}
     {% comment %} Sort is the first tabbable element when filter type is vertical {% endcomment %}
      
     {%- if section.settings.enable_sorting and section.settings.filter_type == 'vertical' -%}
@@ -240,14 +248,56 @@
             class="collection{% if section.settings.filter_type != 'vertical' %} page-width{% endif %}"
           >
             <div class="loading-overlay gradient"></div>
+            <style>
+              /* Scoped to ul#product-grid so it doesn't hit the wrapper
+                 <div id="product-grid"> on the search page. */
+              /* Layout source of truth is aa-pcard.css (.template-collection
+                 grid rules at the top of that file). This block is only the
+                 fallback for non-collection contexts. */
+              ul#product-grid {
+                display: grid !important;
+                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+                gap: 4px !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                padding: 0 2px !important;
+                margin: 0 !important;
+                box-sizing: border-box !important;
+                list-style: none !important;
+                overflow: visible !important;
+              }
+              ul#product-grid > li {
+                width: 100% !important;
+                max-width: 100% !important;
+                min-width: 0 !important;
+                flex: none !important;
+                margin: 0 !important;
+              }
+              @media (min-width: 750px) {
+                /* CONTAINED 4-col grid. Selector strength (1 id, 2 classes)
+                   intentionally beats every historical rule in aa-pcard.css,
+                   including stale CDN-cached generations of that file, so the
+                   column count can never flip between cache states. */
+                html body.template-collection .collection ul#product-grid {
+                  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+                  gap: 22px !important;
+                  max-width: 100% !important;
+                  margin: 0 !important;
+                  padding: 0 24px !important;
+                  width: 100% !important;
+                  box-sizing: border-box !important;
+                }
+              }
+              @media (min-width: 750px) and (max-width: 1099px) {
+                html body.template-collection .collection ul#product-grid {
+                  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+                }
+              }
+            </style>
             <ul
               id="product-grid"
               data-id="{{ section.id }}"
-              class="
-                grid product-grid grid--{{ section.settings.columns_mobile }}-col-tablet-down
-                grid--{{ section.settings.columns_desktop }}-col-desktop
-                {% if section.settings.quick_add == 'bulk' %} collection-quick-add-bulk{% endif %}
-              "
+              class="grid product-grid aa-collection-grid{% if section.settings.quick_add == 'bulk' %} collection-quick-add-bulk{% endif %}"
             >
               {% assign skip_card_product_styles = false %}
               {%- for product in collection.products -%}
@@ -273,12 +323,75 @@
                     lazy_load: lazy_load,
                     skip_styles: skip_card_product_styles,
                     quick_add: section.settings.quick_add,
+                    show_quick_view: true,
+                    aa_coll_card: true,
                     section_id: section.id
                   %}
                 </li>
                 {%- assign skip_card_product_styles = true -%}
               {%- endfor -%}
             </ul>
+
+            {%- comment -%} AA View-more: shows 7 rows, reveals 7 more per click. Row-aware (reads live column count). {%- endcomment -%}
+            <div class="aa-viewmore" data-aa-viewmore data-rows="7" data-grid="product-grid" hidden>
+              <button type="button" class="aa-viewmore__btn">
+                <span class="aa-viewmore__label">View more</span>
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+            <style>
+              .aa-viewmore{display:flex;justify-content:center;margin:40px 0 8px}
+              .aa-viewmore[hidden]{display:none}
+              .aa-viewmore__btn{display:inline-flex;align-items:center;gap:9px;font-family:inherit;font-weight:600;font-size:14px;letter-spacing:.02em;line-height:1;color:#1a1320;background:#fff;padding:14px 32px;border-radius:999px;cursor:pointer;border:1.5px solid transparent;background-image:linear-gradient(#fff,#fff),linear-gradient(90deg,#E9027A,#F58220);background-origin:border-box;background-clip:padding-box,border-box;transition:color .25s ease,box-shadow .25s ease,transform .12s ease}
+              .aa-viewmore__btn:hover{color:#fff;background-image:linear-gradient(90deg,#E9027A,#F58220),linear-gradient(90deg,#E9027A,#F58220);box-shadow:0 8px 22px rgba(233,2,122,.22)}
+              .aa-viewmore__btn:active{transform:translateY(1px)}
+              .aa-viewmore__btn svg{width:15px;height:15px;transition:transform .25s ease}
+              .aa-viewmore__btn:hover svg{transform:translateY(2px)}
+              .aa-collection-grid > li.grid__item.aa-vm-show{opacity:1!important;transform:none!important;visibility:visible!important}
+              /* AA: "+" / Add button hover = brand gradient (diagonal so magenta + orange both read on the small button). Inline here so it does not depend on the cache-stuck aa-pcard.css asset version. */
+              html body .product-grid .aa-pcard__cta:hover,
+              html body #product-grid .aa-pcard__cta:hover,
+              html body ul.product-grid li .aa-pcard__cta:hover{
+                background:linear-gradient(130deg,#E9027A 0%,#EC1F4F 30%,#F04930 62%,#F58220 100%)!important;
+                background-color:#E9027A!important;
+                color:#fff!important;
+              }
+            </style>
+            <script>
+              (function(){
+                function initVM(scope){
+                  (scope||document).querySelectorAll('[data-aa-viewmore]').forEach(function(wrap){
+                    if(wrap.dataset.aaVmInit==='1') return;
+                    var grid=document.getElementById(wrap.getAttribute('data-grid')||'product-grid');
+                    if(!grid) return;
+                    var items=Array.prototype.slice.call(grid.querySelectorAll(':scope > li.grid__item'));
+                    var rows=parseInt(wrap.getAttribute('data-rows'),10)||7;
+                    var btn=wrap.querySelector('.aa-viewmore__btn');
+                    var steps=1;
+                    function cols(){
+                      var gtc=getComputedStyle(grid).gridTemplateColumns;
+                      var n=gtc?gtc.split(' ').filter(function(s){return s&&s!=='none';}).length:1;
+                      return n>0?n:1;
+                    }
+                    function apply(){
+                      var visible=steps*rows*cols();
+                      items.forEach(function(li,i){
+                        if(i<visible){li.style.display='';li.classList.add('aa-vm-show');}
+                        else{li.style.display='none';li.classList.remove('aa-vm-show');}
+                      });
+                      wrap.hidden = visible>=items.length;
+                    }
+                    if(items.length<=rows*cols()){wrap.remove();return;}
+                    wrap.dataset.aaVmInit='1';
+                    btn.addEventListener('click',function(){steps++;apply();});
+                    var rt;window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(apply,150);});
+                    apply();
+                  });
+                }
+                if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',function(){initVM();});}else{initVM();}
+                document.addEventListener('shopify:section:load',function(e){initVM(e.target);});
+              })();
+            </script>
 
             {%- if paginate.pages > 1 -%}
               {% render 'pagination', paginate: paginate, anchor: '' %}

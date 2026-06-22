@@ -1,0 +1,70 @@
+{%- comment -%}
+  Floating Aura Dock — appears when the buy buttons scroll out of view.
+  Its buttons DELEGATE clicks to Dawn's real Add-to-Cart / dynamic checkout
+  buttons, so all commerce logic (variant id, price, cart) stays Dawn's.
+  Price text is mirrored from the live price element, never computed here.
+{%- endcomment -%}
+<div class="aa-dock" id="AaDock" aria-hidden="true">
+  {%- if product.featured_image -%}
+    <img src="{{ product.featured_image | image_url: width: 96 }}" alt="" width="46" height="46" loading="lazy">
+  {%- endif -%}
+  <div class="aa-dinfo">
+    <div class="aa-dn">{{ product.title | escape }}</div>
+    <div class="aa-dp"><b data-aa-dock-price></b></div>
+  </div>
+  <button type="button" class="aa-dcart" data-aa-dock-cart>+ Cart</button>
+  <button type="button" class="aa-dbuy" data-aa-dock-buy>Buy Now</button>
+</div>
+<script>
+(function () {
+  var dock = document.getElementById('AaDock');
+  if (!dock) return;
+
+  /* mirror the live price text (Dawn updates it on variant change) */
+  function priceEl() {
+    return document.querySelector('.product__info-container .price-item--sale, .product__info-container .price-item--last')
+        || document.querySelector('.price-item--sale, .price-item--last');
+  }
+  function syncPrice() {
+    var p = priceEl();
+    if (p) dock.querySelector('[data-aa-dock-price]').textContent = p.textContent.trim();
+  }
+  syncPrice();
+  var pe = priceEl();
+  if (pe && window.MutationObserver) {
+    new MutationObserver(syncPrice).observe(pe.parentNode || pe, { childList: true, subtree: true, characterData: true });
+  }
+
+  /* delegate to the REAL buttons (explicitly — NOT by ambiguous class) */
+  dock.querySelector('[data-aa-dock-cart]').addEventListener('click', function () {
+    // the real Add-to-Cart submit, never the buy-now (which also has .product-form__submit)
+    var b = document.querySelector('button[name="add"].product-form__submit')
+         || document.querySelector('.product-form__submit:not(.aa-buy-now-btn)');
+    if (b) b.click();
+  });
+  dock.querySelector('[data-aa-dock-buy]').addEventListener('click', function () {
+    // Delegate to OUR custom buy-now button (race-free clear -> add -> Magic
+    // Checkout). Do NOT click '.shopify-payment-button__button' — that class
+    // also matches Shopify's NATIVE dynamic-checkout button, which hydrates
+    // async and dumps the user onto the native Shopify checkout page. That
+    // ambiguity was the "Buy Now sometimes opens Shopify, sometimes Magic" bug.
+    var b = document.querySelector('.aa-buy-now-btn');
+    if (b) b.click();
+  });
+
+  /* show after the form leaves the viewport */
+  var target = document.querySelector('.product-form__buttons') || document.querySelector('.product-form__submit');
+  if (target && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function (es) {
+      var e = es[0];
+      /* show only when the buttons are ABOVE the viewport (already passed),
+         not while they are still below the fold on first load */
+      var show = !e.isIntersecting && e.boundingClientRect.top < 0;
+      dock.classList.toggle('aa-show', show);
+      dock.setAttribute('aria-hidden', show ? 'false' : 'true');
+    }, { threshold: 0 }).observe(target);
+  }
+
+
+})();
+</script>

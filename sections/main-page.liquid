@@ -1,7 +1,17 @@
-{% comment %} //main-page.liquid (calculator template) {% endcomment %}
-{{ 'section-main-page.css' | asset_url | stylesheet_tag }}
+{% comment %} //main-page.liquid (Astro Calculator) {% endcomment %}
 {{ 'astro-calculator.css' | asset_url | stylesheet_tag }}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script src="{{ 'astro-calculator.js' | asset_url }}" defer></script>
+
+{%- style -%}
+  .calculator-section {
+    background-image:
+      linear-gradient(180deg, rgba(40, 18, 10, 0.32), rgba(40, 18, 10, 0.50)),
+      url('{{ 'aa-calc-bg.jpg' | asset_url }}');
+  }
+{%- endstyle -%}
 
 {%- style -%}
   .section-{{ section.id }}-padding {
@@ -16,65 +26,29 @@
   }
 {%- endstyle -%}
 
-<div class="section-{{ section.id }}-padding">
-  {% comment %}
-    <h1 class="main-page-title page-title h0{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
-      {{ page.title | escape }}
-    </h1>
-  {% endcomment %}
-  {% comment %}
-    <div class="rte{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-      {{ page.content }}
+<section class="calculator-section calculator-section--bare">
+  <div class="aa-calc-stack">
+    <header class="aa-calc-hero">
+      <h1 class="calculator-title">Astro Calculator</h1>
+      <p class="calculator-subtitle">Let your birth chart reveal the perfect Gemstone &amp; Rudraksha for you</p>
+    </header>
+
+    <div class="aa-calc-form-wrap">
+      <div class="calculator-tabs" role="tablist">
+        <button class="tab active" data-tab="by-gemstone" type="button" role="tab">Gemstone</button>
+        <button class="tab" data-tab="by-rudraksha" type="button" role="tab">Rudraksha</button>
+      </div>
+
+      <form id="calculator-form"><!-- fields injected by astro-calculator.js --></form>
     </div>
-  {% endcomment %}
-  <div>
-    <section class="calculator-section">
-      <div class="calculator-container">
 
-        {% comment %} <div class="calculator-form-containter"> {% endcomment %}
-          <h2 class="calculator-title">Astro Calculator</h2>
-        <p class="calculator-subtilte">Let your birth chart reveal the perfect Gemstone/Rudraksha for you</p>
-
-        <h3 class="calculator-personalized">Personalized <strong>For You!</strong></h3>
-        <p>Enter your details below to receive a personalized recommendation tailored to your needs and astrology.</p>
-
-        <div class="calculator-tabs">
-          <button class="tab active" data-tab="by-gemstone">Gemstone Calculator</button>
-          <button class="tab" data-tab="by-rudraksha">Rudraksha Calculator</button>
-        </div>
-
-        <form id="calculator-form">
-          <!-- Form fields will be dynamically loaded by astro-calculator.js based on tab selection. -->
-          <!-- The initial content below serves as the default 'By Birth' structure before JS fully initializes. -->
-          <div class="form-group">
-            <input type="text" name="name" placeholder="Enter your name" required>
-            {% comment %} <input type="tel" name="phone" placeholder="Enter your phone number"> {% endcomment %}
-          </div>
-
-          <div class="form-group">
-            <input type="date" name="dob" required>
-            <input type="time" name="tob">
-            <label><input type="checkbox" name="no_time"> I don't have time of birth</label>
-          </div>
-
-          <div class="form-group">
-                 <input type="text" name="placeName" placeholder="Enter Birth Place (e.g., New Delhi, India)" required>
-
-          </div>
-
-          <button type="submit" class="rudraksha-btn">Know your Gemstone</button>
-        </form>
-{% comment %} </div> {% endcomment %}
-        </div>
-        <!-- Results Section -->
-        <div id="astro-results" class="astro-results" style="display:none;">
-          <h3>Recommendation Details</h3>
-          <div id="astro-output"></div>
-        </div>
-      
-    </section>
+    <!-- Results -->
+    <div id="astro-results" class="astro-results" style="display:none;">
+      <span class="aa-calc-result-eyebrow">Your Recommendation</span>
+      <div id="astro-output"></div>
+    </div>
   </div>
-</div>
+</section>
 
 {% schema %}
 {

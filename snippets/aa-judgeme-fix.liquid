@@ -1,0 +1,191 @@
+{% comment %}
+  Aura AI — Customer Reviews v8 (MINIMAL — just colors, fonts, no layout fighting)
+  Let Judge.me's native HTML structure work. We only override visual styling.
+{% endcomment %}
+
+<style>
+  /* Container max-width + padding */
+  html body .jdgm-rev-widg {
+    max-width: 1100px !important;
+    margin: 48px auto !important;
+    padding: 0 20px !important;
+    font-family: 'Inter', -apple-system, sans-serif !important;
+  }
+
+  /* Title centered + serif */
+  html body .jdgm-rev-widg__title {
+    font-family: 'Cormorant Garamond', Georgia, serif !important;
+    font-size: 30px !important;
+    font-weight: 600 !important;
+    color: #1A1A1A !important;
+    text-align: center !important;
+    margin: 0 0 24px !important;
+    padding: 0 !important;
+  }
+
+  /* Summary block — let Judge.me lay it out, we only soften */
+  html body .jdgm-rev-widg__summary {
+    background: #FFFFFF !important;
+    border: 1px solid rgba(0,0,0,0.06) !important;
+    border-radius: 12px !important;
+    padding: 24px !important;
+    margin-bottom: 24px !important;
+  }
+
+  /* Score on one line, no wrap */
+  html body .jdgm-rev-widg__summary-average {
+    font-family: 'Cormorant Garamond', Georgia, serif !important;
+    font-size: 24px !important;
+    font-weight: 700 !important;
+    color: #1A1A1A !important;
+    white-space: nowrap !important;
+    display: inline-block !important;
+  }
+
+  /* Stars — amber gold */
+  html body .jdgm-star.jdgm--on,
+  html body .jdgm--on { color: #F5A623 !important; }
+  html body .jdgm-star.jdgm--off,
+  html body .jdgm--off { color: #E5E5E5 !important; }
+
+  /* Histogram bars — amber gold (no layout changes, just color) */
+  html body .jdgm-histogram-row__bar-content,
+  html body .jdgm-histogram__bar-content {
+    background: #F5A623 !important;
+    background-color: #F5A623 !important;
+  }
+
+  /* Write a Review button — clean pill */
+  html body .jdgm-write-rev-link {
+    display: inline-block !important;
+    padding: 12px 28px !important;
+    background: #1A1A1A !important;
+    color: #FFFFFF !important;
+    border: none !important;
+    border-radius: 999px !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.5px !important;
+    text-transform: uppercase !important;
+    text-decoration: none !important;
+    transition: all 0.2s ease !important;
+  }
+  html body .jdgm-write-rev-link:hover {
+    background: #4A1942 !important;
+    transform: translateY(-1px);
+  }
+
+  /* Sort dropdown — clean */
+  html body .jdgm-sort-dropdown {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 13px !important;
+    border: 1px solid rgba(0,0,0,0.12) !important;
+    border-radius: 8px !important;
+    padding: 8px 14px !important;
+    background: #FFFFFF !important;
+  }
+
+  /* Each review — clean card */
+  html body .jdgm-rev {
+    background: #FFFFFF !important;
+    border: 1px solid rgba(0,0,0,0.06) !important;
+    border-radius: 12px !important;
+    padding: 20px 24px !important;
+    margin: 0 0 12px !important;
+  }
+
+  /* Verified badge — green pill */
+  html body .jdgm-rev__buyer-badge {
+    background: rgba(46, 139, 87, 0.10) !important;
+    color: #2E8B57 !important;
+    border-radius: 999px !important;
+    padding: 2px 9px !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+  }
+
+  /* Author name */
+  html body .jdgm-rev__author {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    color: #1A1A1A !important;
+  }
+
+  /* Title */
+  html body .jdgm-rev__title {
+    font-weight: 700 !important;
+    color: #1A1A1A !important;
+  }
+
+  /* Body */
+  html body .jdgm-rev__body {
+    font-family: 'Inter', sans-serif !important;
+    line-height: 1.65 !important;
+    color: #4A4A4A !important;
+  }
+
+  /* Date */
+  html body .jdgm-rev__timestamp {
+    color: #999 !important;
+    font-size: 12px !important;
+  }
+
+  /* Pagination buttons */
+  html body .jdgm-paginate a,
+  html body .jdgm-paginate__page,
+  html body .jdgm-paginate__current-page {
+    border-radius: 999px !important;
+    padding: 8px 14px !important;
+    border: 1px solid rgba(0,0,0,0.10) !important;
+    background: #FFFFFF !important;
+    color: #1A1A1A !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 13px !important;
+  }
+  html body .jdgm-paginate__current-page {
+    background: #1A1A1A !important;
+    color: #FFFFFF !important;
+    border-color: #1A1A1A !important;
+  }
+  /* Hide empty pagination boxes (Judge.me's prev/next icons not rendering) */
+  html body .jdgm-paginate a:empty,
+  html body .jdgm-paginate__page:empty {
+    display: none !important;
+  }
+</style>
+
+<script>
+  (function() {
+    function force() {
+      document.querySelectorAll('.jdgm-star.jdgm--on, .jdgm--on').forEach(function(s) {
+        s.style.setProperty('color', '#F5A623', 'important');
+      });
+      document.querySelectorAll('.jdgm-histogram-row__bar-content, .jdgm-histogram__bar-content').forEach(function(b) {
+        b.style.setProperty('background', '#F5A623', 'important');
+        b.style.setProperty('background-color', '#F5A623', 'important');
+      });
+      /* Hide pagination boxes that have no visible content (Judge.me's prev/next icons broken) */
+      document.querySelectorAll('.jdgm-paginate a, .jdgm-paginate__page, .jdgm-paginate li').forEach(function(el) {
+        var text = (el.textContent || '').trim();
+        var hasIcon = el.querySelector('svg, img, i.fa, [class*="icon"]');
+        if (!text && !hasIcon) {
+          el.style.setProperty('display', 'none', 'important');
+          if (el.parentElement && el.parentElement.classList.contains('jdgm-paginate')) {
+            /* also hide the LI wrapper if any */
+            var li = el.closest('li');
+            if (li) li.style.setProperty('display', 'none', 'important');
+          }
+        }
+      });
+    }
+    document.addEventListener('DOMContentLoaded', force);
+    window.addEventListener('load', force);
+    setTimeout(force, 1500);
+    setTimeout(force, 3500);
+    var mo = new MutationObserver(force);
+    mo.observe(document.body, { childList: true, subtree: true });
+    setTimeout(function() { mo.disconnect(); }, 10000);
+  })();
+</script>

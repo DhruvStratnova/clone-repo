@@ -44,14 +44,16 @@
         "buttons_yt67QM"
       ],
       "custom_css": [
-        ".tabber_coll {}",
+        ".tablinks {background: transparent;}",
         ".tabber_content {padding: 2rem; display: flex; justify-content: center;}",
         ".tabcontent {background-color: #ffffff; border: 1px solid #eaeaea; border-radius: 12px; padding: 40px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); max-width: 1400px; margin: 2rem 2rem;}",
-        ".banner__media {width: 100%; aspect-ratio: 2560 / 1024;}"
+        ".banner__media {width: 100%;}",
+        ".tablinks:hover {font-weight: bold;}"
       ],
       "name": "t:sections.image-banner.presets.name",
       "settings": {
-        "image": "shopify://shop_images/Rudraksh_-_banner_3f3e1200-574a-434f-82fb-3da701149d6f.png",
+        "image": "shopify://shop_images/GemsAura_banner2.jpg",
+        "image_2": "shopify://shop_images/GemsAura_phonebanner2.jpg",
         "image_overlay_opacity": 0,
         "image_height": "adapt",
         "image_behavior": "none",
@@ -66,9 +68,8 @@
     },
     "banner": {
       "type": "main-collection-banner",
-      "disabled": true,
       "settings": {
-        "show_collection_description": true,
+        "show_collection_description": false,
         "show_collection_image": false,
         "color_scheme": "scheme-1"
       }

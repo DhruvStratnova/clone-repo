@@ -1,0 +1,34 @@
+<section class="sec"><div class="wrap">
+  {%- if section.settings.dev != blank or section.settings.heading != blank -%}
+  <div class="sh" data-rise>{% if section.settings.dev != blank %}<span class="dev">{{ section.settings.dev }}</span>{% endif %}<h2 style="font-family:'Cormorant Garamond',Georgia,serif !important;font-weight:600">{{ section.settings.heading | default: 'Shop by Aura' }}</h2></div>
+  {%- endif -%}
+  <div class="purp" data-rise>
+    {%- for block in section.blocks -%}
+      {%- liquid
+        assign coll = collections[block.settings.collection]
+        assign img = block.settings.image
+        if img == blank and coll.image != blank
+          assign img = coll.image
+        endif
+        if img == blank
+          assign img = coll.products.first.featured_media.preview_image
+        endif
+      -%}
+      <a class="ptile" href="{{ block.settings.url | default: coll.url | default: '#' }}" {{ block.shopify_attributes }}>
+        <div class="pi">{% if img %}<img loading="lazy" width="360" height="360" src="{{ img | image_url: width: 360 }}" alt="{{ block.settings.label | escape }}">{% endif %}</div>
+        <div class="pl">{{ block.settings.label }}</div>
+      </a>
+    {%- endfor -%}
+  </div>
+</div></section>
+{% schema %}
+{"name":"AA Purpose Tiles","max_blocks":12,"settings":[
+  {"type":"text","id":"dev","label":"Devanagari accent","default":"॥ अपनी राशि चुनें ॥"},
+  {"type":"text","id":"heading","label":"Heading","default":"Shop by Aura"}
+],"blocks":[{"type":"tile","name":"Tile","settings":[
+  {"type":"text","id":"label","label":"Label"},
+  {"type":"collection","id":"collection","label":"Collection (for link + image)"},
+  {"type":"image_picker","id":"image","label":"Image override"},
+  {"type":"url","id":"url","label":"Link override"}
+]}],"presets":[{"name":"AA Purpose Tiles","blocks":[{"type":"tile"},{"type":"tile"},{"type":"tile"},{"type":"tile"},{"type":"tile"},{"type":"tile"},{"type":"tile"}]}]}
+{% endschema %}

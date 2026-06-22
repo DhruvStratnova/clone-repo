@@ -1,0 +1,30 @@
+{%- liquid
+  assign coll = collections[section.settings.collection]
+  assign limit = section.settings.count | default: 12
+-%}
+<section class="sec">
+  <div class="wrap"><div class="sh" data-rise><h2 style="font-family:'Cormorant Garamond',Georgia,serif !important;font-weight:600">{{ section.settings.heading | default: 'Top Selling' }}</h2></div></div>
+  <div class="fb" data-rise>
+    <div class="sbtn sprev">{% render 'aa-rd-icon', name: 'caret-left' %}</div>
+    <div class="sbtn snext">{% render 'aa-rd-icon', name: 'caret-right' %}</div>
+    <div class="sld">
+      {%- for product in coll.products limit: limit -%}
+        {%- render 'aa-rd-card', product: product -%}
+      {%- else -%}
+        {%- for product in collections.all.products limit: 6 -%}{%- render 'aa-rd-card', product: product -%}{%- endfor -%}
+      {%- endfor -%}
+    </div>
+  </div>
+  {%- if section.settings.view_url != blank -%}
+  <div class="wrap"><div class="view-wrap" data-rise><a class="view" href="{{ section.settings.view_url }}">{{ section.settings.view_label | default: 'View all' }} {% render 'aa-rd-icon', name: 'arrow-right' %}</a></div></div>
+  {%- endif -%}
+</section>
+{% schema %}
+{"name":"AA Slider","settings":[
+  {"type":"text","id":"heading","label":"Heading","default":"Top Selling"},
+  {"type":"collection","id":"collection","label":"Collection"},
+  {"type":"range","id":"count","min":4,"max":50,"step":1,"label":"Products","default":12},
+  {"type":"url","id":"view_url","label":"View all link"},
+  {"type":"text","id":"view_label","label":"View all label","default":"View all products"}
+],"presets":[{"name":"AA Slider"}]}
+{% endschema %}

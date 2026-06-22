@@ -1,0 +1,40 @@
+{%- comment -%}
+  Returns a bracelet SUB-category label for the card "category" tag.
+  Param: product. Echoes one of: Silver Bracelet / Wealth Bracelet / Zodiac Bracelet /
+  Crystal Bracelet / Remedy Bracelet. Capture the render to use the value.
+{%- endcomment -%}
+{%- liquid
+  assign tl = product.title | downcase
+  assign core = tl | remove: 'bracelet' | strip
+  assign label = 'Remedy Bracelet'
+  assign zodiacs = 'aries,taurus,gemini,cancer,leo,virgo,libra,scorpio,sagittarius,capricorn,aquarius,pisces' | split: ','
+  assign stones = 'amethyst,tiger eye,citrine,rose quartz,green aventurine,black tourmaline,clear quartz,lapis,pyrite,moonstone,red jasper,sunstone,amazonite,amber,apatite,black agate,blue agate,howlite,rhodonite,smoky,selenite,turquoise,tourquise,garnet,carnelian,sodalite,malachite,jade,hematite,obsidian,opal,peridot,jasper,agate,quartz,firoza,onyx,bloodstone,kyanite,labradorite,fluorite,moss' | split: ','
+  if tl contains 'silver'
+    assign label = 'Silver Bracelet'
+  elsif tl contains 'dhan yog'
+    assign label = 'Wealth Bracelet'
+  else
+    assign is_zodiac = false
+    for z in zodiacs
+      if core == z
+        assign is_zodiac = true
+        break
+      endif
+    endfor
+    if is_zodiac
+      assign label = 'Zodiac Bracelet'
+    else
+      assign is_stone = false
+      for s in stones
+        if tl contains s
+          assign is_stone = true
+          break
+        endif
+      endfor
+      if is_stone
+        assign label = 'Crystal Bracelet'
+      endif
+    endif
+  endif
+  echo label
+-%}

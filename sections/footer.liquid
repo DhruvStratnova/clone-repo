@@ -1,4 +1,7 @@
 {% comment %}theme-check-disable UndefinedObject{% endcomment %}
+{% comment %} AURA AI — Custom footer renders here, original Dawn footer hidden below {% endcomment %}
+{% render 'aa-footer-content' %}
+<div style="display:none !important;">
 {{ 'section-footer.css' | asset_url | stylesheet_tag }}
 {{ 'component-newsletter.css' | asset_url | stylesheet_tag }}
 {{ 'component-list-menu.css' | asset_url | stylesheet_tag }}
@@ -24,6 +27,78 @@
       padding-top: {{ section.settings.padding_top }}px;
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
+  }
+{%- endstyle -%}
+
+{%- style -%}
+  /* === Aura AI footer — logo + typography polish only (color scheme preserved) === */
+
+  /* Aura AI wordmark in footer (rendered when brand_image is blank) */
+  .aa-footer-logo {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    text-decoration: none !important;
+    margin-bottom: 14px;
+    color: inherit !important;
+  }
+  .aa-footer-logo__orb-wrap {
+    width: 52px;
+    height: 52px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: radial-gradient(circle at center,
+      rgba(255, 184, 114, 0.55) 0%,
+      rgba(255, 154, 86, 0.40) 28%,
+      rgba(255, 123, 62, 0.18) 55%,
+      rgba(255, 123, 62, 0) 75%);
+  }
+  .aa-footer-logo__orb {
+    width: 40px;
+    height: 40px;
+    display: block;
+    filter: drop-shadow(0 0 4px rgba(255, 154, 86, 0.45));
+  }
+  .aa-footer-logo__text {
+    font-family: 'Cormorant Garamond', Georgia, serif !important;
+    font-size: 22px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.3px;
+    color: inherit !important;
+    line-height: 1;
+  }
+
+  /* Headings — keep theme color, just refine type */
+  .footer .footer-block__heading {
+    font-family: 'Cormorant Garamond', Georgia, serif !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.2px !important;
+    margin-bottom: 12px !important;
+  }
+
+  /* Body text — keep theme color, refine type */
+  .footer-block__details-content,
+  .footer-block__details-content a,
+  .footer-block--text .rte,
+  .footer-block--text .rte p,
+  .aa-footer-brand .rte p {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    font-size: 13.5px !important;
+    line-height: 1.7 !important;
+  }
+  .aa-footer-brand .rte p { max-width: 280px; margin-top: 6px; }
+
+  /* Mobile tweaks */
+  @media screen and (max-width: 749px) {
+    .aa-footer-logo__text { font-size: 20px !important; }
+    .aa-footer-logo__orb-wrap { width: 44px; height: 44px; }
+    .aa-footer-logo__orb { width: 34px; height: 34px; }
+    .aa-footer-brand .rte p { max-width: 100%; }
+    .footer-block__heading { font-size: 15px !important; }
+    .footer__copyright { text-align: center; }
   }
 {%- endstyle -%}
 
@@ -134,7 +209,7 @@
                       </ul>
                     {%- endif -%}
                   {%- when 'brand_information' -%}
-                    <div class="footer-block__brand-info">
+                    <div class="footer-block__brand-info aa-footer-brand">
                       {%- if settings.brand_image != blank -%}
                         {%- assign brand_image_height = settings.brand_image_width
                           | divided_by: settings.brand_image.aspect_ratio
@@ -153,8 +228,15 @@
                               width: settings.brand_image_width
                           }}
                         </div>
+                      {%- else -%}
+                        <a href="{{ routes.root_url }}" class="aa-footer-logo" aria-label="Aura AI home">
+                          <span class="aa-footer-logo__orb-wrap">
+                            <img src="{{ 'aa-logo-orb.svg' | asset_url }}" alt="" class="aa-footer-logo__orb" width="40" height="40" loading="lazy">
+                          </span>
+                          <span class="aa-footer-logo__text">Aura AI</span>
+                        </a>
                       {%- endif -%}
-                      {%- if settings.brand_headline != blank -%}
+                      {%- if settings.brand_headline != blank and settings.brand_image != blank -%}
                         <h2 class="footer-block__heading rte">{{ settings.brand_headline }}</h2>
                       {%- endif -%}
                       {%- if settings.brand_description != blank -%}
@@ -409,7 +491,7 @@
     window.addEventListener('resize', setStateForViewport);
   });
 </script>
-
+</div>
 {% schema %}
 {
   "name": "t:sections.footer.name",
@@ -633,3 +715,4 @@
   }
 }
 {% endschema %}
+

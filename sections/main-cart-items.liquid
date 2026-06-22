@@ -27,9 +27,10 @@
 
 <cart-items class="gradient color-{{ section.settings.color_scheme }} isolate{% if cart == empty %} is-empty{% else %} section-{{ section.id }}-padding{% endif %}">
   <div class="page-width">
-    <div class="title-wrapper-with-link">
-      <h1 class="title title--primary">{{ 'sections.cart.title' | t }}</h1>
-      <a href="{{ routes.all_products_collection_url }}" class="underlined-link">
+    <div class="title-wrapper-with-link aa-cart-header">
+      <h1 class="title title--primary aa-cart-title">{{ 'sections.cart.title' | t }}</h1>
+      <a href="{{ routes.all_products_collection_url }}" class="underlined-link aa-cart-continue">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
         {{- 'general.continue_shopping' | t -}}
       </a>
     </div>
@@ -43,7 +44,7 @@
       {%- if shop.customer_accounts_enabled and customer == null -%}
         <h2 class="cart__login-title">{{ 'sections.cart.login.title' | t }}</h2>
         <p class="cart__login-paragraph">
-          {{ 'sections.cart.login.paragraph_html' | t: link: routes.account_login_url }}
+          {{ 'sections.cart.login.paragraph_html' | t: link: '/pages/account' }}
         </p>
       {%- endif -%}
     </div>
@@ -125,6 +126,7 @@
                             {{ item.final_price | money }}
                           </strong>
                         </div>
+
                       {%- else -%}
                         <div class="product-option">
                           {{ item.original_price | money }}
@@ -156,10 +158,29 @@
                                 <dd>
                                   {%- if property.last contains '/uploads/' -%}
                                     <a href="{{ property.last }}" class="link" target="_blank">
-                                      {{ property.last | split: '/' | last }}
+                                      
+{% assign file_type = property.last | split: '.' | last | downcase %}
+{% assign file_types = 'jpg,jpeg,webp,gif,png,apng,avif,svg,bmp,ico,tiff' | split: ',' %}
+{% if file_types contains file_type %}
+  <div class="bcpo-cart-file"><img src="{{ property.last }}" style="max-width: 50px; height: auto;"></div>
+{% else %}
+  <span class="bcpo-cart-file">Uploaded file</span>
+{% endif %}
+
                                     </a>
                                   {%- else -%}
-                                    {{ property.last }}
+                                    
+{% if property.last contains '/uploads/' %}
+	{% assign file_type = property.last | split: '.' | last | downcase %}
+	{% assign file_types = 'jpg,jpeg,webp,gif,png,apng,avif,svg,bmp,ico,tiff' | split: ',' %}
+	{% if file_types contains file_type %}
+		<div class="bcpo-cart-file"><img src="{{ property.last }}" style="max-width: 50px; height: auto;"></div>
+	{% else %}
+		<span class="bcpo-cart-file">Uploaded file</span>
+	{% endif %}
+{% else %}
+	{{ property.last }}
+{% endif %}
                                   {%- endif -%}
                                 </dd>
                               </div>

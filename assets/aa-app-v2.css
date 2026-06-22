@@ -1,0 +1,337 @@
+/* ============================================================
+   AstroAura app shell — native-app feel for the in-app webview
+   ============================================================ */
+
+/* ---- 1. Kill the "webview tells" ---- */
+html { -webkit-tap-highlight-color: transparent; }
+body {
+  overscroll-behavior-y: none;          /* no rubber-band / pull-to-refresh */
+  touch-action: manipulation;           /* no double-tap zoom, no 300ms delay (pinch still works) */
+}
+a, button, .button, [role="button"], .aa-tab, summary, label {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* ---- 2. Animated page transitions (cross-document) ---- */
+@view-transition { navigation: auto; }
+::view-transition-old(root) { animation-duration: 110ms; }
+::view-transition-new(root) { animation-duration: 110ms; }
+@media (prefers-reduced-motion: reduce) {
+  @view-transition { navigation: none; }
+}
+
+/* ---- 3. Bottom tab bar (mobile only) ---- */
+:root { --aa-tabbar-h: 56px; }
+.aa-tabbar { display: none; }
+@media screen and (max-width: 749px) {
+  .aa-tabbar {
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    z-index: 900;
+    display: flex;
+    align-items: stretch;
+    justify-content: space-around;
+    min-height: var(--aa-tabbar-h);
+    background: #ffffff;
+    border-top: 1px solid rgba(31, 8, 32, 0.08);
+    padding-bottom: env(safe-area-inset-bottom);
+    box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.06);
+  }
+  .aa-tab {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    padding: 8px 0 7px;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    color: #4a4248;
+    text-decoration: none;
+    position: relative;
+    font: inherit;
+    transition: color 160ms ease, transform 120ms ease;
+  }
+  .aa-tab:active { transform: scale(0.92); }
+  .aa-tab__ico {
+    width: 23px; height: 23px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .aa-tab__lbl { font-size: 10px; font-weight: 600; letter-spacing: 0.01em; white-space: nowrap; }
+  .aa-tab.is-active { color: #e9027a; }
+
+  /* ---- "Find Match" tab: stand out as the signature quiz ---- */
+  .aa-tab--aura { color: #e9027a; }
+  .aa-tab--aura .aa-tab__ico { stroke: #e9027a; filter: drop-shadow(0 0 5px rgba(233, 2, 122, 0.35)); }
+  .aa-tab--aura .aa-tab__lbl { color: #b00060; font-weight: 700; }
+  .aa-tab__pulse {
+    position: absolute;
+    top: 4px;
+    left: calc(50% + 9px);
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: linear-gradient(130deg, #e9027a, #f58220);
+    box-shadow: 0 0 0 0 rgba(233, 2, 122, 0.5);
+    animation: aa-aura-ping 1.9s ease-out infinite;
+    pointer-events: none;
+  }
+  @keyframes aa-aura-ping {
+    0% { box-shadow: 0 0 0 0 rgba(233, 2, 122, 0.5); }
+    70% { box-shadow: 0 0 0 8px rgba(233, 2, 122, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(233, 2, 122, 0); }
+  }
+  @media (prefers-reduced-motion: reduce) { .aa-tab__pulse { animation: none; } }
+  .aa-tab__badge {
+    position: absolute;
+    top: 3px;
+    left: calc(50% + 7px);
+    min-width: 16px; height: 16px;
+    padding: 0 4px;
+    border-radius: 999px;
+    background: linear-gradient(130deg, #e9027a, #f58220);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 800;
+    line-height: 16px;
+    text-align: center;
+    box-shadow: 0 1px 4px rgba(233, 2, 122, 0.4);
+  }
+  .aa-tab__badge[hidden] { display: none; }
+  /* lift page content above the bar (matches the bar height exactly on every device) */
+  body { padding-bottom: calc(var(--aa-tabbar-h) + env(safe-area-inset-bottom)); }
+  /* (no hide-on-overlay: every overlay already covers the bar via z-index, and
+     hiding it left the bar stuck-hidden when the cart was closed by dragging) */
+}
+
+/* ---- 4. Full-screen search overlay ---- */
+.aa-search[hidden] { display: none; }
+.aa-search {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  background: #faf6ef;
+  display: flex;
+  flex-direction: column;
+  padding-top: env(safe-area-inset-top);
+  opacity: 0;
+  transition: opacity 180ms ease;
+}
+.aa-search.is-open { opacity: 1; }
+.aa-search__bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+}
+.aa-search__field {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+  background: #fff;
+  border: 1px solid rgba(31, 8, 32, 0.12);
+  border-radius: 999px;
+  padding: 11px 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+.aa-search__ico { width: 18px; height: 18px; color: #8a7d83; flex: 0 0 auto; }
+.aa-search__ico svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; }
+.aa-search__input {
+  flex: 1 1 auto;
+  border: 0 !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  font-size: 16px;
+  color: #1f0820;
+  min-width: 0;
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: 0;
+}
+.aa-search__input::-webkit-search-cancel-button,
+.aa-search__input::-webkit-search-decoration { -webkit-appearance: none; appearance: none; }
+.aa-search__heading {
+  padding: 16px 16px 6px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #6b5d63;
+}
+.aa-search__heading[hidden] { display: none; }
+.aa-search__cancel {
+  flex: 0 0 auto;
+  border: 0;
+  background: none;
+  color: #e9027a;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.aa-search__results {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 6px 0 calc(20px + env(safe-area-inset-bottom));
+}
+.aa-sr {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  text-decoration: none;
+  color: #1f0820;
+}
+.aa-sr:active { background: rgba(31, 8, 32, 0.04); }
+.aa-sr__img { width: 52px; height: 52px; border-radius: 10px; object-fit: cover; background: #f4efe6; flex: 0 0 auto; }
+.aa-sr__body { min-width: 0; flex: 1 1 auto; }
+.aa-sr__title { font-size: 14px; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+.aa-sr__price { font-size: 13px; font-weight: 700; margin-top: 2px; }
+.aa-sr__price s { font-weight: 400; opacity: 0.5; margin-left: 5px; }
+.aa-search__empty { text-align: center; color: #8a7d83; font-size: 14px; padding: 40px 20px; }
+.aa-search__all { display: block; text-align: center; margin: 8px 10px 6px; padding: 14px; border-radius: 12px; background: linear-gradient(120deg, rgba(233,2,122,.1), rgba(245,130,32,.1)); color: #c1006a; font: 600 13.5px/1 'Jost', sans-serif; text-decoration: none; }
+.aa-search__all:hover { background: linear-gradient(120deg, rgba(233,2,122,.16), rgba(245,130,32,.16)); }
+
+/* ---- Desktop search: a centred floating dropdown panel instead of the
+   full-screen mobile overlay (the overlay is built for the in-app webview and
+   read as a broken empty page on desktop). Desktop only — mobile untouched. ---- */
+@media screen and (min-width: 750px) {
+  .aa-search {
+    background: rgba(20, 8, 16, .46);
+    align-items: center;
+    justify-content: flex-start;
+    padding: 76px 20px 48px;
+  }
+  .aa-search__bar,
+  .aa-search__heading,
+  .aa-search__results { width: min(620px, 92vw); background: #fff; margin: 0; }
+  .aa-search__bar {
+    border-radius: 18px 18px 0 0;
+    padding: 14px 16px;
+    border-bottom: 1px solid rgba(36, 16, 25, .08);
+    box-shadow: 0 30px 90px rgba(20, 8, 16, .34);
+  }
+  .aa-search__bar:last-child { border-radius: 18px; }
+  .aa-search__field { background: #f5efe6; height: 48px; }
+  .aa-search__heading { padding: 16px 22px 4px; }
+  .aa-search__results {
+    border-radius: 0 0 18px 18px;
+    max-height: min(56vh, 520px);
+    overflow-y: auto;
+    padding: 6px 10px 14px;
+    box-shadow: 0 30px 90px rgba(20, 8, 16, .34);
+  }
+}
+
+/* ---- 5. Lightweight image placeholder (no infinite animation — keeps scroll smooth) ---- */
+.aa-pcard__media:not(.is-loaded),
+.aa-rec__img:not(.is-loaded) {
+  background-color: #f1eadf;
+}
+
+/* ---- 6. Sticky header GROUP (offer bar + header move together) ----
+   ROOT FIX: Dawn's per-header <sticky-header> web component is disabled in
+   header.liquid (header_tag forced to 'div'), so its JS no longer pins the
+   header with its own position/transform. The whole header GROUP (.aa-sticky)
+   is now the ONE sticky unit, so the offer bar and header can never overlap. */
+/* Offer bar + header = flush + stacked sticky, moving together (Astrotalk-style).
+   They are SEPARATE sibling sections. Kill ALL spacing between them, then stack:
+   offer bar (.aa-sticky) sticks at top:0; header (.section-header) sticks flush
+   right below it at the offer bar's measured height (--aa-offer-h, set in aa-app.js). */
+.announcement-bar-section { margin: 0 !important; }
+.aa-sticky { position: sticky; top: 0; z-index: 851; margin: 0 !important; }
+.section-header { margin: 0 !important; top: var(--aa-offer-h, 50px) !important; }
+.section-header .header-wrapper { margin: 0 !important; }
+
+/* ---- 7. Wishlist heart active state ---- */
+.aa-pcard__heart { cursor: pointer; transition: transform 140ms ease, color 160ms ease; }
+.aa-pcard__heart:active { transform: scale(0.8); }
+.aa-pcard__heart.is-wished { color: #e9027a; }
+.aa-pcard__heart.is-wished svg { fill: #e9027a; stroke: #e9027a; }
+
+/* ---- Wishlist overlay extras ---- */
+.aa-wish__title { flex: 1 1 auto; font-size: 16px; font-weight: 700; color: #1f0820; }
+.aa-sr__remove {
+  flex: 0 0 auto;
+  border: 0;
+  background: none;
+  color: #b0a39a;
+  font-size: 20px;
+  line-height: 1;
+  padding: 6px;
+  cursor: pointer;
+}
+.aa-sr__remove:active { color: #e9027a; }
+
+/* ---- Tap latency ---- */
+.aa-tab { touch-action: manipulation; }
+
+/* ---- Evergreen: keep the tab bar tidy on very narrow phones ---- */
+@media screen and (max-width: 360px) {
+  .aa-tab__ico { width: 21px; height: 21px; }
+  .aa-tab__lbl { font-size: 9px; }
+  .aa-tab { padding: 7px 0 6px; }
+}
+
+/* Header (mobile app): hamburger + logo + search + PROFILE.
+   Cart now lives in the bottom tab bar, so hide the header cart and show account. */
+@media screen and (max-width: 749px) {
+  #cart-icon-bubble,
+  .header__icon--cart { display: none !important; }
+  .header__icon--account,
+  .header__icon--account.small-hide { display: inline-flex !important; }
+}
+
+/* Navigation loading bar — sits just under the header, animates during Turbo visits */
+.aa-loadbar {
+  position: fixed;
+  left: 0; top: 0;
+  height: 5px; width: 0;
+  z-index: 1000;
+  background: linear-gradient(90deg, #B8915A 0%, #E8CD8F 45%, #D8B465 70%, #B8915A 100%);
+  box-shadow: 0 0 10px rgba(184, 145, 90, 0.55);
+  border-radius: 0 4px 4px 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: width 9s cubic-bezier(0.08, 0.7, 0.18, 1), opacity 220ms ease;
+}
+.aa-loadbar.is-on { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .aa-loadbar { transition: opacity 200ms ease; } }
+
+/* Offer bar: hard-locked to a fixed slim height so it can never expand/glitch
+   (even while the slider re-initialises during a Turbo navigation). */
+@media screen and (max-width: 749px) {
+  .announcement-bar,
+  .announcement-bar-slider {
+    height: 38px !important;
+    min-height: 38px !important;
+    max-height: 38px !important;
+    overflow: hidden !important;
+  }
+  .announcement-bar__announcement {
+    height: 38px !important;
+    min-height: 0 !important;
+  }
+  .announcement-bar .announcement-bar__message,
+  .announcement-bar__message {
+    height: 38px;
+    min-height: 0;
+    padding: 0 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.12rem;
+    line-height: 1.15;
+    letter-spacing: 0.03rem;
+  }
+}

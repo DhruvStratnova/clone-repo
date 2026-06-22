@@ -44,14 +44,16 @@
         "buttons_yt67QM"
       ],
       "custom_css": [
-        ".tabber_coll {}",
+        ".tablinks {background: transparent;}",
         ".tabber_content {padding: 2rem; display: flex; justify-content: center;}",
         ".tabcontent {background-color: #ffffff; border: 1px solid #eaeaea; border-radius: 12px; padding: 40px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); max-width: 1400px; margin: 2rem 2rem;}",
-        ".banner__media {width: 100%; aspect-ratio: 2560 / 1024;}"
+        ".banner__media {width: 100%;}",
+        ".tablinks:hover {font-weight: bold;}"
       ],
       "name": "t:sections.image-banner.presets.name",
       "settings": {
-        "image": "shopify://shop_images/Gemstone_banner_f84b8c74-ebef-47f3-b2aa-baa32334b34a.png",
+        "image": "shopify://shop_images/GemsAura_banner6.jpg",
+        "image_2": "shopify://shop_images/GemsAura_phonebanner6.jpg",
         "image_overlay_opacity": 0,
         "image_height": "adapt",
         "image_behavior": "none",
@@ -66,9 +68,8 @@
     },
     "banner": {
       "type": "main-collection-banner",
-      "disabled": true,
       "settings": {
-        "show_collection_description": true,
+        "show_collection_description": false,
         "show_collection_image": false,
         "color_scheme": "scheme-1"
       }
@@ -106,7 +107,7 @@
         "text_UtfAWr": {
           "type": "text",
           "settings": {
-            "text": "<p>Vedic astrology links cosmic order with planetary motion—Sun, Moon, Mars, Jupiter, Venus, Mercury, Saturn, Rahu, and Ketu guiding human destiny. Gemstones, formed over millions of years, hold pure cosmic energies. Worn with faith, they channel planetary blessings, attracting harmony, protection, strength, and spiritual growth through their unique vibrational frequencies.</p>",
+            "text": "<p>Vedic astrology links cosmic order with planetary motion\u2014Sun, Moon, Mars, Jupiter, Venus, Mercury, Saturn, Rahu, and Ketu guiding human destiny. Gemstones, formed over millions of years, hold pure cosmic energies. Worn with faith, they channel planetary blessings, attracting harmony, protection, strength, and spiritual growth through their unique vibrational frequencies.</p>",
             "text_style": "body"
           }
         },
@@ -167,7 +168,7 @@
           "settings": {
             "heading": "What is the return policy and estimated delivery duration?",
             "icon": "none",
-            "row_content": "<p>Since gemstones are spiritual and customized, returns<br/>are not allowed. However, if there is damage or incorrect shipping,<br/>replacements are assessed case-by-case. Time of delivery is area-based: 5–7<br/>working days for Indian delivery and 10–14 working days for international<br/>delivery.</p>",
+            "row_content": "<p>Since gemstones are spiritual and customized, returns<br/>are not allowed. However, if there is damage or incorrect shipping,<br/>replacements are assessed case-by-case. Time of delivery is area-based: 5\u20137<br/>working days for Indian delivery and 10\u201314 working days for international<br/>delivery.</p>",
             "page": ""
           }
         },
@@ -176,7 +177,7 @@
           "settings": {
             "heading": "How is this energized and how can i wear it?",
             "icon": "none",
-            "row_content": "<p>Every gemstone is ritually cleansed and charged (pran<br/>pratishtha) by Vedic methods before dispatch so that it absorbs the<br/>sought-after planetary energies. Directions are issued for using the<br/>stone—whether as a ring, pendant, or bracelet—and the recommended metal and<br/>auspicious day for wearing.</p>",
+            "row_content": "<p>Every gemstone is ritually cleansed and charged (pran<br/>pratishtha) by Vedic methods before dispatch so that it absorbs the<br/>sought-after planetary energies. Directions are issued for using the<br/>stone\u2014whether as a ring, pendant, or bracelet\u2014and the recommended metal and<br/>auspicious day for wearing.</p>",
             "page": ""
           }
         }

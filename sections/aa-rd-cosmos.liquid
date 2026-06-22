@@ -1,0 +1,32 @@
+{{ 'aa-rd-v2.css' | asset_url | stylesheet_tag }}
+<link rel="stylesheet" href="{{ 'quick-add.css' | asset_url }}" media="print" onload="this.media='all'">
+<script src="{{ 'quick-add.js' | asset_url }}" defer="defer"></script>
+{{ 'aa-quickview-v2.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'aa-rd-quickview-v5.js' | asset_url }}" defer="defer"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Jost:wght@300;400;500;600;700;800&family=Tiro+Devanagari+Hindi&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Jost:wght@300;400;500;600;700;800&family=Tiro+Devanagari+Hindi&display=swap"></noscript>
+<div class="cosmos" aria-hidden="true">
+  <span class="cz-om" data-par="0.05" style="left:8%;top:14%;font-size:46px;color:rgba(184,145,90,.14);animation:czfloat 26s ease-in-out infinite">ॐ</span>
+  <span class="cz-om" data-par="0.08" style="left:88%;top:20%;font-size:40px;color:rgba(184,145,90,.12);animation:czfloat 30s ease-in-out infinite">ॐ</span>
+  <span class="cz-om" data-par="0.06" style="left:72%;top:64%;font-size:52px;color:rgba(184,145,90,.13);animation:czfloat 24s ease-in-out infinite">ॐ</span>
+  <span class="cz-om" data-par="0.07" style="left:16%;top:72%;font-size:38px;color:rgba(184,145,90,.11);animation:czfloat 28s ease-in-out infinite">ॐ</span>
+  <span class="cz-om" data-par="0.05" style="left:50%;top:40%;font-size:34px;color:rgba(184,145,90,.10);animation:czfloat 32s ease-in-out infinite">ॐ</span>
+</div>
+<div class="grain"></div>
+<script>
+(function(){
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!reduce){ document.documentElement.classList.add('aa-reveal'); }
+  function init(){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('seen');io.unobserve(e.target)}})},{threshold:.06});
+    document.querySelectorAll('[data-rise]').forEach(function(el){io.observe(el)});
+    document.querySelectorAll('.whyz .li').forEach(function(li){li.addEventListener('click',function(){var was=li.classList.contains('on');li.parentElement.querySelectorAll('.li').forEach(function(x){x.classList.remove('on')});if(!was)li.classList.add('on')})});
+    document.querySelectorAll('.sbtn').forEach(function(b){b.addEventListener('click',function(){var box=b.closest('.fb')||b.closest('.slw');if(!box)return;var t=box.querySelector('.sld');var c=t.querySelector('*');var s=(c?c.getBoundingClientRect().width:260)+(parseFloat(getComputedStyle(t).columnGap)||22);t.scrollBy({left:b.classList.contains('snext')?s:-s,behavior:'smooth'})})});
+  }
+  if(document.readyState!=='loading'){ init(); } else { document.addEventListener('DOMContentLoaded', init); }
+  if(!reduce){var tk=false;addEventListener('scroll',function(){if(!tk){requestAnimationFrame(function(){var y=scrollY;document.querySelectorAll('[data-par]').forEach(function(el){el.style.transform='translateY('+(y*parseFloat(el.dataset.par))+'px)'});tk=false})}tk=true},{passive:true})}
+})();
+</script>
+{% schema %}
+{"name":"AA Cosmos + assets","settings":[],"presets":[{"name":"AA Cosmos + assets"}]}
+{% endschema %}

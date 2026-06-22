@@ -1,0 +1,49 @@
+{%- comment -%}
+  Shared step markup for the login popup. params: scope ('d'|'m'), desktop (bool)
+  Behaviour hooks are data-attributes; aa-auth.js scopes them per [data-aa-au-scope].
+{%- endcomment -%}
+
+{%- comment -%} ----- step 1: phone ----- {%- endcomment -%}
+<div class="aa-au-step aa-au-on" data-step="phone">
+  {%- if desktop -%}
+    <h2 class="aa-au-serif">Sign in to<br>Aura AI</h2>
+  {%- else -%}
+    <h2 class="aa-au-serif">Welcome to Aura AI</h2>
+    <p class="aa-au-sub">Sign in with your mobile number to track orders, save your details and unlock your readings.</p>
+    <label class="aa-au-fl">Mobile number</label>
+  {%- endif -%}
+  <div class="aa-au-phone-row">
+    <button class="aa-au-cc" type="button">+91 <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+    <input class="aa-au-inp" data-phone inputmode="numeric" maxlength="10" placeholder="{% if desktop %}Enter mobile number{% else %}98765 43210{% endif %}" autocomplete="tel-national">
+  </div>
+  <label class="aa-au-check"><input type="checkbox" data-wa checked> Notify me on WhatsApp for updates &amp; offers</label>
+  <button class="aa-au-btn" type="button" data-send>Send OTP <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+  <p class="aa-au-errmsg" data-send-err style="margin-top:12px"></p>
+  <p class="{% if desktop %}aa-au-terms{% else %}aa-au-fine{% endif %}">By continuing you agree to our <a href="/policies/privacy-policy">Privacy Policy</a> &amp; <a href="/policies/terms-of-service">T&amp;Cs</a>.</p>
+  <a class="aa-au-trouble" href="mailto:support@astroaura.market?subject=Trouble%20logging%20in%20to%20Aura%20AI&body=Hi%20Aura%20AI%20team%2C%0A%0AI'm%20having%20trouble%20logging%20in.%20My%20mobile%20number%20is%3A%20">Trouble logging in?</a>
+</div>
+
+{%- comment -%} ----- step 2: otp ----- {%- endcomment -%}
+<div class="aa-au-step" data-step="otp">
+  <h2 class="aa-au-serif">Verify your{% if desktop %}<br>{% else %} {% endif %}number</h2>
+  <p class="aa-au-sub">Code sent to <b>+91 <span data-echo>98765 43210</span></b></p>
+  <div class="aa-au-otp" data-otp>
+    <input inputmode="numeric" maxlength="1" autocomplete="one-time-code"><input inputmode="numeric" maxlength="1"><input inputmode="numeric" maxlength="1">
+    <input inputmode="numeric" maxlength="1"><input inputmode="numeric" maxlength="1"><input inputmode="numeric" maxlength="1">
+  </div>
+  <p class="aa-au-errmsg" data-err>That code didn’t match. Please try again.</p>
+  <div class="aa-au-otpmeta">
+    <span class="aa-au-resend" data-resend>Resend in <b>0:30</b></span>
+    <span class="aa-au-change" data-change>Change number</span>
+  </div>
+  <button class="aa-au-btn" type="button" data-verify style="margin-top:16px">Verify &amp; Continue</button>
+</div>
+
+{%- comment -%} ----- step 3: done ----- {%- endcomment -%}
+<div class="aa-au-step" data-step="done">
+  <div class="aa-au-done">
+    <div class="aa-au-done__tick"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div>
+    <h2 class="aa-au-serif">You’re in</h2>
+    <p>Taking you to your account…</p>
+  </div>
+</div>

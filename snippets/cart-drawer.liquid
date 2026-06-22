@@ -15,6 +15,13 @@
   .drawer {
     visibility: hidden;
   }
+  /* AstroAura: slightly wider drawer on desktop so the per-item price sits comfortably on the right */
+  @media (min-width: 750px) {
+    cart-drawer .drawer__inner {
+      width: 46rem;
+      max-width: calc(100vw - 3rem);
+    }
+  }
 </style>
 
 <cart-drawer class="drawer{% if cart == empty %} is-empty{% endif %}">
@@ -49,7 +56,7 @@
               {%- if shop.customer_accounts_enabled and customer == null -%}
                 <p class="cart__login-title h3">{{ 'sections.cart.login.title' | t }}</p>
                 <p class="cart__login-paragraph">
-                  {{ 'sections.cart.login.paragraph_html' | t: link: routes.account_login_url }}
+                  {{ 'sections.cart.login.paragraph_html' | t: link: '/pages/account' }}
                 </p>
               {%- endif -%}
             </div>
@@ -74,6 +81,17 @@
           </span>
         </button>
       </div>
+
+      {%- comment -%} AstroAura: auto-rotating promo strip at the top (CSS-only, survives section swaps) {%- endcomment -%}
+      <div class="aa-cart-promo" aria-hidden="true">
+        <div class="aa-cart-promo__track">
+          <span class="aa-cart-promo__item">&#10022;&nbsp; Pay online &amp; get <strong>25% OFF</strong> your order</span>
+          <span class="aa-cart-promo__item">&#10022;&nbsp; Free shipping across India &bull; no minimum</span>
+          <span class="aa-cart-promo__item">&#10022;&nbsp; 100% authentic &amp; energised products</span>
+          <span class="aa-cart-promo__item">&#10022;&nbsp; Pay online &amp; get <strong>25% OFF</strong> your order</span>
+        </div>
+      </div>
+
       <cart-drawer-items
         {% if cart == empty %}
           class=" is-empty"
@@ -154,42 +172,52 @@
                             {{- item.product.title | escape -}}
                           </a>
 
-                          {%- if item.original_price != item.final_price -%}
-                            <div class="cart-item__discounted-prices">
-                              <span class="visually-hidden">
-                                {{ 'products.product.price.regular_price' | t }}
-                              </span>
-                              <s class="cart-item__old-price product-option">
-                                {{- item.original_price | money -}}
-                              </s>
-                              <span class="visually-hidden">
-                                {{ 'products.product.price.sale_price' | t }}
-                              </span>
-                              <strong class="cart-item__final-price product-option">
-                                {{ item.final_price | money }}
-                              </strong>
-                            </div>
-                          {%- else -%}
-                            <div class="product-option">
-                              {{ item.original_price | money }}
-                            </div>
-                          {%- endif -%}
-
                           {%- if item.product.has_only_default_variant == false
                             or item.properties.size != 0
                             or item.selling_plan_allocation != null
                           -%}
                             <dl>
                               {%- if item.product.has_only_default_variant == false -%}
-                                {%- for option in item.options_with_values -%}
-                                  <div class="product-option">
-                                    <dt>{{ option.name }}:</dt>
-                                    <dd>
-                                      {{ option.value -}}
-                                      {%- unless forloop.last %}, {% endunless %}
-                                    </dd>
+                                {%- comment -%}
+                                  AstroAura: inline variant dropdown so customers
+                                  can swap variant (bead size, metal, etc.)
+                                  without removing + re-adding the item. Falls
+                                  back gracefully to the static display if JS
+                                  is off — the dropdown is just a native select.
+                                {%- endcomment -%}
+                                {%- if item.product.variants.size > 1 -%}
+                                  <div class="product-option aa-variant-row">
+                                    <label class="aa-variant-row__label" for="AaVariantSelect-{{ section.id }}-{{ forloop.index }}">Variant:</label>
+                                    <select
+                                      id="AaVariantSelect-{{ section.id }}-{{ forloop.index }}"
+                                      class="aa-variant-select"
+                                      data-line-key="{{ item.key }}"
+                                      data-line-index="{{ forloop.index }}"
+                                      data-quantity="{{ item.quantity }}"
+                                      aria-label="Change {{ item.product.title | escape }} variant"
+                                    >
+                                      {%- for variant in item.product.variants -%}
+                                        <option
+                                          value="{{ variant.id }}"
+                                          {% if variant.id == item.variant_id %}selected{% endif %}
+                                          {% unless variant.available %}disabled{% endunless %}
+                                        >
+                                          {{ variant.title | escape }} · {{ variant.price | money }}{%- unless variant.available %} (Sold out){%- endunless -%}
+                                        </option>
+                                      {%- endfor -%}
+                                    </select>
                                   </div>
-                                {%- endfor -%}
+                                {%- else -%}
+                                  {%- for option in item.options_with_values -%}
+                                    <div class="product-option">
+                                      <dt>{{ option.name }}:</dt>
+                                      <dd>
+                                        {{ option.value -}}
+                                        {%- unless forloop.last %}, {% endunless %}
+                                      </dd>
+                                    </div>
+                                  {%- endfor -%}
+                                {%- endif -%}
                               {%- endif -%}
 
                               {%- for property in item.properties -%}
@@ -205,10 +233,29 @@
                                           target="_blank"
                                           aria-describedby="a11y-new-window-message"
                                         >
-                                          {{ property.last | split: '/' | last }}
+                                          
+{% assign file_type = property.last | split: '.' | last | downcase %}
+{% assign file_types = 'jpg,jpeg,webp,gif,png,apng,avif,svg,bmp,ico,tiff' | split: ',' %}
+{% if file_types contains file_type %}
+  <div class="bcpo-cart-file"><img src="{{ property.last }}" style="max-width: 50px; height: auto;"></div>
+{% else %}
+  <span class="bcpo-cart-file">Uploaded file</span>
+{% endif %}
+
                                         </a>
                                       {%- else -%}
-                                        {{ property.last }}
+                                        
+{% if property.last contains '/uploads/' %}
+	{% assign file_type = property.last | split: '.' | last | downcase %}
+	{% assign file_types = 'jpg,jpeg,webp,gif,png,apng,avif,svg,bmp,ico,tiff' | split: ',' %}
+	{% if file_types contains file_type %}
+		<div class="bcpo-cart-file"><img src="{{ property.last }}" style="max-width: 50px; height: auto;"></div>
+	{% else %}
+		<span class="bcpo-cart-file">Uploaded file</span>
+	{% endif %}
+{% else %}
+	{{ property.last }}
+{% endif %}
                                       {%- endif -%}
                                     </dd>
                                   </div>
@@ -473,7 +520,14 @@
           </div>
           <div id="CartDrawer-CartErrors" role="alert"></div>
         </form>
+
+        {%- comment -%} AstroAura: in-cart upsell carousel — inside the scroll area so new items stack above it and push it down {%- endcomment -%}
+        <div class="aa-cart-recs" id="aa-cart-recs" hidden>
+          <div class="aa-cart-recs__head">You may also like</div>
+          <div class="aa-cart-recs__track" id="aa-cart-recs-track"></div>
+        </div>
       </cart-drawer-items>
+
       <div class="drawer__footer">
         {%- if settings.show_cart_note -%}
           <details id="Details-CartDrawer">
@@ -565,17 +619,28 @@
           <button
             type="submit"
             id="CartDrawer-Checkout"
-            class="cart__checkout-button button"
+            class="cart__checkout-button button aa-checkout-btn"
             name="checkout"
             form="CartDrawer-Form"
             {% if cart == empty %}
               disabled
             {% endif %}
           >
-            {{ 'sections.cart.checkout' | t }}
+            <span class="aa-checkout-btn__label">{{ 'sections.cart.checkout' | t }}</span>
+            <span class="aa-checkout-btn__pay" aria-hidden="true">
+              <span class="aa-pl aa-pl--paytm">
+                <svg viewBox="0 0 46 16" width="20" height="7"><text x="0" y="13" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="14" letter-spacing="-0.5"><tspan fill="#002970">Pay</tspan><tspan fill="#00b9f1">tm</tspan></text></svg>
+              </span>
+              <span class="aa-pl aa-pl--phonepe">&#2346;&#2375;</span>
+              <span class="aa-pl aa-pl--gpay">
+                <svg viewBox="0 0 48 48" width="14" height="14"><path fill="#4285F4" d="M45.12 24.5c0-1.56-.14-3.06-.4-4.5H24v8.51h11.84c-.51 2.75-2.06 5.08-4.39 6.64v5.52h7.11c4.16-3.83 6.56-9.47 6.56-16.17z"/><path fill="#34A853" d="M24 46c5.94 0 10.92-1.97 14.56-5.33l-7.11-5.52c-1.97 1.32-4.49 2.1-7.45 2.1-5.73 0-10.58-3.87-12.31-9.07H4.34v5.7C7.96 41.07 15.4 46 24 46z"/><path fill="#FBBC05" d="M11.69 28.18C11.25 26.86 11 25.45 11 24s.25-2.86.69-4.18v-5.7H4.34C2.85 17.09 2 20.45 2 24s.85 6.91 2.34 9.88l7.35-5.7z"/><path fill="#EA4335" d="M24 10.75c3.23 0 6.13 1.11 8.41 3.29l6.31-6.31C34.91 4.18 29.93 2 24 2 15.4 2 7.96 6.93 4.34 14.12l7.35 5.7c1.73-5.2 6.58-9.07 12.31-9.07z"/></svg>
+              </span>
+            </span>
           </button>
         </div>
       </div>
     </div>
   </div>
 </cart-drawer>
+
+<script src="{{ 'aa-cart-fix-v2.js' | asset_url }}" defer="defer"></script>

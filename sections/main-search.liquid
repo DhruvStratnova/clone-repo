@@ -3,6 +3,13 @@
 {{ 'component-price.css' | asset_url | stylesheet_tag }}
 {{ 'component-search.css' | asset_url | stylesheet_tag }}
 
+{%- comment -%} AstroAura quick-view (desktop) for card-product grids {%- endcomment -%}
+{{ 'aa-quickview-v2.css' | asset_url | stylesheet_tag }}
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&display=swap">
+{{ 'quick-add.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'quick-add.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'aa-rd-quickview-v5.js' | asset_url }}" defer="defer"></script>
+
 {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
   {{ 'component-facets.css' | asset_url | stylesheet_tag }}
   <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
@@ -252,8 +259,38 @@
               data-id="{{ section.id }}"
             >
               <div class="loading-overlay gradient"></div>
+              <style>
+                /* ID selector beats every class-based Dawn rule. */
+                #aa-search-grid-{{ section.id }} {
+                  display: grid !important;
+                  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+                  gap: 4px !important;
+                  width: 100% !important;
+                  max-width: 100% !important;
+                  padding: 0 2px !important;
+                  margin: 0 !important;
+                  box-sizing: border-box !important;
+                  list-style: none !important;
+                  overflow: visible !important;
+                }
+                #aa-search-grid-{{ section.id }} > li {
+                  width: 100% !important;
+                  max-width: 100% !important;
+                  min-width: 0 !important;
+                  flex: none !important;
+                  margin: 0 !important;
+                }
+                @media (min-width: 750px) {
+                  #aa-search-grid-{{ section.id }} {
+                    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)) !important;
+                    gap: 24px !important;
+                    padding: 0 24px !important;
+                  }
+                }
+              </style>
               <ul
-                class="grid product-grid  grid--{{ section.settings.columns_mobile }}-col-tablet-down grid--{{ section.settings.columns_desktop }}-col-desktop"
+                class="grid product-grid aa-search-grid"
+                id="aa-search-grid-{{ section.id }}"
                 role="list"
               >
                 {%- assign skip_card_product_styles = false -%}
@@ -281,7 +318,8 @@
                           show_vendor: section.settings.show_vendor,
                           show_rating: section.settings.show_rating,
                           lazy_load: lazy_load,
-                          skip_styles: skip_card_product_styles
+                          skip_styles: skip_card_product_styles,
+                          show_quick_view: true
                         %}
                         {%- assign skip_card_product_styles = true -%}
                       {%- when 'article' -%}

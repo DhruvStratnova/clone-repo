@@ -1,0 +1,57 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "name": "Astro Calculator",
+      "settings": {
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "rich_text_AyQBwG": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_FrEGNr": {
+          "type": "heading",
+          "settings": {
+            "heading": "About Us",
+            "heading_size": "h1"
+          }
+        },
+        "text_rNaWBJ": {
+          "type": "text",
+          "settings": {
+            "text": "<p>At <strong>AstroAura</strong>, we are your one-stop destination for all kinds of <strong>gemstones, crystals, rudraksha, and wellness products</strong>. Our collection features gemstones sourced from top mines and certified by leading labs. Each product is carefully prepared and energized with positive vibrations to maximize its benefits. </p><p>Browse our selection of <strong>bracelets, pendants, and accessories</strong> designed not only to elevate your style but also to help align your chakras and energies. </p><p>Whether you are looking for <strong>guidance, remedies, or simply tools to enhance your lifestyle</strong>, AstroAura has everything you need under one roof. </p><h3><strong>Customer Care</strong> </h3><p>Our support team is available <strong>Monday to Saturday, 10 AM – 7 PM</strong>, ready to answer your queries and guide you in making the right choice. </p><h3><strong>Our Commitment</strong> </h3><ul><li><strong>Authentic & Certified Products</strong> </li><li><strong>Transparent Information</strong> </li><li><strong>Trusted Shopping Experience</strong> </li></ul><p>Thank you for choosing <strong>AstroAura</strong> as your partner in spirituality and wellness. </p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_FrEGNr",
+        "text_rNaWBJ"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    }
+  },
+  "order": [
+    "main",
+    "rich_text_AyQBwG"
+  ]
+}

@@ -1,0 +1,65 @@
+{%- comment -%}
+  AstroAura "Find My Perfect Match" quiz.
+  Opens as a half bottom-sheet (intro), expands to full-screen on start.
+  AstroAura brand language (cream / aubergine ink / gold / magenta-orange gradient,
+  Cormorant serif). Steps + results rendered by aa-quiz.js; styles in aa-quiz.css.
+{%- endcomment -%}
+
+<div class="aa-quiz" id="aa-quiz" hidden aria-hidden="true" data-turbo-permanent>
+  <div class="aa-quiz__scrim" data-quiz-close></div>
+
+  <div class="aa-quiz__sheet" role="dialog" aria-modal="true" aria-label="Find My Perfect Match">
+    <span class="aa-quiz__grab" aria-hidden="true"></span>
+
+    {%- comment -%} ----- INTRO (half) ----- {%- endcomment -%}
+    <div class="aa-quiz__screen aa-quiz__intro" data-quiz-screen="intro">
+      <button type="button" class="aa-quiz__x" data-quiz-close aria-label="Close">&times;</button>
+      <div class="aa-quiz__intro-in">
+        <span class="aa-quiz__kicker">Personalised for you</span>
+        <h2 class="aa-quiz__h">Not sure what&rsquo;s <em>right for you?</em></h2>
+        <p class="aa-quiz__lede">Answer five quick questions and we&rsquo;ll match you with the pieces aligned to your intent, lifestyle and Kundali.</p>
+        <button type="button" class="aa-quiz__cta" data-quiz-start>Find My Perfect Match <span aria-hidden="true">&rarr;</span></button>
+        <p class="aa-quiz__fine">5 questions &middot; Free &middot; No sign-up</p>
+      </div>
+    </div>
+
+    {%- comment -%} ----- LIMIT / UPSELL (half) ----- {%- endcomment -%}
+    <div class="aa-quiz__screen aa-quiz__intro aa-quiz__limit" data-quiz-screen="limit" hidden>
+      <button type="button" class="aa-quiz__x" data-quiz-close aria-label="Close">&times;</button>
+      <div class="aa-quiz__intro-in">
+        <span class="aa-quiz__kicker">Daily limit reached</span>
+        <h2 class="aa-quiz__h">You&rsquo;ve found <em>today&rsquo;s matches</em></h2>
+        <p class="aa-quiz__lede">You&rsquo;ve used both free matches for today. For unlimited guidance, deeper Kundali readings and daily remedies, continue your journey inside the Aura AI app.</p>
+        <button type="button" class="aa-quiz__cta" data-quiz-continue-app>Continue in Aura AI app <span aria-hidden="true">&rarr;</span></button>
+        <p class="aa-quiz__fine">Your free matches refresh tomorrow</p>
+      </div>
+    </div>
+
+    {%- comment -%} ----- FLOW (full, steps rendered by JS) ----- {%- endcomment -%}
+    <div class="aa-quiz__screen aa-quiz__flow" data-quiz-screen="flow" hidden>
+      <div class="aa-quiz__top">
+        <span class="aa-quiz__logo">{% if shop.brand.logo %}{{ shop.brand.logo | image_url: width: 120 | image_tag: alt: shop.name, class: 'aa-quiz__logo-img' }}{% else %}{{ shop.name }}{% endif %}</span>
+        <button type="button" class="aa-quiz__x aa-quiz__x--static" data-quiz-close aria-label="Close">&times;</button>
+      </div>
+      <div class="aa-quiz__progress"><span class="aa-quiz__progress-bar" data-quiz-progress></span></div>
+      <div class="aa-quiz__steplabel" data-quiz-stepcount>STEP 1 OF 5</div>
+      <div class="aa-quiz__body" data-quiz-body></div>
+      <div class="aa-quiz__footer">
+        <button type="button" class="aa-quiz__cta" data-quiz-next disabled>Continue <span aria-hidden="true">&rarr;</span></button>
+        <button type="button" class="aa-quiz__back" data-quiz-back hidden>&larr; Go back</button>
+      </div>
+    </div>
+
+    {%- comment -%} ----- RESULTS (full) ----- {%- endcomment -%}
+    <div class="aa-quiz__screen aa-quiz__results" data-quiz-screen="results" hidden>
+      <div class="aa-quiz__top">
+        <span class="aa-quiz__logo">{% if shop.brand.logo %}{{ shop.brand.logo | image_url: width: 120 | image_tag: alt: shop.name, class: 'aa-quiz__logo-img' }}{% else %}{{ shop.name }}{% endif %}</span>
+        <button type="button" class="aa-quiz__x aa-quiz__x--static" data-quiz-close aria-label="Close">&times;</button>
+      </div>
+      <div class="aa-quiz__progress"><span class="aa-quiz__progress-bar" style="width:100%"></span></div>
+      <div class="aa-quiz__steplabel">YOUR RESULTS</div>
+      <div class="aa-quiz__results-body" data-quiz-results></div>
+    </div>
+
+  </div>
+</div>

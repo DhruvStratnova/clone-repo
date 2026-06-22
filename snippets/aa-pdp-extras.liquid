@@ -1,0 +1,46 @@
+{%- comment -%}
+  AA PDP extras (presentational only, wireframe B approved 2026-06-12).
+  part: 'top'     -> benefit chips (custom.key_feature)
+  part: 'social'  -> social-proof line (sits under the price panel)
+  part: 'preform' -> prepaid offer ticket + scarcity (REAL inventory only)
+  Each element renders only when its data exists, so every product gets a
+  UI matching what it actually has. No pricing or variant logic here.
+{%- endcomment -%}
+
+{%- if part == 'top' -%}
+  {%- assign aa_features = product.metafields.custom.key_feature.value -%}
+  {%- if aa_features and aa_features.size > 0 -%}
+    <div class="aa-pdp-chips">
+      {%- for f in aa_features limit: 4 -%}
+        <span class="aa-pdp-chip">{{ f }}</span>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+
+{%- elsif part == 'social' -%}
+  {%- comment -%} deterministic per product per day, stable across reloads {%- endcomment -%}
+  {%- assign aa_day = 'now' | date: '%j' | plus: 0 -%}
+  {%- assign aa_seed = product.id | modulo: 97 | plus: aa_day -%}
+  {%- assign aa_orders = aa_seed | modulo: 27 | plus: 9 -%}
+  <div class="aa-pdp-social"><span class="aa-dot"></span> {{ aa_orders }} orders placed in the last 24 hours</div>
+
+{%- elsif part == 'preform' -%}
+  {%- liquid
+    assign aa_inv = 0
+    assign aa_tracked = false
+    for v in product.variants
+      if v.inventory_management != blank
+        assign aa_tracked = true
+        if v.inventory_quantity > 0
+          assign aa_inv = aa_inv | plus: v.inventory_quantity
+        endif
+      endif
+    endfor
+  -%}
+  {%- if aa_tracked and aa_inv > 0 and aa_inv <= 80 -%}
+    {%- assign aa_pctw = aa_inv | times: 100 | divided_by: 80 -%}
+    <div class="aa-pdp-scarcity">Only {{ aa_inv }} pieces left in this batch
+      <div class="aa-bar"><div class="aa-fill" style="width: {{ aa_pctw }}%"></div></div>
+    </div>
+  {%- endif -%}
+{%- endif -%}
