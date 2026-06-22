@@ -40,6 +40,7 @@ from aisensy import send_vendor_new_order
 from aisensy.sender import AiSensyClient
 import shopify_admin
 import dashboard as dashboard_mod
+import meta_capi
 from notify import notify_ops
 from confirm_token import confirm_url, verify_token
 
@@ -120,6 +121,8 @@ def root():
         "shopify_webhook_secret_set": bool(_shopify_secret()),
         "shopify_admin_ready": shopify_admin.is_ready(),
         "public_base_url_set": bool(os.environ.get("PUBLIC_BASE_URL")),
+        "meta_capi_ready": meta_capi.is_ready(),
+        "meta_capi_missing": meta_capi.missing(),
     }
 
 
@@ -161,6 +164,22 @@ async def order_created(
             "order": order_name,
             "financial_status": order.get("financial_status"),
         }
+
+    # --- Meta Conversions API: server-side Purchase (reliable, off-theme checkout) ---
+    # Only for genuinely completed payments. COD is "payable" (fulfilled) but the
+    # money isn't collected until delivery, so we don't count it as a Purchase here.
+    try:
+        fin = (order.get("financial_status") or "").lower()
+        if fin in ("paid", "partially_paid"):
+            capi_res = meta_capi.send_purchase(order)
+            _log_event(f"meta_capi_{order_name}", capi_res)
+            log.info("Meta CAPI Purchase for %s: %s", order_name, capi_res.get("status"))
+        else:
+            log.info("Meta CAPI: skipping %s (financial_status=%s — not a collected payment)",
+                     order_name, fin)
+    except Exception as exc:  # never let conversion tracking break fulfillment
+        log.warning("Meta CAPI Purchase failed for %s: %s", order_name, exc)
+        _log_event(f"meta_capi_error_{order_name}", {"error": str(exc)})
 
     cfg = IThinkConfig.from_env()
     if not cfg.is_ready():

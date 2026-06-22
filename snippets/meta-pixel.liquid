@@ -1,0 +1,93 @@
+{%- comment -%}
+  Meta (Facebook) Pixel — client-side storefront tracking.
+
+  Mirrors the client Pixel used in the Aura AI web app (PageView + standard funnel
+  events). The Pixel / Dataset ID is configured in:
+    Theme settings → Meta Pixel → "Meta Pixel / Dataset ID"  (settings.meta_pixel_id)
+
+  NOTE: Shopify's checkout & thank-you pages do NOT run theme code, so the
+  Purchase event is sent SERVER-SIDE via the Conversions API from the ops-tool
+  (see ops-tool/meta_capi.py). This snippet covers everything up to checkout.
+{%- endcomment -%}
+{%- if settings.meta_pixel_id != blank -%}
+  <!-- Meta Pixel Code -->
+  <script>
+    !(function (f, b, e, v, n, t, s) {
+      if (f.fbq) return;
+      n = f.fbq = function () {
+        n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+      };
+      if (!f._fbq) f._fbq = n;
+      n.push = n;
+      n.loaded = !0;
+      n.version = '2.0';
+      n.queue = [];
+      t = b.createElement(e);
+      t.async = !0;
+      t.src = v;
+      s = b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t, s);
+    })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+
+    fbq('init', '{{ settings.meta_pixel_id }}');
+    fbq('track', 'PageView');
+
+    {%- if request.page_type == 'product' and product -%}
+      fbq('track', 'ViewContent', {
+        content_ids: ['{{ product.selected_or_first_available_variant.id }}'],
+        content_name: {{ product.title | json }},
+        content_type: 'product',
+        value: {{ product.selected_or_first_available_variant.price | divided_by: 100.0 }},
+        currency: '{{ cart.currency.iso_code }}'
+      });
+    {%- endif -%}
+
+    {%- if request.page_type == 'search' and search.performed -%}
+      fbq('track', 'Search', { search_string: {{ search.terms | json }} });
+    {%- endif -%}
+
+    // AddToCart — fires on cart/add form submits (Dawn keeps the submit event
+    // even though it preventDefault()s for the AJAX add).
+    document.addEventListener(
+      'submit',
+      function (e) {
+        var form = e.target;
+        if (form && form.action && form.action.indexOf('/cart/add') !== -1) {
+          try {
+            fbq('track', 'AddToCart');
+          } catch (err) {}
+        }
+      },
+      true
+    );
+
+    // InitiateCheckout — checkout buttons on the cart page and cart drawer.
+    document.addEventListener(
+      'click',
+      function (e) {
+        if (!e.target.closest) return;
+        var el = e.target.closest(
+          '[name="checkout"], #checkout, .cart__checkout-button, a[href$="/checkout"]'
+        );
+        if (el) {
+          try {
+            fbq('track', 'InitiateCheckout', {
+              value: {{ cart.total_price | divided_by: 100.0 }},
+              currency: '{{ cart.currency.iso_code }}',
+              num_items: {{ cart.item_count }}
+            });
+          } catch (err) {}
+        }
+      },
+      true
+    );
+  </script>
+  <noscript
+    ><img
+      height="1"
+      width="1"
+      style="display: none"
+      src="https://www.facebook.com/tr?id={{ settings.meta_pixel_id }}&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
+{%- endif -%}

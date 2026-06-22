@@ -1451,5 +1451,24 @@
         "default": "scheme-1"
       }
     ]
+  },
+  {
+    "name": "Meta Pixel",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Meta (Facebook) Pixel"
+      },
+      {
+        "type": "paragraph",
+        "content": "Client-side Meta Pixel for the storefront (PageView, ViewContent, AddToCart, Search, InitiateCheckout). The Purchase event is sent server-side via the Conversions API from the ops-tool, because Shopify's checkout pages don't run theme code. Paste the Pixel / Dataset ID from Meta Events Manager."
+      },
+      {
+        "type": "text",
+        "id": "meta_pixel_id",
+        "label": "Meta Pixel / Dataset ID",
+        "info": "Events Manager → Data sources → your dataset → Dataset ID (a numeric string)."
+      }
+    ]
   }
 ]
