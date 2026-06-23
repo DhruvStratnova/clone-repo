@@ -46,22 +46,58 @@
       fbq('track', 'Search', { search_string: {{ search.terms | json }} });
     {%- endif -%}
 
-    // AddToCart — fires on cart/add form submits (Dawn keeps the submit event
-    // even though it preventDefault()s for the AJAX add).
-    document.addEventListener(
-      'submit',
-      function (e) {
-        var form = e.target;
-        if (form && form.action && form.action.indexOf('/cart/add') !== -1) {
-          try {
-            fbq('track', 'AddToCart');
-          } catch (err) {}
+    // AddToCart — intercept Dawn's AJAX add to /cart/add so we capture the EXACT
+    // product(s) added (name, variant id, unit price, quantity). The fetch hook is
+    // installed inline in <head>, before any add can fire. Replaces the old bare
+    // submit listener (which carried no product data).
+    (function () {
+      if (!window.fetch || window.__aaFetchPatched) return;
+      window.__aaFetchPatched = true;
+      var origFetch = window.fetch;
+      window.fetch = function () {
+        var args = arguments;
+        var url = (args[0] && args[0].url) || args[0] || '';
+        var isAdd = typeof url === 'string' && url.indexOf('/cart/add') !== -1;
+        var promise = origFetch.apply(this, args);
+        if (isAdd) {
+          promise
+            .then(function (res) {
+              return res.clone().json();
+            })
+            .then(function (data) {
+              // /cart/add.js returns the added line item (or {items:[...]}).
+              var items = data && data.items ? data.items : [data];
+              items.forEach(function (it) {
+                if (!it || !it.id) return;
+                var qty = it.quantity || 1;
+                var unit = (it.price || 0) / 100.0;
+                var lineVal =
+                  it.final_line_price != null ? it.final_line_price / 100.0 : unit * qty;
+                fbq('track', 'AddToCart', {
+                  content_ids: [String(it.id)],
+                  content_name: it.product_title || it.title,
+                  content_type: 'product',
+                  value: lineVal,
+                  currency: '{{ cart.currency.iso_code }}',
+                  contents: [{ id: String(it.id), quantity: qty, item_price: unit }]
+                });
+              });
+            })
+            .catch(function () {});
         }
-      },
-      true
-    );
+        return promise;
+      };
+    })();
 
-    // InitiateCheckout — checkout buttons on the cart page and cart drawer.
+    // InitiateCheckout — checkout buttons (cart page + drawer). content_ids/contents
+    // reflect the cart at page load (accurate on the cart page; may lag if items were
+    // added via the drawer without a reload).
+    var aaCartContents = [
+      {%- for item in cart.items -%}
+        { id: '{{ item.variant_id }}', quantity: {{ item.quantity }}, item_price: {{ item.final_price | divided_by: 100.0 }} }{%- unless forloop.last -%},{%- endunless -%}
+      {%- endfor -%}
+    ];
+    var aaCartContentIds = aaCartContents.map(function (c) { return c.id; });
     document.addEventListener(
       'click',
       function (e) {
@@ -74,7 +110,10 @@
             fbq('track', 'InitiateCheckout', {
               value: {{ cart.total_price | divided_by: 100.0 }},
               currency: '{{ cart.currency.iso_code }}',
-              num_items: {{ cart.item_count }}
+              num_items: {{ cart.item_count }},
+              content_type: 'product',
+              content_ids: aaCartContentIds,
+              contents: aaCartContents
             });
           } catch (err) {}
         }

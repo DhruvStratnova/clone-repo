@@ -76,14 +76,24 @@ seen twice.
 |-------|-------|
 | `search_string` | the search terms |
 
-**`AddToCart`** — standard event, no custom parameters (fires on cart/add submit).
-
-**`InitiateCheckout`**
+**`AddToCart`** (intercepts Dawn's AJAX `/cart/add` response → exact item added)
 | Param | Value |
 |-------|-------|
-| `value` | cart total ÷ 100 (major units, at page load) |
+| `content_ids` | `[ <variant id> ]` of the added item |
+| `content_name` | added product's title |
+| `content_type` | `"product"` |
+| `value` | line price ÷ 100 (unit × qty) |
+| `currency` | cart currency ISO code |
+| `contents` | `[{ id, quantity, item_price }]` |
+
+**`InitiateCheckout`** (cart contents at page load)
+| Param | Value |
+|-------|-------|
+| `value` | cart total ÷ 100 (major units) |
 | `currency` | cart currency ISO code |
 | `num_items` | cart item count |
+| `content_ids` | variant ids in cart |
+| `contents` | `[{ id, quantity, item_price }, …]` |
 
 **`Purchase`** (server-side CAPI) — only for orders with `financial_status` of
 `paid` / `partially_paid`. **COD orders are skipped** (cash isn't collected until
