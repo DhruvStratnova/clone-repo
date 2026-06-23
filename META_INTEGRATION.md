@@ -95,9 +95,16 @@ seen twice.
 | `content_ids` | variant ids in cart |
 | `contents` | `[{ id, quantity, item_price }, …]` |
 
-**`Purchase`** (server-side CAPI) — only for orders with `financial_status` of
-`paid` / `partially_paid`. **COD orders are skipped** (cash isn't collected until
-delivery).
+**`Purchase`** (server-side CAPI) — for committed orders: **prepaid**
+(`paid` / `partially_paid`) **and COD** (counted at order placement; COD's
+`financial_status` stays `pending` until delivery). Only cancelled / refunded /
+voided orders are skipped.
+
+> Production note: the live `Purchase` runs in the Supabase edge function
+> `shopify-order-webhook` (it already receives the order webhook server-side and
+> fires Purchase once per order via a `claim_capi_purchase_lock` guard). The
+> `ops-tool/meta_capi.py` below is the original reference implementation and is
+> not the deployed path.
 
 Event-level:
 | Param | Value |
@@ -213,9 +220,9 @@ shows as received via both "Browser" and "Server" with deduplication applied.
   channel for `1532873735240771` — not both.
 - **Price units.** The theme divides prices by 100 (Shopify stores money in minor units);
   the CAPI module uses the webhook's `total_price`, which is already in major units.
-- **COD.** Counted as fulfilled but **not** as `Purchase` (payment is collected on
-  delivery). Change the gate in `shopify_webhook.py` if you want COD counted at order
-  placement.
+- **COD.** Counted as a `Purchase` at order placement (COD's `financial_status`
+  stays `pending` until delivery, so the gate fires on prepaid **and** COD/pending —
+  only cancelled/refunded/voided are excluded).
 - **Token rotation.** When the access token is regenerated, update it in **both**
   `ops-tool/.env.local` (local) and the production host env vars.
 - **Remove the test code for production.** Unset `META_TEST_EVENT_CODE` so real events
