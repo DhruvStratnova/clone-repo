@@ -6,7 +6,7 @@
  * user picks a new option. Then does a smooth DOM swap of items + footer,
  * plus a belt-and-suspenders direct text patch on the total.
  */
-console.log('[aa-cart-variant-swap] v5 smooth-swap loaded');
+if (window.AA_DEBUG) console.log('[aa-cart-variant-swap] v5 smooth-swap loaded');
 
 (function () {
   let inflight = false;

@@ -1,8 +1,24 @@
 <!doctype html>
 <!-- SNAPSHOT-BUMP-1779916413-V8 -->
 
-<html class="js" lang="{{ request.locale.iso_code }}">
+<html class="js" lang="{{ request.locale.iso_code }}"{% if request.cookies['app_color_scheme'] == 'dark' %} data-theme="dark"{% endif %}>
   <head>
+    {%- comment -%}
+      AstroAura dark mode no-flash gate. MUST be the first thing in <head>,
+      before any stylesheet/font, so it runs before first paint. It is
+      authoritative over the SSR data-theme attr above (Shopify full-page-cache
+      can serve a stale attr): it ADDS dark when the app cookie or the manual
+      web choice says dark, and REMOVES a wrongly-cached dark attr otherwise.
+    {%- endcomment -%}
+    <script>
+    (function(){try{
+      // Dark mode ONLY via the Aura AI app cookie (app_color_scheme=dark). No
+      // manual/web toggle anywhere else. Authoritative over the SSR attr.
+      var dark = document.cookie.split('; ').indexOf('app_color_scheme=dark') > -1;
+      var el = document.documentElement;
+      if (dark) el.setAttribute('data-theme','dark'); else el.removeAttribute('data-theme');
+    }catch(e){}})();
+    </script>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,7 +30,7 @@
     <meta name="turbo-cache-control" content="no-preview">
     {%- comment -%} AstroAura: the cart is the slide-up drawer only — kill the standalone /cart page {%- endcomment -%}
     <script>if(location.pathname.replace(/\/+$/,'')==='/cart'){location.replace('/?cart=open');}</script>
-    <meta name="theme-color" content="">
+    <meta name="theme-color" content="#1F0820">
     <link rel="canonical" href="{{ canonical_url }}">
 
     {%- if settings.favicon != blank -%}
@@ -68,8 +84,6 @@
     {{ content_for_header }}
 
     {% render 'meta-tags' %}
-
-    {% render 'meta-pixel' %}
 
     <script src="{{ 'constants.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'pubsub.js' | asset_url }}" defer="defer"></script>
@@ -322,6 +336,28 @@
       <link rel="stylesheet" href="{{ 'component-discounts.css' | asset_url }}" media="print" onload="this.media='all'">
     {%- endif -%}
 
+    {%- comment -%}
+      AstroAura dark mode overrides. Render-blocking (NOT media=print) so dark
+      paints before first paint with no light->dark flash. Loaded AFTER all other
+      custom aa css so its html[data-theme="dark"] rules win the cascade. Every
+      rule inside is scoped under html[data-theme="dark"], so the light default
+      for normal web visitors is byte-for-byte unchanged.
+    {%- endcomment -%}
+    {{ 'aa-dark.css' | asset_url | stylesheet_tag }}
+    {{ 'aa-dark-header.css' | asset_url | stylesheet_tag }}
+    {{ 'aa-dark-commerce.css' | asset_url | stylesheet_tag }}
+    {{ 'aa-dark-type.css' | asset_url | stylesheet_tag }}
+    {{ 'aa-dark-quickview.css' | asset_url | stylesheet_tag }}
+    {{ 'aa-dark-sections.css' | asset_url | stylesheet_tag }}
+    {{ 'aa-dark-collection.css' | asset_url | stylesheet_tag }}
+    {{ 'aa-dark-fixes.css' | asset_url | stylesheet_tag }}
+    {{ 'aa-dark-gaps.css' | asset_url | stylesheet_tag }}
+    {{ 'aa-dark-account.css' | asset_url | stylesheet_tag }}
+    {{ 'aa-dark-search.css' | asset_url | stylesheet_tag }}
+    {{ 'aa-dark-cart.css' | asset_url | stylesheet_tag }}
+    {{ 'aa-dark-pdp2.css' | asset_url | stylesheet_tag }}
+    {{ 'aa-dark-reviews.css' | asset_url | stylesheet_tag }}
+
     {%- unless settings.type_body_font.system? -%}
       {% comment %}theme-check-disable AssetPreload{% endcomment %}
       <link rel="preload" as="font" href="{{ settings.type_body_font | font_url }}" type="font/woff2" crossorigin>
@@ -338,21 +374,12 @@
       <script src="{{ 'localization-form.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
 
-    {%- if settings.predictive_search_enabled -%}
-      <link
-        rel="stylesheet"
-        href="{{ 'component-predictive-search.css' | asset_url }}"
-        media="print"
-        onload="this.media='all'"
-      >
-    {%- endif -%}
 
     <script>
       if (Shopify.designMode) {
         document.documentElement.classList.add('shopify-design-mode');
       }
     </script>
-    <link rel="stylesheet" href="{{ 'AIChatBotWidget.css' | asset_url }}" media="print" onload="this.media='all'">
 
 
    <meta name="google-site-verification" content="87vUVrM1g0t-1uco09g2SKRI-su3KNATycKI0o1FOaU" />
@@ -506,9 +533,6 @@
       };
     </script>
 
-    {%- if settings.predictive_search_enabled -%}
-      <script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
-    {%- endif -%}
 
     {%- if settings.cart_type == 'drawer' -%}
       <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
@@ -540,5 +564,6 @@
 {% render 'aa-app-shell' %}
 {% render 'aa-auth-popup' %}
 {% render 'aa-auth-account' %}
+{%- comment -%} Manual theme toggle removed: dark mode is app-cookie-only. {%- endcomment -%}
 </body>
 </html>

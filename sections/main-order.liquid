@@ -22,8 +22,26 @@
   .aa-au-orderpage th{font-family:'Jost',sans-serif;color:#4a3a40}
   .aa-au-orderpage .order-summary,
   .aa-au-orderpage [class*="address"]{background:#fff;border:1px solid rgba(36,16,25,.10);border-radius:16px;padding:18px}
+
+  /* ---- dark theme (gated; light untouched) ---- */
+  html[data-theme="dark"] .aa-au-orderpage h1,
+  html[data-theme="dark"] .aa-au-orderpage h2,
+  html[data-theme="dark"] .aa-au-orderpage h3{color:#FFFFFF}
+  html[data-theme="dark"] .aa-au-orderpage > div > a[href]{color:#FF8C42}
+  html[data-theme="dark"] .aa-au-orderpage p{color:rgba(255,255,255,.70)}
+  html[data-theme="dark"] .aa-au-orderpage p strong{color:#FFFFFF}
+  html[data-theme="dark"] .aa-au-orderpage table{background:linear-gradient(180deg,#2D1B4E 0%,#1A0B2E 120%);border:1px solid rgba(255,255,255,.12)}
+  html[data-theme="dark"] .aa-au-orderpage th{color:rgba(255,255,255,.70)}
+  html[data-theme="dark"] .aa-au-orderpage td,
+  html[data-theme="dark"] .aa-au-orderpage caption,
+  html[data-theme="dark"] .aa-au-orderpage tfoot{color:#FFFFFF}
+  html[data-theme="dark"] .aa-au-orderpage td a[href]{color:#FF8C42}
+  html[data-theme="dark"] .aa-au-orderpage thead tr,
+  html[data-theme="dark"] .aa-au-orderpage tbody tr,
+  html[data-theme="dark"] .aa-au-orderpage tfoot tr{border-color:rgba(255,255,255,.10)}
+  html[data-theme="dark"] .aa-au-orderpage .order-summary,
+  html[data-theme="dark"] .aa-au-orderpage [class*="address"]{background:#1A0B2E;border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.70)}
 {%- endstyle -%}
-{{ 'aa-auth-v2.css' | asset_url | stylesheet_tag }}
 
 <div class="customer order aa-au-orderpage section-{{ section.id }}-padding">
   <div>

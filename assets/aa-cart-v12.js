@@ -108,11 +108,11 @@
 (function () {
   'use strict';
   var TAG = '[AA-CART]';
-  function log() { try { console.log.apply(console, [TAG].concat([].slice.call(arguments))); } catch (e) {} }
+  function log() { if (!window.AA_DEBUG) return; try { console.log.apply(console, [TAG].concat([].slice.call(arguments))); } catch (e) {} }
   function err() { try { console.error.apply(console, [TAG].concat([].slice.call(arguments))); } catch (e) {} }
 
   try { window.AA_CART_VERSION = 'v12-magic-native'; } catch (e) {}
-  log('aa-cart.js loaded at', new Date().toISOString(), 'version', 'v9.1-qtyfix');
+  log('aa-cart.js loaded at', new Date().toISOString(), 'version', 'v12');
 
   var state = {}; // String(variant_id) -> qty
   var busy = {};  // variant_id -> bool

@@ -1,5 +1,21 @@
 {{ 'component-slideshow.css' | asset_url | stylesheet_tag }}
 {{ 'component-slider.css' | asset_url | stylesheet_tag }}
+{%- style -%}
+  /* Offer bar stays solid near-black in BOTH light and dark modes (per brand).
+     Targets the exact rendered selectors and kills any scheme gradient. */
+  .shopify-section-group-header-group .utility-bar,
+  .utility-bar.color-{{ section.settings.color_scheme }},
+  #shopify-section-{{ section.id }} .utility-bar {
+    background: #0A0A0A !important;
+    background-image: none !important;
+    --gradient-background: #0A0A0A !important;
+  }
+  /* nuke the whole offer-bar subtree bg (except the localization dropdown) so the solid black bar shows through everywhere (fixes navy middle slide) */
+  #shopify-section-{{ section.id }} .utility-bar *:not(.disclosure__list-wrapper):not(.country-filter):not(.country-filter__input) {
+    background-color: transparent !important;
+    background-image: none !important;
+  }
+{%- endstyle -%}
 
 {%- liquid
   assign social_icons = true

@@ -232,7 +232,7 @@
   z-index: 4;
 }
 .aa-pcard:hover .aa-pcard__qv-btn { opacity: 1; transform: translateX(-50%) translateY(0); }
-.aa-pcard__qv-btn:hover { background: rgba(36, 16, 25, 1); }
+.aa-pcard__qv-btn:hover { transform: translateX(-50%) translateY(0) scale(1.04); }
 @media (max-width: 768px) { .aa-pcard__qv-btn { display: none; } }
 
 /* Combo / multi-item / contextual photo cards — use CONTAIN so the full
@@ -698,58 +698,58 @@ article.aa-pcard.aa-in-cart .aa-pcard__qty {
     margin: 0 !important;
   }
   /* Card itself — smaller radius, tighter padding */
-  body:not(.template-collection) .aa-pcard {
+  body:not(.template-collection):not(.template-product) .aa-pcard {
     border-radius: 12px !important;
   }
   /* Image — smaller margin around it */
-  body:not(.template-collection) .aa-pcard__media {
+  body:not(.template-collection):not(.template-product) .aa-pcard__media {
     margin: 4px 4px 0 !important;
     border-radius: 8px !important;
   }
   /* Badge — smaller */
-  body:not(.template-collection) .aa-pcard__badge {
+  body:not(.template-collection):not(.template-product) .aa-pcard__badge {
     top: 6px !important; left: 6px !important;
     font-size: 7.5px !important;
     padding: 3px 6px !important;
     letter-spacing: 0.1em !important;
   }
   /* Heart — smaller */
-  body:not(.template-collection) .aa-pcard__heart {
+  body:not(.template-collection):not(.template-product) .aa-pcard__heart {
     top: 6px !important; right: 6px !important;
     width: 20px !important; height: 20px !important;
   }
-  body:not(.template-collection) .aa-pcard__heart svg { width: 11px !important; height: 11px !important; }
+  body:not(.template-collection):not(.template-product) .aa-pcard__heart svg { width: 11px !important; height: 11px !important; }
   /* Content — tighter padding */
-  body:not(.template-collection) .aa-pcard__content {
+  body:not(.template-collection):not(.template-product) .aa-pcard__content {
     padding: 8px 8px 8px !important;
     gap: 3px !important;
   }
   /* Category — smaller */
-  body:not(.template-collection) .aa-pcard__cat {
+  body:not(.template-collection):not(.template-product) .aa-pcard__cat {
     font-size: 7px !important;
     letter-spacing: 0.12em !important;
   }
   /* Title — smaller font */
-  body:not(.template-collection) .aa-pcard__title {
+  body:not(.template-collection):not(.template-product) .aa-pcard__title {
     font-size: 11px !important;
     line-height: 1.2 !important;
     min-height: 27px !important;
   }
   /* Divider — tighter */
-  body:not(.template-collection) .aa-pcard__divider {
+  body:not(.template-collection):not(.template-product) .aa-pcard__divider {
     width: 20px !important;
     margin: 1px 0 !important;
   }
   /* Price — smaller */
-  body:not(.template-collection) .aa-pcard__price {
+  body:not(.template-collection):not(.template-product) .aa-pcard__price {
     font-size: 12.5px !important;
   }
-  body:not(.template-collection) .aa-pcard__strike {
+  body:not(.template-collection):not(.template-product) .aa-pcard__strike {
     font-size: 9px !important;
   }
-  body:not(.template-collection) .aa-pcard__price-row { gap: 4px !important; margin-top: 0 !important; }
+  body:not(.template-collection):not(.template-product) .aa-pcard__price-row { gap: 4px !important; margin-top: 0 !important; }
   /* ADD TO CART button — much smaller pill */
-  body:not(.template-collection) .aa-pcard__cta {
+  body:not(.template-collection):not(.template-product) .aa-pcard__cta {
     padding: 6px 8px !important;
     font-size: 8px !important;
     letter-spacing: 0.08em !important;
@@ -769,7 +769,7 @@ article.aa-pcard.aa-in-cart .aa-pcard__qty {
 /* MOBILE: ADD TO CART — narrower + taller, curved rectangle (not full-width pill).
    Collection pages excluded: their mobile card (wireframe B) styles its own buttons. */
 @media (max-width: 749px) {
-  body:not(.template-collection) .aa-pcard__cta {
+  body:not(.template-collection):not(.template-product) .aa-pcard__cta {
     width: auto !important;
     max-width: 70% !important;
     padding: 12px 14px !important;
@@ -779,7 +779,7 @@ article.aa-pcard.aa-in-cart .aa-pcard__qty {
     display: block !important;
     align-self: center !important;
   }
-  body:not(.template-collection) .aa-pcard__form { width: 100% !important; text-align: center !important; }
+  body:not(.template-collection):not(.template-product) .aa-pcard__form { width: 100% !important; text-align: center !important; }
 }
 
 /* Hide the heart/wishlist icon on all product cards (mobile + desktop) */

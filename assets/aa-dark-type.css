@@ -1,0 +1,152 @@
+/* =========================================================================
+   aa-dark-type.css
+   Dark-mode TYPOGRAPHY fix for MAIN-CONTENT section headings, titles and
+   body copy in the homepage redesign (aa-rd-*) sections.
+
+   Why this file exists:
+   The aa-rd-* sections render display headings two ways.
+     1) Via the shared aa-rd-v2.css variables (--ink / --ink-soft). Those are
+        already remapped to white in aa-dark.css.
+     2) Via HARDCODED light-theme hex literals baked into each section's inline
+        <style> (color:#241019 / #6f5f57 / #8E2C2C). Those literals ignore the
+        variable remap, so on the dark canvas they render as near-invisible
+        dark maroon. This file recolors only those literal cases, plus forces
+        the shared display titles white as a belt-and-suspenders guarantee.
+
+   Scope rules:
+   - Every selector is scoped under html[data-theme="dark"]; light theme is
+     never touched.
+   - HEADER and FOOTER are intentionally excluded (owned by aa-dark-header.css
+     / aa-dark-footer.css).
+   - .template-collection is excluded (collection title / breadcrumbs / facets
+     are owned by aa-dark.css).
+   - Product CARD titles and prices are excluded (owned by aa-dark-commerce.css).
+
+   Palette:
+     text        #FFFFFF
+     secondary   rgba(255,255,255,.70)
+     tertiary    rgba(255,255,255,.54)
+     gold accent #FFC24B   (intentional Devanagari eyebrows stay gold)
+     link/brand  #FF2E93
+   ========================================================================= */
+
+/* -------------------------------------------------------------------------
+   1) SHARED REDESIGN DISPLAY TITLES (variable-driven, force white)
+   Covers: "Shop by Aura" (.sh h2), section rich-top titles (.rtop h2),
+   image-with-text titles (.iwt h3), editorial feature title (.efeat .ov h3),
+   and the shared <section class="sec"> h2/h3 display headings.
+   ------------------------------------------------------------------------- */
+html[data-theme="dark"] body:not(.template-collection) .sec h2,
+html[data-theme="dark"] body:not(.template-collection) .sec h3,
+html[data-theme="dark"] body:not(.template-collection) .sh h2,
+html[data-theme="dark"] body:not(.template-collection) .rtop h2,
+html[data-theme="dark"] body:not(.template-collection) .iwt h3,
+html[data-theme="dark"] body:not(.template-collection) .efeat .ov h3,
+html[data-theme="dark"] .related-products__heading,
+html[data-theme="dark"] .related-products__heading * {
+  color: #FFFFFF;
+}
+
+/* The decorative \2726 stars flanking .sh h2 / .rtop h2 stay gold on-brand. */
+html[data-theme="dark"] body:not(.template-collection) .sh h2::before,
+html[data-theme="dark"] body:not(.template-collection) .sh h2::after,
+html[data-theme="dark"] body:not(.template-collection) .rtop h2::before,
+html[data-theme="dark"] body:not(.template-collection) .rtop h2::after {
+  color: #FFC24B;
+}
+
+/* Devanagari / eyebrow accents stay gold (deliberate brand treatment). */
+html[data-theme="dark"] body:not(.template-collection) .sh .dev,
+html[data-theme="dark"] body:not(.template-collection) .rtop .dev,
+html[data-theme="dark"] body:not(.template-collection) .iwt .dev,
+html[data-theme="dark"] body:not(.template-collection) .whyz .dev {
+  color: #FFC24B;
+}
+
+/* Shared section body / secondary copy and circular-tile labels. */
+html[data-theme="dark"] body:not(.template-collection) .iwt p,
+html[data-theme="dark"] body:not(.template-collection) .efeat .ov p {
+  color: rgba(255,255,255,.70);
+}
+html[data-theme="dark"] body:not(.template-collection) .ptile .pl {
+  color: #FFFFFF;
+}
+
+/* Step blocks (How it works). */
+html[data-theme="dark"] body:not(.template-collection) .step h4 {
+  color: #FFFFFF;
+}
+
+/* -------------------------------------------------------------------------
+   2) DHAN YOG FEATURED SECTION (aa-rd-dhanyog.liquid)
+   Hardcoded literals: title #241019, body #6f5f57, eyebrow gold #B8915A.
+   The big "The Dhan Yog Bracelet" wordmark must become legible white.
+   ------------------------------------------------------------------------- */
+html[data-theme="dark"] .aa-dy__title {
+  color: #FFFFFF;
+}
+html[data-theme="dark"] .aa-dy__body {
+  color: rgba(255,255,255,.70);
+}
+html[data-theme="dark"] .aa-dy__eyebrow {
+  color: #FFC24B; /* "|| धन योग ||" deliberate gold eyebrow */
+}
+
+/* -------------------------------------------------------------------------
+   3) CERTIFY / TRUST SECTION (aa-rd-certify.liquid)
+   Hardcoded literals: title #241019, sub #6f5f57, name #241019,
+   eyebrow gold #B8915A, tag #8a6a3a.
+   ------------------------------------------------------------------------- */
+html[data-theme="dark"] .aa-cert__title,
+html[data-theme="dark"] .aa-cert__name {
+  color: #FFFFFF;
+}
+html[data-theme="dark"] .aa-cert__sub {
+  color: rgba(255,255,255,.70);
+}
+html[data-theme="dark"] .aa-cert__eyebrow {
+  color: #FFC24B; /* deliberate gold eyebrow */
+}
+html[data-theme="dark"] .aa-cert__tag {
+  color: rgba(255,255,255,.54);
+}
+
+/* ===== Dark fixes (code-review C1/C2): PDP + collection tabs bake light !important
+   ink literals that ignore the Dawn var remap and render dark-on-dark. Override,
+   scoped to dark, with !important to beat the baked declarations. ===== */
+
+/* PDP price (main-product) */
+html[data-theme="dark"] [id^="ProductInfo-"] .price--large .price-item--last { color:#FFFFFF !important; }
+html[data-theme="dark"] [id^="ProductInfo-"] .price--large s.price-item--regular,
+html[data-theme="dark"] [id^="ProductInfo-"] .price--large .aa-mrp { color:rgba(255,255,255,.55) !important; }
+
+/* PDP variant pills */
+html[data-theme="dark"] [id^="ProductInfo-"] .product-form__input--pill label {
+  background:rgba(255,255,255,.06) !important; color:#FFFFFF !important; border-color:rgba(255,255,255,.20) !important;
+}
+html[data-theme="dark"] [id^="ProductInfo-"] .product-form__input--pill input[type="radio"] + label::after {
+  border-color:rgba(255,255,255,.30) !important;
+}
+html[data-theme="dark"] [id^="ProductInfo-"] .product-form__input--pill input[type="radio"]:checked + label {
+  background:rgba(255,46,147,.12) !important; color:#FFFFFF !important; border-color:#FF2E93 !important; box-shadow:0 0 0 1px #FF2E93 !important;
+}
+html[data-theme="dark"] [id^="ProductInfo-"] .product-form__input--pill input[type="radio"]:checked + label::after {
+  border-color:#FF2E93 !important; background:#FF2E93 !important;
+}
+
+/* PDP accordions + shipping caption */
+html[data-theme="dark"] [id^="ProductInfo-"] .collapsible-row-title { color:#FFFFFF !important; }
+html[data-theme="dark"] [id^="ProductInfo-"] .collapsible-row-content p { color:rgba(255,255,255,.70) !important; }
+html[data-theme="dark"] [id^="ProductInfo-"] .collapsible-row-icon { color:rgba(255,255,255,.60) !important; }
+html[data-theme="dark"] [id^="ProductInfo-"] .aa-shipping-line,
+html[data-theme="dark"] [id^="ProductInfo-"] .product__text.inline-richtext { color:rgba(255,255,255,.70) !important; }
+
+/* Collection listing tabs (image-banner) */
+html[data-theme="dark"] .listing-description-accordion .tablinks { color:rgba(255,255,255,.60) !important; }
+html[data-theme="dark"] .listing-description-accordion .tablinks:hover,
+html[data-theme="dark"] .listing-description-accordion .tablinks.active { color:#FFFFFF !important; }
+html[data-theme="dark"] .listing-description-accordion .tabc-title { color:#FFFFFF !important; }
+html[data-theme="dark"] .listing-description-accordion .tabber_content p,
+html[data-theme="dark"] .listing-description-accordion .tabber_content h3,
+html[data-theme="dark"] .listing-description-accordion .tabber_content ul,
+html[data-theme="dark"] .listing-description-accordion .tabber_content ol { color:rgba(255,255,255,.70) !important; }

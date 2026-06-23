@@ -68,10 +68,17 @@
     qEl.classList.add('aa-swap');
     setTimeout(paint, 220);
   }
-  card.querySelector('[data-aa-prev]').addEventListener('click', function () { show(idx - 1); });
-  card.querySelector('[data-aa-next]').addEventListener('click', function () { show(idx + 1); });
+  var timer = null;
+  function startAuto() {
+    if (stories.length < 2) return;
+    clearInterval(timer);
+    timer = setInterval(function () { show(idx + 1); }, 5000);
+  }
+  card.querySelector('[data-aa-prev]').addEventListener('click', function () { show(idx - 1); startAuto(); });
+  card.querySelector('[data-aa-next]').addEventListener('click', function () { show(idx + 1); startAuto(); });
   show(0, true);
   card.hidden = false;
+  startAuto();
   src.remove();
 })();
 </script>

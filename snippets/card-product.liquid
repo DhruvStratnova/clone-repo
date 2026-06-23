@@ -78,7 +78,7 @@
       {%- endif -%}
 
       {%- assign aa_rating_count = card_product.metafields.reviews.rating_count.value | default: 0 | plus: 0 -%}
-      {%- assign aa_rating_val = card_product.metafields.reviews.rating.value.rating | default: 0 -%}
+      {%- assign aa_rating_val = card_product.metafields.reviews.rating.value.rating | default: 0 | plus: 0 -%}
       {%- if aa_coll_card and aa_rating_count > 0 and card_product.metafields.reviews.rating.value != blank -%}
         <span class="aa-pcard__rate" aria-label="Rated {{ card_product.metafields.reviews.rating.value }} out of 5">
           <span class="aa-pcard__rate-star" aria-hidden="true">&#9733;</span>{{ card_product.metafields.reviews.rating.value.rating | round: 2 }}
@@ -91,9 +91,11 @@
     {%- endif -%}
 
     {%- if card_product.available and aa_coll_card -%}
-      {%- comment -%} Mobile collection card (wireframe B): floating "+" on the
-          image — same .aa-pcard__cta class so aa-cart-v9's instant-add pipeline
-          handles it. Hidden on desktop (the full-width pill below stays). {%- endcomment -%}
+      {%- comment -%} Floating "+" circle on the image — same .aa-pcard__cta class
+          so aa-cart-v9's instant-add pipeline handles it. Rendered for collection,
+          search AND related (related now uses the collection card design). The
+          related section's inline <style> sizes it to a circle + hides the full
+          pill (cache-proof, since collection's circle CSS is template-scoped). {%- endcomment -%}
       <form class="aa-pcard__form aa-pcard__form--float" action="/cart/add" method="post" data-aa-cart>
         <input type="hidden" name="id" value="{{ card_product.selected_or_first_available_variant.id }}">
         <button type="button" class="aa-pcard__cta aa-pcard__cta--plus" aria-label="Add {{ card_product.title | escape }} to cart">+</button>

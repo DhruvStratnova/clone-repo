@@ -1,6 +1,9 @@
 {{ 'component-card.css' | asset_url | stylesheet_tag }}
 {{ 'component-price.css' | asset_url | stylesheet_tag }}
 {{ 'section-related-products.css' | asset_url | stylesheet_tag }}
+{%- comment -%} quick-add.css hides the quick-add-modal (position:fixed; opacity:0; visibility:hidden).
+   Without it on the product page the modal renders inline and its close "x" leaks onto each card. {%- endcomment -%}
+{{ 'quick-add.css' | asset_url | stylesheet_tag }}
 
 {% if section.settings.image_shape == 'blob' %}
   {{ 'mask-blobs.css' | asset_url | stylesheet_tag }}
@@ -16,6 +19,61 @@
     .section-{{ section.id }}-padding {
       padding-top: {{ section.settings.padding_top }}px;
       padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  /* Related card = the COLLECTION page product card, RESPONSIVE like collection:
+     DESKTOP = full-width "Add to cart" pill (no floating "+"), MOBILE = floating
+     "+" circle (no pill). Inline here so it ships via the recommendations AJAX
+     (cache-proof). Every rule carries the (0,6,2) chain to beat astroaura-styles.css
+     which styles .aa-pcard__form/.aa-pcard__cta at (0,5,2). */
+
+  /* shared (both viewports): rating chip bottom-left + 2-line title */
+  html body:not(.template-collection) .related-products .aa-pcard.card-wrapper.product-card-wrapper .aa-pcard__rate {
+    position: absolute !important; left: 10px !important; right: auto !important;
+    bottom: 10px !important; top: auto !important; z-index: 3 !important;
+    display: inline-flex !important; align-items: center !important; gap: 4px !important;
+    padding: 4px 9px !important; border-radius: 999px !important;
+    font-size: 12px !important; font-weight: 700 !important;
+    background: rgba(20, 10, 30, 0.72) !important; color: #FFFFFF !important;
+    -webkit-backdrop-filter: blur(6px) !important; backdrop-filter: blur(6px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  }
+  html body:not(.template-collection) .related-products .aa-pcard.card-wrapper.product-card-wrapper .aa-pcard__rate-star { color: #FFC83D !important; }
+  html body:not(.template-collection) .related-products .aa-pcard.card-wrapper.product-card-wrapper .aa-pcard__title {
+    display: -webkit-box !important; -webkit-line-clamp: 2 !important; -webkit-box-orient: vertical !important;
+    overflow: hidden !important; text-overflow: ellipsis !important;
+  }
+  html body:not(.template-collection) .related-products .aa-pcard.card-wrapper.product-card-wrapper .aa-pcard__title a { display: inline !important; }
+
+  /* DESKTOP card: full-width "Add to cart" pill, hide the floating "+" */
+  @media screen and (min-width: 750px) {
+    html body:not(.template-collection) .related-products .aa-pcard.card-wrapper.product-card-wrapper .aa-pcard__form--float { display: none !important; }
+    html body:not(.template-collection) .related-products .aa-pcard.card-wrapper.product-card-wrapper .aa-pcard__form--inline {
+      display: block !important; position: static !important; width: 100% !important; margin-top: auto !important;
+    }
+  }
+
+  /* MOBILE card: floating "+" circle, hide the pill */
+  @media screen and (max-width: 749px) {
+    html body:not(.template-collection) .related-products .grid.product-grid {
+      padding-left: 16px !important; padding-right: 16px !important; scroll-padding-left: 16px !important;
+    }
+    html body:not(.template-collection) .related-products .aa-pcard.card-wrapper.product-card-wrapper .aa-pcard__form--inline { display: none !important; }
+    html body:not(.template-collection) .related-products .aa-pcard.card-wrapper.product-card-wrapper .aa-pcard__form--float {
+      position: absolute !important; right: 8px !important; bottom: 8px !important; top: auto !important; left: auto !important;
+      display: block !important; width: auto !important; max-width: none !important; margin: 0 !important; padding: 0 !important; z-index: 4 !important; transform: none !important;
+    }
+    html body:not(.template-collection) .related-products .aa-pcard.card-wrapper.product-card-wrapper .aa-pcard__cta.aa-pcard__cta--plus {
+      position: static !important; width: 34px !important; height: 34px !important; max-width: 34px !important; min-width: 34px !important;
+      border-radius: 999px !important; border: 0 !important; padding: 0 !important; margin: 0 !important;
+      display: flex !important; align-items: center !important; justify-content: center !important; gap: 0 !important;
+      background: linear-gradient(135deg, #FF8C42, #FF2E93) !important; color: #FFFFFF !important;
+      font: 600 19px/1 'Jost', sans-serif !important; letter-spacing: 0 !important; text-transform: none !important;
+      box-shadow: 0 6px 16px rgba(255, 46, 147, 0.34) !important;
+    }
+    html body:not(.template-collection) .related-products .aa-pcard.card-wrapper.product-card-wrapper .aa-pcard__rate {
+      left: 8px !important; bottom: 8px !important; font-size: 11px !important; padding: 3px 8px !important;
     }
   }
 {%- endstyle -%}
@@ -43,7 +101,13 @@
                 show_secondary_image: section.settings.show_secondary_image,
                 show_vendor: section.settings.show_vendor,
                 show_rating: section.settings.show_rating,
-                skip_styles: aa_skip
+                lazy_load: true,
+                skip_styles: aa_skip,
+                quick_add: section.settings.quick_add,
+                show_quick_view: false,
+                aa_coll_card: true,
+                aa_related: true,
+                section_id: section.id
               %}
             </li>
             {%- assign aa_shown = aa_shown | plus: 1 -%}
@@ -77,7 +141,13 @@
               show_secondary_image: section.settings.show_secondary_image,
               show_vendor: section.settings.show_vendor,
               show_rating: section.settings.show_rating,
-              skip_styles: skip_card_product_styles
+              lazy_load: true,
+              skip_styles: skip_card_product_styles,
+              quick_add: section.settings.quick_add,
+              show_quick_view: false,
+              aa_coll_card: true,
+              aa_related: true,
+              section_id: section.id
             %}
           </li>
           {%- assign skip_card_product_styles = true -%}

@@ -1,0 +1,313 @@
+/* =====================================================================
+   aa-dark-account.css  -  Dark theme for the account experience
+   Scope: header profile popup (aa-auth-account.liquid)
+          My Account page (main-account.liquid)
+          Orders list page (aa-orders-page.liquid -> aa-auth-v2.js)
+   Base light styles live in aa-auth-v2.css (var(--ink)/--muted/--cream/--grad).
+   Everything here is gated under html[data-theme="dark"] so light is untouched.
+   Palette: canvas #0C0A1F/#06061F | surface #1A0B2E | raised #2D1B4E
+            text #FFFFFF / rgba(255,255,255,.70) / .54
+            accent linear-gradient(135deg,#FF8C42,#FF2E93) | primary #FF2E93
+            gold #FFC24B | success #2E9E5B | border rgba(255,255,255,.12)
+   ===================================================================== */
+
+/* ---------- shared accent tokens (scoped, no global leak) ---------- */
+html[data-theme="dark"] .aa-au {
+  --aa-d-surface: #1A0B2E;
+  --aa-d-raised:  #2D1B4E;
+  --aa-d-glass:   rgba(255,255,255,.06);
+  --aa-d-glass-2: rgba(255,255,255,.09);
+  --aa-d-line:    rgba(255,255,255,.12);
+  --aa-d-line-2:  rgba(255,255,255,.07);
+  --aa-d-txt:     #FFFFFF;
+  --aa-d-txt-70:  rgba(255,255,255,.70);
+  --aa-d-txt-54:  rgba(255,255,255,.54);
+  --aa-d-grad:    linear-gradient(135deg,#FF8C42 0%,#FF2E93 100%);
+  --aa-d-grad-soft: linear-gradient(135deg,rgba(255,140,66,.18),rgba(255,46,147,.18));
+  --aa-d-pink:    #FF2E93;
+}
+
+/* =====================================================================
+   1) HEADER PROFILE POPUP  (snippets/aa-auth-account.liquid)
+   ===================================================================== */
+html[data-theme="dark"] .aa-au-menu__card {
+  background: var(--aa-d-surface) !important;
+  border: 1px solid var(--aa-d-line) !important;
+  box-shadow: 0 24px 60px rgba(3,2,10,.65), 0 0 0 1px rgba(255,255,255,.04) !important;
+}
+
+/* top user strip - was cream */
+html[data-theme="dark"] .aa-au-menu__head {
+  background: linear-gradient(180deg, var(--aa-d-raised) 0%, var(--aa-d-surface) 100%) !important;
+  border-bottom: 1px solid var(--aa-d-line) !important;
+}
+html[data-theme="dark"] .aa-au-menu__av {
+  background: var(--aa-d-grad) !important;
+  color: #fff !important;
+  box-shadow: 0 6px 18px rgba(255,46,147,.40) !important;
+}
+html[data-theme="dark"] .aa-au-menu__nm { color: var(--aa-d-txt) !important; }
+html[data-theme="dark"] .aa-au-menu__ph { color: var(--aa-d-txt-54) !important; }
+
+/* menu rows */
+html[data-theme="dark"] .aa-au-menu__item {
+  border-bottom: 1px solid var(--aa-d-line-2) !important;
+  transition: background .15s ease;
+}
+html[data-theme="dark"] .aa-au-menu__item:hover { background: var(--aa-d-glass) !important; }
+html[data-theme="dark"] .aa-au-menu__item:active { background: var(--aa-d-glass-2) !important; }
+
+/* icon chip + label */
+html[data-theme="dark"] .aa-au-mic {
+  background: var(--aa-d-grad-soft) !important;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.06);
+}
+html[data-theme="dark"] .aa-au-mic svg { stroke: #FF8C42 !important; }
+html[data-theme="dark"] .aa-au-mlbl  { color: var(--aa-d-txt) !important; }
+html[data-theme="dark"] .aa-au-mchev { stroke: var(--aa-d-txt-54) !important; }
+
+/* logout row - magenta */
+html[data-theme="dark"] .aa-au-menu__out .aa-au-mic {
+  background: rgba(255,46,147,.14) !important;
+}
+html[data-theme="dark"] .aa-au-menu__out .aa-au-mic svg { stroke: var(--aa-d-pink) !important; }
+html[data-theme="dark"] .aa-au-menu__out .aa-au-mlbl    { color: var(--aa-d-pink) !important; }
+
+/* =====================================================================
+   2) MY ACCOUNT PAGE  (sections/main-account.liquid)
+   ===================================================================== */
+/* headings */
+html[data-theme="dark"] .aa-au-h1,
+html[data-theme="dark"] .aa-au-sech h3,
+html[data-theme="dark"] .aa-au-empty h3 { color: var(--aa-d-txt) !important; }
+html[data-theme="dark"] .aa-au-sech a   { color: #FF8C42 !important; }
+
+/* profile card */
+html[data-theme="dark"] .aa-au-card-s {
+  background: var(--aa-d-surface) !important;
+  border: 1px solid var(--aa-d-line) !important;
+  box-shadow: 0 14px 36px rgba(3,2,10,.45), 0 1px 3px rgba(3,2,10,.4) !important;
+}
+html[data-theme="dark"] .aa-au-avatar {
+  background: var(--aa-d-grad) !important;
+  box-shadow: 0 10px 24px rgba(255,46,147,.40), 0 0 0 4px rgba(255,255,255,.10) !important;
+}
+html[data-theme="dark"] .aa-au-proftop .aa-au-nm   { color: var(--aa-d-txt) !important; }
+html[data-theme="dark"] .aa-au-proftop .aa-au-meta { color: var(--aa-d-txt-54) !important; }
+html[data-theme="dark"] .aa-au-proftop .aa-au-meta b { color: var(--aa-d-txt) !important; }
+html[data-theme="dark"] .aa-au-iconbtn {
+  background: var(--aa-d-glass) !important;
+  border: 1px solid var(--aa-d-line) !important;
+}
+html[data-theme="dark"] .aa-au-iconbtn svg { stroke: var(--aa-d-txt-70) !important; }
+
+/* quick rows (My Orders / Addresses) */
+html[data-theme="dark"] .aa-au-row {
+  background: var(--aa-d-glass) !important;
+  border: 1px solid var(--aa-d-line) !important;
+}
+html[data-theme="dark"] .aa-au-row:hover {
+  background: var(--aa-d-glass-2) !important;
+  border-color: rgba(255,46,147,.28) !important;
+  box-shadow: 0 12px 26px rgba(3,2,10,.4) !important;
+}
+html[data-theme="dark"] .aa-au-row .aa-au-ri  { background: var(--aa-d-grad-soft) !important; }
+html[data-theme="dark"] .aa-au-row .aa-au-ri svg { stroke: #FF8C42 !important; }
+html[data-theme="dark"] .aa-au-row .aa-au-rt  { color: var(--aa-d-txt) !important; }
+html[data-theme="dark"] .aa-au-row .aa-au-rs  { color: var(--aa-d-txt-54) !important; }
+html[data-theme="dark"] .aa-au-row .aa-au-chev { stroke: var(--aa-d-txt-54) !important; }
+html[data-theme="dark"] .aa-au-row .aa-au-cnt {
+  background: var(--aa-d-grad) !important;
+  color: #fff !important;
+}
+
+/* order cards (account page grid + orders list ocard share .aa-au-order/.aa-au-ocard) */
+html[data-theme="dark"] .aa-au-order {
+  background: var(--aa-d-surface) !important;
+  border: 1px solid var(--aa-d-line) !important;
+  box-shadow: 0 12px 30px rgba(3,2,10,.42) !important;
+}
+html[data-theme="dark"] .aa-au-grid .aa-au-order {
+  background: linear-gradient(180deg, var(--aa-d-raised) 0%, var(--aa-d-surface) 100%) !important;
+  border-color: var(--aa-d-line) !important;
+  box-shadow: 0 12px 28px rgba(3,2,10,.42) !important;
+}
+html[data-theme="dark"] .aa-au-order:hover {
+  box-shadow: 0 18px 38px rgba(3,2,10,.55) !important;
+  border-color: rgba(255,46,147,.22) !important;
+}
+html[data-theme="dark"] .aa-au-order__top {
+  background: rgba(255,255,255,.04) !important;
+  border-bottom: 1px solid var(--aa-d-line) !important;
+}
+html[data-theme="dark"] .aa-au-grid .aa-au-order__top {
+  background: transparent !important;
+  border-bottom: 1px solid var(--aa-d-line-2) !important;
+}
+html[data-theme="dark"] .aa-au-order__date { color: var(--aa-d-txt-54) !important; }
+html[data-theme="dark"] .aa-au-thumb {
+  background: var(--aa-d-raised) !important;
+  border: 1px solid var(--aa-d-line) !important;
+}
+html[data-theme="dark"] .aa-au-grid .aa-au-thumb {
+  background: #fff !important;        /* keep product photo on white inside dark card */
+  border: 1px solid var(--aa-d-line) !important;
+  box-shadow: 0 5px 14px rgba(3,2,10,.45) !important;
+}
+html[data-theme="dark"] .aa-au-order__info .aa-au-ti  { color: var(--aa-d-txt) !important; }
+html[data-theme="dark"] .aa-au-order__info .aa-au-osub { color: var(--aa-d-txt-54) !important; }
+html[data-theme="dark"] .aa-au-order__info .aa-au-pr  { color: var(--aa-d-txt) !important; }
+
+/* status pills */
+html[data-theme="dark"] .aa-au-pill.aa-au-ok   { color: #4FD18B !important; background: rgba(46,158,91,.16) !important; }
+html[data-theme="dark"] .aa-au-pill.aa-au-ok .aa-au-dot   { background: #4FD18B !important; }
+html[data-theme="dark"] .aa-au-pill.aa-au-pend { color: #FFC24B !important; background: rgba(255,194,75,.14) !important; }
+html[data-theme="dark"] .aa-au-pill.aa-au-pend .aa-au-dot { background: #FFC24B !important; }
+html[data-theme="dark"] .aa-au-pill.aa-au-warn { color: #FF9F6B !important; background: rgba(255,159,107,.14) !important; }
+html[data-theme="dark"] .aa-au-pill.aa-au-warn .aa-au-dot { background: #FF9F6B !important; }
+
+/* action buttons */
+html[data-theme="dark"] .aa-au-trk {
+  background: var(--aa-d-glass) !important;
+  border: 1px solid var(--aa-d-line) !important;
+  color: var(--aa-d-txt-70) !important;
+}
+html[data-theme="dark"] .aa-au-trk svg { stroke: var(--aa-d-txt-70) !important; }
+html[data-theme="dark"] .aa-au-trk:hover {
+  background: var(--aa-d-glass-2) !important;
+  color: var(--aa-d-txt) !important;
+}
+html[data-theme="dark"] .aa-au-buy {
+  background: var(--aa-d-grad) !important;
+  color: #fff !important;
+  box-shadow: 0 8px 18px rgba(255,46,147,.30) !important;
+}
+html[data-theme="dark"] .aa-au-buy svg { stroke: #fff !important; }
+
+/* "+N more" inline span (set inline color:#8a7a70 in liquid) */
+html[data-theme="dark"] .aa-au-order__info .aa-au-ti span { color: var(--aa-d-txt-54) !important; }
+
+/* empty state */
+html[data-theme="dark"] .aa-au-empty { color: var(--aa-d-txt-54) !important; }
+html[data-theme="dark"] .aa-au-empty__ic { background: var(--aa-d-grad-soft) !important; }
+html[data-theme="dark"] .aa-au-empty__ic svg { stroke: #FF8C42 !important; }
+html[data-theme="dark"] .aa-au-btn {
+  background: var(--aa-d-grad) !important;
+  color: #fff !important;
+  box-shadow: 0 10px 24px rgba(255,46,147,.30) !important;
+}
+
+/* sign out */
+html[data-theme="dark"] .aa-au-so1 {
+  background: var(--aa-d-glass) !important;
+  border: 1.5px solid var(--aa-d-pink) !important;
+  color: var(--aa-d-pink) !important;
+}
+html[data-theme="dark"] .aa-au-so1:hover { background: rgba(255,46,147,.10) !important; }
+
+/* =====================================================================
+   3) ORDERS LIST PAGE  (sections/aa-orders-page.liquid + aa-auth-v2.js)
+   ===================================================================== */
+html[data-theme="dark"] .aa-au-ordhead h1 { color: var(--aa-d-txt) !important; }
+html[data-theme="dark"] .aa-au-loading    { color: var(--aa-d-txt-54) !important; }
+
+/* JS-rendered order cards (.aa-au-ocard) */
+html[data-theme="dark"] .aa-au-ocard {
+  background: linear-gradient(180deg, var(--aa-d-raised) 0%, var(--aa-d-surface) 100%) !important;
+  border: 1px solid var(--aa-d-line) !important;
+  box-shadow: 0 12px 28px rgba(3,2,10,.42) !important;
+}
+html[data-theme="dark"] .aa-au-ocard.aa-au-open {
+  box-shadow: 0 20px 44px rgba(3,2,10,.55) !important;
+}
+html[data-theme="dark"] .aa-au-osum .aa-au-thumb {
+  background: #fff !important;
+  border: 1px solid var(--aa-d-line) !important;
+  box-shadow: 0 5px 14px rgba(3,2,10,.45) !important;
+}
+html[data-theme="dark"] .aa-au-otitle { color: var(--aa-d-txt) !important; }
+html[data-theme="dark"] .aa-au-osub2  { color: var(--aa-d-txt-54) !important; }
+html[data-theme="dark"] .aa-au-chev2  { stroke: var(--aa-d-txt-54) !important; }
+
+/* expanded detail drawer */
+html[data-theme="dark"] .aa-au-dd-pad { border-top: 1px solid var(--aa-d-line) !important; }
+html[data-theme="dark"] .aa-au-dsec   { color: var(--aa-d-txt) !important; }
+html[data-theme="dark"] .aa-au-ditem  { border-bottom: 1px solid var(--aa-d-line-2) !important; }
+html[data-theme="dark"] .aa-au-dthumb {
+  background: #fff !important;
+  border: 1px solid var(--aa-d-line) !important;
+}
+html[data-theme="dark"] .aa-au-ditem__t { color: var(--aa-d-txt) !important; }
+html[data-theme="dark"] .aa-au-ditem__m { color: var(--aa-d-txt-54) !important; }
+html[data-theme="dark"] .aa-au-ditem__p { color: var(--aa-d-txt) !important; }
+html[data-theme="dark"] .aa-au-dkv      { color: var(--aa-d-txt) !important; }
+
+/* address blocks in drawer */
+html[data-theme="dark"] .aa-au-daddr__h { color: var(--aa-d-txt-54) !important; }
+html[data-theme="dark"] .aa-au-daddr__l { color: var(--aa-d-txt-70) !important; }
+
+/* drawer buttons */
+html[data-theme="dark"] .aa-au-dbtn--pri {
+  background: var(--aa-d-grad) !important;
+  color: #fff !important;
+  box-shadow: 0 8px 18px rgba(255,46,147,.30) !important;
+}
+html[data-theme="dark"] .aa-au-dbtn--sec {
+  border: 1.5px solid var(--aa-d-line) !important;
+  color: var(--aa-d-txt) !important;
+}
+html[data-theme="dark"] .aa-au-dbtn--sec:hover { background: var(--aa-d-glass) !important; }
+
+/* profile key/value rows (.aa-au-pf in dropdown profile view) */
+html[data-theme="dark"] .aa-au-pf__row {
+  background: var(--aa-d-glass) !important;
+  border: 1px solid var(--aa-d-line) !important;
+}
+html[data-theme="dark"] .aa-au-pf__k { color: var(--aa-d-txt-54) !important; }
+html[data-theme="dark"] .aa-au-pf__v { color: var(--aa-d-txt) !important; }
+
+/* saved address cards (.aa-au-addr on account/addresses) */
+html[data-theme="dark"] .aa-au-addr {
+  background: var(--aa-d-glass) !important;
+  border: 1px solid var(--aa-d-line) !important;
+}
+html[data-theme="dark"] .aa-au-addr:hover { box-shadow: 0 10px 22px rgba(3,2,10,.45) !important; }
+html[data-theme="dark"] .aa-au-addr .aa-au-who   { color: var(--aa-d-txt) !important; }
+html[data-theme="dark"] .aa-au-addr .aa-au-lines { color: var(--aa-d-txt-70) !important; }
+html[data-theme="dark"] .aa-au-addr .aa-au-tag {
+  color: #FFC24B !important;
+  background: linear-gradient(120deg, rgba(255,46,147,.14), rgba(255,140,66,.14)) !important;
+}
+
+/* ============================================================================
+   LOGIN / OTP popup steps (snippets/aa-auth-steps.liquid). These were only
+   styled for light (dark ink) so the text was invisible on the dark popup.
+   ============================================================================ */
+html[data-theme="dark"] .aa-au-serif { color: var(--aa-d-txt) !important; }
+html[data-theme="dark"] .aa-au-sub { color: var(--aa-d-txt-70) !important; }
+html[data-theme="dark"] .aa-au-sub b { color: var(--aa-d-txt) !important; }
+html[data-theme="dark"] .aa-au-fl { color: var(--aa-d-txt-54) !important; }
+html[data-theme="dark"] .aa-au-cc {
+  color: var(--aa-d-txt) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid var(--aa-d-line) !important;
+}
+html[data-theme="dark"] .aa-au-cc svg { stroke: var(--aa-d-txt-54) !important; }
+html[data-theme="dark"] .aa-au-inp {
+  color: var(--aa-d-txt) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+html[data-theme="dark"] .aa-au-inp::placeholder { color: var(--aa-d-txt-54) !important; }
+html[data-theme="dark"] .aa-au-check { color: var(--aa-d-txt-70) !important; }
+html[data-theme="dark"] .aa-au-otp input,
+html[data-theme="dark"] .aa-au-otp .aa-au-otpbox {
+  color: var(--aa-d-txt) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid var(--aa-d-line) !important;
+}
+html[data-theme="dark"] .aa-au-otpmeta,
+html[data-theme="dark"] .aa-au-resend { color: var(--aa-d-txt-54) !important; }
+html[data-theme="dark"] .aa-au-resend b { color: var(--aa-d-txt) !important; }
+html[data-theme="dark"] .aa-au-change { color: #FF8C42 !important; cursor: pointer; }
+html[data-theme="dark"] .aa-au-trouble { color: var(--aa-d-txt-54) !important; }
+html[data-theme="dark"] .aa-au-done h2 { color: var(--aa-d-txt) !important; }
