@@ -1,0 +1,75 @@
+{%- comment -%}
+  AstroAura manual dark-mode toggle (web visitors only).
+  App users are force-dark by the app_color_scheme=dark cookie regardless of
+  this control; this pill lets a normal web visitor opt in/out of dark.
+  On click it flips localStorage.aa_theme between 'dark' and 'light' and sets/
+  removes data-theme on <html> live, no reload. Self-contained, scoped styles,
+  visible in both themes. Hidden for app traffic (cookie-forced dark).
+{%- endcomment -%}
+{%- unless request.cookies['app_color_scheme'] == 'dark' -%}
+<style>
+  .aa-theme-toggle{
+    position:fixed;left:16px;bottom:16px;z-index:2147483600;
+    display:inline-flex;align-items:center;gap:8px;
+    height:40px;padding:0 14px;border-radius:999px;
+    border:1px solid rgba(0,0,0,.12);
+    background:#ffffff;color:#1A0B2E;
+    font:600 13px/1 system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+    letter-spacing:.01em;cursor:pointer;
+    box-shadow:0 4px 16px rgba(0,0,0,.18);
+    -webkit-tap-highlight-color:transparent;
+    transition:background .2s ease,color .2s ease,border-color .2s ease;
+  }
+  .aa-theme-toggle:focus-visible{outline:2px solid #FF2E93;outline-offset:2px;}
+  .aa-theme-toggle svg{width:18px;height:18px;flex:none;display:block;}
+  .aa-theme-toggle .aa-tt-label{white-space:nowrap;}
+  .aa-theme-toggle .aa-tt-moon{display:inline;}
+  .aa-theme-toggle .aa-tt-sun{display:none;}
+  html[data-theme="dark"] .aa-theme-toggle{
+    background:#2D1B4E;color:#FFFFFF;
+    border-color:rgba(255,255,255,.20);
+    box-shadow:0 4px 16px rgba(0,0,0,.45);
+  }
+  html[data-theme="dark"] .aa-theme-toggle .aa-tt-moon{display:none;}
+  html[data-theme="dark"] .aa-theme-toggle .aa-tt-sun{display:inline;}
+</style>
+
+<button type="button" class="aa-theme-toggle" id="aa-theme-toggle"
+        aria-label="Toggle dark mode" aria-pressed="false" data-no-prefetch>
+  <span class="aa-tt-moon" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+    </svg>
+  </span>
+  <span class="aa-tt-sun" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="4"></circle>
+      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+    </svg>
+  </span>
+  <span class="aa-tt-label">Dark</span>
+</button>
+
+<script>
+  (function(){
+    var btn = document.getElementById('aa-theme-toggle');
+    if (!btn) return;
+    var el = document.documentElement;
+    function sync(){
+      var isDark = el.getAttribute('data-theme') === 'dark';
+      btn.setAttribute('aria-pressed', isDark ? 'true' : 'false');
+      var label = btn.querySelector('.aa-tt-label');
+      if (label) label.textContent = isDark ? 'Light' : 'Dark';
+    }
+    btn.addEventListener('click', function(){
+      var isDark = el.getAttribute('data-theme') === 'dark';
+      var next = isDark ? 'light' : 'dark';
+      try { localStorage.setItem('aa_theme', next); } catch(e){}
+      if (next === 'dark') el.setAttribute('data-theme','dark');
+      else el.removeAttribute('data-theme');
+      sync();
+    });
+    sync();
+  })();
+</script>
+{%- endunless -%}

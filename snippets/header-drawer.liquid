@@ -144,6 +144,42 @@
       width: 22px !important;
       height: 22px !important;
     }
+
+    /* ===== DARK MODE: flip every cream/white drawer surface to the Aura AI
+       dark cosmic palette. Light theme untouched. ===== */
+    html[data-theme="dark"] body header-drawer #menu-drawer,
+    html[data-theme="dark"] body header-drawer .menu-drawer,
+    html[data-theme="dark"] body header-drawer .aa-drawer {
+      background: #0C0A1F !important;
+      background-image: linear-gradient(180deg, #0C0A1F 0%, #06061F 100%) !important;
+    }
+    html[data-theme="dark"] .aa-drawer__title,
+    html[data-theme="dark"] .aa-drawer__title--inline,
+    html[data-theme="dark"] .aa-drawer__back,
+    html[data-theme="dark"] .aa-drawer__tile,
+    html[data-theme="dark"] .aa-drawer__tile-label,
+    html[data-theme="dark"] .aa-drawer__purpose-label,
+    html[data-theme="dark"] .aa-drawer__page-link,
+    html[data-theme="dark"] .aa-drawer__close {
+      color: #FFFFFF !important;
+    }
+    html[data-theme="dark"] .aa-drawer__tile-circle,
+    html[data-theme="dark"] .aa-drawer__purpose-tile,
+    html[data-theme="dark"] .aa-drawer__social-link {
+      background: #1A0B2E !important;
+      border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    }
+    html[data-theme="dark"] .aa-drawer__purpose-img-wrap {
+      background: rgba(255, 255, 255, 0.06) !important;
+    }
+    html[data-theme="dark"] .aa-drawer__social-link { color: #FFFFFF !important; }
+    html[data-theme="dark"] .aa-drawer__tile-placeholder {
+      background: linear-gradient(135deg, #2D1B4E, #1A0B2E) !important;
+      color: #FFFFFF !important;
+    }
+    html[data-theme="dark"] .aa-drawer__page-link {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.10) !important;
+    }
   }
 </style>
 

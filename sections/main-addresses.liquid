@@ -32,7 +32,6 @@
   .aa-au-addrpage .address-delete,
   .aa-au-addrpage button[name="cancel"]{background:#fff !important;color:#4a3a40 !important;border:1px solid rgba(36,16,25,.14) !important;border-radius:999px;padding:11px 20px}
 {%- endstyle -%}
-{{ 'aa-auth-v2.css' | asset_url | stylesheet_tag }}
 
 {%- paginate customer.addresses by 5 -%}
   <div class="customer addresses aa-au-addrpage section-{{ section.id }}-padding" data-customer-addresses>

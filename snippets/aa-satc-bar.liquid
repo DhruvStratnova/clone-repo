@@ -1,0 +1,65 @@
+{%- comment -%}
+  Sticky Buy Now / Add to Cart bar — Aura AI app (dark) + mobile ONLY.
+  Appears when the main add-to-cart button is off-screen; forwards clicks to the
+  REAL buttons (#ProductSubmitButton-<id> / #aa-buy-now-btn-<id>) so all existing
+  cart + Magic-checkout logic applies. Scoped to html[data-theme="dark"] and
+  max-width:749px, so the light website and desktop are never affected.
+  Param: section_id
+{%- endcomment -%}
+<div class="aa-satc-bar" id="AaSatcBar-{{ section_id }}" aria-hidden="true">
+  <button type="button" class="aa-satc-bar__cta aa-satc-bar__cta--atc" data-aa-satc="atc">Add to cart</button>
+  <button type="button" class="aa-satc-bar__cta aa-satc-bar__cta--buy" data-aa-satc="buy">Buy now</button>
+</div>
+
+<style>
+  .aa-satc-bar { display: none; }
+  /* Hide the previous floating "Aura Dock" buy popup in dark/app — this sticky
+     bar replaces it. Light site keeps its dock (untouched). */
+  html[data-theme="dark"] .aa-dock { display: none !important; }
+  @media screen and (max-width: 749px) {
+    html[data-theme="dark"] .aa-satc-bar.is-visible {
+      display: flex; gap: 10px;
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 60;
+      padding: 10px 14px calc(10px + env(safe-area-inset-bottom));
+      background: rgba(6, 6, 15, 0.86);
+      -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+      border-top: 1px solid rgba(255, 255, 255, 0.10);
+      animation: aaSatcUp 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    @keyframes aaSatcUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+    html[data-theme="dark"] .aa-satc-bar__cta {
+      flex: 1 1 50%; height: 50px; border: 0; border-radius: 12px; cursor: pointer;
+      font-family: inherit; font-weight: 800; font-size: 14px; letter-spacing: 0.02em;
+      display: inline-flex; align-items: center; justify-content: center;
+    }
+    html[data-theme="dark"] .aa-satc-bar__cta--atc {
+      background: rgba(255, 255, 255, 0.10); color: #FFFFFF; border: 1px solid rgba(255, 255, 255, 0.18);
+    }
+    html[data-theme="dark"] .aa-satc-bar__cta--buy {
+      background: linear-gradient(135deg, #FF8C42, #FF2E93); color: #FFFFFF;
+      box-shadow: 0 8px 22px rgba(255, 46, 147, 0.34);
+    }
+    html[data-theme="dark"] .aa-satc-bar--atc-only .aa-satc-bar__cta--atc { flex: 1 1 100%; }
+  }
+</style>
+
+<script>
+(function () {
+  var bar = document.getElementById('AaSatcBar-{{ section_id }}');
+  var atc = document.getElementById('ProductSubmitButton-{{ section_id }}');
+  var buy = document.getElementById('aa-buy-now-btn-{{ section_id }}');
+  if (!bar || !atc) return;
+  bar.querySelector('[data-aa-satc="atc"]').addEventListener('click', function () { atc.click(); });
+  var buyBtn = bar.querySelector('[data-aa-satc="buy"]');
+  if (buy) {
+    buyBtn.addEventListener('click', function () { buy.click(); });
+  } else {
+    buyBtn.style.display = 'none';
+    bar.classList.add('aa-satc-bar--atc-only');
+  }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { bar.classList.toggle('is-visible', !e.isIntersecting); });
+  }, { rootMargin: '0px 0px -40px 0px' });
+  io.observe(atc);
+})();
+</script>

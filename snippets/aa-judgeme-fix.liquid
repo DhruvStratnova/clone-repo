@@ -154,6 +154,18 @@
   html body .jdgm-paginate__page:empty {
     display: none !important;
   }
+  /* Mobile: clean vertical spacing so the summary, WRITE A REVIEW button,
+     histogram, sort and review cards don't crowd/overlap each other. */
+  @media screen and (max-width: 749px) {
+    html body .jdgm-rev-widg { padding: 0 16px !important; }
+    html body .jdgm-rev-widg__summary { gap: 14px !important; margin-bottom: 20px !important; }
+    html body .jdgm-rev-widg__summary-stars { margin-bottom: 6px !important; }
+    html body .jdgm-write-rev-link { display: block !important; margin: 18px auto !important; }
+    html body .jdgm-histogram { margin: 18px 0 !important; clear: both !important; }
+    html body .jdgm-rev-widg__sort-wrapper,
+    html body .jdgm-rev-widg__sort { margin: 16px 0 !important; }
+    html body .jdgm-rev { margin-bottom: 18px !important; }
+  }
 </style>
 
 <script>
@@ -165,6 +177,22 @@
       document.querySelectorAll('.jdgm-histogram-row__bar-content, .jdgm-histogram__bar-content').forEach(function(b) {
         b.style.setProperty('background', '#F5A623', 'important');
         b.style.setProperty('background-color', '#F5A623', 'important');
+      });
+      /* User: remove the average-score box + Judge.me "Diamond Transparency"
+         badge. Inline display:none via JS beats cache + survives re-renders. */
+      document.querySelectorAll('.jdgm-rev-widg__summary-inner, .jdgm-all-reviews-rating, .jdgm-all-reviews__summary-text--verified, .jdgm-medals').forEach(function(el) {
+        el.style.setProperty('display', 'none', 'important');
+      });
+      /* The summary container is now empty (inner hidden) but keeps its white/dark
+         box bg+border+padding => leftover empty box. Strip it so it collapses. */
+      document.querySelectorAll('.jdgm-rev-widg__summary').forEach(function(el) {
+        el.style.setProperty('background', 'none', 'important');
+        el.style.setProperty('background-color', 'transparent', 'important');
+        el.style.setProperty('border', '0', 'important');
+        el.style.setProperty('box-shadow', 'none', 'important');
+        el.style.setProperty('padding', '0', 'important');
+        el.style.setProperty('margin', '0', 'important');
+        el.style.setProperty('min-height', '0', 'important');
       });
       /* Hide pagination boxes that have no visible content (Judge.me's prev/next icons broken) */
       document.querySelectorAll('.jdgm-paginate a, .jdgm-paginate__page, .jdgm-paginate li').forEach(function(el) {

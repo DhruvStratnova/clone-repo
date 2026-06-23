@@ -82,13 +82,23 @@
         </button>
       </div>
 
-      {%- comment -%} AstroAura: auto-rotating promo strip at the top (CSS-only, survives section swaps) {%- endcomment -%}
+      {%- comment -%} AstroAura: left-to-right marquee promo strip. Styles live in
+          astroaura-cart-v8.css (+ aa-dark-cart.css for dark). Items output twice so
+          translateX(-50%) loops seamlessly. Minimal inline below ONLY guarantees
+          row alignment + visible dark text if the external cart CSS is cached. {%- endcomment -%}
+      {%- style -%}
+        .aa-cart-promo__track { display: flex !important; flex-direction: row !important; width: max-content !important; align-items: center !important; }
+        html[data-theme="dark"] .aa-cart-promo__item { color: rgba(255, 255, 255, 0.82) !important; }
+        html[data-theme="dark"] .aa-cart-promo__item strong { color: #FFC24B !important; }
+      {%- endstyle -%}
       <div class="aa-cart-promo" aria-hidden="true">
         <div class="aa-cart-promo__track">
-          <span class="aa-cart-promo__item">&#10022;&nbsp; Pay online &amp; get <strong>25% OFF</strong> your order</span>
-          <span class="aa-cart-promo__item">&#10022;&nbsp; Free shipping across India &bull; no minimum</span>
-          <span class="aa-cart-promo__item">&#10022;&nbsp; 100% authentic &amp; energised products</span>
-          <span class="aa-cart-promo__item">&#10022;&nbsp; Pay online &amp; get <strong>25% OFF</strong> your order</span>
+          <span class="aa-cart-promo__item">Pay online &amp; get <strong>25% OFF</strong> your order</span>
+          <span class="aa-cart-promo__item">Free shipping across India &bull; no minimum</span>
+          <span class="aa-cart-promo__item">100% authentic &amp; energised products</span>
+          <span class="aa-cart-promo__item">Pay online &amp; get <strong>25% OFF</strong> your order</span>
+          <span class="aa-cart-promo__item">Free shipping across India &bull; no minimum</span>
+          <span class="aa-cart-promo__item">100% authentic &amp; energised products</span>
         </div>
       </div>
 
@@ -102,6 +112,7 @@
           id="CartDrawer-Form"
           class="cart__contents cart-drawer__form"
           method="post"
+          data-turbo="false"
         >
           <div id="CartDrawer-CartItems" class="drawer__contents js-contents">
             {%- if cart != empty -%}
@@ -622,6 +633,7 @@
             class="cart__checkout-button button aa-checkout-btn"
             name="checkout"
             form="CartDrawer-Form"
+            data-turbo="false"
             {% if cart == empty %}
               disabled
             {% endif %}

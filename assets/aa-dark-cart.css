@@ -1,0 +1,220 @@
+/* ============================================================
+   aa-dark-cart.css — dark-mode revamp for the cart (drawer + page)
+   All rules scoped under html[data-theme="dark"]; light untouched.
+   Targets the LIVE rendered classes:
+     drawer .drawer__inner / cart-items (page)
+     .cart-item__name / .cart-item__details / .product-option
+     .quantity / .quantity__button / .quantity__input (stepper)
+     cart-remove-button (trash)
+     .aa-rec / .aa-rec__* (You may also like recs, built by aa-cart-v12.js)
+     .totals / .totals__total / .totals__total-value / .tax-note
+     .aa-checkout-btn (checkout bar — keeps its gradient)
+   Palette: canvas #0C0A1F/#06061F, surface #1A0B2E, raised #2D1B4E,
+   text #FFFFFF/.70/.54, accent linear-gradient(135deg,#FF8C42,#FF2E93),
+   primary #FF2E93, success #2E9E5B, borders rgba(255,255,255,.12)
+   ============================================================ */
+
+/* ---------- Drawer + cart-page surfaces ---------- */
+html[data-theme="dark"] body cart-drawer .drawer__inner,
+html[data-theme="dark"] body cart-drawer .drawer__inner-empty {
+  background: #0C0A1F !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  color: #FFFFFF !important;
+}
+/* dim overlay behind the drawer */
+html[data-theme="dark"] body .drawer {
+  background-color: rgba(0, 0, 0, 0.6) !important;
+}
+/* mobile sheet grab-handle */
+html[data-theme="dark"] body .drawer__inner::before {
+  background: rgba(255, 255, 255, 0.22) !important;
+}
+/* cart PAGE surface */
+html[data-theme="dark"] body cart-items {
+  background: #0C0A1F !important;
+  color: #FFFFFF !important;
+}
+
+/* ---------- Headings / close ---------- */
+html[data-theme="dark"] body .drawer__heading,
+html[data-theme="dark"] body .drawer__close,
+html[data-theme="dark"] body .cart__empty-text,
+html[data-theme="dark"] body .aa-cart-title {
+  color: #FFFFFF !important;
+}
+html[data-theme="dark"] body .drawer__header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+html[data-theme="dark"] body .drawer__footer,
+html[data-theme="dark"] body cart-drawer .cart-items thead tr {
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+/* ---------- Column headers (Product / Total / Quantity) ---------- */
+html[data-theme="dark"] body .cart-items thead th,
+html[data-theme="dark"] body .cart-items thead .caption-with-letter-spacing {
+  color: rgba(255, 255, 255, 0.54) !important;
+}
+
+/* ---------- Line items ---------- */
+html[data-theme="dark"] body .cart-item {
+  border-color: rgba(255, 255, 255, 0.10) !important;
+}
+html[data-theme="dark"] body .cart-item__name {
+  color: #FFFFFF !important;
+}
+html[data-theme="dark"] body .cart-item__name:hover {
+  color: #FF2E93 !important;
+}
+/* variant text, properties, vendor, selling plan = white 70 */
+html[data-theme="dark"] body .cart-item__details .product-option,
+html[data-theme="dark"] body .cart-item__details .product-option dt,
+html[data-theme="dark"] body .cart-item__details .product-option dd,
+html[data-theme="dark"] body .cart-item__details .caption-with-letter-spacing,
+html[data-theme="dark"] body .cart-item__details .aa-variant-row__label {
+  color: rgba(255, 255, 255, 0.70) !important;
+}
+/* inline variant <select> swap dropdown — clean chip, subtle, no harsh box */
+html[data-theme="dark"] body .cart-item__details .aa-variant-select {
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: rgba(255, 255, 255, 0.90) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 9px !important;
+  padding: 7px 30px 7px 12px !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  max-width: 100% !important;
+  text-overflow: ellipsis !important;
+  cursor: pointer !important;
+}
+/* per-line price (drawer override forced #1f0820 in v8 — beat it) */
+html[data-theme="dark"] body cart-drawer .cart-item__totals .price,
+html[data-theme="dark"] body .cart-item__totals .price,
+html[data-theme="dark"] body .cart-item__final-price {
+  color: #FFFFFF !important;
+}
+html[data-theme="dark"] body .cart-item__old-price,
+html[data-theme="dark"] body .cart-item .unit-price {
+  color: rgba(255, 255, 255, 0.54) !important;
+}
+
+/* ---------- Quantity stepper: clean glass, subtle border, gold accent ---------- */
+html[data-theme="dark"] body .cart-item .quantity,
+html[data-theme="dark"] body .cart-item .cart-quantity {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  border-radius: 12px !important;
+  color: #FFFFFF !important;
+  box-shadow: none !important;
+}
+html[data-theme="dark"] body .cart-item .quantity__input {
+  background: transparent !important;
+  color: #FFFFFF !important;
+  font-weight: 700 !important;
+}
+html[data-theme="dark"] body .cart-item .quantity__button {
+  color: rgba(255, 255, 255, 0.72) !important;
+}
+html[data-theme="dark"] body .cart-item .quantity__button:hover .svg-wrapper,
+html[data-theme="dark"] body .cart-item .quantity__button:hover {
+  color: #FFC24B !important;
+}
+html[data-theme="dark"] body .cart-item .quantity__button svg,
+html[data-theme="dark"] body .cart-item .quantity__button .icon {
+  color: currentColor !important;
+}
+
+/* ---------- Trash / remove icon ---------- */
+html[data-theme="dark"] body .cart-item cart-remove-button .button,
+html[data-theme="dark"] body .cart-item cart-remove-button .icon-remove,
+html[data-theme="dark"] body .cart-item cart-remove-button svg {
+  color: rgba(255, 255, 255, 0.70) !important;
+}
+html[data-theme="dark"] body .cart-item cart-remove-button .button:hover {
+  color: #FF2E93 !important;
+}
+
+/* ---------- "You may also like" recommendation cards (DARK, not white) ---------- */
+html[data-theme="dark"] body .aa-cart-recs {
+  border-top: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+html[data-theme="dark"] body .aa-cart-recs__head {
+  color: #FFFFFF !important;
+}
+html[data-theme="dark"] body .aa-rec {
+  background: #1A0B2E !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+/* image wells: keep a dark raised plate so broken/empty images don't flash white */
+html[data-theme="dark"] body .aa-rec__img {
+  background: #2D1B4E !important;
+}
+html[data-theme="dark"] body .aa-rec__title {
+  color: #FFFFFF !important;
+}
+html[data-theme="dark"] body .aa-rec__price {
+  color: #FFFFFF !important;
+}
+html[data-theme="dark"] body .aa-rec__price s {
+  color: rgba(255, 255, 255, 0.54) !important;
+}
+/* ADD button = brand gradient (matches site cards), not the v8 dark fill */
+html[data-theme="dark"] body .aa-rec__add {
+  background: linear-gradient(135deg, #FF8C42 0%, #FF2E93 100%) !important;
+  color: #FFFFFF !important;
+}
+html[data-theme="dark"] body .aa-rec__add:hover {
+  background: linear-gradient(135deg, #FF2E93 0%, #FF8C42 100%) !important;
+}
+
+/* ---------- Estimated total + tax note ---------- */
+html[data-theme="dark"] body .totals__total,
+html[data-theme="dark"] body .totals__total-value {
+  color: #FFFFFF !important;
+}
+html[data-theme="dark"] body .tax-note,
+html[data-theme="dark"] body .tax-note a,
+html[data-theme="dark"] body .cart__login-paragraph,
+html[data-theme="dark"] body .cart__login-title {
+  color: rgba(255, 255, 255, 0.54) !important;
+}
+
+/* ---------- Cart note (optional message field) ---------- */
+html[data-theme="dark"] body .cart__note .text-area,
+html[data-theme="dark"] body .cart__note .field__input {
+  background: #1A0B2E !important;
+  color: #FFFFFF !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+html[data-theme="dark"] body .drawer__footer summary,
+html[data-theme="dark"] body .cart__note label {
+  color: rgba(255, 255, 255, 0.70) !important;
+}
+
+/* ---------- Checkout button: keep the gradient, ensure white label ---------- */
+html[data-theme="dark"] body .aa-checkout-btn,
+html[data-theme="dark"] body cart-drawer .cart__checkout-button,
+html[data-theme="dark"] body .template-cart .cart__checkout-button {
+  background: linear-gradient(130deg, #e9027a 0%, #ec1f4f 32%, #f04930 64%, #f58220 100%) !important;
+  color: #FFFFFF !important;
+}
+html[data-theme="dark"] body .aa-checkout-btn__label {
+  color: #FFFFFF !important;
+}
+
+/* ---------- Top promo strip: tint for dark canvas ---------- */
+html[data-theme="dark"] body .aa-cart-promo {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.09) !important;
+}
+html[data-theme="dark"] body .aa-cart-promo__item {
+  color: rgba(255, 255, 255, 0.82) !important;
+}
+html[data-theme="dark"] body .aa-cart-promo__item strong {
+  color: #FFC24B !important;
+}
+
+/* ---------- Scrollbar in the drawer ---------- */
+html[data-theme="dark"] body cart-drawer-items::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.3) !important;
+}

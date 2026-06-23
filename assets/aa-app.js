@@ -319,8 +319,6 @@
     }
   }, true);
 
-  /* ---------- Condensing header (mobile) ---------- */
-  var headerScrollBound = false;
   /* Collection filters: only one dropdown open at a time ('toggle' doesn't
      bubble, so listen in capture phase). */
   document.addEventListener('toggle', function (e) {
@@ -334,18 +332,6 @@
   function initHeader() {
     var header = document.querySelector('.shopify-section-group-header-group') || document.querySelector('.section-header') || document.querySelector('.header-wrapper');
     if (header) header.classList.add('aa-sticky');
-    if (headerScrollBound) return;       /* bind the scroll listener ONCE (survives Turbo visits) */
-    headerScrollBound = true;
-    var lastY = window.scrollY || 0, ticking = false;
-    window.addEventListener('scroll', function () {
-      if (ticking) return; ticking = true;
-      requestAnimationFrame(function () {
-        var y = window.scrollY || 0;
-        if (y > 90 && y > lastY + 4) document.body.classList.add('aa-head-hidden');
-        else if (y < lastY - 4 || y < 90) document.body.classList.remove('aa-head-hidden');
-        lastY = y; ticking = false;
-      });
-    }, { passive: true });
   }
 
   /* ---------- Haptics on add-to-cart ---------- */

@@ -1,0 +1,205 @@
+/*
+  aa-dark-header.css
+  Dark-mode header overrides for the Aura AI header bar.
+  Every rule is scoped under html[data-theme="dark"] so the default light
+  (cream) header for normal web visitors is untouched. Values ported from the
+  fully-dark sibling theme (market-tweak), re-scoped here. !important is used to
+  beat the inline cream rules in sections/header.liquid + snippets.
+  Palette: bg #1A0B2E, header-deep #010922, raised #2D1B4E, text #FFFFFF,
+  secondary rgba(255,255,255,.70), primary/active #FF2E93,
+  accent gradient linear-gradient(135deg,#FF8C42,#FF2E93),
+  borders rgba(255,255,255,.12).
+*/
+
+/* === Header bar surface (frosted near-black) ===
+   ROOT CAUSE: sections/header.liquid renders an INLINE <style> in the BODY
+   that hard-codes `.shopify-section-header, sticky-header.header-wrapper,
+   .header-wrapper { background:#FBF6EE !important; }` (opaque cream). That
+   literal !important is the real light source. We cannot edit header.liquid,
+   so every rule below is prefixed with `html[data-theme="dark"] body` to lift
+   specificity above that inline rule (and above any future edit that adds
+   `html` to it). #010922 frosted near-black per the dark palette. */
+html[data-theme="dark"] body .shopify-section-header,
+html[data-theme="dark"] body sticky-header.header-wrapper,
+html[data-theme="dark"] body .header-wrapper {
+  background: #010922 !important;
+  background-color: #010922 !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+  backdrop-filter: blur(14px) !important;
+  border: 0 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: none !important;
+}
+
+/* === Magenta/orange ambient glow on the right edge === */
+html[data-theme="dark"] body sticky-header.header-wrapper::before,
+html[data-theme="dark"] body .header-wrapper::before {
+  background: radial-gradient(circle at 90% 50%,
+    rgba(255, 46, 147, 0.18) 0%,
+    rgba(255, 140, 66, 0.10) 30%,
+    rgba(255, 123, 62, 0) 65%) !important;
+}
+
+/* === Top announcement / offer bar (dark) ===
+   The announcement-bar section carries Dawn `color-accent-2`; aa-dark.css
+   already repoints that scheme's --color-background to dark, but we force the
+   exact #010922 here and boost specificity with `body` so no literal can win. */
+html[data-theme="dark"] body .section-header,
+html[data-theme="dark"] body .announcement-bar,
+html[data-theme="dark"] body .announcement-bar-section,
+html[data-theme="dark"] body .utility-bar,
+html[data-theme="dark"] body .utility-bar.color-accent-2,
+html[data-theme="dark"] body .aa-offer-bar {
+  background: #010922 !important;
+  background-color: #010922 !important;
+}
+html[data-theme="dark"] body .announcement-bar__message,
+html[data-theme="dark"] body .announcement-bar__announcement,
+html[data-theme="dark"] body .announcement-bar a,
+html[data-theme="dark"] body .announcement-bar__link,
+html[data-theme="dark"] body .utility-bar,
+html[data-theme="dark"] body .aa-offer-bar,
+html[data-theme="dark"] body .aa-offer-bar a {
+  color: #FFFFFF !important;
+}
+
+/* === Nav links + icons: light text, magenta on hover ===
+   `body` prefix lifts these above any inline color rule the section may emit. */
+html[data-theme="dark"] body .header__menu-item,
+html[data-theme="dark"] body .header__menu-item .list-menu__item,
+html[data-theme="dark"] body .header__active-menu-item,
+html[data-theme="dark"] body .header__icon,
+html[data-theme="dark"] body .header .list-menu__item--link,
+html[data-theme="dark"] body .aa-nav__link,
+html[data-theme="dark"] body .aa-nav__link span,
+html[data-theme="dark"] body .aa-logo__text {
+  color: #FFFFFF !important;
+}
+html[data-theme="dark"] body .header__menu-item:hover,
+html[data-theme="dark"] body .header__menu-item:hover .list-menu__item,
+html[data-theme="dark"] body .header__active-menu-item:hover,
+html[data-theme="dark"] body .header__icon:hover,
+html[data-theme="dark"] body .aa-nav__link:hover,
+html[data-theme="dark"] body .aa-nav__link:hover span,
+html[data-theme="dark"] body details[open] > .aa-nav__link,
+html[data-theme="dark"] body details[open] > .aa-nav__link span {
+  color: #FF2E93 !important;
+}
+
+/* === Active / current nav item: magenta (matches "Bracelets") === */
+html[data-theme="dark"] body .aa-nav__link[aria-current],
+html[data-theme="dark"] body .aa-nav__link[aria-current] span,
+html[data-theme="dark"] body .header__active-menu-item,
+html[data-theme="dark"] body .list-menu__item--active {
+  color: #FF2E93 !important;
+}
+
+/* === Animated nav underline: magenta === */
+html[data-theme="dark"] body .aa-nav__link::after {
+  background: #FF2E93 !important;
+}
+
+/* === Icon SVGs (search, account, cart): light, magenta on hover === */
+html[data-theme="dark"] body .header__icon .svg-wrapper,
+html[data-theme="dark"] body .header__icon svg {
+  color: #FFFFFF !important;
+}
+html[data-theme="dark"] body .header__icon:hover .svg-wrapper,
+html[data-theme="dark"] body .header__icon:hover svg {
+  color: #FF2E93 !important;
+}
+
+/* === Dropdown carets / chevrons: light, magenta when open === */
+html[data-theme="dark"] body .aa-nav__link .aa-chevron {
+  color: rgba(255, 255, 255, 0.70) !important;
+}
+html[data-theme="dark"] body .aa-nav__link:hover .aa-chevron,
+html[data-theme="dark"] body details[open] > .aa-nav__link .aa-chevron {
+  color: #FF2E93 !important;
+}
+
+/* === Cart-count badge: accent gradient, white text === */
+html[data-theme="dark"] body .header .cart-count-bubble {
+  background: linear-gradient(135deg, #FF8C42, #FF2E93) !important;
+  color: #FFFFFF !important;
+  border: 0 !important;
+}
+html[data-theme="dark"] body .header .cart-count-bubble span {
+  color: #FFFFFF !important;
+}
+
+/* === Mega-menu dropdown panel: dark surface, light labels ===
+   .aa-mega__panel carries the menu color-scheme (already dark via aa-dark.css);
+   we force the exact surface and boost with `body`. */
+html[data-theme="dark"] body .aa-mega__panel {
+  background: rgba(26, 11, 46, 0.97) !important;
+  background-color: rgba(26, 11, 46, 0.97) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.45) !important;
+  color: #FFFFFF !important;
+}
+
+/* === Mega-menu tiles: dark image circles, light labels === */
+html[data-theme="dark"] body .aa-tile,
+html[data-theme="dark"] body .aa-tile:hover,
+html[data-theme="dark"] body .aa-tile:focus,
+html[data-theme="dark"] body .aa-tile:active,
+html[data-theme="dark"] body .aa-tile:visited {
+  color: #FFFFFF !important;
+  background: none !important;
+}
+html[data-theme="dark"] body .aa-tile__circle {
+  background: rgba(255, 255, 255, 0.06) !important;
+}
+html[data-theme="dark"] body .aa-tile__circle::after {
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12) !important;
+}
+html[data-theme="dark"] body .aa-tile:hover .aa-tile__circle {
+  background: rgba(255, 255, 255, 0.10) !important;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45) !important;
+}
+html[data-theme="dark"] body .aa-tile--active .aa-tile__circle {
+  box-shadow: inset 0 0 0 1px #FF2E93 !important;
+}
+html[data-theme="dark"] body .aa-tile--all .aa-tile__circle {
+  background: linear-gradient(135deg, #FF8C42 0%, #FF2E93 100%) !important;
+}
+html[data-theme="dark"] body .aa-tile__placeholder {
+  color: #FFFFFF !important;
+}
+html[data-theme="dark"] body .aa-tile__label {
+  color: #FFFFFF !important;
+}
+html[data-theme="dark"] body .aa-tile:hover .aa-tile__label,
+html[data-theme="dark"] body .aa-tile--active .aa-tile__label {
+  color: #FF2E93 !important;
+}
+
+/* === Classic dropdown submenu (non-mega) panel: dark surface === */
+html[data-theme="dark"] body .header__submenu {
+  background: #1A0B2E !important;
+  background-color: #1A0B2E !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.45) !important;
+}
+html[data-theme="dark"] body .header__submenu .header__menu-item,
+html[data-theme="dark"] body .header__submenu .list-menu__item {
+  color: #FFFFFF !important;
+}
+html[data-theme="dark"] body .header__submenu .header__menu-item:hover,
+html[data-theme="dark"] body .header__submenu .list-menu__item:hover,
+html[data-theme="dark"] body .header__submenu .list-menu__item--active {
+  color: #FF2E93 !important;
+  background: #2D1B4E !important;
+}
+
+/* Header win over aa-section-cards.css `html body .section-header .header-wrapper`
+   cream !important (mirror its exact chain + data-theme for the specificity win).
+   Verified via theme dev DOM inspection. */
+html[data-theme="dark"] body .section-header,
+html[data-theme="dark"] body .section-header .header-wrapper,
+html[data-theme="dark"] body .header-wrapper,
+html[data-theme="dark"] body sticky-header.header-wrapper {
+  background: #010922 !important;
+  background-color: #010922 !important;
+}

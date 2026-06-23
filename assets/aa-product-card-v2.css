@@ -556,12 +556,25 @@ product-recommendations.related-products {
   overflow-y: visible !important;
   scroll-snap-type: x mandatory !important;
   scroll-behavior: smooth !important;
-  gap: 20px !important;
-  padding: 10px 4px 18px 4px !important;
+  gap: 14px !important;
+  padding: 2px 4px 14px 4px !important;
   margin: 0 !important;
   grid-template-columns: none !important;
   list-style: none !important;
   -webkit-overflow-scrolling: touch !important;
+}
+/* Broken-card fixes for the related slider (collection breakpoint CSS is
+   template-collection-scoped and never runs on the product page):
+   1) kill the floating "+" that renders as a full-width bar here,
+   2) always show the full Add-to-cart pill,
+   3) pin the rating pill bottom-left so it stops overlapping the badge. */
+.related-products .aa-pcard__form--float,
+.related-products .aa-pcard__cta--plus { display: none !important; }
+.related-products .aa-pcard__form--inline { display: block !important; position: static !important; margin-top: auto !important; }
+.related-products .aa-pcard__rate {
+  position: absolute !important;
+  left: 8px !important; right: auto !important; bottom: 8px !important; top: auto !important;
+  z-index: 3 !important;
 }
 /* Hide scrollbar but allow scroll */
 .related-products .grid.product-grid::-webkit-scrollbar { height: 6px; }
@@ -575,16 +588,17 @@ product-recommendations.related-products {
 }
 .related-products .grid.product-grid > .grid__item {
   flex: 0 0 auto !important;
-  width: 260px !important;
-  max-width: 260px !important;
-  min-width: 0 !important;
+  width: 210px !important;
+  max-width: 210px !important;
+  min-width: 210px !important;
   scroll-snap-align: start !important;
   margin: 0 !important;
 }
 @media screen and (min-width: 990px) {
   .related-products .grid.product-grid > .grid__item {
-    width: 280px !important;
-    max-width: 280px !important;
+    width: 230px !important;
+    max-width: 230px !important;
+    min-width: 230px !important;
   }
 }
 
@@ -760,11 +774,11 @@ html body .card-wrapper.product-card-wrapper .quick-add__submit svg.aa-cta-plus 
     height: 9px !important;
   }
 
-  /* Related products slider — better mobile cards */
+  /* Related products slider — mobile card width */
   .related-products .grid.product-grid > .grid__item {
-    width: 165px !important;
-    max-width: 165px !important;
-    min-width: 165px !important;
+    width: 180px !important;
+    max-width: 180px !important;
+    min-width: 180px !important;
   }
 }
 
@@ -797,9 +811,9 @@ html body .card-wrapper.product-card-wrapper .quick-add__submit svg.aa-cta-plus 
     padding-bottom: 12px !important;
   }
   html body .related-products .grid.product-grid > .grid__item {
-    width: 175px !important;
-    max-width: 175px !important;
-    min-width: 175px !important;
+    width: 180px !important;
+    max-width: 180px !important;
+    min-width: 180px !important;
   }
   /* Cards inside related slider — full vertical layout, no ADD button cropping title */
   html body .related-products .card-wrapper.product-card-wrapper .card > .card__content,

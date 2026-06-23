@@ -291,7 +291,7 @@ html body .sec h2,html body .sec h3,html body .efeat .ov h3,html body .rtop h2,h
 .pcard .qv-btn{position:absolute!important;left:50%!important;right:auto!important;top:auto!important;bottom:12px!important;width:auto!important;height:auto!important;transform:translate(-50%,8px);opacity:0;z-index:5;transition:opacity .25s ease,transform .25s ease;pointer-events:none}
 .pcard:hover .qv-btn{opacity:1;transform:translate(-50%,0);pointer-events:auto}
 .pcard .qv-btn .qv-btn__b{font:inherit;cursor:pointer;background:var(--card)!important;color:var(--ink);border:1px solid var(--line)!important;border-radius:999px;padding:8px 16px!important;font-size:12px;font-weight:500;box-shadow:var(--shadow);white-space:nowrap;width:auto!important;height:auto!important;display:inline-block!important;position:relative!important}
-.pcard .qv-btn .qv-btn__b:hover{background:var(--ink)!important;color:#F6F0E3}
+.pcard .qv-btn .qv-btn__b:hover{transform:scale(1.04)}
 @media(max-width:768px){.pcard .qv-btn{display:none!important}}
 .pcard .media-btn{appearance:none;-webkit-appearance:none;background:none;border:0;padding:0;margin:0;width:100%;height:100%;display:block;position:relative;cursor:pointer;font:inherit;color:inherit}
 .qv-hint{position:absolute;left:50%;bottom:10px;transform:translateX(-50%) translateY(8px);background:rgba(36,16,25,.86);color:#F6F0E3;font-size:11px;letter-spacing:.03em;padding:6px 14px;border-radius:999px;opacity:0;transition:opacity .25s,transform .25s;pointer-events:none;white-space:nowrap;z-index:3}

@@ -54,13 +54,13 @@
             tokenAuth: c.msg91TokenAuth,
             exposeMethods: true,
             captchaRenderId: '',
-            success: function (data) { console.log('[aa-auth] MSG91 success cb:', data); },
-            failure: function (err) { console.log('[aa-auth] MSG91 failure cb:', err); }
+            success: function () {},
+            failure: function () {}
           });
         } catch (e) { reject(e); return; }
         var tries = 0;
         (function wait() {
-          if (typeof window.sendOtp === 'function') { console.log('[aa-auth] window.sendOtp ready'); resolve(); return; }
+          if (typeof window.sendOtp === 'function') { resolve(); return; }
           if (tries++ > 240) { reject(new Error('window.sendOtp not exposed after 12s')); return; }
           setTimeout(wait, 50);
         })();
@@ -85,13 +85,12 @@
           return new Promise(function (resolve) {
             window.sendOtp('91' + phone,
               function (d) {
-                console.log('[aa-auth] sendOtp success:', d);
                 var rid = (typeof d === 'string') ? d : (d && (d.message || d.reqId || d.request_id));
                 resolve({ ok: true, reqId: rid || null });
               },
-              function (e) { console.error('[aa-auth] sendOtp failure:', e); resolve({ ok: false, error: (e && (e.message || (typeof e === 'string' ? e : JSON.stringify(e)))) || 'send failed' }); });
+              function (e) { resolve({ ok: false, error: (e && (e.message || (typeof e === 'string' ? e : JSON.stringify(e)))) || 'send failed' }); });
           });
-        }).catch(function (e) { console.error('[aa-auth] widget load error:', e); return { ok: false, error: e.message }; });
+        }).catch(function (e) { return { ok: false, error: e.message }; });
       }
       // Fallback: send-otp-v2 edge function (only matches verify if same MSG91 method)
       return fetch(c.sendOtpUrl, {
@@ -120,7 +119,6 @@
         })
       }).then(function (r) { _status = r.status; return r.json().catch(function () { return null; }); })
         .then(function (d) {
-          console.log('[aa-auth] verify HTTP ' + _status + ' response:', d);
           if (!d || !d.success) return { ok: false, error: (d && d.error) ? (d.error + ' (HTTP ' + _status + ')') : ('verify failed (HTTP ' + _status + ')') };
           // 2) establish the Supabase session (app identity) from the token_hash
           return establishSession(c, d).then(function () {
@@ -217,12 +215,6 @@
     closeMenu(); window.location.href = '/';
   }
 
-  function openView(title, html) {
-    var v = viewEl(); if (!v) return;
-    v.querySelector('[data-view-title]').textContent = title;
-    v.querySelector('[data-view-body]').innerHTML = html;
-    v.hidden = false; void v.offsetWidth; requestAnimationFrame(function () { v.classList.add('aa-au-in'); });
-  }
   function closeView() { var v = viewEl(); if (!v) return; v.classList.remove('aa-au-in'); setTimeout(function () { if (!v.classList.contains('aa-au-in')) v.hidden = true; }, 420); }
   function row(k, val) { return '<div class="aa-au-pf__row"><span class="aa-au-pf__k">' + k + '</span><span class="aa-au-pf__v">' + esc(val) + '</span></div>'; }
 

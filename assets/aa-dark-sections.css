@@ -1,0 +1,84 @@
+/* =============================================================================
+   aa-dark-sections.css . AstroAura dark-mode SURFACE overrides for home sections
+   -----------------------------------------------------------------------------
+   Every rule scoped under html[data-theme="dark"]. Light default is untouched.
+
+   WHY THIS FILE EXISTS
+   The trust/authenticity section (sections/aa-rd-certify.liquid, class .aa-cert)
+   bakes its backgrounds as LITERAL light hex values inside its own inline
+   {%- style -%} block:
+     .aa-cert      -> background: linear-gradient(180deg,#FBF8F2,#F4EFE4)  (cream)
+     .aa-cert__card-> background: linear-gradient(180deg,#FFFFFF,#FBF6EC)  (white)
+                      + light gold border + light shadow
+     .aa-cert__ic--*-> pale pastel washes (light icon chips)
+     .aa-cert__tag -> cream/gold pill background
+   Those are SURFACES, not text. The global dark layer remaps text via
+   aa-dark-type.css (.aa-cert__title/__name/__sub/__eyebrow/__tag colors are
+   already handled there), but nothing inverted the baked surfaces, so the
+   whole section rendered fully light with near-invisible text.
+
+   This file inverts ONLY the surfaces (section bg, cards, icon chips, tag pill).
+   It deliberately does NOT redeclare the text colors that aa-dark-type.css owns.
+
+   LOAD ORDER: this stylesheet must be tagged AFTER aa-dark-type.css in
+   layout/theme.liquid so its rules win the cascade, e.g. add right below it:
+     {{ 'aa-dark-sections.css' | asset_url | stylesheet_tag }}
+   !important is used on the backgrounds because the baked values live in a
+   per-section inline <style> whose paint order vs an external sheet is fragile.
+
+   PALETTE
+   bg #0C0A1F/#06061F · surface #1A0B2E · raised #2D1B4E
+   text #FFFFFF/.70/.54 · border rgba(255,255,255,.12) · gold #FFC24B · accent #FF2E93
+   ============================================================================= */
+
+/* -------------------------------------------------------------------------
+   CERTIFY / TRUST SECTION  (sections/aa-rd-certify.liquid  .aa-cert)
+   "A Promise of Purity & Authenticity"  ·  eyebrow "|| प्रमाणित ||"
+   ------------------------------------------------------------------------- */
+
+/* Section canvas: cream gradient -> dark canvas */
+html[data-theme="dark"] .aa-cert {
+  background: #0C0A1F !important;
+}
+
+/* Feature cards: white gradient -> dark surface, light border -> faint white */
+html[data-theme="dark"] .aa-cert__card {
+  background: #1A0B2E !important;
+  border: 1px solid rgba(255,255,255,.12) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.04),
+    0 2px 4px rgba(0,0,0,.30),
+    0 16px 34px -14px rgba(0,0,0,.65) !important;
+}
+html[data-theme="dark"] .aa-cert__card:hover {
+  border-color: rgba(255,255,255,.20) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.06),
+    0 24px 52px -16px rgba(0,0,0,.75) !important;
+}
+
+/* Icon chips: keep each accent tint, but on a dark-aware wash with a
+   brighter (legible) stroke colour for the inline SVGs. */
+html[data-theme="dark"] .aa-cert__ic--g {
+  background: rgba(46,158,91,.20) !important;
+  color: #5FD597 !important; /* green: 100% Authentic */
+}
+html[data-theme="dark"] .aa-cert__ic--b {
+  background: rgba(68,138,255,.20) !important;
+  color: #7FB0FF !important; /* blue: Lab Tested */
+}
+html[data-theme="dark"] .aa-cert__ic--p {
+  background: rgba(255,46,147,.18) !important;
+  color: #FF7CC2 !important; /* accent pink: Natural Origin */
+}
+html[data-theme="dark"] .aa-cert__ic--o {
+  background: rgba(255,140,66,.20) !important;
+  color: #FFB37A !important; /* orange: Energised & Blessed */
+}
+
+/* Sub-label pills: cream/gold pill -> dark raised pill with light text.
+   (Text colour itself is set in aa-dark-type.css; here we fix the surface.) */
+html[data-theme="dark"] .aa-cert__tag {
+  background: rgba(255,255,255,.06) !important;
+  border: 1px solid rgba(255,255,255,.12) !important;
+}

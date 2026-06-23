@@ -1,0 +1,158 @@
+/* =========================================================================
+   AstroAura DARK MODE - SEARCH overlay + predictive-search panel.
+   Scoped entirely under html[data-theme="dark"]. Light appearance untouched.
+
+   Palette:
+     surface  #1A0B2E   raised #2D1B4E
+     text     #FFFFFF / rgba(255,255,255,.70) / .54
+     primary  #FF2E93   accent linear-gradient(135deg,#FF8C42,#FF2E93)
+     border   rgba(255,255,255,.12)   glass rgba(255,255,255,.06)
+   Fixes a WHITE search input + white "POPULAR RIGHT NOW" header on the dark
+   results panel. Stock .field__input / .predictive-search use Dawn
+   --color-* tokens that resolve to the LIGHT scheme here, so we pin dark
+   values explicitly and win the cascade with html[data-theme="dark"] body.
+   ========================================================================= */
+
+/* ---- Search input field: dark surface, white text, light placeholder ---- */
+html[data-theme="dark"] body .search-modal .search__input.field__input,
+html[data-theme="dark"] body .search-modal .field__input {
+  background-color: #1A0B2E !important;
+  color: #FFFFFF !important;
+  border-radius: 14px !important;
+}
+
+/* Glass hairline ring around the input (replaces the light --color-foreground ring) */
+html[data-theme="dark"] body .search-modal .field:after {
+  box-shadow: 0 0 0 0.1rem rgba(255,255,255,.12) !important;
+  border-color: transparent !important;
+}
+
+html[data-theme="dark"] body .search-modal .field:hover.field:after {
+  box-shadow: 0 0 0 0.1rem rgba(255,255,255,.24) !important;
+}
+
+/* Magenta focus ring */
+html[data-theme="dark"] body .search-modal .field__input:focus,
+html[data-theme="dark"] body .search-modal .field__input:focus-visible {
+  box-shadow: 0 0 0 0.2rem #FF2E93 !important;
+}
+
+/* Floating label + placeholder: muted white */
+html[data-theme="dark"] body .search-modal .field__label {
+  color: rgba(255,255,255,.54) !important;
+}
+
+html[data-theme="dark"] body .search-modal .field__input::placeholder {
+  color: rgba(255,255,255,.54) !important;
+}
+
+/* Kill the stock autofill rule that forces BLACK text on a dark field */
+html[data-theme="dark"] body .search-modal .field__input:-webkit-autofill,
+html[data-theme="dark"] body .search-modal .field__input:-webkit-autofill ~ .field__label {
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  -webkit-box-shadow: 0 0 0 1000px #1A0B2E inset !important;
+}
+
+/* ---- Search + reset + close icons: light ---- */
+html[data-theme="dark"] body .search-modal .search__button .icon,
+html[data-theme="dark"] body .search-modal .reset__button .icon,
+html[data-theme="dark"] body .search-modal__close-button .icon,
+html[data-theme="dark"] body .search-modal .field__button {
+  color: rgba(255,255,255,.70) !important;
+}
+
+html[data-theme="dark"] body .search-modal .search__button:hover .icon,
+html[data-theme="dark"] body .search-modal .reset__button:hover .icon,
+html[data-theme="dark"] body .search-modal__close-button:hover .icon {
+  color: #FF2E93 !important;
+}
+
+/* Reset-button divider hairline on dark */
+html[data-theme="dark"] body .search-modal .reset__button:not(:focus-visible)::after,
+html[data-theme="dark"] body .search-modal .reset__button:not(:focus)::after {
+  border-right-color: rgba(255,255,255,.12) !important;
+}
+
+/* Focused icon buttons keep the dark surface, not a white flash */
+html[data-theme="dark"] body .search-modal .search__button:focus,
+html[data-theme="dark"] body .search-modal .search__button:focus-visible,
+html[data-theme="dark"] body .search-modal .reset__button:focus,
+html[data-theme="dark"] body .search-modal .reset__button:focus-visible {
+  background-color: #1A0B2E !important;
+}
+
+/* ---- Predictive-search results panel: dark glass card ---- */
+html[data-theme="dark"] body .predictive-search {
+  background-color: #1A0B2E !important;
+  border-color: rgba(255,255,255,.12) !important;
+  box-shadow: 0 18px 50px rgba(0,0,0,.55) !important;
+  border-bottom-left-radius: 16px !important;
+  border-bottom-right-radius: 16px !important;
+}
+
+html[data-theme="dark"] body .predictive-search__results-groups-wrapper {
+  border-bottom-color: rgba(255,255,255,.12) !important;
+}
+
+/* "POPULAR RIGHT NOW" / group headings: muted white, dark hairline */
+html[data-theme="dark"] body .predictive-search__heading {
+  color: rgba(255,255,255,.70) !important;
+  border-bottom-color: rgba(255,255,255,.12) !important;
+}
+
+/* ---- Result rows ---- */
+html[data-theme="dark"] body .predictive-search__item {
+  color: #FFFFFF !important;
+}
+
+/* Product titles white */
+html[data-theme="dark"] body .predictive-search__item-heading {
+  color: #FFFFFF !important;
+}
+
+html[data-theme="dark"] body .predictive-search__item-vendor {
+  color: rgba(255,255,255,.54) !important;
+}
+
+/* Prices white70 */
+html[data-theme="dark"] body .predictive-search__item .price,
+html[data-theme="dark"] body .predictive-search .price {
+  color: rgba(255,255,255,.70) !important;
+}
+
+/* Query-result highlight mark stays subtle on dark */
+html[data-theme="dark"] body .predictive-search__item-query-result mark {
+  color: rgba(255,255,255,.70) !important;
+  background-color: transparent !important;
+}
+
+/* Hover / keyboard-selected row: subtle glass highlight, no underline color loss */
+html[data-theme="dark"] body .predictive-search__list-item[aria-selected="true"] > *,
+html[data-theme="dark"] body .predictive-search__list-item:hover > *,
+html[data-theme="dark"] body .predictive-search__item[aria-selected="true"],
+html[data-theme="dark"] body .predictive-search__item:hover {
+  color: #FFFFFF !important;
+  background-color: rgba(255,255,255,.06) !important;
+}
+
+/* ---- Thumbnail tiles: dark raised, not white ---- */
+html[data-theme="dark"] body .predictive-search__item--link-with-thumbnail .predictive-search__image,
+html[data-theme="dark"] body .predictive-search__image {
+  background-color: #2D1B4E !important;
+  border-radius: 10px !important;
+}
+
+/* "Search for X" term rows + arrow: white text, magenta arrow */
+html[data-theme="dark"] body .predictive-search__item--term {
+  color: #FFFFFF !important;
+}
+
+html[data-theme="dark"] body .predictive-search__item--term .icon-arrow {
+  color: #FF2E93 !important;
+}
+
+/* Loading spinner tint */
+html[data-theme="dark"] body .predictive-search .spinner path {
+  stroke: rgba(255,255,255,.70) !important;
+}

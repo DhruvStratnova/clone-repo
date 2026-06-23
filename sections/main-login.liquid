@@ -22,7 +22,6 @@
   .aa-au-loginpage button{background:linear-gradient(130deg,#E9027A,#F58220) !important;color:#fff !important;border:0 !important;border-radius:999px !important;padding:14px 22px !important;font-weight:700 !important;cursor:pointer}
   .aa-au-loginpage a{color:#E9027A;font-weight:600;text-decoration:none}
 {%- endstyle -%}
-{{ 'aa-auth-v2.css' | asset_url | stylesheet_tag }}
 
 {%- if section.settings.enable_shop_login_button == false -%}
   {%- assign hide_shop_login_button = true -%}

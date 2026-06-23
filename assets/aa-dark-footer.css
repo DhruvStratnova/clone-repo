@@ -1,0 +1,98 @@
+/* ============================================================
+   Aura AI — Dark-mode FOOTER overrides
+   Cookie-gated: every rule scoped under html[data-theme="dark"].
+   Default light footer (aa-footer.css) is left untouched.
+   Values ported from market-tweak/assets/aa-footer.css (the dark
+   source of truth), re-scoped here so they only apply in dark mode.
+   ============================================================ */
+
+/* ---------- FOOTER SHELL ---------- */
+html[data-theme="dark"] .aa-footer {
+  background: #06061F;
+  color: rgba(255, 255, 255, 0.70);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* ---------- BRAND BLOCK ---------- */
+html[data-theme="dark"] .aa-logo__orb-wrap {
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.18), 0 2px 12px rgba(0, 0, 0, 0.4);
+}
+html[data-theme="dark"] .aa-logo__text {
+  color: #FFFFFF;
+}
+html[data-theme="dark"] .aa-footer__tagline,
+html[data-theme="dark"] .aa-footer__hours {
+  color: rgba(255, 255, 255, 0.70);
+}
+html[data-theme="dark"] .aa-footer__hours strong {
+  color: #FFFFFF;
+}
+
+/* ---------- SOCIAL ICONS ---------- */
+html[data-theme="dark"] .aa-footer__social a {
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: rgba(255, 255, 255, 0.70);
+}
+html[data-theme="dark"] .aa-footer__social a:hover,
+html[data-theme="dark"] .aa-footer__social a:focus-visible {
+  background: linear-gradient(135deg, #FF8C42, #FF2E93);
+  border-color: transparent;
+  color: #fff;
+}
+
+/* ---------- COLUMN HEADINGS ---------- */
+html[data-theme="dark"] .aa-footer__heading {
+  color: #FFFFFF;
+}
+
+/* ---------- COLUMN LINKS ---------- */
+html[data-theme="dark"] .aa-footer__links a {
+  color: rgba(255, 255, 255, 0.70);
+}
+html[data-theme="dark"] .aa-footer__links a:hover,
+html[data-theme="dark"] .aa-footer__links a:focus-visible {
+  color: #FF2E93;
+}
+
+/* ---------- BOTTOM BAR ---------- */
+html[data-theme="dark"] .aa-footer__bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  background: #06061F;
+}
+html[data-theme="dark"] .aa-footer__copyright,
+html[data-theme="dark"] .aa-footer__contact {
+  color: rgba(255, 255, 255, 0.54);
+}
+html[data-theme="dark"] .aa-footer__contact a {
+  color: rgba(255, 255, 255, 0.70);
+}
+html[data-theme="dark"] .aa-footer__contact span {
+  color: rgba(255, 255, 255, 0.40);
+}
+
+/* ============================================================
+   MOBILE (≤749px) — accordions, quicklinks, dividers
+   ============================================================ */
+@media (max-width: 749px) {
+  html[data-theme="dark"] .aa-footer__tagline,
+  html[data-theme="dark"] .aa-footer__hours {
+    color: rgba(255, 255, 255, 0.70);
+  }
+
+  /* Mobile quicklinks */
+  html[data-theme="dark"] .aa-footer__quicklink {
+    color: #FFFFFF;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  /* Accordion section dividers + chevron */
+  html[data-theme="dark"] .aa-footer__accordion {
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  html[data-theme="dark"] .aa-footer__chevron {
+    color: rgba(255, 255, 255, 0.70);
+  }
+  html[data-theme="dark"] .aa-footer__accordion .aa-footer__links a {
+    color: rgba(255, 255, 255, 0.70);
+  }
+}

@@ -659,8 +659,10 @@ header .aa-img-stamp,
   width: 56px !important;
   height: 56px !important;
   margin: 0 !important;
-  top: 14px !important;
-  left: 14px !important;
+  /* Inset clears the 14px image corner radius + the -10deg rotation overhang,
+     so the seal never clips on any slide. Consistent on every image. */
+  top: 18px !important;
+  left: 18px !important;
   bottom: auto !important;
   right: auto !important;
   align-items: center !important;
@@ -672,6 +674,7 @@ header .aa-img-stamp,
   border-radius: 50% !important;
   box-shadow: 0 2px 6px rgba(0,0,0,0.08) !important;
   transform: rotate(-10deg) !important;
+  transform-origin: center center !important;
   pointer-events: none !important;
   box-sizing: border-box !important;
   backdrop-filter: blur(4px) !important;
@@ -699,8 +702,8 @@ body.template-product .product__media-wrapper .product__media-item .aa-img-stamp
 body.template-product .product__media-wrapper .product__media .aa-img-stamp {
   display: flex !important;
   visibility: visible !important;
-  top: 14px !important;
-  left: 14px !important;
+  top: 18px !important;
+  left: 18px !important;
   bottom: auto !important;
   right: auto !important;
 }

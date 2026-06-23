@@ -8,6 +8,7 @@
 {%- endcomment -%}
 
 {%- if part == 'top' -%}
+  {{ 'aa-dark-pdp.css' | asset_url | stylesheet_tag }}
   {%- assign aa_features = product.metafields.custom.key_feature.value -%}
   {%- if aa_features and aa_features.size > 0 -%}
     <div class="aa-pdp-chips">

@@ -1,0 +1,108 @@
+/* ============================================================================
+   aa-dark-pdp.css
+   Dark-mode PDP fixes for sections/main-product.liquid + snippets/aa-pdp-*.liquid
+   Scope: every rule gated under html[data-theme="dark"]; light theme untouched.
+   Does NOT duplicate aa-dark-type.css (PDP accordions, variant pills, price-item,
+   MRP), only the gaps it leaves: title h1, deal price <b>, social-proof, cert badge.
+   Palette: text #FFFFFF, secondary rgba(255,255,255,.70), tertiary .54,
+   raised surface #2D1B4E, primary #FF2E93, gold #FFC24B, gradient #FF8C42->#FF2E93.
+   ============================================================================ */
+
+/* ---- 1. PRODUCT TITLE -----------------------------------------------------
+   Bug: title renders faint dark maroon. The source colours the heading on
+   `.product__title h1` / `h2.h1`, and aa-pdp-v1.css armours it with a 24x
+   repeated `.template-product` class chain. The existing dark rule only hits
+   the `.product__title` container (not the h1) so the maroon h1 wins. Match the
+   id wrapper + the deepest element at high specificity to force legible white. */
+html[data-theme="dark"] #ProductInfo-1 .product__title h1,
+html[data-theme="dark"] #ProductInfo-1 .product__title h2.h1,
+html[data-theme="dark"] [id^="ProductInfo-"] .product__title h1,
+html[data-theme="dark"] [id^="ProductInfo-"] .product__title h2.h1,
+html[data-theme="dark"] body.template-product .product__title h1,
+html[data-theme="dark"] body.template-product .product__title h2.h1,
+html[data-theme="dark"] body.template-product .product__title,
+html[data-theme="dark"] body.template-product .product__title a {
+  color: #FFFFFF !important;
+}
+
+/* ---- 2. PREPAID DEAL BLOCK ------------------------------------------------
+   Markup (snippets/aa-pdp-commerce.liquid): .aa-deal > .aa-deal-top >
+   .aa-deal-l (.aa-deal-get with <b> price + .aa-deal-tag) + .aa-deal-chip.
+   Bugs:
+   (a) the "Get at Rs.X" price lives in `.aa-deal-get b` (hardcoded #241019),
+       which the existing dark file missed (it targeted a non-existent
+       `.aa-deal-amt`), so the price stayed invisible.
+   (b) make the panel a proper raised dark surface, labels light, chip readable,
+       gold accents preserved. */
+html[data-theme="dark"] .aa-deal {
+  background: #2D1B4E !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35) !important;
+}
+html[data-theme="dark"] .aa-deal-get {
+  color: #FFFFFF !important;
+}
+html[data-theme="dark"] .aa-deal-get b {
+  color: #FFFFFF !important;
+  border-bottom: 2.5px solid #FFC24B !important;
+}
+html[data-theme="dark"] .aa-deal-tag {
+  color: rgba(255, 255, 255, 0.70) !important;
+}
+html[data-theme="dark"] .aa-deal-chip {
+  background: rgba(255, 194, 75, 0.16) !important;
+  color: #FFC24B !important;
+  border: 1px solid rgba(255, 194, 75, 0.35) !important;
+}
+
+/* ---- 3. SOCIAL-PROOF LINE -------------------------------------------------
+   Markup (snippets/aa-pdp-extras.liquid): .aa-pdp-social (+ .aa-dot).
+   Bug: hardcoded #9a5b2a (dark brown), no dark rule existed, so the line
+   "N orders placed in the last 24 hours" rendered near-black on dark.
+   Make it light/secondary; keep the gradient pulse dot. */
+html[data-theme="dark"] .aa-pdp-social {
+  color: rgba(255, 255, 255, 0.70) !important;
+}
+html[data-theme="dark"] .aa-pdp-social .aa-dot {
+  background: linear-gradient(135deg, #FF8C42, #FF2E93) !important;
+}
+
+/* ---- 4. CERTIFIED IMAGE BADGE (.aa-img-stamp) -----------------------------
+   Bug: the round CERTIFIED seal overlaps the image corner oddly. Root cause is
+   positioning, not colour: the stamp is absolutely positioned (top/left 14px)
+   against .product__media-item, but the rotate(-10deg) transform-origin is the
+   element centre, so the rotated 56px disc swings past the rounded 14px image
+   corner and clips outside the frame. Pin the origin to the corner and tuck the
+   disc just inside the rounded edge so it rides the corner cleanly.
+   (Position/transform-origin fix only; safe in both themes but scoped to dark
+   per instructions. Colour adapts the seal to the dark surface.) */
+html[data-theme="dark"] body.template-product .product__media-wrapper .product__media-item .aa-img-stamp,
+html[data-theme="dark"] body.template-product .product__media-wrapper .product__media .aa-img-stamp {
+  top: 16px !important;
+  left: 16px !important;
+  transform-origin: center center !important;
+  transform: rotate(-8deg) !important;
+}
+
+/* Main price was dark (#1a1a1a from aa-product-page.css .product__info-wrapper .price__regular .price-item--regular !important). Beat it. */
+html[data-theme="dark"] .product__info-wrapper .price__regular .price-item--regular,
+html[data-theme="dark"] .product__info-wrapper .price__sale .price-item--sale,
+html[data-theme="dark"] .product__info-wrapper .price .price-item--last,
+html[data-theme="dark"] .product__info-wrapper .price .mws-price { color:#FFFFFF !important; }
+html[data-theme="dark"] .product__info-wrapper .price s,
+html[data-theme="dark"] .product__info-wrapper .price .price-item--regular.price--end { color:rgba(255,255,255,.55) !important; }
+
+/* ---- 6. PDP MEDIA FRAME STAYS WHITE -------------------------------------
+   Product photos must keep a WHITE backdrop in dark mode (per instruction:
+   "these images keep their bg white"). Transparent product PNGs (e.g. the
+   pendant cutout) would otherwise show the dark page behind them. Force the
+   PDP media frame white so every product image reads on white, exactly like
+   light mode. Scoped to the product template media only. */
+html[data-theme="dark"] body.template-product .product__media-wrapper .product__media,
+html[data-theme="dark"] body.template-product .product__media-wrapper .product__media-item,
+html[data-theme="dark"] body.template-product .product__media-wrapper .product__media .media,
+html[data-theme="dark"] body.template-product .product__media-wrapper .product__modal-opener {
+  background: #FFFFFF !important;
+  background-color: #FFFFFF !important;
+  background-image: none !important;
+}

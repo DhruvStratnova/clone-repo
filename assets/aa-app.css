@@ -23,14 +23,14 @@ a, button, .button, [role="button"], .aa-tab, summary, label {
 }
 
 /* ---- 3. Bottom tab bar (mobile only) ---- */
-:root { --aa-tabbar-h: 56px; }
+:root { --aa-tabbar-h: 0px; }
 .aa-tabbar { display: none; }
 @media screen and (max-width: 749px) {
   .aa-tabbar {
     position: fixed;
     left: 0; right: 0; bottom: 0;
     z-index: 900;
-    display: flex;
+    display: none;
     align-items: stretch;
     justify-content: space-around;
     min-height: var(--aa-tabbar-h);
