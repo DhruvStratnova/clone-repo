@@ -17,8 +17,10 @@
 
     var ENABLED = true; // <-- live for all visitors (account icon opens our popup, never Shopify login)
 
-    // Send via OTPWidget (the @msg91comm/sendotp object your app uses) -> reqId,
-    // verify with the already-deployed msg91-verify-token-v1 (widget verify). No new deploy.
+    // MSG91 REST API flow (no client widget): SEND via send-otp-v2 (POST /api/v5/otp)
+    // and VERIFY via verify-otp-v2 (GET /api/v5/otp/verify). Both run server-side with
+    // the secret MSG91_AUTH_KEY. Leaving the widget creds EMPTY makes aa-auth.js take
+    // its server send-otp-v2 path instead of loading the verify.msg91.com widget.
     window.AA_AUTH_CONFIG = {
       enabled: ENABLED || preview,
       demo: false,
@@ -26,9 +28,9 @@
       projectRef: PROJECT_REF,
       anonKey: ANON_KEY,
       sendOtpUrl: SUPABASE_URL + '/functions/v1/send-otp-v2',
-      verifyUrl: SUPABASE_URL + '/functions/v1/msg91-verify-token-v1',
-      msg91WidgetId: '356b776c4e50333131353237',
-      msg91TokenAuth: '479288TzoS0bFWCte69230125P1',
+      verifyUrl: SUPABASE_URL + '/functions/v1/verify-otp-v2',
+      msg91WidgetId: '',
+      msg91TokenAuth: '',
       headers: { 'apikey': ANON_KEY, 'Authorization': 'Bearer ' + ANON_KEY },
       successUrl: '',      // '' = close popup + reload to reflect logged-in state
       appSignature: '',
