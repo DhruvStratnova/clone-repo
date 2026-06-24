@@ -197,6 +197,10 @@
      also load AFTER turbo:load, so we retry until it's ready (up to ~4.5s). */
   function renderJudgeMe(tries) {
     tries = tries || 0;
+    /* Skip review-less pages (homepage, collection, etc.): without this, every
+       Turbo navigation polls every 150ms for ~4.5s and scans the DOM even where
+       there are no Judge.me widgets — a real per-nav cost in the app webview. */
+    if (!document.querySelector('[class*="jdgm"], [data-jdgm-id]')) return;
     if (!window.jdgm) { if (tries < 30) setTimeout(function () { renderJudgeMe(tries + 1); }, 150); return; }
     try {
       if (typeof jdgm.batchRenderBadges === 'function') jdgm.batchRenderBadges();
