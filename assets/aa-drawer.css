@@ -128,8 +128,10 @@ html body.overflow-hidden .aa-img-stamp {
     z-index: 2147483646 !important;
     pointer-events: auto !important;
   }
-  html:has(header-drawer > details[open]),
-  body:has(header-drawer > details[open]) { overflow: hidden !important; }
+  /* Lock scroll on <html> ONLY, never <body>: overflow on body makes it the
+     scroll container, which breaks the drawer's position:fixed on iOS — the
+     drawer anchors off-screen once the page is scrolled (disappears + frozen). */
+  html:has(header-drawer > details[open]) { overflow: hidden !important; }
 
   header-drawer > details[open] .menu-drawer__inner-container,
   header-drawer > details[open] .aa-drawer__inner {

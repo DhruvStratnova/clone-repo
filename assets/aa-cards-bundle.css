@@ -2082,7 +2082,10 @@ article.aa-pcard .aa-pcard__heart {
    overflow WITHOUT creating a scroll container, so position: sticky
    on the header still works on mobile. */
 @media (max-width: 749px) {
-  html, body { overflow-x: clip !important; max-width: 100% !important; }
+  /* overflow-x guard on <html> only — never on <body> (body overflow breaks the
+     mobile drawer's position:fixed on iOS); body keeps max-width as the guard. */
+  html { overflow-x: clip !important; max-width: 100% !important; }
+  body { max-width: 100% !important; }
   .product-grid,
   ul.product-grid,
   .grid--3-col-tablet,
