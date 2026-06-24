@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- SNAPSHOT-BUMP-1782294000-V10 -->
+<!-- SNAPSHOT-BUMP-1782294500-V11 -->
 
 <html class="js" lang="{{ request.locale.iso_code }}"{% if request.cookies['app_color_scheme'] == 'dark' %} data-theme="dark"{% endif %}>
   <head>
@@ -590,10 +590,12 @@
    does update on live) and load last so they win the cascade. Remove once the
    asset publish pipeline is unstuck. {%- endcomment -%}
 <style id="aa-pipeline-bypass">
-  /* CTAs: rounded rectangles, not pills (mirrors aa-pdp-v1.css / aa-quickview-v2.css) */
-  body.template-product .product-form__submit,
-  body.template-product .shopify-payment-button__button--unbranded,
-  .qv-add, .qv-buy { border-radius: 14px !important; }
+  /* CTAs: rounded rectangles, not pills. :not(#z) boosts specificity above every
+     frozen 999px rule so this wins regardless of which selector set them. Targets
+     .product-form__submit (both ADD TO CART + BUY NOW) and the quick-view buttons. */
+  body.template-product .product-form__submit:not(#z1):not(#z2),
+  .qv-add:not(#z1):not(#z2),
+  .qv-buy:not(#z1):not(#z2) { border-radius: 14px !important; }
   /* Dark mode: kill backdrop-filter blur (scroll jank). The :not(#x) boosts
      specificity above the frozen aa-dark-bundle.css blur rules. */
   html[data-theme="dark"] *:not(#aaqz1):not(#aaqz2),
