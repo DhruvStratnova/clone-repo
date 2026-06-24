@@ -1,0 +1,2802 @@
+/* =========================================================================
+   AstroAura DARK MODE overrides.
+   Every rule in this file is scoped under html[data-theme="dark"] so the
+   default light appearance for normal web visitors is byte-for-byte
+   unchanged. data-theme="dark" is set before first paint by the inline gate
+   in layout/theme.liquid (app cookie OR manual web toggle).
+
+   Aura AI dark palette (from the app design system):
+     canvas gradient #0C0A1F -> #06061F
+     surface base #1A0B2E | raised #2D1B4E | navbar deep #010922
+     brand primary #FF2E93 | CTA gradient linear-gradient(135deg,#FF8C42,#FF2E93)
+     text #FFFFFF / rgba(255,255,255,.70) / rgba(255,255,255,.54)
+     hairlines rgba(255,255,255,.12) | subtle .08 | strong .20
+     gold (premium/reward only) #FFC24B
+   DO NOT add unscoped rules here. DO NOT push without explicit approval.
+   ========================================================================= */
+
+/* -------------------------------------------------------------------------
+   2a. Dawn color-scheme variable overrides.
+   Re-point every ACTIVE color-{id} scheme to the dark palette. This recolors
+   all Dawn-rendered sections (backgrounds, foreground text, buttons, badges,
+   links) without touching the light scheme values in settings.
+   ------------------------------------------------------------------------- */
+html[data-theme="dark"],
+html[data-theme="dark"] .color-background-1,
+html[data-theme="dark"] .color-background-2,
+html[data-theme="dark"] .color-inverse,
+html[data-theme="dark"] .color-accent-1,
+html[data-theme="dark"] .color-accent-2,
+html[data-theme="dark"] .color-accent-3,
+html[data-theme="dark"] .color-scheme-2d4f5da3-2521-4670-a08a-03a39f17fd78,
+html[data-theme="dark"] .color-scheme-1fcb732a-95e0-48ee-ad4f-d3df6563fe3e,
+html[data-theme="dark"] .color-scheme-d042d7b2-a9c1-4c2f-9f34-d12479533a88,
+html[data-theme="dark"] .color-scheme-c6323a96-20a5-4474-b039-727f2117b7fb,
+html[data-theme="dark"] .color-scheme-ae31259b-1635-4508-b6f8-de409eaf58b0,
+html[data-theme="dark"] .color-scheme-1,
+html[data-theme="dark"] .color-scheme-2,
+html[data-theme="dark"] .color-scheme-3,
+html[data-theme="dark"] .color-scheme-4,
+html[data-theme="dark"] .color-scheme-5 {
+  --color-background: 26,11,46;
+  --color-foreground: 255,255,255;
+  --color-background-contrast: 45,27,78;
+  --color-shadow: 0,0,0;
+  --color-button: 255,46,147;
+  --color-button-text: 255,255,255;
+  --color-secondary-button: 26,11,46;
+  --color-secondary-button-text: 255,46,147;
+  --color-link: 255,46,147;
+  --color-badge-foreground: 255,255,255;
+  --color-badge-background: 26,11,46;
+  --color-badge-border: 255,255,255;
+  --gradient-background: linear-gradient(180deg,#0C0A1F,#06061F);
+}
+
+/* Page canvas: midnight-violet gradient. */
+html[data-theme="dark"] body {
+  background-color: #06061F !important;
+  background-image: linear-gradient(180deg,#0C0A1F,#06061F) !important;
+  background-attachment: fixed;
+}
+
+/* =========================================================================
+   2b. Custom-component dark colours, ported from the market-tweak tree
+   (the same theme already converted to dark). Each selector below is the
+   market-tweak dark value, re-scoped under html[data-theme="dark"].
+   ========================================================================= */
+
+/* ===== astroaura-styles.css ===== */
+html[data-theme="dark"] body {
+  color: #fff;
+}
+html[data-theme="dark"] .responsive-button {
+  border: 2px solid rgba(255,255,255,.12);
+}
+html[data-theme="dark"] .slider-component:hover::-webkit-scrollbar-thumb {
+  background-color: rgba(255,255,255,.18);
+}
+html[data-theme="dark"] body:not(.template-collection) .aa-pcard.card-wrapper.product-card-wrapper {
+  background: #1A0B2E !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3), 0 12px 28px rgba(0,0,0,0.45) !important;
+}
+html[data-theme="dark"] body:not(.template-collection) .aa-pcard.card-wrapper.product-card-wrapper:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4), 0 22px 48px rgba(0,0,0,0.6) !important;
+  border-color: rgba(255,255,255,0.20) !important;
+}
+html[data-theme="dark"] body:not(.template-collection) .aa-pcard.card-wrapper.product-card-wrapper .aa-pcard__cat {
+  -webkit-text-fill-color: #FFC24B !important;
+  color: #FFC24B !important;
+}
+html[data-theme="dark"] body:not(.template-collection) .aa-pcard.card-wrapper.product-card-wrapper .aa-pcard__divider {
+  background: linear-gradient(90deg, #FFC24B, transparent) !important;
+}
+html[data-theme="dark"] body:not(.template-collection) .aa-pcard.card-wrapper.product-card-wrapper .aa-pcard__stars::before {
+  color: rgba(255,255,255,0.18) !important;
+}
+html[data-theme="dark"] body:not(.template-collection) .aa-pcard.card-wrapper.product-card-wrapper .aa-pcard__stars::after {
+  color: #FFC83D !important;
+}
+html[data-theme="dark"] body:not(.template-collection) .aa-pcard.card-wrapper.product-card-wrapper .aa-pcard__rate-num {
+  color: rgba(255,255,255,.54) !important;
+}
+html[data-theme="dark"] body:not(.template-collection) .aa-pcard.card-wrapper.product-card-wrapper .aa-pcard__cta {
+  background: linear-gradient(135deg, #FF8C42 0%, #FF2E93 100%) !important;
+}
+html[data-theme="dark"] body:not(.template-collection) .aa-pcard.card-wrapper.product-card-wrapper .aa-pcard__cta:hover {
+  background: linear-gradient(135deg, #FF8C42 0%, #FF2E93 100%) !important;
+  box-shadow: 0 9px 20px rgba(255,46,147,0.34) !important;
+  filter: brightness(1.06) !important;
+}
+html[data-theme="dark"] body:not(.template-collection) .aa-pcard.card-wrapper.product-card-wrapper .aa-pcard__qty {
+  background: rgba(255,255,255,.08) !important;
+  border: 1px solid rgba(255,255,255,.12) !important;
+}
+
+/* ===== aa-section-cards.css ===== */
+html[data-theme="dark"] .featured-product,
+html[data-theme="dark"] .featured-product.product--right,
+html[data-theme="dark"] .featured-product.product--left {
+  background: #1A0B2E !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45) !important;
+}
+html[data-theme="dark"] .featured-product .product__media-wrapper,
+html[data-theme="dark"] .featured-product.product--right .product__media-wrapper,
+html[data-theme="dark"] .featured-product.product--left .product__media-wrapper {
+  background: #2D1B4E !important;
+}
+html[data-theme="dark"] .featured-product .product-media-container,
+html[data-theme="dark"] .featured-product .product__media,
+html[data-theme="dark"] .featured-product .product__media-item,
+html[data-theme="dark"] .featured-product .product__media-list,
+html[data-theme="dark"] .featured-product media-gallery,
+html[data-theme="dark"] .featured-product slider-component {
+  background: #2D1B4E !important;
+}
+html[data-theme="dark"] .featured-product .product__media-wrapper img,
+html[data-theme="dark"] .featured-product .product-media-container img,
+html[data-theme="dark"] .featured-product .product__media img {
+  background: #2D1B4E !important;
+}
+html[data-theme="dark"] .featured-product .product__title,
+html[data-theme="dark"] .featured-product .product__title h1,
+html[data-theme="dark"] .featured-product .product__title h2 {
+  color: #FFFFFF !important;
+}
+html[data-theme="dark"] .featured-product .product__text,
+html[data-theme="dark"] .featured-product .product__description,
+html[data-theme="dark"] .featured-product .rte {
+  color: rgba(255, 255, 255, 0.70) !important;
+}
+html[data-theme="dark"] .featured-product .product__view-details,
+html[data-theme="dark"] .featured-product a.product__view-details {
+  border: 1.5px solid rgba(255, 255, 255, 0.24) !important;
+  color: rgba(255, 255, 255, 0.70) !important;
+}
+html[data-theme="dark"] .featured-product .product__view-details:hover {
+  background: linear-gradient(135deg, #FF8C42 0%, #FF2E93 100%) !important;
+  border-color: transparent !important;
+  color: #FFFFFF !important;
+}
+html[data-theme="dark"] .featured-product .product-form__submit,
+html[data-theme="dark"] .featured-product .product-form__submit.button,
+html[data-theme="dark"] .featured-product .product-form__submit.button--primary,
+html[data-theme="dark"] .featured-product button.product-form__submit {
+  background: linear-gradient(135deg, #FF8C42 0%, #FF2E93 100%) !important;
+  background-color: #FF2E93 !important;
+  background-image: linear-gradient(135deg, #FF8C42 0%, #FF2E93 100%) !important;
+  color: #FFFFFF !important;
+}
+html[data-theme="dark"] .featured-product .product-form__submit:hover {
+  background: linear-gradient(135deg, #FF2E93 0%, #FF8C42 100%) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 6px 18px rgba(255, 46, 147, 0.32) !important;
+}
+html[data-theme="dark"] .featured-product .product__text.caption-with-letter-spacing,
+html[data-theme="dark"] .featured-product .caption-with-letter-spacing {
+  background: var(--aa-gradient, linear-gradient(135deg, #FF8C42 0%, #FF2E93 100%)) !important;
+}
+html[data-theme="dark"] .aa-pcard__media {
+  background: #2D1B4E !important;
+}
+html[data-theme="dark"] .aa-pcard__badge {
+  background: linear-gradient(135deg, #FF8C42 0%, #FF2E93 100%) !important;
+}
+html[data-theme="dark"] .aa-pcard__cta {
+  background: linear-gradient(135deg, #FF8C42 0%, #FF2E93 100%) !important;
+  color: #FFFFFF !important;
+}
+html[data-theme="dark"] .image-with-text__grid {
+  background: #1A0B2E !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.45) !important;
+}
+html[data-theme="dark"] .image-with-text__heading,
+html[data-theme="dark"] .image-with-text__text h4 strong,
+html[data-theme="dark"] .image-with-text__text strong,
+html[data-theme="dark"] .rich-text__heading,
+html[data-theme="dark"] .rich-text__text strong,
+html[data-theme="dark"] .rich-text__blocks > *,
+html[data-theme="dark"] section .image-with-text__heading,
+html[data-theme="dark"] section .rich-text__heading,
+html[data-theme="dark"] section h2.section-header__title,
+html[data-theme="dark"] section .section-header__title {
+  color: #FFFFFF !important;
+}
+html[data-theme="dark"] .image-with-text__text,
+html[data-theme="dark"] .image-with-text__text h4,
+html[data-theme="dark"] .image-with-text__text p,
+html[data-theme="dark"] .rich-text__text,
+html[data-theme="dark"] .rich-text__text p {
+  color: rgba(255, 255, 255, 0.70) !important;
+}
+html[data-theme="dark"] .image-with-text__content .button,
+html[data-theme="dark"] .rich-text .button {
+  background: linear-gradient(135deg, #FF8C42 0%, #FF2E93 100%) !important;
+}
+html[data-theme="dark"] .image-with-text__content .button:hover,
+html[data-theme="dark"] .rich-text .button:hover {
+  background: linear-gradient(135deg, #FF2E93 0%, #FF8C42 100%) !important;
+}
+html[data-theme="dark"] cart-drawer .drawer__header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+html[data-theme="dark"] cart-drawer .drawer__footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+html[data-theme="dark"] cart-drawer .cart__checkout-button,
+html[data-theme="dark"] .template-cart .cart__checkout-button,
+html[data-theme="dark"] .template-cart #checkout,
+html[data-theme="dark"] .template-cart .cart__ctas .button,
+html[data-theme="dark"] body.template-cart .cart__checkout-button {
+  background: linear-gradient(135deg, #FF8C42 0%, #FF2E93 100%) !important;
+}
+html[data-theme="dark"] .template-cart .cart__checkout-button:hover,
+html[data-theme="dark"] .template-cart .cart__checkout-button:focus {
+  background: linear-gradient(135deg, #FF2E93 0%, #FF8C42 100%) !important;
+}
+html[data-theme="dark"] cart-items .aa-cart-continue {
+  color: rgba(255, 255, 255, 0.70) !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+}
+html[data-theme="dark"] cart-items .aa-cart-continue:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+  color: #FFFFFF !important;
+}
+html[data-theme="dark"] .header__menu-item:hover,
+html[data-theme="dark"] .header__menu-item:hover span,
+html[data-theme="dark"] .header__menu-item:focus,
+html[data-theme="dark"] .header__menu-item:focus span,
+html[data-theme="dark"] .header__menu-item:focus-visible,
+html[data-theme="dark"] .header__menu-item:focus-visible span,
+html[data-theme="dark"] details[open] > .header__menu-item,
+html[data-theme="dark"] details[open]:hover > .header__menu-item,
+html[data-theme="dark"] .header__menu-item:hover .header__active-menu-item {
+  color: #FF2E93 !important;
+}
+html[data-theme="dark"] .header__menu-item:hover .icon-caret,
+html[data-theme="dark"] .header__menu-item:hover svg {
+  fill: #FF2E93 !important;
+  color: #FF2E93 !important;
+}
+html[data-theme="dark"] .shopify-section [class*="testimonials-slider"],
+html[data-theme="dark"] .shopify-section [class*="testimonial"],
+html[data-theme="dark"] [class*="testimonial"] .testimonial,
+html[data-theme="dark"] [class*="testimonial"] .swiper-slide,
+html[data-theme="dark"] .testimonials-slider .review,
+html[data-theme="dark"] .testimonials-slider [class*="card"] {
+  background: #1A0B2E !important;
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.06) inset,
+    0 6px 14px rgba(0,0,0,0.35),
+    0 18px 38px rgba(0,0,0,0.40) !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
+}
+html[data-theme="dark"] .shopify-section [class*="testimonial"]:hover,
+html[data-theme="dark"] .testimonials-slider .swiper-slide:hover {
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.08) inset,
+    0 10px 22px rgba(0,0,0,0.42),
+    0 26px 50px rgba(0,0,0,0.50) !important;
+}
+html[data-theme="dark"] .shopify-section [class*="testimonial"] .testimonial::before,
+html[data-theme="dark"] .testimonials-slider .swiper-slide::before {
+  color: rgba(255, 46, 147, 0.30) !important;
+}
+html[data-theme="dark"] .jdgm-rev-widg .jdgm-rev,
+html[data-theme="dark"] .jdgm-revs__cols-wrapper .jdgm-rev,
+html[data-theme="dark"] .jdgm-carousel-item__review {
+  background: linear-gradient(180deg, #1A0B2E 0%, #160A28 100%) !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.06),
+    0 2px 4px rgba(0,0,0,0.30),
+    0 14px 30px -10px rgba(0,0,0,0.45) !important;
+}
+html[data-theme="dark"] .jdgm-rev-widg .jdgm-rev:hover {
+  border-color: rgba(255,46,147,0.40) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.08),
+    0 4px 8px rgba(0,0,0,0.32),
+    0 22px 44px -10px rgba(0,0,0,0.50) !important;
+}
+html[data-theme="dark"] .jdgm-rev-widg__title { color: #FFFFFF !important; }
+html[data-theme="dark"] .jdgm-rev-widg__summary {
+  background: linear-gradient(180deg, #1A0B2E 0%, #160A28 100%) !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 2px 4px rgba(0,0,0,0.30), 0 14px 30px -10px rgba(0,0,0,0.45) !important;
+}
+html[data-theme="dark"] .jdgm-histogram__bar { background: rgba(255,255,255,0.08) !important; }
+html[data-theme="dark"] .jdgm-histogram__bar-content { background: linear-gradient(90deg,#FFC24B,#FFA92E) !important; }
+html[data-theme="dark"] .jdgm-write-rev-link {
+  background: linear-gradient(135deg,#FF8C42 0%,#FF2E93 100%) !important;
+  color: #FFFFFF !important;
+  border: 0 !important;
+  box-shadow: 0 6px 16px rgba(255,46,147,.28) !important;
+}
+html[data-theme="dark"] .jdgm-write-rev-link:hover {
+  background: linear-gradient(135deg,#FF2E93 0%,#FF8C42 100%) !important;
+  color: #FFFFFF !important;
+}
+html[data-theme="dark"] .jdgm-sort-dropdown,
+html[data-theme="dark"] .jdgm-sort-dropdown-wrapper select,
+html[data-theme="dark"] select.jdgm-sort-dropdown {
+  background: rgba(255,255,255,0.06) !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
+  color: rgba(255,255,255,0.70) !important;
+}
+html[data-theme="dark"] .jdgm-rev__icon {
+  background: #2D1B4E !important;
+  color: #FFC24B !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
+}
+html[data-theme="dark"] .jdgm-rev__author { color: #FFFFFF !important; }
+html[data-theme="dark"] .jdgm-rev__title { color: #FFFFFF !important; }
+html[data-theme="dark"] .jdgm-rev__body { color: rgba(255,255,255,0.70) !important; }
+html[data-theme="dark"] .jdgm-rev__timestamp { color: rgba(255,255,255,0.54) !important; }
+html[data-theme="dark"] body .section-header,
+html[data-theme="dark"] body .section-header .header-wrapper,
+html[data-theme="dark"] body .header-wrapper.color-background-1,
+html[data-theme="dark"] body .header-wrapper.color-background-1.gradient,
+html[data-theme="dark"] body header.header,
+html[data-theme="dark"] body header.header.page-width {
+  background: #010922 !important;
+  background-color: #010922 !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+  backdrop-filter: blur(14px) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+
+/* ===== aa-pcard-v6.css ===== */
+html[data-theme="dark"] {
+  --aa-bg:        #1A0B2E;
+  --aa-ink:       #FFFFFF;
+  --aa-muted:     #9EA6BE;
+  --aa-hair:      rgba(255,255,255,.12);
+  --aa-g-1:       #FF2E93;
+  --aa-g-3:       #FF6B4A;
+  --aa-g-5:       #FF8C42;
+  --aa-gradient:  linear-gradient(135deg, #FF8C42 0%, #FF2E93 100%);
+  --aa-shadow-card: 0 2px 8px rgba(0,0,0,.3), 0 12px 28px rgba(0,0,0,.45);
+  --aa-shadow-card-hi: 0 4px 12px rgba(0,0,0,.4), 0 22px 48px rgba(0,0,0,.6);
+}
+html[data-theme="dark"] .aa-pcard { background: #1A0B2E; }
+html[data-theme="dark"] .aa-pcard__qv-btn {
+  background: rgba(255, 255, 255, .10);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, .14);
+}
+html[data-theme="dark"] .aa-pcard__qv-btn:hover { background: rgba(255, 255, 255, .10); transform: translateX(-50%) translateY(0) scale(1.04); }
+html[data-theme="dark"] .aa-pcard__divider {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.22), transparent);
+}
+html[data-theme="dark"] .aa-pcard__cta {
+  background: var(--aa-gradient);
+  color: #FFFFFF;
+}
+html[data-theme="dark"] .aa-pcard__cta:hover {
+  background: var(--aa-gradient) !important;
+  box-shadow: 0 10px 22px rgba(255,46,147,0.34);
+  filter: brightness(1.06);
+}
+html[data-theme="dark"] .aa-pcard__cta--loading {
+  background: rgba(255,255,255,.10) !important;
+  color: #FFFFFF !important;
+}
+html[data-theme="dark"] .aa-pcard__cta--done { background: var(--aa-gradient) !important; }
+html[data-theme="dark"] .aa-pcard__qty {
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.12);
+}
+html[data-theme="dark"] .collection-list .card-wrapper,
+html[data-theme="dark"] .collection-list .card,
+html[data-theme="dark"] .collection-list .card.collection-card {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.35) !important;
+  background: rgba(255,255,255,.06) !important;
+  border: 1px solid rgba(255,255,255,.12) !important;
+}
+html[data-theme="dark"] body.template-collection .product-grid .aa-pcard__cta--plus,
+html[data-theme="dark"] body.template-search .product-grid .aa-pcard__cta--plus {
+  background: linear-gradient(135deg, #FF8C42 0%, #FF2E93 100%) !important;
+  box-shadow: 0 6px 16px rgba(255, 46, 147, 0.40);
+}
+html[data-theme="dark"] .template-collection h1.collection-hero__title,
+html[data-theme="dark"] .template-collection .collection-hero__title {
+  color: #FFFFFF !important;
+}
+html[data-theme="dark"] .template-collection .collection-hero__description { color: rgba(255,255,255,.70); }
+html[data-theme="dark"] .template-collection .facets__form {
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+html[data-theme="dark"] .template-collection .facets__heading { color: rgba(255,255,255,.70); }
+html[data-theme="dark"] .template-collection .facets__summary .icon-caret,
+html[data-theme="dark"] .template-collection .facets__summary svg {
+  color: rgba(255,255,255,.54);
+  fill: rgba(255,255,255,.54);
+}
+html[data-theme="dark"] .template-collection .product-count__text { color: rgba(255,255,255,.70); }
+html[data-theme="dark"] .template-collection .aa-pcard__rate {
+  background: rgba(255, 255, 255, 0.08);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #FFFFFF;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+}
+html[data-theme="dark"] .template-collection .aa-pcard__rate-star { color: #FFC83D; }
+html[data-theme="dark"] .template-collection .aa-pcard__pct { color: #3DDC84; }
+html[data-theme="dark"] .template-collection .aa-pcard__cta--full {
+  background: var(--aa-gradient);
+  color: #FFFFFF;
+}
+html[data-theme="dark"] .template-collection .facets__disclosure .facets__display {
+  background: #1A0B2E;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.55);
+}
+html[data-theme="dark"] .template-collection .facets__header {
+  color: rgba(255,255,255,.54);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+html[data-theme="dark"] .template-collection .facets__header a,
+html[data-theme="dark"] .template-collection .facets__header .underlined-link { color: #FFFFFF; }
+html[data-theme="dark"] .template-collection .facets__disclosure .facets__display .facet-checkbox,
+html[data-theme="dark"] .template-collection .facets__disclosure .facets__display label,
+html[data-theme="dark"] .template-collection .facets__disclosure .facets__display .facets__label {
+  color: rgba(255,255,255,.85);
+}
+
+/* ===== aa-product-card-v2.css ===== */
+html[data-theme="dark"] .card-wrapper.product-card-wrapper {
+  background: #1A0B2E !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3), 0 12px 28px rgba(0,0,0,0.45) !important;
+}
+
+/* ===== aa-product-page.css ===== */
+html[data-theme="dark"] {
+  --aa-purple: #FF2E93;
+  --aa-purple-dark: #FF8C42;
+  --aa-purple-soft: rgba(255,255,255,.06);
+  --aa-ink: #FFFFFF;
+  --aa-ink-soft: rgba(255,255,255,.70);
+  --aa-muted: rgba(255,255,255,.54);
+}
+html[data-theme="dark"] .aa-add-to-cart {
+  background: linear-gradient(135deg, #FF8C42 0%, #FF2E93 100%) !important;
+  background-color: #FF2E93 !important;
+}
+html[data-theme="dark"] .aa-add-to-cart:hover {
+  background: linear-gradient(135deg, #FF2E93 0%, #FF8C42 100%) !important;
+}
+html[data-theme="dark"] .aa-buy-now {
+  background: rgba(255,255,255,.06) !important;
+  color: #FFFFFF !important;
+  border: 1.5px solid rgba(255,255,255,.30) !important;
+}
+html[data-theme="dark"] .aa-buy-now:hover {
+  background: rgba(255,255,255,.12) !important;
+  color: #FFFFFF !important;
+}
+html[data-theme="dark"] .aa-buy-now:hover svg { color: #FFFFFF !important; }
+html[data-theme="dark"] .aa-mega-deal {
+  background: rgba(255,255,255,.06);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  border: 1px dashed rgba(255, 194, 75, 0.45);
+}
+html[data-theme="dark"] .aa-mega-deal__tag { background: rgba(255, 194, 75, 0.18); color: #FFC24B; }
+html[data-theme="dark"] .aa-mega-deal__save { color: #FFC24B; }
+html[data-theme="dark"] .aa-cod-badge {
+  background: rgba(255,255,255,.06);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  border: 1px dashed rgba(255,255,255,.30);
+  color: #FFFFFF;
+}
+html[data-theme="dark"] .aa-cod-badge svg { color: #FF2E93; }
+html[data-theme="dark"] .aa-variant-card {
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  -webkit-backdrop-filter: blur(10px) !important; backdrop-filter: blur(10px) !important;
+  box-shadow: none !important;
+}
+html[data-theme="dark"] .aa-variant-card:hover {
+  border-color: rgba(255, 255, 255, 0.20) !important;
+  box-shadow: 0 18px 38px -10px rgba(0, 0, 0, 0.45) !important;
+}
+html[data-theme="dark"] .aa-variant-card.is-selected {
+  border-color: rgba(255, 46, 147, 0.40) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 22px 44px -10px rgba(0, 0, 0, 0.5) !important;
+}
+html[data-theme="dark"] .aa-variant-card__title { color: #FFFFFF; }
+html[data-theme="dark"] .aa-combo-offer {
+  background: rgba(255,255,255,.06);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,.12);
+}
+html[data-theme="dark"] .aa-combo-offer__badge {
+  background: linear-gradient(135deg, #FF8C42 0%, #FF2E93 100%);
+  color: #FFFFFF;
+  box-shadow: 0 2px 4px rgba(255, 46, 147, 0.28);
+}
+html[data-theme="dark"] .aa-combo-offer__title { color: #FFFFFF; }
+html[data-theme="dark"] .aa-combo-offer__price { color: #FFFFFF; text-decoration-color: #FF2E93; }
+html[data-theme="dark"] .aa-combo-offer__save { background: #2E9E5B; color: #FFFFFF; }
+html[data-theme="dark"] .aa-mega-deal__footer {
+  border-top: 1px dashed rgba(255,255,255,0.12);
+  color: rgba(255,255,255,.54);
+}
+html[data-theme="dark"] .aa-mega-deal__code {
+  background: rgba(255,255,255,.08);
+  border: 1px dashed rgba(255, 46, 147, 0.45);
+  color: #FF2E93;
+}
+html[data-theme="dark"] .aa-mega-deal__timer-num { color: #FF2E93 !important; }
+html[data-theme="dark"] .aa-mega-deal__details-panel {
+  background: rgba(255,255,255,.06);
+  border: 1px dashed rgba(255,255,255,0.12);
+  color: rgba(255,255,255,.70) !important;
+}
+html[data-theme="dark"] .aa-mega-deal__details-panel strong { color: #FF8C42; }
+html[data-theme="dark"] .aa-aura-match__title { color: #FFFFFF !important; }
+html[data-theme="dark"] .aa-aura-match__trait {
+  background: rgba(255,255,255,.06) !important;
+  -webkit-backdrop-filter: blur(10px) !important; backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(255,255,255,.12) !important;
+  color: #FFFFFF !important;
+}
+html[data-theme="dark"] .aa-orders-line { color: rgba(255,255,255,.70) !important; }
+html[data-theme="dark"] .aa-orders-line svg { color: #FF2E93 !important; }
+html[data-theme="dark"] .aa-orders-line strong { color: #FFFFFF !important; }
+html[data-theme="dark"] .aa-sticky-bar__price { color: #FFFFFF !important; }
+html[data-theme="dark"] .aa-sticky-bar__mrp { color: rgba(255,255,255,.54) !important; }
+html[data-theme="dark"] .aa-sticky-bar__variant-btn {
+  background: rgba(255,255,255,.06) !important;
+  -webkit-backdrop-filter: blur(10px) !important; backdrop-filter: blur(10px) !important;
+  color: #FFFFFF !important;
+  border: 1.5px solid rgba(255,255,255,0.12) !important;
+}
+html[data-theme="dark"] .aa-sticky-bar__variant-btn.is-active {
+  background: rgba(255,46,147,.10) !important;
+  color: #FFFFFF !important;
+  border-color: #FF2E93 !important;
+}
+html[data-theme="dark"] .aa-sticky-bar__coupon {
+  background: rgba(255, 194, 75, 0.10) !important;
+  border: 1px solid rgba(255, 194, 75, 0.40) !important;
+}
+html[data-theme="dark"] .aa-sticky-bar__coupon-text { color: #FFC24B !important; }
+html[data-theme="dark"] .aa-sticky-bar__cta {
+  background: linear-gradient(135deg, #FF8C42 0%, #FF2E93 100%) !important;
+  background-color: #FF2E93 !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 6px 18px rgba(255, 46, 147, 0.28) !important;
+}
+html[data-theme="dark"] .aa-sticky-bar__cta:hover { box-shadow: 0 10px 24px rgba(255, 46, 147, 0.36) !important; }
+html[data-theme="dark"] .aa-trust-card {
+  background: rgba(255,255,255,.06) !important;
+  -webkit-backdrop-filter: blur(10px) !important; backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
+}
+html[data-theme="dark"] .aa-trust-card:hover {
+  border-color: rgba(255, 46, 147, 0.30) !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.35) !important;
+}
+html[data-theme="dark"] .aa-trust-card__icon { background: rgba(255, 46, 147, 0.14) !important; color: #FF2E93 !important; }
+html[data-theme="dark"] .aa-trust-card__title { color: #FFFFFF !important; }
+html[data-theme="dark"] .aa-trust-card__desc { color: rgba(255,255,255,.54) !important; }
+html[data-theme="dark"] .aa-cod-pill { color: #FF2E93 !important; border: 1.5px dashed #FF2E93 !important; }
+html[data-theme="dark"] .aa-qty-label { color: #FFFFFF !important; }
+html[data-theme="dark"] .aa-qty-value { color: #FFFFFF !important; }
+html[data-theme="dark"] .aa-qty-btn { border: 1.5px solid rgba(255,255,255,0.12) !important; }
+html[data-theme="dark"] .aa-pincode-input { color: #FFFFFF !important; }
+
+/* ===== aa-pdp-v1.css ===== */
+html[data-theme="dark"] {
+  --aa-pdp-gold: #FFC24B;
+  --aa-pdp-hair: rgba(255, 255, 255, 0.12);
+  --aa-pdp-muted: rgba(255, 255, 255, 0.54);
+  --aa-pdp-grad: linear-gradient(135deg, #FF8C42, #FF2E93);
+}
+html[data-theme="dark"] body.template-product .product__title { color: #FFFFFF !important; }
+html[data-theme="dark"] .aa-pdp-eyebrow {
+  color: rgba(255,255,255,.70);
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.12);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+}
+html[data-theme="dark"] .aa-pdp-eyebrow::before { background: #FFC24B; }
+html[data-theme="dark"] .aa-pdp-saveline { color: rgba(255,255,255,.70); }
+html[data-theme="dark"] body.template-product .price--large .price-item--sale,
+html[data-theme="dark"] body.template-product .price--large .price-item--last { color: #FFFFFF; }
+html[data-theme="dark"] body.template-product .price--large .price-item--regular { color: rgba(255,255,255,.54); }
+html[data-theme="dark"] .aa-pdp-cashnote { color: rgba(255,255,255,.54); }
+html[data-theme="dark"] .aa-pdp-cashnote b { color: #FFC24B; }
+html[data-theme="dark"] .aa-pdp-timer {
+  color: #FFFFFF;
+  background: rgba(255,255,255,.06);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,.12);
+}
+html[data-theme="dark"] .aa-pdp-timer .aa-t { color: #FF9F6B; }
+html[data-theme="dark"] .aa-pdp-swatch {
+  background: rgba(255,255,255,.06);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  color: #FFFFFF;
+}
+html[data-theme="dark"] .aa-pdp-swatch.is-sel { background: rgba(255,46,147,.10); color: #FFFFFF; border-color: #FF2E93; }
+html[data-theme="dark"] .aa-pdp-scarcity { color: #FF9F6B; }
+html[data-theme="dark"] .aa-pdp-scarcity .aa-bar { background: rgba(255, 255, 255, 0.12); }
+html[data-theme="dark"] .aa-pdp-scarcity .aa-fill { background: linear-gradient(90deg, #FF8C42, #FF2E93); }
+html[data-theme="dark"] .aa-pdp-trust .aa-tr {
+  background: rgba(255,255,255,.06);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  border: 1px solid var(--aa-pdp-hair);
+}
+html[data-theme="dark"] .aa-pdp-trust b { color: #FFFFFF; }
+html[data-theme="dark"] .aa-pdp-atc {
+  background: #1A0B2E !important; color: #fff !important;
+  border: 1px solid rgba(255,255,255,.12) !important;
+}
+html[data-theme="dark"] .aa-story {
+  background: rgba(255,255,255,.06);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+}
+html[data-theme="dark"] .aa-story .aa-kick { color: #FFC24B; }
+html[data-theme="dark"] .aa-story .aa-ver { color: #3DDC84; border: 1px solid rgba(61, 220, 132, 0.35); }
+html[data-theme="dark"] .aa-story .aa-stars { color: #FFC83D; }
+html[data-theme="dark"] .aa-story blockquote { color: rgba(255,255,255,.88); border-left: 2px solid rgba(255, 194, 75, 0.6); }
+html[data-theme="dark"] .aa-story .aa-av { background: #2D1B4E; color: #FFFFFF; }
+html[data-theme="dark"] .aa-story .aa-who b { color: #FFFFFF; }
+html[data-theme="dark"] .aa-story .aa-who span { color: rgba(255,255,255,.60); }
+html[data-theme="dark"] .aa-story .aa-strip { border-top: 1px solid rgba(255,255,255,.12); }
+html[data-theme="dark"] .aa-story .aa-dots i { background: rgba(255, 255, 255, 0.20); }
+html[data-theme="dark"] .aa-story .aa-arr button { background: rgba(255,255,255,.06); color: #FFFFFF; border: 1px solid rgba(255,255,255,.16); }
+html[data-theme="dark"] .aa-deal {
+  background: rgba(255,255,255,.06);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+html[data-theme="dark"] .aa-deal-badge { background: linear-gradient(135deg, #FF8C42, #FF2E93); color: #fff; box-shadow: 0 3px 10px rgba(255, 46, 147, 0.3); }
+html[data-theme="dark"] .aa-deal-get { color: #FFFFFF; }
+html[data-theme="dark"] .aa-deal-amt { color: #FFFFFF; border-bottom: 2.5px solid #FFC24B; }
+html[data-theme="dark"] .aa-deal-tag { color: rgba(255,255,255,.54); }
+html[data-theme="dark"] .aa-deal-chip { background: rgba(255, 194, 75, 0.14); color: #FFC24B; border: 1px solid rgba(255, 194, 75, 0.3); }
+html[data-theme="dark"] .aa-dsv-h { color: #FFFFFF; }
+html[data-theme="dark"] .aa-dsv-ic { color: rgba(255,255,255,.70); }
+html[data-theme="dark"] .aa-dsv-badge { background: #2E9E5B; color: #fff; border: 1.5px solid rgb(var(--color-background, 12 10 31)); }
+html[data-theme="dark"] .aa-dsv-row b { color: #FFFFFF; }
+html[data-theme="dark"] .aa-gww-h { color: rgba(255,255,255,.54); }
+html[data-theme="dark"] .aa-gww-item {
+  background: rgba(255,255,255,.06); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+html[data-theme="dark"] .aa-gww-t b { color: #FFFFFF; }
+html[data-theme="dark"] .aa-gww-t span { color: #FFC24B; }
+/* GOES WELL WITH "ADD" button: the JS renders a bare <button>ADD</button> with
+   no class (.aa-gww-add never existed), so the dark rule was dead and the button
+   kept its light #241019 border/text = invisible on dark. Target the real
+   element and give it a clear gradient ADD pill. */
+html[data-theme="dark"] .aa-gww-item button {
+  border: 0 !important;
+  background: linear-gradient(135deg, #FF8C42, #FF2E93) !important;
+  color: #FFFFFF !important;
+}
+/* Variant picker label/legend ("Carat Size", etc.): aa-product-page.css forces
+   color:#1A1A1A !important (near-black) = invisible on dark. Override to light. */
+html[data-theme="dark"] .product-form__input legend,
+html[data-theme="dark"] .product-form__input .form__label {
+  color: rgba(255,255,255,.72) !important;
+}
+
+/* ===== aa-quickview-v2.css ===== */
+html[data-theme="dark"] .quick-add-modal__toggle { color: #fff; }
+html[data-theme="dark"] .qv-spin { border: 3px solid rgba(255,255,255,.14); border-top-color: #FF2E93; }
+html[data-theme="dark"] .qv-thumb.is-sel { border-color: #fff; }
+html[data-theme="dark"] .qv-cat { color: #FFC24B; }
+html[data-theme="dark"] .qv-title { color: #fff; }
+html[data-theme="dark"] .qv-rev { color: rgba(255,255,255,.70); }
+html[data-theme="dark"] .qv-stars { color: #FFC83D; }
+html[data-theme="dark"] .qv-mrp { color: rgba(255,255,255,.70); }
+html[data-theme="dark"] .qv-mrp s { color: rgba(255,255,255,.70); }
+html[data-theme="dark"] .qv-pricebig { color: #fff; }
+html[data-theme="dark"] .qv-offtag { color: #fff; background: linear-gradient(135deg,#FF8C42,#FF2E93); }
+html[data-theme="dark"] .qv-deal { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); }
+html[data-theme="dark"] .qv-deal-badge {
+  background: linear-gradient(135deg,#FF8C42,#FF2E93);
+  color: #fff;
+  box-shadow: 0 3px 10px rgba(233,2,122,.3);
+}
+html[data-theme="dark"] .qv-deal-l b { color: #fff; }
+html[data-theme="dark"] .qv-deal-l b u { text-decoration-color: #FFC24B; }
+html[data-theme="dark"] .qv-deal-l small { color: rgba(255,255,255,.70); }
+html[data-theme="dark"] .qv-deal-chip { background: rgba(255,194,75,.14); border: 1px solid rgba(255,194,75,.35); color: #FFC24B; }
+html[data-theme="dark"] .qv-opt-label { color: rgba(255,255,255,.70); }
+html[data-theme="dark"] .qv-chip { border: 1.5px solid rgba(255,255,255,.12); background: rgba(255,255,255,.06); color: #fff; }
+html[data-theme="dark"] .qv-chip::after { border: 1.5px solid rgba(255,255,255,.3); }
+html[data-theme="dark"] .qv-chip.is-sel { border-color: #FF2E93; box-shadow: 0 0 0 1px #FF2E93; }
+html[data-theme="dark"] .qv-chip.is-sel::after { border: 4.5px solid #FF2E93; }
+html[data-theme="dark"] .qv-add { background: rgba(255,255,255,.10); color: #fff; }
+html[data-theme="dark"] .qv-buy { background: linear-gradient(135deg,#FF8C42,#FF2E93); color: #fff; box-shadow: 0 6px 18px rgba(233,2,122,.22); }
+html[data-theme="dark"] .qv-svc { color: rgba(255,255,255,.55); }
+html[data-theme="dark"] .qv-link { color: #FF2E93; }
+html[data-theme="dark"] .qv-sk { background: linear-gradient(90deg,rgba(255,255,255,.06),rgba(255,255,255,.13),rgba(255,255,255,.06)); }
+
+/* ===== aa-rd-v2.css ===== */
+html[data-theme="dark"] {
+  --cream:#0C0A1F;--cream-2:#06061F;--card:#1A0B2E;--ink:#FFFFFF;--ink-soft:rgba(255,255,255,.70);--gold:#FFC24B;--maroon:#FF2E93;--line:rgba(255,255,255,.12);--magenta:#FF2E93;--orange:#FF8C42;--grad:linear-gradient(135deg,#FF8C42,#FF2E93);--shadow:0 2px 6px rgba(0,0,0,.25),0 14px 30px rgba(0,0,0,.45);--shadow-hi:0 10px 24px rgba(0,0,0,.45),0 30px 60px rgba(0,0,0,.6);
+}
+html[data-theme="dark"] .btn { background: var(--grad); color: #fff; }
+html[data-theme="dark"] .btn-ghost:hover { background: var(--grad); color: #fff; }
+html[data-theme="dark"] .pcard { background: #1A0B2E; border: 1px solid rgba(255,255,255,.12); box-shadow: 0 12px 28px rgba(0,0,0,.45); }
+html[data-theme="dark"] .badge-new { background: var(--grad); color: #fff; }
+html[data-theme="dark"] .pcard .rate {
+  background: rgba(7,6,15,.72); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,255,255,.14); color: #fff; box-shadow: 0 2px 8px rgba(0,0,0,.35);
+}
+html[data-theme="dark"] .cert .seal { background: var(--grad); color: #fff; }
+html[data-theme="dark"] .rcard .av { background: var(--grad); color: #fff; }
+
+/* ===== aa-app.css ===== */
+html[data-theme="dark"] .aa-tabbar {
+  background: #1A0B2E;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 -6px 20px rgba(3, 2, 10, 0.5);
+}
+html[data-theme="dark"] .aa-tab { color: rgba(255, 255, 255, 0.70); }
+html[data-theme="dark"] .aa-tab.is-active { color: #FF2E93; }
+html[data-theme="dark"] .aa-tab--aura { color: #FF2E93; }
+html[data-theme="dark"] .aa-tab--aura .aa-tab__ico { stroke: #FF2E93; filter: drop-shadow(0 0 5px rgba(255, 46, 147, 0.35)); }
+html[data-theme="dark"] .aa-tab--aura .aa-tab__lbl { color: #FF2E93; }
+html[data-theme="dark"] .aa-tab--aura .aa-tab__ico-wrap {
+  background: linear-gradient(130deg, #FF2E93, #FF8C42);
+  box-shadow: 0 0 0 0 rgba(255, 46, 147, 0.5);
+}
+html[data-theme="dark"] .aa-tab--cta .aa-tab__ico-wrap {
+  background: linear-gradient(130deg, #FF2E93, #FF8C42);
+  box-shadow: 0 1px 4px rgba(255, 46, 147, 0.4);
+}
+html[data-theme="dark"] .aa-search { background: #06061F; }
+html[data-theme="dark"] .aa-search__field {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 1px 3px rgba(3, 2, 10, 0.4);
+}
+html[data-theme="dark"] .aa-search__ico { color: rgba(255, 255, 255, 0.54); }
+html[data-theme="dark"] .aa-search__input { color: #fff; }
+html[data-theme="dark"] .aa-search__cancel { color: rgba(255, 255, 255, 0.54); }
+html[data-theme="dark"] .aa-search__clear { color: #FF2E93; }
+html[data-theme="dark"] .aa-sr { color: #fff; }
+html[data-theme="dark"] .aa-sr:active { background: rgba(255, 255, 255, 0.05); }
+html[data-theme="dark"] .aa-sr__img { background: #2D1B4E; }
+html[data-theme="dark"] .aa-search__empty { color: rgba(255, 255, 255, 0.54); }
+html[data-theme="dark"] .aa-search__all { background: linear-gradient(120deg, rgba(255,46,147,.1), rgba(255,140,66,.1)); color: #FF2E93; }
+html[data-theme="dark"] .aa-search__all:hover { background: linear-gradient(120deg, rgba(255,46,147,.16), rgba(255,140,66,.16)); }
+html[data-theme="dark"] .aa-search__overlay { background: rgba(3, 2, 10, .7); }
+html[data-theme="dark"] .aa-search__results { background: #1A0B2E; }
+html[data-theme="dark"] .aa-search__results-head {
+  border-bottom: 1px solid rgba(255, 255, 255, .12);
+  box-shadow: 0 30px 90px rgba(3, 2, 10, .6);
+}
+html[data-theme="dark"] .aa-search__results-body { box-shadow: 0 30px 90px rgba(3, 2, 10, .6); }
+html[data-theme="dark"] .aa-pcard__img-wrap { background-color: #2D1B4E; }
+html[data-theme="dark"] .aa-pcard__heart.is-wished { color: #FF2E93; }
+html[data-theme="dark"] .aa-pcard__heart.is-wished svg { fill: #FF2E93; stroke: #FF2E93; }
+html[data-theme="dark"] .aa-wish__title { color: #fff; }
+html[data-theme="dark"] .aa-sr__remove { color: rgba(255, 255, 255, 0.40); }
+html[data-theme="dark"] .aa-sr__remove:active { color: #FF2E93; }
+html[data-theme="dark"] .aa-loadbar {
+  background: linear-gradient(90deg, #FF8C42 0%, #FF2E93 55%, #FFC24B 100%);
+  box-shadow: 0 0 10px rgba(255, 46, 147, 0.55);
+}
+
+/* ===== aa-footer.css ===== */
+html[data-theme="dark"] .aa-footer {
+  background: #06061F;
+  color: rgba(255, 255, 255, 0.70);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+html[data-theme="dark"] .aa-footer__logo { box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.18), 0 2px 12px rgba(0, 0, 0, 0.4); }
+html[data-theme="dark"] .aa-footer__tagline { color: #FFFFFF; }
+html[data-theme="dark"] .aa-footer__hours { color: rgba(255, 255, 255, 0.70); }
+html[data-theme="dark"] .aa-footer__hours strong { color: #FFFFFF; }
+html[data-theme="dark"] .aa-footer__newsletter input {
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: rgba(255, 255, 255, 0.70);
+}
+html[data-theme="dark"] .aa-footer__newsletter button {
+  background: linear-gradient(135deg, #FF8C42, #FF2E93);
+  border-color: transparent;
+}
+html[data-theme="dark"] .aa-footer__col h4 { color: #FFFFFF; }
+html[data-theme="dark"] .aa-footer__col a { color: rgba(255, 255, 255, 0.70); }
+html[data-theme="dark"] .aa-footer__col a:hover { color: #FF2E93; }
+html[data-theme="dark"] .aa-footer__bottom { border-top: 1px solid rgba(255, 255, 255, 0.12); background: #06061F; }
+html[data-theme="dark"] .aa-footer__copy { color: rgba(255, 255, 255, 0.54); }
+html[data-theme="dark"] .aa-footer__legal a { color: rgba(255, 255, 255, 0.70); }
+html[data-theme="dark"] .aa-footer__contact span { color: rgba(255, 255, 255, 0.40); }
+html[data-theme="dark"] .aa-footer__accordion { border-top: 1px solid rgba(255, 255, 255, 0.12); }
+html[data-theme="dark"] .aa-footer__accordion-head { border-top: 1px solid rgba(255, 255, 255, 0.12); }
+html[data-theme="dark"] .aa-footer__accordion-head h4 { color: rgba(255, 255, 255, 0.70); }
+
+/* ===== aa-drawer.css ===== */
+html[data-theme="dark"] .aa-menu-drawer {
+  --aa-ink: rgba(255, 255, 255, 0.92);
+  --aa-bg: #1A0B2E;
+}
+html[data-theme="dark"] .aa-menu-drawer .menu-drawer {
+  background: linear-gradient(180deg, #140d22, #0a0715) !important;
+  color: rgba(255, 255, 255, 0.70) !important;
+  box-shadow: 0 0 80px rgba(0,0,0,0.6) !important;
+}
+html[data-theme="dark"] .aa-menu-drawer .menu-drawer__menu-item {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(255, 255, 255, 0.10) !important;
+}
+html[data-theme="dark"] .aa-menu-drawer .aa-drawer__welcome-sub {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03)) !important;
+}
+html[data-theme="dark"] .aa-menu-drawer .aa-drawer__quick-card {
+  background: #1A0B2E !important;
+  border: 1px solid rgba(255, 255, 255, 0.10) !important;
+}
+html[data-theme="dark"] .aa-menu-drawer .aa-drawer__quick-card:active { background: rgba(255, 255, 255, 0.06) !important; }
+html[data-theme="dark"] .aa-menu-drawer .aa-drawer__section { border-top: 1px solid rgba(255, 255, 255, 0.12) !important; }
+html[data-theme="dark"] .aa-menu-drawer .aa-drawer__section-head { border-bottom: 1px solid rgba(255, 255, 255, 0.10) !important; }
+html[data-theme="dark"] .aa-menu-drawer .aa-drawer__social-link {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+html[data-theme="dark"] .aa-menu-drawer .aa-drawer__social-link:hover {
+  background: linear-gradient(135deg, #FF8C42, #FF2E93) !important;
+  border-color: transparent !important;
+  color: #fff !important;
+}
+
+/* ===== aa-quiz-v4.css ===== */
+html[data-theme="dark"] .aa-quiz {
+  --q-bg: linear-gradient(180deg, #1A0B2E 0%, #06061F 100%);
+  --q-card: rgba(255, 255, 255, 0.06);
+  --q-card-2: #2D1B4E;
+  --q-ink: #fff;
+  --q-soft: rgba(255, 255, 255, 0.70);
+  --q-gold: #FFC24B;
+  --q-line: rgba(255, 255, 255, 0.12);
+  --q-magenta: #FF2E93;
+  --q-orange: #FF8C42;
+  --q-grad: linear-gradient(135deg, #FF8C42, #FF2E93);
+  --q-shadow: 0 1px 3px rgba(3, 2, 10, 0.4), 0 14px 30px rgba(3, 2, 10, 0.5);
+}
+html[data-theme="dark"] .aa-quiz__scrim { background: rgba(3, 2, 10, 0.7); }
+html[data-theme="dark"] .aa-quiz__sheet { box-shadow: 0 -14px 48px rgba(3, 2, 10, 0.55); }
+html[data-theme="dark"] .aa-quiz__grip { background: rgba(255, 255, 255, 0.16); }
+html[data-theme="dark"] .aa-quiz__close { background: rgba(255, 255, 255, 0.06); }
+html[data-theme="dark"] .aa-quiz__cta { background: var(--q-grad); color: #fff; box-shadow: 0 10px 26px rgba(255, 46, 147, 0.26); }
+html[data-theme="dark"] .aa-quiz__cta:not(:disabled):active { filter: brightness(1.05); box-shadow: 0 12px 30px rgba(255, 46, 147, 0.34); }
+html[data-theme="dark"] .aa-quiz__progress { background: rgba(255, 255, 255, 0.12); }
+html[data-theme="dark"] .aa-quiz__progress-bar { background: var(--q-grad); }
+html[data-theme="dark"] .aa-quiz__opt.is-sel {
+  background: linear-gradient(0deg, rgba(255, 46, 147, 0.045), rgba(255, 46, 147, 0.045)), var(--q-card);
+  box-shadow: 0 0 0 1.5px var(--q-magenta), 0 10px 24px rgba(255, 46, 147, 0.12);
+}
+html[data-theme="dark"] .aa-quiz__opt-check { border: 2px solid rgba(255, 255, 255, 0.20); }
+html[data-theme="dark"] .aa-quiz__flow-fade { background: linear-gradient(180deg, rgba(26, 11, 46, 0), #1A0B2E 36%); }
+html[data-theme="dark"] .aa-quiz__cc-menu { background: #1A0B2E; box-shadow: 0 12px 30px rgba(255, 255, 255, 0.16); }
+html[data-theme="dark"] .aa-quiz__cc-opt:active { background: rgba(255, 46, 147, 0.05); }
+html[data-theme="dark"] .aa-quiz__pob-menu { background: #1A0B2E; box-shadow: 0 12px 30px rgba(255, 255, 255, 0.16); }
+html[data-theme="dark"] .aa-quiz__pob-opt:active { background: rgba(255, 46, 147, 0.05); }
+html[data-theme="dark"] .aa-quiz .aa-qc.is-gift { border: 1px solid rgba(255, 194, 75, 0.34); }
+html[data-theme="dark"] .aa-quiz .aa-qc.is-pick { box-shadow: 0 0 0 1.5px var(--q-magenta), 0 12px 26px rgba(255, 46, 147, 0.14); }
+html[data-theme="dark"] .aa-quiz .aa-qc__media { background: #2D1B4E; }
+html[data-theme="dark"] .aa-quiz .aa-qc__price s { color: rgba(255, 255, 255, 0.40); }
+html[data-theme="dark"] .aa-quiz .aa-qc__add { background: var(--q-grad); color: #fff; }
+html[data-theme="dark"] .aa-quiz .aa-qc__add:active { filter: brightness(1.05); }
+html[data-theme="dark"] .aa-quiz__combo { box-shadow: 0 14px 32px rgba(255, 46, 147, 0.13); }
+html[data-theme="dark"] .aa-quiz__combo-thumb { background: #2D1B4E; border: 1px solid var(--q-line); }
+html[data-theme="dark"] .aa-quiz__combo-price s { color: rgba(255, 255, 255, 0.40); }
+html[data-theme="dark"] .aa-quiz__combo-cta { box-shadow: 0 10px 24px rgba(255, 46, 147, 0.26); }
+html[data-theme="dark"] .aa-quiz__hero-media { background: #2D1B4E; border: 1px solid var(--q-line); }
+
+/* ===== astroaura-cart-v8.css ===== */
+html[data-theme="dark"] .aa-cart-badge { background: rgba(255, 46, 147, 0.12); }
+html[data-theme="dark"] .aa-cart-progress__bar { background: linear-gradient(90deg, transparent 0%, #FF2E93 35%, #FF8C42 65%, transparent 100%); }
+html[data-theme="dark"] .aa-cart-empty {
+  background: linear-gradient(180deg, #140d22, #0a0715);
+  color: rgba(255, 255, 255, 0.70);
+  border: 0.1rem solid rgba(255, 255, 255, 0.12);
+}
+html[data-theme="dark"] .aa-cart-empty__sub { color: rgba(255, 255, 255, 0.70); }
+html[data-theme="dark"] .aa-cart-empty__cta { color: #FFFFFF; }
+html[data-theme="dark"] .aa-cart-title { color: #FFFFFF; }
+html[data-theme="dark"] .aa-cart-foot { border-top: 0.1rem solid rgba(255, 255, 255, 0.12); }
+html[data-theme="dark"] .aa-cart-note { border-bottom: 0.1rem solid rgba(255, 255, 255, 0.12); }
+html[data-theme="dark"] .aa-cart-line { border-bottom: 0.1rem solid rgba(255, 255, 255, 0.10); }
+html[data-theme="dark"] .aa-cart-checkout {
+  background: linear-gradient(135deg, #FF8C42 0%, #FF2E93 100%) !important;
+  color: #FFFFFF !important;
+}
+html[data-theme="dark"] .aa-cart-spinner { border: 3px solid rgba(255, 255, 255, 0.18); border-top-color: #FF2E93; }
+html[data-theme="dark"] .aa-cart-loading { color: rgba(255, 255, 255, 0.54); }
+html[data-theme="dark"] .aa-cart-qty__btn { background-color: rgba(255, 255, 255, 0.30); }
+html[data-theme="dark"] .aa-cart-drawer { box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.5); }
+html[data-theme="dark"] .aa-cart-overlay { background: rgba(255, 255, 255, 0.24); }
+html[data-theme="dark"] .aa-rec { border-top: 1px solid rgba(255, 255, 255, 0.12); }
+html[data-theme="dark"] .aa-rec__head { color: #FFFFFF; }
+html[data-theme="dark"] .aa-rec__card { background: #1A0B2E; border: 1px solid rgba(255, 255, 255, 0.12); }
+html[data-theme="dark"] .aa-rec__img { background: rgba(255, 255, 255, 0.06); }
+html[data-theme="dark"] .aa-rec__name { color: rgba(255, 255, 255, 0.70); }
+html[data-theme="dark"] .aa-rec__price { color: #FFFFFF; }
+html[data-theme="dark"] .aa-rec__add { background: linear-gradient(135deg, #FF8C42, #FF2E93); }
+html[data-theme="dark"] .aa-rec__add:hover { filter: brightness(1.08); }
+/* .aa-cart-promo dark colours live in aa-dark-cart.css (single source). */
+
+/* ===== aa-auth-v2.css ===== */
+html[data-theme="dark"] .aa-au-btn { box-shadow:0 10px 24px rgba(255,46,147,.28); }
+html[data-theme="dark"] .aa-au-cc { background:rgba(255,255,255,.06); }
+html[data-theme="dark"] .aa-au-flag { box-shadow:0 0 0 1px rgba(255,255,255,.12); }
+html[data-theme="dark"] .aa-au-inp { background:rgba(255,255,255,.06); }
+html[data-theme="dark"] .aa-au-inp:focus { border-color:#FF2E93;box-shadow:0 0 0 3px rgba(255,46,147,.12); }
+html[data-theme="dark"] .aa-au-inp::placeholder { color:rgba(255,255,255,.40); }
+html[data-theme="dark"] .aa-au-otp input { background:rgba(255,255,255,.06); }
+html[data-theme="dark"] .aa-au-otp input:focus { border-color:#FF2E93;box-shadow:0 0 0 3px rgba(255,46,147,.12); }
+html[data-theme="dark"] .aa-au-otp.aa-au-err input { border-color:#FF9F6B;box-shadow:0 0 0 3px rgba(255,159,107,.10); }
+html[data-theme="dark"] .aa-au-change { color:#FF2E93; }
+html[data-theme="dark"] .aa-au-pop.aa-au-open { background:rgba(3,2,10,.7); }
+html[data-theme="dark"] .aa-au-done__tick svg { stroke:#FF2E93; }
+html[data-theme="dark"] .aa-au-sheet { background:#1A0B2E; border-top:1px solid rgba(255,255,255,.12); }
+html[data-theme="dark"] .aa-au-grab { background:rgba(255,255,255,.30); }
+html[data-theme="dark"] .aa-au-check input { accent-color:#FF2E93; }
+html[data-theme="dark"] .aa-au-trouble { color:#FF2E93; }
+html[data-theme="dark"] .aa-au-modal { box-shadow:0 30px 80px rgba(3,2,10,.6); }
+html[data-theme="dark"] .aa-au-modal__close { background:rgba(255,255,255,.06);color:rgba(255,255,255,.54); }
+html[data-theme="dark"] .aa-au-modal__close:hover { background:rgba(255,255,255,.12);color:#fff; }
+html[data-theme="dark"] .aa-au-left { background:linear-gradient(158deg,#06061F 0%,#1A0B2E 52%,#2D1B4E 100%); }
+html[data-theme="dark"] .aa-au-left::before {
+  background:
+    radial-gradient(70% 50% at 15% 12%, rgba(255,140,66,.16), transparent 55%),
+    radial-gradient(60% 50% at 95% 95%, rgba(255,46,147,.20), transparent 55%);
+}
+html[data-theme="dark"] .aa-au-brand .aa-au-brandlogo { filter:drop-shadow(0 4px 14px rgba(255,46,147,.30)); }
+html[data-theme="dark"] .aa-au-card .aa-au-ic { background:rgba(255,194,75,.22); }
+html[data-theme="dark"] .aa-au-card .aa-au-cd { color:rgba(255,255,255,.66); }
+html[data-theme="dark"] .aa-au-right { background:#1A0B2E; }
+html[data-theme="dark"] .aa-au-card-s {
+  background:#140d22;border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 8px 28px rgba(3,2,10,.10),0 1px 3px rgba(3,2,10,.05);
+}
+html[data-theme="dark"] .aa-au-avatar { box-shadow:0 10px 24px rgba(255,46,147,.36),0 0 0 4px rgba(255,255,255,.65); }
+html[data-theme="dark"] .aa-au-iconbtn { background:rgba(255,255,255,.06); }
+html[data-theme="dark"] .aa-au-row { background:rgba(255,255,255,.06); }
+html[data-theme="dark"] .aa-au-row:hover { box-shadow:0 12px 26px rgba(3,2,10,.12);border-color:rgba(255,46,147,.18); }
+html[data-theme="dark"] .aa-au-row .aa-au-ri svg { stroke:#FF2E93; }
+html[data-theme="dark"] .aa-au-sech a { color:#FF2E93; }
+html[data-theme="dark"] .aa-au-addr { background:rgba(255,255,255,.06); }
+html[data-theme="dark"] .aa-au-addr:hover { box-shadow:0 10px 22px rgba(3,2,10,.10); }
+html[data-theme="dark"] .aa-au-addr .aa-au-tag { color:#FF2E93;background:linear-gradient(120deg,rgba(255,46,147,.12),rgba(255,140,66,.12)); }
+html[data-theme="dark"] .aa-au-addr .aa-au-edit { background:rgba(255,255,255,.06); }
+html[data-theme="dark"] .aa-au-so1 { background:rgba(255,255,255,.06);border:1.5px solid #FF2E93;color:#FF2E93; }
+html[data-theme="dark"] .aa-au-so1:hover { background:#FF2E93;color:#fff; }
+html[data-theme="dark"] .aa-au-order { background:rgba(255,255,255,.06); }
+html[data-theme="dark"] .aa-au-order:hover { box-shadow:0 18px 38px rgba(3,2,10,.18); }
+html[data-theme="dark"] .aa-au-order--link:hover { box-shadow:0 10px 26px rgba(3,2,10,.16); }
+html[data-theme="dark"] .aa-au-order__go { stroke:rgba(255,255,255,.40); }
+html[data-theme="dark"] .aa-au-pill.aa-au-ok { background:rgba(46,158,91,.10); }
+html[data-theme="dark"] .aa-au-pill.aa-au-warn { background:rgba(255,159,107,.10); }
+html[data-theme="dark"] .aa-au-pill.aa-au-pend { background:rgba(255,194,75,.12); }
+html[data-theme="dark"] .aa-au-buy { box-shadow:0 8px 18px rgba(255,46,147,.24); }
+html[data-theme="dark"] .aa-au-trk { background:rgba(255,255,255,.06); }
+html[data-theme="dark"] .aa-au-ohd__ic.aa-au-ok { background:rgba(46,158,91,.12); }
+html[data-theme="dark"] .aa-au-ohd__ic.aa-au-warn { background:rgba(255,159,107,.12); }
+html[data-theme="dark"] .aa-au-ohd__ic.aa-au-pend { background:rgba(255,194,75,.14); }
+html[data-theme="dark"] .aa-au-ohd__track { background:linear-gradient(135deg,#FF8C42,#FF2E93);box-shadow:0 6px 14px rgba(255,46,147,.24); }
+html[data-theme="dark"] .aa-au-orev {
+  border-top:1px solid rgba(255,255,255,.12);
+  background:linear-gradient(120deg,rgba(255,46,147,.05),rgba(255,140,66,.06));
+}
+html[data-theme="dark"] .aa-au-orev:hover { background:linear-gradient(120deg,rgba(255,46,147,.10),rgba(255,140,66,.11)); }
+html[data-theme="dark"] .aa-au-orev__stars svg { fill:#FFC24B; }
+html[data-theme="dark"] .aa-au-empty__ic svg { stroke:#FF2E93; }
+html[data-theme="dark"] .aa-au-grid .aa-au-order {
+  background:linear-gradient(180deg,#2D1B4E 0%,#1A0B2E 100%);border-color:rgba(255,194,75,.30);box-shadow:0 12px 28px rgba(3,2,10,.12);
+}
+html[data-theme="dark"] .aa-au-grid .aa-au-order__top { border-bottom:1px solid rgba(255,194,75,.20); }
+html[data-theme="dark"] .aa-au-grid .aa-au-thumb { background:#2D1B4E;border:1px solid rgba(255,194,75,.30);box-shadow:0 5px 14px rgba(3,2,10,.10); }
+html[data-theme="dark"] .aa-au-menu__card { background:#1A0B2E;border:1px solid rgba(255,255,255,.12);box-shadow:0 18px 50px rgba(3,2,10,.22); }
+html[data-theme="dark"] .aa-au-menu__item:active { background:rgba(255,255,255,.05); }
+html[data-theme="dark"] .aa-au-mic svg { stroke:#FF2E93; }
+html[data-theme="dark"] .aa-au-menu__out .aa-au-mic { background:rgba(255,159,107,.1); }
+html[data-theme="dark"] .aa-au-view__bg { background:rgba(3,2,10,.7); }
+html[data-theme="dark"] .aa-au-view__panel { background:#1A0B2E;box-shadow:0 18px 50px rgba(3,2,10,.55); }
+html[data-theme="dark"] .aa-au-back { background:rgba(255,255,255,.06); }
+html[data-theme="dark"] .aa-au-view__back { background:rgba(255,255,255,.06); }
+html[data-theme="dark"] .aa-au-pf__row { background:rgba(255,255,255,.06); }
+html[data-theme="dark"] .aa-au-editbtn { background:rgba(255,255,255,.06); }
+html[data-theme="dark"] .aa-au-editsave { background:linear-gradient(135deg,#FF8C42,#FF2E93);box-shadow:0 8px 18px rgba(255,46,147,.24); }
+html[data-theme="dark"] .aa-au-editcancel { background:rgba(255,255,255,.06); }
+html[data-theme="dark"] .aa-au-ocard {
+  background:linear-gradient(180deg,#2D1B4E 0%,#1A0B2E 100%);border:1px solid rgba(255,194,75,.30);box-shadow:0 12px 28px rgba(3,2,10,.12);
+}
+html[data-theme="dark"] .aa-au-ocard.aa-au-open { box-shadow:0 20px 44px rgba(3,2,10,.18); }
+html[data-theme="dark"] .aa-au-osum .aa-au-thumb { background:#2D1B4E;border:1px solid rgba(255,194,75,.30);box-shadow:0 5px 14px rgba(3,2,10,.10); }
+html[data-theme="dark"] .aa-au-dd-pad { border-top:1px solid rgba(255,194,75,.22); }
+html[data-theme="dark"] .aa-au-dthumb { background:#2D1B4E;border:1px solid rgba(255,194,75,.30); }
+html[data-theme="dark"] .aa-au-dbtn--pri { background:linear-gradient(135deg,#FF8C42,#FF2E93);box-shadow:0 8px 18px rgba(255,46,147,.24); }
+
+/* ===== Remove scroll-to-reveal motion (app/dark): content appears immediately,
+   no slide/fade-in on scroll. Fixes "Customers Also Bought / Aura Stories pop
+   in late". Dark-scoped so the live light website keeps its animations. ===== */
+html[data-theme="dark"] .scroll-trigger,
+html[data-theme="dark"] .scroll-trigger.animate--slide-in,
+html[data-theme="dark"] .scroll-trigger.animate--fade-in,
+html[data-theme="dark"] .scroll-trigger--offscreen,
+html[data-theme="dark"] .scroll-trigger.animate--slide-in.scroll-trigger--offscreen {
+  opacity: 1 !important;
+  transform: none !important;
+  visibility: visible !important;
+  animation: none !important;
+  transition: none !important;
+}
+/*
+  aa-dark-header.css
+  Dark-mode header overrides for the Aura AI header bar.
+  Every rule is scoped under html[data-theme="dark"] so the default light
+  (cream) header for normal web visitors is untouched. Values ported from the
+  fully-dark sibling theme (market-tweak), re-scoped here. !important is used to
+  beat the inline cream rules in sections/header.liquid + snippets.
+  Palette: bg #1A0B2E, header-deep #010922, raised #2D1B4E, text #FFFFFF,
+  secondary rgba(255,255,255,.70), primary/active #FF2E93,
+  accent gradient linear-gradient(135deg,#FF8C42,#FF2E93),
+  borders rgba(255,255,255,.12).
+*/
+
+/* === Header bar surface (frosted near-black) ===
+   ROOT CAUSE: sections/header.liquid renders an INLINE <style> in the BODY
+   that hard-codes `.shopify-section-header, sticky-header.header-wrapper,
+   .header-wrapper { background:#FBF6EE !important; }` (opaque cream). That
+   literal !important is the real light source. We cannot edit header.liquid,
+   so every rule below is prefixed with `html[data-theme="dark"] body` to lift
+   specificity above that inline rule (and above any future edit that adds
+   `html` to it). #010922 frosted near-black per the dark palette. */
+html[data-theme="dark"] body .shopify-section-header,
+html[data-theme="dark"] body sticky-header.header-wrapper,
+html[data-theme="dark"] body .header-wrapper {
+  background: #010922 !important;
+  background-color: #010922 !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+  backdrop-filter: blur(14px) !important;
+  border: 0 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: none !important;
+}
+
+/* === Magenta/orange ambient glow on the right edge === */
+html[data-theme="dark"] body sticky-header.header-wrapper::before,
+html[data-theme="dark"] body .header-wrapper::before {
+  background: radial-gradient(circle at 90% 50%,
+    rgba(255, 46, 147, 0.18) 0%,
+    rgba(255, 140, 66, 0.10) 30%,
+    rgba(255, 123, 62, 0) 65%) !important;
+}
+
+/* === Top announcement / offer bar (dark) ===
+   The announcement-bar section carries Dawn `color-accent-2`; aa-dark.css
+   already repoints that scheme's --color-background to dark, but we force the
+   exact #010922 here and boost specificity with `body` so no literal can win. */
+html[data-theme="dark"] body .section-header,
+html[data-theme="dark"] body .announcement-bar,
+html[data-theme="dark"] body .announcement-bar-section,
+html[data-theme="dark"] body .utility-bar,
+html[data-theme="dark"] body .utility-bar.color-accent-2,
+html[data-theme="dark"] body .aa-offer-bar {
+  background: #010922 !important;
+  background-color: #010922 !important;
+}
+html[data-theme="dark"] body .announcement-bar__message,
+html[data-theme="dark"] body .announcement-bar__announcement,
+html[data-theme="dark"] body .announcement-bar a,
+html[data-theme="dark"] body .announcement-bar__link,
+html[data-theme="dark"] body .utility-bar,
+html[data-theme="dark"] body .aa-offer-bar,
+html[data-theme="dark"] body .aa-offer-bar a {
+  color: #FFFFFF !important;
+}
+
+/* === Nav links + icons: light text, magenta on hover ===
+   `body` prefix lifts these above any inline color rule the section may emit. */
+html[data-theme="dark"] body .header__menu-item,
+html[data-theme="dark"] body .header__menu-item .list-menu__item,
+html[data-theme="dark"] body .header__active-menu-item,
+html[data-theme="dark"] body .header__icon,
+html[data-theme="dark"] body .header .list-menu__item--link,
+html[data-theme="dark"] body .aa-nav__link,
+html[data-theme="dark"] body .aa-nav__link span,
+html[data-theme="dark"] body .aa-logo__text {
+  color: #FFFFFF !important;
+}
+html[data-theme="dark"] body .header__menu-item:hover,
+html[data-theme="dark"] body .header__menu-item:hover .list-menu__item,
+html[data-theme="dark"] body .header__active-menu-item:hover,
+html[data-theme="dark"] body .header__icon:hover,
+html[data-theme="dark"] body .aa-nav__link:hover,
+html[data-theme="dark"] body .aa-nav__link:hover span,
+html[data-theme="dark"] body details[open] > .aa-nav__link,
+html[data-theme="dark"] body details[open] > .aa-nav__link span {
+  color: #FF2E93 !important;
+}
+
+/* === Active / current nav item: magenta (matches "Bracelets") === */
+html[data-theme="dark"] body .aa-nav__link[aria-current],
+html[data-theme="dark"] body .aa-nav__link[aria-current] span,
+html[data-theme="dark"] body .header__active-menu-item,
+html[data-theme="dark"] body .list-menu__item--active {
+  color: #FF2E93 !important;
+}
+
+/* === Animated nav underline: magenta === */
+html[data-theme="dark"] body .aa-nav__link::after {
+  background: #FF2E93 !important;
+}
+
+/* === Icon SVGs (search, account, cart): light, magenta on hover === */
+html[data-theme="dark"] body .header__icon .svg-wrapper,
+html[data-theme="dark"] body .header__icon svg {
+  color: #FFFFFF !important;
+}
+html[data-theme="dark"] body .header__icon:hover .svg-wrapper,
+html[data-theme="dark"] body .header__icon:hover svg {
+  color: #FF2E93 !important;
+}
+
+/* === Dropdown carets / chevrons: light, magenta when open === */
+html[data-theme="dark"] body .aa-nav__link .aa-chevron {
+  color: rgba(255, 255, 255, 0.70) !important;
+}
+html[data-theme="dark"] body .aa-nav__link:hover .aa-chevron,
+html[data-theme="dark"] body details[open] > .aa-nav__link .aa-chevron {
+  color: #FF2E93 !important;
+}
+
+/* === Cart-count badge: accent gradient, white text === */
+html[data-theme="dark"] body .header .cart-count-bubble {
+  background: linear-gradient(135deg, #FF8C42, #FF2E93) !important;
+  color: #FFFFFF !important;
+  border: 0 !important;
+}
+html[data-theme="dark"] body .header .cart-count-bubble span {
+  color: #FFFFFF !important;
+}
+
+/* === Mega-menu dropdown panel: dark surface, light labels ===
+   .aa-mega__panel carries the menu color-scheme (already dark via aa-dark.css);
+   we force the exact surface and boost with `body`. */
+html[data-theme="dark"] body .aa-mega__panel {
+  background: rgba(26, 11, 46, 0.97) !important;
+  background-color: rgba(26, 11, 46, 0.97) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.45) !important;
+  color: #FFFFFF !important;
+}
+
+/* === Mega-menu tiles: dark image circles, light labels === */
+html[data-theme="dark"] body .aa-tile,
+html[data-theme="dark"] body .aa-tile:hover,
+html[data-theme="dark"] body .aa-tile:focus,
+html[data-theme="dark"] body .aa-tile:active,
+html[data-theme="dark"] body .aa-tile:visited {
+  color: #FFFFFF !important;
+  background: none !important;
+}
+html[data-theme="dark"] body .aa-tile__circle {
+  background: rgba(255, 255, 255, 0.06) !important;
+}
+html[data-theme="dark"] body .aa-tile__circle::after {
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12) !important;
+}
+html[data-theme="dark"] body .aa-tile:hover .aa-tile__circle {
+  background: rgba(255, 255, 255, 0.10) !important;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45) !important;
+}
+html[data-theme="dark"] body .aa-tile--active .aa-tile__circle {
+  box-shadow: inset 0 0 0 1px #FF2E93 !important;
+}
+html[data-theme="dark"] body .aa-tile--all .aa-tile__circle {
+  background: linear-gradient(135deg, #FF8C42 0%, #FF2E93 100%) !important;
+}
+html[data-theme="dark"] body .aa-tile__placeholder {
+  color: #FFFFFF !important;
+}
+html[data-theme="dark"] body .aa-tile__label {
+  color: #FFFFFF !important;
+}
+html[data-theme="dark"] body .aa-tile:hover .aa-tile__label,
+html[data-theme="dark"] body .aa-tile--active .aa-tile__label {
+  color: #FF2E93 !important;
+}
+
+/* === Classic dropdown submenu (non-mega) panel: dark surface === */
+html[data-theme="dark"] body .header__submenu {
+  background: #1A0B2E !important;
+  background-color: #1A0B2E !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.45) !important;
+}
+html[data-theme="dark"] body .header__submenu .header__menu-item,
+html[data-theme="dark"] body .header__submenu .list-menu__item {
+  color: #FFFFFF !important;
+}
+html[data-theme="dark"] body .header__submenu .header__menu-item:hover,
+html[data-theme="dark"] body .header__submenu .list-menu__item:hover,
+html[data-theme="dark"] body .header__submenu .list-menu__item--active {
+  color: #FF2E93 !important;
+  background: #2D1B4E !important;
+}
+
+/* Header win over aa-section-cards.css `html body .section-header .header-wrapper`
+   cream !important (mirror its exact chain + data-theme for the specificity win).
+   Verified via theme dev DOM inspection. */
+html[data-theme="dark"] body .section-header,
+html[data-theme="dark"] body .section-header .header-wrapper,
+html[data-theme="dark"] body .header-wrapper,
+html[data-theme="dark"] body sticky-header.header-wrapper {
+  background: #010922 !important;
+  background-color: #010922 !important;
+}
+/* =========================================================================
+   aa-dark-commerce.css
+   Dark-mode commerce polish for product cards (home rails + collection grid
+   + search grid) and quick-view buttons.
+
+   Scope: EVERY rule is gated on html[data-theme="dark"] so the default light
+   theme is never touched. Cookie-gated dark mode sets data-theme="dark" on
+   <html> before first paint.
+
+   Source of truth for values: the sibling theme market-tweak (same theme,
+   already dark, same class names). Dark commerce values ported here and
+   re-scoped. The ADD-TO-CART button uses the brand GRADIENT
+   (orange -> magenta) per requirement, even though some surfaces in
+   market-tweak used a flat colour.
+
+   Two card systems on this theme:
+     1. Rail / Top Selling / featured cards  -> snippets/aa-rd-card.liquid
+        classes: .pcard  .nm  .price  .was  .pct  .add  .qv-btn__b  .rate
+     2. Collection / search / grid cards     -> snippets/card-product.liquid
+        classes: .aa-pcard  .aa-pcard__title  .aa-pcard__price
+                 .aa-pcard__strike  .aa-pcard__pct  .aa-pcard__cta
+                 .aa-pcard__qv-btn
+
+   Palette:
+     card surface   #1A0B2E
+     text           #FFFFFF
+     secondary      rgba(255,255,255,.70)
+     strike         rgba(255,255,255,.50)
+     savings green  #2E9E5B
+     accent grad    linear-gradient(135deg,#FF8C42,#FF2E93)
+     borders        rgba(255,255,255,.12)
+   ========================================================================= */
+
+
+/* =========================================================================
+   1) RAIL CARDS  (.pcard from aa-rd-card.liquid)
+   ========================================================================= */
+
+/* Title: light on dark */
+html[data-theme="dark"] .pcard .nm,
+html[data-theme="dark"] .pcard .nm a {
+  color: #FFFFFF;
+}
+
+/* Current price: white + bold */
+html[data-theme="dark"] .pcard .price {
+  color: #FFFFFF;
+  font-weight: 800;
+}
+
+/* Compare-at strikethrough */
+html[data-theme="dark"] .pcard .was {
+  color: rgba(255, 255, 255, .50);
+}
+
+/* "% off" / savings text: green */
+html[data-theme="dark"] .pcard .pct {
+  color: #2E9E5B;
+}
+
+/* Star-rating badge: readable glassy chip on dark
+   (matches market-tweak's dark .pcard .rate value) */
+html[data-theme="dark"] .pcard .rate {
+  background: rgba(7, 6, 15, .72);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, .14);
+  color: #FFFFFF;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .35);
+}
+html[data-theme="dark"] .pcard .rate-star {
+  color: #FFC83D;
+}
+
+/* ADD TO CART pill: brand GRADIENT (was a dark/black pill in dark mode) */
+html[data-theme="dark"] .pcard .add {
+  background: linear-gradient(135deg, #FF8C42, #FF2E93);
+  color: #FFFFFF;
+  border: none;
+}
+html[data-theme="dark"] .pcard .add:hover {
+  background: linear-gradient(135deg, #FF8C42, #FF2E93);
+  color: #FFFFFF;
+  filter: brightness(1.06);
+  box-shadow: 0 9px 20px rgba(255, 46, 147, .30);
+}
+
+/* Sold-out fallback: muted, clearly not a buy action */
+html[data-theme="dark"] .pcard .add--sold {
+  background: rgba(255, 255, 255, .10);
+  color: rgba(255, 255, 255, .70);
+  border: 1px solid rgba(255, 255, 255, .12);
+  opacity: 1;
+}
+
+/* Quick-view button on rail card: glassy chip, readable on dark image */
+html[data-theme="dark"] .pcard .qv-btn .qv-btn__b {
+  background: rgba(7, 6, 15, .72) !important;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, .14) !important;
+}
+html[data-theme="dark"] .pcard .qv-btn .qv-btn__b:hover {
+  background: rgba(7, 6, 15, .72) !important;
+  color: #FFFFFF;
+  border-color: rgba(255, 255, 255, .14) !important;
+  transform: scale(1.04) !important;
+}
+
+
+/* =========================================================================
+   2) COLLECTION / SEARCH / GRID CARDS  (.aa-pcard from card-product.liquid)
+   ========================================================================= */
+
+/* Category eyebrow already handled in aa-dark.css for the non-collection card;
+   cover the collection/search context too (gradient text). */
+
+/* Title: light on dark */
+html[data-theme="dark"] .aa-pcard__title,
+html[data-theme="dark"] .aa-pcard__title a {
+  color: #FFFFFF;
+}
+
+/* Current price: white + bold */
+html[data-theme="dark"] .aa-pcard__price {
+  color: #FFFFFF;
+  font-weight: 800;
+}
+
+/* Compare-at strikethrough */
+html[data-theme="dark"] .aa-pcard__strike {
+  color: rgba(255, 255, 255, .50);
+}
+
+/* "% off" / savings text: green.
+   aa-dark.css sets .template-collection .aa-pcard__pct to #3DDC84; this rule
+   is equal-or-higher specificity and ordered later in the cascade for the
+   collection context, and also covers the rail/non-collection context. */
+html[data-theme="dark"] .aa-pcard__pct,
+html[data-theme="dark"] .template-collection .aa-pcard__pct,
+html[data-theme="dark"] .template-search .aa-pcard__pct {
+  color: #2E9E5B;
+}
+
+/* Rating row text + filled stars on the grid card */
+html[data-theme="dark"] .aa-pcard__rate-num {
+  color: rgba(255, 255, 255, .70);
+}
+html[data-theme="dark"] .aa-pcard__rate {
+  background: rgba(7, 6, 15, .72);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, .14);
+  color: #FFFFFF;
+}
+html[data-theme="dark"] .aa-pcard__rate-star {
+  color: #FFC83D;
+}
+
+/* ADD TO CART pill: brand GRADIENT (covers collection full pill, top-selling
+   full pill, and the floating "+" on mobile collection cards). aa-dark.css
+   already sets the gradient for some of these; reinforce every variant so no
+   dark/black pill slips through. */
+html[data-theme="dark"] .aa-pcard__cta,
+html[data-theme="dark"] .aa-pcard__cta--full,
+html[data-theme="dark"] .aa-pcard__cta--plus {
+  background: linear-gradient(135deg, #FF8C42, #FF2E93) !important;
+  color: #FFFFFF !important;
+  border: none !important;
+}
+html[data-theme="dark"] .aa-pcard__cta:hover,
+html[data-theme="dark"] .aa-pcard__cta--full:hover {
+  background: linear-gradient(135deg, #FF8C42, #FF2E93) !important;
+  color: #FFFFFF !important;
+  filter: brightness(1.06);
+  box-shadow: 0 10px 22px rgba(255, 46, 147, .34) !important;
+}
+
+/* Sold-out / View fallback: muted, not a buy action */
+html[data-theme="dark"] .aa-pcard__cta--sold {
+  background: rgba(255, 255, 255, .10) !important;
+  color: rgba(255, 255, 255, .70) !important;
+  border: 1px solid rgba(255, 255, 255, .12) !important;
+}
+
+/* Quick-view button on grid card: glassy chip (matches market-tweak dark) */
+html[data-theme="dark"] .aa-pcard__qv-btn {
+  background: rgba(255, 255, 255, .10);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, .14);
+}
+html[data-theme="dark"] .aa-pcard__qv-btn:hover {
+  background: rgba(255, 255, 255, .10);
+  color: #FFFFFF;
+  border-color: rgba(255, 255, 255, .14);
+  transform: translateX(-50%) translateY(0) scale(1.04);
+}
+
+
+/* =========================================================================
+   3) DAWN .price FALLBACK INSIDE CARD CONTEXTS
+   Some grids render the Dawn price snippet (.price / .price-item) instead of
+   the .aa-pcard__price spans. Keep those readable on dark card surfaces too.
+   Scoped to card contexts only so PDP / cart price styling is untouched.
+   ========================================================================= */
+html[data-theme="dark"] .pcard .price-item--regular,
+html[data-theme="dark"] .pcard .price-item--sale,
+html[data-theme="dark"] .aa-pcard .price-item--regular,
+html[data-theme="dark"] .aa-pcard .price-item--sale,
+html[data-theme="dark"] .card-product .price-item--regular,
+html[data-theme="dark"] .card-product .price-item--sale {
+  color: #FFFFFF;
+}
+html[data-theme="dark"] .pcard .price--on-sale .price-item--regular,
+html[data-theme="dark"] .aa-pcard .price--on-sale .price-item--regular,
+html[data-theme="dark"] .card-product .price--on-sale .price-item--regular {
+  color: rgba(255, 255, 255, .50);
+}
+html[data-theme="dark"] .pcard .price__badge-sale,
+html[data-theme="dark"] .aa-pcard .price__badge-sale,
+html[data-theme="dark"] .card-product .price__badge-sale {
+  color: #2E9E5B;
+}
+/* =========================================================================
+   aa-dark-type.css
+   Dark-mode TYPOGRAPHY fix for MAIN-CONTENT section headings, titles and
+   body copy in the homepage redesign (aa-rd-*) sections.
+
+   Why this file exists:
+   The aa-rd-* sections render display headings two ways.
+     1) Via the shared aa-rd-v2.css variables (--ink / --ink-soft). Those are
+        already remapped to white in aa-dark.css.
+     2) Via HARDCODED light-theme hex literals baked into each section's inline
+        <style> (color:#241019 / #6f5f57 / #8E2C2C). Those literals ignore the
+        variable remap, so on the dark canvas they render as near-invisible
+        dark maroon. This file recolors only those literal cases, plus forces
+        the shared display titles white as a belt-and-suspenders guarantee.
+
+   Scope rules:
+   - Every selector is scoped under html[data-theme="dark"]; light theme is
+     never touched.
+   - HEADER and FOOTER are intentionally excluded (owned by aa-dark-header.css
+     / aa-dark-footer.css).
+   - .template-collection is excluded (collection title / breadcrumbs / facets
+     are owned by aa-dark.css).
+   - Product CARD titles and prices are excluded (owned by aa-dark-commerce.css).
+
+   Palette:
+     text        #FFFFFF
+     secondary   rgba(255,255,255,.70)
+     tertiary    rgba(255,255,255,.54)
+     gold accent #FFC24B   (intentional Devanagari eyebrows stay gold)
+     link/brand  #FF2E93
+   ========================================================================= */
+
+/* -------------------------------------------------------------------------
+   1) SHARED REDESIGN DISPLAY TITLES (variable-driven, force white)
+   Covers: "Shop by Aura" (.sh h2), section rich-top titles (.rtop h2),
+   image-with-text titles (.iwt h3), editorial feature title (.efeat .ov h3),
+   and the shared <section class="sec"> h2/h3 display headings.
+   ------------------------------------------------------------------------- */
+html[data-theme="dark"] body:not(.template-collection) .sec h2,
+html[data-theme="dark"] body:not(.template-collection) .sec h3,
+html[data-theme="dark"] body:not(.template-collection) .sh h2,
+html[data-theme="dark"] body:not(.template-collection) .rtop h2,
+html[data-theme="dark"] body:not(.template-collection) .iwt h3,
+html[data-theme="dark"] body:not(.template-collection) .efeat .ov h3,
+html[data-theme="dark"] .related-products__heading,
+html[data-theme="dark"] .related-products__heading * {
+  color: #FFFFFF;
+}
+
+/* The decorative \2726 stars flanking .sh h2 / .rtop h2 stay gold on-brand. */
+html[data-theme="dark"] body:not(.template-collection) .sh h2::before,
+html[data-theme="dark"] body:not(.template-collection) .sh h2::after,
+html[data-theme="dark"] body:not(.template-collection) .rtop h2::before,
+html[data-theme="dark"] body:not(.template-collection) .rtop h2::after {
+  color: #FFC24B;
+}
+
+/* Devanagari / eyebrow accents stay gold (deliberate brand treatment). */
+html[data-theme="dark"] body:not(.template-collection) .sh .dev,
+html[data-theme="dark"] body:not(.template-collection) .rtop .dev,
+html[data-theme="dark"] body:not(.template-collection) .iwt .dev,
+html[data-theme="dark"] body:not(.template-collection) .whyz .dev {
+  color: #FFC24B;
+}
+
+/* Shared section body / secondary copy and circular-tile labels. */
+html[data-theme="dark"] body:not(.template-collection) .iwt p,
+html[data-theme="dark"] body:not(.template-collection) .efeat .ov p {
+  color: rgba(255,255,255,.70);
+}
+html[data-theme="dark"] body:not(.template-collection) .ptile .pl {
+  color: #FFFFFF;
+}
+
+/* Step blocks (How it works). */
+html[data-theme="dark"] body:not(.template-collection) .step h4 {
+  color: #FFFFFF;
+}
+
+/* -------------------------------------------------------------------------
+   2) DHAN YOG FEATURED SECTION (aa-rd-dhanyog.liquid)
+   Hardcoded literals: title #241019, body #6f5f57, eyebrow gold #B8915A.
+   The big "The Dhan Yog Bracelet" wordmark must become legible white.
+   ------------------------------------------------------------------------- */
+html[data-theme="dark"] .aa-dy__title {
+  color: #FFFFFF;
+}
+html[data-theme="dark"] .aa-dy__body {
+  color: rgba(255,255,255,.70);
+}
+html[data-theme="dark"] .aa-dy__eyebrow {
+  color: #FFC24B; /* "|| धन योग ||" deliberate gold eyebrow */
+}
+
+/* -------------------------------------------------------------------------
+   3) CERTIFY / TRUST SECTION (aa-rd-certify.liquid)
+   Hardcoded literals: title #241019, sub #6f5f57, name #241019,
+   eyebrow gold #B8915A, tag #8a6a3a.
+   ------------------------------------------------------------------------- */
+html[data-theme="dark"] .aa-cert__title,
+html[data-theme="dark"] .aa-cert__name {
+  color: #FFFFFF;
+}
+html[data-theme="dark"] .aa-cert__sub {
+  color: rgba(255,255,255,.70);
+}
+html[data-theme="dark"] .aa-cert__eyebrow {
+  color: #FFC24B; /* deliberate gold eyebrow */
+}
+html[data-theme="dark"] .aa-cert__tag {
+  color: rgba(255,255,255,.54);
+}
+
+/* ===== Dark fixes (code-review C1/C2): PDP + collection tabs bake light !important
+   ink literals that ignore the Dawn var remap and render dark-on-dark. Override,
+   scoped to dark, with !important to beat the baked declarations. ===== */
+
+/* PDP price (main-product) */
+html[data-theme="dark"] [id^="ProductInfo-"] .price--large .price-item--last { color:#FFFFFF !important; }
+html[data-theme="dark"] [id^="ProductInfo-"] .price--large s.price-item--regular,
+html[data-theme="dark"] [id^="ProductInfo-"] .price--large .aa-mrp { color:rgba(255,255,255,.55) !important; }
+
+/* PDP variant pills */
+html[data-theme="dark"] [id^="ProductInfo-"] .product-form__input--pill label {
+  background:rgba(255,255,255,.06) !important; color:#FFFFFF !important; border-color:rgba(255,255,255,.20) !important;
+}
+html[data-theme="dark"] [id^="ProductInfo-"] .product-form__input--pill input[type="radio"] + label::after {
+  border-color:rgba(255,255,255,.30) !important;
+}
+html[data-theme="dark"] [id^="ProductInfo-"] .product-form__input--pill input[type="radio"]:checked + label {
+  background:rgba(255,46,147,.12) !important; color:#FFFFFF !important; border-color:#FF2E93 !important; box-shadow:0 0 0 1px #FF2E93 !important;
+}
+html[data-theme="dark"] [id^="ProductInfo-"] .product-form__input--pill input[type="radio"]:checked + label::after {
+  border-color:#FF2E93 !important; background:#FF2E93 !important;
+}
+
+/* PDP accordions + shipping caption */
+html[data-theme="dark"] [id^="ProductInfo-"] .collapsible-row-title { color:#FFFFFF !important; }
+html[data-theme="dark"] [id^="ProductInfo-"] .collapsible-row-content p { color:rgba(255,255,255,.70) !important; }
+html[data-theme="dark"] [id^="ProductInfo-"] .collapsible-row-icon { color:rgba(255,255,255,.60) !important; }
+html[data-theme="dark"] [id^="ProductInfo-"] .aa-shipping-line,
+html[data-theme="dark"] [id^="ProductInfo-"] .product__text.inline-richtext { color:rgba(255,255,255,.70) !important; }
+
+/* Collection listing tabs (image-banner) */
+html[data-theme="dark"] .listing-description-accordion .tablinks { color:rgba(255,255,255,.60) !important; }
+html[data-theme="dark"] .listing-description-accordion .tablinks:hover,
+html[data-theme="dark"] .listing-description-accordion .tablinks.active { color:#FFFFFF !important; }
+html[data-theme="dark"] .listing-description-accordion .tabc-title { color:#FFFFFF !important; }
+html[data-theme="dark"] .listing-description-accordion .tabber_content p,
+html[data-theme="dark"] .listing-description-accordion .tabber_content h3,
+html[data-theme="dark"] .listing-description-accordion .tabber_content ul,
+html[data-theme="dark"] .listing-description-accordion .tabber_content ol { color:rgba(255,255,255,.70) !important; }
+/* AstroAura quick-view DARK MODE overrides.
+   Scoped entirely under html[data-theme="dark"]; default light theme untouched.
+   Values mirror the market-tweak source-of-truth dark theme.
+   Base quick-view styles live in aa-quickview-v2.css (light, high specificity),
+   so light backgrounds are overridden with !important here. */
+
+/* ---- modal shell + dialog surface ---- */
+html[data-theme="dark"] .quick-add-modal{background:rgba(8,3,14,.62)!important}
+html[data-theme="dark"] .quick-add-modal>[role="dialog"]{background:#1A0B2E!important;box-shadow:0 30px 90px rgba(0,0,0,.6)!important}
+
+/* ---- close (X) button ---- */
+html[data-theme="dark"] .quick-add-modal__toggle{background:rgba(255,255,255,.10)!important;border:1px solid rgba(255,255,255,.18)!important;color:#fff!important}
+
+/* ---- loader ---- */
+html[data-theme="dark"] .qv-spin{border:3px solid rgba(255,255,255,.14)!important;border-top-color:#FF2E93!important}
+
+/* ---- gallery thumbnails + slider ---- */
+html[data-theme="dark"] .qv-thumb{background:rgba(255,255,255,.06)!important}
+html[data-theme="dark"] .qv-thumb.is-sel{border-color:#fff!important}
+html[data-theme="dark"] .qv-slider{border:1px solid rgba(255,255,255,.12)!important;background:rgba(255,255,255,.04)!important}
+
+/* ---- info pane: kicker / title / reviews ---- */
+html[data-theme="dark"] .qv-cat{color:#FFC24B!important}
+html[data-theme="dark"] .qv-title{color:#fff!important}
+html[data-theme="dark"] .qv-rev{color:rgba(255,255,255,.70)!important}
+html[data-theme="dark"] .qv-stars{color:#FFC83D!important}
+
+/* ---- price row: MRP strike / big price / % OFF tag ---- */
+html[data-theme="dark"] .qv-mrp{color:rgba(255,255,255,.50)!important}
+html[data-theme="dark"] .qv-mrp s{color:rgba(255,255,255,.50)!important}
+html[data-theme="dark"] .qv-pricebig{color:#fff!important}
+html[data-theme="dark"] .qv-offtag{color:#fff!important;background:linear-gradient(135deg,#FF8C42,#FF2E93)!important}
+
+/* ---- prepaid deal block ---- */
+html[data-theme="dark"] .qv-deal{background:rgba(255,255,255,.06)!important;border:1px solid rgba(255,255,255,.12)!important}
+html[data-theme="dark"] .qv-deal-badge{background:linear-gradient(135deg,#FF8C42,#FF2E93)!important;color:#fff!important}
+html[data-theme="dark"] .qv-deal-l b{color:#fff!important}
+html[data-theme="dark"] .qv-deal-l b u{text-decoration-color:#FFC24B!important}
+html[data-theme="dark"] .qv-deal-l small{color:rgba(255,255,255,.70)!important}
+html[data-theme="dark"] .qv-deal-chip{background:rgba(255,194,75,.14)!important;border:1px solid rgba(255,194,75,.35)!important;color:#FFC24B!important}
+
+/* ---- bead size option pills ---- */
+html[data-theme="dark"] .qv-opt-label{color:rgba(255,255,255,.70)!important}
+html[data-theme="dark"] .qv-chip{border:1.5px solid rgba(255,255,255,.12)!important;background:rgba(255,255,255,.06)!important;color:#fff!important}
+html[data-theme="dark"] .qv-chip::after{border:1.5px solid rgba(255,255,255,.3)!important}
+html[data-theme="dark"] .qv-chip.is-sel{border-color:#FF2E93!important;box-shadow:0 0 0 1px #FF2E93!important}
+html[data-theme="dark"] .qv-chip.is-sel::after{border:4.5px solid #FF2E93!important}
+
+/* ---- action buttons: ADD TO CART (dark) / BUY NOW (brand gradient) ---- */
+html[data-theme="dark"] .qv-add{background:rgba(255,255,255,.10)!important;color:#fff!important}
+html[data-theme="dark"] .qv-buy{background:linear-gradient(135deg,#FF8C42,#FF2E93)!important;color:#fff!important}
+
+/* ---- trust row + view full details link ---- */
+html[data-theme="dark"] .qv-svc{color:rgba(255,255,255,.55)!important}
+html[data-theme="dark"] .qv-link{color:#FF2E93!important}
+
+/* ---- skeleton shimmer ---- */
+html[data-theme="dark"] .qv-sk{background:linear-gradient(90deg,rgba(255,255,255,.06),rgba(255,255,255,.13),rgba(255,255,255,.06))!important;background-size:200% 100%}
+
+/* ADD TO CART visibility: dark pill needs a clear border on dark bg so the
+   quick-view ATC stays visibly distinct from the PDP add-to-cart (user req). */
+html[data-theme="dark"] .qv-add{ background:#2D1B4E !important; border:1px solid rgba(255,255,255,.28) !important; }
+/* =============================================================================
+   aa-dark-sections.css . AstroAura dark-mode SURFACE overrides for home sections
+   -----------------------------------------------------------------------------
+   Every rule scoped under html[data-theme="dark"]. Light default is untouched.
+
+   WHY THIS FILE EXISTS
+   The trust/authenticity section (sections/aa-rd-certify.liquid, class .aa-cert)
+   bakes its backgrounds as LITERAL light hex values inside its own inline
+   {%- style -%} block:
+     .aa-cert      -> background: linear-gradient(180deg,#FBF8F2,#F4EFE4)  (cream)
+     .aa-cert__card-> background: linear-gradient(180deg,#FFFFFF,#FBF6EC)  (white)
+                      + light gold border + light shadow
+     .aa-cert__ic--*-> pale pastel washes (light icon chips)
+     .aa-cert__tag -> cream/gold pill background
+   Those are SURFACES, not text. The global dark layer remaps text via
+   aa-dark-type.css (.aa-cert__title/__name/__sub/__eyebrow/__tag colors are
+   already handled there), but nothing inverted the baked surfaces, so the
+   whole section rendered fully light with near-invisible text.
+
+   This file inverts ONLY the surfaces (section bg, cards, icon chips, tag pill).
+   It deliberately does NOT redeclare the text colors that aa-dark-type.css owns.
+
+   LOAD ORDER: this stylesheet must be tagged AFTER aa-dark-type.css in
+   layout/theme.liquid so its rules win the cascade, e.g. add right below it:
+     {{ 'aa-dark-sections.css' | asset_url | stylesheet_tag }}
+   !important is used on the backgrounds because the baked values live in a
+   per-section inline <style> whose paint order vs an external sheet is fragile.
+
+   PALETTE
+   bg #0C0A1F/#06061F · surface #1A0B2E · raised #2D1B4E
+   text #FFFFFF/.70/.54 · border rgba(255,255,255,.12) · gold #FFC24B · accent #FF2E93
+   ============================================================================= */
+
+/* -------------------------------------------------------------------------
+   CERTIFY / TRUST SECTION  (sections/aa-rd-certify.liquid  .aa-cert)
+   "A Promise of Purity & Authenticity"  ·  eyebrow "|| प्रमाणित ||"
+   ------------------------------------------------------------------------- */
+
+/* Section canvas: cream gradient -> dark canvas */
+html[data-theme="dark"] .aa-cert {
+  background: #0C0A1F !important;
+}
+
+/* Feature cards: white gradient -> dark surface, light border -> faint white */
+html[data-theme="dark"] .aa-cert__card {
+  background: #1A0B2E !important;
+  border: 1px solid rgba(255,255,255,.12) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.04),
+    0 2px 4px rgba(0,0,0,.30),
+    0 16px 34px -14px rgba(0,0,0,.65) !important;
+}
+html[data-theme="dark"] .aa-cert__card:hover {
+  border-color: rgba(255,255,255,.20) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.06),
+    0 24px 52px -16px rgba(0,0,0,.75) !important;
+}
+
+/* Icon chips: keep each accent tint, but on a dark-aware wash with a
+   brighter (legible) stroke colour for the inline SVGs. */
+html[data-theme="dark"] .aa-cert__ic--g {
+  background: rgba(46,158,91,.20) !important;
+  color: #5FD597 !important; /* green: 100% Authentic */
+}
+html[data-theme="dark"] .aa-cert__ic--b {
+  background: rgba(68,138,255,.20) !important;
+  color: #7FB0FF !important; /* blue: Lab Tested */
+}
+html[data-theme="dark"] .aa-cert__ic--p {
+  background: rgba(255,46,147,.18) !important;
+  color: #FF7CC2 !important; /* accent pink: Natural Origin */
+}
+html[data-theme="dark"] .aa-cert__ic--o {
+  background: rgba(255,140,66,.20) !important;
+  color: #FFB37A !important; /* orange: Energised & Blessed */
+}
+
+/* Sub-label pills: cream/gold pill -> dark raised pill with light text.
+   (Text colour itself is set in aa-dark-type.css; here we fix the surface.) */
+html[data-theme="dark"] .aa-cert__tag {
+  background: rgba(255,255,255,.06) !important;
+  border: 1px solid rgba(255,255,255,.12) !important;
+}
+/* ==========================================================================
+   aa-dark-collection.css
+   Dark-mode fix for the COLLECTION / listing / search product-card rating.
+
+   Root cause: the light rule (aa-pcard-v6.css .template-collection
+   .aa-pcard__rate) paints the chip white -- background rgba(255,255,255,.95)
+   -- and colours the number with var(--aa-ink). aa-dark.css flips --aa-ink to
+   #FFFFFF in dark mode, so the rating number became white text on a white pill
+   (invisible). Only the star kept its own colour, hence "white pill, star, no
+   number".
+
+   Fix: match the home-rail / source-of-truth dark style -- a translucent dark
+   glass chip with a white number and a bright gold star, so it reads on the
+   dark card. Card surface/border/title already flip via aa-dark.css tokens, so
+   only the rating chip needs touching here.
+
+   Scope: every rule gated under html[data-theme="dark"]. Light theme untouched.
+   ========================================================================== */
+
+html[data-theme="dark"] .template-collection .aa-pcard__rate,
+html[data-theme="dark"] .template-search .aa-pcard__rate {
+  background: rgba(255, 255, 255, 0.08);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #FFFFFF;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+}
+
+html[data-theme="dark"] .template-collection .aa-pcard__rate-star,
+html[data-theme="dark"] .template-search .aa-pcard__rate-star {
+  color: #FFC24B;
+}
+
+/* Rating pill -> dark glassmorphism (match hero cards). */
+html[data-theme="dark"] .template-collection .aa-pcard__rate,
+html[data-theme="dark"] .template-search .aa-pcard__rate {
+  background: rgba(18,10,28,.55) !important;
+  -webkit-backdrop-filter: blur(9px) !important; backdrop-filter: blur(9px) !important;
+  border: 1px solid rgba(255,255,255,.20) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 2px 10px rgba(0,0,0,.35) !important;
+}
+html[data-theme="dark"] .template-collection .aa-pcard__rate-star,
+html[data-theme="dark"] .template-search .aa-pcard__rate-star { color: #FFC24B !important; }
+
+/* Quick view button on collection cards was near-invisible -> solid dark glass pill. */
+html[data-theme="dark"] .template-collection .aa-pcard__qv-btn,
+html[data-theme="dark"] .template-search .aa-pcard__qv-btn {
+  background: rgba(18,10,28,.82) !important; color: #FFFFFF !important;
+  -webkit-backdrop-filter: blur(6px) !important; backdrop-filter: blur(6px) !important;
+  border: 1px solid rgba(255,255,255,.24) !important;
+}
+/* =============================================================================
+   aa-dark-fixes.css . AstroAura dark-mode targeted fixes (3 issues)
+   -----------------------------------------------------------------------------
+   Dark-only rules are scoped under html[data-theme="dark"] so the light default
+   for normal web visitors is byte-for-byte unchanged. The hover-removal rules
+   (FIX 2) are intentionally UNSCOPED: the user does not want any hover effect on
+   these three specific buttons in EITHER theme. They are targeted to only those
+   three buttons so hover on every other button is left intact.
+
+   LOAD ORDER: tag this stylesheet AFTER aa-dark.css (and the other aa-dark-*
+   files) in layout/theme.liquid so its rules win the cascade, e.g. add right
+   below the dark block (around line 349):
+     {{ 'aa-dark-fixes.css' | asset_url | stylesheet_tag }}
+
+   PALETTE
+   raised #2D1B4E . text #FFFFFF . border rgba(255,255,255,.18)
+   accent gradient #FF8C42 -> #FF2E93 . primary #FF2E93
+   ============================================================================= */
+
+/* -----------------------------------------------------------------------------
+   FIX 1 . "Discover the Bracelet" CTA + "Shop all" ghost button legible in dark
+   -----------------------------------------------------------------------------
+   - .aa-dy__cta lives in sections/aa-rd-dhanyog.liquid. Its inline <style> bakes
+     background:#241019;color:#F2EAD9 which renders as a faint dark-maroon pill on
+     the dark bg. Restyle to a solid raised surface so it clearly stands out.
+   - .btn-ghost is the "Shop all" button (section aa-rd-imgtext, "Our Shop").
+     In dark its border/text resolve to --ink (#FFFFFF on transparent) so it is
+     near-invisible until hover. Give it the same raised secondary-CTA surface.
+   --------------------------------------------------------------------------- */
+html[data-theme="dark"] .aa-dy__cta {
+  background: #2D1B4E !important;
+  color: #FFFFFF !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35), 0 14px 30px rgba(0, 0, 0, 0.45);
+}
+
+html[data-theme="dark"] .btn-ghost {
+  background: #2D1B4E;
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35), 0 14px 30px rgba(0, 0, 0, 0.45);
+}
+
+/* -----------------------------------------------------------------------------
+   FIX 2 . Remove hover/focus effects on exactly three buttons (BOTH themes)
+   -----------------------------------------------------------------------------
+   Targets only:
+     .aa-dy__cta            -> "Discover the Bracelet"
+     .btn-ghost             -> "Shop all"
+     .aa-pcard__qv-btn      -> quick-view button (card-product.liquid grid cards)
+     .qv-btn .qv-btn__b     -> quick-view button (aa-rd-card.liquid rail cards)
+   For each, :hover and :focus-visible are pinned to equal the BASE state:
+   no transform/scale/translate, no background change, no color change, no
+   box-shadow change, no border-color change. The base box-shadow is restated
+   explicitly so the hover state cannot differ from base.
+
+   The quick-view buttons keep their reveal transform on the PARENT card hover
+   (.aa-pcard:hover .aa-pcard__qv-btn / .pcard:hover .qv-btn) untouched; only the
+   button's OWN :hover/:focus-visible appearance is neutralized.
+   --------------------------------------------------------------------------- */
+
+/* Discover the Bracelet . hover == base.
+   LIGHT base (from inline <style>): background:#241019; color:#F2EAD9; no border;
+   no box-shadow; no transform. DARK base (FIX 1 above): #2D1B4E raised. */
+.aa-dy__cta:hover,
+.aa-dy__cta:focus-visible {
+  background: #241019 !important;
+  color: #F2EAD9 !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+.aa-dy__cta:hover svg,
+.aa-dy__cta:focus-visible svg { transform: none !important; }
+
+html[data-theme="dark"] .aa-dy__cta:hover,
+html[data-theme="dark"] .aa-dy__cta:focus-visible {
+  background: #2D1B4E !important;
+  color: #FFFFFF !important;
+  border-color: rgba(255, 255, 255, 0.18) !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35), 0 14px 30px rgba(0, 0, 0, 0.45) !important;
+  transform: none !important;
+}
+
+/* Shop all (ghost) . hover == base.
+   LIGHT base: background:transparent; color:var(--ink); border:1px solid var(--ink);
+   no box-shadow; no transform. DARK base (FIX 1 above): #2D1B4E raised. */
+.btn-ghost:hover,
+.btn-ghost:focus-visible {
+  background: transparent !important;
+  color: var(--ink) !important;
+  border-color: var(--ink) !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+html[data-theme="dark"] .btn-ghost:hover,
+html[data-theme="dark"] .btn-ghost:focus-visible {
+  background: #2D1B4E !important;
+  color: #FFFFFF !important;
+  border-color: rgba(255, 255, 255, 0.18) !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35), 0 14px 30px rgba(0, 0, 0, 0.45) !important;
+  transform: none !important;
+}
+
+/* Quick view . grid cards (card-product.liquid) . hover == base.
+   LIGHT base: background:rgba(36,16,25,.86); color:#F6F0E3; no border.
+   Only the button's OWN hover is neutralized; the card-hover reveal transform on
+   .aa-pcard:hover .aa-pcard__qv-btn is left intact. */
+.aa-pcard__qv-btn:hover,
+.aa-pcard__qv-btn:focus-visible {
+  background: rgba(36, 16, 25, 0.86) !important;
+}
+/* DARK: hover bg == non-hover base (.10), no colour change. Beats aa-dark.css
+   line 373 (html[data-theme="dark"] .aa-pcard__qv-btn:hover -> .18) via the
+   added body in the selector. Only a slight scale animation (user request). */
+html[data-theme="dark"] body .aa-pcard__qv-btn:hover,
+html[data-theme="dark"] body .aa-pcard__qv-btn:focus-visible {
+  background: rgba(255, 255, 255, 0.10) !important;
+  filter: none !important;
+}
+
+/* Quick view . rail cards (aa-rd-card.liquid) . hover == base.
+   Base: background:var(--card); color:var(--ink); border:1px solid var(--line);
+   box-shadow:var(--shadow). Tokens auto-resolve per theme, so one rule covers both. */
+.pcard .qv-btn .qv-btn__b:hover,
+.pcard .qv-btn .qv-btn__b:focus-visible {
+  background: var(--card) !important;
+  color: var(--ink) !important;
+  border-color: var(--line) !important;
+  box-shadow: var(--shadow) !important;
+  transform: none !important;
+}
+
+/* -----------------------------------------------------------------------------
+   FIX 3 . Footer "Aura AI" logo + name box (dark only)
+   -----------------------------------------------------------------------------
+   aa-dark.css line 780 draws a 1px ring around the brand block via:
+     html[data-theme="dark"] .aa-footer__logo {
+       box-shadow: 0 0 0 1px rgba(255,255,255,.18), 0 2px 12px rgba(0,0,0,.4); }
+   The 0 0 0 1px spread is the stray rectangle around the orb + "Aura AI". Remove
+   the box entirely (also clear any border/outline defensively).
+   .aa-footer__logo wraps the orb + name in snippets/aa-footer-content.liquid.
+   --------------------------------------------------------------------------- */
+html[data-theme="dark"] .aa-footer__logo {
+  box-shadow: none;
+  border: none;
+  outline: none;
+}
+
+/* User: keep hover but NO gradient. Tasteful non-gradient effect, both themes.
+   Loaded after the hover-neutralize rules above, so this wins. */
+.aa-dy__cta:hover, .btn-ghost:hover {
+  transform: translateY(-2px) !important;
+  filter: brightness(1.07) !important;
+  box-shadow: 0 10px 26px -10px rgba(0,0,0,.45) !important;
+  transition: transform .2s ease, filter .2s ease, box-shadow .2s ease !important;
+}
+.aa-pcard__qv-btn:hover, .pcard .qv-btn .qv-btn__b:hover {
+  filter: brightness(1.08) !important;
+  transition: filter .2s ease !important;
+}
+
+/* Quick view button: no hover colour at all, only a slight scale (user request).
+   Loaded last so it wins. Applies to both quick-view buttons; the dark-scoped
+   rule above keeps the dark hover background equal to its non-hover base. */
+.aa-pcard__qv-btn:hover, .pcard .qv-btn .qv-btn__b:hover {
+  filter: none !important;
+  transform: scale(1.04) !important;
+  transition: transform .2s ease !important;
+}
+/* DARK: pin no colour/bg/filter change, only the scale. The rail-card hover
+   block above pins transform:none, so restate the scale here for dark too. */
+html[data-theme="dark"] body .aa-pcard__qv-btn:hover,
+html[data-theme="dark"] body .aa-pcard__qv-btn:focus-visible,
+html[data-theme="dark"] body .pcard .qv-btn .qv-btn__b:hover,
+html[data-theme="dark"] body .pcard .qv-btn .qv-btn__b:focus-visible {
+  filter: none !important;
+  transform: scale(1.04) !important;
+  transition: transform .2s ease !important;
+}
+/* aa-dark-gaps.css — round-3 code-review coverage gaps. All scoped to dark.
+   These sections bake light surfaces in inline <style> that the global remap
+   misses. Loaded last so it wins. No light-theme change. */
+
+/* 1. Mobile menu drawer (was cream #F8F4EA) */
+html[data-theme="dark"] header-drawer .aa-drawer { background:#0C0A1F !important; color:#FFFFFF !important; }
+html[data-theme="dark"] .aa-drawer__title { color:#FFFFFF !important; }
+html[data-theme="dark"] .aa-drawer__tile-circle { background:radial-gradient(circle at 30% 30%, #2D1B4E, #1A0B2E) !important; }
+html[data-theme="dark"] .aa-drawer__tile-label { color:#FFFFFF !important; }
+
+/* 2. Mobile category nav (was cream #FBF6EE) */
+html[data-theme="dark"] .aa-catnav { background:#0C0A1F !important; }
+html[data-theme="dark"] .aa-catnav__thumb { background:rgba(255,255,255,.06) !important; }
+html[data-theme="dark"] .aa-catnav__lbl, html[data-theme="dark"] .aa-catnav__item { color:#FFFFFF !important; }
+
+/* 3. PDP accordion panel (was white #FFFFFF -> white-on-white) */
+html[data-theme="dark"] [id^="ProductInfo-"] .collapsible-row-details { background:#1A0B2E !important; border-color:rgba(255,255,255,.12) !important; }
+
+/* 4. Judge.me reviews widget (snippet bakes white cards for both themes) */
+html[data-theme="dark"] .jdgm-rev-widg__title { color:#FFFFFF !important; }
+html[data-theme="dark"] .jdgm-rev-widg__summary { background:linear-gradient(180deg,#1A0B2E,#160A28) !important; border-color:rgba(255,255,255,.12) !important; }
+html[data-theme="dark"] .jdgm-rev-widg__summary-average { color:#FFFFFF !important; }
+html[data-theme="dark"] .jdgm-rev { background:linear-gradient(180deg,#1A0B2E,#160A28) !important; border-color:rgba(255,255,255,.12) !important; }
+html[data-theme="dark"] .jdgm-rev__author, html[data-theme="dark"] .jdgm-rev__title { color:#FFFFFF !important; }
+html[data-theme="dark"] .jdgm-rev__body { color:rgba(255,255,255,.70) !important; }
+html[data-theme="dark"] .jdgm-rev__timestamp { color:rgba(255,255,255,.54) !important; }
+html[data-theme="dark"] .jdgm-histogram__bar, html[data-theme="dark"] .jdgm-histogram-row__bar { background:rgba(255,255,255,.08) !important; }
+html[data-theme="dark"] .jdgm-sort-dropdown { background:rgba(255,255,255,.06) !important; color:rgba(255,255,255,.80) !important; border-color:rgba(255,255,255,.12) !important; }
+html[data-theme="dark"] .jdgm-paginate a, html[data-theme="dark"] .jdgm-paginate__page { background:rgba(255,255,255,.06) !important; color:#FFFFFF !important; border-color:rgba(255,255,255,.12) !important; }
+
+/* 5. Account pages headings (login/order/addresses, were #241019) */
+html[data-theme="dark"] .aa-au-loginpage h1, html[data-theme="dark"] .aa-au-loginpage h2, html[data-theme="dark"] .aa-au-loginpage h3,
+html[data-theme="dark"] .aa-au-orderpage h1, html[data-theme="dark"] .aa-au-orderpage h2, html[data-theme="dark"] .aa-au-orderpage h3,
+html[data-theme="dark"] .aa-au-addrpage h1, html[data-theme="dark"] .aa-au-addrpage h2, html[data-theme="dark"] .aa-au-addrpage h3 { color:#FFFFFF !important; }
+html[data-theme="dark"] .aa-au-orderpage th { color:rgba(255,255,255,.70) !important; }
+
+/* 6. Product FAQ (was #f0f0f0 / #fff panels) */
+html[data-theme="dark"] .faq-question { background:rgba(255,255,255,.06) !important; color:#FFFFFF !important; }
+html[data-theme="dark"] .faq-answer { background:#1A0B2E !important; color:rgba(255,255,255,.70) !important; }
+html[data-theme="dark"] .faq-answer p { color:rgba(255,255,255,.70) !important; }
+
+/* Collection description tabs: user wants them white (were dim grey). */
+html[data-theme="dark"] .listing-description-accordion .tablinks { color:#FFFFFF !important; }
+html[data-theme="dark"] .listing-description-accordion .tablinks.active { color:#FF2E93 !important; }
+/* =====================================================================
+   aa-dark-account.css  -  Dark theme for the account experience
+   Scope: header profile popup (aa-auth-account.liquid)
+          My Account page (main-account.liquid)
+          Orders list page (aa-orders-page.liquid -> aa-auth-v2.js)
+   Base light styles live in aa-auth-v2.css (var(--ink)/--muted/--cream/--grad).
+   Everything here is gated under html[data-theme="dark"] so light is untouched.
+   Palette: canvas #0C0A1F/#06061F | surface #1A0B2E | raised #2D1B4E
+            text #FFFFFF / rgba(255,255,255,.70) / .54
+            accent linear-gradient(135deg,#FF8C42,#FF2E93) | primary #FF2E93
+            gold #FFC24B | success #2E9E5B | border rgba(255,255,255,.12)
+   ===================================================================== */
+
+/* ---------- shared accent tokens (scoped, no global leak) ---------- */
+html[data-theme="dark"] .aa-au {
+  --aa-d-surface: #1A0B2E;
+  --aa-d-raised:  #2D1B4E;
+  --aa-d-glass:   rgba(255,255,255,.06);
+  --aa-d-glass-2: rgba(255,255,255,.09);
+  --aa-d-line:    rgba(255,255,255,.12);
+  --aa-d-line-2:  rgba(255,255,255,.07);
+  --aa-d-txt:     #FFFFFF;
+  --aa-d-txt-70:  rgba(255,255,255,.70);
+  --aa-d-txt-54:  rgba(255,255,255,.54);
+  --aa-d-grad:    linear-gradient(135deg,#FF8C42 0%,#FF2E93 100%);
+  --aa-d-grad-soft: linear-gradient(135deg,rgba(255,140,66,.18),rgba(255,46,147,.18));
+  --aa-d-pink:    #FF2E93;
+}
+
+/* =====================================================================
+   1) HEADER PROFILE POPUP  (snippets/aa-auth-account.liquid)
+   ===================================================================== */
+html[data-theme="dark"] .aa-au-menu__card {
+  background: var(--aa-d-surface) !important;
+  border: 1px solid var(--aa-d-line) !important;
+  box-shadow: 0 24px 60px rgba(3,2,10,.65), 0 0 0 1px rgba(255,255,255,.04) !important;
+}
+
+/* top user strip - was cream */
+html[data-theme="dark"] .aa-au-menu__head {
+  background: linear-gradient(180deg, var(--aa-d-raised) 0%, var(--aa-d-surface) 100%) !important;
+  border-bottom: 1px solid var(--aa-d-line) !important;
+}
+html[data-theme="dark"] .aa-au-menu__av {
+  background: var(--aa-d-grad) !important;
+  color: #fff !important;
+  box-shadow: 0 6px 18px rgba(255,46,147,.40) !important;
+}
+html[data-theme="dark"] .aa-au-menu__nm { color: var(--aa-d-txt) !important; }
+html[data-theme="dark"] .aa-au-menu__ph { color: var(--aa-d-txt-54) !important; }
+
+/* menu rows */
+html[data-theme="dark"] .aa-au-menu__item {
+  border-bottom: 1px solid var(--aa-d-line-2) !important;
+  transition: background .15s ease;
+}
+html[data-theme="dark"] .aa-au-menu__item:hover { background: var(--aa-d-glass) !important; }
+html[data-theme="dark"] .aa-au-menu__item:active { background: var(--aa-d-glass-2) !important; }
+
+/* icon chip + label */
+html[data-theme="dark"] .aa-au-mic {
+  background: var(--aa-d-grad-soft) !important;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.06);
+}
+html[data-theme="dark"] .aa-au-mic svg { stroke: #FF8C42 !important; }
+html[data-theme="dark"] .aa-au-mlbl  { color: var(--aa-d-txt) !important; }
+html[data-theme="dark"] .aa-au-mchev { stroke: var(--aa-d-txt-54) !important; }
+
+/* logout row - magenta */
+html[data-theme="dark"] .aa-au-menu__out .aa-au-mic {
+  background: rgba(255,46,147,.14) !important;
+}
+html[data-theme="dark"] .aa-au-menu__out .aa-au-mic svg { stroke: var(--aa-d-pink) !important; }
+html[data-theme="dark"] .aa-au-menu__out .aa-au-mlbl    { color: var(--aa-d-pink) !important; }
+
+/* =====================================================================
+   2) MY ACCOUNT PAGE  (sections/main-account.liquid)
+   ===================================================================== */
+/* headings */
+html[data-theme="dark"] .aa-au-h1,
+html[data-theme="dark"] .aa-au-sech h3,
+html[data-theme="dark"] .aa-au-empty h3 { color: var(--aa-d-txt) !important; }
+html[data-theme="dark"] .aa-au-sech a   { color: #FF8C42 !important; }
+
+/* profile card */
+html[data-theme="dark"] .aa-au-card-s {
+  background: var(--aa-d-surface) !important;
+  border: 1px solid var(--aa-d-line) !important;
+  box-shadow: 0 14px 36px rgba(3,2,10,.45), 0 1px 3px rgba(3,2,10,.4) !important;
+}
+html[data-theme="dark"] .aa-au-avatar {
+  background: var(--aa-d-grad) !important;
+  box-shadow: 0 10px 24px rgba(255,46,147,.40), 0 0 0 4px rgba(255,255,255,.10) !important;
+}
+html[data-theme="dark"] .aa-au-proftop .aa-au-nm   { color: var(--aa-d-txt) !important; }
+html[data-theme="dark"] .aa-au-proftop .aa-au-meta { color: var(--aa-d-txt-54) !important; }
+html[data-theme="dark"] .aa-au-proftop .aa-au-meta b { color: var(--aa-d-txt) !important; }
+html[data-theme="dark"] .aa-au-iconbtn {
+  background: var(--aa-d-glass) !important;
+  border: 1px solid var(--aa-d-line) !important;
+}
+html[data-theme="dark"] .aa-au-iconbtn svg { stroke: var(--aa-d-txt-70) !important; }
+
+/* quick rows (My Orders / Addresses) */
+html[data-theme="dark"] .aa-au-row {
+  background: var(--aa-d-glass) !important;
+  border: 1px solid var(--aa-d-line) !important;
+}
+html[data-theme="dark"] .aa-au-row:hover {
+  background: var(--aa-d-glass-2) !important;
+  border-color: rgba(255,46,147,.28) !important;
+  box-shadow: 0 12px 26px rgba(3,2,10,.4) !important;
+}
+html[data-theme="dark"] .aa-au-row .aa-au-ri  { background: var(--aa-d-grad-soft) !important; }
+html[data-theme="dark"] .aa-au-row .aa-au-ri svg { stroke: #FF8C42 !important; }
+html[data-theme="dark"] .aa-au-row .aa-au-rt  { color: var(--aa-d-txt) !important; }
+html[data-theme="dark"] .aa-au-row .aa-au-rs  { color: var(--aa-d-txt-54) !important; }
+html[data-theme="dark"] .aa-au-row .aa-au-chev { stroke: var(--aa-d-txt-54) !important; }
+html[data-theme="dark"] .aa-au-row .aa-au-cnt {
+  background: var(--aa-d-grad) !important;
+  color: #fff !important;
+}
+
+/* order cards (account page grid + orders list ocard share .aa-au-order/.aa-au-ocard) */
+html[data-theme="dark"] .aa-au-order {
+  background: var(--aa-d-surface) !important;
+  border: 1px solid var(--aa-d-line) !important;
+  box-shadow: 0 12px 30px rgba(3,2,10,.42) !important;
+}
+html[data-theme="dark"] .aa-au-grid .aa-au-order {
+  background: linear-gradient(180deg, var(--aa-d-raised) 0%, var(--aa-d-surface) 100%) !important;
+  border-color: var(--aa-d-line) !important;
+  box-shadow: 0 12px 28px rgba(3,2,10,.42) !important;
+}
+html[data-theme="dark"] .aa-au-order:hover {
+  box-shadow: 0 18px 38px rgba(3,2,10,.55) !important;
+  border-color: rgba(255,46,147,.22) !important;
+}
+html[data-theme="dark"] .aa-au-order__top {
+  background: rgba(255,255,255,.04) !important;
+  border-bottom: 1px solid var(--aa-d-line) !important;
+}
+html[data-theme="dark"] .aa-au-grid .aa-au-order__top {
+  background: transparent !important;
+  border-bottom: 1px solid var(--aa-d-line-2) !important;
+}
+html[data-theme="dark"] .aa-au-order__date { color: var(--aa-d-txt-54) !important; }
+html[data-theme="dark"] .aa-au-thumb {
+  background: var(--aa-d-raised) !important;
+  border: 1px solid var(--aa-d-line) !important;
+}
+html[data-theme="dark"] .aa-au-grid .aa-au-thumb {
+  background: #fff !important;        /* keep product photo on white inside dark card */
+  border: 1px solid var(--aa-d-line) !important;
+  box-shadow: 0 5px 14px rgba(3,2,10,.45) !important;
+}
+html[data-theme="dark"] .aa-au-order__info .aa-au-ti  { color: var(--aa-d-txt) !important; }
+html[data-theme="dark"] .aa-au-order__info .aa-au-osub { color: var(--aa-d-txt-54) !important; }
+html[data-theme="dark"] .aa-au-order__info .aa-au-pr  { color: var(--aa-d-txt) !important; }
+
+/* status pills */
+html[data-theme="dark"] .aa-au-pill.aa-au-ok   { color: #4FD18B !important; background: rgba(46,158,91,.16) !important; }
+html[data-theme="dark"] .aa-au-pill.aa-au-ok .aa-au-dot   { background: #4FD18B !important; }
+html[data-theme="dark"] .aa-au-pill.aa-au-pend { color: #FFC24B !important; background: rgba(255,194,75,.14) !important; }
+html[data-theme="dark"] .aa-au-pill.aa-au-pend .aa-au-dot { background: #FFC24B !important; }
+html[data-theme="dark"] .aa-au-pill.aa-au-warn { color: #FF9F6B !important; background: rgba(255,159,107,.14) !important; }
+html[data-theme="dark"] .aa-au-pill.aa-au-warn .aa-au-dot { background: #FF9F6B !important; }
+
+/* action buttons */
+html[data-theme="dark"] .aa-au-trk {
+  background: var(--aa-d-glass) !important;
+  border: 1px solid var(--aa-d-line) !important;
+  color: var(--aa-d-txt-70) !important;
+}
+html[data-theme="dark"] .aa-au-trk svg { stroke: var(--aa-d-txt-70) !important; }
+html[data-theme="dark"] .aa-au-trk:hover {
+  background: var(--aa-d-glass-2) !important;
+  color: var(--aa-d-txt) !important;
+}
+html[data-theme="dark"] .aa-au-buy {
+  background: var(--aa-d-grad) !important;
+  color: #fff !important;
+  box-shadow: 0 8px 18px rgba(255,46,147,.30) !important;
+}
+html[data-theme="dark"] .aa-au-buy svg { stroke: #fff !important; }
+
+/* "+N more" inline span (set inline color:#8a7a70 in liquid) */
+html[data-theme="dark"] .aa-au-order__info .aa-au-ti span { color: var(--aa-d-txt-54) !important; }
+
+/* empty state */
+html[data-theme="dark"] .aa-au-empty { color: var(--aa-d-txt-54) !important; }
+html[data-theme="dark"] .aa-au-empty__ic { background: var(--aa-d-grad-soft) !important; }
+html[data-theme="dark"] .aa-au-empty__ic svg { stroke: #FF8C42 !important; }
+html[data-theme="dark"] .aa-au-btn {
+  background: var(--aa-d-grad) !important;
+  color: #fff !important;
+  box-shadow: 0 10px 24px rgba(255,46,147,.30) !important;
+}
+
+/* sign out */
+html[data-theme="dark"] .aa-au-so1 {
+  background: var(--aa-d-glass) !important;
+  border: 1.5px solid var(--aa-d-pink) !important;
+  color: var(--aa-d-pink) !important;
+}
+html[data-theme="dark"] .aa-au-so1:hover { background: rgba(255,46,147,.10) !important; }
+
+/* =====================================================================
+   3) ORDERS LIST PAGE  (sections/aa-orders-page.liquid + aa-auth-v2.js)
+   ===================================================================== */
+html[data-theme="dark"] .aa-au-ordhead h1 { color: var(--aa-d-txt) !important; }
+html[data-theme="dark"] .aa-au-loading    { color: var(--aa-d-txt-54) !important; }
+
+/* JS-rendered order cards (.aa-au-ocard) */
+html[data-theme="dark"] .aa-au-ocard {
+  background: linear-gradient(180deg, var(--aa-d-raised) 0%, var(--aa-d-surface) 100%) !important;
+  border: 1px solid var(--aa-d-line) !important;
+  box-shadow: 0 12px 28px rgba(3,2,10,.42) !important;
+}
+html[data-theme="dark"] .aa-au-ocard.aa-au-open {
+  box-shadow: 0 20px 44px rgba(3,2,10,.55) !important;
+}
+html[data-theme="dark"] .aa-au-osum .aa-au-thumb {
+  background: #fff !important;
+  border: 1px solid var(--aa-d-line) !important;
+  box-shadow: 0 5px 14px rgba(3,2,10,.45) !important;
+}
+html[data-theme="dark"] .aa-au-otitle { color: var(--aa-d-txt) !important; }
+html[data-theme="dark"] .aa-au-osub2  { color: var(--aa-d-txt-54) !important; }
+html[data-theme="dark"] .aa-au-chev2  { stroke: var(--aa-d-txt-54) !important; }
+
+/* expanded detail drawer */
+html[data-theme="dark"] .aa-au-dd-pad { border-top: 1px solid var(--aa-d-line) !important; }
+html[data-theme="dark"] .aa-au-dsec   { color: var(--aa-d-txt) !important; }
+html[data-theme="dark"] .aa-au-ditem  { border-bottom: 1px solid var(--aa-d-line-2) !important; }
+html[data-theme="dark"] .aa-au-dthumb {
+  background: #fff !important;
+  border: 1px solid var(--aa-d-line) !important;
+}
+html[data-theme="dark"] .aa-au-ditem__t { color: var(--aa-d-txt) !important; }
+html[data-theme="dark"] .aa-au-ditem__m { color: var(--aa-d-txt-54) !important; }
+html[data-theme="dark"] .aa-au-ditem__p { color: var(--aa-d-txt) !important; }
+html[data-theme="dark"] .aa-au-dkv      { color: var(--aa-d-txt) !important; }
+
+/* address blocks in drawer */
+html[data-theme="dark"] .aa-au-daddr__h { color: var(--aa-d-txt-54) !important; }
+html[data-theme="dark"] .aa-au-daddr__l { color: var(--aa-d-txt-70) !important; }
+
+/* drawer buttons */
+html[data-theme="dark"] .aa-au-dbtn--pri {
+  background: var(--aa-d-grad) !important;
+  color: #fff !important;
+  box-shadow: 0 8px 18px rgba(255,46,147,.30) !important;
+}
+html[data-theme="dark"] .aa-au-dbtn--sec {
+  border: 1.5px solid var(--aa-d-line) !important;
+  color: var(--aa-d-txt) !important;
+}
+html[data-theme="dark"] .aa-au-dbtn--sec:hover { background: var(--aa-d-glass) !important; }
+
+/* profile key/value rows (.aa-au-pf in dropdown profile view) */
+html[data-theme="dark"] .aa-au-pf__row {
+  background: var(--aa-d-glass) !important;
+  border: 1px solid var(--aa-d-line) !important;
+}
+html[data-theme="dark"] .aa-au-pf__k { color: var(--aa-d-txt-54) !important; }
+html[data-theme="dark"] .aa-au-pf__v { color: var(--aa-d-txt) !important; }
+
+/* saved address cards (.aa-au-addr on account/addresses) */
+html[data-theme="dark"] .aa-au-addr {
+  background: var(--aa-d-glass) !important;
+  border: 1px solid var(--aa-d-line) !important;
+}
+html[data-theme="dark"] .aa-au-addr:hover { box-shadow: 0 10px 22px rgba(3,2,10,.45) !important; }
+html[data-theme="dark"] .aa-au-addr .aa-au-who   { color: var(--aa-d-txt) !important; }
+html[data-theme="dark"] .aa-au-addr .aa-au-lines { color: var(--aa-d-txt-70) !important; }
+html[data-theme="dark"] .aa-au-addr .aa-au-tag {
+  color: #FFC24B !important;
+  background: linear-gradient(120deg, rgba(255,46,147,.14), rgba(255,140,66,.14)) !important;
+}
+
+/* ============================================================================
+   LOGIN / OTP popup steps (snippets/aa-auth-steps.liquid). These were only
+   styled for light (dark ink) so the text was invisible on the dark popup.
+   ============================================================================ */
+html[data-theme="dark"] .aa-au-serif { color: var(--aa-d-txt) !important; }
+html[data-theme="dark"] .aa-au-sub { color: var(--aa-d-txt-70) !important; }
+html[data-theme="dark"] .aa-au-sub b { color: var(--aa-d-txt) !important; }
+html[data-theme="dark"] .aa-au-fl { color: var(--aa-d-txt-54) !important; }
+html[data-theme="dark"] .aa-au-cc {
+  color: var(--aa-d-txt) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid var(--aa-d-line) !important;
+}
+html[data-theme="dark"] .aa-au-cc svg { stroke: var(--aa-d-txt-54) !important; }
+html[data-theme="dark"] .aa-au-inp {
+  color: var(--aa-d-txt) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+html[data-theme="dark"] .aa-au-inp::placeholder { color: var(--aa-d-txt-54) !important; }
+html[data-theme="dark"] .aa-au-check { color: var(--aa-d-txt-70) !important; }
+html[data-theme="dark"] .aa-au-otp input,
+html[data-theme="dark"] .aa-au-otp .aa-au-otpbox {
+  color: var(--aa-d-txt) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid var(--aa-d-line) !important;
+}
+html[data-theme="dark"] .aa-au-otpmeta,
+html[data-theme="dark"] .aa-au-resend { color: var(--aa-d-txt-54) !important; }
+html[data-theme="dark"] .aa-au-resend b { color: var(--aa-d-txt) !important; }
+html[data-theme="dark"] .aa-au-change { color: #FF8C42 !important; cursor: pointer; }
+html[data-theme="dark"] .aa-au-trouble { color: var(--aa-d-txt-54) !important; }
+html[data-theme="dark"] .aa-au-done h2 { color: var(--aa-d-txt) !important; }
+/* =========================================================================
+   AstroAura DARK MODE - SEARCH overlay + predictive-search panel.
+   Scoped entirely under html[data-theme="dark"]. Light appearance untouched.
+
+   Palette:
+     surface  #1A0B2E   raised #2D1B4E
+     text     #FFFFFF / rgba(255,255,255,.70) / .54
+     primary  #FF2E93   accent linear-gradient(135deg,#FF8C42,#FF2E93)
+     border   rgba(255,255,255,.12)   glass rgba(255,255,255,.06)
+   Fixes a WHITE search input + white "POPULAR RIGHT NOW" header on the dark
+   results panel. Stock .field__input / .predictive-search use Dawn
+   --color-* tokens that resolve to the LIGHT scheme here, so we pin dark
+   values explicitly and win the cascade with html[data-theme="dark"] body.
+   ========================================================================= */
+
+/* ---- Search input field: dark surface, white text, light placeholder ---- */
+html[data-theme="dark"] body .search-modal .search__input.field__input,
+html[data-theme="dark"] body .search-modal .field__input {
+  background-color: #1A0B2E !important;
+  color: #FFFFFF !important;
+  border-radius: 14px !important;
+}
+
+/* Glass hairline ring around the input (replaces the light --color-foreground ring) */
+html[data-theme="dark"] body .search-modal .field:after {
+  box-shadow: 0 0 0 0.1rem rgba(255,255,255,.12) !important;
+  border-color: transparent !important;
+}
+
+html[data-theme="dark"] body .search-modal .field:hover.field:after {
+  box-shadow: 0 0 0 0.1rem rgba(255,255,255,.24) !important;
+}
+
+/* Magenta focus ring */
+html[data-theme="dark"] body .search-modal .field__input:focus,
+html[data-theme="dark"] body .search-modal .field__input:focus-visible {
+  box-shadow: 0 0 0 0.2rem #FF2E93 !important;
+}
+
+/* Floating label + placeholder: muted white */
+html[data-theme="dark"] body .search-modal .field__label {
+  color: rgba(255,255,255,.54) !important;
+}
+
+html[data-theme="dark"] body .search-modal .field__input::placeholder {
+  color: rgba(255,255,255,.54) !important;
+}
+
+/* Kill the stock autofill rule that forces BLACK text on a dark field */
+html[data-theme="dark"] body .search-modal .field__input:-webkit-autofill,
+html[data-theme="dark"] body .search-modal .field__input:-webkit-autofill ~ .field__label {
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  -webkit-box-shadow: 0 0 0 1000px #1A0B2E inset !important;
+}
+
+/* ---- Search + reset + close icons: light ---- */
+html[data-theme="dark"] body .search-modal .search__button .icon,
+html[data-theme="dark"] body .search-modal .reset__button .icon,
+html[data-theme="dark"] body .search-modal__close-button .icon,
+html[data-theme="dark"] body .search-modal .field__button {
+  color: rgba(255,255,255,.70) !important;
+}
+
+html[data-theme="dark"] body .search-modal .search__button:hover .icon,
+html[data-theme="dark"] body .search-modal .reset__button:hover .icon,
+html[data-theme="dark"] body .search-modal__close-button:hover .icon {
+  color: #FF2E93 !important;
+}
+
+/* Reset-button divider hairline on dark */
+html[data-theme="dark"] body .search-modal .reset__button:not(:focus-visible)::after,
+html[data-theme="dark"] body .search-modal .reset__button:not(:focus)::after {
+  border-right-color: rgba(255,255,255,.12) !important;
+}
+
+/* Focused icon buttons keep the dark surface, not a white flash */
+html[data-theme="dark"] body .search-modal .search__button:focus,
+html[data-theme="dark"] body .search-modal .search__button:focus-visible,
+html[data-theme="dark"] body .search-modal .reset__button:focus,
+html[data-theme="dark"] body .search-modal .reset__button:focus-visible {
+  background-color: #1A0B2E !important;
+}
+
+/* ---- Predictive-search results panel: dark glass card ---- */
+html[data-theme="dark"] body .predictive-search {
+  background-color: #1A0B2E !important;
+  border-color: rgba(255,255,255,.12) !important;
+  box-shadow: 0 18px 50px rgba(0,0,0,.55) !important;
+  border-bottom-left-radius: 16px !important;
+  border-bottom-right-radius: 16px !important;
+}
+
+html[data-theme="dark"] body .predictive-search__results-groups-wrapper {
+  border-bottom-color: rgba(255,255,255,.12) !important;
+}
+
+/* "POPULAR RIGHT NOW" / group headings: muted white, dark hairline */
+html[data-theme="dark"] body .predictive-search__heading {
+  color: rgba(255,255,255,.70) !important;
+  border-bottom-color: rgba(255,255,255,.12) !important;
+}
+
+/* ---- Result rows ---- */
+html[data-theme="dark"] body .predictive-search__item {
+  color: #FFFFFF !important;
+}
+
+/* Product titles white */
+html[data-theme="dark"] body .predictive-search__item-heading {
+  color: #FFFFFF !important;
+}
+
+html[data-theme="dark"] body .predictive-search__item-vendor {
+  color: rgba(255,255,255,.54) !important;
+}
+
+/* Prices white70 */
+html[data-theme="dark"] body .predictive-search__item .price,
+html[data-theme="dark"] body .predictive-search .price {
+  color: rgba(255,255,255,.70) !important;
+}
+
+/* Query-result highlight mark stays subtle on dark */
+html[data-theme="dark"] body .predictive-search__item-query-result mark {
+  color: rgba(255,255,255,.70) !important;
+  background-color: transparent !important;
+}
+
+/* Hover / keyboard-selected row: subtle glass highlight, no underline color loss */
+html[data-theme="dark"] body .predictive-search__list-item[aria-selected="true"] > *,
+html[data-theme="dark"] body .predictive-search__list-item:hover > *,
+html[data-theme="dark"] body .predictive-search__item[aria-selected="true"],
+html[data-theme="dark"] body .predictive-search__item:hover {
+  color: #FFFFFF !important;
+  background-color: rgba(255,255,255,.06) !important;
+}
+
+/* ---- Thumbnail tiles: dark raised, not white ---- */
+html[data-theme="dark"] body .predictive-search__item--link-with-thumbnail .predictive-search__image,
+html[data-theme="dark"] body .predictive-search__image {
+  background-color: #2D1B4E !important;
+  border-radius: 10px !important;
+}
+
+/* "Search for X" term rows + arrow: white text, magenta arrow */
+html[data-theme="dark"] body .predictive-search__item--term {
+  color: #FFFFFF !important;
+}
+
+html[data-theme="dark"] body .predictive-search__item--term .icon-arrow {
+  color: #FF2E93 !important;
+}
+
+/* Loading spinner tint */
+html[data-theme="dark"] body .predictive-search .spinner path {
+  stroke: rgba(255,255,255,.70) !important;
+}
+/* ============================================================
+   aa-dark-cart.css — dark-mode revamp for the cart (drawer + page)
+   All rules scoped under html[data-theme="dark"]; light untouched.
+   Targets the LIVE rendered classes:
+     drawer .drawer__inner / cart-items (page)
+     .cart-item__name / .cart-item__details / .product-option
+     .quantity / .quantity__button / .quantity__input (stepper)
+     cart-remove-button (trash)
+     .aa-rec / .aa-rec__* (You may also like recs, built by aa-cart-v12.js)
+     .totals / .totals__total / .totals__total-value / .tax-note
+     .aa-checkout-btn (checkout bar — keeps its gradient)
+   Palette: canvas #0C0A1F/#06061F, surface #1A0B2E, raised #2D1B4E,
+   text #FFFFFF/.70/.54, accent linear-gradient(135deg,#FF8C42,#FF2E93),
+   primary #FF2E93, success #2E9E5B, borders rgba(255,255,255,.12)
+   ============================================================ */
+
+/* ---------- Drawer + cart-page surfaces ---------- */
+html[data-theme="dark"] body cart-drawer .drawer__inner,
+html[data-theme="dark"] body cart-drawer .drawer__inner-empty {
+  background: #0C0A1F !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  color: #FFFFFF !important;
+}
+/* dim overlay behind the drawer */
+html[data-theme="dark"] body .drawer {
+  background-color: rgba(0, 0, 0, 0.6) !important;
+}
+/* mobile sheet grab-handle */
+html[data-theme="dark"] body .drawer__inner::before {
+  background: rgba(255, 255, 255, 0.22) !important;
+}
+/* cart PAGE surface */
+html[data-theme="dark"] body cart-items {
+  background: #0C0A1F !important;
+  color: #FFFFFF !important;
+}
+
+/* ---------- Headings / close ---------- */
+html[data-theme="dark"] body .drawer__heading,
+html[data-theme="dark"] body .drawer__close,
+html[data-theme="dark"] body .cart__empty-text,
+html[data-theme="dark"] body .aa-cart-title {
+  color: #FFFFFF !important;
+}
+html[data-theme="dark"] body .drawer__header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+html[data-theme="dark"] body .drawer__footer,
+html[data-theme="dark"] body cart-drawer .cart-items thead tr {
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+/* ---------- Column headers (Product / Total / Quantity) ---------- */
+html[data-theme="dark"] body .cart-items thead th,
+html[data-theme="dark"] body .cart-items thead .caption-with-letter-spacing {
+  color: rgba(255, 255, 255, 0.54) !important;
+}
+
+/* ---------- Line items ---------- */
+html[data-theme="dark"] body .cart-item {
+  border-color: rgba(255, 255, 255, 0.10) !important;
+}
+html[data-theme="dark"] body .cart-item__name {
+  color: #FFFFFF !important;
+}
+html[data-theme="dark"] body .cart-item__name:hover {
+  color: #FF2E93 !important;
+}
+/* variant text, properties, vendor, selling plan = white 70 */
+html[data-theme="dark"] body .cart-item__details .product-option,
+html[data-theme="dark"] body .cart-item__details .product-option dt,
+html[data-theme="dark"] body .cart-item__details .product-option dd,
+html[data-theme="dark"] body .cart-item__details .caption-with-letter-spacing,
+html[data-theme="dark"] body .cart-item__details .aa-variant-row__label {
+  color: rgba(255, 255, 255, 0.70) !important;
+}
+/* inline variant <select> swap dropdown — clean chip, subtle, no harsh box */
+html[data-theme="dark"] body .cart-item__details .aa-variant-select {
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: rgba(255, 255, 255, 0.90) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 9px !important;
+  padding: 7px 30px 7px 12px !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  max-width: 100% !important;
+  text-overflow: ellipsis !important;
+  cursor: pointer !important;
+}
+/* per-line price (drawer override forced #1f0820 in v8 — beat it) */
+html[data-theme="dark"] body cart-drawer .cart-item__totals .price,
+html[data-theme="dark"] body .cart-item__totals .price,
+html[data-theme="dark"] body .cart-item__final-price {
+  color: #FFFFFF !important;
+}
+html[data-theme="dark"] body .cart-item__old-price,
+html[data-theme="dark"] body .cart-item .unit-price {
+  color: rgba(255, 255, 255, 0.54) !important;
+}
+
+/* ---------- Quantity stepper: clean glass, subtle border, gold accent ---------- */
+html[data-theme="dark"] body .cart-item .quantity,
+html[data-theme="dark"] body .cart-item .cart-quantity {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  border-radius: 12px !important;
+  color: #FFFFFF !important;
+  box-shadow: none !important;
+}
+html[data-theme="dark"] body .cart-item .quantity__input {
+  background: transparent !important;
+  color: #FFFFFF !important;
+  font-weight: 700 !important;
+}
+html[data-theme="dark"] body .cart-item .quantity__button {
+  color: rgba(255, 255, 255, 0.72) !important;
+}
+html[data-theme="dark"] body .cart-item .quantity__button:hover .svg-wrapper,
+html[data-theme="dark"] body .cart-item .quantity__button:hover {
+  color: #FFC24B !important;
+}
+html[data-theme="dark"] body .cart-item .quantity__button svg,
+html[data-theme="dark"] body .cart-item .quantity__button .icon {
+  color: currentColor !important;
+}
+
+/* ---------- Trash / remove icon ---------- */
+html[data-theme="dark"] body .cart-item cart-remove-button .button,
+html[data-theme="dark"] body .cart-item cart-remove-button .icon-remove,
+html[data-theme="dark"] body .cart-item cart-remove-button svg {
+  color: rgba(255, 255, 255, 0.70) !important;
+}
+html[data-theme="dark"] body .cart-item cart-remove-button .button:hover {
+  color: #FF2E93 !important;
+}
+
+/* ---------- "You may also like" recommendation cards (DARK, not white) ---------- */
+html[data-theme="dark"] body .aa-cart-recs {
+  border-top: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+html[data-theme="dark"] body .aa-cart-recs__head {
+  color: #FFFFFF !important;
+}
+html[data-theme="dark"] body .aa-rec {
+  background: #1A0B2E !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+/* image wells: keep a dark raised plate so broken/empty images don't flash white */
+html[data-theme="dark"] body .aa-rec__img {
+  background: #2D1B4E !important;
+}
+html[data-theme="dark"] body .aa-rec__title {
+  color: #FFFFFF !important;
+}
+html[data-theme="dark"] body .aa-rec__price {
+  color: #FFFFFF !important;
+}
+html[data-theme="dark"] body .aa-rec__price s {
+  color: rgba(255, 255, 255, 0.54) !important;
+}
+/* ADD button = brand gradient (matches site cards), not the v8 dark fill */
+html[data-theme="dark"] body .aa-rec__add {
+  background: linear-gradient(135deg, #FF8C42 0%, #FF2E93 100%) !important;
+  color: #FFFFFF !important;
+}
+html[data-theme="dark"] body .aa-rec__add:hover {
+  background: linear-gradient(135deg, #FF2E93 0%, #FF8C42 100%) !important;
+}
+
+/* ---------- Estimated total + tax note ---------- */
+html[data-theme="dark"] body .totals__total,
+html[data-theme="dark"] body .totals__total-value {
+  color: #FFFFFF !important;
+}
+html[data-theme="dark"] body .tax-note,
+html[data-theme="dark"] body .tax-note a,
+html[data-theme="dark"] body .cart__login-paragraph,
+html[data-theme="dark"] body .cart__login-title {
+  color: rgba(255, 255, 255, 0.54) !important;
+}
+
+/* ---------- Cart note (optional message field) ---------- */
+html[data-theme="dark"] body .cart__note .text-area,
+html[data-theme="dark"] body .cart__note .field__input {
+  background: #1A0B2E !important;
+  color: #FFFFFF !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+html[data-theme="dark"] body .drawer__footer summary,
+html[data-theme="dark"] body .cart__note label {
+  color: rgba(255, 255, 255, 0.70) !important;
+}
+
+/* ---------- Checkout button: keep the gradient, ensure white label ---------- */
+html[data-theme="dark"] body .aa-checkout-btn,
+html[data-theme="dark"] body cart-drawer .cart__checkout-button,
+html[data-theme="dark"] body .template-cart .cart__checkout-button {
+  background: linear-gradient(130deg, #e9027a 0%, #ec1f4f 32%, #f04930 64%, #f58220 100%) !important;
+  color: #FFFFFF !important;
+}
+html[data-theme="dark"] body .aa-checkout-btn__label {
+  color: #FFFFFF !important;
+}
+
+/* ---------- Top promo strip: tint for dark canvas ---------- */
+html[data-theme="dark"] body .aa-cart-promo {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.09) !important;
+}
+html[data-theme="dark"] body .aa-cart-promo__item {
+  color: rgba(255, 255, 255, 0.82) !important;
+}
+html[data-theme="dark"] body .aa-cart-promo__item strong {
+  color: #FFC24B !important;
+}
+
+/* ---------- Scrollbar in the drawer ---------- */
+html[data-theme="dark"] body cart-drawer-items::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.3) !important;
+}
+/* ==========================================================================
+   aa-dark-pdp2.css — Aura AI dark-mode PDP polish (not ID-anchored)
+   Scoped under html[data-theme="dark"]; light mode untouched.
+   Wired separately. Palette: glass rgba(255,255,255,.06)+blur,
+   text #fff, borders rgba(255,255,255,.12), gold #FFC24B.
+   ========================================================================== */
+
+/* ---- 1. BENEFIT PILLS (buy box) — .aa-pdp-chip ---------------------------
+   Light base (aa-pdp-v1.css): white pill + #B58E3E gold dot via ::before.
+   Dark: glassy dark pill, white text, keep the gold dot. */
+html[data-theme="dark"] .aa-pdp-chip {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  color: rgba(255, 255, 255, 0.86) !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  backdrop-filter: blur(10px) !important;
+}
+html[data-theme="dark"] .aa-pdp-chip::before {
+  background: #FFC24B !important;
+  box-shadow: 0 0 6px rgba(255, 194, 75, 0.55) !important;
+}
+
+/* ---- 2. GALLERY ARROWS — .slider-button (prev/next) ----------------------
+   Base: Dawn 44x44 transparent flex button (component-slider.css).
+   Dark: glassy dark circle + white chevron, subtle hover.
+   Scoped to the PDP media gallery only (media-gallery), not other sliders. */
+html[data-theme="dark"] media-gallery .slider-buttons .slider-button {
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 50% !important;
+  background: rgba(10, 6, 18, 0.55) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  color: #FFFFFF !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  backdrop-filter: blur(8px) !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35) !important;
+  transition: background 200ms ease, border-color 200ms ease, transform 160ms ease;
+}
+html[data-theme="dark"] media-gallery .slider-buttons .slider-button .icon,
+html[data-theme="dark"] media-gallery .slider-buttons .slider-button svg {
+  color: #FFFFFF !important;
+}
+html[data-theme="dark"] media-gallery .slider-buttons .slider-button:not([disabled]):hover {
+  background: rgba(255, 46, 147, 0.22) !important;
+  border-color: rgba(255, 255, 255, 0.32) !important;
+  color: #FFFFFF !important;
+}
+html[data-theme="dark"] media-gallery .slider-buttons .slider-button[disabled] {
+  opacity: 0.4 !important;
+}
+/* =============================================================================
+   aa-dark-reviews.css
+   -----------------------------------------------------------------------------
+   ALIGNMENT REMOVED 2026-06-23. Per user: dark-mode reviews must use the SAME
+   alignment as light mode. The previous custom Judge.me summary flex layout only
+   ran in dark (html[data-theme="dark"]), so dark and light diverged. Removing it
+   lets both modes use Judge.me's default layout — identical alignment, only the
+   colours differ (handled in aa-dark.css / aa-dark-gaps.css).
+
+   The summary average box + "Diamond Transparency" badge are removed via JS in
+   snippets/aa-judgeme-fix.liquid (global, cache-proof), not here.
+   ============================================================================= */

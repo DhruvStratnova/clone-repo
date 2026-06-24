@@ -345,20 +345,13 @@
       rule inside is scoped under html[data-theme="dark"], so the light default
       for normal web visitors is byte-for-byte unchanged.
     {%- endcomment -%}
-    {{ 'aa-dark.css' | asset_url | stylesheet_tag }}
-    {{ 'aa-dark-header.css' | asset_url | stylesheet_tag }}
-    {{ 'aa-dark-commerce.css' | asset_url | stylesheet_tag }}
-    {{ 'aa-dark-type.css' | asset_url | stylesheet_tag }}
-    {{ 'aa-dark-quickview.css' | asset_url | stylesheet_tag }}
-    {{ 'aa-dark-sections.css' | asset_url | stylesheet_tag }}
-    {{ 'aa-dark-collection.css' | asset_url | stylesheet_tag }}
-    {{ 'aa-dark-fixes.css' | asset_url | stylesheet_tag }}
-    {{ 'aa-dark-gaps.css' | asset_url | stylesheet_tag }}
-    {{ 'aa-dark-account.css' | asset_url | stylesheet_tag }}
-    {{ 'aa-dark-search.css' | asset_url | stylesheet_tag }}
-    {{ 'aa-dark-cart.css' | asset_url | stylesheet_tag }}
-    {{ 'aa-dark-pdp2.css' | asset_url | stylesheet_tag }}
-    {{ 'aa-dark-reviews.css' | asset_url | stylesheet_tag }}
+    {%- comment -%} PERF: the 14 dark CSS files are bundled into aa-dark-bundle.css
+       (same cascade order) and loaded ONLY for app (cookie) users, via a tiny
+       cookie-check document.write at THIS exact position (after base theme CSS),
+       so: cascade + look are byte-identical for dark, light/web visitors download
+       ZERO dark CSS, no flash (render-blocking during parse), FPC-safe (cookie
+       read client-side). Sources kept on disk for editing; rebuild bundle on change. {%- endcomment -%}
+    <script>if(document.cookie.split('; ').indexOf('app_color_scheme=dark')>-1){document.write('<link rel="stylesheet" href="{{ 'aa-dark-bundle.css' | asset_url }}" media="all">');}</script>
 
     {%- unless settings.type_body_font.system? -%}
       {% comment %}theme-check-disable AssetPreload{% endcomment %}
