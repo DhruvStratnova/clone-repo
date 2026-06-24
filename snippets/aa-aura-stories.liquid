@@ -69,15 +69,24 @@
     setTimeout(paint, 220);
   }
   var timer = null;
+  var visible = true;
+  function running() { return visible && !document.hidden; }
   function startAuto() {
-    if (stories.length < 2) return;
     clearInterval(timer);
+    if (stories.length < 2 || !running()) return;
     timer = setInterval(function () { show(idx + 1); }, 5000);
   }
   card.querySelector('[data-aa-prev]').addEventListener('click', function () { show(idx - 1); startAuto(); });
   card.querySelector('[data-aa-next]').addEventListener('click', function () { show(idx + 1); startAuto(); });
   show(0, true);
   card.hidden = false;
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (es) {
+      es.forEach(function (e) { visible = e.isIntersecting; });
+      startAuto();
+    }, { threshold: 0 }).observe(card);
+  }
+  document.addEventListener('visibilitychange', startAuto);
   startAuto();
   src.remove();
 })();

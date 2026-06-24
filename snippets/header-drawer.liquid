@@ -270,7 +270,7 @@
                   <span class="aa-drawer__tile-circle">
                     {%- if tile_image -%}
                       {{ tile_image | image_url: width: 160 | image_tag:
-                        loading: 'eager',
+                        loading: 'lazy',
                         width: 80,
                         height: 80,
                         class: 'aa-drawer__tile-img',
@@ -299,7 +299,7 @@
                 <span class="aa-drawer__tile-circle">
                   {%- if tile_image -%}
                     {{ tile_image | image_url: width: 160 | image_tag:
-                      loading: 'eager',
+                      loading: 'lazy',
                       width: 80,
                       height: 80,
                       class: 'aa-drawer__tile-img',
@@ -319,28 +319,28 @@
           {%- assign aa_mani = collections['mani'] -%}
           <a href="/collections/mani" class="aa-drawer__tile">
             <span class="aa-drawer__tile-circle">
-              {%- if aa_mani.image -%}{{ aa_mani.image | image_url: width: 160 | image_tag: loading: 'eager', width: 80, height: 80, class: 'aa-drawer__tile-img', alt: 'Mani' }}{%- else -%}<span class="aa-drawer__tile-placeholder">M</span>{%- endif -%}
+              {%- if aa_mani.image -%}{{ aa_mani.image | image_url: width: 160 | image_tag: loading: 'lazy', width: 80, height: 80, class: 'aa-drawer__tile-img', alt: 'Mani' }}{%- else -%}<span class="aa-drawer__tile-placeholder">M</span>{%- endif -%}
             </span>
             <span class="aa-drawer__tile-label">Mani</span>
           </a>
           {%- assign aa_ank = collections['anklets'] -%}
           <a href="/collections/anklets" class="aa-drawer__tile">
             <span class="aa-drawer__tile-circle">
-              {%- if aa_ank.image -%}{{ aa_ank.image | image_url: width: 160 | image_tag: loading: 'eager', width: 80, height: 80, class: 'aa-drawer__tile-img', alt: 'Anklets' }}{%- else -%}<span class="aa-drawer__tile-placeholder">A</span>{%- endif -%}
+              {%- if aa_ank.image -%}{{ aa_ank.image | image_url: width: 160 | image_tag: loading: 'lazy', width: 80, height: 80, class: 'aa-drawer__tile-img', alt: 'Anklets' }}{%- else -%}<span class="aa-drawer__tile-placeholder">A</span>{%- endif -%}
             </span>
             <span class="aa-drawer__tile-label">Anklets</span>
           </a>
           {%- assign aa_vastu = collections['vastu'] -%}
           <a href="/collections/vastu" class="aa-drawer__tile">
             <span class="aa-drawer__tile-circle">
-              {%- if aa_vastu.image -%}{{ aa_vastu.image | image_url: width: 160 | image_tag: loading: 'eager', width: 80, height: 80, class: 'aa-drawer__tile-img', alt: 'Vastu' }}{%- else -%}<span class="aa-drawer__tile-placeholder">V</span>{%- endif -%}
+              {%- if aa_vastu.image -%}{{ aa_vastu.image | image_url: width: 160 | image_tag: loading: 'lazy', width: 80, height: 80, class: 'aa-drawer__tile-img', alt: 'Vastu' }}{%- else -%}<span class="aa-drawer__tile-placeholder">V</span>{%- endif -%}
             </span>
             <span class="aa-drawer__tile-label">Vastu</span>
           </a>
           {%- assign aa_combos = collections['combos'] -%}
           <a href="/collections/combos" class="aa-drawer__tile">
             <span class="aa-drawer__tile-circle">
-              {%- if aa_combos.image -%}{{ aa_combos.image | image_url: width: 160 | image_tag: loading: 'eager', width: 80, height: 80, class: 'aa-drawer__tile-img', alt: 'Combos' }}{%- else -%}<span class="aa-drawer__tile-placeholder">C</span>{%- endif -%}
+              {%- if aa_combos.image -%}{{ aa_combos.image | image_url: width: 160 | image_tag: loading: 'lazy', width: 80, height: 80, class: 'aa-drawer__tile-img', alt: 'Combos' }}{%- else -%}<span class="aa-drawer__tile-placeholder">C</span>{%- endif -%}
             </span>
             <span class="aa-drawer__tile-label">Combos</span>
           </a>
@@ -363,9 +363,9 @@
           <a href="/collections/love-1" class="aa-drawer__purpose-tile aa-purpose--love">
             <span class="aa-drawer__purpose-img-wrap">
               {%- if collections['love-1'].image -%}
-                <img src="{{ collections['love-1'].image | image_url: width: 280 }}" alt="For Love" class="aa-drawer__purpose-img" loading="eager">
+                <img src="{{ collections['love-1'].image | image_url: width: 280 }}" alt="For Love" class="aa-drawer__purpose-img" loading="lazy">
               {%- elsif collections['love-1'].featured_image -%}
-                <img src="{{ collections['love-1'].featured_image | image_url: width: 280 }}" alt="For Love" class="aa-drawer__purpose-img" loading="eager">
+                <img src="{{ collections['love-1'].featured_image | image_url: width: 280 }}" alt="For Love" class="aa-drawer__purpose-img" loading="lazy">
               {%- else -%}
                 <span class="aa-drawer__purpose-label" aria-hidden="true">♥</span>
               {%- endif -%}
@@ -375,9 +375,9 @@
           <a href="/collections/health" class="aa-drawer__purpose-tile aa-purpose--health">
             <span class="aa-drawer__purpose-img-wrap">
               {%- if collections['health'].featured_image -%}
-                <img src="{{ collections['health'].featured_image | image_url: width: 280 }}" alt="For Health" class="aa-drawer__purpose-img" loading="eager">
+                <img src="{{ collections['health'].featured_image | image_url: width: 280 }}" alt="For Health" class="aa-drawer__purpose-img" loading="lazy">
               {%- else -%}
-                <img src="https://cdn.shopify.com/s/files/1/0938/8843/3134/files/emerald-necklace.jpg" alt="For Health" class="aa-drawer__purpose-img" loading="eager">
+                <img src="https://cdn.shopify.com/s/files/1/0938/8843/3134/files/emerald-necklace.jpg" alt="For Health" class="aa-drawer__purpose-img" loading="lazy">
               {%- endif -%}
             </span>
             <span class="aa-drawer__purpose-label">For Health</span>
@@ -385,9 +385,9 @@
           <a href="/collections/wealth" class="aa-drawer__purpose-tile aa-purpose--success">
             <span class="aa-drawer__purpose-img-wrap">
               {%- if collections['wealth'].featured_image -%}
-                <img src="{{ collections['wealth'].featured_image | image_url: width: 280 }}" alt="For Wealth" class="aa-drawer__purpose-img" loading="eager">
+                <img src="{{ collections['wealth'].featured_image | image_url: width: 280 }}" alt="For Wealth" class="aa-drawer__purpose-img" loading="lazy">
               {%- else -%}
-                <img src="https://cdn.shopify.com/s/files/1/0938/8843/3134/files/sapphire-ring.jpg" alt="For Wealth" class="aa-drawer__purpose-img" loading="eager">
+                <img src="https://cdn.shopify.com/s/files/1/0938/8843/3134/files/sapphire-ring.jpg" alt="For Wealth" class="aa-drawer__purpose-img" loading="lazy">
               {%- endif -%}
             </span>
             <span class="aa-drawer__purpose-label">For Wealth</span>

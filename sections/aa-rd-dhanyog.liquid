@@ -55,7 +55,6 @@
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (es) { es.forEach(function (en) { if (en.isIntersecting) kick(); }); }, { threshold: 0.15 }).observe(v);
     }
-    setInterval(function () { if (!document.hidden && v.paused) kick(); }, 3000);
   })();
 </script>
 

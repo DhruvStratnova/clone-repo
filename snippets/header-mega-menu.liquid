@@ -54,7 +54,7 @@
                     {%- assign aa_parent = link.title | downcase | strip -%}
                     {%- if aa_parent contains 'combo' -%}
                       {%- comment -%} Combos dropdown: render the whole combos collection (nav menu only has the old few) {%- endcomment -%}
-                      {%- for cp in collections['combos'].products -%}
+                      {%- for cp in collections['combos'].products limit: 50 -%}
                         <a href="{{ cp.url }}" class="aa-tile{% if cp.url == request.path %} aa-tile--active{% endif %}">
                           <span class="aa-tile__circle">
                             {%- if cp.featured_image -%}{{ cp.featured_image | image_url: width: 200 | image_tag: loading: 'lazy', width: 96, height: 96, class: 'aa-tile__img', alt: cp.title }}{%- else -%}<span class="aa-tile__placeholder">C</span>{%- endif -%}
