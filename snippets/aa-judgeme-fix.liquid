@@ -212,8 +212,22 @@
     window.addEventListener('load', force);
     setTimeout(force, 1500);
     setTimeout(force, 3500);
-    var mo = new MutationObserver(force);
-    mo.observe(document.body, { childList: true, subtree: true });
-    setTimeout(function() { mo.disconnect(); }, 10000);
+    /* PERF: observe ONLY the reviews widget (not all of <body>), debounce force()
+       to one call per frame, and disconnect once stable — instead of running
+       force() on every page mutation for 10s. Same visual result, far less jank. */
+    var raf = null;
+    function debounced() { if (raf) return; raf = requestAnimationFrame(function () { raf = null; force(); }); }
+    function startObs() {
+      var w = document.querySelector('.jdgm-rev-widg, .jdgm-widget, [data-jdgm-widget], #judgeme_product_reviews');
+      if (!w) return false;
+      var mo = new MutationObserver(debounced);
+      mo.observe(w, { childList: true, subtree: true });
+      setTimeout(function () { mo.disconnect(); }, 6000);
+      return true;
+    }
+    if (!startObs()) {
+      var tries = 0;
+      var iv = setInterval(function () { if (startObs() || ++tries > 20) clearInterval(iv); }, 250);
+    }
   })();
 </script>
