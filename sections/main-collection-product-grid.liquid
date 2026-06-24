@@ -106,6 +106,73 @@
       </facet-filters-form>
     {%- endif -%}
 
+    <!-- Custom Filter UI for Gemstone, Planet, Zodiac -->
+    <style>
+      .custom-filters {
+        margin-bottom: 2rem;
+        {% comment %} display: flex; {% endcomment %}
+        {% comment %} gap: 2rem; {% endcomment %}
+        {% comment %} flex-wrap: wrap; {% endcomment %}
+        {% comment %} align-items: flex-end; {% endcomment %}
+        max-width:1200px;
+      }
+      .custom-filters form {
+        display: flex;
+        gap: 2rem;
+        flex-wrap: wrap;
+        {% comment %} align-items: flex-end; {% endcomment %}
+      }
+      .custom-filters label {
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+        display: block;
+        color: #222;
+      }
+      .custom-filters select {
+        padding: 0.5rem 2rem 0.5rem 0.75rem;
+        border: 1px solid #ccc;
+        {% comment %} border-radius: 6px; {% endcomment %}
+        {% comment %} font-size: 1rem; {% endcomment %}
+        background: #fff url('data:image/svg+xml;utf8,<svg fill="%23333" height="20" viewBox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M7.293 7.293a1 1 0 011.414 0L10 8.586l1.293-1.293a1 1 0 111.414 1.414l-2 2a1 1 0 01-1.414 0l-2-2a1 1 0 010-1.414z"/></svg>') no-repeat right 0.75rem center/1.25rem 1.25rem;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        min-width: 180px;
+        transition: border 0.2s;
+      }
+      .custom-filters select:focus {
+        border-color: #888;
+        outline: none;
+      }
+    </style>
+    {% comment %} <div id="custom-filters" class="custom-filters">
+      <form id="productFilterForm">
+        <label for="filter-gemstone">Gemstone</label>
+        <select name="gemstone" id="filter-gemstone">
+          <option value="">All Gemstones</option>
+          {% assign gemstones = "diamond,ruby,sapphire,emerald,amethyst,pearl,garnet,opal,aquamarine,topaz,tourmaline,jade" | split: "," %}
+          {% for gemstone in gemstones %}
+            <option value="{{ gemstone | capitalize }}">{{ gemstone | capitalize }}</option>
+          {% endfor %}
+        </select>
+        <label for="filter-planet">Planet</label>
+        <select name="planet" id="filter-planet">
+          <option value="">All Planets</option>
+          {% assign planets = "Sun,Moon,Mercury,Venus,Mars,Jupiter,Saturn,Rahu,Ketu" | split: "," %}
+          {% for planet in planets %}
+            <option value="{{ planet }}">{{ planet }}</option>
+          {% endfor %}
+        </select>
+        <label for="filter-zodiac">Zodiac</label>
+        <select name="zodiac" id="filter-zodiac">
+          <option value="">All Zodiacs</option>
+          {% assign zodiacs = "Aries,Taurus,Gemini,Cancer,Leo,Virgo,Libra,Scorpio,Sagittarius,Capricorn,Aquarius,Pisces" | split: "," %}
+          {% for zodiac in zodiacs %}
+            <option value="{{ zodiac }}">{{ zodiac }}</option>
+          {% endfor %}
+        </select>
+      </form>
+    </div> {% endcomment %}
     <div class="{% if section.settings.filter_type == 'vertical' %} facets-vertical page-width{% endif %}">
       {{ 'component-facets.css' | asset_url | stylesheet_tag }}
       <script src="{{ 'collection-filters.js' | asset_url }}" defer="defer"></script>
@@ -124,6 +191,34 @@
             filter_type: section.settings.filter_type,
             paginate: paginate
           %}
+              {% comment %} <div id="custom-filters" class="custom-filters">
+      <form id="productFilterForm">
+        <label for="filter-gemstone">Gemstone</label>
+        <select name="gemstone" id="filter-gemstone">
+          <option value="">All Gemstones</option>
+          {% assign gemstones = "diamond,ruby,sapphire,emerald,amethyst,pearl,garnet,opal,aquamarine,topaz,tourmaline,jade" | split: "," %}
+          {% for gemstone in gemstones %}
+            <option value="{{ gemstone | capitalize }}">{{ gemstone | capitalize }}</option>
+          {% endfor %}
+        </select>
+        <label for="filter-planet">Planet</label>
+        <select name="planet" id="filter-planet">
+          <option value="">All Planets</option>
+          {% assign planets = "Sun,Moon,Mercury,Venus,Mars,Jupiter,Saturn,Rahu,Ketu" | split: "," %}
+          {% for planet in planets %}
+            <option value="{{ planet }}">{{ planet }}</option>
+          {% endfor %}
+        </select>
+        <label for="filter-zodiac">Zodiac</label>
+        <select name="zodiac" id="filter-zodiac">
+          <option value="">All Zodiacs</option>
+          {% assign zodiacs = "Aries,Taurus,Gemini,Cancer,Leo,Virgo,Libra,Scorpio,Sagittarius,Capricorn,Aquarius,Pisces" | split: "," %}
+          {% for zodiac in zodiacs %}
+            <option value="{{ zodiac }}">{{ zodiac }}</option>
+          {% endfor %}
+        </select>
+      </form>
+    </div> {% endcomment %}
         </aside>
       {%- endif -%}
 
