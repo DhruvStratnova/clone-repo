@@ -97,7 +97,7 @@ body.template-product .product-form__input .form__label {
 /* ---- buy buttons (Dawn markup, reskinned) ---- */
 body.template-product .product-form__submit {
   background: #151013 !important; color: #fff !important;
-  border-radius: 999px !important; border: 0 !important;
+  border-radius: 14px !important; border: 0 !important;
   font-weight: 800 !important; font-size: 14px !important; letter-spacing: 0.06em !important;
   text-transform: uppercase; padding-top: 18px; padding-bottom: 18px;
   transition: transform 160ms var(--aa-eo), box-shadow 240ms var(--aa-eo) !important;
@@ -105,7 +105,7 @@ body.template-product .product-form__submit {
 body.template-product .product-form__submit:active { transform: scale(0.97); }
 body.template-product .shopify-payment-button__button--unbranded {
   background: var(--aa-pdp-grad) !important; color: #fff !important;
-  border-radius: 999px !important; font-weight: 800 !important;
+  border-radius: 14px !important; font-weight: 800 !important;
   font-size: 14px !important; letter-spacing: 0.06em !important; text-transform: uppercase;
   box-shadow: 0 8px 22px rgba(233, 2, 122, 0.28);
   transition: transform 160ms var(--aa-eo), box-shadow 240ms var(--aa-eo) !important;
