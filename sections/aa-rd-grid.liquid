@@ -5,13 +5,44 @@
 <section class="sec">
   <div class="wrap wide">
     <div class="sh" data-rise><h2 style="font-family:'Cormorant Garamond',Georgia,serif !important;font-weight:600">{{ section.settings.heading | default: 'Our Products' }}</h2></div>
-    <div class="pgrid" data-rise>
+    <ul class="grid product-grid aa-collection-grid" data-rise>
+      {% assign skip_card_product_styles = false %}
       {%- for product in coll.products limit: limit -%}
-        {%- render 'aa-rd-card', product: product -%}
+        {% if product.type == 'mws_apo_generated' %}{% continue %}{% endif %}
+        <li class="grid__item">
+          {% render 'card-product',
+            card_product: product,
+            media_aspect_ratio: 'adapt',
+            show_rating: true,
+            lazy_load: true,
+            skip_styles: skip_card_product_styles,
+            quick_add: 'none',
+            show_quick_view: true,
+            aa_coll_card: true,
+            section_id: section.id
+          %}
+        </li>
+        {%- assign skip_card_product_styles = true -%}
       {%- else -%}
-        {%- for product in collections.all.products limit: 16 -%}{%- render 'aa-rd-card', product: product -%}{%- endfor -%}
+        {%- for product in collections.all.products limit: 16 -%}
+          {% if product.type == 'mws_apo_generated' %}{% continue %}{% endif %}
+          <li class="grid__item">
+            {% render 'card-product',
+              card_product: product,
+              media_aspect_ratio: 'adapt',
+              show_rating: true,
+              lazy_load: true,
+              skip_styles: skip_card_product_styles,
+              quick_add: 'none',
+              show_quick_view: true,
+              aa_coll_card: true,
+              section_id: section.id
+            %}
+          </li>
+          {%- assign skip_card_product_styles = true -%}
+        {%- endfor -%}
       {%- endfor -%}
-    </div>
+    </ul>
   </div>
 </section>
 {% schema %}
