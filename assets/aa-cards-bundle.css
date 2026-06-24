@@ -1,0 +1,2913 @@
+/* ============================================================
+   AstroAura — Section Card System + Centered Headings
+   ONLY targets section content. Does NOT touch header icons
+   (search / profile / cart) or any header element.
+   ============================================================ */
+
+/* ---------- Image-with-Text — unified rounded card with shadow ---------- */
+.image-with-text__grid {
+  background: #FFFFFF !important;
+  border-radius: 16px !important;
+  overflow: hidden !important;
+  box-shadow: 0 8px 24px rgba(45, 10, 46, 0.08) !important;
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+}
+.image-with-text__media {
+  border-radius: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+}
+.image-with-text__media-item {
+  margin: 0 !important;
+}
+.image-with-text__text-item {
+  background: transparent !important;
+}
+.image-with-text__content {
+  padding: 40px 36px !important;
+  background: transparent !important;
+  border: 0 !important;
+}
+@media (max-width: 749px) {
+  .image-with-text__content { padding: 24px 20px !important; }
+}
+
+/* ---------- Featured Product — unified rounded card ---------- */
+.featured-product {
+  background: #FFFFFF !important;
+  border-radius: 16px !important;
+  overflow: hidden !important;
+  box-shadow: 0 8px 24px rgba(45, 10, 46, 0.08) !important;
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+}
+.featured-product .product__info-container,
+.featured-product .product__media-wrapper {
+  padding: 36px !important;
+}
+@media (max-width: 749px) {
+  /* The .featured-product element IS the grid container and the card */
+  .featured-product,
+  .featured-product.product--right,
+  .featured-product.product--left {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0 !important;
+    margin: 16px !important;
+    max-width: calc(100% - 32px) !important;
+    width: calc(100% - 32px) !important;
+    border-radius: 16px !important;
+    background: #FFFFFF !important;
+    box-shadow: 0 6px 20px rgba(45, 10, 46, 0.08) !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+  }
+  /* Image first (top of card) — applies regardless of media_position setting */
+  .featured-product .product__media-wrapper,
+  .featured-product.product--right .product__media-wrapper,
+  .featured-product.product--left .product__media-wrapper {
+    order: 1 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: #FFFFFF !important;
+  }
+  /* Info below — same card, no second background */
+  .featured-product .product__info-wrapper,
+  .featured-product.product--right .product__info-wrapper,
+  .featured-product.product--left .product__info-wrapper {
+    order: 2 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+  }
+  .featured-product .product__info-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 16px 18px 20px !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+  }
+  /* Image — show the WHOLE bracelet (contain, not cover) on white */
+  .featured-product .product-media-container,
+  .featured-product .product__media,
+  .featured-product .product__media-item,
+  .featured-product .product__media-list,
+  .featured-product media-gallery,
+  .featured-product slider-component {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    aspect-ratio: 1 / 1 !important;
+    background: #FFFFFF !important;
+    overflow: hidden !important;
+  }
+  .featured-product .product__media-wrapper img,
+  .featured-product .product-media-container img,
+  .featured-product .product__media img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    display: block !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: #FFFFFF !important;
+  }
+  /* Hide slider mechanics inside featured-product — show single static image */
+  .featured-product .thumbnail-list,
+  .featured-product .thumbnail-slider,
+  .featured-product slider-component.thumbnail-slider,
+  .featured-product .slider-buttons,
+  .featured-product slider-button,
+  .featured-product .slider-counter,
+  .featured-product .product__media-icon {
+    display: none !important;
+  }
+  .featured-product .product__media-list .slider__slide:not(:first-child) {
+    display: none !important;
+  }
+  /* Typography inside info-container */
+  .featured-product .product__title,
+  .featured-product .product__title h1,
+  .featured-product .product__title h2 {
+    font-size: 19px !important;
+    line-height: 1.25 !important;
+    margin: 0 0 10px !important;
+    text-align: center !important;
+    color: #1A1A1A !important;
+  }
+  .featured-product .product__text,
+  .featured-product .product__description,
+  .featured-product .rte {
+    font-size: 13.5px !important;
+    line-height: 1.55 !important;
+    text-align: left !important;
+    color: #3A3A3A !important;
+    margin: 0 0 14px !important;
+    max-width: 100% !important;
+  }
+  .featured-product .price,
+  .featured-product .price__container {
+    text-align: center !important;
+    margin: 6px 0 12px !important;
+    font-weight: 700 !important;
+  }
+  /* Hide share button + VIEW FULL DETAILS link inside the featured-product card */
+  .featured-product .share-button,
+  .featured-product share-button,
+  .featured-product .product__view-details,
+  .featured-product a.product__view-details {
+    display: none !important;
+  }
+  /* Body text — justified for clean uniform line edges */
+  .featured-product .product__description,
+  .featured-product .product__text:not(.caption-with-letter-spacing),
+  .featured-product .rte,
+  .featured-product .rte p {
+    text-align: justify !important;
+    text-justify: inter-word !important;
+    hyphens: auto !important;
+    -webkit-hyphens: auto !important;
+    word-spacing: 0 !important;
+  }
+
+  /* Make info-container a flex column; the bottom row will be created by
+     ordering product-form (LEFT) and product__view-details (RIGHT) as a pair. */
+  .featured-product .product__info-container {
+    display: flex !important;
+    flex-direction: column !important;
+    position: relative !important;
+  }
+
+  /* The action row is composed of two elements: product-form (left) + view-details (right).
+     Use a 2-col grid trick: pull them to the bottom and put side-by-side. */
+  .featured-product .product__info-container .product-form,
+  .featured-product .product__info-container .product__view-details,
+  .featured-product .product__info-container a.product__view-details {
+    order: 99 !important;
+    margin-top: 14px !important;
+  }
+  .featured-product .product-form {
+    width: 100% !important;
+    margin-right: 0 !important;
+    display: block !important;
+    float: none !important;
+  }
+  .featured-product .product__view-details,
+  .featured-product a.product__view-details {
+    width: calc(50% - 6px) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 14px 16px !important;
+    border: 1.5px solid #1F0820 !important;
+    border-radius: 999px !important;
+    background: transparent !important;
+    color: #1F0820 !important;
+    font-weight: 700 !important;
+    font-size: 11px !important;
+    letter-spacing: 0.10em !important;
+    text-transform: uppercase !important;
+    text-decoration: none !important;
+    min-height: 50px !important;
+    white-space: nowrap !important;
+    box-sizing: border-box !important;
+    float: right !important;
+  }
+  .featured-product .product__view-details:hover {
+    background: #1F0820 !important;
+    color: #FBF6EE !important;
+  }
+  /* Clear the float */
+  .featured-product .product__info-container::after {
+    content: "" !important;
+    display: table !important;
+    clear: both !important;
+    order: 100 !important;
+  }
+
+  /* Add to cart button — black filled pill, full width of its half-column */
+  .featured-product .product-form__buttons {
+    width: 100% !important;
+    display: block !important;
+    margin: 0 !important;
+  }
+  .featured-product .product-form__submit,
+  .featured-product .product-form__submit.button,
+  .featured-product .product-form__submit.button--primary,
+  .featured-product button.product-form__submit {
+    width: 100% !important;
+    border-radius: 999px !important;
+    padding: 14px 12px !important;
+    background: #1F0820 !important;
+    background-color: #1F0820 !important;
+    background-image: none !important;
+    color: #FBF6EE !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    outline: 0 !important;
+    font-weight: 700 !important;
+    font-size: 11px !important;
+    letter-spacing: 0.12em !important;
+    text-transform: uppercase !important;
+    margin: 0 !important;
+    min-height: 50px !important;
+    cursor: pointer !important;
+  }
+  .featured-product .product-form__submit::before,
+  .featured-product .product-form__submit::after {
+    display: none !important;
+    content: none !important;
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+  .featured-product .product-form__submit:hover {
+    background: #2A0F2C !important;
+    color: #FBF6EE !important;
+    transform: none !important;
+    box-shadow: none !important;
+  }
+  /* Hide the orange Buy Now button on featured-product (the card is for quick ADD only) */
+  .featured-product .aa-buy-now-btn,
+  .featured-product .aa-buy-now-form {
+    display: none !important;
+  }
+  /* Hide quantity input inside featured-product (we only need ADD) */
+  .featured-product .product-form__quantity,
+  .featured-product .product-form__input.product-form__quantity,
+  .featured-product quantity-input,
+  .featured-product .quantity {
+    display: none !important;
+  }
+
+  /* Eyebrow label "FEATURED PRODUCT" — small pill, centered */
+  .featured-product .product__text.caption-with-letter-spacing,
+  .featured-product .caption-with-letter-spacing {
+    display: inline-block !important;
+    text-align: center !important;
+    width: auto !important;
+    margin: 0 auto 14px !important;
+    padding: 5px 12px !important;
+    background: var(--aa-gradient, linear-gradient(95deg, #E9027A 0%, #F58220 100%)) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    color: transparent !important;
+    font-size: 10px !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.18em !important;
+  }
+  /* Center the wrapper for eyebrow */
+  .featured-product .product__info-container > .product__text:first-child,
+  .featured-product .product__info-container .caption-with-letter-spacing {
+    text-align: center !important;
+    display: block !important;
+    margin: 0 auto 12px !important;
+  }
+  /* Tighter spacing inside the card */
+  .featured-product .product__info-container > * + * {
+    margin-top: 10px !important;
+  }
+  .featured-product .price__container,
+  .featured-product .price {
+    margin: 4px 0 14px !important;
+    text-align: center !important;
+    font-size: 16px !important;
+  }
+}
+
+/* ---------- Centered section headings everywhere ---------- */
+.title-wrapper-with-link,
+.title-wrapper-with-link--no-heading-link,
+.title-wrapper-with-link .title,
+.section-header,
+.section__header {
+  text-align: center !important;
+  justify-content: center !important;
+}
+.title-wrapper-with-link h2,
+.title-wrapper-with-link .title-wrapper h2,
+h2.title,
+h2.section-header__title,
+.section__title,
+.collection__title,
+.collection-list-title,
+.featured-collection__title,
+.featured-product__title,
+.product-recommendations__heading,
+.multicolumn__title,
+.collapsible-content__heading,
+.rich-text__heading,
+.image-with-text__heading,
+.banner__heading {
+  text-align: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  width: 100% !important;
+}
+/* Caption (eyebrow) above heading also centered */
+.title-wrapper-with-link .caption-with-letter-spacing,
+.section__header .caption-with-letter-spacing,
+.image-with-text__text--caption,
+.banner__text--caption {
+  text-align: center !important;
+  width: 100% !important;
+}
+/* Optional subtitle/description under heading */
+.title-wrapper-with-link .subtitle,
+.section__description,
+.rich-text__text,
+.image-with-text__text,
+.banner__text {
+  text-align: center !important;
+}
+
+/* ============================================================
+   Product Card Mobile Sizing — fixes huge cards on mobile
+   ============================================================ */
+@media (max-width: 749px) {
+  .aa-pcard {
+    border-radius: 12px !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+  }
+  .aa-pcard__media {
+    aspect-ratio: 1 / 1 !important;
+    width: 100% !important;
+    overflow: hidden !important;
+    background: #FFFFFF !important;
+  }
+  .aa-pcard__media img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block !important;
+  }
+  .aa-pcard__content {
+    padding: 10px !important;
+  }
+  .aa-pcard__cat {
+    font-size: 9px !important;
+    margin-bottom: 4px !important;
+    letter-spacing: 0.08em !important;
+  }
+  .aa-pcard__title {
+    font-size: 12.5px !important;
+    line-height: 1.2 !important;
+    min-height: 30px !important;
+    margin-bottom: 6px !important;
+  }
+  .aa-pcard__divider { margin: 4px 0 !important; }
+  .aa-pcard__price-row, .aa-pcard__priceline {
+    display: flex !important;
+    align-items: baseline !important;
+    gap: 6px !important;
+  }
+  .aa-pcard__price { font-size: 13px !important; font-weight: 700 !important; }
+  .aa-pcard__strike { font-size: 10px !important; opacity: 0.6 !important; text-decoration: line-through !important; }
+  .aa-pcard__badge {
+    font-size: 9px !important;
+    padding: 2px 6px !important;
+    top: 6px !important;
+    left: 6px !important;
+    background: linear-gradient(95deg, #E9027A 0%, #EC1F4F 30%, #F04930 60%, #F58220 100%) !important;
+    color: #FFFFFF !important;
+    border-radius: 999px !important;
+    font-weight: 700 !important;
+    position: absolute !important;
+  }
+  .aa-pcard__heart {
+    top: 6px !important;
+    right: 6px !important;
+    width: 22px !important;
+    height: 22px !important;
+    position: absolute !important;
+  }
+  .aa-pcard__cta {
+    width: 100% !important;
+    padding: 11px 14px !important;
+    font-size: 10.5px !important;
+    margin-top: 8px !important;
+    letter-spacing: 0.12em !important;
+    background: #1F0820 !important;
+    color: #FBF6EE !important;
+    border: 0 !important;
+    border-radius: 999px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    cursor: pointer !important;
+  }
+  .aa-pcard__qty {
+    display: none !important;
+  }
+  .aa-pcard__qty-btn {
+    width: 24px !important;
+    height: 24px !important;
+    font-size: 14px !important;
+    background: transparent !important;
+    border: 0 !important;
+    cursor: pointer !important;
+  }
+  .aa-pcard__qty-num { font-size: 11px !important; font-weight: 700 !important; }
+  /* Product grid layout — 2 cols on mobile */
+  .aa-pgrid.aa-pgrid--grid,
+  .product-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+    padding: 0 !important;
+  }
+}
+
+/* ============================================================
+   Product Card FIXES — image fill + title/price wrapping
+   ============================================================ */
+@media (max-width: 749px) {
+  /* Force image to fill the square media area */
+  .aa-pcard__media {
+    position: relative !important;
+    aspect-ratio: 1 / 1 !important;
+    min-height: 0 !important;
+    height: auto !important;
+  }
+  .aa-pcard__media img,
+  .aa-pcard__media a img {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none !important;
+    max-height: none !important;
+    object-fit: cover !important;
+    display: block !important;
+  }
+  /* Title — wrap on word boundaries, not mid-word */
+  .aa-pcard__title,
+  .aa-pcard__title a {
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
+    word-wrap: break-word !important;
+    hyphens: none !important;
+    -webkit-hyphens: none !important;
+  }
+  /* Price values — never wrap mid-number */
+  .aa-pcard__price,
+  .aa-pcard__strike,
+  .aa-pcard__price-row .price,
+  .price-item {
+    white-space: nowrap !important;
+  }
+  .aa-pcard__price-row {
+    flex-wrap: wrap !important;
+    row-gap: 2px !important;
+  }
+  /* Card uses full grid cell width */
+  .aa-pcard {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+/* ============================================================
+   MOBILE: Image-with-text — image on top, text below, UNIFIED single card
+   ============================================================ */
+@media (max-width: 749px) {
+  /* Outer section padding so the card doesn't touch viewport edges */
+  .shopify-section:has(.image-with-text) {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  /* The whole image-with-text becomes ONE rounded card */
+  .image-with-text,
+  .image-with-text .image-with-text__media-item,
+  .image-with-text .image-with-text__text-item {
+    background: transparent !important;
+  }
+  .image-with-text__grid {
+    display: flex !important;
+    flex-direction: column !important;
+    grid-template-columns: 1fr !important;
+    grid-template-rows: auto auto !important;
+    background: #FFFFFF !important;
+    border-radius: 16px !important;
+    overflow: hidden !important;
+    box-shadow: 0 6px 22px rgba(45, 10, 46, 0.08) !important;
+    margin: 0 16px !important;
+    max-width: calc(100% - 32px) !important;
+    padding: 0 !important;
+    gap: 0 !important;
+  }
+  /* Image first */
+  .image-with-text__grid--reverse,
+  .image-with-text--media-card .image-with-text__grid {
+    flex-direction: column !important;
+  }
+  .image-with-text__media-item {
+    order: 1 !important;
+    grid-column: auto !important;
+    grid-row: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+  }
+  .image-with-text__text-item {
+    order: 2 !important;
+    grid-column: auto !important;
+    grid-row: auto !important;
+    margin: 0 !important;
+    width: 100% !important;
+  }
+  /* Image — fills the top, no inner padding/margin */
+  .image-with-text__media {
+    border-radius: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    aspect-ratio: 4 / 3 !important;
+    height: auto !important;
+    min-height: 0 !important;
+  }
+  .image-with-text__media img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+  /* Text content — below image, padded inside same card, no inner border/shadow */
+  .image-with-text__content {
+    padding: 22px 20px 26px !important;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+  }
+  .image-with-text__heading {
+    text-align: center !important;
+    margin: 0 0 14px !important;
+    font-size: 22px !important;
+    line-height: 1.2 !important;
+    color: #1A1A1A !important;
+  }
+  /* Body text — left-aligned, comfortable reading width, proper paragraph spacing */
+  .image-with-text__text,
+  .image-with-text__text h4,
+  .image-with-text__text p {
+    text-align: left !important;
+    font-size: 14px !important;
+    line-height: 1.55 !important;
+    color: #2A2A2A !important;
+    max-width: 100% !important;
+    margin: 0 0 10px !important;
+  }
+  /* Make <h4 strong> subheadings stand out cleanly (no extra <h4> wrapper styling) */
+  .image-with-text__text h4 {
+    font-weight: 400 !important;
+    font-size: 14px !important;
+    margin: 0 0 10px !important;
+  }
+  .image-with-text__text h4 strong {
+    display: block !important;
+    margin: 14px 0 4px !important;
+    font-weight: 700 !important;
+    font-size: 15px !important;
+    color: #1A1A1A !important;
+  }
+  .image-with-text__text h4:first-child { margin-top: 0 !important; }
+  .image-with-text__content .button {
+    margin-top: 16px !important;
+  }
+}
+
+/* ============================================================
+   Force section text to dark (not green from color scheme)
+   Make image-with-text + rich-text sections aesthetic
+   ============================================================ */
+.image-with-text__heading,
+.image-with-text__text,
+.image-with-text__text p,
+.image-with-text__text strong,
+.rich-text__heading,
+.rich-text__text,
+.rich-text__text p,
+.rich-text__text strong,
+.rich-text__blocks > *,
+section .image-with-text__heading,
+section .rich-text__heading,
+section h2.section-header__title,
+section .section-header__title {
+  color: #1A1A1A !important;
+}
+/* Body text — softer dark grey for readability */
+.image-with-text__text,
+.image-with-text__text p,
+.rich-text__text,
+.rich-text__text p {
+  color: #3A3A3A !important;
+}
+/* Center alignment for hero text sections */
+.rich-text__blocks {
+  text-align: center !important;
+  max-width: 700px !important;
+  margin: 0 auto !important;
+}
+.image-with-text__content {
+  text-align: center !important;
+}
+.image-with-text__content > * {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+/* Button — black with white text, rounded rectangle, centered */
+.image-with-text__content .button,
+.rich-text .button {
+  background: #1A1A1A !important;
+  color: #FFFFFF !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+  padding: 12px 28px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.5px !important;
+  margin: 16px auto 0 !important;
+  display: inline-block !important;
+}
+.image-with-text__content .button:hover,
+.rich-text .button:hover {
+  background: linear-gradient(135deg, #F58220 0%, #F04930 100%) !important;
+  color: #FFFFFF !important;
+}
+
+/* Image-with-text + rich-text buttons — full pill round shape */
+.image-with-text__content .button,
+.rich-text .button,
+.image-with-text .button,
+section .button {
+  border-radius: 999px !important;
+}
+
+/* Remove the rectangle outline box around section buttons */
+.image-with-text__content .button,
+.rich-text .button,
+.image-with-text .button,
+section .button {
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+}
+.image-with-text__content .button::before,
+.image-with-text__content .button::after,
+.rich-text .button::before,
+.rich-text .button::after,
+section .button::before,
+section .button::after {
+  display: none !important;
+  content: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Section paragraphs — left-align so lines align cleanly (no ragged centered look) */
+.image-with-text__text,
+.image-with-text__text p,
+.rich-text__text,
+.rich-text__text p {
+  text-align: left !important;
+  max-width: 580px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* ============================================================
+   CART DRAWER — minimal, no recommendations, tight layout
+   ============================================================ */
+/* Hide any product recommendation / upsell / "you may also like" block injected into the drawer */
+cart-drawer .cart-drawer__collection,
+cart-drawer product-recommendations,
+cart-drawer .product-recommendations,
+cart-drawer .cart-recommendations,
+cart-drawer .rebuy-cart__flyout-recommended-products,
+cart-drawer [data-rebuy-id],
+cart-drawer .upsell,
+cart-drawer .cross-sell,
+cart-drawer .cart-upsell,
+cart-drawer .bcpo-recommendations,
+cart-drawer [class*="recommend"],
+cart-drawer [class*="upsell"],
+cart-drawer [class*="cross-sell"],
+cart-drawer [class*="frequently"],
+cart-drawer [class*="suggest"],
+cart-drawer [class*="bundle"],
+cart-drawer [id*="recommend"],
+cart-drawer [id*="upsell"],
+cart-drawer .also-bought,
+cart-drawer .also-like,
+cart-drawer .related-products,
+cart-drawer related-products,
+cart-drawer .you-may-also-like {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  overflow: hidden !important;
+}
+
+/* FAST drawer open/close transitions — < 200ms feels instant */
+cart-drawer,
+cart-drawer .drawer__inner,
+cart-drawer #CartDrawer,
+cart-drawer .cart-drawer__overlay {
+  transition-duration: 180ms !important;
+  transition-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1) !important;
+  animation-duration: 180ms !important;
+}
+cart-drawer.active .drawer__inner,
+cart-drawer[open] .drawer__inner {
+  transition-duration: 180ms !important;
+}
+/* Menu-drawer also fast */
+header-drawer .menu-drawer,
+header-drawer details[open] .menu-drawer,
+header-drawer details[open] .aa-drawer {
+  transition-duration: 180ms !important;
+  -webkit-transition-duration: 180ms !important;
+}
+
+/* Tighter, breathable drawer */
+cart-drawer .drawer__inner {
+  padding: 0 !important;
+}
+cart-drawer .drawer__header {
+  padding: 16px 18px 12px !important;
+  border-bottom: 1px solid #EFEFEF !important;
+}
+cart-drawer .drawer__heading {
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  margin: 0 !important;
+}
+cart-drawer cart-drawer-items {
+  padding: 8px 14px !important;
+}
+cart-drawer .cart-item {
+  padding: 12px 0 !important;
+}
+cart-drawer .cart-item__image {
+  border-radius: 8px !important;
+}
+cart-drawer .drawer__footer {
+  padding: 12px 18px 18px !important;
+  border-top: 1px solid #EFEFEF !important;
+}
+cart-drawer .totals__total {
+  font-size: 14px !important;
+  font-weight: 700 !important;
+}
+cart-drawer .totals__total-value {
+  font-size: 16px !important;
+  font-weight: 800 !important;
+}
+cart-drawer .cart__checkout-button {
+  background: linear-gradient(135deg, #E9027A 0%, #F58220 100%) !important;
+  color: #FFFFFF !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+  padding: 14px 20px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.5px !important;
+  text-transform: uppercase !important;
+  width: 100% !important;
+}
+
+/* Cart page CHECK OUT button — solid rectangle, no dashed outline */
+.template-cart .cart__checkout-button,
+.template-cart #checkout,
+.template-cart .cart__ctas .button,
+body.template-cart .cart__checkout-button {
+  background: linear-gradient(135deg, #E9027A 0%, #F58220 100%) !important;
+  color: #FFFFFF !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  padding: 16px 24px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  width: 100% !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+}
+/* Kill Dawn's ::before/::after pseudo-element outline (the dashed border around buttons) */
+.template-cart .cart__checkout-button::before,
+.template-cart .cart__checkout-button::after,
+body.template-cart .cart__checkout-button::before,
+body.template-cart .cart__checkout-button::after,
+.template-cart .cart__ctas .button::before,
+.template-cart .cart__ctas .button::after {
+  display: none !important;
+  content: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+.template-cart .cart__checkout-button:hover,
+.template-cart .cart__checkout-button:focus {
+  background: linear-gradient(135deg, #F58220 0%, #E9027A 100%) !important;
+  color: #FFFFFF !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+}
+/* Kill any tax-note / extra clutter that makes drawer feel cramped */
+cart-drawer .tax-note {
+  font-size: 11px !important;
+  opacity: 0.6 !important;
+  margin-top: 6px !important;
+}
+
+/* Custom mobile drawer (Astrotalk-style) lives in aa-drawer.css.
+   Only hide Dawn's standard close-button — the custom .aa-drawer__back stays. */
+.menu-drawer .menu-drawer__close-button,
+.menu-drawer__submenu .menu-drawer__close-button,
+.menu-drawer__inner-submenu .menu-drawer__close-button {
+  display: none !important;
+}
+
+/* ============================================================
+   Cart page header — "Your cart" truly centered in the viewport,
+   Continue shopping pill sits to the left on desktop, ABOVE on mobile.
+   Grid uses 1fr / auto / 1fr so the empty 3rd column mirrors the 1st
+   column's button width → title is dead-center.
+   ============================================================ */
+@media (min-width: 750px) {
+  cart-items .aa-cart-header {
+    display: grid !important;
+    grid-template-columns: 1fr auto 1fr !important;
+    align-items: center !important;
+    gap: 12px !important;
+    margin-bottom: 28px !important;
+  }
+  cart-items .aa-cart-continue {
+    grid-column: 1 !important;
+    justify-self: start !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    text-decoration: none !important;
+    color: #1F0820 !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    padding: 8px 14px !important;
+    border-radius: 999px !important;
+    background: rgba(31, 8, 32, 0.05) !important;
+    transition: background 0.2s ease, transform 0.2s ease !important;
+    border-bottom: 0 !important;
+  }
+  cart-items .aa-cart-continue:hover {
+    background: rgba(31, 8, 32, 0.12) !important;
+    transform: translateX(-2px) !important;
+  }
+  cart-items .aa-cart-title {
+    grid-column: 2 !important;
+    justify-self: center !important;
+    text-align: center !important;
+    margin: 0 !important;
+  }
+}
+/* Mobile — Continue shopping ABOVE the title, both left-aligned compactly */
+@media (max-width: 749px) {
+  cart-items .aa-cart-header {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+    margin-bottom: 18px !important;
+    padding: 0 !important;
+  }
+  cart-items .aa-cart-continue {
+    order: 1 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    text-decoration: none !important;
+    color: #1F0820 !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    padding: 6px 12px 6px 8px !important;
+    border-bottom: 0 !important;
+    border-radius: 999px !important;
+    background: rgba(31, 8, 32, 0.05) !important;
+  }
+  cart-items .aa-cart-title {
+    order: 2 !important;
+    align-self: flex-start !important;
+    text-align: left !important;
+    margin: 0 !important;
+    font-size: 28px !important;
+    line-height: 1.1 !important;
+  }
+}
+
+
+/* ============================================================
+   Header always stays visible while scrolling (sticky, never hides).
+   Dawn's JS adds .shopify-section-header-hidden on scroll-down which
+   slides the header off-screen via `top: calc(-1 * --header-height)`.
+   Neutralize that so the header stays at top: 0.
+   ============================================================ */
+.section-header,
+.section-header.shopify-section-header-sticky,
+.section-header.shopify-section-header-hidden,
+.section-header.shopify-section-header-hidden.animate {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 5 !important;
+}
+
+/* ============================================================
+   Mobile header logo — only the LOGO IMAGE is enlarged, header
+   bar height stays as Dawn defaults (small).
+   The image's "width" HTML attribute (from settings.logo_width in
+   Shopify Admin) renders the logo small by default; we override
+   the width directly so the image scales up to ~210px wide.
+   ============================================================ */
+@media (max-width: 749px) {
+  html body .header__heading,
+  html body .header__heading-link {
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+  html body .header__heading-logo-wrapper {
+    width: auto !important;
+    max-width: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    overflow: visible !important;
+  }
+  /* Force HEIGHT to 64px. Width is allowed to grow to whatever the SVG's
+     aspect ratio computes — NO max-width cap (previous attempts capped
+     max-width which made the browser SHRINK height back down to maintain
+     ratio, defeating the height rule). */
+  html body img.header__heading-logo,
+  html body .header__heading-logo {
+    width: auto !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    height: 64px !important;
+    max-height: 64px !important;
+    object-fit: contain !important;
+    display: block !important;
+  }
+}
+
+/* ============================================================
+   Header menu hover — orange color, NO underline/highlight pill
+   ============================================================ */
+.header__menu-item,
+.header__menu-item span,
+.header__active-menu-item {
+  text-decoration: none !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+}
+.header__menu-item:hover,
+.header__menu-item:hover span,
+.header__menu-item:focus,
+.header__menu-item:focus span,
+.header__menu-item:focus-visible,
+.header__menu-item:focus-visible span,
+details[open] > .header__menu-item,
+details[open]:hover > .header__menu-item,
+.header__menu-item:hover .header__active-menu-item {
+  color: #F58220 !important;
+  text-decoration: none !important;
+  text-underline-offset: 0 !important;
+  text-decoration-thickness: 0 !important;
+  background: transparent !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+}
+/* Kill any pseudo-element highlight pills */
+.header__menu-item::before,
+.header__menu-item::after {
+  display: none !important;
+  content: none !important;
+  background: none !important;
+}
+/* Caret beside menu item — also orange on hover */
+.header__menu-item:hover .icon-caret,
+.header__menu-item:hover svg {
+  fill: #F58220 !important;
+  color: #F58220 !important;
+}
+
+/* ============================================================
+   KILL whitespace between slideshow banner and New Arrival heading.
+   Ultra-aggressive — beats Dawn's computed section padding utilities.
+   Mobile only.
+   ============================================================ */
+@media (max-width: 749px) {
+  /* Slideshow / banner section — zero bottom padding/margin */
+  html body .shopify-section-slideshow,
+  html body .shopify-section[id*="slideshow"],
+  html body .shopify-section:has(slideshow-component),
+  html body .shopify-section:has(.slideshow),
+  html body .shopify-section:has(.banner) {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  html body .slideshow,
+  html body slideshow-component,
+  html body .slideshow__wrapper,
+  html body .slideshow__media-list,
+  html body section.slideshow {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  /* Featured-collection section (New Arrival) — zero top padding/margin */
+  html body .shopify-section.section-featured-collection,
+  html body .shopify-section:has(.featured-collection),
+  html body .shopify-section-featured-collection {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+  html body .featured-collection,
+  html body section.featured-collection {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+  /* Dawn section-{id}-padding utility — force the CSS vars to 0 on these sections */
+  html body .shopify-section-slideshow [class*="-padding"],
+  html body .shopify-section[id*="slideshow"] [class*="-padding"] {
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+  }
+  html body .shopify-section.section-featured-collection [class*="-padding"],
+  html body .shopify-section:has(.featured-collection) [class*="-padding"],
+  html body .shopify-section-featured-collection [class*="-padding"] {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+  }
+  /* New Arrival heading — pull UP hard into banner area */
+  html body .featured-collection .title-wrapper-with-link,
+  html body .featured-collection .title-wrapper,
+  html body .featured-collection .collection__title,
+  html body .featured-collection h2.title,
+  html body .featured-collection .title {
+    margin-top: -30px !important;
+    margin-bottom: 8px !important;
+    padding-top: 0 !important;
+  }
+  /* Pull entire featured-collection section UP to overlap the banner's bottom whitespace */
+  html body .shopify-section.section-featured-collection,
+  html body .shopify-section:has(.featured-collection),
+  html body .shopify-section-featured-collection {
+    margin-top: -40px !important;
+  }
+  /* Banner's own inner padding-bottom = 0 */
+  html body .banner__content,
+  html body .banner__media + * {
+    padding-bottom: 0 !important;
+  }
+
+  /* Nuke spacing on ANY section that immediately precedes a featured-collection */
+  html body .shopify-section:has(+ .shopify-section.section-featured-collection),
+  html body .shopify-section:has(+ .shopify-section:has(.featured-collection)),
+  html body .shopify-section:has(+ .shopify-section-featured-collection) {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  html body .shopify-section:has(+ .shopify-section.section-featured-collection) > *,
+  html body .shopify-section:has(+ .shopify-section:has(.featured-collection)) > *,
+  html body .shopify-section:has(+ .shopify-section-featured-collection) > * {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  /* Collage, image-banner, slideshow — kill bottom space */
+  html body .shopify-section-collage,
+  html body .shopify-section-image-banner,
+  html body .shopify-section-banner,
+  html body .shopify-section:has(.collage),
+  html body .shopify-section:has(.image-banner),
+  html body .shopify-section:has(.banner) {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  html body .collage,
+  html body .image-banner,
+  html body .banner {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+  }
+}
+
+/* ============================================================
+   TESTIMONIAL — clean 3D card styling
+   Targets the testimonials-slider app block + Judge.me reviews widget.
+   ============================================================ */
+.shopify-section [class*="testimonials-slider"],
+.shopify-section [class*="testimonial"],
+[class*="testimonial"] .testimonial,
+[class*="testimonial"] .swiper-slide,
+.testimonials-slider .review,
+.testimonials-slider [class*="card"] {
+  background: #FFFFFF !important;
+  border-radius: 18px !important;
+  padding: 22px 20px !important;
+  margin: 12px 8px !important;
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.4) inset,
+    0 6px 14px rgba(45,10,46,0.08),
+    0 18px 38px rgba(45,10,46,0.10) !important;
+  border: 1px solid rgba(45,10,46,0.06) !important;
+  transition: transform 0.35s ease, box-shadow 0.35s ease !important;
+  transform: perspective(900px) rotateX(0.5deg) translateY(0) !important;
+}
+.shopify-section [class*="testimonial"]:hover,
+.testimonials-slider .swiper-slide:hover {
+  transform: perspective(900px) rotateX(0.5deg) translateY(-4px) !important;
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.5) inset,
+    0 10px 22px rgba(45,10,46,0.10),
+    0 26px 50px rgba(45,10,46,0.14) !important;
+}
+/* Quote-mark adornment for testimonial cards */
+.shopify-section [class*="testimonial"] .testimonial::before,
+.testimonials-slider .swiper-slide::before {
+  content: "“" !important;
+  display: block !important;
+  font-family: Georgia, serif !important;
+  font-size: 56px !important;
+  line-height: 1 !important;
+  color: rgba(233, 2, 122, 0.18) !important;
+  margin: 0 0 -10px !important;
+}
+/* Testimonial author / rating */
+.shopify-section [class*="testimonial"] [class*="author"],
+.shopify-section [class*="testimonial"] [class*="name"],
+.testimonials-slider [class*="author"] {
+  font-weight: 700 !important;
+  margin-top: 12px !important;
+  color: #1F0820 !important;
+}
+/* Judge.me review card — premium 3D treatment (matches the product accordions) */
+.jdgm-rev-widg .jdgm-rev,
+.jdgm-revs__cols-wrapper .jdgm-rev,
+.jdgm-carousel-item__review {
+  background: linear-gradient(180deg, #FFFFFF 0%, #FBF6EC 100%) !important;
+  border: 1px solid rgba(184,145,90,0.22) !important;
+  border-radius: 18px !important;
+  padding: 22px 24px !important;
+  margin-bottom: 16px !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.9),
+    0 2px 4px rgba(74,43,46,0.05),
+    0 14px 30px -10px rgba(74,43,46,0.18) !important;
+  transition: transform 0.3s cubic-bezier(.16,1,.3,1), box-shadow 0.3s, border-color 0.3s !important;
+}
+.jdgm-rev-widg .jdgm-rev:hover {
+  transform: translateY(-3px) !important;
+  border-color: rgba(184,145,90,0.45) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.95),
+    0 4px 8px rgba(74,43,46,0.06),
+    0 22px 44px -10px rgba(74,43,46,0.22) !important;
+}
+
+/* === Customer Reviews (Judge.me) — full section reframe === */
+.jdgm-rev-widg__title{font-family:'Cormorant Garamond',Georgia,serif !important;font-weight:600 !important;color:#241019 !important;letter-spacing:.01em !important;}
+/* Summary card — same premium frame as the review cards */
+.jdgm-rev-widg__summary{
+  background:linear-gradient(180deg,#FFFFFF 0%,#FBF6EC 100%) !important;
+  border:1px solid rgba(184,145,90,0.22) !important;
+  border-radius:18px !important;
+  padding:22px 26px !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.9),0 2px 4px rgba(74,43,46,0.05),0 14px 30px -10px rgba(74,43,46,0.16) !important;
+}
+/* Histogram bars — warm gold fill, rounded track */
+.jdgm-histogram__bar{background:rgba(36,16,25,0.07) !important;border-radius:999px !important;overflow:hidden !important;}
+.jdgm-histogram__bar-content{background:linear-gradient(90deg,#E0A23C,#C8862F) !important;border-radius:999px !important;}
+.jdgm-histogram__row:hover .jdgm-histogram__bar-content{filter:brightness(1.06) !important;}
+/* Write a review — ink pill, brand gradient on hover */
+.jdgm-write-rev-link{
+  background:#241019 !important;color:#F6F0E3 !important;border:0 !important;border-radius:999px !important;
+  padding:14px 30px !important;font-weight:600 !important;letter-spacing:.04em !important;
+  box-shadow:0 6px 16px rgba(74,43,46,.14) !important;transition:.25s !important;
+}
+.jdgm-write-rev-link:hover{background:linear-gradient(100deg,#E9027A,#F58220) !important;color:#fff !important;transform:translateY(-2px) !important;}
+/* Sort dropdown ("Most Recent") — pill */
+.jdgm-sort-dropdown,.jdgm-sort-dropdown-wrapper select,select.jdgm-sort-dropdown{
+  background:#FBF6EC !important;border:1px solid rgba(184,145,90,0.30) !important;border-radius:999px !important;
+  padding:9px 18px !important;color:#241019 !important;font-weight:500 !important;
+}
+/* Review avatar — round, cream */
+.jdgm-rev__icon{
+  border-radius:50% !important;background:#F4ECDC !important;color:#B8915A !important;
+  width:42px !important;height:42px !important;border:1px solid rgba(184,145,90,0.25) !important;
+  display:flex !important;align-items:center !important;justify-content:center !important;
+}
+.jdgm-rev__author{font-weight:700 !important;color:#241019 !important;}
+.jdgm-rev__title{font-weight:700 !important;color:#241019 !important;}
+.jdgm-rev__body{color:#5b4a43 !important;line-height:1.7 !important;}
+.jdgm-rev__timestamp{color:#a99a8d !important;}
+
+/* Body scroll lock while menu drawer or cart-drawer is open.
+   Dawn already adds class .overflow-hidden to <body>; we also use :has()
+   as a fallback for non-Dawn drawer states. overflow:hidden + touch-action:none
+   blocks scroll without losing scroll position. */
+body.overflow-hidden,
+html:has(.menu-drawer-container[open]),
+body:has(.menu-drawer-container[open]),
+html:has(header-drawer details[open]),
+body:has(header-drawer details[open]),
+html:has(cart-drawer.active),
+body:has(cart-drawer.active) {
+  overflow: hidden !important;
+  touch-action: none !important;
+  overscroll-behavior: contain !important;
+}
+
+/* ============================================================
+   HEADER cream tint — AstroAura brand palette cream (#FBF6EE),
+   scoped to the header wrapper only so other sections using
+   color-background-1 stay white. Force-bump-Q4M7K9-cream-header.
+   ============================================================ */
+html body .section-header,
+html body .section-header .header-wrapper,
+html body .header-wrapper.color-background-1,
+html body .header-wrapper.color-background-1.gradient,
+html body header.header,
+html body header.header.page-width {
+  background: #FBF6EE !important;
+  background-color: #FBF6EE !important;
+  background-image: none !important;
+}
+/* cache-bust 2026-06-11T17:20 — force new version hash (collection redesign) */
+/* ============================================================
+   COLLECTION + SEARCH PAGES — grid override.
+   Mobile: 2 cols. Desktop: auto-fill at 230px min.
+   Section liquid uses Dawn defaults — we override via CSS only.
+   ============================================================ */
+@media (max-width: 749px) {
+  body.template-collection ul#product-grid,
+  body.template-collection ul.product-grid,
+  body.template-search ul#product-grid,
+  body.template-search ul.product-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 14px !important;
+    list-style: none !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  body.template-collection ul.product-grid > li,
+  body.template-search ul.product-grid > li {
+    width: 100% !important;
+    min-width: 0 !important;
+    flex: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+}
+/* aa-pcard.css cache-bust 2026-05-27-23b */
+@media (min-width: 750px) {
+  /* Outer collection container — small inner padding so card box-shadows
+     have breathing room and the rightmost card's frame isn't clipped by
+     the viewport edge. */
+  html body.template-collection .collection.page-width,
+  html body.template-search .template-search__results.collection.page-width {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    box-sizing: border-box !important;
+  }
+  html body.template-search ul#product-grid,
+  html body.template-search ul.product-grid.grid,
+  html body.template-search ul.product-grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 24px !important;
+    list-style: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+  /* Collection grid: CONTAINED — space left/right, products in the middle
+     (approved redesign 2026-06-11). */
+  html body.template-collection ul#product-grid,
+  html body.template-collection ul.product-grid.grid,
+  html body.template-collection ul.product-grid {
+    display: grid !important;
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+    gap: 22px !important;
+    list-style: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 24px !important;
+    box-sizing: border-box !important;
+    overflow: visible !important;
+  }
+  /* Match Dawn's specificity (.grid--N-col-desktop .grid__item = 2 classes)
+     by stacking enough class hooks to win the cascade. */
+  html body.template-collection ul.product-grid.grid > li,
+  html body.template-collection ul.product-grid.grid > .grid__item,
+  html body.template-collection ul.product-grid > li.grid__item,
+  html body.template-search ul.product-grid.grid > li,
+  html body.template-search ul.product-grid.grid > .grid__item,
+  html body.template-search ul.product-grid > li.grid__item {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    flex: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+}
+/* Tablet: 3 columns inside the contained collection grid */
+@media (min-width: 750px) and (max-width: 1099px) {
+  html body.template-collection ul#product-grid,
+  html body.template-collection ul.product-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+}
+
+/* ============================================================
+   AstroAura — Wireframe Product Card (.aa-pcard)
+   Self-contained: CSS vars + grid + card + media + content + cta.
+   Mobile-first.
+   ============================================================ */
+
+:root {
+  --aa-bg:        #FBF6EE;
+  --aa-ink:       #1F0820;
+  --aa-muted:     #8A6F88;
+  --aa-hair:      #E8DDD0;
+  --aa-g-1:       #E9027A;
+  --aa-g-3:       #F04930;
+  --aa-g-5:       #F58220;
+  --aa-gradient:  linear-gradient(95deg, #E9027A 0%, #EC1F4F 30%, #F04930 60%, #F58220 100%);
+  --aa-font-disp: 'Fraunces', Georgia, serif;
+  --aa-font-ui:   'Plus Jakarta Sans', system-ui, sans-serif;
+  --aa-shadow-card: 0 1px 2px rgba(45,10,46,.04), 0 6px 20px rgba(45,10,46,.05);
+  --aa-shadow-card-hi: 0 1px 2px rgba(45,10,46,.04), 0 16px 38px rgba(45,10,46,.1);
+}
+
+/* ===== Product grid layout ===== */
+.aa-pgrid--grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+@media (min-width: 781px) {
+  .aa-pgrid--grid { grid-template-columns: repeat(3, 1fr); gap: 22px; }
+}
+@media (min-width: 1100px) {
+  .aa-pgrid--grid { grid-template-columns: repeat(var(--aa-cols, 5), 1fr); }
+}
+
+.aa-pgrid--slider {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  overflow-y: visible;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  padding-bottom: 10px;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+.aa-pgrid--slider::-webkit-scrollbar { display: none; }
+.aa-pgrid--slider .aa-pcard {
+  flex: 0 0 calc((100% - 12px) / 2);
+  scroll-snap-align: start;
+}
+@media (min-width: 781px) {
+  .aa-pgrid--slider { gap: 22px; }
+  .aa-pgrid--slider .aa-pcard {
+    flex: 0 0 calc((100% - 44px) / 3);
+    min-width: 220px;
+  }
+}
+@media (min-width: 1100px) {
+  .aa-pgrid--slider .aa-pcard {
+    flex: 0 0 calc((100% - (var(--aa-cols, 5) - 1) * 22px) / var(--aa-cols, 5));
+  }
+}
+
+/* ===== Card base ===== */
+.aa-pcard {
+  background: #FFFFFF;
+  border: 1px solid var(--aa-hair);
+  border-radius: 18px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--aa-shadow-card);
+  transition: transform 280ms cubic-bezier(.22,.61,.36,1), box-shadow 280ms;
+  position: relative;
+  min-width: 0;
+}
+.aa-pcard:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--aa-shadow-card-hi);
+}
+
+/* ===== Image media ===== */
+.aa-pcard__media {
+  display: block;
+  /* Even inset on all four sides so the frame reads as a balanced rounded square */
+  margin: 6px;
+  border-radius: 14px;
+  /* Square frame matches typical solo-product photos (bracelet, gem, rudraksha)
+     which are usually shot roughly 1:1. Filling both axes feels intentional. */
+  aspect-ratio: 1 / 1;
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 50% 38%, #FFFFFF 0%, #FAF6EE 80%);
+  border: 1px solid rgba(212,175,110,0.22);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.6) inset;
+}
+.aa-pcard__media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  /* COVER + zoom — fills the frame edge-to-edge AND scales the
+     bracelet/gem ~22% so the product reads bigger inside the frame.
+     The minor crop on extreme corners is invisible against the soft
+     studio backdrops these photos use. */
+  object-fit: cover;
+  object-position: center;
+  padding: 0;
+  box-sizing: border-box;
+  display: block;
+  transform: scale(1.22);
+  transform-origin: center;
+  transition: transform 700ms ease;
+}
+.aa-pcard:hover .aa-pcard__media img { transform: scale(1.28); }
+.aa-pcard.aa-fill .aa-pcard__media img { transform: scale(1.18); }
+.aa-pcard.aa-fill:hover .aa-pcard__media img { transform: scale(1.24); }
+.aa-pcard.aa-fill-strong .aa-pcard__media img { transform: scale(1.42); }
+.aa-pcard.aa-fill-strong:hover .aa-pcard__media img { transform: scale(1.48); }
+
+/* Quick-view button — the ONLY quick-view trigger on collection/search cards
+   (the image link itself navigates to the product). Hover-reveal pill on
+   desktop; hidden on mobile where quick-view falls back to the product page. */
+.aa-pcard__qv-btn {
+  position: absolute;
+  left: 50%;
+  bottom: 12px;
+  transform: translateX(-50%) translateY(8px);
+  background: rgba(36, 16, 25, .86);
+  color: #F6F0E3;
+  border: 0;
+  cursor: pointer;
+  font: 600 11px/1 'Jost', sans-serif;
+  letter-spacing: .03em;
+  padding: 8px 16px;
+  border-radius: 999px;
+  opacity: 0;
+  transition: opacity .25s ease, transform .25s ease;
+  white-space: nowrap;
+  z-index: 4;
+}
+.aa-pcard:hover .aa-pcard__qv-btn { opacity: 1; transform: translateX(-50%) translateY(0); }
+.aa-pcard__qv-btn:hover { transform: translateX(-50%) translateY(0) scale(1.04); }
+@media (max-width: 768px) { .aa-pcard__qv-btn { display: none; } }
+
+/* Combo / multi-item / contextual photo cards — use CONTAIN so the full
+   composition (multiple bracelets, wider scenes) stays visible without
+   edges being cropped. Liquid adds .aa-pcard--wide-photo when product
+   title contains "combo"/"trio"/"+" or product type contains "combo". */
+/* Combo / wide-photo cards — use a landscape frame so the wider source
+   photo fills it cleanly without cropping the products at the edges.
+   Frame stays the same VISUAL size on mobile by capping max-height. */
+.aa-pcard--wide-photo .aa-pcard__media {
+  aspect-ratio: 4 / 3 !important;
+}
+.aa-pcard--wide-photo .aa-pcard__media img {
+  object-fit: cover !important;
+  object-position: center !important;
+  padding: 0 !important;
+  transform: scale(1) !important;
+}
+.aa-pcard--wide-photo:hover .aa-pcard__media img {
+  transform: scale(1.04) !important;
+}
+.aa-pcard__placeholder { display: block; }
+
+/* "Customers Also Bought" / related-products ONLY — make combo images fill the
+   frame (no white letterbox bands). Scoped so no other card grids change. */
+.related-products .aa-pcard__media,
+product-recommendations .aa-pcard__media,
+.related-products .aa-pcard--wide-photo .aa-pcard__media,
+product-recommendations .aa-pcard--wide-photo .aa-pcard__media {
+  aspect-ratio: 1 / 1 !important;
+}
+.related-products .aa-pcard__media img,
+product-recommendations .aa-pcard__media img {
+  object-fit: cover !important;
+  object-position: center !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* CERTIFIED stamp hidden on product cards — shows ONLY on product detail page main image */
+.aa-pcard__cert {
+  display: none !important;
+}
+
+/* ===== Badge & Heart ===== */
+.aa-pcard__badge {
+  position: absolute;
+  top: 10px; left: 10px;
+  background: var(--aa-gradient);
+  color: #FFFFFF;
+  font-family: var(--aa-font-ui);
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 5px 10px;
+  border-radius: 999px;
+  box-shadow: 0 4px 10px rgba(240,73,48,0.30);
+  z-index: 2;
+}
+.aa-pcard__heart {
+  position: absolute;
+  top: 10px; right: 10px;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.92);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--aa-ink);
+  z-index: 2;
+}
+
+/* ===== Content (category, title, divider, price) ===== */
+.aa-pcard__content {
+  padding: 12px 14px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+.aa-pcard__cat {
+  font-family: var(--aa-font-ui);
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  background: var(--aa-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-align: center;
+  margin: 0;
+}
+.aa-pcard__title {
+  font-family: var(--aa-font-disp);
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.25;
+  color: var(--aa-ink);
+  text-align: center;
+  min-height: 35px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin: 0;
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+.aa-pcard__title a { color: inherit; text-decoration: none; }
+.aa-pcard__divider {
+  display: block;
+  width: 28px; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(31,8,32,0.30), transparent);
+  align-self: center;
+  margin: 2px 0;
+}
+.aa-pcard__price-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 2px;
+}
+.aa-pcard__price {
+  font-family: var(--aa-font-disp);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--aa-ink);
+  letter-spacing: -0.3px;
+  white-space: nowrap;
+}
+.aa-pcard__strike {
+  font-family: var(--aa-font-ui);
+  font-size: 11px;
+  color: var(--aa-muted);
+  text-decoration: line-through;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* ===== Add to cart CTA ===== */
+.aa-pcard__form { margin: 0; margin-top: auto; position: relative; display: block; }
+.aa-pcard__cta {
+  margin-top: auto;
+  width: 100%;
+  background: var(--aa-ink);
+  color: var(--aa-bg);
+  border: 0;
+  border-radius: 999px;
+  padding: 10px 14px;
+  font-family: var(--aa-font-ui);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 200ms, transform 200ms, box-shadow 200ms;
+  display: block;
+}
+.aa-pcard__cta:hover {
+  background: linear-gradient(130deg, #E9027A 0%, #EC1F4F 32%, #F04930 64%, #F58220 100%) !important;
+  background-color: #E9027A !important;
+  color: #fff !important;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(233,2,122,0.30);
+}
+
+/* ===== Add-to-cart loading + success states ===== */
+.aa-pcard__cta--loading,
+.aa-pcard__cta--done {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  pointer-events: none;
+  transform: none;
+}
+.aa-pcard__cta--loading {
+  background: var(--aa-ink) !important;
+  color: var(--aa-bg) !important;
+}
+.aa-pcard__cta--done {
+  background: linear-gradient(130deg, #E9027A 0%, #EC1F4F 32%, #F04930 64%, #F58220 100%) !important;
+  color: #fff !important;
+  animation: aaCtaPop 0.32s ease;
+}
+.aa-cta-spinner {
+  width: 13px;
+  height: 13px;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  opacity: 0.9;
+  animation: aaCtaSpin 0.6s linear infinite;
+}
+.aa-cta-check {
+  position: relative;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+}
+.aa-cta-check::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 0;
+  width: 5px;
+  height: 9px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg) scale(0);
+  animation: aaCtaCheck 0.3s ease 0.05s forwards;
+}
+@keyframes aaCtaSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes aaCtaPop {
+  0% {
+    transform: scale(0.92);
+  }
+  55% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes aaCtaCheck {
+  0% {
+    transform: rotate(45deg) scale(0);
+  }
+  100% {
+    transform: rotate(45deg) scale(1);
+  }
+}
+
+/* ===== Qty stepper (when item in cart) ===== */
+.aa-pcard__qty {
+  display: none;
+  width: 100%;
+  margin-top: auto;
+  background: var(--aa-ink);
+  border-radius: 999px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px;
+  border: 0;
+  box-sizing: border-box;
+}
+.aa-pcard.aa-in-cart .aa-pcard__cta {
+  display: none !important;
+}
+.aa-pcard.aa-in-cart .aa-pcard__qty {
+  display: flex !important;
+}
+.aa-pcard__qty-btn {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: transparent;
+  color: #FFFFFF;
+  border: 0;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  padding: 0;
+}
+.aa-pcard__qty-btn:hover { background: rgba(255,255,255,0.18); }
+.aa-pcard__qty-num {
+  color: #FFFFFF;
+  font-family: var(--aa-font-ui);
+  font-size: 12px;
+  font-weight: 700;
+  flex: 1;
+  text-align: center;
+}
+
+/* ===== Override Dawn grid containers to use 2-col on mobile ===== */
+@media (max-width: 749px) {
+  .product-grid,
+  ul.product-grid,
+  .grid--3-col-tablet,
+  .grid--4-col-desktop,
+  .grid--5-col-desktop {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  .product-grid > .grid__item,
+  ul.product-grid > .grid__item {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    flex: none !important;
+    margin: 0 !important;
+  }
+}
+
+/* Force-hide empty qty stepper when card is NOT in cart (was rendering as empty pill) */
+.aa-pcard:not(.aa-in-cart) .aa-pcard__qty,
+article.aa-pcard:not(.aa-in-cart) .aa-pcard__qty {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+  overflow: hidden !important;
+}
+
+/* ============================================================
+   Mobile: horizontal slider for product grids (not 2-col grid)
+   ============================================================ */
+@media (max-width: 749px) {
+  /* Convert Dawn product-grid to horizontal slider on mobile — homepage
+     featured-collection only. EXCLUDED from collection/search pages
+     (those use the 2-col grid from earlier in this file). */
+  /* Homepage featured-collection — back to horizontal slider. */
+  body:not(.template-collection):not(.template-search) .product-grid,
+  body:not(.template-collection):not(.template-search) ul.product-grid,
+  body:not(.template-collection):not(.template-search) .grid--3-col-tablet,
+  body:not(.template-collection):not(.template-search) .grid--4-col-desktop,
+  body:not(.template-collection):not(.template-search) .grid--5-col-desktop {
+    display: flex !important;
+    grid-template-columns: none !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    overflow-y: visible !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    gap: 12px !important;
+    padding: 4px 16px 16px !important;
+    margin: 0 -16px !important;
+    list-style: none !important;
+  }
+  body:not(.template-collection):not(.template-search) .product-grid::-webkit-scrollbar,
+  body:not(.template-collection):not(.template-search) ul.product-grid::-webkit-scrollbar { display: none !important; }
+  /* vw-width sizing for homepage featured-collection sliders ONLY.
+     Excluded from template-collection / template-search where cards
+     use the 2-col grid layout from earlier rules. */
+  body:not(.template-collection):not(.template-search) .product-grid > .grid__item,
+  body:not(.template-collection):not(.template-search) ul.product-grid > .grid__item {
+    flex: 0 0 60vw !important;
+    width: 60vw !important;
+    min-width: 60vw !important;
+    max-width: 60vw !important;
+    scroll-snap-align: start !important;
+    margin: 0 !important;
+  }
+}
+@media (max-width: 400px) {
+  body:not(.template-collection):not(.template-search) .product-grid > .grid__item,
+  body:not(.template-collection):not(.template-search) ul.product-grid > .grid__item {
+    flex: 0 0 66vw !important;
+    width: 66vw !important;
+    min-width: 66vw !important;
+    max-width: 66vw !important;
+  }
+}
+
+/* NUKE the empty qty pill — multiple selectors, multiple properties */
+.aa-pcard .aa-pcard__qty,
+article.aa-pcard .aa-pcard__qty,
+.aa-pcard__qty {
+  display: none !important;
+}
+.aa-pcard.aa-in-cart .aa-pcard__qty,
+article.aa-pcard.aa-in-cart .aa-pcard__qty {
+  display: flex !important;
+}
+
+/* ============================================================
+   MOBILE: Cards 2x smaller, smaller ADD TO CART, scaled-down content
+   ============================================================ */
+@media (max-width: 400px) {
+  body:not(.template-collection):not(.template-search) .product-grid > .grid__item,
+  body:not(.template-collection):not(.template-search) ul.product-grid > .grid__item {
+    flex: 0 0 66vw !important;
+    width: 66vw !important;
+    min-width: 66vw !important;
+    max-width: 66vw !important;
+  }
+}
+
+/* NUKE the empty qty pill — multiple selectors, multiple properties */
+.aa-pcard .aa-pcard__qty,
+article.aa-pcard .aa-pcard__qty,
+.aa-pcard__qty {
+  display: none !important;
+}
+.aa-pcard.aa-in-cart .aa-pcard__qty,
+article.aa-pcard.aa-in-cart .aa-pcard__qty {
+  display: flex !important;
+}
+
+/* ============================================================
+   MOBILE: Cards 2x smaller, smaller ADD TO CART, scaled-down content
+   ============================================================ */
+@media (max-width: 400px) {
+  body:not(.template-collection):not(.template-search) .product-grid > .grid__item,
+  body:not(.template-collection):not(.template-search) ul.product-grid > .grid__item {
+    flex: 0 0 66vw !important;
+    width: 66vw !important;
+    min-width: 66vw !important;
+    max-width: 66vw !important;
+  }
+}
+
+/* NUKE the empty qty pill — multiple selectors, multiple properties */
+.aa-pcard .aa-pcard__qty,
+article.aa-pcard .aa-pcard__qty,
+.aa-pcard__qty {
+  display: none !important;
+}
+.aa-pcard.aa-in-cart .aa-pcard__qty,
+article.aa-pcard.aa-in-cart .aa-pcard__qty {
+  display: flex !important;
+}
+
+/* ============================================================
+   MOBILE: Cards 2x smaller, smaller ADD TO CART, scaled-down content
+   ============================================================ */
+@media (max-width: 400px) {
+  body:not(.template-collection):not(.template-search) .product-grid > .grid__item,
+  body:not(.template-collection):not(.template-search) ul.product-grid > .grid__item {
+    flex: 0 0 66vw !important;
+    width: 66vw !important;
+    min-width: 66vw !important;
+    max-width: 66vw !important;
+  }
+}
+
+/* NUKE the empty qty pill — multiple selectors, multiple properties */
+.aa-pcard .aa-pcard__qty,
+article.aa-pcard .aa-pcard__qty,
+.aa-pcard__qty {
+  display: none !important;
+}
+.aa-pcard.aa-in-cart .aa-pcard__qty,
+article.aa-pcard.aa-in-cart .aa-pcard__qty {
+  display: flex !important;
+}
+
+/* ============================================================
+   MOBILE: Cards 2x smaller, smaller ADD TO CART, scaled-down content
+   ============================================================ */
+@media (max-width: 749px) {
+  /* Homepage featured-collection slider — card width back to 42vw default. */
+  body:not(.template-collection):not(.template-search) .product-grid > .grid__item,
+  body:not(.template-collection):not(.template-search) ul.product-grid > .grid__item {
+    flex: 0 0 42vw !important;
+    width: 42vw !important;
+    min-width: 42vw !important;
+    max-width: 42vw !important;
+    scroll-snap-align: start !important;
+    margin: 0 !important;
+  }
+  /* Card itself — smaller radius, tighter padding */
+  body:not(.template-collection):not(.template-product) .aa-pcard {
+    border-radius: 12px !important;
+  }
+  /* Image — smaller margin around it */
+  body:not(.template-collection):not(.template-product) .aa-pcard__media {
+    margin: 4px 4px 0 !important;
+    border-radius: 8px !important;
+  }
+  /* Badge — smaller */
+  body:not(.template-collection):not(.template-product) .aa-pcard__badge {
+    top: 6px !important; left: 6px !important;
+    font-size: 7.5px !important;
+    padding: 3px 6px !important;
+    letter-spacing: 0.1em !important;
+  }
+  /* Heart — smaller */
+  body:not(.template-collection):not(.template-product) .aa-pcard__heart {
+    top: 6px !important; right: 6px !important;
+    width: 20px !important; height: 20px !important;
+  }
+  body:not(.template-collection):not(.template-product) .aa-pcard__heart svg { width: 11px !important; height: 11px !important; }
+  /* Content — tighter padding */
+  body:not(.template-collection):not(.template-product) .aa-pcard__content {
+    padding: 8px 8px 8px !important;
+    gap: 3px !important;
+  }
+  /* Category — smaller */
+  body:not(.template-collection):not(.template-product) .aa-pcard__cat {
+    font-size: 7px !important;
+    letter-spacing: 0.12em !important;
+  }
+  /* Title — smaller font */
+  body:not(.template-collection):not(.template-product) .aa-pcard__title {
+    font-size: 11px !important;
+    line-height: 1.2 !important;
+    min-height: 27px !important;
+  }
+  /* Divider — tighter */
+  body:not(.template-collection):not(.template-product) .aa-pcard__divider {
+    width: 20px !important;
+    margin: 1px 0 !important;
+  }
+  /* Price — smaller */
+  body:not(.template-collection):not(.template-product) .aa-pcard__price {
+    font-size: 12.5px !important;
+  }
+  body:not(.template-collection):not(.template-product) .aa-pcard__strike {
+    font-size: 9px !important;
+  }
+  body:not(.template-collection):not(.template-product) .aa-pcard__price-row { gap: 4px !important; margin-top: 0 !important; }
+  /* ADD TO CART button — much smaller pill */
+  body:not(.template-collection):not(.template-product) .aa-pcard__cta {
+    padding: 6px 8px !important;
+    font-size: 8px !important;
+    letter-spacing: 0.08em !important;
+    margin-top: 6px !important;
+  }
+}
+@media (max-width: 400px) {
+  body:not(.template-collection):not(.template-search) .product-grid > .grid__item,
+  body:not(.template-collection):not(.template-search) ul.product-grid > .grid__item {
+    flex: 0 0 48vw !important;
+    width: 48vw !important;
+    min-width: 48vw !important;
+    max-width: 48vw !important;
+  }
+}
+
+/* MOBILE: ADD TO CART — narrower + taller, curved rectangle (not full-width pill).
+   Collection pages excluded: their mobile card (wireframe B) styles its own buttons. */
+@media (max-width: 749px) {
+  body:not(.template-collection):not(.template-product) .aa-pcard__cta {
+    width: auto !important;
+    max-width: 70% !important;
+    padding: 12px 14px !important;
+    font-size: 8px !important;
+    border-radius: 12px !important;
+    margin: 8px auto 0 !important;
+    display: block !important;
+    align-self: center !important;
+  }
+  body:not(.template-collection):not(.template-product) .aa-pcard__form { width: 100% !important; text-align: center !important; }
+}
+
+/* Hide the heart/wishlist icon on all product cards (mobile + desktop) */
+.aa-pcard__heart,
+article.aa-pcard .aa-pcard__heart {
+  display: none !important;
+}
+
+/* Prevent horizontal page overflow caused by slider negative margins.
+   Use `overflow-x: clip` instead of `hidden` — clip prevents horizontal
+   overflow WITHOUT creating a scroll container, so position: sticky
+   on the header still works on mobile. */
+@media (max-width: 749px) {
+  html, body { overflow-x: clip !important; max-width: 100% !important; }
+  .product-grid,
+  ul.product-grid,
+  .grid--3-col-tablet,
+  .grid--4-col-desktop,
+  .grid--5-col-desktop {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+}
+
+/* ============================================================
+   ADD TO CART — instant slide-in from right (cart page entrance only)
+   ============================================================ */
+body.template-cart,
+body[class*="template-cart"] {
+  animation: aa-cart-push-in 180ms cubic-bezier(0.32, 0.72, 0, 1) both;
+}
+@keyframes aa-cart-push-in {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(0); }
+}
+
+/* FIX: ADD TO CART button must stay visible even after add-to-cart click.
+   Since we redirect to /cart immediately, don't toggle the qty stepper state. */
+.aa-pcard .aa-pcard__cta:not(.aa-pcard__cta--plus),
+.aa-pcard.aa-in-cart .aa-pcard__cta:not(.aa-pcard__cta--plus),
+article.aa-pcard.aa-in-cart .aa-pcard__cta:not(.aa-pcard__cta--plus) {
+  display: block !important;
+  visibility: visible !important;
+}
+.aa-pcard .aa-pcard__qty,
+.aa-pcard.aa-in-cart .aa-pcard__qty,
+article.aa-pcard.aa-in-cart .aa-pcard__qty {
+  display: none !important;
+}
+
+/* ============================================================
+   HOMEPAGE "Collections" section (collection-list) — 3 per row, scaled down
+   ============================================================ */
+@media (max-width: 749px) {
+  /* Wrapper stays a normal block so heading sits on top, grid below */
+  .collection-list-wrapper {
+    display: block !important;
+    width: 100% !important;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+  .collection-list-wrapper .title-wrapper-with-link,
+  .collection-list-wrapper .title-wrapper {
+    display: block !important;
+    width: 100% !important;
+    text-align: center !important;
+    margin: 0 0 14px !important;
+  }
+  .collection-list-wrapper .collection-list-title {
+    text-align: center !important;
+    width: 100% !important;
+    margin: 0 !important;
+  }
+  /* The UL itself becomes the 3-col grid.
+     Specificity bumped to beat Dawn's .grid--1-col-tablet-down which
+     sets 1-col on mobile with !important. */
+  html body ul.collection-list,
+  html body ul.collection-list.grid,
+  html body ul.collection-list.grid.grid--1-col-tablet-down,
+  html body ul.collection-list.grid.grid--2-col-tablet-down,
+  html body .collection-list-wrapper ul.collection-list,
+  html body .collection-list-wrapper .collection-list {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+    scroll-snap-type: none !important;
+    gap: 8px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    list-style: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    transform: none !important;
+  }
+  /* Each item — full grid cell, no max-width */
+  .collection-list > li,
+  .collection-list > .grid__item,
+  ul.collection-list > .grid__item,
+  .collection-list .collection-list__item {
+    flex: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    scroll-snap-align: none !important;
+  }
+  /* Card chrome — tight, square media, small title */
+  .collection-list .card-wrapper,
+  .collection-list .card,
+  .collection-list .card.collection-card {
+    width: 100% !important;
+    border-radius: 10px !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
+    background: #FFFFFF !important;
+    border: 0 !important;
+    padding: 6px !important;
+  }
+  .collection-list .card__media,
+  .collection-list .media,
+  .collection-list .card.collection-card .card__media {
+    margin: 0 0 6px !important;
+    border-radius: 8px !important;
+    aspect-ratio: 1 / 1 !important;
+    overflow: hidden !important;
+  }
+  .collection-list .card__media img,
+  .collection-list .media img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+  .collection-list .card__content,
+  .collection-list .card__information,
+  .collection-list .card__inner {
+    padding: 4px 2px !important;
+    min-height: 0 !important;
+  }
+  .collection-list .card__heading,
+  .collection-list .card__heading a,
+  .collection-list h3,
+  .collection-list h2 {
+    font-size: 10.5px !important;
+    line-height: 1.2 !important;
+    text-align: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-weight: 600 !important;
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
+    hyphens: none !important;
+  }
+  /* Kill description text inside collection cards on mobile (it overflows narrow cells) */
+  .collection-list .card__description,
+  .collection-list p {
+    display: none !important;
+  }
+  /* Hide the right-arrow on tiny cards */
+  .collection-list .icon-arrow,
+  .collection-list .icon-wrap {
+    display: none !important;
+  }
+}
+
+/* ============================================================
+   COLLECTION PAGE LAYOUT — kill Dawn's vertical filter layout
+   that pushes the grid into a narrow left column.
+   Apply on both mobile and desktop.
+   ============================================================ */
+html body .facets-vertical {
+  display: block !important;
+  grid-template-columns: none !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+html body .facets-vertical .facets-wrapper,
+html body aside.facets-wrapper {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 0 16px !important;
+  padding: 0 16px !important;
+  box-sizing: border-box !important;
+}
+html body .product-grid-container,
+html body #ProductGridContainer {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+}
+html body .product-grid-container .collection,
+html body #ProductGridContainer .collection {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  padding: 0 16px !important;
+  box-sizing: border-box !important;
+}
+
+/* ============================================================
+   DESKTOP — collection/search grid cards have a minimum width
+   so they never collapse to thin vertical stripes.
+   ============================================================ */
+@media (min-width: 750px) {
+  /* SEARCH only — the collection grid layout is owned by the CONTAINED
+     rules at the top of this file (approved redesign 2026-06-11). Keeping
+     collection selectors out of this later block stops it from re-flattening
+     the centred max-width grid via file order. */
+  html body.template-search .product-grid,
+  html body.template-search ul.product-grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 24px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    width: 100% !important;
+  }
+  html body.template-collection .product-grid > li,
+  html body.template-collection .product-grid > .grid__item,
+  html body.template-search .product-grid > li,
+  html body.template-search .product-grid > .grid__item {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    flex: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  html body.template-collection .product-grid .aa-pcard,
+  html body.template-search .product-grid .aa-pcard {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+  html body.template-collection .product-grid .aa-pcard__media,
+  html body.template-search .product-grid .aa-pcard__media {
+    aspect-ratio: 1 / 1 !important;
+    width: 100% !important;
+  }
+  html body.template-collection .product-grid .aa-pcard__title,
+  html body.template-search .product-grid .aa-pcard__title {
+    font-size: 15px !important;
+    line-height: 1.3 !important;
+    min-height: 40px !important;
+  }
+  html body.template-collection .product-grid .aa-pcard__price,
+  html body.template-search .product-grid .aa-pcard__price {
+    font-size: 16px !important;
+  }
+  html body.template-collection .product-grid .aa-pcard__cta,
+  html body.template-search .product-grid .aa-pcard__cta {
+    padding: 12px 18px !important;
+    font-size: 11px !important;
+  }
+}
+
+/* ============================================================
+   COLLECTION / SEARCH PAGES — 2-per-row scroll-down, NO slider
+   ONLY applies to /collections/* and /search. Homepage featured-collection
+   (New Arrival, Top Selling) is left as a slider.
+   Hero (product detail page) gallery is untouched.
+   ============================================================ */
+@media (max-width: 749px) {
+  /* ULTRA-FORCE 2-col grid — beat every Dawn slider/grid class */
+  html body.template-collection ul.product-grid,
+  html body.template-collection ul#product-grid,
+  html body.template-collection .product-grid,
+  html body.template-collection .product-grid.slider,
+  html body.template-collection .product-grid.grid--peek,
+  html body.template-collection .grid.product-grid,
+  html body.template-collection .grid--1-col-tablet-down,
+  html body.template-collection .grid--2-col-tablet-down,
+  html body.template-search ul.product-grid,
+  html body.template-search .product-grid,
+  html body.template-list-collections .product-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    gap: 14px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    list-style: none !important;
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+    scroll-snap-type: none !important;
+    transform: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  /* Old rule keeps for compatibility */
+  /* NUKE every ancestor of the product grid on search/collection.
+     Some Dawn ancestor (likely .facets-container or its parent) is
+     constraining width — these rules force the full ancestor chain to
+     be 100% width with no flex/grid splits. */
+  html body.template-search main,
+  html body.template-search #MainContent,
+  html body.template-search .template-search,
+  html body.template-search .template-search > div,
+  html body.template-search .template-search > div > div,
+  html body.template-search .template-search > section,
+  html body.template-search .facets-container,
+  html body.template-search .product-grid-container,
+  html body.template-search #ProductGridContainer,
+  html body.template-search .template-search__results,
+  html body.template-search .template-search__results.collection,
+  html body.template-search .collection.page-width,
+  html body.template-collection main,
+  html body.template-collection #MainContent,
+  html body.template-collection .product-grid-container,
+  html body.template-collection #ProductGridContainer,
+  html body.template-collection .collection,
+  html body.template-collection .collection.page-width {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    flex-basis: auto !important;
+    flex: 1 1 100% !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    box-sizing: border-box !important;
+    grid-template-columns: none !important;
+  }
+  /* BRUTE-FORCE: set card width to calc(50vw - 18px) — half of viewport
+     minus container padding/gap. Beats every cascade because nothing else
+     uses vw math on these elements. */
+  html body.template-collection ul.product-grid > li,
+  html body.template-collection ul.product-grid > .grid__item,
+  html body.template-search ul.product-grid > li,
+  html body.template-search ul.product-grid > .grid__item,
+  html body.template-collection ul.product-grid > li > .aa-pcard,
+  html body.template-search ul.product-grid > li > .aa-pcard,
+  html body.template-collection ul.product-grid > .grid__item > .aa-pcard,
+  html body.template-search ul.product-grid > .grid__item > .aa-pcard,
+  html body.template-collection ul.product-grid > li > .card-wrapper,
+  html body.template-search ul.product-grid > li > .card-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    flex: 0 0 100% !important;
+    box-sizing: border-box !important;
+  }
+  body.template-collection .product-grid,
+  body.template-collection ul.product-grid,
+  body.template-search .product-grid,
+  body.template-search ul.product-grid,
+  body.template-list-collections .product-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 14px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    list-style: none !important;
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+    scroll-snap-type: none !important;
+    transform: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  /* Outer container — padding so cards don't clip the viewport edge */
+  body.template-collection .collection,
+  body.template-collection .collection .page-width,
+  body.template-collection #product-grid,
+  body.template-search .search__results {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+    box-sizing: border-box !important;
+  }
+  body.template-collection .product-grid > li,
+  body.template-collection .product-grid > .grid__item,
+  body.template-search .product-grid > li,
+  body.template-search .product-grid > .grid__item {
+    flex: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    scroll-snap-align: none !important;
+  }
+  /* Hide slider mechanics ONLY on collection/search pages */
+  body.template-collection slider-component .slider-buttons,
+  body.template-collection slider-component slider-counter,
+  body.template-collection slider-component slider-button,
+  body.template-search slider-component .slider-buttons,
+  body.template-search slider-component slider-counter,
+  body.template-search slider-component slider-button {
+    display: none !important;
+  }
+  body.template-collection slider-component,
+  body.template-search slider-component {
+    display: block !important;
+    overflow: visible !important;
+    width: 100% !important;
+  }
+  /* Card sizing tuned for 2-col density */
+  body.template-collection .product-grid .aa-pcard,
+  body.template-search .product-grid .aa-pcard {
+    border-radius: 16px !important;
+    overflow: hidden !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  body.template-collection .product-grid .aa-pcard__media,
+  body.template-search .product-grid .aa-pcard__media {
+    /* wireframe B (2026-06-12): full-bleed square image, no inner frame */
+    aspect-ratio: 1 / 1 !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+  }
+  body.template-collection .product-grid .aa-pcard__title,
+  body.template-search .product-grid .aa-pcard__title {
+    /* wireframe B: single line, ellipsis */
+    font-size: 12.5px !important;
+    line-height: 1.3 !important;
+    min-height: 0 !important;
+    display: block !important;
+  }
+  body.template-collection .product-grid .aa-pcard__title a,
+  body.template-search .product-grid .aa-pcard__title a {
+    display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  body.template-collection .product-grid .aa-pcard__content,
+  body.template-search .product-grid .aa-pcard__content {
+    padding: 9px 11px 12px !important;
+    gap: 2px !important;
+  }
+  body.template-collection .product-grid .aa-pcard__price-row,
+  body.template-search .product-grid .aa-pcard__price-row {
+    margin: 4px 0 0 !important;
+  }
+  body.template-collection .product-grid .aa-pcard__rate,
+  body.template-search .product-grid .aa-pcard__rate {
+    left: 8px !important; right: auto !important; bottom: 8px !important;
+  }
+  body.template-collection .product-grid .aa-pcard__price,
+  body.template-search .product-grid .aa-pcard__price {
+    font-size: 14px !important;
+  }
+  /* wireframe B: the inline full-width ADD pill is hidden on mobile —
+     adding happens via the floating "+" circle on the image */
+  body.template-collection .product-grid .aa-pcard__form--inline,
+  body.template-search .product-grid .aa-pcard__form--inline {
+    display: none !important;
+  }
+  body.template-collection .product-grid .aa-pcard__form--float,
+  body.template-search .product-grid .aa-pcard__form--float {
+    display: block !important; position: absolute !important;
+    right: 8px !important; bottom: 8px !important; z-index: 3 !important;
+    width: auto !important; margin: 0 !important; padding: 0 !important;
+  }
+  body.template-collection .product-grid .aa-pcard__cta--plus,
+  body.template-search .product-grid .aa-pcard__cta--plus {
+    width: 34px !important; height: 34px !important; max-width: none !important;
+    border-radius: 999px !important; border: 0 !important; cursor: pointer;
+    background: #2B0F26 !important; color: #fff !important;
+    font-size: 19px !important; line-height: 1 !important; font-weight: 600 !important;
+    display: flex !important; align-items: center !important; justify-content: center !important;
+    padding: 0 !important; margin: 0 !important; letter-spacing: 0 !important;
+    box-shadow: 0 4px 12px rgba(43, 15, 38, 0.35);
+    transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  body.template-collection .product-grid .aa-pcard__cta--plus:active,
+  body.template-search .product-grid .aa-pcard__cta--plus:active { transform: scale(0.92); }
+  /* wireframe B has no quick view on mobile — the image links to the product */
+  body.template-collection .product-grid .aa-pcard__qv-btn,
+  body.template-search .product-grid .aa-pcard__qv-btn { display: none !important; }
+}
+
+/* Astrotalk-style block reverted at user request — only spacing matters. */
+
+/* ============================================================
+   COLLECTION PAGE DESIGN (approved 2026-06-11) — scoped to
+   .template-collection so search/featured grids keep the base look.
+   Contained grid lives in main-collection-product-grid.liquid;
+   tab styles live in image-banner.liquid. This block: hero heading,
+   facets toolbar, and the collection card variant (aa_coll_card).
+   ============================================================ */
+
+/* ---- Collection heading: serif title + sub, centred ---- */
+.template-collection .collection-hero {
+  padding: 46px 20px 8px;
+  background: none;
+}
+.template-collection .collection-hero__inner {
+  display: block;
+  text-align: center;
+  padding: 0;
+}
+.template-collection h1.collection-hero__title,
+.template-collection .collection-hero__title {
+  /* !important: legacy blanket font rules in astroaura-styles.css use
+     !important on h1; class specificity + !important here settles it. */
+  font-family: 'Cormorant Garamond', Georgia, serif !important;
+  font-weight: 600;
+  font-size: 48px;
+  line-height: 1.12;
+  margin: 0;
+  text-align: center;
+  color: #241019;
+}
+.template-collection .collection-hero__description {
+  font-family: var(--aa-font-ui);
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: #8a7480;
+  max-width: 560px;
+  margin: 10px auto 0;
+}
+
+/* ---- Facets toolbar: plain black text filters + sort, hairlines ---- */
+.template-collection .facets-wrapper {
+  max-width: 1232px;
+  margin: 14px auto 26px;
+  padding: 0 24px;
+}
+.template-collection .facets__form {
+  /* Dawn's native grid (1fr max-content max-content) keeps filters, sort and
+     count on ONE row — do not change display here, it wraps the row. */
+  border-top: 1px solid rgba(36, 16, 25, 0.09);
+  border-bottom: 1px solid rgba(36, 16, 25, 0.09);
+  padding: 10px 2px;
+  align-items: center;
+}
+.template-collection .facets__heading { margin: 0 12px 0 0; align-self: baseline; font-size: 13.5px; line-height: 1.2; padding: 0; }
+.template-collection .facets__wrapper { align-items: baseline; align-self: center; margin: 0; }
+.template-collection .facets__form .product-count,
+.template-collection .product-count,
+.template-collection .product-count-vertical {
+  align-self: center;
+  margin: 0;
+}
+.template-collection .product-count .loading__spinner { display: none; }
+.template-collection .facets__heading {
+  font-family: var(--aa-font-ui);
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #8a7480;
+  margin: 0 6px 0 0;
+}
+.template-collection .facets__disclosure,
+.template-collection .facets__disclosure-vertical {
+  margin-right: 26px;
+}
+.template-collection .facets__summary {
+  background: none;
+  border: 0;
+  box-shadow: none;
+  padding: 8px 18px 8px 2px;
+  margin: 0;
+  position: relative;
+  font-family: var(--aa-font-ui);
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--aa-ink);
+  line-height: 1.2;
+  transition: opacity 0.2s;
+}
+.template-collection .facets__summary:hover { opacity: 0.65; }
+.template-collection .facets__summary .icon-caret,
+.template-collection .facets__summary svg {
+  width: 10px;
+  height: 10px;
+  margin: 0;
+  flex: 0 0 auto;
+  color: #6b5a62;
+}
+.template-collection .facet-filters.sorting {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0;
+  margin: 0;
+}
+.template-collection .facet-filters__field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.template-collection .facet-filters__label {
+  font-family: var(--aa-font-ui);
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--aa-ink);
+  margin: 0;
+}
+.template-collection .facet-filters__field .select,
+.template-collection .facet-filters__field select {
+  font-family: var(--aa-font-ui);
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--aa-ink);
+  background: none;
+  border: 0;
+}
+.template-collection .product-count__text {
+  font-family: var(--aa-font-ui);
+  font-size: 13.5px;
+  font-weight: 500;
+  color: #8a7480;
+}
+
+/* ---- Collection card variant ---- */
+.template-collection .aa-pcard { border-radius: 18px; }
+.template-collection .aa-pcard__media-wrap { position: relative; display: block; }
+.template-collection .aa-pcard__media {
+  margin: 0;
+  border-radius: 0;
+  border: 0;
+  box-shadow: none;
+}
+.template-collection .aa-pcard__media img { transform: scale(1.16); }
+.template-collection .aa-pcard:hover .aa-pcard__media img { transform: scale(1.24); }
+/* Neutralise the legacy fill-zoom classes on collection cards: object-fit
+   cover already fills the full-bleed frame, so the old 1.18/1.42 multipliers
+   (built for the framed layout) just crop the product out of view. */
+.template-collection .aa-pcard.aa-fill .aa-pcard__media img { transform: scale(1.08); }
+.template-collection .aa-pcard.aa-fill:hover .aa-pcard__media img { transform: scale(1.14); }
+.template-collection .aa-pcard.aa-fill-strong .aa-pcard__media img { transform: scale(1.02); }
+.template-collection .aa-pcard.aa-fill-strong:hover .aa-pcard__media img { transform: scale(1.08); }
+
+/* The floating "+" add form only exists for mobile collection cards */
+.aa-pcard__form--float { display: none; }
+
+
+.template-collection .aa-pcard__rate {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.95);
+  font-family: var(--aa-font-ui);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--aa-ink);
+  padding: 4px 9px;
+  border-radius: 999px;
+  box-shadow: 0 2px 8px rgba(36, 16, 25, 0.10);
+}
+.template-collection .aa-pcard__rate-star { color: #E8A23B; }
+.template-collection .aa-pcard__content {
+  padding: 14px 14px 16px;
+  text-align: center;
+  gap: 0;
+}
+.template-collection .aa-pcard__title {
+  font-size: 14.5px;
+  font-weight: 600;
+  line-height: 1.35;
+  min-height: 39px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 0;
+}
+.template-collection .aa-pcard__price-row {
+  justify-content: center;
+  align-items: baseline;
+  gap: 7px;
+  margin: 8px 0 12px;
+}
+.template-collection .aa-pcard__price { font-size: 16.5px; font-weight: 800; }
+.template-collection .aa-pcard__strike { font-size: 13px; }
+.template-collection .aa-pcard__pct {
+  font-family: var(--aa-font-ui);
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #1d8a4e;
+}
+/* Desktop-only: the full-width ADD pill under the price. Scoped to >=750px —
+   the mobile card (wireframe B) replaces this form with the floating "+",
+   and the display:block !important here was overriding the mobile hide. */
+@media (min-width: 750px) {
+  .template-collection .aa-pcard__form--inline {
+    margin-top: auto;
+    position: static !important;
+    inset: auto !important;
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  .template-collection .aa-pcard__cta--full {
+    background: #151013;
+    font-size: 13.5px;
+    letter-spacing: 0.04em;
+    padding: 13px 0 !important;
+    text-transform: uppercase;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    position: static !important;
+    display: block !important;
+    border-radius: 999px !important;
+  }
+}
+
+/* ---- Mobile (2-col grid preserved) ---- */
+@media screen and (max-width: 749px) {
+  .template-collection .collection-hero { padding: 30px 14px 4px; }
+  .template-collection .collection-hero__title { font-size: 32px; }
+  .template-collection .collection-hero__description { font-size: 13px; }
+  .template-collection .facets-wrapper { padding: 0 12px; margin: 10px auto 18px; }
+  .template-collection .aa-pcard__content { padding: 9px 11px 12px; gap: 2px; }
+  .template-collection .aa-pcard__title { font-size: 12.5px; min-height: 0; line-height: 1.3; }
+  .template-collection .aa-pcard__price { font-size: 14.5px; }
+  .template-collection .aa-pcard__strike { font-size: 11.5px; }
+  .template-collection .aa-pcard__pct { font-size: 11px; }
+  .template-collection .aa-pcard__rate { font-size: 11px; padding: 3px 8px; }
+}
+
+/* NitroPack's "fontify" app embed injects inline `font-family: Sora !important`
+   with a giant :not() selector chain that outranks normal theme rules. The
+   repeated-class selector below manufactures higher specificity to take the
+   collection title back. REAL fix: disable font optimization in NitroPack. */
+body.template-collection.template-collection.template-collection.template-collection.template-collection.template-collection.template-collection.template-collection.template-collection.template-collection.template-collection.template-collection.template-collection.template-collection.template-collection.template-collection.template-collection.template-collection.template-collection.template-collection.template-collection.template-collection.template-collection.template-collection h1.collection-hero__title {
+  font-family: 'Cormorant Garamond', Georgia, serif !important;
+  font-weight: 600 !important;
+}
+
+/* ---- Filter dropdown panel: compact white popup card ---- */
+.template-collection .facets__disclosure .facets__display {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  z-index: 80;
+  width: 330px;
+  max-height: 400px;
+  overflow-y: auto;
+  background: #FFFFFF;
+  border: 1px solid rgba(36, 16, 25, 0.10);
+  border-radius: 14px;
+  box-shadow: 0 18px 44px rgba(36, 16, 25, 0.16);
+  padding: 14px 18px 16px;
+}
+.template-collection .facets__disclosure { position: relative; }
+.template-collection .facets__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--aa-font-ui);
+  font-size: 12.5px;
+  color: #8a7480;
+  border-bottom: 1px solid rgba(36, 16, 25, 0.08);
+  padding-bottom: 10px;
+  margin-bottom: 6px;
+}
+.template-collection .facets__header a,
+.template-collection .facets__header .underlined-link {
+  color: var(--aa-ink);
+  font-weight: 600;
+  text-decoration: none;
+  text-underline-offset: initial;
+}
+.template-collection .facets__header a:hover { opacity: 0.65; }
+.template-collection .facets__header { background: none; }
+/* no underline on the open filter name (Dawn underlines the active summary) */
+.template-collection .facets__summary,
+.template-collection .facets__disclosure[open] .facets__summary,
+.template-collection .facets__summary:hover,
+.template-collection .facets__summary:focus {
+  text-decoration: none !important;
+  box-shadow: none !important;
+  outline: none;
+}
+.template-collection .facets-wrap { border: 0; padding: 0; margin: 0; }
+.template-collection .facets__list { padding: 0; }
+.template-collection .facets__item { padding: 4px 0; font-size: 13.5px; }
+
+
+/* ============================================================
+   DESKTOP MEDIA ARROWS (approved wireframe 2026-06-12) — one design for
+   product cards, quick view and the PDP gallery. aa-media-arrows.js drives
+   behaviour. Mobile (<750px) never shows them.
+   ============================================================ */
+/* hard-locked: generic homepage button rules were inflating these to the
+   full media box (the "white disc" bug) — every box property is explicit */
+.aa-marr, .aa-mcount { display: none !important; }
+@media (min-width: 750px) {
+  .aa-marr {
+    display: flex !important; align-items: center !important; justify-content: center !important;
+    position: absolute !important; top: 50% !important; bottom: auto !important;
+    transform: translateY(-50%) !important;
+    width: 36px !important; height: 36px !important;
+    min-width: 0 !important; max-width: 36px !important; max-height: 36px !important;
+    border-radius: 999px !important; border: 0 !important; cursor: pointer;
+    background: rgba(255, 255, 255, 0.92) !important;
+    -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+    box-shadow: 0 2px 10px rgba(36, 16, 25, 0.18) !important;
+    color: #241019 !important; z-index: 4; padding: 0 !important; margin: 0 !important;
+    transition: transform 160ms cubic-bezier(0.32, 0.72, 0, 1), opacity 200ms ease, background 200ms ease;
+  }
+  .aa-marr svg { width: 15px !important; height: 15px !important; }
+  .aa-marr:hover { background: #fff; }
+  .aa-marr:active { transform: translateY(-50%) scale(0.88) !important; }
+  .aa-marr--l { left: 10px !important; right: auto !important; }
+  .aa-marr--r { right: 10px !important; left: auto !important; }
+  /* cards: reveal on hover only */
+  .aa-pcard__media .aa-marr, .pcard .media .aa-marr { opacity: 0; pointer-events: none; }
+  .aa-pcard:hover .aa-pcard__media .aa-marr,
+  .pcard:hover .media .aa-marr { opacity: 1; pointer-events: auto; }
+  /* homepage card media needs to anchor them */
+  .pcard .media { position: relative; }
+  /* PDP gallery: anchor + frosted counter */
+  media-gallery slider-component { position: relative; display: block; }
+  media-gallery .aa-marr { opacity: 1; }
+  /* cycled (non-first) card images: kill the hero zoom so infographic /
+     secondary shots show un-cropped; cover on a square = exact fit */
+  .aa-pcard__media.aa-cycled img,
+  .aa-pcard.aa-fill .aa-pcard__media.aa-cycled img,
+  .aa-pcard.aa-fill-strong .aa-pcard__media.aa-cycled img,
+  .template-collection .aa-pcard__media.aa-cycled img,
+  .pcard .media.aa-cycled img,
+  .pcard.aa-fill .media.aa-cycled img,
+  .pcard.aa-fill-strong .media.aa-cycled img,
+  .pcard:hover .media.aa-cycled img {
+    transform: none !important;
+  }
+  .aa-mcount {
+    display: inline-flex !important; position: absolute; right: 12px; bottom: 12px; z-index: 4;
+    background: rgba(20, 10, 16, 0.45); color: #fff;
+    -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+    font-size: 11px; font-weight: 700; border-radius: 999px; padding: 5px 11px;
+  }
+}

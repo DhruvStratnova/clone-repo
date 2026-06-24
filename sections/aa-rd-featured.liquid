@@ -7,7 +7,7 @@
 -%}
 <section class="sec"><div class="wrap" data-rise>
   <div class="efeat">
-    <div class="big">{% if img %}<img width="900" height="900" src="{{ img | image_url: width: 900 }}" alt="{{ p.title | escape }}">{% endif %}</div>
+    <div class="big">{% if img %}<img width="900" height="900" src="{{ img | image_url: width: 900 }}" srcset="{{ img | image_url: width: 360 }} 360w, {{ img | image_url: width: 540 }} 540w, {{ img | image_url: width: 720 }} 720w, {{ img | image_url: width: 900 }} 900w, {{ img | image_url: width: 1080 }} 1080w" sizes="(max-width: 560px) calc(100vw - 36px), (max-width: 980px) calc(100vw - 72px), 654px" alt="{{ p.title | escape }}">{% endif %}</div>
     <div class="ov">
       <span class="eb">{{ section.settings.eyebrow | default: 'Best-Selling' }}</span>
       <h3 style="font-family:'Cormorant Garamond',Georgia,serif !important;font-weight:600">{{ p.title | default: 'Featured Product' }}</h3>
