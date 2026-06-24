@@ -12,7 +12,7 @@
       {%- if section.settings.btn_label != blank -%}<a class="btn" href="{{ section.settings.btn_url | default: '#' }}">{{ section.settings.btn_label }} {% render 'aa-rd-icon', name: 'arrow-right' %}</a>{%- endif -%}
     </div>
     {%- assign cimg = '' -%}{%- if section.settings.image_asset != blank -%}{%- assign cimg = section.settings.image_asset | asset_url -%}{%- elsif section.settings.bg_url != blank -%}{%- assign cimg = section.settings.bg_url -%}{%- elsif section.settings.image != blank -%}{%- assign cimg = section.settings.image | image_url: width: 1100 -%}{%- endif -%}
-    <div class="frame"><span class="seal">{% render 'aa-rd-icon', name: 'check' %} {{ section.settings.seal | default: 'Lab Verified' }}</span>{% if cimg != blank %}<img width="1000" height="640" src="{{ cimg }}" alt="Certificate">{% endif %}</div>
+    <div class="frame"><span class="seal">{% render 'aa-rd-icon', name: 'check' %} {{ section.settings.seal | default: 'Lab Verified' }}</span>{% if cimg != blank %}<img loading="lazy" width="1000" height="640" src="{{ cimg }}" alt="Certificate">{% endif %}</div>
   </div>
 </div></section>
 {% schema %}

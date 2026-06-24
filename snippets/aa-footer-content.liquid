@@ -1,6 +1,6 @@
 {% comment %} Aura AI custom footer content — rendered in place of Dawn footer {% endcomment %}
 {{ 'aa-footer.css' | asset_url | stylesheet_tag }}
-{{ 'aa-dark-footer.css' | asset_url | stylesheet_tag }}
+<script>if(document.cookie.split('; ').indexOf('app_color_scheme=dark')>-1){document.write('<link rel="stylesheet" href="{{ 'aa-dark-footer.css' | asset_url }}" media="all">');}</script>
 
 <footer class="aa-footer">
   <!-- Decorative cosmic globes — top-left + bottom-right, slow rotation -->

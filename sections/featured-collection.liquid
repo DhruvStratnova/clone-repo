@@ -3,7 +3,7 @@
 
 {%- comment -%} AstroAura quick-view (desktop) for card-product grids {%- endcomment -%}
 {{ 'aa-quickview-v2.css' | asset_url | stylesheet_tag }}
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&display=swap">
+{%- comment -%} Cormorant Garamond loaded globally in theme.liquid; redundant section <link> removed. {%- endcomment -%}
 {{ 'quick-add.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'quick-add.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'aa-rd-quickview-v5.js' | asset_url }}" defer="defer"></script>
