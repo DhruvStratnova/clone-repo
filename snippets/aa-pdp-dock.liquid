@@ -59,7 +59,7 @@
       var e = es[0];
       /* show only when the buttons are ABOVE the viewport (already passed),
          not while they are still below the fold on first load */
-      var show = !e.isIntersecting;
+      var show = !e.isIntersecting && e.boundingClientRect.top < 0;
       dock.classList.toggle('aa-show', show);
       dock.setAttribute('aria-hidden', show ? 'false' : 'true');
     }, { threshold: 0 }).observe(target);
