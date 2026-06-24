@@ -165,18 +165,25 @@
                 assign fetch_priority = 'high'
               endif
             -%}
-            {%- comment -%} Desktop image {%- endcomment -%}
+            {%- comment -%} Desktop image. When the slide has NO mobile image,
+                drop `small-hide` so it still shows on phones (the in-app webview);
+                otherwise it would be hidden under 750px with no mobile image to
+                replace it, leaving a blank hero. {%- endcomment -%}
+            {%- assign desktop_classes = 'slideshow__image desktop-image small-hide' -%}
+            {%- if block.settings.image_mobile == blank -%}
+              {%- assign desktop_classes = 'slideshow__image desktop-image' -%}
+            {%- endif -%}
             {%- if forloop.first -%}
               {{
                 block.settings.image
                 | image_url: width: 3840
-                | image_tag: class: 'slideshow__image desktop-image small-hide', height: desktop_height, sizes: sizes, widths: widths, fetchpriority: fetch_priority, decoding: 'async'
+                | image_tag: class: desktop_classes, height: desktop_height, sizes: sizes, widths: widths, fetchpriority: fetch_priority, decoding: 'async'
               }}
             {%- else -%}
               {{
                 block.settings.image
                 | image_url: width: 3840
-                | image_tag: class: 'slideshow__image desktop-image small-hide', loading: 'lazy', height: desktop_height, sizes: sizes, widths: widths
+                | image_tag: class: desktop_classes, loading: 'lazy', height: desktop_height, sizes: sizes, widths: widths
               }}
             {%- endif -%}
             {%- comment -%} Mobile image (shown under 750px) {%- endcomment -%}

@@ -25,7 +25,9 @@
     document.querySelectorAll('.sbtn').forEach(function(b){b.addEventListener('click',function(){var box=b.closest('.fb')||b.closest('.slw');if(!box)return;var t=box.querySelector('.sld');var c=t.querySelector('*');var s=(c?c.getBoundingClientRect().width:260)+(parseFloat(getComputedStyle(t).columnGap)||22);t.scrollBy({left:b.classList.contains('snext')?s:-s,behavior:'smooth'})})});
   }
   if(document.readyState!=='loading'){ init(); } else { document.addEventListener('DOMContentLoaded', init); }
-  if(!reduce){var pars=document.querySelectorAll('[data-par]');var tk=false;addEventListener('scroll',function(){if(!tk){requestAnimationFrame(function(){var y=scrollY;pars.forEach(function(el){el.style.transform='translateY('+(y*parseFloat(el.dataset.par))+'px)'});tk=false})}tk=true},{passive:true})}
+  /* Parallax is desktop-only: writing transforms on every scroll frame janks
+     the in-app (mobile/touch) webview, so skip it on small/coarse-pointer screens. */
+  if(!reduce && matchMedia('(min-width:750px)').matches && matchMedia('(pointer:fine)').matches){var pars=document.querySelectorAll('[data-par]');var tk=false;addEventListener('scroll',function(){if(!tk){requestAnimationFrame(function(){var y=scrollY;pars.forEach(function(el){el.style.transform='translateY('+(y*parseFloat(el.dataset.par))+'px)'});tk=false})}tk=true},{passive:true})}
 })();
 </script>
 {% schema %}
