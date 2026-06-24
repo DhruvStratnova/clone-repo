@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- SNAPSHOT-BUMP-1782295500-V13 -->
+<!-- SNAPSHOT-BUMP-1782296000-V14 -->
 
 <html class="js" lang="{{ request.locale.iso_code }}"{% if request.cookies['app_color_scheme'] == 'dark' %} data-theme="dark"{% endif %}>
   <head>
@@ -596,11 +596,6 @@
   body.template-product .product-form__submit:not(#z1):not(#z2),
   .qv-add:not(#z1):not(#z2),
   .qv-buy:not(#z1):not(#z2) { border-radius: 14px !important; }
-  /* Slideshow: slides have no mobile image, so Dawn hides the wide desktop banner
-     on phones (small-hide) -> blank. Force it to show on mobile at natural height. */
-  @media (max-width: 749px) {
-    .slideshow__image.desktop-image:not(#z1):not(#z2) { display: block !important; }
-  }
   /* Dark mode: kill backdrop-filter blur (scroll jank). The :not(#x) boosts
      specificity above the frozen aa-dark-bundle.css blur rules. */
   html[data-theme="dark"] *:not(#aaqz1):not(#aaqz2),
