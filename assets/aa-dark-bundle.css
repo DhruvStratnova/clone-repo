@@ -344,8 +344,8 @@ html[data-theme="dark"] body header.header,
 html[data-theme="dark"] body header.header.page-width {
   background: #010922 !important;
   background-color: #010922 !important;
-  -webkit-backdrop-filter: blur(14px) !important;
-  backdrop-filter: blur(14px) !important;
+  
+  
   border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
 }
 
@@ -365,8 +365,8 @@ html[data-theme="dark"] {
 html[data-theme="dark"] .aa-pcard { background: #1A0B2E; }
 html[data-theme="dark"] .aa-pcard__qv-btn {
   background: rgba(255, 255, 255, .10);
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
+  
+  
   color: #FFFFFF;
   border: 1px solid rgba(255, 255, 255, .14);
 }
@@ -422,8 +422,8 @@ html[data-theme="dark"] .template-collection .facets__summary svg {
 html[data-theme="dark"] .template-collection .product-count__text { color: rgba(255,255,255,.70); }
 html[data-theme="dark"] .template-collection .aa-pcard__rate {
   background: rgba(255, 255, 255, 0.08);
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
+  
+  
   border: 1px solid rgba(255, 255, 255, 0.14);
   color: #FFFFFF;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
@@ -486,14 +486,14 @@ html[data-theme="dark"] .aa-buy-now:hover {
 html[data-theme="dark"] .aa-buy-now:hover svg { color: #FFFFFF !important; }
 html[data-theme="dark"] .aa-mega-deal {
   background: rgba(255,255,255,.06);
-  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+   
   border: 1px dashed rgba(255, 194, 75, 0.45);
 }
 html[data-theme="dark"] .aa-mega-deal__tag { background: rgba(255, 194, 75, 0.18); color: #FFC24B; }
 html[data-theme="dark"] .aa-mega-deal__save { color: #FFC24B; }
 html[data-theme="dark"] .aa-cod-badge {
   background: rgba(255,255,255,.06);
-  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+   
   border: 1px dashed rgba(255,255,255,.30);
   color: #FFFFFF;
 }
@@ -501,7 +501,7 @@ html[data-theme="dark"] .aa-cod-badge svg { color: #FF2E93; }
 html[data-theme="dark"] .aa-variant-card {
   border: 1px solid rgba(255, 255, 255, 0.12) !important;
   background: rgba(255, 255, 255, 0.06) !important;
-  -webkit-backdrop-filter: blur(10px) !important; backdrop-filter: blur(10px) !important;
+   
   box-shadow: none !important;
 }
 html[data-theme="dark"] .aa-variant-card:hover {
@@ -516,7 +516,7 @@ html[data-theme="dark"] .aa-variant-card.is-selected {
 html[data-theme="dark"] .aa-variant-card__title { color: #FFFFFF; }
 html[data-theme="dark"] .aa-combo-offer {
   background: rgba(255,255,255,.06);
-  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+   
   border: 1px solid rgba(255,255,255,.12);
 }
 html[data-theme="dark"] .aa-combo-offer__badge {
@@ -546,7 +546,7 @@ html[data-theme="dark"] .aa-mega-deal__details-panel strong { color: #FF8C42; }
 html[data-theme="dark"] .aa-aura-match__title { color: #FFFFFF !important; }
 html[data-theme="dark"] .aa-aura-match__trait {
   background: rgba(255,255,255,.06) !important;
-  -webkit-backdrop-filter: blur(10px) !important; backdrop-filter: blur(10px) !important;
+   
   border: 1px solid rgba(255,255,255,.12) !important;
   color: #FFFFFF !important;
 }
@@ -557,7 +557,7 @@ html[data-theme="dark"] .aa-sticky-bar__price { color: #FFFFFF !important; }
 html[data-theme="dark"] .aa-sticky-bar__mrp { color: rgba(255,255,255,.54) !important; }
 html[data-theme="dark"] .aa-sticky-bar__variant-btn {
   background: rgba(255,255,255,.06) !important;
-  -webkit-backdrop-filter: blur(10px) !important; backdrop-filter: blur(10px) !important;
+   
   color: #FFFFFF !important;
   border: 1.5px solid rgba(255,255,255,0.12) !important;
 }
@@ -580,7 +580,7 @@ html[data-theme="dark"] .aa-sticky-bar__cta {
 html[data-theme="dark"] .aa-sticky-bar__cta:hover { box-shadow: 0 10px 24px rgba(255, 46, 147, 0.36) !important; }
 html[data-theme="dark"] .aa-trust-card {
   background: rgba(255,255,255,.06) !important;
-  -webkit-backdrop-filter: blur(10px) !important; backdrop-filter: blur(10px) !important;
+   
   border: 1px solid rgba(255,255,255,0.12) !important;
 }
 html[data-theme="dark"] .aa-trust-card:hover {
@@ -608,7 +608,7 @@ html[data-theme="dark"] .aa-pdp-eyebrow {
   color: rgba(255,255,255,.70);
   background: rgba(255,255,255,.06);
   border: 1px solid rgba(255,255,255,.12);
-  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+   
 }
 html[data-theme="dark"] .aa-pdp-eyebrow::before { background: #FFC24B; }
 html[data-theme="dark"] .aa-pdp-saveline { color: rgba(255,255,255,.70); }
@@ -620,13 +620,13 @@ html[data-theme="dark"] .aa-pdp-cashnote b { color: #FFC24B; }
 html[data-theme="dark"] .aa-pdp-timer {
   color: #FFFFFF;
   background: rgba(255,255,255,.06);
-  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+   
   border: 1px solid rgba(255,255,255,.12);
 }
 html[data-theme="dark"] .aa-pdp-timer .aa-t { color: #FF9F6B; }
 html[data-theme="dark"] .aa-pdp-swatch {
   background: rgba(255,255,255,.06);
-  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+   
   color: #FFFFFF;
 }
 html[data-theme="dark"] .aa-pdp-swatch.is-sel { background: rgba(255,46,147,.10); color: #FFFFFF; border-color: #FF2E93; }
@@ -635,7 +635,7 @@ html[data-theme="dark"] .aa-pdp-scarcity .aa-bar { background: rgba(255, 255, 25
 html[data-theme="dark"] .aa-pdp-scarcity .aa-fill { background: linear-gradient(90deg, #FF8C42, #FF2E93); }
 html[data-theme="dark"] .aa-pdp-trust .aa-tr {
   background: rgba(255,255,255,.06);
-  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+   
   border: 1px solid var(--aa-pdp-hair);
 }
 html[data-theme="dark"] .aa-pdp-trust b { color: #FFFFFF; }
@@ -645,7 +645,7 @@ html[data-theme="dark"] .aa-pdp-atc {
 }
 html[data-theme="dark"] .aa-story {
   background: rgba(255,255,255,.06);
-  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+   
 }
 html[data-theme="dark"] .aa-story .aa-kick { color: #FFC24B; }
 html[data-theme="dark"] .aa-story .aa-ver { color: #3DDC84; border: 1px solid rgba(61, 220, 132, 0.35); }
@@ -659,7 +659,7 @@ html[data-theme="dark"] .aa-story .aa-dots i { background: rgba(255, 255, 255, 0
 html[data-theme="dark"] .aa-story .aa-arr button { background: rgba(255,255,255,.06); color: #FFFFFF; border: 1px solid rgba(255,255,255,.16); }
 html[data-theme="dark"] .aa-deal {
   background: rgba(255,255,255,.06);
-  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+   
   border: 1px solid rgba(255, 255, 255, 0.12);
 }
 html[data-theme="dark"] .aa-deal-badge { background: linear-gradient(135deg, #FF8C42, #FF2E93); color: #fff; box-shadow: 0 3px 10px rgba(255, 46, 147, 0.3); }
@@ -673,7 +673,7 @@ html[data-theme="dark"] .aa-dsv-badge { background: #2E9E5B; color: #fff; border
 html[data-theme="dark"] .aa-dsv-row b { color: #FFFFFF; }
 html[data-theme="dark"] .aa-gww-h { color: rgba(255,255,255,.54); }
 html[data-theme="dark"] .aa-gww-item {
-  background: rgba(255,255,255,.06); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  background: rgba(255,255,255,.06);  
   border: 1px solid rgba(255, 255, 255, 0.12);
 }
 html[data-theme="dark"] .aa-gww-t b { color: #FFFFFF; }
@@ -736,7 +736,7 @@ html[data-theme="dark"] .btn-ghost:hover { background: var(--grad); color: #fff;
 html[data-theme="dark"] .pcard { background: #1A0B2E; border: 1px solid rgba(255,255,255,.12); box-shadow: 0 12px 28px rgba(0,0,0,.45); }
 html[data-theme="dark"] .badge-new { background: var(--grad); color: #fff; }
 html[data-theme="dark"] .pcard .rate {
-  background: rgba(7,6,15,.72); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  background: rgba(7,6,15,.72);  
   border: 1px solid rgba(255,255,255,.14); color: #fff; box-shadow: 0 2px 8px rgba(0,0,0,.35);
 }
 html[data-theme="dark"] .cert .seal { background: var(--grad); color: #fff; }
@@ -1067,8 +1067,8 @@ html[data-theme="dark"] body sticky-header.header-wrapper,
 html[data-theme="dark"] body .header-wrapper {
   background: #010922 !important;
   background-color: #010922 !important;
-  -webkit-backdrop-filter: blur(14px) !important;
-  backdrop-filter: blur(14px) !important;
+  
+  
   border: 0 !important;
   border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
   box-shadow: none !important;
@@ -1310,8 +1310,8 @@ html[data-theme="dark"] .pcard .pct {
    (matches market-tweak's dark .pcard .rate value) */
 html[data-theme="dark"] .pcard .rate {
   background: rgba(7, 6, 15, .72);
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
+  
+  
   border: 1px solid rgba(255, 255, 255, .14);
   color: #FFFFFF;
   box-shadow: 0 2px 8px rgba(0, 0, 0, .35);
@@ -1344,8 +1344,8 @@ html[data-theme="dark"] .pcard .add--sold {
 /* Quick-view button on rail card: glassy chip, readable on dark image */
 html[data-theme="dark"] .pcard .qv-btn .qv-btn__b {
   background: rgba(7, 6, 15, .72) !important;
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
+  
+  
   color: #FFFFFF;
   border: 1px solid rgba(255, 255, 255, .14) !important;
 }
@@ -1397,8 +1397,8 @@ html[data-theme="dark"] .aa-pcard__rate-num {
 }
 html[data-theme="dark"] .aa-pcard__rate {
   background: rgba(7, 6, 15, .72);
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
+  
+  
   border: 1px solid rgba(255, 255, 255, .14);
   color: #FFFFFF;
 }
@@ -1435,8 +1435,8 @@ html[data-theme="dark"] .aa-pcard__cta--sold {
 /* Quick-view button on grid card: glassy chip (matches market-tweak dark) */
 html[data-theme="dark"] .aa-pcard__qv-btn {
   background: rgba(255, 255, 255, .10);
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
+  
+  
   color: #FFFFFF;
   border: 1px solid rgba(255, 255, 255, .14);
 }
@@ -1792,8 +1792,8 @@ html[data-theme="dark"] .aa-cert__tag {
 html[data-theme="dark"] .template-collection .aa-pcard__rate,
 html[data-theme="dark"] .template-search .aa-pcard__rate {
   background: rgba(255, 255, 255, 0.08);
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
+  
+  
   border: 1px solid rgba(255, 255, 255, 0.14);
   color: #FFFFFF;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
@@ -1808,7 +1808,7 @@ html[data-theme="dark"] .template-search .aa-pcard__rate-star {
 html[data-theme="dark"] .template-collection .aa-pcard__rate,
 html[data-theme="dark"] .template-search .aa-pcard__rate {
   background: rgba(18,10,28,.55) !important;
-  -webkit-backdrop-filter: blur(9px) !important; backdrop-filter: blur(9px) !important;
+   
   border: 1px solid rgba(255,255,255,.20) !important;
   color: #FFFFFF !important;
   box-shadow: 0 2px 10px rgba(0,0,0,.35) !important;
@@ -1820,7 +1820,7 @@ html[data-theme="dark"] .template-search .aa-pcard__rate-star { color: #FFC24B !
 html[data-theme="dark"] .template-collection .aa-pcard__qv-btn,
 html[data-theme="dark"] .template-search .aa-pcard__qv-btn {
   background: rgba(18,10,28,.82) !important; color: #FFFFFF !important;
-  -webkit-backdrop-filter: blur(6px) !important; backdrop-filter: blur(6px) !important;
+   
   border: 1px solid rgba(255,255,255,.24) !important;
 }
 /* =============================================================================
@@ -2752,8 +2752,8 @@ html[data-theme="dark"] .aa-pdp-chip {
   border: 1px solid rgba(255, 255, 255, 0.14) !important;
   color: rgba(255, 255, 255, 0.86) !important;
   box-shadow: none !important;
-  -webkit-backdrop-filter: blur(10px) !important;
-  backdrop-filter: blur(10px) !important;
+  
+  
 }
 html[data-theme="dark"] .aa-pdp-chip::before {
   background: #FFC24B !important;
@@ -2771,8 +2771,8 @@ html[data-theme="dark"] media-gallery .slider-buttons .slider-button {
   background: rgba(10, 6, 18, 0.55) !important;
   border: 1px solid rgba(255, 255, 255, 0.18) !important;
   color: #FFFFFF !important;
-  -webkit-backdrop-filter: blur(8px) !important;
-  backdrop-filter: blur(8px) !important;
+  
+  
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35) !important;
   transition: background 200ms ease, border-color 200ms ease, transform 160ms ease;
 }

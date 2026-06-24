@@ -13,8 +13,8 @@ html[data-theme="dark"] .aa-pdp-chip {
   border: 1px solid rgba(255, 255, 255, 0.14) !important;
   color: rgba(255, 255, 255, 0.86) !important;
   box-shadow: none !important;
-  -webkit-backdrop-filter: blur(10px) !important;
-  backdrop-filter: blur(10px) !important;
+  
+  
 }
 html[data-theme="dark"] .aa-pdp-chip::before {
   background: #FFC24B !important;
@@ -32,8 +32,8 @@ html[data-theme="dark"] media-gallery .slider-buttons .slider-button {
   background: rgba(10, 6, 18, 0.55) !important;
   border: 1px solid rgba(255, 255, 255, 0.18) !important;
   color: #FFFFFF !important;
-  -webkit-backdrop-filter: blur(8px) !important;
-  backdrop-filter: blur(8px) !important;
+  
+  
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35) !important;
   transition: background 200ms ease, border-color 200ms ease, transform 160ms ease;
 }

@@ -62,8 +62,8 @@ html[data-theme="dark"] .pcard .pct {
    (matches market-tweak's dark .pcard .rate value) */
 html[data-theme="dark"] .pcard .rate {
   background: rgba(7, 6, 15, .72);
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
+  
+  
   border: 1px solid rgba(255, 255, 255, .14);
   color: #FFFFFF;
   box-shadow: 0 2px 8px rgba(0, 0, 0, .35);
@@ -96,8 +96,8 @@ html[data-theme="dark"] .pcard .add--sold {
 /* Quick-view button on rail card: glassy chip, readable on dark image */
 html[data-theme="dark"] .pcard .qv-btn .qv-btn__b {
   background: rgba(7, 6, 15, .72) !important;
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
+  
+  
   color: #FFFFFF;
   border: 1px solid rgba(255, 255, 255, .14) !important;
 }
@@ -149,8 +149,8 @@ html[data-theme="dark"] .aa-pcard__rate-num {
 }
 html[data-theme="dark"] .aa-pcard__rate {
   background: rgba(7, 6, 15, .72);
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
+  
+  
   border: 1px solid rgba(255, 255, 255, .14);
   color: #FFFFFF;
 }
@@ -187,8 +187,8 @@ html[data-theme="dark"] .aa-pcard__cta--sold {
 /* Quick-view button on grid card: glassy chip (matches market-tweak dark) */
 html[data-theme="dark"] .aa-pcard__qv-btn {
   background: rgba(255, 255, 255, .10);
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
+  
+  
   color: #FFFFFF;
   border: 1px solid rgba(255, 255, 255, .14);
 }
