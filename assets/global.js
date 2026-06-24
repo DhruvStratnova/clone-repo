@@ -291,7 +291,7 @@ function debounce(fn, wait) {
 function throttle(fn, delay) {
   let lastCall = 0;
   return function (...args) {
-    const now = new Date().getTime();
+    const now = Date.now();
     if (now - lastCall < delay) {
       return;
     }
@@ -1343,22 +1343,36 @@ document.addEventListener('DOMContentLoaded', () => {
     const ulElement = slider.querySelector('.grid.product-grid');
     if (!ulElement) return;
 
-    let scrollInterval;
-    const scrollSpeed = 0.5; // Adjust this value to change the scroll speed
+    let scrollRaf;
+    let lastTimestamp;
+    const scrollSpeed = 0.5; // px per 10ms tick, matched below as 0.05 px/ms
+    const scrollSpeedPerMs = scrollSpeed / 10;
+
+    const step = (timestamp) => {
+      if (lastTimestamp === undefined) lastTimestamp = timestamp;
+      const delta = timestamp - lastTimestamp;
+      lastTimestamp = timestamp;
+
+      // Stop scrolling when it reaches the end of the content
+      if (ulElement.scrollLeft + ulElement.clientWidth >= ulElement.scrollWidth) {
+        scrollRaf = undefined;
+        return;
+      }
+      ulElement.scrollLeft += scrollSpeedPerMs * delta;
+      scrollRaf = requestAnimationFrame(step);
+    };
 
     slider.addEventListener('mouseenter', () => {
-      scrollInterval = setInterval(() => {
-        // Stop scrolling when it reaches the end of the content
-        if (ulElement.scrollLeft + ulElement.clientWidth >= ulElement.scrollWidth) {
-          clearInterval(scrollInterval);
-        } else {
-          ulElement.scrollLeft += scrollSpeed;
-        }
-      }, 10); // Adjust interval for smoother or faster animation
+      if (scrollRaf) return;
+      lastTimestamp = undefined;
+      scrollRaf = requestAnimationFrame(step);
     });
 
     slider.addEventListener('mouseleave', () => {
-      clearInterval(scrollInterval);
+      if (scrollRaf) {
+        cancelAnimationFrame(scrollRaf);
+        scrollRaf = undefined;
+      }
     });
   });
 });

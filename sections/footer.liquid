@@ -2,11 +2,9 @@
 {% comment %} AURA AI — Custom footer renders here, original Dawn footer hidden below {% endcomment %}
 {% render 'aa-footer-content' %}
 <div style="display:none !important;">
-{{ 'section-footer.css' | asset_url | stylesheet_tag }}
-{{ 'component-newsletter.css' | asset_url | stylesheet_tag }}
-{{ 'component-list-menu.css' | asset_url | stylesheet_tag }}
-{{ 'component-list-payment.css' | asset_url | stylesheet_tag }}
-{{ 'component-list-social.css' | asset_url | stylesheet_tag }}
+{%- comment -%} PERF: removed section-footer.css + 4 component-*.css (171KB) — they
+   only styled this display:none legacy Dawn footer. The visible footer is
+   aa-footer-content (own aa-footer.css / aa-dark-footer.css, aa-footer__* classes). {%- endcomment -%}
 
 {%- style -%}
   .footer {

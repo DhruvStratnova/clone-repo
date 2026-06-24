@@ -4,7 +4,7 @@
 /* Minimalist astrology fonts:
    - Marcellus — classical serif for titles/headings (Co-Star / Sanctuary vibe)
    - Manrope — clean modern sans for body, prices, buttons (minimal premium) */
-@import url('https://fonts.googleapis.com/css2?family=Marcellus&family=Manrope:wght@300;400;500;600;700&display=swap');
+/* Marcellus + Manrope loaded non-render-blocking from layout/theme.liquid <head> (perf) */
 
 /* SITE-WIDE FONTS */
 html body,
