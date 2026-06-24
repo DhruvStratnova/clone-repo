@@ -7,6 +7,12 @@
 <style>
   .posrel{position:relative;}
   .posrel .posoverlay{position:absolute; top:0; bottom:0; left:0; right:0;}
+  /* The desktop banner is un-hidden on mobile only for the in-app DARK theme
+     (the slides have no mobile crop). In light/web mobile keep it hidden so the
+     wide desktop banner doesn't pop in where it isn't designed for. */
+  @media (max-width: 749px) {
+    html:not([data-theme="dark"]) .slideshow__image.desktop-image { display: none !important; }
+  }
     </style>
 
 
