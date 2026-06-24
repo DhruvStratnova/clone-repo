@@ -57,6 +57,8 @@
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.28);
     }
     .aa-ourproducts .aa-pcard__qv-btn:not(#z1):not(#z2) { display: none !important; }
+    /* dark mode: gradient "+" (black is invisible on the dark bg) */
+    html[data-theme="dark"] .aa-ourproducts .aa-pcard__cta--plus:not(#z1):not(#z2) { background: linear-gradient(96deg, #E9027A, #F58220) !important; box-shadow: 0 4px 12px rgba(233, 2, 122, 0.4) !important; }
   }
 {%- endstyle -%}
 <section class="sec">
