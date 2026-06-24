@@ -6,8 +6,6 @@
  * user picks a new option. Then does a smooth DOM swap of items + footer,
  * plus a belt-and-suspenders direct text patch on the total.
  */
-console.log('[aa-cart-variant-swap] v5 smooth-swap loaded');
-
 (function () {
   let inflight = false;
 
@@ -50,9 +48,7 @@ console.log('[aa-cart-variant-swap] v5 smooth-swap loaded');
     }
     const newVariantId = parseInt(select.value, 10);
     const quantity = parseInt(select.dataset.quantity || '1', 10);
-    console.log('[aa-swap] fired. old=' + oldVariantId + ' new=' + newVariantId + ' qty=' + quantity);
     if (!oldVariantId || !newVariantId || oldVariantId === newVariantId) {
-      console.log('[aa-swap] skipping — invalid or same variant');
       return;
     }
 
@@ -76,7 +72,6 @@ console.log('[aa-cart-variant-swap] v5 smooth-swap loaded');
       });
       if (!resp.ok) throw new Error('update failed: ' + resp.status);
       const data = await resp.json();
-      console.log('[aa-swap] cart now item_count=' + data.item_count + ' total=' + data.total_price);
 
       // Manual DOM swap of items area + footer (smooth, no page reload)
       if (data.sections && data.sections['cart-drawer']) {
@@ -109,7 +104,6 @@ console.log('[aa-cart-variant-swap] v5 smooth-swap loaded');
         const totalEls = document.querySelectorAll('.totals__total-value, .totals__subtotal-value');
         const formatted = formatMoney(data.total_price);
         totalEls.forEach((el) => { el.textContent = formatted; });
-        console.log('[aa-swap] total patched:', formatted);
       }
     } catch (err) {
       console.error('[aa-cart-variant-swap]', err);
@@ -130,6 +124,4 @@ console.log('[aa-cart-variant-swap] v5 smooth-swap loaded');
     },
     true,
   );
-
-  console.log('[aa-cart-variant-swap] change listener bound (capture phase)');
 })();

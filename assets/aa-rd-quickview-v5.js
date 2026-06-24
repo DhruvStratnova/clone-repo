@@ -144,7 +144,7 @@
         }
       }
     }
-    if(slider){ slider.addEventListener('scroll',syncMedia); syncMedia(); }
+    if(slider){ slider.addEventListener('scroll',syncMedia,{passive:true}); syncMedia(); }
     function dealHTML(price){
       var deal=Math.round(price*0.75/100)*100;
       var extra=price-deal;

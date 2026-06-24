@@ -15,7 +15,7 @@
         endif
       -%}
       <a class="ptile" href="{{ block.settings.url | default: coll.url | default: '#' }}" {{ block.shopify_attributes }}>
-        <div class="pi">{% if img %}<img loading="lazy" width="360" height="360" src="{{ img | image_url: width: 360 }}" alt="{{ block.settings.label | escape }}">{% endif %}</div>
+        <div class="pi">{% if img %}<img loading="lazy" width="360" height="360" src="{{ img | image_url: width: 360 }}" srcset="{{ img | image_url: width: 180 }} 180w, {{ img | image_url: width: 270 }} 270w, {{ img | image_url: width: 360 }} 360w" sizes="178px" alt="{{ block.settings.label | escape }}">{% endif %}</div>
         <div class="pl">{{ block.settings.label }}</div>
       </a>
     {%- endfor -%}

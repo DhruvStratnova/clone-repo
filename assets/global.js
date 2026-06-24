@@ -742,7 +742,7 @@ class SliderComponent extends HTMLElement {
     const resizeObserver = new ResizeObserver((entries) => this.initPages());
     resizeObserver.observe(this.slider);
 
-    this.slider.addEventListener('scroll', this.update.bind(this));
+    this.slider.addEventListener('scroll', this.update.bind(this), { passive: true });
     this.prevButton.addEventListener('click', this.onButtonClick.bind(this));
     this.nextButton.addEventListener('click', this.onButtonClick.bind(this));
   }
@@ -843,7 +843,7 @@ class SlideshowComponent extends SliderComponent {
 
     this.sliderControlLinksArray = Array.from(this.sliderControlWrapper.querySelectorAll('.slider-counter__link'));
     this.sliderControlLinksArray.forEach((link) => link.addEventListener('click', this.linkToSlide.bind(this)));
-    this.slider.addEventListener('scroll', this.setSlideVisibility.bind(this));
+    this.slider.addEventListener('scroll', this.setSlideVisibility.bind(this), { passive: true });
     this.setSlideVisibility();
 
     if (this.announcementBarSlider) {
