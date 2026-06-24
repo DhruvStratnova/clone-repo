@@ -58,10 +58,18 @@
 
 <!-- JS for FAQ (add at bottom of theme.liquid before </body>) -->
 <script>
-document.querySelectorAll('.faq-question').forEach(button => {
-  button.addEventListener('click', () => {
-    const item = button.parentElement;
-    item.classList.toggle('active');
+/* Bound to turbo:load (+ guard) so the FAQ toggle works after every Turbo SPA
+   navigation, not only on the initially-parsed product page. */
+function initAaFaq() {
+  document.querySelectorAll('.faq-question').forEach(button => {
+    if (button.dataset.aaFaqInit) return;
+    button.dataset.aaFaqInit = '1';
+    button.addEventListener('click', () => {
+      const item = button.parentElement;
+      item.classList.toggle('active');
+    });
   });
-});
+}
+document.addEventListener('turbo:load', initAaFaq);
+if (document.readyState !== 'loading') initAaFaq();
 </script>

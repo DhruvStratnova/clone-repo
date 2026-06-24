@@ -331,8 +331,10 @@
   {{ 'component-deferred-media.css' | asset_url | stylesheet_tag }}
   {{ 'aa-product-page.css' | asset_url | stylesheet_tag }}
   <script>
-    /* Aura AI — single-open accordion behavior */
-    document.addEventListener('DOMContentLoaded', function() {
+    /* Aura AI — single-open accordion behavior. Bound to turbo:load (fires on
+       first load AND every Turbo SPA nav) so it survives navigation, not just
+       the initial parse (DOMContentLoaded never refires on Turbo nav). */
+    document.addEventListener('turbo:load', function() {
       var details = document.querySelectorAll('.collapsible-row-details');
       details.forEach(function(d) {
         d.addEventListener('toggle', function() {

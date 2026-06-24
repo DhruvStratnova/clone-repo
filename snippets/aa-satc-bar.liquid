@@ -45,21 +45,29 @@
 
 <script>
 (function () {
-  var bar = document.getElementById('AaSatcBar-{{ section_id }}');
-  var atc = document.getElementById('ProductSubmitButton-{{ section_id }}');
-  var buy = document.getElementById('aa-buy-now-btn-{{ section_id }}');
-  if (!bar || !atc) return;
-  bar.querySelector('[data-aa-satc="atc"]').addEventListener('click', function () { atc.click(); });
-  var buyBtn = bar.querySelector('[data-aa-satc="buy"]');
-  if (buy) {
-    buyBtn.addEventListener('click', function () { buy.click(); });
-  } else {
-    buyBtn.style.display = 'none';
-    bar.classList.add('aa-satc-bar--atc-only');
+  /* Re-init after every Turbo SPA navigation, not just first parse, or the
+     sticky buy bar is dead on the 2nd+ product (handlers + show-on-scroll). */
+  function initSatc() {
+    var bar = document.getElementById('AaSatcBar-{{ section_id }}');
+    var atc = document.getElementById('ProductSubmitButton-{{ section_id }}');
+    var buy = document.getElementById('aa-buy-now-btn-{{ section_id }}');
+    if (!bar || !atc) return;
+    if (bar.dataset.aaSatcInit) return;
+    bar.dataset.aaSatcInit = '1';
+    bar.querySelector('[data-aa-satc="atc"]').addEventListener('click', function () { atc.click(); });
+    var buyBtn = bar.querySelector('[data-aa-satc="buy"]');
+    if (buy) {
+      buyBtn.addEventListener('click', function () { buy.click(); });
+    } else {
+      buyBtn.style.display = 'none';
+      bar.classList.add('aa-satc-bar--atc-only');
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { bar.classList.toggle('is-visible', !e.isIntersecting); });
+    }, { rootMargin: '0px 0px -40px 0px' });
+    io.observe(atc);
   }
-  var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) { bar.classList.toggle('is-visible', !e.isIntersecting); });
-  }, { rootMargin: '0px 0px -40px 0px' });
-  io.observe(atc);
+  document.addEventListener('turbo:load', initSatc);
+  if (document.readyState !== 'loading') initSatc();
 })();
 </script>
