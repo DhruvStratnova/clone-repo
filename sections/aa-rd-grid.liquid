@@ -1,30 +1,77 @@
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+{{ 'quick-add.css' | asset_url | stylesheet_tag }}
 {%- liquid
   assign coll = collections[section.settings.collection]
   assign limit = section.settings.count | default: 16
 -%}
+{%- comment -%}
+  Our Products = the COLLECTION product card (snippets/card-product.liquid with
+  aa_coll_card:true), reused off-template using the SAME proven approach as
+  sections/related-products.liquid. card-product renders BOTH the floating "+"
+  form (.aa-pcard__form--float) and the full "Add to cart" pill form
+  (.aa-pcard__form--inline); the collection's own show/hide CSS is
+  .template-collection-scoped, so off-template we ship the per-viewport rules
+  inline here. Mobile = floating "+" circle (no pill); desktop = full pill (no
+  float). Scope chain html body:not(.template-collection) .aa-ourproducts
+  .aa-pcard.card-wrapper.product-card-wrapper beats astroaura-styles.css.
+{%- endcomment -%}
+{%- style -%}
+  html body:not(.template-collection) .aa-ourproducts .aa-pcard.card-wrapper.product-card-wrapper .aa-pcard__rate {
+    position: absolute !important; left: 10px !important; right: auto !important;
+    bottom: 10px !important; top: auto !important; z-index: 3 !important;
+    display: inline-flex !important; align-items: center !important; gap: 4px !important;
+    padding: 4px 9px !important; border-radius: 999px !important;
+    font-size: 12px !important; font-weight: 700 !important;
+    background: rgba(20, 10, 30, 0.72) !important; color: #FFFFFF !important;
+    -webkit-backdrop-filter: blur(6px) !important; backdrop-filter: blur(6px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  }
+  html body:not(.template-collection) .aa-ourproducts .aa-pcard.card-wrapper.product-card-wrapper .aa-pcard__rate-star { color: #FFC83D !important; }
+  html body:not(.template-collection) .aa-ourproducts .aa-pcard.card-wrapper.product-card-wrapper .aa-pcard__title {
+    display: -webkit-box !important; -webkit-line-clamp: 2 !important; -webkit-box-orient: vertical !important;
+    overflow: hidden !important; text-overflow: ellipsis !important;
+  }
+  html body:not(.template-collection) .aa-ourproducts .aa-pcard.card-wrapper.product-card-wrapper .aa-pcard__title a { display: inline !important; }
+
+  /* DESKTOP: full-width "Add to cart" pill, hide the floating "+" */
+  @media screen and (min-width: 750px) {
+    html body:not(.template-collection) .aa-ourproducts .aa-pcard.card-wrapper.product-card-wrapper .aa-pcard__form--float { display: none !important; }
+    html body:not(.template-collection) .aa-ourproducts .aa-pcard.card-wrapper.product-card-wrapper .aa-pcard__form--inline {
+      display: block !important; position: static !important; width: 100% !important; margin-top: auto !important;
+    }
+  }
+
+  /* MOBILE: floating "+" circle, hide the pill */
+  @media screen and (max-width: 749px) {
+    html body:not(.template-collection) .aa-ourproducts .grid.product-grid {
+      padding-left: 16px !important; padding-right: 16px !important; scroll-padding-left: 16px !important;
+    }
+    html body:not(.template-collection) .aa-ourproducts .aa-pcard.card-wrapper.product-card-wrapper .aa-pcard__form--inline { display: none !important; }
+    html body:not(.template-collection) .aa-ourproducts .aa-pcard.card-wrapper.product-card-wrapper .aa-pcard__form--float {
+      position: absolute !important; right: 8px !important; bottom: 8px !important; top: auto !important; left: auto !important;
+      display: block !important; width: auto !important; max-width: none !important; margin: 0 !important; padding: 0 !important; z-index: 4 !important; transform: none !important;
+    }
+    html body:not(.template-collection) .aa-ourproducts .aa-pcard.card-wrapper.product-card-wrapper .aa-pcard__cta.aa-pcard__cta--plus {
+      position: static !important; width: 34px !important; height: 34px !important; max-width: 34px !important; min-width: 34px !important;
+      border-radius: 999px !important; border: 0 !important; padding: 0 !important; margin: 0 !important;
+      display: flex !important; align-items: center !important; justify-content: center !important; gap: 0 !important;
+      background: linear-gradient(135deg, #FF8C42, #FF2E93) !important; color: #FFFFFF !important;
+      font: 600 19px/1 'Jost', sans-serif !important; letter-spacing: 0 !important; text-transform: none !important;
+      box-shadow: 0 6px 16px rgba(255, 46, 147, 0.34) !important;
+    }
+    html body:not(.template-collection) .aa-ourproducts .aa-pcard.card-wrapper.product-card-wrapper .aa-pcard__rate {
+      left: 8px !important; bottom: 8px !important; font-size: 11px !important; padding: 3px 8px !important;
+    }
+  }
+{%- endstyle -%}
 <section class="sec">
   <div class="wrap wide">
     <div class="sh" data-rise><h2 style="font-family:'Cormorant Garamond',Georgia,serif !important;font-weight:600">{{ section.settings.heading | default: 'Our Products' }}</h2></div>
-    <ul class="grid product-grid aa-collection-grid" data-rise>
-      {% assign skip_card_product_styles = false %}
-      {%- for product in coll.products limit: limit -%}
-        {% if product.type == 'mws_apo_generated' %}{% continue %}{% endif %}
-        <li class="grid__item">
-          {% render 'card-product',
-            card_product: product,
-            media_aspect_ratio: 'adapt',
-            show_rating: true,
-            lazy_load: true,
-            skip_styles: skip_card_product_styles,
-            quick_add: 'none',
-            show_quick_view: true,
-            aa_coll_card: true,
-            section_id: section.id
-          %}
-        </li>
-        {%- assign skip_card_product_styles = true -%}
-      {%- else -%}
-        {%- for product in collections.all.products limit: 16 -%}
+    <div class="aa-ourproducts">
+      <ul class="grid product-grid grid--4-col-desktop grid--2-col-tablet-down" role="list" data-rise>
+        {% assign skip_card_product_styles = false %}
+        {%- for product in coll.products limit: limit -%}
           {% if product.type == 'mws_apo_generated' %}{% continue %}{% endif %}
           <li class="grid__item">
             {% render 'card-product',
@@ -34,15 +81,33 @@
               lazy_load: true,
               skip_styles: skip_card_product_styles,
               quick_add: 'none',
-              show_quick_view: true,
+              show_quick_view: false,
               aa_coll_card: true,
               section_id: section.id
             %}
           </li>
           {%- assign skip_card_product_styles = true -%}
+        {%- else -%}
+          {%- for product in collections.all.products limit: 16 -%}
+            {% if product.type == 'mws_apo_generated' %}{% continue %}{% endif %}
+            <li class="grid__item">
+              {% render 'card-product',
+                card_product: product,
+                media_aspect_ratio: 'adapt',
+                show_rating: true,
+                lazy_load: true,
+                skip_styles: skip_card_product_styles,
+                quick_add: 'none',
+                show_quick_view: false,
+                aa_coll_card: true,
+                section_id: section.id
+              %}
+            </li>
+            {%- assign skip_card_product_styles = true -%}
+          {%- endfor -%}
         {%- endfor -%}
-      {%- endfor -%}
-    </ul>
+      </ul>
+    </div>
   </div>
 </section>
 {% schema %}
