@@ -162,7 +162,7 @@ function aaCalcInit() {
     document.addEventListener('mousedown', function (e) {
       if (!suggestionBox.contains(e.target) && e.target !== placeInput) suggestionBox.style.display = 'none';
     });
-    window.addEventListener('scroll', updatePosition, true);
+    window.addEventListener('scroll', updatePosition, { capture: true, passive: true });
     window.addEventListener('resize', updatePosition);
   }
 
