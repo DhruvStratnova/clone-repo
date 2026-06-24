@@ -20,14 +20,16 @@
   @media screen and (max-width: 749px) {
     .sec .aa-op-desk { display: none !important; }
     .aa-op-mob { display: block !important; }
+    /* break the mobile grid out of .wrap's side padding so cards widen + stay centered */
+    .aa-ourproducts.aa-op-mob:not(#z1):not(#z2) { margin-left: -10px !important; margin-right: -10px !important; }
     .aa-ourproducts .aa-op-grid:not(#z1):not(#z2) {
       display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-      gap: 9px !important; width: 100% !important; max-width: 100% !important;
-      padding: 0 10px !important; margin: 0 !important; list-style: none !important; overflow: visible !important; box-sizing: border-box !important;
+      gap: 8px !important; width: 100% !important; max-width: 100% !important;
+      padding: 0 !important; margin: 0 auto !important; list-style: none !important; overflow: visible !important; box-sizing: border-box !important;
     }
     .aa-ourproducts .aa-op-grid > .grid__item:not(#z1):not(#z2) { width: 100% !important; min-width: 0 !important; max-width: 100% !important; margin: 0 !important; }
     .aa-ourproducts .aa-pcard__media-wrap:not(#z1):not(#z2) { position: relative !important; }
-    .aa-ourproducts .aa-pcard:not(#z1):not(#z2) { border-radius: 16px !important; overflow: hidden !important; width: 100% !important; max-width: 100% !important; }
+    .aa-ourproducts .aa-pcard:not(#z1):not(#z2) { border-radius: 16px !important; overflow: hidden !important; width: 100% !important; max-width: 100% !important; min-width: 0 !important; }
     .aa-ourproducts .aa-pcard__media:not(#z1):not(#z2) { aspect-ratio: 1 / 1 !important; border-radius: 0 !important; margin: 0 !important; }
     .aa-ourproducts .aa-pcard__content:not(#z1):not(#z2) { padding: 9px 11px 12px !important; gap: 2px !important; min-width: 0 !important; overflow: hidden !important; }
     /* 1-line title, fit then ellipsis */
@@ -48,11 +50,11 @@
     .aa-ourproducts .aa-pcard__cta--plus:not(#z1):not(#z2) {
       width: 34px !important; height: 34px !important; max-width: none !important;
       border-radius: 999px !important; border: 0 !important; cursor: pointer;
-      background: linear-gradient(96deg, #E9027A, #F58220) !important; color: #fff !important;
+      background: #111111 !important; color: #fff !important;
       font-size: 19px !important; line-height: 1 !important; font-weight: 600 !important;
       display: flex !important; align-items: center !important; justify-content: center !important;
       padding: 0 !important; margin: 0 !important; letter-spacing: 0 !important;
-      box-shadow: 0 4px 12px rgba(233, 2, 122, 0.32);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.28);
     }
     .aa-ourproducts .aa-pcard__qv-btn:not(#z1):not(#z2) { display: none !important; }
   }
