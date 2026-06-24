@@ -7,11 +7,14 @@
 <style>
   .posrel{position:relative;}
   .posrel .posoverlay{position:absolute; top:0; bottom:0; left:0; right:0;}
-  /* The desktop banner is un-hidden on mobile only for the in-app DARK theme
-     (the slides have no mobile crop). In light/web mobile keep it hidden so the
-     wide desktop banner doesn't pop in where it isn't designed for. */
+  /* Mobile hero height: LIGHT/web shows the banner at its natural (full) height
+     from the image aspect ratio; the in-app DARK theme shows a COMPACT, shorter
+     crop. Slides have no mobile image, so the desktop image fills the box and is
+     cover-cropped. The 38% padding (~2.6:1) is the compact dark height — tune to
+     taste. */
   @media (max-width: 749px) {
-    html:not([data-theme="dark"]) .slideshow__image.desktop-image { display: none !important; }
+    #Slider-{{ section.id }} .slideshow__image.desktop-image { object-fit: cover !important; }
+    html[data-theme="dark"] #Slider-{{ section.id }} .media::before { padding-bottom: 38% !important; }
   }
     </style>
 
