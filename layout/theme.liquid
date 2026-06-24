@@ -386,7 +386,7 @@
        so: cascade + look are byte-identical for dark, light/web visitors download
        ZERO dark CSS, no flash (render-blocking during parse), FPC-safe (cookie
        read client-side). Sources kept on disk for editing; rebuild bundle on change. {%- endcomment -%}
-    <script>if(document.cookie.split('; ').indexOf('app_color_scheme=dark')>-1){document.write('<link rel="stylesheet" href="{{ 'aa-dark-bundle.css' | asset_url }}" media="all">');}</script>
+    <script>if(document.cookie.split('; ').indexOf('app_color_scheme=dark')>-1){var h='{{ 'aa-dark-bundle.css' | asset_url }}';if(document.readyState==='loading'){document.write('<link rel="stylesheet" id="aa-dark-bundle" href="'+h+'" media="all">');}else if(!document.getElementById('aa-dark-bundle')){var l=document.createElement('link');l.id='aa-dark-bundle';l.rel='stylesheet';l.href=h;l.media='all';document.head.appendChild(l);}}</script>
 
     {%- if localization.available_countries.size > 1 or localization.available_languages.size > 1 -%}
       {{ 'component-localization-form.css' | asset_url | stylesheet_tag: preload: true }}

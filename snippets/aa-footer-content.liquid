@@ -1,6 +1,6 @@
 {% comment %} Aura AI custom footer content — rendered in place of Dawn footer {% endcomment %}
 {{ 'aa-footer.css' | asset_url | stylesheet_tag }}
-<script>if(document.cookie.split('; ').indexOf('app_color_scheme=dark')>-1){document.write('<link rel="stylesheet" href="{{ 'aa-dark-footer.css' | asset_url }}" media="all">');}</script>
+<script>if(document.cookie.split('; ').indexOf('app_color_scheme=dark')>-1){var h='{{ 'aa-dark-footer.css' | asset_url }}';if(document.readyState==='loading'){document.write('<link rel="stylesheet" id="aa-dark-footer" href="'+h+'" media="all">');}else if(!document.getElementById('aa-dark-footer')){var l=document.createElement('link');l.id='aa-dark-footer';l.rel='stylesheet';l.href=h;l.media='all';document.head.appendChild(l);}}</script>
 
 <footer class="aa-footer">
   <!-- Decorative cosmic globes — top-left + bottom-right, slow rotation -->

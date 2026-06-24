@@ -8,7 +8,7 @@
 {%- endcomment -%}
 
 {%- if part == 'top' -%}
-  <script>if(document.cookie.split('; ').indexOf('app_color_scheme=dark')>-1){document.write('<link rel="stylesheet" href="{{ 'aa-dark-pdp.css' | asset_url }}" media="all">');}</script>
+  <script>if(document.cookie.split('; ').indexOf('app_color_scheme=dark')>-1){var h='{{ 'aa-dark-pdp.css' | asset_url }}';if(document.readyState==='loading'){document.write('<link rel="stylesheet" id="aa-dark-pdp" href="'+h+'" media="all">');}else if(!document.getElementById('aa-dark-pdp')){var l=document.createElement('link');l.id='aa-dark-pdp';l.rel='stylesheet';l.href=h;l.media='all';document.head.appendChild(l);}}</script>
   {%- assign aa_features = product.metafields.custom.key_feature.value -%}
   {%- if aa_features and aa_features.size > 0 -%}
     <div class="aa-pdp-chips">
