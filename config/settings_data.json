@@ -175,14 +175,14 @@
         "type": "shopify://apps/inbox/blocks/chat/841fc607-4181-4ad1-842d-e24d7f8bad6b",
         "disabled": true,
         "settings": {
+          "greeting_message": "",
           "button_color": "#000000",
           "secondary_color": "#ffffff",
           "ternary_color": "#6a6a6a",
           "button_icon": "team",
           "button_text": "support",
           "button_horizontal_position": "bottom_right",
-          "button_vertical_position": "lowest",
-          "greeting_message": ""
+          "button_vertical_position": "lowest"
         }
       },
       "14060646107696862457": {
@@ -253,6 +253,11 @@
       },
       "2567389343055140935": {
         "type": "shopify://apps/microsoft-clarity/blocks/clarity_js/31c3d126-8116-4b4a-8ba1-baeda7c4aeea",
+        "disabled": false,
+        "settings": {}
+      },
+      "13694372020385051692": {
+        "type": "shopify://apps/analyzely/blocks/analyzely/b3a3a697-6f42-4507-a5ae-c447f6da2c9d",
         "disabled": false,
         "settings": {}
       }
