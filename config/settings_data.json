@@ -13,7 +13,6 @@
     "ai_chatbot_ws_url": "https://nexaverse.tech",
     "logo_width": 280,
     "favicon": "shopify://shop_images/Frame_2147223404.png",
-    "meta_pixel_id": "1532873735240771",
     "type_header_font": "ovo_n4",
     "heading_scale": 100,
     "type_body_font": "neuzeit_s_n4",
@@ -138,6 +137,7 @@
     "ai_chatbot_position": "bottom-right",
     "ai_chatbot_width": 350,
     "ai_chatbot_max_height": 600,
+    "meta_pixel_id": "1532873735240771",
     "_aa_snapshot_bump": "bump-1779916774",
     "theme_name": "Dawn",
     "sections": {
@@ -249,6 +249,11 @@
       "3557650678667880288": {
         "type": "shopify://apps/razorpay-cod-magic-checkout/blocks/magicx-script/c13c688d-5c45-4054-b95f-1edd63faa705",
         "disabled": true,
+        "settings": {}
+      },
+      "2567389343055140935": {
+        "type": "shopify://apps/microsoft-clarity/blocks/clarity_js/31c3d126-8116-4b4a-8ba1-baeda7c4aeea",
+        "disabled": false,
         "settings": {}
       }
     },
