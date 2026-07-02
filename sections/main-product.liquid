@@ -461,53 +461,64 @@
      notches punched at the SEAM (right edge of the stub) that reveal the card
      background behind — the classic perforation look (ref: BSC coupon). */
   #ProductInfo-{{ section.id }} .aa-coupon {
-    --line:#eeeeee;
-    display:flex; margin:16px 0 4px; background:#ffffff;
-    border:1px solid #ececec; border-radius:14px; overflow:hidden;
+    --line:#ededed; position:relative;
+    display:flex; margin:18px 0 6px; background:#ffffff;
+    border-radius:16px; overflow:hidden;
+    /* single inward scoop on the RIGHT edge; drop-shadow keeps a clean outline */
+    -webkit-mask: radial-gradient(11px at 100% 50%, #0000 96%, #000 100%);
+            mask: radial-gradient(11px at 100% 50%, #0000 96%, #000 100%);
+    filter: drop-shadow(0 3px 10px rgba(0,0,0,.09));
     font-family:'Poppins',system-ui,sans-serif;
   }
   #ProductInfo-{{ section.id }} .aa-coupon__stub {
-    position:relative; flex:0 0 52px;
+    position:relative; z-index:0; flex:0 0 56px;
     background:linear-gradient(150deg, #FF8C42, #FF2E93);   /* brand gradient stub */
     display:flex; align-items:center; justify-content:center;
-    -webkit-mask:
-      radial-gradient(6px at 100% 15%, #0000 96%, #000),
-      radial-gradient(6px at 100% 38%, #0000 96%, #000),
-      radial-gradient(6px at 100% 62%, #0000 96%, #000),
-      radial-gradient(6px at 100% 85%, #0000 96%, #000);
-    -webkit-mask-composite: source-in;
-    mask:
-      radial-gradient(6px at 100% 15%, #0000 96%, #000),
-      radial-gradient(6px at 100% 38%, #0000 96%, #000),
-      radial-gradient(6px at 100% 62%, #0000 96%, #000),
-      radial-gradient(6px at 100% 85%, #0000 96%, #000);
-    mask-composite: intersect;
   }
   #ProductInfo-{{ section.id }} .aa-coupon__amt {
     transform:rotate(-90deg); white-space:nowrap; color:#fff;
-    font-weight:800; font-size:13px; letter-spacing:.5px;
+    font-weight:800; font-size:15px; letter-spacing:.6px;
   }
-  #ProductInfo-{{ section.id }} .aa-coupon__body { flex:1 1 auto; min-width:0; display:flex; flex-direction:column; }
+  /* body overlaps the stub by 7px and punches semicircle notches out of its OWN
+     left edge, revealing the gradient stub behind = gradient bumps that point
+     INTO the body (convex), the mirror of a plain bite. */
+  #ProductInfo-{{ section.id }} .aa-coupon__body {
+    position:relative; z-index:1; flex:1 1 auto; min-width:0;
+    margin-left:-7px; background:#ffffff;
+    display:flex; flex-direction:column;
+    -webkit-mask:
+      radial-gradient(7px at 0 15%, #0000 96%, #000),
+      radial-gradient(7px at 0 38%, #0000 96%, #000),
+      radial-gradient(7px at 0 62%, #0000 96%, #000),
+      radial-gradient(7px at 0 85%, #0000 96%, #000);
+    -webkit-mask-composite: source-in;
+    mask:
+      radial-gradient(7px at 0 15%, #0000 96%, #000),
+      radial-gradient(7px at 0 38%, #0000 96%, #000),
+      radial-gradient(7px at 0 62%, #0000 96%, #000),
+      radial-gradient(7px at 0 85%, #0000 96%, #000);
+    mask-composite: intersect;
+  }
   #ProductInfo-{{ section.id }} .aa-coupon__top {
-    display:flex; align-items:center; justify-content:space-between; gap:12px; padding:11px 16px;
+    display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 20px 10px 15px;
   }
-  #ProductInfo-{{ section.id }} .aa-coupon__label { font-size:16px; font-weight:700; color:#1a1a1a; line-height:1.1; white-space:nowrap; }
+  #ProductInfo-{{ section.id }} .aa-coupon__label { font-size:18px; font-weight:700; color:#1a1a1a; line-height:1.1; white-space:nowrap; }
   #ProductInfo-{{ section.id }} .aa-coupon__timer {
-    font-size:12px; font-weight:500; color:#8a8a8a; white-space:nowrap;
+    font-size:13px; font-weight:500; color:#8a8a8a; white-space:nowrap;
     display:inline-flex; align-items:center; gap:5px;
   }
   #ProductInfo-{{ section.id }} .aa-coupon__timer-lbl { opacity:.9; }
   #ProductInfo-{{ section.id }} .aa-coupon__timer [data-aa-countdown] { color:#1a1a1a; font-weight:700; font-variant-numeric:tabular-nums; }
   #ProductInfo-{{ section.id }} .aa-coupon__sub {
-    border-top:1px solid var(--line); padding:10px 16px;
-    font-size:12.5px; font-weight:400; color:#8a8a8a; line-height:1.35;
+    border-top:1px solid var(--line); padding:9px 20px 9px 15px;
+    font-size:13.5px; font-weight:400; color:#8a8a8a; line-height:1.35;
   }
   /* dark: card becomes a dark surface; notches reveal the same dark = seamless */
-  html[data-theme="dark"] #ProductInfo-{{ section.id }} .aa-coupon { --line:rgba(255,255,255,.10); background:#160c28; border-color:rgba(255,255,255,.10); }
+  html[data-theme="dark"] #ProductInfo-{{ section.id }} .aa-coupon { --line:rgba(255,255,255,.10); background:#160c28; }
+  html[data-theme="dark"] #ProductInfo-{{ section.id }} .aa-coupon__body { background:#160c28; }
   html[data-theme="dark"] #ProductInfo-{{ section.id }} .aa-coupon__label { color:#ffffff; }
   html[data-theme="dark"] #ProductInfo-{{ section.id }} .aa-coupon__timer { color:rgba(255,255,255,.55); }
   html[data-theme="dark"] #ProductInfo-{{ section.id }} .aa-coupon__timer [data-aa-countdown] { color:#ffffff; }
-  html[data-theme="dark"] #ProductInfo-{{ section.id }} .aa-coupon__sub { color:rgba(255,255,255,.6); }
   html[data-theme="dark"] #ProductInfo-{{ section.id }} .aa-coupon__sub { color:rgba(255,255,255,.6); }
 {%- endstyle -%}
   {{ 'component-price.css' | asset_url | stylesheet_tag }}
@@ -752,7 +763,7 @@
                 </div>
                 <div class="aa-coupon">
                   <div class="aa-coupon__stub">
-                    <span class="aa-coupon__amt">Flat 25%</span>
+                    <span class="aa-coupon__amt">Flat 25</span>
                   </div>
                   <div class="aa-coupon__body">
                     <div class="aa-coupon__top">
