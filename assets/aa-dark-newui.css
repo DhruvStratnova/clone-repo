@@ -72,3 +72,38 @@ html[data-theme="dark"] .card-wrapper.product-card-wrapper{
   background:#150A24 !important;
   border-color:rgba(255,255,255,.1) !important;
   box-shadow:0 10px 26px rgba(0,0,0,.45) !important}
+
+/* ============ 5. Judge.me reviews widget — was a big WHITE block in dark ============ */
+/* The reviews summary header, sort dropdown, form, pagination rendered white with
+   dark reviewer text. Keep the gold stars + colored histogram bars; only recolor
+   surfaces + text. Verified on live dark PDP. */
+html[data-theme="dark"] .jdgm-rev-widg__header{
+  background:rgba(255,255,255,.04) !important;color:#fff !important;
+  border:1px solid rgba(255,255,255,.1) !important;border-radius:16px !important}
+html[data-theme="dark"] .jdgm-rev-widg__title,
+html[data-theme="dark"] .jdgm-rev-widg__summary-text,
+html[data-theme="dark"] .jdgm-histogram__label,
+html[data-theme="dark"] .jdgm-histogram__frequency,
+html[data-theme="dark"] .jdgm-rev__author,
+html[data-theme="dark"] .jdgm-rev__title,
+html[data-theme="dark"] .jdgm-rev__body,
+html[data-theme="dark"] .jdgm-row-profile,
+html[data-theme="dark"] .jdgm-rev__author-wrapper,
+html[data-theme="dark"] .jdgm-rev__rating-title,
+html[data-theme="dark"] .jdgm-rev__timestamp{color:rgba(255,255,255,.86) !important}
+html[data-theme="dark"] .jdgm-sort-dropdown,
+html[data-theme="dark"] .jdgm-paginate__page,
+html[data-theme="dark"] .jdgm-form input,
+html[data-theme="dark"] .jdgm-form textarea,
+html[data-theme="dark"] .jdgm-btn--border{
+  background:rgba(255,255,255,.06) !important;color:#fff !important;
+  border-color:rgba(255,255,255,.18) !important}
+html[data-theme="dark"] .jdgm-rev{border-color:rgba(255,255,255,.1) !important}
+
+/* ============ 6. Cart drawer promo marquee — cream strip in dark ============ */
+/* .aac__promo (cart-drawer.liquid) bakes a cream gradient; swap to a subtle dark
+   strip + light text in dark mode so it matches the dark cart. */
+html[data-theme="dark"] .aac__promo{
+  background:rgba(255,255,255,.06) !important}
+html[data-theme="dark"] .aac__promo span{color:rgba(255,255,255,.85) !important}
+html[data-theme="dark"] .aac__promo b{color:#fff !important}
