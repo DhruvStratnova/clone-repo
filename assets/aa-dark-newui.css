@@ -107,3 +107,12 @@ html[data-theme="dark"] .aac__promo{
   background:rgba(255,255,255,.06) !important}
 html[data-theme="dark"] .aac__promo span{color:rgba(255,255,255,.85) !important}
 html[data-theme="dark"] .aac__promo b{color:#fff !important}
+
+/* ============ 7. Collection "View more" button — was white in dark ============ */
+html[data-theme="dark"] .aa-viewmore__btn{
+  background:rgba(255,255,255,.06) !important;color:#fff !important;
+  border-color:rgba(255,255,255,.2) !important}
+
+/* ============ 8. Product-card "% off" savings — dim green on dark cards ============ */
+/* rgb(46,158,91) reads faint on the dark card; brighten for dark only. */
+html[data-theme="dark"] .aa-pcard__pct{color:#3FD07A !important}

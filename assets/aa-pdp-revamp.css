@@ -971,9 +971,11 @@ html[data-theme="dark"] .aa-pdp-offer__timer svg { color: rgba(255, 255, 255, 0.
     margin: 0 !important;
     justify-content: center !important;
     text-align: center !important;
-    white-space: nowrap !important;
+    white-space: normal !important;      /* let long labels (e.g. "Spiritual Awareness") wrap inside the pill instead of spilling off-screen */
+    line-height: 1.18 !important;
+    overflow: hidden !important;
     padding-left: 8px !important;
     padding-right: 8px !important;
-    font-size: 0.95rem !important;
+    font-size: 0.9rem !important;
   }
 }
