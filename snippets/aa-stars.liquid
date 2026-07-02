@@ -1,6 +1,0 @@
-{%- comment -%}
-  5 gold rating stars as inline SVG. The plain ★ unicode glyph rendered broken
-  (boxes / mis-shaped) inside the in-app webview, so we draw the star instead —
-  identical on every device. Optional param: count (defaults to 5 filled).
-{%- endcomment -%}
-<span class="aa-stars-row" aria-hidden="true">{%- for i in (1..5) -%}<svg class="aa-star" viewBox="0 0 24 24"><path d="M12 2.2l2.92 6.16 6.78.86-4.98 4.66 1.27 6.72L12 18.1l-6.0 2.86 1.27-6.72L2.3 9.22l6.78-.86z"/></svg>{%- endfor -%}</span>
