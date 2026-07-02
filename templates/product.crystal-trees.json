@@ -151,6 +151,55 @@
         "padding_bottom": 36
       }
     },
+    "image_with_text_BTVzcx": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_VXrBTe": {
+          "type": "heading",
+          "settings": {
+            "heading": "Bracelets & You",
+            "heading_size": "h1"
+          }
+        },
+        "text_GABa9L": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Bracelets are elegant accessories symbolizing love, strength, and style. Made from gold, silver, beads, or crystals, they suit every personality and occasion. Lightweight and comfortable, they pair easily with other jewelry. From minimalist to bold designs, bracelets enhance modern fashion while carrying sentimental and symbolic value in personal style.</p>",
+            "text_style": "body"
+          }
+        },
+        "button_JLGGQF": {
+          "type": "button",
+          "settings": {
+            "button_label": "Learn More",
+            "button_link": "shopify://collections/rashi-bracelets",
+            "button_style_secondary": true
+          }
+        }
+      },
+      "block_order": [
+        "heading_VXrBTe",
+        "text_GABa9L",
+        "button_JLGGQF"
+      ],
+      "disabled": true,
+      "name": "t:sections.image-with-text.presets.name",
+      "settings": {
+        "image": "shopify://shop_images/ChatGPT_Image_Sep_5_2025_11_12_01_AM.png",
+        "height": "adapt",
+        "desktop_image_width": "small",
+        "layout": "image_first",
+        "image_behavior": "none",
+        "content_layout": "no-overlap",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "mobile_content_alignment": "left",
+        "section_color_scheme": "",
+        "color_scheme": "",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
     "collapsible_content_FVzxxR": {
       "type": "collapsible-content",
       "blocks": {
@@ -168,7 +217,7 @@
           "settings": {
             "heading": "How natural and authentic is this gemstone?",
             "icon": "none",
-            "row_content": "<p>All our stones are 100% natural and authentic. The healing stones have been sourced from top international mines from across the globe and certified by various labs.  <br/><br/></p>",
+            "row_content": "<p>All our stones are 100% natural and authentic. The healing stones have been sourced from top international mines from across the globe and certified by various labs.\u00a0\u00a0<br/><br/></p>",
             "page": ""
           }
         },
@@ -177,7 +226,7 @@
           "settings": {
             "heading": "What is the return policy and estimated delivery duration?",
             "icon": "none",
-            "row_content": "<p>We offer a hassle-free 7-day return policy. Additionally, you can expect delivery within 10 to 14 days. <br/><br/></p>",
+            "row_content": "<p>We offer a hassle-free 7-day return policy. Additionally, you can expect delivery within 10 to 14 days.\u00a0<br/><br/></p>",
             "page": ""
           }
         },
@@ -186,7 +235,7 @@
           "settings": {
             "heading": "How is this energized and how can i wear it?",
             "icon": "none",
-            "row_content": "<p><strong>How can crystals heal-</strong> All healing crystals correspond to different planets in our solar system, which is why each crystal vibrates at its unique frequency. These healing stones offer more than mere aesthetic value. At the right frequency the crystals directly affect the 7 chakras of the human body.  <br/><br/><br/><strong>What is energisation-</strong> When properly energised, the crystals vibrate at frequencies that align with the various chakras in our body. This process of ensuring the alignment of frequencies, known as the energization of a healing stone, enhances their therapeutic and psychic benefits. </p><p><br/><strong>How we help-</strong> At Astrotalk, we ensure that all our healing stones are sourced and energised by trusted experts and astrologers to guarantee their authenticity. Before delivery, all our healing stones are energised with pure intentions and energy by our esteemed astrologers, making them highly effective for our customers. </p>",
+            "row_content": "<p><strong>How can crystals heal-</strong>\u00a0All healing crystals correspond to different planets in our solar system, which is why each crystal vibrates at its unique frequency. These healing stones offer more than mere aesthetic value. At the right frequency the crystals directly affect the 7 chakras of the human body.\u00a0\u00a0<br/><br/><br/><strong>What is energisation-</strong>\u00a0When properly energised, the crystals vibrate at frequencies that align with the various chakras in our body. This process of ensuring the alignment of frequencies, known as the energization of a healing stone, enhances their therapeutic and psychic benefits.\u00a0</p><p><br/><strong>How we help-</strong>\u00a0At Astrotalk, we ensure that all our healing stones are sourced and energised by trusted experts and astrologers to guarantee their authenticity. Before delivery, all our healing stones are energised with pure intentions and energy by our esteemed astrologers, making them highly effective for our customers.\u00a0</p>",
             "page": ""
           }
         }
@@ -237,18 +286,14 @@
     "aa_certify": {
       "type": "aa-rd-certify",
       "settings": {}
-    },
-    "aa_faq": {
-      "type": "aa-pdp-faq",
-      "settings": {}
     }
   },
   "order": [
     "main",
     "aa_certify",
     "related-products",
+    "image_with_text_BTVzcx",
     "collapsible_content_FVzxxR",
-    "1758806897b73a9307",
-    "aa_faq"
+    "1758806897b73a9307"
   ]
 }

@@ -133,6 +133,7 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/Healing_properties_1.png",
+            "image_mobile": "shopify://shop_images/section_5_8655b04c-3577-4258-b295-66987f1a64fa.png",
             "image_overlay_opacity": 0,
             "heading": "",
             "heading_size": "h1",
@@ -152,6 +153,7 @@
           "disabled": true,
           "settings": {
             "image": "shopify://shop_images/How_to_use.png",
+            "image_mobile": "shopify://shop_images/section_6_46648d00-e770-4e6f-bf9a-e27a4faec007.png",
             "image_overlay_opacity": 0,
             "heading": "",
             "heading_size": "h1",
@@ -171,6 +173,7 @@
           "disabled": true,
           "settings": {
             "image": "shopify://shop_images/Why_Bring_Rudraksha_Into_Your_Life.png",
+            "image_mobile": "shopify://shop_images/section_7_e4e85468-1fac-4d13-95d5-974271a8d212.png",
             "image_overlay_opacity": 0,
             "heading": "",
             "heading_size": "h1",
@@ -190,6 +193,7 @@
           "disabled": true,
           "settings": {
             "image": "shopify://shop_images/Water_Test_The_Truth_Revealed.png",
+            "image_mobile": "shopify://shop_images/div_9_a263b41d-b9b3-4ee0-81a0-b4b7b04287ae.png",
             "image_overlay_opacity": 0,
             "heading": "",
             "heading_size": "h1",
@@ -230,6 +234,7 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/How_to_use.png",
+            "image_mobile": "shopify://shop_images/section_6_46648d00-e770-4e6f-bf9a-e27a4faec007.png",
             "image_overlay_opacity": 0,
             "heading": "",
             "heading_size": "h1",
@@ -286,6 +291,7 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/Why_Bring_Rudraksha_Into_Your_Life.png",
+            "image_mobile": "shopify://shop_images/section_7_e4e85468-1fac-4d13-95d5-974271a8d212.png",
             "image_overlay_opacity": 0,
             "heading": "",
             "heading_size": "h1",
@@ -342,6 +348,7 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/Water_Test_The_Truth_Revealed.png",
+            "image_mobile": "shopify://shop_images/div_9_a263b41d-b9b3-4ee0-81a0-b4b7b04287ae.png",
             "image_overlay_opacity": 0,
             "heading": "",
             "heading_size": "h1",
@@ -425,6 +432,54 @@
         "include_margins": true
       }
     },
+    "image_with_text_BTVzcx": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_VXrBTe": {
+          "type": "heading",
+          "settings": {
+            "heading": "Rudraksha & You",
+            "heading_size": "h1"
+          }
+        },
+        "text_GABa9L": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Rudraksha beads, sacred to Lord Shiva, hold spiritual power and protective energy. Their vibrations balance mind, body, and soul, fostering peace, focus, and resilience. Wearing Rudraksha reduces stress, sharpens intuition, and shields from negativity. From single to multi-Mukhi, each bead supports life aspects, guiding spiritual growth and inner strength.</p>",
+            "text_style": "body"
+          }
+        },
+        "button_JLGGQF": {
+          "type": "button",
+          "settings": {
+            "button_label": "Learn More",
+            "button_link": "shopify://collections/rudrasha",
+            "button_style_secondary": true
+          }
+        }
+      },
+      "block_order": [
+        "heading_VXrBTe",
+        "text_GABa9L",
+        "button_JLGGQF"
+      ],
+      "name": "t:sections.image-with-text.presets.name",
+      "settings": {
+        "image": "shopify://shop_images/ChatGPT_Image_Sep_2_2025_01_34_17_PM.png",
+        "height": "adapt",
+        "desktop_image_width": "small",
+        "layout": "image_first",
+        "image_behavior": "none",
+        "content_layout": "no-overlap",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "mobile_content_alignment": "left",
+        "section_color_scheme": "",
+        "color_scheme": "",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
     "collapsible_content_FVzxxR": {
       "type": "collapsible-content",
       "blocks": {
@@ -491,10 +546,6 @@
     "aa_certify": {
       "type": "aa-rd-certify",
       "settings": {}
-    },
-    "aa_faq": {
-      "type": "aa-pdp-faq",
-      "settings": {}
     }
   },
   "order": [
@@ -507,7 +558,7 @@
     "slideshow_gLGgpg",
     "slideshow_mHQYmL",
     "1758874356394114cb",
-    "collapsible_content_FVzxxR",
-    "aa_faq"
+    "image_with_text_BTVzcx",
+    "collapsible_content_FVzxxR"
   ]
 }
