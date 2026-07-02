@@ -152,9 +152,25 @@
     setTimeout(function () { searchEl.hidden = true; searchEl.setAttribute('aria-hidden', 'true'); }, 180);
   }
   function esc(s) { return String(s).replace(/[<>&"]/g, function (c) { return { '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;' }[c]; }); }
+  function rankSearch(q, products) {
+    var ql = (q || '').toLowerCase().trim();
+    if (!ql) return products;
+    var esc2 = function (w) { return w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); };
+    var toks = ql.split(/\s+/).filter(Boolean);
+    return products.map(function (p, i) {
+      var t = (p.title || '').toLowerCase(), s = 0;
+      if (t === ql) s += 1000;
+      else if (t.indexOf(ql) === 0) s += 600;
+      else if (new RegExp('\\b' + esc2(ql)).test(t)) s += 400;
+      else if (t.indexOf(ql) > -1) s += 200;
+      toks.forEach(function (w) { if (new RegExp('\\b' + esc2(w)).test(t)) s += 40; });
+      return { p: p, s: s - i };
+    }).sort(function (a, b) { return b.s - a.s; }).map(function (x) { return x.p; });
+  }
   function renderSearch(products, q) {
     setHeading('Results');
     if (!products.length) { resultsEl.innerHTML = '<div class="aa-search__empty">No results for &ldquo;' + esc(q) + '&rdquo;</div>'; return; }
+    products = rankSearch(q, products);
     var rows = products.map(function (p) {
       var img = (p.featured_image && p.featured_image.url) || p.image || '';
       if (img) img = img + (img.indexOf('?') >= 0 ? '&' : '?') + 'width=140';
@@ -166,7 +182,7 @@
   }
   function runSearch(q) {
     if (!q || q.trim().length < 2) { showPopular(); return; }
-    fetch('/search/suggest.json?q=' + encodeURIComponent(q) + '&resources[type]=product&resources[limit]=10&resources[options][unavailable_products]=last', { credentials: 'same-origin' })
+    fetch('/search/suggest.json?q=' + encodeURIComponent(q) + '&resources[type]=product&resources[limit]=10&resources[options][unavailable_products]=last&resources[options][fields]=title,product_type,variants.title,tag', { credentials: 'same-origin' })
       .then(function (r) { return r.json(); })
       .then(function (d) {
         var ps = (d.resources && d.resources.results && d.resources.results.products) || [];

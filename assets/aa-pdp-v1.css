@@ -29,16 +29,16 @@ body.template-product .product__title h2.h1 {
 }
 
 /* ---- chips + social proof ---- */
-.aa-pdp-chips { display: flex; gap: 8px; flex-wrap: wrap; margin: 0 0 12px; }
+.aa-pdp-chips { display: flex; gap: 10px; flex-wrap: wrap; margin: 0 0 16px; }
 .aa-pdp-chip {
-  display: inline-flex; align-items: center; gap: 6px;
-  font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
-  padding: 7px 13px; border-radius: 999px; color: #5d4a53;
-  background: #fff; box-shadow: 0 1px 2px rgba(36, 16, 25, 0.06);
+  display: inline-flex; align-items: center;
+  font-size: 1.1rem; font-weight: 700; letter-spacing: 0; text-transform: none;
+  padding: 13px 24px; border-radius: 999px; line-height: 1;
+  color: #241019; background: #fff; border: 1px solid #e6ddd0;
 }
-.aa-pdp-chip::before {
-  content: ''; width: 5px; height: 5px; border-radius: 50%; background: #B58E3E; flex: 0 0 auto;
-}
+.aa-pdp-chip--a { background: #FBEFD6; color: #8a6d3b; }
+.aa-pdp-chip--b { background: #EBE3F7; color: #5b4b8a; }
+.aa-pdp-chip::before { display: none; }
 .aa-pdp-social {
   display: flex; align-items: center; gap: 8px;
   font-size: 13px; color: #9a5b2a; font-weight: 600; margin: 10px 0 2px;
@@ -200,8 +200,7 @@ body.template-product .shopify-payment-button__button--unbranded:active { transf
   body.template-product .product__title h2.h1 { font-size: 27px; }
   body.template-product .price--large .price-item--sale,
   body.template-product .price--large .price-item--last { font-size: 28px; }
-  .aa-pdp-chips { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; padding-bottom: 2px; }
-  .aa-pdp-chips::-webkit-scrollbar { display: none; }
+  .aa-pdp-chips { flex-wrap: wrap; overflow: visible; gap: 8px; padding: 5px 0; }
   .aa-pdp-chip { flex: 0 0 auto; }
   .aa-pdp-social { font-size: 12px; }
   .aa-pdp-timer { font-size: 12px; padding: 6px 13px; }

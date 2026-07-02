@@ -38,7 +38,7 @@
       assign is_combo = true
     endif
   -%}
-  <article class="aa-pcard card-wrapper product-card-wrapper{% if card_product.type == 'Mani' or is_combo %} aa-fill{% elsif card_product.type == 'Anklet' or card_product.type == 'Vastu' %} aa-fill-strong{% endif %}" data-section="{{ section_id }}">
+  <article class="aa-pcard card-wrapper product-card-wrapper{% if card_product.type == 'Mani' or is_combo %} aa-fill{% elsif card_product.type == 'Anklet' or card_product.type == 'Vastu' %} aa-fill-strong{% endif %}" data-section="{{ section_id }}" data-aa-hindi="{{ card_product.metafields.custom.hindi_title.value | default: card_product.metafields.custom.subtitle.value | escape }}">
     {%- comment -%}
       Wrap media+form in a position:relative div so the form can absolutely
       pin to bottom-right of the IMAGE regardless of parent layout (flex,

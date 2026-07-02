@@ -1,74 +1,142 @@
-{%- comment -%} AstroAura — on-brand authenticity / trust section {%- endcomment -%}
-{%- comment -%} Cormorant Garamond loaded globally in theme.liquid; redundant section <link> removed. {%- endcomment -%}
+{%- comment -%}
+  AstroAura "Why Aura AI?" trust band - single image (assets/aa-trust.webp), full width on
+  desktop, scales on mobile. image_1 overrides if a merchant sets one. Shows on every product.
+{%- endcomment -%}
+<section class="aa-why">
+  <div class="aa-why__wrap">
+    {%- if section.settings.image_1 != blank -%}
+      <img class="aa-why__img" src="{{ section.settings.image_1 | image_url: width: 1600 }}" alt="Why Aura AI" width="1536" height="672" loading="lazy">
+    {%- else -%}
+      <picture>
+        <source media="(max-width: 749px)" srcset="{{ 'aa-trust-mobile.webp' | asset_url }}">
+        <img class="aa-why__img" src="{{ 'aa-trust.webp' | asset_url }}" alt="Why Aura AI - trusted by thousands, 100% genuine and certified, easy 7-day returns, free shipping all over India" width="1536" height="672" loading="lazy">
+      </picture>
+    {%- endif -%}
+  </div>
+</section>
+<style>
+  .aa-why { padding: 10px 0 42px; }
+  .aa-why__wrap { width: 100%; margin: 0; padding: 0; }
+  .aa-why picture { display: block; }
+  .aa-why__img { display: block; width: 100%; height: auto; border-radius: 18px;
+    transition: transform 320ms cubic-bezier(0.22,1,0.36,1), box-shadow 320ms ease; }
+  .aa-why__img:hover { transform: scale(1.015) translateY(-2px); box-shadow: 0 18px 44px rgba(36,16,25,0.13); }
+  @media screen and (max-width: 749px) {
+    .aa-why { padding: 6px 0 26px; }
+    .aa-why__wrap { padding: 0; }
+  }
+</style>
+
+
 <section class="aa-cert">
   <div class="aa-cert__wrap">
-    <div class="aa-cert__head">
-      <span class="aa-cert__eyebrow">{{ section.settings.eyebrow | default: '॥ प्रमाणित ॥' }}</span>
-      <h2 class="aa-cert__title">{{ section.settings.heading | default: 'A Promise of Purity & Authenticity' }}</h2>
-      <p class="aa-cert__sub">{{ section.settings.subtext | default: 'Every gemstone and spiritual piece is hand-selected and verified for authenticity — so you receive only genuine, natural treasures of the highest quality.' }}</p>
-    </div>
+    <h2 class="aa-cert__title">Each Item Comes With Its Own Certificate</h2>
+    <p class="aa-cert__sub">Every piece is lab-tested and ships with a verifiable authenticity report.</p>
 
-    <div class="aa-cert__grid">
-      <div class="aa-cert__card">
-        <span class="aa-cert__ic aa-cert__ic--g"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 8.5 8 11 4.6-2.5 8-6 8-11V5l-8-3z"/><path d="m9 12 2 2 4-4"/></svg></span>
-        <div class="aa-cert__name">100% Authentic</div>
-        <span class="aa-cert__tag">Every piece verified</span>
-      </div>
-      <div class="aa-cert__card">
-        <span class="aa-cert__ic aa-cert__ic--b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 1.8 3h10.4A2 2 0 0 0 19 18l-5-9V3"/><path d="M7.5 14h9"/></svg></span>
-        <div class="aa-cert__name">Lab Tested</div>
-        <span class="aa-cert__tag">Quality assured</span>
-      </div>
-      <div class="aa-cert__card">
-        <span class="aa-cert__ic aa-cert__ic--p"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2.5 1.5 6.5-.5 10A7 7 0 0 1 11 20z"/><path d="M2 22c2-4 5-7 9-9"/></svg></span>
-        <div class="aa-cert__name">Natural Origin</div>
-        <span class="aa-cert__tag">Untreated &amp; pure</span>
-      </div>
-      <div class="aa-cert__card">
-        <span class="aa-cert__ic aa-cert__ic--o"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="m9 14-2 7 5-3 5 3-2-7"/></svg></span>
-        <div class="aa-cert__name">Energised &amp; Blessed</div>
-        <span class="aa-cert__tag">Ready to wear</span>
+    <div class="aa-cert__stage">
+      <span class="aa-cert__call aa-cert__call--uid"><span>Unique Identifier</span><i></i></span>
+      <span class="aa-cert__call aa-cert__call--auth"><span>Verified Authenticity</span><i></i></span>
+      <span class="aa-cert__call aa-cert__call--scan"><i></i><span>Scan for Authenticity</span></span>
+      <span class="aa-cert__call aa-cert__call--gem"><i></i><span>Certified by Gemologist</span></span>
+
+      <div class="aa-gtc">
+        <div class="aa-gtc__title">Gem Testing Laboratory</div>
+        <div class="aa-gtc__report">Authenticity Report</div>
+        <div class="aa-gtc__grid">
+          <div class="aa-gtc__rows">
+            <div class="aa-gtc__r"><span>Batch No.</span><b>GTL{{ product.id | modulo: 9000000 | plus: 1000000 }}</b></div>
+            <div class="aa-gtc__r"><span>Weight</span><b>22 gm (approx)</b></div>
+            <div class="aa-gtc__r"><span>Dimensions</span><b>{{ product.type | default: 'Bracelet' }}</b></div>
+            <div class="aa-gtc__r"><span>Color</span><b>Natural</b></div>
+            <div class="aa-gtc__r"><span>Shape &amp; Cut</span><b>Round Beads</b></div>
+            <div class="aa-gtc__r"><span>Refractive Index</span><b>1.53 &ndash; 1.67</b></div>
+            <div class="aa-gtc__r"><span>Specific Gravity</span><b>2.6 &ndash; 5.2</b></div>
+            <div class="aa-gtc__r"><span>Hardness</span><b>5 &ndash; 7</b></div>
+            <div class="aa-gtc__r"><span>Polarity</span><b>DR</b></div>
+            <div class="aa-gtc__r"><span>Microscopic Study</span><b>Crystal Inclusions</b></div>
+            <div class="aa-gtc__r"><span>Mounting</span><b>N.A.</b></div>
+            <div class="aa-gtc__r"><span>Result</span><b>{{ product.title | truncate: 30 | escape }}</b></div>
+          </div>
+          <div class="aa-gtc__side">
+            <img class="aa-gtc__qr" src="{{ 'aa-cert-qr.webp' | asset_url }}" alt="Scan to verify authenticity" width="110" height="110" loading="lazy">
+            <span class="aa-gtc__scan">Scan to verify</span>
+          </div>
+        </div>
+        <div class="aa-gtc__signature">
+          <svg class="aa-gtc__sigscribble" viewBox="0 0 96 26" fill="none" stroke="#1b2452" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M3 18 C9 4 14 5 13 16 C12 23 19 9 25 14 C29 17 27 22 33 18 C40 13 37 7 45 16 C51 22 55 6 61 16 C65 22 72 11 80 13 C85 14 90 12 93 9"/></svg>
+          <span class="aa-gtc__sigline"></span>
+          <span class="aa-gtc__sigrole">Sn. Gemologist</span>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-{%- style -%}
-  .aa-cert{padding:60px 0;background:linear-gradient(180deg,#FBF8F2 0%,#F4EFE4 100%);}
-  .aa-cert__wrap{max-width:1100px;margin:0 auto;padding:0 24px;}
-  .aa-cert__head{text-align:center;max-width:660px;margin:0 auto 40px;}
-  .aa-cert__eyebrow{display:block;font-family:'Tiro Devanagari Hindi',serif;font-size:16px;color:#B8915A;letter-spacing:.06em;margin-bottom:12px;}
-  .aa-cert__title{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:clamp(30px,3.6vw,46px);line-height:1.06;color:#241019;margin:0 0 14px;}
-  .aa-cert__sub{font-size:15.5px;line-height:1.75;color:#6f5f57;font-weight:300;margin:0;}
-  .aa-cert__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
-  .aa-cert__card{text-align:center;padding:32px 22px 28px;border-radius:18px;
-    background:linear-gradient(180deg,#FFFFFF 0%,#FBF6EC 100%);border:1px solid rgba(184,145,90,.22);
-    box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 2px 4px rgba(74,43,46,.05),0 14px 30px -12px rgba(74,43,46,.16);
-    transition:transform .3s cubic-bezier(.16,1,.3,1),box-shadow .3s,border-color .3s;}
-  .aa-cert__card:hover{transform:translateY(-4px);border-color:rgba(184,145,90,.45);box-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 22px 44px -12px rgba(74,43,46,.22);}
-  .aa-cert__ic{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;margin:0 auto 16px;}
-  .aa-cert__ic svg{width:27px;height:27px;}
-  .aa-cert__ic--g{background:rgba(62,124,90,.14);color:#3e7c5a;}
-  .aa-cert__ic--b{background:rgba(54,110,180,.13);color:#366eb4;}
-  .aa-cert__ic--p{background:rgba(140,90,200,.14);color:#7d4fc0;}
-  .aa-cert__ic--o{background:rgba(245,130,32,.15);color:#d9741e;}
-  .aa-cert__name{font-size:16px;color:#241019;font-weight:600;}
-  .aa-cert__tag{display:inline-block;margin-top:10px;font-size:11.5px;letter-spacing:.03em;color:#8a6a3a;
-    background:rgba(184,145,90,.12);border:1px solid rgba(184,145,90,.25);border-radius:999px;padding:5px 14px;}
-  @media (max-width:860px){
-    .aa-cert{padding:44px 0;}
-    .aa-cert__grid{grid-template-columns:repeat(2,1fr);gap:14px;}
+<style>
+  .aa-cert { margin-top:6px; padding:46px 0 56px; border-radius:22px; overflow:hidden;
+    background:
+      radial-gradient(120% 75% at 50% 0%, rgba(255,140,66,0.30), transparent 60%),
+      linear-gradient(135deg,#3a0518 0%,#60062B 38%,#9c2b33 72%,#c7522f 100%); }
+  .aa-cert__wrap { max-width:1060px; margin:0 auto; padding:0 22px; text-align:center; }
+  .aa-cert__title { font-family:Georgia,'Times New Roman',serif; font-weight:700; font-size:clamp(23px,3vw,36px); color:#FFF6EC; margin:0 0 8px; line-height:1.18; }
+  .aa-cert__sub { color:rgba(255,240,225,0.82); font-size:15px; margin:0 0 34px; }
+  .aa-cert__stage { position:relative; max-width:930px; margin:0 auto; }
+
+  .aa-gtc { position:relative; z-index:2; max-width:580px; margin:0 auto; text-align:left;
+    background:#fff; border-radius:14px; padding:26px 30px 24px;
+    box-shadow:0 30px 64px rgba(0,0,0,0.42), 0 6px 16px rgba(0,0,0,0.25);
+    transition:transform 360ms cubic-bezier(0.22,1,0.36,1), box-shadow 360ms ease; }
+  .aa-gtc:hover { transform:translateY(-8px); box-shadow:0 46px 92px rgba(0,0,0,0.5), 0 22px 56px rgba(255,120,60,0.42); }
+  .aa-gtc__title { font-family:Georgia,'Times New Roman',serif; font-weight:700; font-size:25px; color:#161616; text-align:center; margin:0; padding-bottom:14px; border-bottom:2px solid #1d1d1d; }
+  .aa-gtc__report { text-align:center; font:700 11.5px/1 'Jost',system-ui,sans-serif; letter-spacing:0.13em; text-transform:uppercase; color:#9c2b33; margin:12px 0 2px; }
+  .aa-gtc__grid { display:flex; gap:0; padding-top:8px; }
+  .aa-gtc__rows { flex:1 1 auto; min-width:0; padding-right:20px; }
+  .aa-gtc__r { display:flex; gap:12px; padding:7px 0; border-bottom:1px solid #ededed; font:13.5px/1.3 'Jost',system-ui,sans-serif; }
+  .aa-gtc__r:last-child { border-bottom:0; }
+  .aa-gtc__r span { flex:0 0 48%; color:#5c5c5c; }
+  .aa-gtc__r b { color:#111; font-weight:600; }
+  .aa-gtc__side { flex:0 0 auto; width:132px; display:flex; flex-direction:column; align-items:center; border-left:1px solid #e6e6e6; padding-left:20px; }
+  .aa-gtc__qr { width:108px; height:108px; display:block; }
+  .aa-gtc__scan { display:block; font:10px 'Jost',system-ui,sans-serif; color:#777; margin-top:5px; }
+
+  .aa-gtc__signature { position:absolute; right:26px; bottom:18px; width:118px; text-align:center; }
+  .aa-gtc__sigscribble { display:block; width:96px; height:26px; margin:0 auto 1px; opacity:0.9; }
+  .aa-gtc__sigline { display:block; height:1px; background:#161616; margin:0 4px 4px; }
+  .aa-gtc__sigrole { display:block; font:italic 11px 'Jost',system-ui,sans-serif; color:#444; }
+
+  .aa-cert__call { position:absolute; z-index:3; display:flex; align-items:center; gap:8px; color:#FFF1E2; font-size:13px; font-weight:600; line-height:1.2; }
+  .aa-cert__call > span { flex:0 0 auto; max-width:140px; }
+  .aa-cert__call i { flex:1 1 auto; min-width:16px; height:1.4px; background:#C99A45; position:relative; }
+  .aa-cert__call i::after { content:''; position:absolute; width:8px; height:8px; border-radius:50%; background:#E6B85A; top:-3.3px; }
+  .aa-cert__call--uid, .aa-cert__call--auth { left:0; width:calc(50% - 264px); }
+  .aa-cert__call--uid > span, .aa-cert__call--auth > span { text-align:right; }
+  .aa-cert__call--uid i::after, .aa-cert__call--auth i::after { right:-2px; }
+  .aa-cert__call--scan, .aa-cert__call--gem { right:0; width:calc(50% - 206px); }
+  .aa-cert__call--scan > span, .aa-cert__call--gem > span { text-align:left; }
+  .aa-cert__call--scan i::after, .aa-cert__call--gem i::after { left:-2px; }
+  .aa-cert__call--uid  { top:23.2%; }
+  .aa-cert__call--scan { top:22%; }
+  .aa-cert__call--auth { bottom:8%; }
+  .aa-cert__call--gem  { bottom:6%; }
+
+  @media (max-width: 919px){ .aa-cert__call { display:none; } }
+  @media (max-width: 749px){
+    .aa-cert { padding:30px 0 36px; border-radius:16px; }
+    .aa-cert__sub { font-size:13.5px; margin-bottom:24px; }
+    .aa-gtc { max-width:none; padding:18px 16px 56px; border-radius:12px; }
+    .aa-gtc__title { font-size:19px; padding-bottom:10px; }
+    .aa-gtc__grid { padding-top:4px; }
+    .aa-gtc__rows { padding-right:12px; }
+    .aa-gtc__r { font-size:11px; padding:5px 0; gap:8px; }
+    .aa-gtc__r span { flex:0 0 50%; }
+    .aa-gtc__side { width:82px; padding-left:12px; }
+    .aa-gtc__qr { width:74px; height:74px; }
+    .aa-gtc__scan { font-size:8px; margin-top:3px; }
+    .aa-gtc__signature { right:16px; bottom:14px; width:104px; }
+    .aa-gtc__sigscribble { width:80px; }
   }
-{%- endstyle -%}
+</style>
 
 {% schema %}
-{
-  "name": "AA Certification",
-  "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "॥ प्रमाणित ॥" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "A Promise of Purity & Authenticity" },
-    { "type": "textarea", "id": "subtext", "label": "Subtext", "default": "Every gemstone and spiritual piece is hand-selected and verified for authenticity — so you receive only genuine, natural treasures of the highest quality." }
-  ],
-  "presets": [ { "name": "AA Certification" } ]
-}
+{ "name": "AA Product Tabs", "settings": [ { "type": "image_picker", "id": "image_1", "label": "Trust image (defaults to aa-trust.webp)" } ], "presets": [ { "name": "AA Product Tabs" } ] }
 {% endschema %}

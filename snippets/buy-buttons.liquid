@@ -70,6 +70,28 @@
               assign quantity_rule_soldout = true
             endif
           -%}         
+{%- unless product.gift_card? -%}
+  <quantity-input class="quantity aa-qty" data-url="{{ product.url }}" data-section="{{ section_id }}">
+    <button class="quantity__button" name="minus" type="button">
+      <span class="visually-hidden">{{ 'products.product.quantity.decrease' | t: product: product.title | escape }}</span>
+      <span class="svg-wrapper">{{- 'icon-minus.svg' | inline_asset_content -}}</span>
+    </button>
+    <input
+      class="quantity__input"
+      type="number"
+      name="quantity"
+      id="Quantity-{{ section_id }}"
+      min="{{ product.selected_or_first_available_variant.quantity_rule.min }}"
+      {% if product.selected_or_first_available_variant.quantity_rule.max != null %}max="{{ product.selected_or_first_available_variant.quantity_rule.max }}"{% endif %}
+      step="{{ product.selected_or_first_available_variant.quantity_rule.increment }}"
+      value="{{ product.selected_or_first_available_variant.quantity_rule.min }}"
+    >
+    <button class="quantity__button" name="plus" type="button">
+      <span class="visually-hidden">{{ 'products.product.quantity.increase' | t: product: product.title | escape }}</span>
+      <span class="svg-wrapper">{{- 'icon-plus.svg' | inline_asset_content -}}</span>
+    </button>
+  </quantity-input>
+{%- endunless -%}
 <button
   id="ProductSubmitButton-{{ section_id }}"
   type="submit"
@@ -123,10 +145,8 @@
   (function() {
     var btn = document.getElementById('aa-buy-now-btn-{{ section_id }}');
     if (!btn) return;
+    var TAG = '[AA-BUYNOW]';
 
-    // Always read the CURRENT selected variant id at click time — the variant
-    // picker updates the product form's <input name="id"> dynamically, but the
-    // server-rendered data-attribute is frozen to the page-load variant.
     function getCurrentVariantId() {
       var mainForm = document.querySelector('product-form form[action*="/cart/add"], form[action*="/cart/add"]');
       if (mainForm) {
@@ -141,11 +161,6 @@
       return btn.getAttribute('data-aa-buy-now-variant');
     }
 
-    // Re-render the cart drawer from the /cart/add.js `sections` response so the
-    // real #CartDrawer-Checkout button (which Razorpay Magic Checkout has hooked)
-    // is guaranteed present + enabled before we click it. This removes the race
-    // that made Buy Now "sometimes work" and otherwise fall through to the native
-    // Shopify checkout page.
     function swapDrawer(addJson) {
       try {
         var html = addJson && addJson.sections && addJson.sections['cart-drawer'];
@@ -159,19 +174,36 @@
       } catch (err) {}
     }
 
-    // Click the MC-hooked checkout button once it exists + is enabled. Razorpay's
-    // hook intercepts the click and opens its overlay. NEVER navigate to the
-    // native /checkout — if the button truly never appears, open the cart drawer
-    // so the customer can tap Check out themselves.
+    function magicOpened() {
+      return !!document.querySelector('.razorpay-container, iframe[src*="razorpay"], iframe[src*="magic"], .razorpay-checkout-frame, .rzp-magic-modal, [class*="magic-checkout"][class*="open"]');
+    }
+
+    // Razorpay Magic Checkout (app embed) re-hooks the checkout button via an async
+    // observer after the drawer is re-rendered. So: wait a beat for the hook, click
+    // ONCE, verify the overlay opened, and retry the click if the hook was not ready.
+    // We never navigate to native /checkout; worst case we open the cart drawer.
+    function openDrawerFallback() {
+      var opener = document.querySelector('[aria-controls="CartDrawer"], #cart-icon-bubble, a[href$="/cart"], .header__icon--cart');
+      if (opener) opener.click();
+    }
     function openMagicCheckout(reset) {
-      var tries = 0;
-      (function tick() {
-        var el = document.querySelector('#CartDrawer-Checkout, button[name="checkout"], .cart__checkout-button');
-        if (el && !el.disabled) { el.click(); reset(); return; }
-        if (tries++ < 30) { setTimeout(tick, 70); return; }   // up to ~2.1s
-        var opener = document.querySelector('[aria-controls="CartDrawer"], #cart-icon-bubble, a[href$="/cart"], .header__icon--cart');
-        if (opener) opener.click();
-        reset();
+      var findTries = 0;
+      function clickAndVerify(clicksLeft) {
+        var el = document.querySelector('.aac__checkout, [data-aac-checkout], #CartDrawer-Checkout, button[name="checkout"], .cart__checkout-button');
+        if (!el || el.disabled) { console.warn(TAG, 'no enabled checkout button at click time'); openDrawerFallback(); reset(); return; }
+        console.log(TAG, 'clicking checkout ->', el.id || el.className);
+        el.click();
+        setTimeout(function() {
+          if (magicOpened()) { console.log(TAG, 'Magic overlay opened OK'); reset(); return; }
+          if (clicksLeft > 0) { console.log(TAG, 'overlay not open yet, retrying click ('+clicksLeft+' left)'); clickAndVerify(clicksLeft - 1); }
+          else { console.warn(TAG, 'Magic overlay did NOT open after clicks; opening drawer'); openDrawerFallback(); reset(); }
+        }, 500);
+      }
+      (function waitForBtn() {
+        var el = document.querySelector('.aac__checkout, [data-aac-checkout], #CartDrawer-Checkout, button[name="checkout"], .cart__checkout-button');
+        if (el && !el.disabled) { console.log(TAG, 'checkout button present, waiting 350ms for Magic hook'); setTimeout(function(){ clickAndVerify(2); }, 350); return; }
+        if (findTries++ < 30) { setTimeout(waitForBtn, 70); return; }
+        console.warn(TAG, 'checkout button never appeared'); openDrawerFallback(); reset();
       })();
     }
 
@@ -181,31 +213,19 @@
       btn._aaBusy = true; btn.style.pointerEvents = 'none';
       function reset() { btn._aaBusy = false; btn.style.pointerEvents = ''; }
       var variantId = getCurrentVariantId();
-
-      // 1. clear cart  2. add ONLY this variant (request the cart-drawer section)
-      // 3. swap the fresh drawer HTML in  4. click the MC-hooked checkout button
-      fetch('/cart/clear.js', {
-        method: 'POST', credentials: 'same-origin',
-        headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' }
-      })
+      console.log(TAG, 'buy now clicked, variant =', variantId);
+      fetch('/cart/clear.js', { method: 'POST', credentials: 'same-origin', headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' } })
       .then(function() {
         var fd = new FormData();
         fd.append('id', variantId);
         fd.append('quantity', '1');
         fd.append('sections', 'cart-drawer');
         fd.append('sections_url', '/');
-        return fetch('/cart/add.js', {
-          method: 'POST', credentials: 'same-origin',
-          headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
-          body: fd
-        });
+        return fetch('/cart/add.js', { method: 'POST', credentials: 'same-origin', headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' }, body: fd });
       })
       .then(function(r) { return r.json(); })
-      .then(function(data) {
-        swapDrawer(data);
-        requestAnimationFrame(function () { openMagicCheckout(reset); });
-      })
-      .catch(function() { reset(); });
+      .then(function(data) { console.log(TAG, 'added to cart, swapping drawer'); swapDrawer(data); requestAnimationFrame(function () { openMagicCheckout(reset); }); })
+      .catch(function(err) { console.warn(TAG, 'error', err); reset(); });
     });
   })();
 </script>

@@ -214,7 +214,7 @@ a, button, .button, [role="button"], .aa-tab, summary, label {
   }
   .aa-search__bar,
   .aa-search__heading,
-  .aa-search__results { width: min(620px, 92vw); background: #fff; margin: 0; }
+  .aa-search__results { width: min(1040px, 94vw); background: #fff; margin: 0; }
   .aa-search__bar {
     border-radius: 18px 18px 0 0;
     padding: 14px 16px;
@@ -226,7 +226,7 @@ a, button, .button, [role="button"], .aa-tab, summary, label {
   .aa-search__heading { padding: 16px 22px 4px; }
   .aa-search__results {
     border-radius: 0 0 18px 18px;
-    max-height: min(56vh, 520px);
+    max-height: min(72vh, 680px);
     overflow-y: auto;
     padding: 6px 10px 14px;
     box-shadow: 0 30px 90px rgba(20, 8, 16, .34);

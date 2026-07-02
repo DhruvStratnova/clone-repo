@@ -39,6 +39,7 @@
   }
   function addToCart(modal,variant,btn){
     if(!variant) return; btn.disabled=true; btn.textContent='Adding…';
+    if(typeof window.AA_addToCart==='function'){ if(modal) modal.removeAttribute('open'); try{ window.AA_addToCart(variant.id,1); }catch(e){} btn.disabled=false; btn.textContent='Add to cart'; return; }
     var fd=new FormData(); fd.append('id',variant.id); fd.append('quantity','1'); fd.append('sections','cart-icon-bubble,cart-drawer'); fd.append('sections_url',location.pathname);
     fetch('/cart/add.js',{method:'POST',credentials:'same-origin',headers:{'Accept':'application/json','X-Requested-With':'XMLHttpRequest'},body:fd})
       .then(function(r){return r.json();}).then(function(res){
@@ -54,7 +55,7 @@
      magic-shopify.js hooks it and opens its overlay for this single product).
      Fallback: a name=checkout form post that Razorpay also hooks. */
   function triggerCheckout(){
-    var c=['#CartDrawer-Checkout','button[name="checkout"]','.cart__checkout-button','#checkout','form#CartDrawer-Form button[type="submit"]','form#cart button[type="submit"]'];
+    var c=['.aac__checkout','[data-aac-checkout]','#CartDrawer-Checkout','button[name="checkout"]','.cart__checkout-button','#checkout','form#CartDrawer-Form button[type="submit"]','form#cart button[type="submit"]'];
     for(var i=0;i<c.length;i++){ var el=document.querySelector(c[i]); if(el && !el.disabled){ el.click(); return true; } }
     return false;
   }
@@ -73,6 +74,20 @@
         return fetch('/cart/add.js',{method:'POST',credentials:'same-origin',headers:h,body:fd}); })
       .then(function(){ requestAnimationFrame(function(){ if(!triggerCheckout()){ buyNowFormPost(variant.id); } }); })
       .catch(function(){ buyNowFormPost(variant.id); });
+  }
+  /* prepaid-offer countdown — same logic/format as the PDP inline script,
+     shares the __aaOfferCountdown guard so it runs once per page. */
+  function startOfferCountdown(){
+    if(window.__aaOfferCountdown) return; window.__aaOfferCountdown=true;
+    function pad(n){ return n<10?'0'+n:''+n; }
+    function tick(){
+      var els=document.querySelectorAll('[data-aa-countdown]'); if(!els.length) return;
+      var now=new Date(), end=new Date(now.getFullYear(),now.getMonth(),now.getDate()+1,0,0,0,0);
+      var d=Math.max(0,end-now), h=Math.floor(d/3600000), m=Math.floor(d%3600000/60000), s=Math.floor(d%60000/1000);
+      var txt=h+' hr : '+pad(m)+' min : '+pad(s)+' sec';
+      for(var i=0;i<els.length;i++) els[i].textContent=txt;
+    }
+    tick(); setInterval(tick,1000);
   }
   function chips(p,sel){
     if(p.variants.length<=1 && p.options.length===1 && optName(p.options[0])==='Title') return '';
@@ -124,7 +139,7 @@
     var ar='<button type="button" class="aa-marr aa-marr--l" aria-label="Previous image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>'+'<button type="button" class="aa-marr aa-marr--r" aria-label="Next image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>';
     return thumbsHTML+'<div class="qv-stage"><div class="qv-slider">'+slides+'</div>'+(items.length>1?ar:'')+'</div>';
   }
-  function render(modal,p,instantImg,feats,rating){
+  function render(modal,p,instantImg,feats,rating,hindi){
     var content=modal.querySelector('[id^="QuickAddInfo-"]'); if(!content) return;
     var sel=p.options.map(function(o,i){ return p.variants[0]['option'+(i+1)]; });
     /* build the slider ONCE so variant changes don't reset the swipe position */
@@ -145,26 +160,33 @@
       }
     }
     if(slider){ slider.addEventListener('scroll',syncMedia,{passive:true}); syncMedia(); }
-    function dealHTML(price){
-      var deal=Math.round(price*0.75/100)*100;
-      var extra=price-deal;
-      return '<div class="qv-deal"><span class="qv-deal-badge">&#10022; Prepaid Deal</span>'
-        +'<span class="qv-deal-l"><b>Get at <u>'+money(deal)+'</u></b><small>When you pay online at checkout</small></span>'
-        +'<span class="qv-deal-chip">Extra '+money(extra)+' Off</span></div>';
+    /* PDP prepaid-offer box, verbatim from main-product.liquid so the quick
+       view matches the product page exactly (own countdown, started below). */
+    function dealHTML(){
+      return '<div class="aa-pdp-offer">'
+        +'<div class="aa-pdp-offer__head">'
+          +'<span class="aa-pdp-offer__pct" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M2 11.5V4a2 2 0 0 1 2-2h7.5a2 2 0 0 1 1.41.59l8 8a2 2 0 0 1 0 2.82l-7.5 7.5a2 2 0 0 1-2.82 0l-8-8A2 2 0 0 1 2 11.5Zm5-3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"/></svg></span>'
+          +'<span class="aa-pdp-offer__title">Prepaid Offer</span>'
+          +'<span class="aa-pdp-offer__timer"><span class="aa-pdp-offer__timer-label">Ends in</span> <span class="aa-pdp-offer__time" data-aa-countdown>--:--:--</span></span>'
+        +'</div>'
+        +'<h3 class="aa-pdp-offer__h">Flat <span>25% OFF</span> on Prepaid Orders</h3>'
+        +'<p class="aa-pdp-offer__desc">Pay online and the discount is applied automatically at checkout. No coupon needed.</p>'
+      +'</div>';
     }
     function paint(){
       var v=findVariant(p,sel)||p.variants[0];
       var price=v.price, cap=v.compare_at_price||p.compare_at_price, off=(cap&&cap>price)?Math.round((1-price/cap)*100):0;
       info.innerHTML=
         (p.type?'<div class="qv-cat">'+esc(p.type)+'</div>':'')
+        +(hindi?'<p class="qv-hindi" lang="hi">'+esc(hindi)+'</p>':'')
         +'<h3 class="qv-title">'+esc(p.title)+'</h3>'
         +(rating?'<div class="qv-rev"><span class="qv-stars">&#9733;</span> '+esc(rating)+' rated by customers</div>':'')
         +'<div class="qv-pricerow">'
           +(cap&&cap>price?'<span class="qv-mrp">MRP <s>'+money(cap)+'</s></span>':'')
           +'<span class="qv-pricebig">'+money(price)+'</span>'
-          +(off?'<span class="qv-offtag"><span>'+off+'% OFF!</span></span>':'')
+          +(off?'<span class="qv-offtag"><span>'+off+'% OFF</span></span>':'')
         +'</div>'
-        +(v.available?dealHTML(price):'')
+        +(v.available?dealHTML():'')
         +chips(p,sel)
         +'<div class="qv-actions">'
         +'<button type="button" class="qv-add"'+(v.available?'':' disabled')+'>'+(v.available?'Add to cart':'Sold out')+'</button>'
@@ -172,6 +194,7 @@
         +'</div>'
         +'<div class="qv-svc"><span>&#10003; Free shipping</span><span>&#10003; COD available</span><span>&#10003; 7-day returns</span><span>&#10003; Lab certified</span></div>'
         +'<a class="qv-link" href="'+p.url+'">View full details &rarr;</a>';
+      if(v.available) startOfferCountdown();
     }
     content.onclick=function(e){
       var th=e.target.closest('.qv-thumb'); if(th){ var i=+th.dataset.i; var im=slider&&slider.children[i]; if(im){ slider.scrollTo({left:im.offsetLeft,behavior:'smooth'}); } return; }
@@ -181,7 +204,7 @@
     };
     paint();
   }
-  function openModal(modal,url,instantImg,feats,rating){
+  function openModal(modal,url,instantImg,feats,rating,hindi){
     modal.setAttribute('open',''); document.body.classList.add('overflow-hidden');
     var content=modal.querySelector('[id^="QuickAddInfo-"]');
     if(content){
@@ -190,7 +213,7 @@
         +(instantImg?'<img src="'+instantImg+'" alt="">':'<div class="qv-load"><span class="qv-spin"></span></div>')
         +'</div></div><div class="qv-info"><span class="qv-sk qv-sk-c"></span><span class="qv-sk qv-sk-t"></span><span class="qv-sk qv-sk-p"></span><span class="qv-sk qv-sk-b"></span></div></div>';
     }
-    fetchProduct(url).then(function(p){ render(modal,p,instantImg,feats,rating); })
+    fetchProduct(url).then(function(p){ render(modal,p,instantImg,feats,rating,hindi); })
       .catch(function(){ if(content) content.innerHTML='<div style="padding:40px;text-align:center">Could not load. <a href="'+url+'">Open product &rarr;</a></div>'; });
   }
   document.addEventListener('click',function(e){
@@ -206,7 +229,8 @@
     var card=btn.closest('.aa-pcard, .pcard');
     var rateEl=card&&card.querySelector('.aa-pcard__rate');
     var rating=rateEl?(rateEl.textContent||'').replace(/[^0-9.]/g,''):'';
-    if(modal) openModal(modal,url,trigImg(btn),feats,rating); else window.location.href=url;
+    var hindi=card?(card.getAttribute('data-aa-hindi')||''):'';
+    if(modal) openModal(modal,url,trigImg(btn),feats,rating,hindi); else window.location.href=url;
   },true);
 
   /* click-drag to slide the image slider on desktop (no arrows) */
@@ -221,4 +245,17 @@
   document.addEventListener('pointerup',function(){
     if(!drag) return; var s=drag; drag=null; setTimeout(function(){ s.style.scrollSnapType=''; },60);
   });
+
+  /* Close the quick view ourselves. Dawn's QuickAddModal.hide() calls
+     cart-drawer.setActiveElement(), which the theme's custom <cart-drawer>
+     doesn't have, so it throws before removing [open] — the X, backdrop and
+     Esc all break. Handle them here with a direct close. */
+  function closeQV(modal){ if(!modal) return; modal.removeAttribute('open'); document.body.classList.remove('overflow-hidden'); }
+  document.addEventListener('click',function(e){
+    var modal=document.querySelector('.quick-add-modal[open]'); if(!modal) return;
+    if((e.target.closest && e.target.closest('.quick-add-modal__toggle')) || e.target===modal){
+      e.preventDefault(); e.stopPropagation(); closeQV(modal);
+    }
+  },true);
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeQV(document.querySelector('.quick-add-modal[open]')); });
 })();

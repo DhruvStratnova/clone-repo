@@ -19,14 +19,14 @@
         "slide_tXFfw7": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/GemsAura_banner2.jpg",
-            "image_mobile": "shopify://shop_images/GemsAura_phonebanner2.jpg",
+            "image": "shopify:\/\/shop_images\/GemsAura_banner2.jpg",
+            "image_mobile": "shopify:\/\/shop_images\/GemsAura_phonebanner2.jpg",
             "image_overlay_opacity": 0,
             "heading": "",
             "heading_size": "h1",
             "subheading": "",
             "button_label": "",
-            "link": "shopify://collections/rudrasha",
+            "link": "shopify:\/\/collections\/rudrasha",
             "button_style_secondary": false,
             "show_text_box": false,
             "box_align": "middle-center",
@@ -39,8 +39,8 @@
           "type": "slide",
           "disabled": true,
           "settings": {
-            "image": "shopify://shop_images/rudraksha_diwali_desktop.png",
-            "image_mobile": "shopify://shop_images/Rudraksah_mobile_diwlai.png",
+            "image": "shopify:\/\/shop_images\/rudraksha_diwali_desktop.png",
+            "image_mobile": "shopify:\/\/shop_images\/Rudraksah_mobile_diwlai.png",
             "image_overlay_opacity": 0,
             "heading": "",
             "heading_size": "h1",
@@ -58,14 +58,14 @@
         "slide_93RPaQ": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/GemsAura_banner1.jpg",
-            "image_mobile": "shopify://shop_images/GemsAura_phonebanner1.jpg",
+            "image": "shopify:\/\/shop_images\/GemsAura_banner1.jpg",
+            "image_mobile": "shopify:\/\/shop_images\/GemsAura_phonebanner1.jpg",
             "image_overlay_opacity": 0,
             "heading": "",
             "heading_size": "h2",
             "subheading": "",
             "button_label": "",
-            "link": "shopify://collections/bracelets",
+            "link": "shopify:\/\/collections\/bracelets",
             "button_style_secondary": false,
             "show_text_box": false,
             "box_align": "middle-center",
@@ -77,14 +77,14 @@
         "slide_FnJjtn": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/GemsAura_banner6.jpg",
-            "image_mobile": "shopify://shop_images/GemsAura_phonebanner6.jpg",
+            "image": "shopify:\/\/shop_images\/GemsAura_banner6.jpg",
+            "image_mobile": "shopify:\/\/shop_images\/GemsAura_phonebanner6.jpg",
             "image_overlay_opacity": 0,
             "heading": "",
             "heading_size": "h1",
             "subheading": "",
             "button_label": "",
-            "link": "shopify://collections/gemstones",
+            "link": "shopify:\/\/collections\/gemstones",
             "button_style_secondary": false,
             "show_text_box": false,
             "box_align": "middle-center",
@@ -96,14 +96,14 @@
         "slide_BaHAmK": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/GemsAura_banner5.jpg",
-            "image_mobile": "shopify://shop_images/GemsAura_phonebanner5.jpg",
+            "image": "shopify:\/\/shop_images\/GemsAura_banner5.jpg",
+            "image_mobile": "shopify:\/\/shop_images\/GemsAura_phonebanner5.jpg",
             "image_overlay_opacity": 0,
             "heading": "",
             "heading_size": "h1",
             "subheading": "",
             "button_label": "",
-            "link": "shopify://collections/crystal-rakhi",
+            "link": "shopify:\/\/collections\/crystal-rakhi",
             "button_style_secondary": false,
             "show_text_box": false,
             "box_align": "middle-center",
@@ -153,11 +153,11 @@
         "heading": "Spiritual Essential",
         "text": "A sacred seed, Rudraksha carries divine protection, inner peace and clarity for a steady journey toward balance and enlightenment.",
         "btn_label": "Shop Rudraksha",
-        "btn_url": "shopify://collections/rudrasha",
+        "btn_url": "shopify:\/\/collections\/rudrasha",
         "btn_ghost": false,
-        "image": "shopify://shop_images/Gemini_Generated_Image_kasoikasoikasoik-clean_3709f244-f751-4e5b-8e3d-79631cc8bc58.png",
+        "image": "shopify:\/\/shop_images\/Gemini_Generated_Image_kasoikasoikasoik-clean_3709f244-f751-4e5b-8e3d-79631cc8bc58.png",
         "image_asset": "aa-spiritual.jpg",
-        "bg_url": "https://cdn.shopify.com/s/files/1/0947/9467/8574/files/Gemini_Generated_Image_kasoikasoikasoik-clean_3709f244-f751-4e5b-8e3d-79631cc8bc58.png",
+        "bg_url": "https:\/\/cdn.shopify.com\/s\/files\/1\/0947\/9467\/8574\/files\/Gemini_Generated_Image_kasoikasoikasoik-clean_3709f244-f751-4e5b-8e3d-79631cc8bc58.png",
         "reverse": false
       }
     },
@@ -167,7 +167,7 @@
         "heading": "Combos",
         "collection": "combos",
         "count": 12,
-        "view_url": "shopify://collections/combos",
+        "view_url": "shopify:\/\/collections\/combos",
         "view_label": "View all combos"
       }
     },
@@ -177,7 +177,7 @@
         "heading": "New Arrivals",
         "collection": "new-arrivals",
         "count": 24,
-        "view_url": "shopify://collections/new-arrivals",
+        "view_url": "shopify:\/\/collections\/new-arrivals",
         "view_label": "View all New Arrivals"
       }
     },
@@ -188,11 +188,11 @@
         "heading": "Our Shop",
         "text": "Gemstones, Rudraksha and crystal bracelets where beauty meets energy. Rudraksha brings peace, gemstones invite prosperity, crystals lift your healing vibration.",
         "btn_label": "Shop all",
-        "btn_url": "shopify://collections/all",
+        "btn_url": "shopify:\/\/collections\/all",
         "btn_ghost": true,
-        "image": "shopify://shop_images/Gemini_Generated_Image_qsy7npqsy7npqsy7-clean_f04445ca-f971-40f7-9dbf-c0e1c9eadc19.png",
+        "image": "shopify:\/\/shop_images\/Gemini_Generated_Image_qsy7npqsy7npqsy7-clean_f04445ca-f971-40f7-9dbf-c0e1c9eadc19.png",
         "image_asset": "aa-ourshop.jpg",
-        "bg_url": "https://cdn.shopify.com/s/files/1/0947/9467/8574/files/Gemini_Generated_Image_qsy7npqsy7npqsy7-clean_f04445ca-f971-40f7-9dbf-c0e1c9eadc19.png",
+        "bg_url": "https:\/\/cdn.shopify.com\/s\/files\/1\/0947\/9467\/8574\/files\/Gemini_Generated_Image_qsy7npqsy7npqsy7-clean_f04445ca-f971-40f7-9dbf-c0e1c9eadc19.png",
         "reverse": true
       }
     },
@@ -279,9 +279,9 @@
       ],
       "settings": {
         "heading": "Why Aura AI",
-        "image": "shopify://shop_images/why_astroaura.png",
+        "image": "shopify:\/\/shop_images\/why_astroaura.png",
         "image_asset": "aa-amethyst.jpg",
-        "bg_url": "https://cdn.shopify.com/s/files/1/0947/9467/8574/files/why_astroaura.png",
+        "bg_url": "https:\/\/cdn.shopify.com\/s\/files\/1\/0947\/9467\/8574\/files\/why_astroaura.png",
         "footer": ""
       }
     },
@@ -320,10 +320,10 @@
         "heading": "Certified Gems, Verified Trust",
         "text": "Every gemstone arrives with a government-recognised lab report, so you always know exactly what you are wearing.",
         "btn_label": "",
-        "btn_url": "shopify://pages/contact",
-        "image": "shopify://shop_images/Certified_gems_2_8b510f51-751d-429a-a543-351c25d42c22.jpg",
+        "btn_url": "shopify:\/\/pages\/contact",
+        "image": "shopify:\/\/shop_images\/Certified_gems_2_8b510f51-751d-429a-a543-351c25d42c22.jpg",
         "image_asset": "aa-certified.jpg",
-        "bg_url": "https://cdn.shopify.com/s/files/1/0947/9467/8574/files/Certified_gems_2_8b510f51-751d-429a-a543-351c25d42c22.jpg",
+        "bg_url": "https:\/\/cdn.shopify.com\/s\/files\/1\/0947\/9467\/8574\/files\/Certified_gems_2_8b510f51-751d-429a-a543-351c25d42c22.jpg",
         "seal": "Lab Verified"
       }
     },
@@ -333,22 +333,22 @@
         "step_0": {
           "type": "step",
           "settings": {
-            "title": "Locate Report Number",
-            "text": "Find the unique number on your certificate (format LAB-XXXXXXXX)."
+            "title": "Scan the QR Code",
+            "text": "Point your phone camera at the QR code printed on your certificate card."
           }
         },
         "step_1": {
           "type": "step",
           "settings": {
-            "title": "Visit Lab Website",
-            "text": "Open the issuing laboratory's official verification portal."
+            "title": "Open the Secure Link",
+            "text": "The QR instantly opens your certificate on our official verification page."
           }
         },
         "step_2": {
           "type": "step",
           "settings": {
-            "title": "Verify Details",
-            "text": "Enter the number to instantly confirm your gemstone is genuine."
+            "title": "View Your Certificate",
+            "text": "See your gemstone's full authenticity report and confirm it is genuine."
           }
         }
       },
@@ -360,7 +360,7 @@
       "settings": {
         "heading": "How to Verify Your Certificate",
         "cta_label": "Contact Verification Support",
-        "cta_url": "shopify://pages/contact"
+        "cta_url": "shopify:\/\/pages\/contact"
       }
     },
     "testimonials_aa": {
@@ -496,7 +496,7 @@
         "heading": "The Dhan Yog Bracelet",
         "body": "Strung with citrine, tiger eye and the sacred Dhan Yog bead, worn to draw wealth, abundance and balanced energy into everyday life.",
         "cta": "Discover the Bracelet",
-        "product_url": "shopify://products/dhan-yog-bracelet"
+        "product_url": "shopify:\/\/products\/dhan-yog-bracelet"
       }
     }
   },

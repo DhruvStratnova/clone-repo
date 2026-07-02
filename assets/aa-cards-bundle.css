@@ -2736,14 +2736,17 @@ html body #ProductGridContainer .collection {
 }
 .template-collection .aa-pcard__title {
   font-size: 14.5px;
-  font-weight: 600;
+  font-weight: 600 !important; /* html body h3 {400 !important} in astroaura-styles flattens h3 titles; match rail boldness */
   line-height: 1.35;
   min-height: 39px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   text-align: center;
   margin: 0;
+}
+.template-collection .aa-pcard__title a {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 .template-collection .aa-pcard__price-row {
   justify-content: center;

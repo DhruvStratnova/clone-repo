@@ -1,0 +1,120 @@
+{% comment %}
+  AA PDP revamp gallery (left column). Self-contained, namespaced aa-pdp-*.
+  Renders from product.media: a main stage with overlaid circular prev/next
+  arrows, floating Share + Wishlist buttons, and a thumbnail strip below
+  (video thumbs get a play badge). Behaviour lives in aa-pdp-gallery.js.
+
+  It deliberately does NOT use Dawn's <media-gallery> element, so it cannot
+  clash with media-gallery.js. product-info.js updateMedia is fully guarded
+  (it no-ops without a <media-gallery>), so variant changes still update
+  price/id/availability; the variant->image swap is handled here via the
+  data-aa-variant-media map + aa-pdp-gallery.js.
+
+  Accepts: product
+{% endcomment %}
+<div class="aa-pdp-gallery" data-aa-gallery data-aa-index="0">
+  <div class="aa-pdp-gallery__stage">
+    <div class="aa-pdp-gallery__main" data-aa-main>
+      {%- for media in product.media -%}
+        <div
+          class="aa-pdp-gslide{% if forloop.first %} is-active{% endif %}"
+          data-aa-slide
+          data-index="{{ forloop.index0 }}"
+          data-type="{{ media.media_type }}"
+          data-media-id="{{ media.id }}"
+        >
+          {%- if forloop.first -%}
+            <div class="aa-img-stamp" aria-label="Certified authentic"><span>Certified</span></div>
+          {%- endif -%}
+          {%- case media.media_type -%}
+            {%- when 'image' -%}
+              <img
+                src="{{ media | image_url: width: 990 }}"
+                srcset="{{ media | image_url: width: 493 }} 493w, {{ media | image_url: width: 600 }} 600w, {{ media | image_url: width: 800 }} 800w, {{ media | image_url: width: 990 }} 990w, {{ media | image_url: width: 1206 }} 1206w"
+                sizes="(min-width: 990px) 46vw, 100vw"
+                alt="{{ media.alt | escape }}"
+                width="{{ media.width }}"
+                height="{{ media.height }}"
+                {% unless forloop.first %}loading="lazy"{% endunless %}
+                fetchpriority="{% if forloop.first %}high{% else %}auto{% endif %}"
+              >
+            {%- when 'video' -%}
+              {{ media | media_tag: image_size: '990x', autoplay: false, loop: false, controls: true, preload: 'none' }}
+            {%- when 'external_video' -%}
+              {{ media | external_video_tag }}
+            {%- else -%}
+              <img
+                src="{{ media.preview_image | image_url: width: 990 }}"
+                alt="{{ media.alt | escape }}"
+                width="{{ media.preview_image.width }}"
+                height="{{ media.preview_image.height }}"
+                loading="lazy"
+              >
+          {%- endcase -%}
+        </div>
+      {%- endfor -%}
+
+      {%- if product.media.size == 0 -%}
+        <div class="aa-pdp-gslide is-active aa-pdp-gslide--empty">
+          {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- if product.media.size > 1 -%}
+      <button type="button" class="aa-pdp-garrow aa-pdp-garrow--prev" data-aa-prev aria-label="Previous image">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <button type="button" class="aa-pdp-garrow aa-pdp-garrow--next" data-aa-next aria-label="Next image">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+      </button>
+      <div class="aa-pdp-dots" data-aa-dots>
+        {%- for media in product.media -%}
+          <button type="button" class="aa-pdp-dot{% if forloop.first %} is-active{% endif %}" data-aa-dot data-index="{{ forloop.index0 }}" aria-label="Go to image {{ forloop.index }}"></button>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+  </div>
+
+  {%- if product.media.size > 1 -%}
+    <div class="aa-pdp-gallery__thumbs" data-aa-thumbs role="list">
+      {%- for media in product.media -%}
+        <button
+          type="button"
+          class="aa-pdp-gthumb{% if forloop.first %} is-active{% endif %}"
+          data-aa-thumb
+          data-index="{{ forloop.index0 }}"
+          role="listitem"
+          aria-label="View media {{ forloop.index }}"
+        >
+          <img
+            src="{{ media.preview_image | image_url: width: 400 }}"
+            alt=""
+            width="200"
+            height="200"
+            loading="lazy"
+          >
+          {%- if media.media_type == 'video' or media.media_type == 'external_video' -%}
+            <span class="aa-pdp-gthumb__play" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+            </span>
+          {%- endif -%}
+        </button>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+
+  {%- comment -%} variant id -> featured media id, for variant->image swap. The
+  trailing "_aa" sentinel keeps the JSON valid regardless of trailing commas. {%- endcomment -%}
+  <script type="application/json" data-aa-variant-media>
+    {
+    {%- for variant in product.variants -%}
+      {%- if variant.featured_media -%}
+        "{{ variant.id }}": "{{ variant.featured_media.id }}",
+      {%- endif -%}
+    {%- endfor -%}
+    "_aa": "_aa"
+    }
+  </script>
+</div>

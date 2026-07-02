@@ -44,7 +44,8 @@ a{text-decoration:none;color:inherit} img{display:block;max-width:100%} .ph{disp
 .pcard .rate{position:absolute;bottom:10px;right:10px;z-index:2;display:inline-flex;align-items:center;gap:4px;background:rgba(255,255,255,.95);font:700 12px/1 'Jost',sans-serif;color:var(--ink);padding:4px 9px;border-radius:999px;box-shadow:0 2px 8px rgba(36,16,25,.10)}
 .pcard .rate-star{color:#E8A23B}
 .pcard .body{padding:14px 14px 16px;display:flex;flex-direction:column;align-items:center;gap:0;flex:1;text-align:center}
-.pcard .nm{font-size:14.5px;font-weight:600;line-height:1.35;min-height:39px;display:flex;align-items:center;justify-content:center;text-align:center;margin:0}
+.pcard .nm{font-size:14.5px;font-weight:600;line-height:1.35;min-height:39px;text-align:center;margin:0}
+.pcard .nm a{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .pcard .price-row{display:flex;justify-content:center;align-items:baseline;gap:7px;margin:8px 0 12px;flex-wrap:wrap}
 .pcard .price{font-size:16.5px;font-weight:800;white-space:nowrap}
 .pcard .was{font-size:13px;font-weight:400;color:#79695a;text-decoration:line-through;white-space:nowrap}
@@ -101,8 +102,7 @@ a{text-decoration:none;color:inherit} img{display:block;max-width:100%} .ph{disp
 .cert li{display:flex;align-items:center;gap:12px;font-size:14.5px} .cert li .ph{color:var(--magenta);font-size:18px}
 .cert .frame{position:relative;border-radius:16px;overflow:hidden;box-shadow:var(--shadow-hi);border:1px solid var(--line);background:#fff}
 .cert .frame img{width:100%;height:auto;display:block}
-.cert .seal{position:absolute;top:16px;right:16px;background:var(--ink);color:#F6F0E3;font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:7px 13px;border-radius:999px;display:flex;align-items:center;gap:6px} .cert .seal .ph{color:#D99A2B}
-/* steps */
+.cert .seal{position:absolute;top:16px;right:16px;background:var(--ink);color:#F6F0E3;font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:7px 13px;border-radius:999px;display:flex;align-items:center;gap:6px} .cert .seal .ph{color:#D99A2B}/* steps */
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:34px;position:relative;max-width:980px;margin:0 auto}
 .steps::before{content:"";position:absolute;top:31px;left:16%;right:16%;height:1px;background:var(--line)}
 .step{text-align:center;position:relative}
@@ -170,7 +170,7 @@ html body .sec h2,html body .sec h3,html body .efeat .ov h3,html body .rtop h2,h
   .pcard .media{border-radius:0}
   .pcard .media img{transform:scale(1.16)}
   .pcard .body{padding:11px 12px 13px;gap:0}
-  .pcard .nm{font-size:13px;min-height:0;line-height:1.3;display:flex;align-items:center;justify-content:center;text-align:center}
+  .pcard .nm{font-size:13px;min-height:34px;line-height:1.3;text-align:center}
   .pcard .price-row{margin:6px 0 10px}
   .pcard .price{font-size:14.5px}
   .pcard .was{font-size:11.5px}

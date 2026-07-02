@@ -127,10 +127,10 @@
      white-card .tabcontent style with an ID selector we cannot beat, and
      the legacy rules in section-image-banner.css set float/hover greys. */
   .listing-description-accordion .tabcontent {
-    max-width: 680px !important;
+    max-width: 860px !important;
     margin: 0 auto !important;
     padding: 26px 0 30px !important;
-    text-align: center !important;
+    text-align: left !important;
     background: none !important;
     border: 0 !important;
     box-shadow: none !important;
@@ -148,10 +148,11 @@
   }
   .listing-description-accordion .tabc-title {
     font-family: var(--font-heading-family, Georgia, serif);
-    font-weight: 400;
+    font-weight: 700 !important; /* beat global html body h3{400 !important} flattener */
     font-size: 24px;
     color: #241019;
-    margin: 0 0 4px;
+    margin: 0 0 12px;
+    text-align: left;
   }
   .listing-description-accordion .tabber_content p,
   .listing-description-accordion .tabber_content h3,
@@ -160,6 +161,27 @@
     font-size: 14.5px;
     line-height: 1.75;
     color: #5d4a53;
+  }
+  /* astrology bullet (✦), left-aligned list */
+  .listing-description-accordion .tabber_content ul {
+    list-style: none !important;
+    padding-left: 4px !important;
+    margin: 12px 0 0 !important;
+    text-align: left !important;
+  }
+  .listing-description-accordion .tabber_content ul li {
+    position: relative !important;
+    padding-left: 30px !important;
+    margin: 0 0 9px !important;
+  }
+  .listing-description-accordion .tabber_content ul li::before {
+    content: "\2726"; /* four-point star */
+    position: absolute;
+    left: 4px;
+    top: 0;
+    color: #FF7A1A;
+    font-size: 15px;
+    line-height: 1.75;
   }
   /* Mobile-only horizontal scroll for tab header */
   @media screen and (max-width: 749px) {

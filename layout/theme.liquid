@@ -334,7 +334,10 @@
     <link rel="stylesheet" href="{{ 'aa-quiz-v4.css' | asset_url }}" media="print" onload="this.media='all'">
     <script src="{{ 'aa-turbo.min.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'aa-turbo-init.js' | asset_url }}" defer="defer"></script>
-    <script src="{{ 'aa-cart-v12.js' | asset_url }}" defer="defer"></script>
+    {%- comment -%} DeDawn: lean cart owns all cart logic (assets/aa-cart.js, loaded
+       in snippets/cart-drawer.liquid). aa-cart-v12.js is unreferenced (kept on disk,
+       reversible); its non-cart grid/stamp helpers live on in aa-grid-fix.js. {%- endcomment -%}
+    <script src="{{ 'aa-grid-fix.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'aa-media-arrows-v2.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'aa-app.js' | asset_url }}" defer="defer"></script>
     {%- comment -%} PERF: load the 32KB quiz JS only on the first tap of the Find-Match
@@ -363,15 +366,12 @@
     {% render 'aa-auth-config' %}
     <script src="{{ 'aa-auth-v2.js' | asset_url }}" defer="defer"></script>
 
-    <link rel="stylesheet" href="{{ 'component-cart-items.css' | asset_url }}" media="print" onload="this.media='all'">
-
-    {%- if settings.cart_type == 'drawer' -%}
-      <link rel="stylesheet" href="{{ 'astroaura-cart-v8.css' | asset_url }}" media="print" onload="this.media='all'">
-      <link rel="stylesheet" href="{{ 'component-cart.css' | asset_url }}" media="print" onload="this.media='all'">
-      <link rel="stylesheet" href="{{ 'component-totals.css' | asset_url }}" media="print" onload="this.media='all'">
-      <link rel="stylesheet" href="{{ 'component-price.css' | asset_url }}" media="print" onload="this.media='all'">
-      <link rel="stylesheet" href="{{ 'component-discounts.css' | asset_url }}" media="print" onload="this.media='all'">
-    {%- endif -%}
+    {%- comment -%} DeDawn lean cart styling (namespaced .aac-*). Replaces the old
+       Dawn drawer CSS (astroaura-cart-v8 + component-cart/totals/price/discounts/
+       cart-items), which are unreferenced here but kept on disk for the /cart
+       fallback page and easy revert. {%- endcomment -%}
+    <link rel="stylesheet" href="{{ 'aa-cart.css' | asset_url }}" media="print" onload="this.media='all'">
+    <noscript>{{ 'aa-cart.css' | asset_url | stylesheet_tag }}</noscript>
 
     {%- comment -%}
       AstroAura dark mode overrides. Render-blocking (NOT media=print) so dark
@@ -386,7 +386,7 @@
        so: cascade + look are byte-identical for dark, light/web visitors download
        ZERO dark CSS, no flash (render-blocking during parse), FPC-safe (cookie
        read client-side). Sources kept on disk for editing; rebuild bundle on change. {%- endcomment -%}
-    <script>if(document.cookie.split('; ').indexOf('app_color_scheme=dark')>-1){var h='{{ 'aa-dark-bundle.css' | asset_url }}';if(document.readyState==='loading'){document.write('<link rel="stylesheet" id="aa-dark-bundle" href="'+h+'" media="all">');}else if(!document.getElementById('aa-dark-bundle')){var l=document.createElement('link');l.id='aa-dark-bundle';l.rel='stylesheet';l.href=h;l.media='all';document.head.appendChild(l);}}</script>
+    <script>if(document.cookie.split('; ').indexOf('app_color_scheme=dark')>-1){['{{ 'aa-dark-bundle.css' | asset_url }}','{{ 'aa-dark-newui.css' | asset_url }}'].forEach(function(h,i){var id='aa-dark-'+i;if(document.readyState==='loading'){document.write('<link rel="stylesheet" id="'+id+'" href="'+h+'" media="all">');}else if(!document.getElementById(id)){var l=document.createElement('link');l.id=id;l.rel='stylesheet';l.href=h;l.media='all';document.head.appendChild(l);}});}</script>
 
     {%- if localization.available_countries.size > 1 or localization.available_languages.size > 1 -%}
       {{ 'component-localization-form.css' | asset_url | stylesheet_tag: preload: true }}
@@ -553,9 +553,8 @@
     </script>
 
 
-    {%- if settings.cart_type == 'drawer' -%}
-      <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
-    {%- endif -%}
+    {%- comment -%} DeDawn: Dawn's cart-drawer.js is unreferenced — the lean
+       <cart-drawer> element is defined in assets/aa-cart.js. {%- endcomment -%}
     {% if settings.ai_chatbot_enabled %}
     <script>
       window.AI_CHATBOT_CONFIG = {
@@ -575,10 +574,9 @@
     <script src="{{ 'ai-chatbot-improved.js' | asset_url }}" defer="defer"></script>
     {% endif %}
   
-{%- comment -%} Razorpay Magic Checkout wired DIRECTLY here (the official app
-  embed is intentionally OFF — using only this snippet avoids the double-load of
-  magic-shopify.js that broke the checkout hook). Reads the magic_checkout shop
-  metafields for config. Re-wired 2026-06-16. {%- endcomment -%}
+{%- comment -%}
+  Razorpay Magic Checkout. 2026-06-29: on DeDawn Dev we switched to the official "Magic Checkout Script" app embed, which now injects magic-shopify.js. The manual render below is DISABLED so the loader runs exactly once (two loaders broke the checkout hook on 2026-06-16). To revert to snippet-only wiring: turn the app embed OFF and uncomment the render line.
+{%- endcomment -%}
 {% render 'razorpay-magic-checkout' %}
 {% render 'aa-app-shell' %}
 {% render 'aa-auth-popup' %}
@@ -596,14 +594,9 @@
   body.template-product .product-form__submit:not(#z1):not(#z2),
   .qv-add:not(#z1):not(#z2),
   .qv-buy:not(#z1):not(#z2) { border-radius: 14px !important; }
-  /* Dark mode: kill backdrop-filter blur (scroll jank). The :not(#x) boosts
-     specificity above the frozen aa-dark-bundle.css blur rules. */
-  html[data-theme="dark"] *:not(#aaqz1):not(#aaqz2),
-  html[data-theme="dark"] *:not(#aaqz1):not(#aaqz2)::before,
-  html[data-theme="dark"] *:not(#aaqz1):not(#aaqz2)::after {
-    -webkit-backdrop-filter: none !important;
-    backdrop-filter: none !important;
-  }
+  /* (Removed the universal html[data-theme="dark"] * backdrop-filter:none hack —
+     the dark bundle no longer emits any blur, so it was dead weight and a
+     per-recalc cost via the universal selector.) */
 </style>
 </body>
 </html>

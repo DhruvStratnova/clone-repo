@@ -12,125 +12,115 @@
     font-family: 'Inter', -apple-system, sans-serif !important;
   }
 
-  /* Title centered + serif */
+  /* Heading — bold sans, dark ink (text set to "Hear From Our Customers" via JS) */
   html body .jdgm-rev-widg__title {
-    font-family: 'Cormorant Garamond', Georgia, serif !important;
-    font-size: 30px !important;
-    font-weight: 600 !important;
-    color: #1A1A1A !important;
+    font-family: 'Jost','Inter',system-ui,sans-serif !important;
+    font-size: 26px !important;
+    font-weight: 800 !important;
+    color: #241019 !important;
     text-align: center !important;
-    margin: 0 0 24px !important;
+    letter-spacing: -0.01em !important;
+    margin: 0 0 26px !important;
     padding: 0 !important;
   }
 
-  /* Summary block — let Judge.me lay it out, we only soften */
+  /* Reference layout: heading on top, then row = [average+stars] | [histogram] | [Write a review] */
+  html body .jdgm-rev-widg__header {
+    display: flex !important; flex-wrap: wrap !important; align-items: center !important;
+    justify-content: center !important; gap: 26px 40px !important;
+    background: #FFFFFF !important; border: 1px solid rgba(36,16,25,0.06) !important; box-shadow: 0 12px 34px rgba(20,10,20,0.06) !important; border-radius: 18px !important;
+    padding: 26px 32px !important; margin-bottom: 28px !important;
+  }
+  html body .jdgm-rev-widg__title { width: 100% !important; }
   html body .jdgm-rev-widg__summary {
-    background: #FFFFFF !important;
-    border: 1px solid rgba(0,0,0,0.06) !important;
-    border-radius: 12px !important;
-    padding: 24px !important;
-    margin-bottom: 24px !important;
+    flex: 1 1 320px !important; display: flex !important; align-items: center !important; gap: 34px !important;
+    background: none !important; border: 0 !important; border-radius: 0 !important; padding: 0 !important; margin: 0 !important; min-width: 0 !important;
   }
-
-  /* Score on one line, no wrap */
+  html body .jdgm-rev-widg__summary-inner {
+    display: flex !important; flex-direction: row !important; flex-wrap: wrap !important; align-items: center !important; justify-content: flex-start !important; gap: 6px 10px !important;
+    flex: 0 0 auto !important; padding-right: 34px !important; text-align: left !important;
+    border-top: 0 !important; border-bottom: 0 !important; border-left: 0 !important;
+    border-right: 1px solid rgba(36,16,25,0.12) !important; box-shadow: none !important; background: none !important;
+  }
   html body .jdgm-rev-widg__summary-average {
-    font-family: 'Cormorant Garamond', Georgia, serif !important;
-    font-size: 24px !important;
-    font-weight: 700 !important;
-    color: #1A1A1A !important;
-    white-space: nowrap !important;
-    display: inline-block !important;
+    font-family: 'Jost','Inter',system-ui,sans-serif !important; font-size: 18px !important;
+    font-weight: 500 !important; color: #241019 !important; white-space: nowrap !important; display: inline-block !important;
   }
+  /* "Based on N reviews" drops to its own line under the stars + score */
+  html body .jdgm-rev-widg__summary-text { flex-basis: 100% !important; color: #8a7480 !important; font-size: 13px !important; margin: 2px 0 0 !important; }
+  /* no stray outline boxes around the summary / all-reviews mini widgets */
+  html body .jdgm-rev-widg__summary,
+  html body .jdgm-all-reviews-rating,
+  html body .jdgm-all-reviews__inner,
+  html body .jdgm-widget.jdgm-preview-badge { border: 0 !important; box-shadow: none !important; }
+  html body .jdgm-histogram { display: block !important; flex: 1 1 auto !important; margin: 0 !important; min-width: 240px !important; float: none !important; width: auto !important; border-right: 1px solid rgba(36,16,25,0.12) !important; padding-right: 30px !important; box-sizing: border-box !important; }
+  html body .jdgm-histogram__row { display:flex !important; align-items:center !important; gap:12px !important; margin:5px 0 !important; float:none !important; width:100% !important; box-sizing:border-box !important; }
+  html body .jdgm-histogram__star { flex:0 0 auto !important; white-space:nowrap !important; width:auto !important; margin:0 !important; line-height:1 !important; }
+  html body .jdgm-histogram__bar { flex:1 1 auto !important; background:#ECE6DF !important; border-radius:999px !important; height:12px !important; overflow:hidden !important; width:auto !important; float:none !important; margin:0 !important; }
+  html body .jdgm-histogram__frequency { flex:0 0 auto !important; color:#8a7480 !important; font-size:13px !important; min-width:26px !important; text-align:right !important; margin:0 !important; }
+  html body .jdgm-histogram__row.jdgm-histogram__clear-filter { display:none !important; }
 
-  /* Stars — amber gold */
+  /* Stars — brand orange */
   html body .jdgm-star.jdgm--on,
   html body .jdgm--on { color: #F5A623 !important; }
   html body .jdgm-star.jdgm--off,
-  html body .jdgm--off { color: #E5E5E5 !important; }
+  html body .jdgm--off { color: #E5E0DA !important; }
 
-  /* Histogram bars — amber gold (no layout changes, just color) */
+  /* Histogram fill — Aura brand gradient */
   html body .jdgm-histogram-row__bar-content,
   html body .jdgm-histogram__bar-content {
-    background: #F5A623 !important;
-    background-color: #F5A623 !important;
+    background: linear-gradient(90deg,#FF8C42,#FF2E93) !important;
+    height: 100% !important; border-radius: 999px !important;
   }
 
-  /* Write a Review button — clean pill */
+  /* Write a Review — brand gradient pill (3rd column) */
   html body .jdgm-write-rev-link {
-    display: inline-block !important;
-    padding: 12px 28px !important;
-    background: #1A1A1A !important;
-    color: #FFFFFF !important;
-    border: none !important;
-    border-radius: 999px !important;
-    font-family: 'Inter', sans-serif !important;
-    font-size: 13px !important;
-    font-weight: 600 !important;
-    letter-spacing: 0.5px !important;
-    text-transform: uppercase !important;
-    text-decoration: none !important;
-    transition: all 0.2s ease !important;
+    flex: 0 0 auto !important; display: inline-flex !important; align-items: center !important; justify-content: center !important; text-align: center !important; align-self: center !important; margin-left: 48px !important; white-space: nowrap !important; padding: 11px 30px !important; min-height: 0 !important; line-height: 1.2 !important;
+    background: linear-gradient(135deg,#FF8C42,#FF2E93) !important; color: #FFFFFF !important; border: none !important;
+    border-radius: 999px !important; font-family: 'Jost','Inter',sans-serif !important; font-size: 14px !important;
+    font-weight: 700 !important; letter-spacing: 0.2px !important; text-transform: none !important; text-decoration: none !important;
+    box-shadow: 0 6px 18px rgba(255,46,147,0.28) !important; transition: transform 0.15s ease !important;
   }
-  html body .jdgm-write-rev-link:hover {
-    background: #4A1942 !important;
-    transform: translateY(-1px);
-  }
+  html body .jdgm-write-rev-link:hover { transform: translateY(-1px); }
 
-  /* Sort dropdown — clean */
+  /* Sort control — flat, no outline box */
+  html body .jdgm-rev-widg__sort-wrapper,
+  html body .jdgm-rev-widg__sort,
   html body .jdgm-sort-dropdown {
-    font-family: 'Inter', sans-serif !important;
-    font-size: 13px !important;
-    border: 1px solid rgba(0,0,0,0.12) !important;
-    border-radius: 8px !important;
-    padding: 8px 14px !important;
-    background: #FFFFFF !important;
+    border: 0 !important; box-shadow: none !important; outline: 0 !important; background: transparent !important; border-radius: 0 !important;
+  }
+  html body .jdgm-sort-dropdown {
+    font-family: 'Jost','Inter', sans-serif !important; font-size: 13px !important; color: #241019 !important; font-weight: 600 !important; padding: 6px 8px !important;
   }
 
-  /* Each review — clean card */
+  /* ── Review cards: FLAT + side by side. Reviews live in .jdgm-rev-widg__reviews
+        (a child of __body), so the grid goes THERE, not on __body. ── */
+  html body .jdgm-rev-widg__reviews { display: grid !important; grid-template-columns: repeat(3, 1fr) !important; gap: 18px !important; }
   html body .jdgm-rev {
-    background: #FFFFFF !important;
-    border: 1px solid rgba(0,0,0,0.06) !important;
-    border-radius: 12px !important;
-    padding: 20px 24px !important;
-    margin: 0 0 12px !important;
+    background: #FFFFFF !important; border: 1px solid rgba(36,16,25,0.07) !important; border-radius: 12px !important;
+    padding: 18px 20px !important; margin: 0 !important; box-shadow: none !important; overflow: hidden !important;
+    display: flex !important; flex-direction: column !important; gap: 6px !important;
   }
-
-  /* Verified badge — green pill */
-  html body .jdgm-rev__buyer-badge {
-    background: rgba(46, 139, 87, 0.10) !important;
-    color: #2E8B57 !important;
-    border-radius: 999px !important;
-    padding: 2px 9px !important;
-    font-size: 11px !important;
-    font-weight: 600 !important;
+  html body .jdgm-rev__header { background: none !important; padding: 0 !important; margin: 0 !important; border: 0 !important; display: block !important; }
+  /* hide the broken default avatar + the redundant per-review product name */
+  html body .jdgm-rev__pic, html body .jdgm-rev__icon, html body .jdgm-row-profile img, html body .jdgm-row-profile svg, html body .jdgm-row-product { display: none !important; }
+  html body .jdgm-row-rating { margin: 0 0 6px !important; }
+  html body .jdgm-rev__author, html body .jdgm-row-profile {
+    font-family: 'Jost','Inter',sans-serif !important; font-size: 15px !important; font-weight: 800 !important; color: #241019 !important;
   }
-
-  /* Author name */
-  html body .jdgm-rev__author {
-    font-family: 'Inter', sans-serif !important;
-    font-size: 14px !important;
-    font-weight: 600 !important;
-    color: #1A1A1A !important;
+  html body .jdgm-rev__buyer-badge, html body .jdgm-rev__timestamp, html body .jdgm-row-extra {
+    background: none !important; color: #8a7480 !important; font-size: 12.5px !important; font-weight: 500 !important; padding: 0 !important; border-radius: 0 !important;
   }
-
-  /* Title */
-  html body .jdgm-rev__title {
-    font-weight: 700 !important;
-    color: #1A1A1A !important;
-  }
-
-  /* Body */
-  html body .jdgm-rev__body {
-    font-family: 'Inter', sans-serif !important;
-    line-height: 1.65 !important;
-    color: #4A4A4A !important;
-  }
-
-  /* Date */
-  html body .jdgm-rev__timestamp {
-    color: #999 !important;
-    font-size: 12px !important;
-  }
+  html body .jdgm-rev__title { font-weight: 700 !important; color: #241019 !important; margin: 4px 0 0 !important; padding: 0 !important; }
+  html body .jdgm-rev__body { font-family: 'Inter', sans-serif !important; line-height: 1.6 !important; color: #57505a !important; margin: 2px 0 0 !important; padding: 0 !important;
+    display: -webkit-box !important; -webkit-line-clamp: 6 !important; -webkit-box-orient: vertical !important; overflow: hidden !important; }
+  html body .jdgm-rev__body.aa-expanded { -webkit-line-clamp: unset !important; overflow: visible !important; display: block !important; }
+  html body .aa-viewmore { display: inline-block !important; margin-top: 10px !important; color: #FF2E93 !important; font: 600 13px/1 'Jost','Inter',sans-serif !important; cursor: pointer !important; text-decoration: underline !important; background: none !important; border: 0 !important; padding: 0 !important; }
+  html body .jdgm-rev__body a, html body .jdgm-read-more { color: #FF2E93 !important; font-weight: 600 !important; text-decoration: underline !important; }
+  /* injected numeric average "X out of 5" next to the summary stars */
+  html body .aa-avg { font-family: 'Jost','Inter',sans-serif !important; font-size: 18px !important; font-weight: 800 !important; color: #241019 !important; }
+  @media (min-width: 750px) and (max-width: 990px) { html body .jdgm-rev-widg__reviews { grid-template-columns: repeat(2, 1fr) !important; } }
+  @media (max-width: 749px) { html body .jdgm-rev-widg__reviews { grid-template-columns: 1fr !important; } }
 
   /* Pagination buttons */
   html body .jdgm-paginate a,
@@ -158,14 +148,15 @@
      histogram, sort and review cards don't crowd/overlap each other. */
   @media screen and (max-width: 749px) {
     html body .jdgm-rev-widg { padding: 0 16px !important; }
-    html body .jdgm-rev-widg__summary { gap: 14px !important; margin-bottom: 20px !important; }
-    html body .jdgm-rev-widg__summary-stars { margin-bottom: 6px !important; }
-    html body .jdgm-write-rev-link { display: block !important; margin: 18px auto !important; }
-    html body .jdgm-histogram { margin: 18px 0 !important; clear: both !important; }
-    html body .jdgm-rev-widg__sort-wrapper,
-    html body .jdgm-rev-widg__sort { margin: 16px 0 !important; }
+    html body .jdgm-rev-widg__header { flex-direction: column !important; gap: 18px !important; padding: 22px 18px !important; }
+    html body .jdgm-rev-widg__title { font-size: 22px !important; margin-bottom: 2px !important; }
+    html body .jdgm-rev-widg__summary { flex-direction: column !important; gap: 16px !important; width: 100% !important; align-items: center !important; }
+    html body .jdgm-rev-widg__summary-inner { border-right: 0 !important; padding-right: 0 !important; }
+    html body .jdgm-histogram { width: 100% !important; }
+    html body .jdgm-write-rev-link { display: block !important; width: 100% !important; text-align: center !important; margin: 0 !important; }
     html body .jdgm-rev { margin-bottom: 18px !important; }
   }
+  html body .jdgm-row-media, html body .jdgm-medals-wrapper, html body .jdgm-form-wrapper, html body .jdgm-form-dynamic-wrapper { display:none !important; }
 </style>
 
 <script>
@@ -175,24 +166,28 @@
         s.style.setProperty('color', '#F5A623', 'important');
       });
       document.querySelectorAll('.jdgm-histogram-row__bar-content, .jdgm-histogram__bar-content').forEach(function(b) {
-        b.style.setProperty('background', '#F5A623', 'important');
-        b.style.setProperty('background-color', '#F5A623', 'important');
+        b.style.setProperty('background', 'linear-gradient(90deg,#FF8C42,#FF2E93)', 'important');
       });
-      /* User: remove the average-score box + Judge.me "Diamond Transparency"
-         badge. Inline display:none via JS beats cache + survives re-renders. */
-      document.querySelectorAll('.jdgm-rev-widg__summary-inner, .jdgm-all-reviews-rating, .jdgm-all-reviews__summary-text--verified, .jdgm-medals').forEach(function(el) {
+      /* rename the widget heading */
+      document.querySelectorAll('.jdgm-rev-widg__title').forEach(function(t) {
+        if ((t.textContent || '').trim() !== 'Hear From Our Customers') t.textContent = 'Hear From Our Customers';
+      });
+      /* Judge.me already renders .jdgm-rev-widg__summary-average ("X out of 5") — no injection (avoids duplicate) */
+      /* hide only the Judge.me medals / diamond-transparency badge — KEEP the average summary (left column now) */
+      document.querySelectorAll('.jdgm-all-reviews-rating, .jdgm-all-reviews__summary-text--verified, .jdgm-medals').forEach(function(el) {
         el.style.setProperty('display', 'none', 'important');
       });
-      /* The summary container is now empty (inner hidden) but keeps its white/dark
-         box bg+border+padding => leftover empty box. Strip it so it collapses. */
-      document.querySelectorAll('.jdgm-rev-widg__summary').forEach(function(el) {
-        el.style.setProperty('background', 'none', 'important');
-        el.style.setProperty('background-color', 'transparent', 'important');
-        el.style.setProperty('border', '0', 'important');
-        el.style.setProperty('box-shadow', 'none', 'important');
-        el.style.setProperty('padding', '0', 'important');
-        el.style.setProperty('margin', '0', 'important');
-        el.style.setProperty('min-height', '0', 'important');
+      /* clamp long review bodies to 6 lines with a View more / View less toggle */
+      document.querySelectorAll('.jdgm-rev__body').forEach(function(b) {
+        if (b.dataset.aaClamp) return; b.dataset.aaClamp = '1';
+        if (b.scrollHeight > b.clientHeight + 4) {
+          var btn = document.createElement('button'); btn.type = 'button'; btn.className = 'aa-viewmore'; btn.textContent = 'View more';
+          b.insertAdjacentElement('afterend', btn);
+          btn.addEventListener('click', function () {
+            var ex = b.classList.toggle('aa-expanded');
+            btn.textContent = ex ? 'View less' : 'View more';
+          });
+        }
       });
       /* Hide pagination boxes that have no visible content (Judge.me's prev/next icons broken) */
       document.querySelectorAll('.jdgm-paginate a, .jdgm-paginate__page, .jdgm-paginate li').forEach(function(el) {

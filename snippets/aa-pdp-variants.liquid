@@ -1,0 +1,119 @@
+{% comment %}
+  AA PDP revamp variant UI: renders COLOR options as swatch chips and every
+  other option as selectable pills (the reference's "size pills"). It reuses
+  Dawn's product-variant-options so the inputs stay 100% native:
+
+  - Everything sits inside <variant-selects> (global.js VariantSelects), so
+    selecting a value publishes optionValueSelectionChange and product-info.js
+    refetches + updates the form's input[name="id"], price, and availability.
+  - Pills keep .product-form__input--pill + a <legend>, which the Option Plus
+    loader at the bottom of main-product.liquid depends on ("Choice of Wear").
+  - data-option-value-id / data-product-url come through product-variant-options
+    and swatch-input (additional_props), which VariantSelects reads.
+
+  Accepts: product, block, product_form_id
+{% endcomment %}
+{%- unless product.has_only_default_variant -%}
+  {%- liquid
+    assign aa_ring = false
+    assign aa_pt = product.title | append: ' ' | append: product.type | downcase
+    if aa_pt contains 'ring'
+      assign aa_ring = true
+    endif
+    assign aa_sizechart = 'https://cdn.shopify.com/s/files/1/0947/9467/8574/files/Ring_Size.pdf?v=1756981561'
+  -%}
+  <variant-selects
+    id="variant-selects-{{ section.id }}"
+    data-section="{{ section.id }}"
+    class="aa-pdp-variants"
+    {{ block.shopify_attributes }}
+  >
+    {%- for option in product.options_with_values -%}
+      {%- liquid
+        assign swatch_count = option.values | map: 'swatch' | compact | size
+        assign aa_name_l = option.name | downcase
+        assign aa_show_chart = false
+        if aa_ring and aa_name_l contains 'size'
+          assign aa_show_chart = true
+        endif
+        assign aa_picker = 'button'
+        if swatch_count > 0
+          assign aa_picker = 'swatch'
+        endif
+      -%}
+      {%- if aa_picker == 'swatch' -%}
+        <fieldset class="js product-form__input product-form__input--swatch aa-pdp-opt aa-pdp-opt--swatch">
+          <legend class="form__label aa-pdp-opt__label">
+            <span class="aa-pdp-opt__name">{{ option.name }}: <span data-selected-value>{{ option.selected_value }}</span></span>
+            {%- if aa_show_chart -%}
+              <button type="button" class="aa-pdp-sizechart" data-aa-sizechart data-href="{{ aa_sizechart }}">View Size Chart</button>
+            {%- endif -%}
+          </legend>
+          {% render 'product-variant-options', product: product, option: option, block: block, picker_type: 'swatch' %}
+        </fieldset>
+      {%- else -%}
+        <fieldset class="js product-form__input product-form__input--pill aa-pdp-opt aa-pdp-opt--pill">
+          <legend class="form__label aa-pdp-opt__label">
+            <span class="aa-pdp-opt__name">{{ option.name }}</span>
+            {%- if aa_show_chart -%}
+              <button type="button" class="aa-pdp-sizechart" data-aa-sizechart data-href="{{ aa_sizechart }}">View Size Chart</button>
+            {%- endif -%}
+          </legend>
+          {% render 'product-variant-options', product: product, option: option, block: block, picker_type: 'button' %}
+          {%- comment -%} making-time note removed per request {%- endcomment -%}
+        </fieldset>
+      {%- endif -%}
+    {%- endfor -%}
+
+    <script type="application/json" data-selected-variant>
+      {{ product.selected_or_first_available_variant | json }}
+    </script>
+    {%- comment -%} Default the picker to the cheapest available variant (the base
+    "Without/Standard" combo that carries the MRP/compare-at price), not whatever
+    variant happens to be first-available by admin ordering. {%- endcomment -%}
+    {%- liquid
+      assign aa_def = product.selected_or_first_available_variant
+      assign aa_min = 2147483647
+      for v in product.variants
+        if v.available and v.price < aa_min
+          assign aa_min = v.price
+          assign aa_def = v
+        endif
+      endfor
+    -%}
+    <script type="application/json" data-aa-default-options>{{ aa_def.options | json }}</script>
+  </variant-selects>
+  <script>
+    (function () {
+      if (window.__aaDefaultVariant) return;
+      window.__aaDefaultVariant = true;
+      function run() {
+        var vs = document.querySelector('variant-selects.aa-pdp-variants');
+        if (!vs) return;
+        var node = vs.querySelector('[data-aa-default-options]');
+        if (!node) return;
+        var want;
+        try { want = JSON.parse(node.textContent); } catch (e) { return; }
+        if (!want || !want.length) return;
+        var fieldsets = vs.querySelectorAll('fieldset');
+        var changed = false;
+        for (var i = 0; i < fieldsets.length; i++) {
+          var target = want[i];
+          if (target == null) continue;
+          var radios = fieldsets[i].querySelectorAll('input[type="radio"]');
+          for (var j = 0; j < radios.length; j++) {
+            var match = radios[j].value === target;
+            if (match && !radios[j].checked) { radios[j].checked = true; changed = true; }
+            else if (!match && radios[j].checked) { radios[j].checked = false; }
+          }
+        }
+        if (changed) {
+          var c = vs.querySelector('input[type="radio"]:checked');
+          if (c) c.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+      }
+      if (document.readyState !== 'loading') run();
+      else document.addEventListener('DOMContentLoaded', run);
+    })();
+  </script>
+{%- endunless -%}

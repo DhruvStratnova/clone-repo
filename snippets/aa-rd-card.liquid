@@ -17,7 +17,7 @@
   endif
 -%}
 {%- unless is_pyramid -%}
-<article class="pcard{% if p.type == 'Mani' or p.type == 'Vastu' or aa_is_combo %} aa-fill{% elsif p.type == 'Anklet' %} aa-fill-strong{% endif %}">
+<article class="pcard{% if p.type == 'Mani' or p.type == 'Vastu' or aa_is_combo %} aa-fill{% elsif p.type == 'Anklet' %} aa-fill-strong{% endif %}" data-aa-hindi="{{ p.metafields.custom.hindi_title.value | default: p.metafields.custom.subtitle.value | escape }}">
   <div class="media"{% if p.images.size > 1 %} data-aa-imgs='[{% for im in p.images limit: 4 %}"{{ im | image_url: width: 600 }}"{% unless forloop.last %},{% endunless %}{% endfor %}]'{% endif %}>
     {%- if p.images.size > 1 -%}
       <button type="button" class="aa-marr aa-marr--l" aria-label="Previous image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>

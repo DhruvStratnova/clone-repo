@@ -699,7 +699,9 @@ header .aa-img-stamp,
 /* Stamp ONLY shows on the product detail page, inside the main product media wrapper.
    Top-left corner, small + translucent so product remains visible. */
 body.template-product .product__media-wrapper .product__media-item .aa-img-stamp,
-body.template-product .product__media-wrapper .product__media .aa-img-stamp {
+body.template-product .product__media-wrapper .product__media .aa-img-stamp,
+body.template-product .product__media-wrapper .aa-pdp-gallery__stage .aa-img-stamp,
+body.template-product .product__media-wrapper .aa-pdp-gallery .aa-img-stamp {
   display: flex !important;
   visibility: visible !important;
   top: 18px !important;

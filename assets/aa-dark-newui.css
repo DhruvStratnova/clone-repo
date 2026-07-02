@@ -1,0 +1,74 @@
+/* aa-dark-newui.css — dark styling for the UI added AFTER the Jun-27 dark bundle
+   (custom collection filter, full-page search, bottom tab bar, media placeholders,
+   product cards). Every rule scoped under html[data-theme="dark"] so the light
+   default for web visitors is byte-for-byte unchanged. Lightweight: class-keyed,
+   no blur, no universal selectors. Aura dark palette:
+     canvas #0C0A1F  surface #150A24  raised #22143C  line rgba(255,255,255,.12)
+     text #fff / rgba(255,255,255,.72) / rgba(255,255,255,.5)  accent #FF2E93 / #FF8C42 */
+
+/* ============ 1. Custom collection filter (aa-filter.css) ============ */
+/* The bar reads its palette from --ink/--mut/--line — just reflip those. */
+html[data-theme="dark"] .aa-fltr{
+  --ink:#ffffff;
+  --mut:rgba(255,255,255,.6);
+  --line:rgba(255,255,255,.14);
+}
+html[data-theme="dark"] .aa-fltr__btn:hover,
+html[data-theme="dark"] .aa-fltr__grp.open .aa-fltr__btn,
+html[data-theme="dark"] .aa-fltr__opt:hover{background:rgba(255,255,255,.07)}
+/* dropdown panel / bottom sheet surfaces (were #fff) */
+html[data-theme="dark"] .aa-fltr__panel{
+  background:#150A24;border-color:rgba(255,255,255,.12);
+  box-shadow:0 18px 44px rgba(0,0,0,.55)}
+html[data-theme="dark"] .aa-fltr__phead{background:#150A24;border-bottom-color:rgba(255,255,255,.12)}
+html[data-theme="dark"] .aa-fltr__pbody::-webkit-scrollbar-thumb{background:rgba(255,255,255,.22)}
+/* checkbox outline (was dark ink) */
+html[data-theme="dark"] .aa-fltr__box{border-color:rgba(255,255,255,.32)}
+/* sort select + price min/max inputs (were #fff) */
+html[data-theme="dark"] .aa-fltr__sortsel,
+html[data-theme="dark"] .aa-fltr__rin{
+  background:#22143C;color:#fff;border-color:rgba(255,255,255,.16)}
+html[data-theme="dark"] .aa-fltr__sortsel option{background:#150A24;color:#fff}
+/* selected pills keep the magenta wash — already token-driven, no change needed */
+
+/* ============ 2. Full-page search overlay (aa-app.css) ============ */
+html[data-theme="dark"] .aa-search{background:#0C0A1F}
+html[data-theme="dark"] .aa-search__field{
+  background:#150A24;border-color:rgba(255,255,255,.14);box-shadow:none}
+html[data-theme="dark"] .aa-search__ico{color:rgba(255,255,255,.5)}
+html[data-theme="dark"] .aa-search__input{color:#fff}
+html[data-theme="dark"] .aa-search__input::placeholder{color:rgba(255,255,255,.42)}
+html[data-theme="dark"] .aa-search__heading{color:rgba(255,255,255,.5)}
+html[data-theme="dark"] .aa-sr{color:#fff}
+html[data-theme="dark"] .aa-sr:active{background:rgba(255,255,255,.06)}
+html[data-theme="dark"] .aa-sr__img,
+html[data-theme="dark"] .aa-pcard__media:not(.is-loaded),
+html[data-theme="dark"] .aa-rec__img:not(.is-loaded){background-color:#1c1030}
+html[data-theme="dark"] .aa-search__empty{color:rgba(255,255,255,.5)}
+html[data-theme="dark"] .aa-wish__title{color:#fff}
+/* desktop centred panel (was #fff surfaces) */
+@media screen and (min-width:750px){
+  html[data-theme="dark"] .aa-search{background:rgba(4,3,10,.62)}
+  html[data-theme="dark"] .aa-search__bar,
+  html[data-theme="dark"] .aa-search__heading,
+  html[data-theme="dark"] .aa-search__results{background:#0F0A1E}
+  html[data-theme="dark"] .aa-search__bar{border-bottom-color:rgba(255,255,255,.1)}
+  html[data-theme="dark"] .aa-search__field{background:#1B1030}
+}
+
+/* ============ 3. Bottom tab bar (aa-app.css) — was solid #ffffff ============ */
+@media screen and (max-width:749px){
+  html[data-theme="dark"] .aa-tabbar{
+    background:#0B0918;border-top-color:rgba(255,255,255,.08);
+    box-shadow:0 -6px 20px rgba(0,0,0,.4)}
+  html[data-theme="dark"] .aa-tab{color:rgba(255,255,255,.62)}
+  /* active + Find-Match accent already magenta (#e9027a) — legible on dark, kept */
+}
+
+/* ============ 4. Product cards — keep dark, not this session's white ============ */
+/* this session set .card-wrapper.product-card-wrapper to #FFFFFF for LIGHT hero
+   parity; in dark it must stay a dark surface. */
+html[data-theme="dark"] .card-wrapper.product-card-wrapper{
+  background:#150A24 !important;
+  border-color:rgba(255,255,255,.1) !important;
+  box-shadow:0 10px 26px rgba(0,0,0,.45) !important}

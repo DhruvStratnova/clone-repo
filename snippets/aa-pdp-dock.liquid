@@ -1,70 +1,134 @@
 {%- comment -%}
-  Floating Aura Dock — appears when the buy buttons scroll out of view.
-  Its buttons DELEGATE clicks to Dawn's real Add-to-Cart / dynamic checkout
-  buttons, so all commerce logic (variant id, price, cart) stays Dawn's.
-  Price text is mirrored from the live price element, never computed here.
+  Floating Aura sticky popup. Moved to <body> on every load (incl. Turbo SPA navs) so
+  position:fixed anchors to the viewport. Renders as a curved rounded-rectangle card that
+  floats above the bottom edge with a gap on all sides. Buttons delegate to the real
+  Add-to-Cart / custom Buy Now. Price mirrors the live price element.
 {%- endcomment -%}
+{%- assign aa_cur = product.price -%}
+{%- assign aa_cmp = product.compare_at_price -%}
 <div class="aa-dock" id="AaDock" aria-hidden="true">
-  {%- if product.featured_image -%}
-    <img src="{{ product.featured_image | image_url: width: 96 }}" alt="" width="46" height="46" loading="lazy">
-  {%- endif -%}
-  <div class="aa-dinfo">
-    <div class="aa-dn">{{ product.title | escape }}</div>
-    <div class="aa-dp"><b data-aa-dock-price></b></div>
+  <div class="aa-dock__body">
+    {%- if product.featured_image -%}
+      <img class="aa-dock__img" src="{{ product.featured_image | image_url: width: 96 }}" alt="" width="42" height="42" loading="lazy">
+    {%- endif -%}
+    <div class="aa-dock__info">
+      <span class="aa-dock__title">{{ product.title }}</span>
+      <div class="aa-dock__price">
+        <b data-aa-dock-price>{{ aa_cur | money }}</b>
+        {%- if aa_cmp > aa_cur -%}
+          {%- assign aa_disc = aa_cmp | minus: aa_cur | times: 100.0 | divided_by: aa_cmp | round -%}
+          <span class="aa-dock__meta">
+            <s>{{ aa_cmp | money }}</s>
+            <span class="aa-dock__off"><span>{{ aa_disc }}% OFF</span></span>
+          </span>
+        {%- endif -%}
+      </div>
+    </div>
+    <div class="aa-dock__btns">
+      <button type="button" class="aa-dock__cart" data-aa-dock-cart>Add to Cart</button>
+      <button type="button" class="aa-dock__buy" data-aa-dock-buy>Buy Now</button>
+    </div>
   </div>
-  <button type="button" class="aa-dcart" data-aa-dock-cart>+ Cart</button>
-  <button type="button" class="aa-dbuy" data-aa-dock-buy>Buy Now</button>
 </div>
+
+<style>
+  /* Floating curved-rectangle popup: compact rounded card that floats above the bottom edge
+     with a gap on all sides. overflow:clip keeps the content within the card radius. */
+  .aa-dock { display:block; position:fixed; left:0; right:0; bottom:0; margin:0; z-index:9999;
+    width:auto; max-width:none; padding:0; overflow:clip;
+    border-radius:16px 16px 0 0; background:#fff;
+    box-shadow: 0 -2px 10px rgba(20,10,20,0.08), 0 -14px 40px rgba(20,10,20,0.18);
+    transform: translateY(150%); transition: transform 380ms cubic-bezier(0.22,1,0.36,1); pointer-events:none; }
+  .aa-dock.aa-show { transform: translateY(0); pointer-events:auto; }
+  /* cart drawer / any overlay open (aa-cart.js adds body.aa-overlay-open): slide the dock away so it never overlaps */
+  body.aa-overlay-open .aa-dock { transform: translateY(150%) !important; pointer-events:none !important; }
+  /* full-width white bar, but centered content container so price/buttons pull in from the corners */
+  .aa-dock__body { max-width:1180px; margin-inline:auto; padding:6px 28px; display:flex; align-items:center; gap:16px; box-sizing:border-box; }
+  .aa-dock__img { flex:0 0 auto; width:36px; height:36px; margin-left:0; border-radius:50%; object-fit:cover; border:1.5px solid #efe7da; }
+  .aa-dock__info { display:flex; flex-direction:column; gap:3px; min-width:0; flex:0 1 auto; }
+  .aa-dock__title { font:700 14px/1.15 'Jost',system-ui,sans-serif; color:#241019; letter-spacing:-0.01em;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:360px; }
+  .aa-dock__price { display:flex; align-items:center; gap:10px; flex:0 0 auto; white-space:nowrap; }
+  .aa-dock__price b { font:800 19px/1 'Jost',system-ui,sans-serif; color:#241019; letter-spacing:-0.01em; }
+  .aa-dock__price s { color:#9b948e; font-size:13px; line-height:1; }
+  /* desktop: strike + badge inline; mobile stacks it (badge over cut price) */
+  .aa-dock__meta { display:inline-flex; align-items:center; gap:10px; }
+  /* Exact copy of the PDP price badge (.aa-pp-off in main-product.liquid): skewed magenta->orange
+     tag with an animated shimmer sweep and an un-skewed inner span. Copied here because the source
+     rules are ID-scoped to #ProductInfo and cannot reach this dock (which is moved to <body>). */
+  .aa-dock__off { display:inline-block; font-size:10px; font-weight:800; letter-spacing:.04em; color:#fff;
+    background: linear-gradient(96deg,#E9027A,#F58220); border-radius:7px; padding:4px 9px; white-space:nowrap;
+    transform: skewX(-6deg); position:relative; overflow:hidden; }
+  .aa-dock__off::after { content:""; position:absolute; top:0; left:-65%; width:45%; height:100%;
+    background: linear-gradient(115deg, transparent 0%, rgba(255,255,255,0.65) 50%, transparent 100%);
+    pointer-events:none; z-index:1; animation: aa-cta-shimmer 3s ease-in-out infinite; }
+  .aa-dock__off > span { display:inline-block; position:relative; z-index:2; transform: skewX(6deg); }
+  @keyframes aa-cta-shimmer { 0%{left:-60%} 55%{left:130%} 100%{left:130%} }
+  .aa-dock__btns { display:flex; gap:12px; margin-left:auto; flex:0 0 auto; }
+  .aa-dock__cart, .aa-dock__buy { min-height:42px; padding:0 26px; border-radius:8px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center;
+    font:700 14px/1 'Jost',system-ui,sans-serif; letter-spacing:0.01em; text-transform:none; transition:transform 140ms ease; }
+  .aa-dock__cart { background:#1F0820; color:#fff; border:0; box-shadow:0 0 0 1.5px rgba(217,164,65,0.9); }
+  .aa-dock__buy { background: linear-gradient(135deg,#FF8C42,#FF2E93,#FF8C42); color:#fff; border:0; box-shadow:0 6px 16px rgba(255,46,147,0.32); }
+  .aa-dock__cart:active, .aa-dock__buy:active { transform:scale(0.98); }
+  @media (max-width: 749px){
+    .aa-dock { bottom:0; width:auto; max-width:none; border-radius:16px 16px 0 0; }
+    .aa-dock__body { gap:8px; padding:8px 12px; }
+    .aa-dock__img, .aa-dock__title { display:none; } /* no image or title on mobile (keep it compact) */
+    .aa-dock__info { flex:0 0 auto; }                /* natural width, don't squish the price into wraps */
+    /* price, strike and badge all on ONE line, natural width so they never squish */
+    .aa-dock__price { flex:0 0 auto; flex-direction:row; align-items:center; gap:10px; }
+    .aa-dock__meta { flex-direction:column-reverse; align-items:flex-start; gap:4px; } /* badge on top, cut price below */
+    .aa-dock__price b { font-size:18px; }
+    .aa-dock__price s { font-size:12px; }
+    .aa-dock__off { padding:4px 7px; font-size:9.5px; }
+    .aa-dock__btns { gap:8px; margin-left:auto; flex:1 1 auto; min-width:0; }
+    .aa-dock__cart, .aa-dock__buy { flex:1 1 0; min-width:0; min-height:44px; padding:0 8px; font-size:12px; white-space:nowrap; }
+  }
+</style>
+
 <script>
 (function () {
-  var dock = document.getElementById('AaDock');
-  if (!dock) return;
+  function init() {
+    var dock = document.getElementById('AaDock');
+    if (!dock) return;
+    /* move OUT of the product column to <body> so position:fixed spans the full viewport */
+    if (dock.parentNode !== document.body) document.body.appendChild(dock);
+    if (dock.dataset.aaWired) return;        /* set up handlers/observers once per element */
+    dock.dataset.aaWired = '1';
 
-  /* mirror the live price text (Dawn updates it on variant change) */
-  function priceEl() {
-    return document.querySelector('.product__info-container .price-item--sale, .product__info-container .price-item--last')
-        || document.querySelector('.price-item--sale, .price-item--last');
+    /* mirror the live price text (Dawn updates it on variant change) */
+    function priceEl() {
+      return document.querySelector('.product__info-container .price-item--sale, .product__info-container .price-item--last')
+          || document.querySelector('.price-item--sale, .price-item--last');
+    }
+    function syncPrice() { var p = priceEl(); if (p) dock.querySelector('[data-aa-dock-price]').textContent = p.textContent.trim(); }
+    syncPrice();
+    var pe = priceEl();
+    if (pe && window.MutationObserver) new MutationObserver(syncPrice).observe(pe.parentNode || pe, { childList: true, subtree: true, characterData: true });
+
+    /* delegate to the REAL buttons */
+    dock.querySelector('[data-aa-dock-cart]').addEventListener('click', function () {
+      var b = document.querySelector('button[name="add"].product-form__submit') || document.querySelector('.product-form__submit:not(.aa-buy-now-btn)');
+      if (b) b.click();
+    });
+    dock.querySelector('[data-aa-dock-buy]').addEventListener('click', function () {
+      var b = document.querySelector('.aa-buy-now-btn'); if (b) b.click();
+    });
+
+    /* show whenever the real CTA buttons are NOT visible in the viewport (below the fold on load,
+       or scrolled past above) — hide only while they are on screen */
+    var target = document.querySelector('.product-form__buttons') || document.querySelector('.product-form__submit');
+    if (target && 'IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) {
+        var show = !es[0].isIntersecting;
+        dock.classList.toggle('aa-show', show);
+        dock.setAttribute('aria-hidden', show ? 'false' : 'true');
+      }, { threshold: 0 }).observe(target);
+    }
   }
-  function syncPrice() {
-    var p = priceEl();
-    if (p) dock.querySelector('[data-aa-dock-price]').textContent = p.textContent.trim();
-  }
-  syncPrice();
-  var pe = priceEl();
-  if (pe && window.MutationObserver) {
-    new MutationObserver(syncPrice).observe(pe.parentNode || pe, { childList: true, subtree: true, characterData: true });
-  }
-
-  /* delegate to the REAL buttons (explicitly — NOT by ambiguous class) */
-  dock.querySelector('[data-aa-dock-cart]').addEventListener('click', function () {
-    // the real Add-to-Cart submit, never the buy-now (which also has .product-form__submit)
-    var b = document.querySelector('button[name="add"].product-form__submit')
-         || document.querySelector('.product-form__submit:not(.aa-buy-now-btn)');
-    if (b) b.click();
-  });
-  dock.querySelector('[data-aa-dock-buy]').addEventListener('click', function () {
-    // Delegate to OUR custom buy-now button (race-free clear -> add -> Magic
-    // Checkout). Do NOT click '.shopify-payment-button__button' — that class
-    // also matches Shopify's NATIVE dynamic-checkout button, which hydrates
-    // async and dumps the user onto the native Shopify checkout page. That
-    // ambiguity was the "Buy Now sometimes opens Shopify, sometimes Magic" bug.
-    var b = document.querySelector('.aa-buy-now-btn');
-    if (b) b.click();
-  });
-
-  /* show after the form leaves the viewport */
-  var target = document.querySelector('.product-form__buttons') || document.querySelector('.product-form__submit');
-  if (target && 'IntersectionObserver' in window) {
-    new IntersectionObserver(function (es) {
-      var e = es[0];
-      /* show only when the buttons are ABOVE the viewport (already passed),
-         not while they are still below the fold on first load */
-      var show = !e.isIntersecting && e.boundingClientRect.top < 0;
-      dock.classList.toggle('aa-show', show);
-      dock.setAttribute('aria-hidden', show ? 'false' : 'true');
-    }, { threshold: 0 }).observe(target);
-  }
-
-
+  if (document.readyState !== 'loading') init(); else document.addEventListener('DOMContentLoaded', init);
+  document.addEventListener('turbo:load', init);   /* re-mount on every Turbo SPA navigation */
 })();
 </script>
+
+

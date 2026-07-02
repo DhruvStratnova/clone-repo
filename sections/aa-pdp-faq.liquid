@@ -1,0 +1,31 @@
+{%- comment -%} Product-specific FAQ accordion. Reads custom.faq (json [{q,a}]); renders nothing if empty. {%- endcomment -%}
+{%- assign aa_faq = product.metafields.custom.faq.value -%}
+{%- if aa_faq and aa_faq.size > 0 -%}
+<div class="aa-faq">
+  <h2 class="aa-faq__h">Frequently Asked Questions</h2>
+  <div class="aa-faq__list">
+    {%- for item in aa_faq -%}
+      <details class="aa-faq__item">
+        <summary class="aa-faq__q"><span>{{ item.q }}</span><span class="aa-faq__ic" aria-hidden="true"></span></summary>
+        <div class="aa-faq__a">{{ item.a }}</div>
+      </details>
+    {%- endfor -%}
+  </div>
+</div>
+<style>
+  .aa-faq{max-width:900px;margin:44px auto 12px;padding:0 20px;}
+  .aa-faq__h{font:800 26px/1.2 'Jost',system-ui,sans-serif;color:#241019;text-align:center;letter-spacing:-0.01em;margin:0 0 22px;}
+  .aa-faq__item{border-bottom:1px solid rgba(36,16,25,0.10);}
+  .aa-faq__q{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:14px;font:600 16px/1.45 'Jost',system-ui,sans-serif;color:#241019;padding:16px 2px;}
+  .aa-faq__q::-webkit-details-marker{display:none;}
+  .aa-faq__ic{flex:0 0 auto;width:10px;height:10px;border-right:2px solid #FF2E93;border-bottom:2px solid #FF2E93;transform:rotate(45deg);transition:transform .25s ease;margin-right:4px;}
+  .aa-faq__item[open] .aa-faq__ic{transform:rotate(-135deg);}
+  .aa-faq__a{padding:0 2px 18px;font:400 15px/1.65 'Inter',system-ui,sans-serif;color:#57505a;}
+  html[data-theme="dark"] .aa-faq__h,html[data-theme="dark"] .aa-faq__q{color:#fff;}
+  html[data-theme="dark"] .aa-faq__a{color:rgba(255,255,255,.72);}
+  html[data-theme="dark"] .aa-faq__item{border-bottom-color:rgba(255,255,255,.12);}
+</style>
+{%- endif -%}
+{% schema %}
+{"name":"Product FAQ","tag":"section","settings":[]}
+{% endschema %}
