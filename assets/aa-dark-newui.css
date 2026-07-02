@@ -116,3 +116,16 @@ html[data-theme="dark"] .aa-viewmore__btn{
 /* ============ 8. Product-card "% off" savings — dim green on dark cards ============ */
 /* rgb(46,158,91) reads faint on the dark card; brighten for dark only. */
 html[data-theme="dark"] .aa-pcard__pct{color:#3FD07A !important}
+
+/* ============ 9. PDP quantity selector — +/- and number were #1a1a1a (invisible) ============ */
+html[data-theme="dark"] .quantity__button,
+html[data-theme="dark"] .quantity__input{color:#ffffff !important}
+html[data-theme="dark"] .quantity__button svg{color:#ffffff !important}
+
+/* ============ 10. PDP prepaid-offer tag icon — was #241019 (invisible) ============ */
+html[data-theme="dark"] .aa-pdp-offer__pct,
+html[data-theme="dark"] .aa-pdp-offer__pct svg{color:#FF8C42 !important}
+
+/* ============ 11. PDP Add-to-cart — faint gold ring border, brighten in dark ============ */
+html[data-theme="dark"] .product-form__submit{
+  box-shadow:0 0 0 1.6px rgba(233,196,120,.9),0 0 14px rgba(217,164,65,.3) !important}
