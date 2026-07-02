@@ -165,18 +165,24 @@
                 assign fetch_priority = 'high'
               endif
             -%}
-            {%- comment -%} Desktop image {%- endcomment -%}
+            {%- comment -%} Desktop image. Only hide on mobile (small-hide) when a
+              mobile image exists to replace it; otherwise it shows on mobile so the
+              banner isn't a void. {%- endcomment -%}
+            {%- assign dsk_cls = 'slideshow__image desktop-image' -%}
+            {%- if block.settings.image_mobile != blank -%}
+              {%- assign dsk_cls = 'slideshow__image desktop-image small-hide' -%}
+            {%- endif -%}
             {%- if forloop.first -%}
               {{
                 block.settings.image
                 | image_url: width: 3840
-                | image_tag: class: 'slideshow__image desktop-image{% if block.settings.image_mobile != blank %} small-hide{% endif %}', height: desktop_height, sizes: sizes, widths: widths, fetchpriority: fetch_priority, decoding: 'async'
+                | image_tag: class: dsk_cls, height: desktop_height, sizes: sizes, widths: widths, fetchpriority: fetch_priority, decoding: 'async'
               }}
             {%- else -%}
               {{
                 block.settings.image
                 | image_url: width: 3840
-                | image_tag: class: 'slideshow__image desktop-image{% if block.settings.image_mobile != blank %} small-hide{% endif %}', loading: 'lazy', height: desktop_height, sizes: sizes, widths: widths
+                | image_tag: class: dsk_cls, loading: 'lazy', height: desktop_height, sizes: sizes, widths: widths
               }}
             {%- endif -%}
             {%- comment -%} Mobile image (shown under 750px) {%- endcomment -%}
