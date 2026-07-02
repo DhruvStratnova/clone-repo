@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- SNAPSHOT-BUMP-1783018873-V24 -->
+<!-- SNAPSHOT-BUMP-1783019504-V25 -->
 
 <html class="js" lang="{{ request.locale.iso_code }}"{% if request.cookies['app_color_scheme'] == 'dark' %} data-theme="dark"{% endif %}>
   <head>
@@ -640,6 +640,17 @@
   /* collection "View more" white button + dim savings green */
   html[data-theme="dark"] .aa-viewmore__btn { background:rgba(255,255,255,.06) !important; color:#fff !important; border-color:rgba(255,255,255,.2) !important; }
   html[data-theme="dark"] .aa-pcard__pct { color:#3FD07A !important; }
+  /* OTP login popup open (aa-auth-v2.js adds body.aa-au-locked) — hide the sticky
+     add-to-cart dock so it doesn't sit over the modal (mirrors body.aa-overlay-open). */
+  body.aa-au-locked .aa-dock { transform: translateY(150%) !important; pointer-events:none !important; }
+  /* Permanent (steady) glow on the PDP CTAs — was a pulsing animation. */
+  [id^="ProductInfo-"] .product-form__submit:not(.aa-buy-now-btn):not(.shopify-payment-button__button) {
+    animation: none !important;
+    box-shadow: 0 0 0 1.6px rgba(217,164,65,.9), 0 0 20px rgba(217,164,65,.55), 0 0 34px rgba(150,90,200,.4) !important; }
+  [id^="ProductInfo-"] .shopify-payment-button__button,
+  [id^="ProductInfo-"] .aa-buy-now-btn {
+    animation: aa-cta-gradient 4s ease infinite !important;
+    box-shadow: 0 10px 30px rgba(255,46,147,.55), 0 0 24px rgba(255,140,66,.55), 0 0 0 1.6px rgba(255,185,95,.65) !important; }
 </style>
 </body>
 </html>
