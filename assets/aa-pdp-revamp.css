@@ -940,6 +940,18 @@ html[data-theme="dark"] .aa-pdp-floral { color: #C9A227; opacity: 0.32; }
 .aa-pdp-benefits__rte strong, .aa-pdp-benefits__rte b { font-weight: 700 !important; color: #141414; }
 html[data-theme="dark"] .aa-pdp-benefits__list li,
 html[data-theme="dark"] .aa-pdp-benefits .rte li { color: rgba(255, 255, 255, 0.74); }
+/* dark-mode fix 2026-07-02: the new __rte description markup (lead p, bullets,
+   bold stone headers) + the prepaid countdown baked #141414/#241019 with NO
+   matching dark override -> dark-on-dark. The override above only hit
+   `.aa-pdp-benefits .rte li`, missing the `__rte` BEM the new PDP UI renders. */
+html[data-theme="dark"] .aa-pdp-benefits__rte p,
+html[data-theme="dark"] .aa-pdp-benefits__rte li { color: rgba(255, 255, 255, 0.74); }
+html[data-theme="dark"] .aa-pdp-benefits__rte strong,
+html[data-theme="dark"] .aa-pdp-benefits__rte b { color: #ffffff; }
+html[data-theme="dark"] .aa-pdp-benefits__rte li::marker,
+html[data-theme="dark"] .aa-pdp-benefits__list li::marker { color: rgba(255, 255, 255, 0.4); }
+html[data-theme="dark"] .aa-pdp-offer__time { color: #ffffff; }
+html[data-theme="dark"] .aa-pdp-offer__timer svg { color: rgba(255, 255, 255, 0.6); }
 
 /* Delivery & offers card hidden for this version (2026-06-29) - code kept; delete this rule to restore */
 .aa-pdp-deliv { display: none !important; }
