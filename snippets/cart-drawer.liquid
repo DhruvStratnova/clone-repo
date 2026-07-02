@@ -125,4 +125,8 @@
   .aac__promo-track b{ color:#E9027A; font-weight:700; }
   .aac__promo:hover .aac__promo-track{ animation-play-state:paused; }
   @keyframes aac-marquee{ from{transform:translateX(0);} to{transform:translateX(-50%);} }
+  /* tighten the gap between the offer bar and the "Your cart" heading */
+  .aac__head{ padding-top:6px !important; }
+  /* brighten the faint empty-cart icon in dark (was rgba(255,255,255,.3), near-invisible) */
+  html[data-theme="dark"] .aac__empty-ico{ color:rgba(255,255,255,.62) !important; }
 </style>
