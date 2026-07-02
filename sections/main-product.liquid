@@ -457,56 +457,57 @@
   html[data-theme="dark"] #ProductInfo-{{ section.id }} .aa-drop-lined .aa-drop-item { border-bottom-color: rgba(255,255,255,.12) !important; }
 
   /* ===== Prepaid coupon ticket (replaces the old offer card) ===== */
+  /* ticket card: white body + subtle border, gradient stub with semicircle
+     notches punched at the SEAM (right edge of the stub) that reveal the card
+     background behind — the classic perforation look (ref: BSC coupon). */
   #ProductInfo-{{ section.id }} .aa-coupon {
-    --line:#ece7df;
-    display:flex; margin:16px 0 4px; background:transparent;   /* no box outline */
+    --line:#eeeeee;
+    display:flex; margin:16px 0 4px; background:#ffffff;
+    border:1px solid #ececec; border-radius:14px; overflow:hidden;
+    font-family:'Poppins',system-ui,sans-serif;
   }
   #ProductInfo-{{ section.id }} .aa-coupon__stub {
-    position:relative; flex:0 0 54px;
-    background:linear-gradient(160deg, #FF8C42, #FF2E93);   /* brand gradient stub */
-    border-radius:14px 0 0 14px; display:flex; align-items:center; justify-content:center;
-    /* scalloped ticket edge: punch 4 clean semicircles into the stub's left edge */
+    position:relative; flex:0 0 52px;
+    background:linear-gradient(150deg, #FF8C42, #FF2E93);   /* brand gradient stub */
+    display:flex; align-items:center; justify-content:center;
     -webkit-mask:
-      radial-gradient(8px at 0 20%, #0000 98%, #000),
-      radial-gradient(8px at 0 40%, #0000 98%, #000),
-      radial-gradient(8px at 0 60%, #0000 98%, #000),
-      radial-gradient(8px at 0 80%, #0000 98%, #000);
+      radial-gradient(6px at 100% 15%, #0000 96%, #000),
+      radial-gradient(6px at 100% 38%, #0000 96%, #000),
+      radial-gradient(6px at 100% 62%, #0000 96%, #000),
+      radial-gradient(6px at 100% 85%, #0000 96%, #000);
     -webkit-mask-composite: source-in;
     mask:
-      radial-gradient(8px at 0 20%, #0000 98%, #000),
-      radial-gradient(8px at 0 40%, #0000 98%, #000),
-      radial-gradient(8px at 0 60%, #0000 98%, #000),
-      radial-gradient(8px at 0 80%, #0000 98%, #000);
+      radial-gradient(6px at 100% 15%, #0000 96%, #000),
+      radial-gradient(6px at 100% 38%, #0000 96%, #000),
+      radial-gradient(6px at 100% 62%, #0000 96%, #000),
+      radial-gradient(6px at 100% 85%, #0000 96%, #000);
     mask-composite: intersect;
   }
   #ProductInfo-{{ section.id }} .aa-coupon__amt {
     transform:rotate(-90deg); white-space:nowrap; color:#fff;
-    font-family:'Manrope',system-ui,sans-serif; font-weight:800; font-size:14px; letter-spacing:.4px;
+    font-weight:800; font-size:13px; letter-spacing:.5px;
   }
-  #ProductInfo-{{ section.id }} .aa-coupon__body {
-    flex:1 1 auto; min-width:0; background:transparent;
-    padding:4px 2px 4px 16px;
-    display:flex; flex-direction:column; gap:9px;
-  }
+  #ProductInfo-{{ section.id }} .aa-coupon__body { flex:1 1 auto; min-width:0; display:flex; flex-direction:column; }
   #ProductInfo-{{ section.id }} .aa-coupon__top {
-    display:flex; align-items:center; justify-content:space-between; gap:12px;
+    display:flex; align-items:center; justify-content:space-between; gap:12px; padding:11px 16px;
   }
-  #ProductInfo-{{ section.id }} .aa-coupon__label { font-size:18px; font-weight:800; color:#141414; line-height:1.1; white-space:nowrap; }
+  #ProductInfo-{{ section.id }} .aa-coupon__label { font-size:16px; font-weight:700; color:#1a1a1a; line-height:1.1; white-space:nowrap; }
   #ProductInfo-{{ section.id }} .aa-coupon__timer {
-    font-size:11.5px; font-weight:600; color:#9a948c; white-space:nowrap;
+    font-size:12px; font-weight:500; color:#8a8a8a; white-space:nowrap;
     display:inline-flex; align-items:center; gap:5px;
   }
-  #ProductInfo-{{ section.id }} .aa-coupon__timer-lbl { font-weight:500; opacity:.9; }
-  #ProductInfo-{{ section.id }} .aa-coupon__timer [data-aa-countdown] { color:#141414; font-weight:800; font-variant-numeric:tabular-nums; }
+  #ProductInfo-{{ section.id }} .aa-coupon__timer-lbl { opacity:.9; }
+  #ProductInfo-{{ section.id }} .aa-coupon__timer [data-aa-countdown] { color:#1a1a1a; font-weight:700; font-variant-numeric:tabular-nums; }
   #ProductInfo-{{ section.id }} .aa-coupon__sub {
-    border-top:1px solid var(--line); padding-top:8px;
-    font-size:12.5px; font-weight:500; color:#8a857d; line-height:1.35;
+    border-top:1px solid var(--line); padding:10px 16px;
+    font-size:12.5px; font-weight:400; color:#8a8a8a; line-height:1.35;
   }
-  /* dark */
-  html[data-theme="dark"] #ProductInfo-{{ section.id }} .aa-coupon { --line:rgba(255,255,255,.14); }
+  /* dark: card becomes a dark surface; notches reveal the same dark = seamless */
+  html[data-theme="dark"] #ProductInfo-{{ section.id }} .aa-coupon { --line:rgba(255,255,255,.10); background:#160c28; border-color:rgba(255,255,255,.10); }
   html[data-theme="dark"] #ProductInfo-{{ section.id }} .aa-coupon__label { color:#ffffff; }
-  html[data-theme="dark"] #ProductInfo-{{ section.id }} .aa-coupon__timer { color:rgba(255,255,255,.5); }
+  html[data-theme="dark"] #ProductInfo-{{ section.id }} .aa-coupon__timer { color:rgba(255,255,255,.55); }
   html[data-theme="dark"] #ProductInfo-{{ section.id }} .aa-coupon__timer [data-aa-countdown] { color:#ffffff; }
+  html[data-theme="dark"] #ProductInfo-{{ section.id }} .aa-coupon__sub { color:rgba(255,255,255,.6); }
   html[data-theme="dark"] #ProductInfo-{{ section.id }} .aa-coupon__sub { color:rgba(255,255,255,.6); }
 {%- endstyle -%}
   {{ 'component-price.css' | asset_url | stylesheet_tag }}
