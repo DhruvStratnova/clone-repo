@@ -118,8 +118,8 @@
   #ProductInfo-{{ section.id }} .product-form__submit:not(.aa-buy-now-btn):not(.shopify-payment-button__button) {
     background: #1F0820 !important; color: #fff !important;
     position: relative !important; overflow: hidden !important;
-    box-shadow: 0 0 0 1.5px rgba(217, 164, 65, 0.45), 0 0 12px rgba(217, 164, 65, 0.22) !important;
-    animation: aa-cta-glow-gold 2.8s ease-in-out infinite !important;
+    box-shadow: 0 0 0 1.6px rgba(217, 164, 65, 0.9), 0 0 20px rgba(217, 164, 65, 0.55), 0 0 34px rgba(150, 90, 200, 0.4) !important;
+    animation: none !important; /* permanent (steady) glow — was aa-cta-glow-gold pulse */
   }
   #ProductInfo-{{ section.id }} .shopify-payment-button__button,
   #ProductInfo-{{ section.id }} .aa-buy-now-btn {
@@ -129,8 +129,8 @@
     background: linear-gradient(135deg, #FF8C42, #FF2E93, #FF8C42) !important;
     background-size: 220% 220% !important; color: #fff !important;
     border: 0 !important; position: relative !important; overflow: hidden !important;
-    box-shadow: 0 8px 22px rgba(255, 46, 147, 0.28) !important;
-    animation: aa-cta-gradient 4s ease infinite, aa-cta-glow-pink 2.4s ease-in-out infinite !important;
+    box-shadow: 0 10px 30px rgba(255, 46, 147, 0.55), 0 0 24px rgba(255, 140, 66, 0.55), 0 0 0 1.6px rgba(255, 185, 95, 0.65) !important;
+    animation: aa-cta-gradient 4s ease infinite !important; /* permanent glow — dropped aa-cta-glow-pink pulse, kept gradient */
   }
   /* shimmer light-sweep across both CTAs (cosmic gleam) */
   #ProductInfo-{{ section.id }} .product-form__submit::after {
