@@ -129,3 +129,5 @@ html[data-theme="dark"] .aa-pdp-offer__pct svg{color:#FF8C42 !important}
 /* ============ 11. PDP Add-to-cart — faint gold ring border, brighten in dark ============ */
 html[data-theme="dark"] .product-form__submit{
   box-shadow:0 0 0 1.6px rgba(233,196,120,.9),0 0 14px rgba(217,164,65,.3) !important}
+
+/* cdn-cache-bust 2026-07-03T-r5 */
