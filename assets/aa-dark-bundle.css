@@ -2751,9 +2751,7 @@ html[data-theme="dark"] .aa-pdp-chip {
   background: rgba(255, 255, 255, 0.06) !important;
   border: 1px solid rgba(255, 255, 255, 0.14) !important;
   color: rgba(255, 255, 255, 0.86) !important;
-  box-shadow: none !important;
-  
-  
+  /* box-shadow removed: it was killing the aa-chip-glow pulse in dark (2026-07-03) */
 }
 html[data-theme="dark"] .aa-pdp-chip::before {
   background: #FFC24B !important;
