@@ -269,6 +269,12 @@
   #ProductInfo-{{ section.id }} .product-form__buttons .aa-qty .quantity__button {
     color: #4a4048 !important; width: 38px !important; background: transparent !important;
   }
+  /* dark mode: the stepper -/+ (#4a4048) and number (#1F0820) are dark-on-dark; make
+     them white. ID-scoped in place so it beats these ID rules (external overrides lose). */
+  html[data-theme="dark"] #ProductInfo-{{ section.id }} .product-form__buttons .aa-qty .quantity__input,
+  html[data-theme="dark"] #ProductInfo-{{ section.id }} .product-form__buttons .aa-qty .quantity__button {
+    color: #ffffff !important;
+  }
   /* shipping line: quiet caption, not a shout */
   #ProductInfo-{{ section.id }} .aa-shipping-line,
   #ProductInfo-{{ section.id }} .product__text.inline-richtext {
