@@ -116,10 +116,10 @@
     transform: none !important; width: 100% !important;
   }
   #ProductInfo-{{ section.id }} .product-form__submit:not(.aa-buy-now-btn):not(.shopify-payment-button__button) {
-    background: linear-gradient(135deg, #33204F, #1C0D31) !important; color: #fff !important;
+    background: #1F0820 !important; color: #fff !important;
     position: relative !important; overflow: hidden !important;
-    box-shadow: 0 0 0 1.6px rgba(217, 164, 65, 0.9), 0 0 20px rgba(217, 164, 65, 0.55), 0 0 34px rgba(150, 90, 200, 0.4) !important;
-    animation: none !important; /* permanent (steady) glow — was aa-cta-glow-gold pulse */
+    box-shadow: 0 0 0 1.5px rgba(217, 164, 65, 0.45), 0 0 12px rgba(217, 164, 65, 0.22) !important;
+    animation: aa-cta-glow-gold 2.8s ease-in-out infinite !important;
   }
   #ProductInfo-{{ section.id }} .shopify-payment-button__button,
   #ProductInfo-{{ section.id }} .aa-buy-now-btn {
@@ -129,8 +129,8 @@
     background: linear-gradient(135deg, #FF8C42, #FF2E93, #FF8C42) !important;
     background-size: 220% 220% !important; color: #fff !important;
     border: 0 !important; position: relative !important; overflow: hidden !important;
-    box-shadow: 0 10px 30px rgba(255, 46, 147, 0.55), 0 0 24px rgba(255, 140, 66, 0.55), 0 0 0 1.6px rgba(255, 185, 95, 0.65) !important;
-    animation: aa-cta-gradient 4s ease infinite !important; /* permanent glow — dropped aa-cta-glow-pink pulse, kept gradient */
+    box-shadow: 0 8px 22px rgba(255, 46, 147, 0.28) !important;
+    animation: aa-cta-gradient 4s ease infinite, aa-cta-glow-pink 2.4s ease-in-out infinite !important;
   }
   /* shimmer light-sweep across both CTAs (cosmic gleam) */
   #ProductInfo-{{ section.id }} .product-form__submit::after {
@@ -458,46 +458,56 @@
 
   /* ===== Prepaid coupon ticket (replaces the old offer card) ===== */
   #ProductInfo-{{ section.id }} .aa-coupon {
-    --stub:#141414; --notch:#ffffff; --line:#e7e2da;
-    display:flex; margin:18px 0 4px; background:#ffffff;
-    border:1px solid var(--line); border-radius:16px; overflow:hidden;
+    --line:#ece7df;
+    display:flex; margin:16px 0 4px; background:transparent;   /* no box outline */
   }
   #ProductInfo-{{ section.id }} .aa-coupon__stub {
-    position:relative; flex:0 0 60px; background:var(--stub);
-    border-radius:16px 0 0 16px; display:flex; align-items:center; justify-content:center;
+    position:relative; flex:0 0 54px;
+    background:linear-gradient(160deg, #FF8C42, #FF2E93);   /* brand gradient stub */
+    border-radius:14px 0 0 14px; display:flex; align-items:center; justify-content:center;
+    /* scalloped ticket edge: punch 4 clean semicircles into the stub's left edge */
+    -webkit-mask:
+      radial-gradient(8px at 0 20%, #0000 98%, #000),
+      radial-gradient(8px at 0 40%, #0000 98%, #000),
+      radial-gradient(8px at 0 60%, #0000 98%, #000),
+      radial-gradient(8px at 0 80%, #0000 98%, #000);
+    -webkit-mask-composite: source-in;
+    mask:
+      radial-gradient(8px at 0 20%, #0000 98%, #000),
+      radial-gradient(8px at 0 40%, #0000 98%, #000),
+      radial-gradient(8px at 0 60%, #0000 98%, #000),
+      radial-gradient(8px at 0 80%, #0000 98%, #000);
+    mask-composite: intersect;
   }
   #ProductInfo-{{ section.id }} .aa-coupon__amt {
     transform:rotate(-90deg); white-space:nowrap; color:#fff;
-    font-family:'Manrope',system-ui,sans-serif; font-weight:800; font-size:19px; letter-spacing:.5px;
+    font-family:'Manrope',system-ui,sans-serif; font-weight:800; font-size:14px; letter-spacing:.4px;
   }
-  #ProductInfo-{{ section.id }} .aa-coupon__stub::before,
-  #ProductInfo-{{ section.id }} .aa-coupon__stub::after,
-  #ProductInfo-{{ section.id }} .aa-coupon__notch {
-    content:""; position:absolute; left:-7px; width:14px; height:14px; border-radius:50%; background:var(--notch);
+  #ProductInfo-{{ section.id }} .aa-coupon__body {
+    flex:1 1 auto; min-width:0; background:transparent;
+    padding:4px 2px 4px 16px;
+    display:flex; flex-direction:column; gap:9px;
   }
-  #ProductInfo-{{ section.id }} .aa-coupon__stub::before { top:calc(26% - 7px); }
-  #ProductInfo-{{ section.id }} .aa-coupon__notch { top:calc(50% - 7px); }
-  #ProductInfo-{{ section.id }} .aa-coupon__stub::after { top:calc(74% - 7px); }
-  #ProductInfo-{{ section.id }} .aa-coupon__body { flex:1 1 auto; min-width:0; display:flex; flex-direction:column; }
-  #ProductInfo-{{ section.id }} .aa-coupon__top { padding:14px 18px; font-size:16px; font-weight:500; color:#3d3a37; }
-  #ProductInfo-{{ section.id }} .aa-coupon__bot {
-    border-top:1px solid var(--line); padding:13px 18px;
+  #ProductInfo-{{ section.id }} .aa-coupon__top {
     display:flex; align-items:center; justify-content:space-between; gap:12px;
   }
-  #ProductInfo-{{ section.id }} .aa-coupon__label { font-size:19px; font-weight:700; color:#141414; line-height:1.1; }
-  #ProductInfo-{{ section.id }} .aa-coupon__cta {
-    font-size:14px; font-weight:500; color:#9a948c; white-space:nowrap;
-    display:inline-flex; align-items:center; gap:5px; cursor:pointer; background:none; border:0; font-family:inherit;
+  #ProductInfo-{{ section.id }} .aa-coupon__label { font-size:18px; font-weight:800; color:#141414; line-height:1.1; white-space:nowrap; }
+  #ProductInfo-{{ section.id }} .aa-coupon__timer {
+    font-size:11.5px; font-weight:600; color:#9a948c; white-space:nowrap;
+    display:inline-flex; align-items:center; gap:5px;
+  }
+  #ProductInfo-{{ section.id }} .aa-coupon__timer-lbl { font-weight:500; opacity:.9; }
+  #ProductInfo-{{ section.id }} .aa-coupon__timer [data-aa-countdown] { color:#141414; font-weight:800; font-variant-numeric:tabular-nums; }
+  #ProductInfo-{{ section.id }} .aa-coupon__sub {
+    border-top:1px solid var(--line); padding-top:8px;
+    font-size:12.5px; font-weight:500; color:#8a857d; line-height:1.35;
   }
   /* dark */
-  html[data-theme="dark"] #ProductInfo-{{ section.id }} .aa-coupon {
-    --notch:#0C0A1F; --line:rgba(255,255,255,.10); background:rgba(255,255,255,.04);
-  }
-  html[data-theme="dark"] #ProductInfo-{{ section.id }} .aa-coupon__stub { background:#000000; }
-  html[data-theme="dark"] #ProductInfo-{{ section.id }} .aa-coupon__top { color:rgba(255,255,255,.72); }
-  html[data-theme="dark"] #ProductInfo-{{ section.id }} .aa-coupon__bot { border-top-color:rgba(255,255,255,.10); }
+  html[data-theme="dark"] #ProductInfo-{{ section.id }} .aa-coupon { --line:rgba(255,255,255,.14); }
   html[data-theme="dark"] #ProductInfo-{{ section.id }} .aa-coupon__label { color:#ffffff; }
-  html[data-theme="dark"] #ProductInfo-{{ section.id }} .aa-coupon__cta { color:rgba(255,255,255,.5); }
+  html[data-theme="dark"] #ProductInfo-{{ section.id }} .aa-coupon__timer { color:rgba(255,255,255,.5); }
+  html[data-theme="dark"] #ProductInfo-{{ section.id }} .aa-coupon__timer [data-aa-countdown] { color:#ffffff; }
+  html[data-theme="dark"] #ProductInfo-{{ section.id }} .aa-coupon__sub { color:rgba(255,255,255,.6); }
 {%- endstyle -%}
   {{ 'component-price.css' | asset_url | stylesheet_tag }}
   {{ 'component-slider.css' | asset_url | stylesheet_tag }}
@@ -741,15 +751,14 @@
                 </div>
                 <div class="aa-coupon">
                   <div class="aa-coupon__stub">
-                    <span class="aa-coupon__notch"></span>
-                    <span class="aa-coupon__amt">&#8377;800*</span>
+                    <span class="aa-coupon__amt">Flat 25%</span>
                   </div>
                   <div class="aa-coupon__body">
-                    <div class="aa-coupon__top">Exclusive Partner Offers</div>
-                    <div class="aa-coupon__bot">
-                      <span class="aa-coupon__label">On prepaid order</span>
-                      <button type="button" class="aa-coupon__cta">click to collect &#128070;</button>
+                    <div class="aa-coupon__top">
+                      <span class="aa-coupon__label">Prepaid Offer</span>
+                      <span class="aa-coupon__timer"><span class="aa-coupon__timer-lbl">Ends in</span> <span data-aa-countdown>--:--:--</span></span>
                     </div>
+                    <div class="aa-coupon__sub">Pay online and the discount is applied automatically at checkout. No coupon needed.</div>
                   </div>
                 </div>
                 <script>
