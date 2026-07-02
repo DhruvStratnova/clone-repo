@@ -594,9 +594,52 @@
   body.template-product .product-form__submit:not(#z1):not(#z2),
   .qv-add:not(#z1):not(#z2),
   .qv-buy:not(#z1):not(#z2) { border-radius: 14px !important; }
-  /* (Removed the universal html[data-theme="dark"] * backdrop-filter:none hack —
-     the dark bundle no longer emits any blur, so it was dead weight and a
-     per-recalc cost via the universal selector.) */
+  /* === Dark-mode fixes duplicated INLINE (asset pipeline frozen — aa-*.css not
+     serving on live). Scoped html[data-theme="dark"], load last so they win. 2026-07-03 === */
+  /* PDP quantity +/- and number (were #1a1a1a, invisible) */
+  html[data-theme="dark"] .quantity__button,
+  html[data-theme="dark"] .quantity__input { color:#fff !important; }
+  html[data-theme="dark"] .quantity__button svg { color:#fff !important; }
+  /* PDP prepaid-offer tag icon (was #241019) */
+  html[data-theme="dark"] .aa-pdp-offer__pct,
+  html[data-theme="dark"] .aa-pdp-offer__pct svg { color:#FF8C42 !important; }
+  html[data-theme="dark"] .aa-pdp-offer__time { color:#fff !important; }
+  /* PDP Add-to-cart faint gold ring -> brighter */
+  html[data-theme="dark"] .product-form__submit:not(#z1):not(#z2) {
+    box-shadow:0 0 0 1.6px rgba(233,196,120,.9), 0 0 14px rgba(217,164,65,.3) !important; }
+  /* PDP description (__rte) dark-on-dark */
+  html[data-theme="dark"] .aa-pdp-benefits__rte p,
+  html[data-theme="dark"] .aa-pdp-benefits__rte li { color:rgba(255,255,255,.74) !important; }
+  html[data-theme="dark"] .aa-pdp-benefits__rte strong,
+  html[data-theme="dark"] .aa-pdp-benefits__rte b { color:#fff !important; }
+  html[data-theme="dark"] .aa-pdp-benefits__rte li::marker { color:rgba(255,255,255,.4) !important; }
+  /* purpose pills: "Spiritual Awareness" spilling off — wrap inside pill (both modes) */
+  @media (max-width:749px){
+    .aa-pdp-chips .aa-pdp-chip { white-space:normal !important; line-height:1.18 !important; font-size:.9rem !important; overflow:hidden !important; }
+  }
+  /* Judge.me reviews — was a white block in dark */
+  html[data-theme="dark"] .jdgm-rev-widg__header { background:rgba(255,255,255,.04) !important; color:#fff !important; border:1px solid rgba(255,255,255,.1) !important; border-radius:16px !important; }
+  html[data-theme="dark"] .jdgm-rev-widg__title,
+  html[data-theme="dark"] .jdgm-rev-widg__summary-text,
+  html[data-theme="dark"] .jdgm-histogram__label,
+  html[data-theme="dark"] .jdgm-histogram__frequency,
+  html[data-theme="dark"] .jdgm-rev__author,
+  html[data-theme="dark"] .jdgm-rev__title,
+  html[data-theme="dark"] .jdgm-rev__body,
+  html[data-theme="dark"] .jdgm-row-profile,
+  html[data-theme="dark"] .jdgm-rev__timestamp { color:rgba(255,255,255,.86) !important; }
+  html[data-theme="dark"] .jdgm-sort-dropdown,
+  html[data-theme="dark"] .jdgm-paginate__page,
+  html[data-theme="dark"] .jdgm-form input,
+  html[data-theme="dark"] .jdgm-form textarea,
+  html[data-theme="dark"] .jdgm-btn--border { background:rgba(255,255,255,.06) !important; color:#fff !important; border-color:rgba(255,255,255,.18) !important; }
+  /* cart drawer cream promo strip */
+  html[data-theme="dark"] .aac__promo { background:rgba(255,255,255,.06) !important; }
+  html[data-theme="dark"] .aac__promo span { color:rgba(255,255,255,.85) !important; }
+  html[data-theme="dark"] .aac__promo b { color:#fff !important; }
+  /* collection "View more" white button + dim savings green */
+  html[data-theme="dark"] .aa-viewmore__btn { background:rgba(255,255,255,.06) !important; color:#fff !important; border-color:rgba(255,255,255,.2) !important; }
+  html[data-theme="dark"] .aa-pcard__pct { color:#3FD07A !important; }
 </style>
 </body>
 </html>
