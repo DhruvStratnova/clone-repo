@@ -465,7 +465,7 @@
      drop-shadow gives the edge so the scoop keeps a clean outline. */
   #ProductInfo-{{ section.id }} .aa-coupon {
     --line:#ededed; position:relative;
-    display:flex; margin:18px 0 8px; background:#ffffff;
+    display:flex; margin:18px 0 8px; max-width:600px; background:#ffffff;
     border-radius:18px; overflow:hidden;
     -webkit-mask: radial-gradient(12px at 100% 50%, #0000 96%, #000 100%);
             mask: radial-gradient(12px at 100% 50%, #0000 96%, #000 100%);
@@ -490,7 +490,7 @@
   }
   #ProductInfo-{{ section.id }} .aa-coupon__body { flex:1 1 auto; min-width:0; display:flex; flex-direction:column; }
   #ProductInfo-{{ section.id }} .aa-coupon__top {
-    display:flex; align-items:center; justify-content:space-between; gap:12px; padding:15px 22px 15px 18px;
+    display:flex; align-items:center; justify-content:space-between; gap:12px; padding:19px 22px 19px 18px;
   }
   #ProductInfo-{{ section.id }} .aa-coupon__label { font-size:16px; font-weight:800; color:#1a1a1a; line-height:1.1; white-space:nowrap; text-transform:uppercase; letter-spacing:.6px; }
   #ProductInfo-{{ section.id }} .aa-coupon__timer {
@@ -500,7 +500,7 @@
   #ProductInfo-{{ section.id }} .aa-coupon__timer-lbl { opacity:.9; }
   #ProductInfo-{{ section.id }} .aa-coupon__timer [data-aa-countdown] { color:#1a1a1a; font-weight:700; font-variant-numeric:tabular-nums; }
   #ProductInfo-{{ section.id }} .aa-coupon__sub {
-    border-top:1px solid var(--line); padding:13px 22px 13px 18px;
+    border-top:1px solid var(--line); padding:18px 22px 18px 18px;
     font-size:13.5px; font-weight:400; color:#8a8a8a; line-height:1.4;
   }
   /* mobile: keep the top row on one line, scale down a touch, tighten the stub */
@@ -517,8 +517,8 @@
     #ProductInfo-{{ section.id }} .aa-coupon__sub { padding:11px 16px 11px 14px; font-size:12.5px; }
   }
   /* dark: card becomes a dark surface; notches reveal the same dark = seamless */
-  html[data-theme="dark"] #ProductInfo-{{ section.id }} .aa-coupon { --line:rgba(255,255,255,.10); background:#160c28; }
-  html[data-theme="dark"] #ProductInfo-{{ section.id }} .aa-coupon__body { background:#160c28; }
+  html[data-theme="dark"] #ProductInfo-{{ section.id }} .aa-coupon { --line:rgba(255,255,255,.12); background:#241542; filter:drop-shadow(0 6px 18px rgba(0,0,0,.5)); }
+  html[data-theme="dark"] #ProductInfo-{{ section.id }} .aa-coupon__body { background:#241542; }
   html[data-theme="dark"] #ProductInfo-{{ section.id }} .aa-coupon__label { color:#ffffff; }
   html[data-theme="dark"] #ProductInfo-{{ section.id }} .aa-coupon__timer { color:rgba(255,255,255,.55); }
   html[data-theme="dark"] #ProductInfo-{{ section.id }} .aa-coupon__timer [data-aa-countdown] { color:#ffffff; }
