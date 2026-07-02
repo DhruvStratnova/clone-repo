@@ -444,7 +444,60 @@
     background-size: 220% 220% !important;
     color: #FFFFFF !important;
     border: 0 !important;
+    /* no outline ring — just a soft glow */
+    box-shadow: 0 10px 30px rgba(255,46,147,.5), 0 0 22px rgba(255,140,66,.45) !important;
   }
+  /* ===== How-to-Use dropdown: divider lines between items ===== */
+  #ProductInfo-{{ section.id }} .aa-drop-lined .aa-drop-item {
+    margin: 0 !important; padding: 13px 0 !important;
+    border-bottom: 1px solid rgba(36,16,25,.10) !important;
+  }
+  #ProductInfo-{{ section.id }} .aa-drop-lined .aa-drop-item:last-child { border-bottom: 0 !important; padding-bottom: 2px !important; }
+  #ProductInfo-{{ section.id }} .aa-drop-lined .aa-drop-item:first-child { padding-top: 2px !important; }
+  html[data-theme="dark"] #ProductInfo-{{ section.id }} .aa-drop-lined .aa-drop-item { border-bottom-color: rgba(255,255,255,.12) !important; }
+
+  /* ===== Prepaid coupon ticket (replaces the old offer card) ===== */
+  #ProductInfo-{{ section.id }} .aa-coupon {
+    --stub:#141414; --notch:#ffffff; --line:#e7e2da;
+    display:flex; margin:18px 0 4px; background:#ffffff;
+    border:1px solid var(--line); border-radius:16px; overflow:hidden;
+  }
+  #ProductInfo-{{ section.id }} .aa-coupon__stub {
+    position:relative; flex:0 0 60px; background:var(--stub);
+    border-radius:16px 0 0 16px; display:flex; align-items:center; justify-content:center;
+  }
+  #ProductInfo-{{ section.id }} .aa-coupon__amt {
+    transform:rotate(-90deg); white-space:nowrap; color:#fff;
+    font-family:'Manrope',system-ui,sans-serif; font-weight:800; font-size:19px; letter-spacing:.5px;
+  }
+  #ProductInfo-{{ section.id }} .aa-coupon__stub::before,
+  #ProductInfo-{{ section.id }} .aa-coupon__stub::after,
+  #ProductInfo-{{ section.id }} .aa-coupon__notch {
+    content:""; position:absolute; left:-7px; width:14px; height:14px; border-radius:50%; background:var(--notch);
+  }
+  #ProductInfo-{{ section.id }} .aa-coupon__stub::before { top:calc(26% - 7px); }
+  #ProductInfo-{{ section.id }} .aa-coupon__notch { top:calc(50% - 7px); }
+  #ProductInfo-{{ section.id }} .aa-coupon__stub::after { top:calc(74% - 7px); }
+  #ProductInfo-{{ section.id }} .aa-coupon__body { flex:1 1 auto; min-width:0; display:flex; flex-direction:column; }
+  #ProductInfo-{{ section.id }} .aa-coupon__top { padding:14px 18px; font-size:16px; font-weight:500; color:#3d3a37; }
+  #ProductInfo-{{ section.id }} .aa-coupon__bot {
+    border-top:1px solid var(--line); padding:13px 18px;
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
+  }
+  #ProductInfo-{{ section.id }} .aa-coupon__label { font-size:19px; font-weight:700; color:#141414; line-height:1.1; }
+  #ProductInfo-{{ section.id }} .aa-coupon__cta {
+    font-size:14px; font-weight:500; color:#9a948c; white-space:nowrap;
+    display:inline-flex; align-items:center; gap:5px; cursor:pointer; background:none; border:0; font-family:inherit;
+  }
+  /* dark */
+  html[data-theme="dark"] #ProductInfo-{{ section.id }} .aa-coupon {
+    --notch:#0C0A1F; --line:rgba(255,255,255,.10); background:rgba(255,255,255,.04);
+  }
+  html[data-theme="dark"] #ProductInfo-{{ section.id }} .aa-coupon__stub { background:#000000; }
+  html[data-theme="dark"] #ProductInfo-{{ section.id }} .aa-coupon__top { color:rgba(255,255,255,.72); }
+  html[data-theme="dark"] #ProductInfo-{{ section.id }} .aa-coupon__bot { border-top-color:rgba(255,255,255,.10); }
+  html[data-theme="dark"] #ProductInfo-{{ section.id }} .aa-coupon__label { color:#ffffff; }
+  html[data-theme="dark"] #ProductInfo-{{ section.id }} .aa-coupon__cta { color:rgba(255,255,255,.5); }
 {%- endstyle -%}
   {{ 'component-price.css' | asset_url | stylesheet_tag }}
   {{ 'component-slider.css' | asset_url | stylesheet_tag }}
@@ -686,19 +739,18 @@
                     -%}
                   </div>
                 </div>
-                <div class="aa-pdp-offer">
-                  <div class="aa-pdp-offer__head">
-                    <span class="aa-pdp-offer__pct" aria-hidden="true">
-                      <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M2 11.5V4a2 2 0 0 1 2-2h7.5a2 2 0 0 1 1.41.59l8 8a2 2 0 0 1 0 2.82l-7.5 7.5a2 2 0 0 1-2.82 0l-8-8A2 2 0 0 1 2 11.5Zm5-3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"/></svg>
-                    </span>
-                    <span class="aa-pdp-offer__title">Prepaid Offer</span>
-                    <span class="aa-pdp-offer__timer">
-                      <span class="aa-pdp-offer__timer-label">Ends in</span>
-                      <span class="aa-pdp-offer__time" data-aa-countdown>--:--:--</span>
-                    </span>
+                <div class="aa-coupon">
+                  <div class="aa-coupon__stub">
+                    <span class="aa-coupon__notch"></span>
+                    <span class="aa-coupon__amt">&#8377;800*</span>
                   </div>
-                  <h3 class="aa-pdp-offer__h">Flat <span>25% OFF</span> on Prepaid Orders</h3>
-                  <p class="aa-pdp-offer__desc">Pay online and the discount is applied automatically at checkout. No coupon needed.</p>
+                  <div class="aa-coupon__body">
+                    <div class="aa-coupon__top">Exclusive Partner Offers</div>
+                    <div class="aa-coupon__bot">
+                      <span class="aa-coupon__label">On prepaid order</span>
+                      <button type="button" class="aa-coupon__cta">click to collect &#128070;</button>
+                    </div>
+                  </div>
                 </div>
                 <script>
                   (function () {
@@ -1414,8 +1466,12 @@
                         <path d="M9 1L5 5 1 1" stroke="currentColor" stroke-width="2" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path>
                       </svg>
                     </summary>
-                    <div class="collapsible-row-content">
-                      <p>{{ product.metafields.custom.how_to_use }}</p>
+                    <div class="collapsible-row-content aa-drop-lined">
+                      {%- assign aa_htu = product.metafields.custom.how_to_use | split: '<br><br>' -%}
+                      {%- for aa_it in aa_htu -%}
+                        {%- assign aa_itt = aa_it | strip -%}
+                        {%- if aa_itt != blank -%}<p class="aa-drop-item">{{ aa_itt }}</p>{%- endif -%}
+                      {%- endfor -%}
                     </div>
                   </details>
                 </div>
