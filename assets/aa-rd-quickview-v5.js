@@ -67,6 +67,7 @@
   }
   function buyNow(modal,variant,btn){
     if(!variant || btn.disabled) return; btn.disabled=true; btn.textContent='Redirecting…';
+    try{ if(window.amplitude) window.amplitude.track('Buy Now Clicked',{'[Amplitude] Product Variant ID':variant.id,'[Amplitude] Product Price':(variant.price||0)/100,'Source':'quickview'}); }catch(e){}
     if(modal) modal.removeAttribute('open');
     var h={'Accept':'application/json','X-Requested-With':'XMLHttpRequest'};
     fetch('/cart/clear.js',{method:'POST',credentials:'same-origin',headers:h})

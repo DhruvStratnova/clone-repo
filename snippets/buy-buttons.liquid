@@ -214,6 +214,15 @@
       function reset() { btn._aaBusy = false; btn.style.pointerEvents = ''; }
       var variantId = getCurrentVariantId();
       console.log(TAG, 'buy now clicked, variant =', variantId);
+      try {
+        if (window.amplitude) window.amplitude.track('Buy Now Clicked', {
+          '[Amplitude] Product ID': {{ product.id | json }},
+          '[Amplitude] Product Variant ID': variantId,
+          '[Amplitude] Product Name': {{ product.title | json }},
+          '[Amplitude] Product Price': {{ product.selected_or_first_available_variant.price | divided_by: 100.0 | json }},
+          'Source': 'pdp'
+        });
+      } catch (err) {}
       fetch('/cart/clear.js', { method: 'POST', credentials: 'same-origin', headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' } })
       .then(function() {
         var fd = new FormData();

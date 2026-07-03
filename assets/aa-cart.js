@@ -157,6 +157,19 @@
         setSubtotal(lastTotal);
         setCount(cartCount());
         announce('Item added to cart');
+        // Amplitude: the custom cart bypasses the Shopify plugin's automatic
+        // add-to-cart capture, so fire the plugin-shaped event here (the one
+        // source all ATC paths funnel through: PDP, cards, quickview).
+        try {
+          if (window.amplitude && item) window.amplitude.track('[Amplitude] Product Added', {
+            '[Amplitude] Product ID': item.product_id,
+            '[Amplitude] Product Variant ID': item.variant_id || id,
+            '[Amplitude] Product Name': item.product_title || item.title,
+            '[Amplitude] Product Price': (item.final_price || item.price || 0) / 100,
+            '[Amplitude] Product Quantity': qty,
+            '[Amplitude] Product URL': item.url
+          });
+        } catch (e) {}
       })
       .catch(function () { byVariant[id] = prev; loadCart(); })
       .then(function () { busy[id] = false; });
