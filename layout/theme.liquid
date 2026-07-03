@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- SNAPSHOT-BUMP-1783100900-V38 -->
+<!-- SNAPSHOT-BUMP-1783102500-V39 -->
 
 <html class="js" lang="{{ request.locale.iso_code }}"{% if request.cookies['app_color_scheme'] == 'dark' %} data-theme="dark"{% endif %}>
   <head>
@@ -652,5 +652,40 @@
     animation: aa-cta-gradient 4s ease infinite !important;
     box-shadow: 0 10px 30px rgba(255,46,147,.55), 0 0 24px rgba(255,140,66,.55), 0 0 0 1.6px rgba(255,185,95,.65) !important; }
 </style>
+<script>
+  /* Amplitude context enrichment: the Shopify plugin's ecommerce events arrive
+     property-less on this de-Dawned theme, so add page context to every event
+     and derive product identity from the /products/<handle> URL at event time
+     (SPA/Turbo-safe: reads location when the event fires, not at page load). */
+  (function () {
+    var tries = 0;
+    function reg() {
+      var a = window.amplitude;
+      if (!a || typeof a.add !== 'function') { if (tries++ < 40) setTimeout(reg, 250); return; }
+      a.add({
+        name: 'aa-context-enrichment',
+        type: 'enrichment',
+        setup: function () { return Promise.resolve(); },
+        execute: function (e) {
+          try {
+            var p = e.event_properties = e.event_properties || {};
+            if (!p['[Amplitude] Page Path']) {
+              p['[Amplitude] Page Path'] = location.pathname;
+              p['[Amplitude] Page URL'] = location.origin + location.pathname;
+              p['[Amplitude] Page Title'] = document.title;
+            }
+            var m = location.pathname.match(/^\/products\/([^\/]+)/);
+            if (m && !p['[Amplitude] Product Name']) {
+              p['[Amplitude] Product Handle'] = m[1];
+              p['[Amplitude] Product Name'] = m[1].replace(/[-_]+/g, ' ').replace(/\b\w/g, function (c) { return c.toUpperCase(); });
+            }
+          } catch (err) {}
+          return Promise.resolve(e);
+        }
+      });
+    }
+    reg();
+  })();
+</script>
 </body>
 </html>
