@@ -277,11 +277,12 @@ a, button, .button, [role="button"], .aa-tab, summary, label {
   .aa-tab { padding: 7px 0 6px; }
 }
 
-/* Header (mobile app): hamburger + logo + search + PROFILE.
-   Cart now lives in the bottom tab bar, so hide the header cart and show account. */
+/* Header (mobile app): hamburger + logo + search + PROFILE + CART.
+   Show the cart icon in the header on mobile too (it opens the drawer via
+   aa-app.js); it also stays in the bottom tab bar. */
 @media screen and (max-width: 749px) {
   #cart-icon-bubble,
-  .header__icon--cart { display: none !important; }
+  .header__icon--cart { display: inline-flex !important; }
   .header__icon--account,
   .header__icon--account.small-hide { display: inline-flex !important; }
 }
