@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- SNAPSHOT-BUMP-1783104600-V40 -->
+<!-- SNAPSHOT-BUMP-1783106400-V41 -->
 
 <html class="js" lang="{{ request.locale.iso_code }}"{% if request.cookies['app_color_scheme'] == 'dark' %} data-theme="dark"{% endif %}>
   <head>
@@ -144,6 +144,23 @@
         function track(name, props) {
           try { if (window.amplitude) window.amplitude.track(name, props || {}); } catch (e) {}
         }
+        // Own product-view event (the SDK plugin's Product Viewed arrives with no
+        // properties on this theme): fire on initial load + Turbo SPA navs.
+        var lastPv = '';
+        function pv() {
+          var m = location.pathname.match(/^\/products\/([^\/]+)/);
+          if (!m) { lastPv = ''; return; }
+          if (m[1] === lastPv) return;
+          lastPv = m[1];
+          track('Web_Shopify_Product_Viewed', {
+            '[Amplitude] Product Handle': m[1],
+            '[Amplitude] Product Name': m[1].replace(/[-_]+/g, ' ').replace(/\b\w/g, function (c) { return c.toUpperCase(); }),
+            '[Amplitude] Page Path': location.pathname
+          });
+        }
+        function pvWhenReady() { var t = 0; (function w() { if (window.amplitude && window.amplitude.track) pv(); else if (t++ < 100) setTimeout(w, 100); })(); }
+        pvWhenReady();
+        addEventListener('turbo:load', pvWhenReady);
         var leaving = false;
         addEventListener('pagehide', function () { leaving = true; });
         setInterval(function () {
