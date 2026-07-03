@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- SNAPSHOT-BUMP-1783102500-V39 -->
+<!-- SNAPSHOT-BUMP-1783104600-V40 -->
 
 <html class="js" lang="{{ request.locale.iso_code }}"{% if request.cookies['app_color_scheme'] == 'dark' %} data-theme="dark"{% endif %}>
   <head>
@@ -95,6 +95,72 @@
     {% endif %}
 
     {{ content_for_header }}
+    <script>
+      /* Amplitude context enrichment — registered from <head> with a fast poll so
+         it beats the SDK's init-time events (Product Viewed fires at init; a
+         late-registered plugin misses it). Adds page context to every event and
+         derives product identity from /products/<handle> at event time (Turbo-safe). */
+      (function () {
+        var tries = 0;
+        function reg() {
+          var a = window.amplitude;
+          if (!a || typeof a.add !== 'function') { if (tries++ < 400) setTimeout(reg, 50); return; }
+          a.add({
+            name: 'aa-context-enrichment',
+            type: 'enrichment',
+            setup: function () { return Promise.resolve(); },
+            execute: function (e) {
+              try {
+                var p = e.event_properties = e.event_properties || {};
+                if (!p['[Amplitude] Page Path']) {
+                  p['[Amplitude] Page Path'] = location.pathname;
+                  p['[Amplitude] Page URL'] = location.origin + location.pathname;
+                  p['[Amplitude] Page Title'] = document.title;
+                }
+                var m = location.pathname.match(/^\/products\/([^\/]+)/);
+                if (m && !p['[Amplitude] Product Name']) {
+                  p['[Amplitude] Product Handle'] = m[1];
+                  p['[Amplitude] Product Name'] = m[1].replace(/[-_]+/g, ' ').replace(/\b\w/g, function (c) { return c.toUpperCase(); });
+                }
+              } catch (err) {}
+              return Promise.resolve(e);
+            }
+          });
+        }
+        reg();
+      })();
+    </script>
+    <script>
+      /* Razorpay Magic checkout overlay tracking: closing the overlay without
+         paying fired NO event anywhere (verified live) — the most important
+         drop-off moment was invisible. Poll for the overlay (no MutationObserver
+         per theme rules): open -> Web_Shopify_Checkout_Opened, gone without a
+         redirect -> Web_Shopify_Checkout_Abandoned with seconds spent. */
+      (function () {
+        var open = false, openedAt = 0;
+        function overlayPresent() {
+          return !!document.querySelector('.razorpay-container, iframe[src*="razorpay"], iframe[src*="magic"], .razorpay-checkout-frame, .rzp-magic-modal');
+        }
+        function track(name, props) {
+          try { if (window.amplitude) window.amplitude.track(name, props || {}); } catch (e) {}
+        }
+        var leaving = false;
+        addEventListener('pagehide', function () { leaving = true; });
+        setInterval(function () {
+          var now = overlayPresent();
+          if (now && !open) { open = true; openedAt = Date.now(); track('Web_Shopify_Checkout_Opened'); }
+          else if (!now && open) {
+            open = false;
+            var secs = Math.round((Date.now() - openedAt) / 1000);
+            // successful payment closes the overlay too, then redirects — wait 3s
+            // and only count it abandoned if we are still on the page.
+            setTimeout(function () {
+              if (!leaving) track('Web_Shopify_Checkout_Abandoned', { 'Seconds In Checkout': secs });
+            }, 3000);
+          }
+        }, 1000);
+      })();
+    </script>
 
     {% render 'meta-tags' %}
 
@@ -652,40 +718,5 @@
     animation: aa-cta-gradient 4s ease infinite !important;
     box-shadow: 0 10px 30px rgba(255,46,147,.55), 0 0 24px rgba(255,140,66,.55), 0 0 0 1.6px rgba(255,185,95,.65) !important; }
 </style>
-<script>
-  /* Amplitude context enrichment: the Shopify plugin's ecommerce events arrive
-     property-less on this de-Dawned theme, so add page context to every event
-     and derive product identity from the /products/<handle> URL at event time
-     (SPA/Turbo-safe: reads location when the event fires, not at page load). */
-  (function () {
-    var tries = 0;
-    function reg() {
-      var a = window.amplitude;
-      if (!a || typeof a.add !== 'function') { if (tries++ < 40) setTimeout(reg, 250); return; }
-      a.add({
-        name: 'aa-context-enrichment',
-        type: 'enrichment',
-        setup: function () { return Promise.resolve(); },
-        execute: function (e) {
-          try {
-            var p = e.event_properties = e.event_properties || {};
-            if (!p['[Amplitude] Page Path']) {
-              p['[Amplitude] Page Path'] = location.pathname;
-              p['[Amplitude] Page URL'] = location.origin + location.pathname;
-              p['[Amplitude] Page Title'] = document.title;
-            }
-            var m = location.pathname.match(/^\/products\/([^\/]+)/);
-            if (m && !p['[Amplitude] Product Name']) {
-              p['[Amplitude] Product Handle'] = m[1];
-              p['[Amplitude] Product Name'] = m[1].replace(/[-_]+/g, ' ').replace(/\b\w/g, function (c) { return c.toUpperCase(); });
-            }
-          } catch (err) {}
-          return Promise.resolve(e);
-        }
-      });
-    }
-    reg();
-  })();
-</script>
 </body>
 </html>

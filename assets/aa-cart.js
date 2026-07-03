@@ -161,7 +161,7 @@
         // add-to-cart capture, so fire the plugin-shaped event here (the one
         // source all ATC paths funnel through: PDP, cards, quickview).
         try {
-          if (window.amplitude && item) window.amplitude.track('[Amplitude] Product Added', {
+          if (window.amplitude && item) window.amplitude.track('Web_Shopify_Product_Added', {
             '[Amplitude] Product ID': item.product_id,
             '[Amplitude] Product Variant ID': item.variant_id || id,
             '[Amplitude] Product Name': item.product_title || item.title,
