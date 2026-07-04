@@ -42,6 +42,11 @@
         var target = activeThumb.offsetLeft - (strip.clientWidth - activeThumb.offsetWidth) / 2;
         strip.scrollTo({ left: target, behavior: 'smooth' });
       }
+      // desktop vertical rail: slide the strip so the active thumb stays in view
+      if (strip && strip.scrollHeight > strip.clientHeight + 2) {
+        var vTarget = activeThumb.offsetTop - (strip.clientHeight - activeThumb.offsetHeight) / 2;
+        strip.scrollTo({ top: vTarget, behavior: 'smooth' });
+      }
     }
 
     // mobile scroll-snap stage: bring the active slide into the horizontal view

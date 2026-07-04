@@ -316,6 +316,7 @@
     flex-direction: column !important; flex-wrap: nowrap !important;
     gap: 10px !important; margin: 0 !important; padding: 0 !important;
     max-height: 540px; overflow-y: auto; overflow-x: hidden;
+    scroll-behavior: smooth;
   }
   .aa-pdp-gthumb { width: 72px !important; height: 72px !important; flex: 0 0 auto !important; }
   .aa-pdp-gallery__stage { flex: 1 1 auto !important; max-width: none !important; margin: 0 !important; }
