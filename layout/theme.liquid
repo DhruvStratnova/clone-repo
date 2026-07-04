@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- SNAPSHOT-BUMP-1783151900-V43 -->
+<!-- SNAPSHOT-BUMP-1783156200-V44 -->
 
 <html class="js" lang="{{ request.locale.iso_code }}"{% if request.cookies['app_color_scheme'] == 'dark' %} data-theme="dark"{% endif %}>
   <head>
@@ -185,9 +185,23 @@
         })();
         var leaving = false;
         addEventListener('pagehide', function () { leaving = true; });
+        // Stamp the visitor's analytics device id onto the cart when checkout
+        // opens; Shopify copies cart attributes onto the order, so the server
+        // order sync can attach Checkout Completed to this exact user.
+        function stampCart() {
+          try {
+            var did = window.amplitude && window.amplitude.getDeviceId && window.amplitude.getDeviceId();
+            if (!did) return;
+            fetch('/cart/update.js', {
+              method: 'POST', credentials: 'same-origin',
+              headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+              body: JSON.stringify({ attributes: { _amp_device_id: did } })
+            });
+          } catch (e) {}
+        }
         setInterval(function () {
           var now = overlayPresent();
-          if (now && !open) { open = true; openedAt = Date.now(); track('Web_Shopify_Checkout_Opened'); }
+          if (now && !open) { open = true; openedAt = Date.now(); track('Web_Shopify_Checkout_Opened'); stampCart(); }
           else if (!now && open) {
             open = false;
             var secs = Math.round((Date.now() - openedAt) / 1000);
