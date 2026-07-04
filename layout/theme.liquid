@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- SNAPSHOT-BUMP-1783106400-V41 -->
+<!-- SNAPSHOT-BUMP-1783108500-V42 -->
 
 <html class="js" lang="{{ request.locale.iso_code }}"{% if request.cookies['app_color_scheme'] == 'dark' %} data-theme="dark"{% endif %}>
   <head>
@@ -139,7 +139,15 @@
       (function () {
         var open = false, openedAt = 0;
         function overlayPresent() {
-          return !!document.querySelector('.razorpay-container, iframe[src*="razorpay"], iframe[src*="magic"], .razorpay-checkout-frame, .rzp-magic-modal');
+          // Razorpay Magic PRELOADS a hidden checkout iframe on every page, so
+          // presence alone false-fires on page load. Count only a VISIBLE,
+          // near-fullscreen overlay.
+          var els = document.querySelectorAll('.razorpay-container, iframe[src*="razorpay"], iframe[src*="magic"], .razorpay-checkout-frame, .rzp-magic-modal');
+          for (var i = 0; i < els.length; i++) {
+            var el = els[i], cs = getComputedStyle(el), r = el.getBoundingClientRect();
+            if (cs.display !== 'none' && cs.visibility !== 'hidden' && cs.opacity !== '0' && r.width > 200 && r.height > 200) return true;
+          }
+          return false;
         }
         function track(name, props) {
           try { if (window.amplitude) window.amplitude.track(name, props || {}); } catch (e) {}
