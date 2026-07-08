@@ -1,0 +1,140 @@
+/* ===== AstroAura energised: free note+checkbox (Siddh add-on), PDP medal, cart strip =====
+   Loaded globally via theme.liquid. Light + dark. Brand: cream card, orange->pink stripe,
+   gold seal. */
+
+/* ---------- shared seal (starburst ॥सिद्ध॥) ---------- */
+.aa-seal{position:relative;width:56px;height:56px;border-radius:12px;overflow:hidden;flex:0 0 auto;
+  background:radial-gradient(120% 120% at 50% 30%,#20130d,#0f0a08);
+  border:1px solid #3a2a1c;box-shadow:0 4px 12px rgba(20,12,6,.35), inset 0 0 0 1px rgba(232,200,119,.25)}
+.aa-seal i{position:absolute;inset:-8px;background:
+  repeating-conic-gradient(from 0deg at 50% 50%, rgba(232,200,119,.55) 0deg 1deg, transparent 1deg 6deg)}
+.aa-seal i.two{background:repeating-conic-gradient(from 3deg at 50% 50%, rgba(184,145,90,.35) 0deg .6deg, transparent .6deg 6deg)}
+.aa-seal b{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);text-align:center;
+  color:#F2D98C;font-size:12px;font-weight:700;letter-spacing:.02em;text-shadow:0 1px 2px rgba(0,0,0,.6)}
+
+/* ---------- note + checkbox chip (replaces the plain Siddh add-on row) ---------- */
+.optionplus-widget .aa-nrg{position:relative;display:block;background:#FFFCF7;border:1px solid #F0E6D6;
+  border-radius:16px;padding:15px 16px 15px 20px;box-shadow:0 8px 22px rgba(36,16,25,.06);overflow:hidden;
+  cursor:pointer;margin:6px 0;transition:border-color .18s, box-shadow .18s;-webkit-tap-highlight-color:transparent}
+.aa-nrg::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:linear-gradient(180deg,#FF8C42,#FF2E93)}
+.aa-nrg:has(.aa-nrg__cb:checked){border-color:#E7C9A6;box-shadow:0 10px 26px rgba(184,145,90,.18)}
+.aa-nrg__cb{position:absolute;opacity:0;pointer-events:none}
+.aa-nrg{display:flex;flex-wrap:wrap;align-items:center;gap:14px}
+.aa-nrg__seal{order:1}
+.aa-nrg__b{order:2;flex:1;min-width:120px}
+.aa-nrg__t{display:block;font-weight:800;font-size:1.05rem;line-height:1.2;color:#241019}
+.aa-nrg__d{display:block;margin-top:2px;font-size:.88rem;color:#6b6058;line-height:1.35}
+.aa-nrg__price{order:3;display:flex;flex-direction:column;align-items:flex-end;gap:3px;flex:0 0 auto}
+.aa-nrg__was{font-size:.82rem;color:#b3a79c;text-decoration:line-through}
+.aa-nrg__free{background:#0f7a4d;color:#fff;font-weight:800;font-size:.8rem;letter-spacing:.04em;
+  padding:4px 12px;border-radius:999px;box-shadow:0 4px 12px rgba(15,122,77,.22)}
+.aa-nrg__check{order:4;flex:0 0 auto;width:24px;height:24px;border-radius:7px;border:2px solid #cbb89b;
+  background:#fff;display:grid;place-items:center;transition:.16s}
+.aa-nrg:has(.aa-nrg__cb:checked) .aa-nrg__check{background:linear-gradient(135deg,#C6A24E,#8a6a3e);border-color:transparent}
+.aa-nrg__check svg{width:15px;height:15px;stroke:#fff;stroke-width:3.2;fill:none;opacity:0;transition:.16s}
+.aa-nrg:has(.aa-nrg__cb:checked) .aa-nrg__check svg{opacity:1}
+.aa-nrg__eta{order:5;flex:0 0 100%;display:grid;grid-template-rows:0fr;transition:grid-template-rows .22s ease}
+.aa-nrg:has(.aa-nrg__cb:checked) .aa-nrg__eta{grid-template-rows:1fr}
+.aa-nrg__eta > span{overflow:hidden}
+.aa-nrg__eta > span::before{content:"✨ ";}
+.aa-nrg__eta span span, .aa-nrg__eta > span{background:#FBF3E7;border:1px dashed #E7CFA6;border-radius:11px;
+  display:block;padding:9px 12px;font-size:.83rem;color:#8a6a3e;line-height:1.4}
+.aa-nrg__eta b{color:#6f5327}
+
+/* ---------- PDP energised note (neat boxed, title + sub-line stacked) ---------- */
+.aa-echip{display:flex;align-items:center;gap:10px;margin:0;padding:8px 12px;
+  border:1px solid #E7DCCC;border-radius:12px;background:rgba(255,252,247,.6);
+  box-shadow:0 2px 8px rgba(36,16,25,.04);cursor:pointer;user-select:none;
+  -webkit-tap-highlight-color:transparent;text-align:left;transition:border-color .16s, background .16s}
+.aa-echip:has(.aa-echip__cb:checked){border-color:#DDC7AE;background:rgba(255,250,243,.92)}
+.aa-echip__cb{position:absolute;opacity:0;pointer-events:none}
+.aa-echip .aa-seal{width:34px;height:34px;border-radius:8px;flex:0 0 auto}
+.aa-echip .aa-seal b{font-size:7.5px}
+.aa-echip__mid{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:1px}
+.aa-echip__t{font-weight:800;font-size:.9rem;line-height:1.2;color:#241019;white-space:nowrap}
+.aa-echip__eta{display:grid;grid-template-rows:0fr;transition:grid-template-rows .2s ease}
+.aa-echip:has(.aa-echip__cb:checked) .aa-echip__eta{grid-template-rows:1fr}
+.aa-echip__eta > span{overflow:hidden;display:block;font-size:.73rem;color:#8a7a6c;line-height:1.3}
+.aa-echip__price{flex:0 0 auto;display:flex;align-items:baseline;gap:5px}
+.aa-echip__was{font-size:.78rem;color:#b3a79c;text-decoration:line-through}
+.aa-echip__free{color:#0f7a4d;font-weight:800;font-size:.86rem;letter-spacing:.02em}
+.aa-echip__box{flex:0 0 auto;width:20px;height:20px;border-radius:5px;border:1.5px solid #c7b3a6;
+  background:#fff;display:grid;place-items:center;transition:.14s}
+.aa-echip:has(.aa-echip__cb:checked) .aa-echip__box{background:#0f7a4d;border-color:#0f7a4d}
+.aa-echip__box svg{width:12px;height:12px;stroke:#fff;stroke-width:3.4;fill:none;opacity:0;transition:.14s}
+.aa-echip:has(.aa-echip__cb:checked) .aa-echip__box svg{opacity:1}
+/* hide OptionPlus energised checkbox to avoid a duplicate (the native note above covers it) */
+.optionplus-widget .aa-nrg{display:none}
+html[data-theme="dark"] .aa-echip{border-color:#3a2d4a;background:rgba(23,18,38,.55)}
+html[data-theme="dark"] .aa-echip:has(.aa-echip__cb:checked){border-color:#4a3a5a;background:rgba(23,18,38,.85)}
+html[data-theme="dark"] .aa-echip__t{color:#EDE7FA}
+html[data-theme="dark"] .aa-echip__eta > span{color:#b3aacb}
+html[data-theme="dark"] .aa-echip__box{background:#0f0a1f;border-color:#5a4a6a}
+html[data-theme="dark"] .aa-echip:has(.aa-echip__cb:checked) .aa-echip__box{background:#0f7a4d;border-color:#0f7a4d}
+html[data-theme="dark"] .aa-echip__was{color:#8a7f95}
+
+/* ---------- cart strip ---------- */
+.aa-cart-nrg{display:flex;align-items:center;gap:11px;margin:0 0 12px;padding:11px 13px;border-radius:12px;
+  background:linear-gradient(100deg,#FFF6EC,#FDEFF6);border:1px dashed #E1CFB4}
+.aa-cart-nrg .aa-seal{width:42px;height:42px}
+.aa-cart-nrg .aa-seal b{font-size:9px}
+.aa-cart-nrg b{display:block;font-weight:800;font-size:.9rem;color:#241019}
+.aa-cart-nrg small{display:block;font-size:.8rem;color:#6b6058}
+
+/* ---------- dark mode ---------- */
+html[data-theme="dark"] .optionplus-widget .aa-nrg{background:#171226;border-color:#2c2340}
+html[data-theme="dark"] .aa-nrg__t,
+html[data-theme="dark"] .aa-medal__cap{color:#EDE7FA}
+html[data-theme="dark"] .aa-nrg__d,
+html[data-theme="dark"] .aa-medal__sub,
+html[data-theme="dark"] .aa-cart-nrg small{color:#b3aacb}
+html[data-theme="dark"] .aa-nrg__check{background:#0f0a1f;border-color:#4a3f6a}
+html[data-theme="dark"] .aa-nrg__eta span span,
+html[data-theme="dark"] .aa-nrg__eta > span{background:#211a33;border-color:#4a3a2a;color:#e6c98f}
+html[data-theme="dark"] .aa-cart-nrg{background:linear-gradient(100deg,#1a1330,#241033);border-color:#3a2d4a}
+html[data-theme="dark"] .aa-cart-nrg b{color:#EDE7FA}
+
+/* ---------- PDP exclusive offers (coupon cards) — pink shader panel ---------- */
+.aa-offers{margin:16px 0 20px;padding:15px 14px 13px;border-radius:16px;
+  background:radial-gradient(130% 90% at 12% -10%, rgba(255,141,66,.10), transparent 55%),
+    linear-gradient(180deg, rgba(233,2,122,.06), rgba(233,2,122,.02));
+  border:1px solid rgba(233,2,122,.10)}
+.aa-offers__head{display:flex;align-items:center;gap:9px;font-weight:800;font-size:1rem;letter-spacing:.05em;
+  text-transform:uppercase;color:#241019;margin:0 0 12px}
+.aa-offers__badge{width:26px;height:26px;flex:0 0 auto;background:#C0392B;border-radius:50%;
+  display:grid;place-items:center;box-shadow:0 3px 8px rgba(192,57,43,.28)}
+.aa-offers__badge svg{width:15px;height:15px}
+.aa-offers__ttl{margin-right:auto}
+.aa-offers__timer{display:inline-flex;align-items:center;gap:5px;font-size:.76rem;font-weight:700;
+  letter-spacing:.01em;text-transform:none;color:#8a5a44;white-space:nowrap}
+.aa-offers__timer-lbl{opacity:.8}
+.aa-offers__timer [data-aa-countdown]{color:#C0392B;font-variant-numeric:tabular-nums}
+.aa-offers__row{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+.aa-offers__row::-webkit-scrollbar{height:0}
+.aa-offer{flex:0 0 186px;scroll-snap-align:start;background:#fff;border:1.5px dashed #E2CFC0;border-radius:12px;
+  padding:13px 14px;display:flex;flex-direction:column;gap:7px;min-height:126px;box-shadow:0 3px 10px rgba(36,16,25,.04)}
+.aa-offer__t{display:flex;align-items:center;gap:8px;font-weight:800;font-size:1.02rem;color:#241019;line-height:1.2}
+.aa-offer__ic{font-size:1.1rem;flex:0 0 auto}
+.aa-offer__d{font-size:.86rem;color:#6b6058;line-height:1.4;flex:1}
+.aa-offer__foot{display:flex;align-items:center;justify-content:space-between;gap:8px;border-top:1px dashed #E2CFC0;padding-top:9px}
+.aa-offer__code{font-weight:800;font-size:.98rem;letter-spacing:.03em;color:#C0392B;font-family:ui-monospace,"SF Mono",monospace}
+.aa-offer__copy{background:none;border:none;cursor:pointer;font-weight:700;font-size:.9rem;color:#241019;padding:2px 4px}
+.aa-offer__copy.is-copied{color:#0f7a4d}
+html[data-theme="dark"] .aa-offers{background:radial-gradient(130% 90% at 12% -10%, rgba(255,141,66,.10), transparent 55%),linear-gradient(180deg, rgba(233,2,122,.10), rgba(233,2,122,.03));border-color:rgba(233,2,122,.16)}
+html[data-theme="dark"] .aa-offers__head{color:#EDE7FA}
+html[data-theme="dark"] .aa-offers__timer{color:#e6b48f}
+html[data-theme="dark"] .aa-offer{background:#171226;border-color:#3a2d4a}
+html[data-theme="dark"] .aa-offer__t{color:#EDE7FA}
+html[data-theme="dark"] .aa-offer__d{color:#b3aacb}
+html[data-theme="dark"] .aa-offer__foot{border-color:#3a2d4a}
+html[data-theme="dark"] .aa-offer__copy{color:#EDE7FA}
+html[data-theme="dark"] .aa-offer__code{color:#ff8a7a}
+
+/* ---------- energised note sits inside the price row, one line, aligned right ---------- */
+.aa-pdp-pricerow:has(.aa-echip){flex-wrap:nowrap;gap:8px 20px}
+.aa-pdp-pricerow > .aa-pdp-pricerow__price{flex:0 0 auto}   /* price never shrinks -> stays one line */
+.aa-pdp-pricerow > .aa-echip{flex:0 1 auto;min-width:0;max-width:420px;margin-left:auto;align-self:center}
+@media(max-width:749px){
+  .aa-pdp-pricerow:has(.aa-echip){flex-wrap:wrap}
+  .aa-pdp-pricerow > .aa-echip{flex:1 1 100%;margin-top:4px}
+}
