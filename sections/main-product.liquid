@@ -1,4 +1,4 @@
-{%- comment -%} Amplitude SDK also rendered here so PRODUCT pages get it: the head render in theme.liquid doesn't re-render cached PDPs, but a change to this section does. Snippet self-guards against double-init. {%- endcomment -%}
+{%- comment -%} Amplitude heatmap capture v2 (dedicated isolated instance): rendered from this section so PRODUCT pages get it and re-render. Snippet self-guards against double-init. {%- endcomment -%}
 {% render 'aa-amplitude' %}
 <product-info
   id="MainProduct-{{ section.id }}"
