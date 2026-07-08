@@ -1,44 +1,54 @@
 {%- comment -%}
-  Amplitude element-interaction capture for HEATMAPS.
+  Amplitude heatmap capture (element interactions + Session Replay).
 
-  Problem this fixes: the Shopify "Amplitude" app pixel AND Razorpay Magic both load
-  Amplitude on the storefront and take over the shared `window.amplitude` WITHOUT
-  autocapture.elementInteractions — so configuring elementInteractions on the shared
-  instance silently did nothing (no `[Amplitude] Element Clicked` events, empty heatmap).
+  Two facts that shaped this:
+  1) The Shopify app pixel + Razorpay Magic take over the shared window.amplitude
+     WITHOUT elementInteractions, so we run on our OWN isolated instance
+     (amplitude.createInstance) that nothing can clobber.
+  2) Amplitude HEATMAPS require the Session Replay plugin (>=1.7.0) — it captures the
+     page snapshot the heatmap overlays clicks onto. Element clicks alone won't render a
+     heatmap. So we load plugin-session-replay-browser and add it to our instance.
 
-  Fix: load our OWN Browser SDK and run element-interaction autocapture on a DEDICATED,
-  isolated instance (amplitude.createInstance) that nothing else can clobber. It sends
-  `[Amplitude] Element Clicked` to the same project (public client key), which is what
-  Amplitude Heatmaps read. Idempotent via window.__aaHeatmapInit. pageViews/forms off so
-  we don't duplicate the app pixel's events — this instance is purely for clicks/heatmap.
+  Sends to the same project (public client key). Idempotent via window.__aaHeatmapInit.
+  Note: Session Replay records real user sessions (sampleRate 1 = 100%); lower the rate
+  to reduce volume/cost. Requires Session Replay to be enabled on the Amplitude plan.
 {%- endcomment -%}
 <script>
 (function () {
   if (window.__aaHeatmapInit) return;
   window.__aaHeatmapInit = true;
-  var s = document.createElement('script');
-  s.async = true;
-  s.src = 'https://cdn.amplitude.com/libs/analytics-browser-2.11.11-min.js.gz';
-  s.onload = function () {
+  var API = '955e3f5f6695674ba9db9bd3a94857ad';
+  function load(src, cb) {
+    var s = document.createElement('script');
+    s.async = true; s.src = src; s.onload = cb; s.onerror = cb;
+    (document.head || document.documentElement).appendChild(s);
+  }
+  load('https://cdn.amplitude.com/libs/analytics-browser-2.11.11-min.js.gz', function () {
     try {
-      var A = window.amplitude;
-      if (!A) return;
+      var A = window.amplitude; if (!A) return;
       // Isolated instance so the app pixel / Razorpay amplitude can't overwrite our config.
       var hm = (typeof A.createInstance === 'function') ? A.createInstance() : A;
-      hm.init('955e3f5f6695674ba9db9bd3a94857ad', {
-        serverZone: 'US',
-        autocapture: {
-          elementInteractions: true,
-          pageViews: false,
-          sessions: true,
-          formInteractions: false,
-          fileDownloads: false,
-          attribution: false
-        }
+      window.aaHeatmap = hm;
+      // Session Replay plugin — REQUIRED for heatmaps (captures the page snapshot).
+      load('https://cdn.amplitude.com/libs/plugin-session-replay-browser-1.14.0-min.js.gz', function () {
+        try {
+          if (window.sessionReplay && window.sessionReplay.plugin) {
+            hm.add(window.sessionReplay.plugin({ sampleRate: 1 }));
+          }
+        } catch (e) {}
+        hm.init(API, {
+          serverZone: 'US',
+          autocapture: {
+            elementInteractions: true,
+            pageViews: false,
+            sessions: true,
+            formInteractions: false,
+            fileDownloads: false,
+            attribution: false
+          }
+        });
       });
-      window.aaHeatmap = hm; // exposed for debugging
     } catch (e) {}
-  };
-  (document.head || document.documentElement).appendChild(s);
+  });
 })();
 </script>
