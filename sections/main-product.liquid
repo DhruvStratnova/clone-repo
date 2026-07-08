@@ -1,3 +1,5 @@
+{%- comment -%} Amplitude SDK also rendered here so PRODUCT pages get it: the head render in theme.liquid doesn't re-render cached PDPs, but a change to this section does. Snippet self-guards against double-init. {%- endcomment -%}
+{% render 'aa-amplitude' %}
 <product-info
   id="MainProduct-{{ section.id }}"
   class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}"
