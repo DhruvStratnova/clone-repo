@@ -6,6 +6,8 @@
 {%- endcomment -%}
 {%- assign aa_cur = product.price -%}
 {%- assign aa_cmp = product.compare_at_price -%}
+{%- assign aa_disc = 0 -%}
+{%- if aa_cmp > aa_cur -%}{%- assign aa_disc = aa_cmp | minus: aa_cur | times: 100.0 | divided_by: aa_cmp | round -%}{%- endif -%}
 <div class="aa-dock" id="AaDock" aria-hidden="true">
   <div class="aa-dock__body">
     {%- if product.featured_image -%}
@@ -15,13 +17,10 @@
       <span class="aa-dock__title">{{ product.title }}</span>
       <div class="aa-dock__price">
         <b data-aa-dock-price>{{ aa_cur | money }}</b>
-        {%- if aa_cmp > aa_cur -%}
-          {%- assign aa_disc = aa_cmp | minus: aa_cur | times: 100.0 | divided_by: aa_cmp | round -%}
-          <span class="aa-dock__meta">
-            <s>{{ aa_cmp | money }}</s>
-            <span class="aa-dock__off"><span>{{ aa_disc }}% OFF</span></span>
-          </span>
-        {%- endif -%}
+        <span class="aa-dock__meta" data-aa-dock-meta{% unless aa_cmp > aa_cur %} style="display:none"{% endunless %}>
+          <s data-aa-dock-cmp>{{ aa_cmp | money }}</s>
+          <span class="aa-dock__off"><span data-aa-dock-off>{{ aa_disc }}% OFF</span></span>
+        </span>
       </div>
     </div>
     <div class="aa-dock__btns">
@@ -96,15 +95,38 @@
     if (dock.dataset.aaWired) return;        /* set up handlers/observers once per element */
     dock.dataset.aaWired = '1';
 
-    /* mirror the live price text (Dawn updates it on variant change) */
-    function priceEl() {
-      return document.querySelector('.product__info-container .price-item--sale, .product__info-container .price-item--last')
-          || document.querySelector('.price-item--sale, .price-item--last');
+    /* Mirror the live PDP price. Dawn swaps the INNER HTML of the stable #price-<sectionid>
+       wrapper on every variant change, so observe THAT wrapper (not the volatile
+       .price-item--sale, whose parent Dawn destroys after the first swap) and re-read the
+       current price + compare + discount so the dock tracks certificate/capping/size toggles. */
+    function num(t) { var n = parseFloat(String(t || '').replace(/[^0-9.]/g, '')); return isNaN(n) ? null : n; }
+    function priceRoot() {
+      var cands = document.querySelectorAll('[id^="price-"]');
+      for (var i = 0; i < cands.length; i++) { if (cands[i].querySelector('.price-item--sale, .price-item--last')) return cands[i]; }
+      var pi = document.querySelector('.price-item--sale, .price-item--last');
+      return pi ? (pi.closest('[id^="price-"]') || pi.closest('.price') || pi.parentNode) : null;
     }
-    function syncPrice() { var p = priceEl(); if (p) dock.querySelector('[data-aa-dock-price]').textContent = p.textContent.trim(); }
+    function syncPrice() {
+      var rootEl = priceRoot(); if (!rootEl) return;
+      var saleEl = rootEl.querySelector('.price-item--sale, .price-item--last');
+      var cmpEl = rootEl.querySelector('.price__sale s.price-item--regular') || rootEl.querySelector('s.price-item--regular');
+      var bEl = dock.querySelector('[data-aa-dock-price]');
+      if (saleEl && bEl) bEl.textContent = saleEl.textContent.trim();
+      var cur = num(saleEl && saleEl.textContent), cmp = num(cmpEl && cmpEl.textContent);
+      var meta = dock.querySelector('[data-aa-dock-meta]');
+      if (meta) {
+        if (cmp != null && cur != null && cmp > cur) {
+          meta.style.display = '';
+          var s = meta.querySelector('[data-aa-dock-cmp]'); if (s && cmpEl) s.textContent = cmpEl.textContent.trim();
+          var off = meta.querySelector('[data-aa-dock-off]'); if (off) off.textContent = Math.round((cmp - cur) / cmp * 100) + '% OFF';
+        } else {
+          meta.style.display = 'none';
+        }
+      }
+    }
+    var priceObsRoot = priceRoot();
+    if (priceObsRoot && window.MutationObserver) new MutationObserver(syncPrice).observe(priceObsRoot, { childList: true, subtree: true, characterData: true });
     syncPrice();
-    var pe = priceEl();
-    if (pe && window.MutationObserver) new MutationObserver(syncPrice).observe(pe.parentNode || pe, { childList: true, subtree: true, characterData: true });
 
     /* delegate to the REAL buttons */
     dock.querySelector('[data-aa-dock-cart]').addEventListener('click', function () {
