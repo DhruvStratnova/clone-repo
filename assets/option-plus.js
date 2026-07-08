@@ -93,6 +93,10 @@
       
       this.bindEvents();
       this.injectStyles();
+      // AstroAura: register any pre-checked add-ons (e.g. free energised) into state + product form.
+      this.container.querySelectorAll('input.optionplus-checkbox:checked').forEach((cb) => {
+        cb.dispatchEvent(new Event('change', { bubbles: true }));
+      });
     }
     
     renderVariant(variant) {
@@ -217,12 +221,27 @@
         return this.renderCheckboxDropdown(variant);
       }
       
-      const checkboxes = variant.valuesArray.map(([name, price]) =>
-        `<label class="optionplus-checkbox-label">
+      const isEnergised = (n) => /siddh|energ|pran|pratishta/i.test(n);
+      const checkboxes = variant.valuesArray.map(([name, price]) => {
+        // AstroAura: render the "energised (Pran Pratishta)" add-on as a free, pre-checked note chip.
+        if (isEnergised(name)) {
+          return `<label class="optionplus-checkbox-label aa-nrg" data-aa-energised>
+            <input type="checkbox" class="optionplus-checkbox aa-nrg__cb" data-title="${variant.title}" data-value="${name}" data-price="0" checked>
+            <span class="aa-nrg__seal aa-seal"><i></i><i class="two"></i><b>॥सिद्ध॥</b></span>
+            <span class="aa-nrg__b">
+              <span class="aa-nrg__t">Get your product Energised</span>
+              <span class="aa-nrg__d">Pran-Pratishta by our temple priests before it ships to you.</span>
+            </span>
+            <span class="aa-nrg__price"><span class="aa-nrg__was">₹199</span><span class="aa-nrg__free">FREE</span></span>
+            <span class="aa-nrg__check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 12l6 6L20 6"/></svg></span>
+            <span class="aa-nrg__eta"><span><b>Energising adds 1&ndash;2 days</b> &mdash; your item is spiritually charged &amp; Pran-Pratishta activated before dispatch.</span></span>
+          </label>`;
+        }
+        return `<label class="optionplus-checkbox-label">
           <input type="checkbox" class="optionplus-checkbox" data-title="${variant.title}" data-value="${name}" data-price="${price || 0}">
           <span>${name}</span>
-        </label>`
-      ).join('');
+        </label>`;
+      }).join('');
       
       return `
         <div class="optionplus-section">

@@ -763,19 +763,32 @@
                       price_class: 'price--large'
                     -%}
                   </div>
+                  <label class="aa-echip">
+                    <input type="checkbox" class="aa-echip__cb" checked>
+                    <span class="aa-seal"><i></i><i class="two"></i><b>॥सिद्ध॥</b></span>
+                    <span class="aa-echip__mid">
+                      <span class="aa-echip__t">Get your product energised ✨</span>
+                      <span class="aa-echip__eta"><span>Pran-Pratishta adds 1&ndash;2 days before dispatch</span></span>
+                    </span>
+                    <span class="aa-echip__price"><span class="aa-echip__was">₹199</span><span class="aa-echip__free">FREE</span></span>
+                    <span class="aa-echip__box" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 12l6 6L20 6"></path></svg></span>
+                  </label>
                 </div>
-                <div class="aa-coupon">
-                  <div class="aa-coupon__stub">
-                    <span class="aa-coupon__amt"><span class="aa-coupon__amt-flat">Flat</span><span class="aa-coupon__amt-num">25%</span></span>
-                  </div>
-                  <div class="aa-coupon__body">
-                    <div class="aa-coupon__top">
-                      <span class="aa-coupon__label">Prepaid Offer 🎁</span>
-                      <span class="aa-coupon__timer"><span class="aa-coupon__timer-lbl">Ends in</span> <span data-aa-countdown>--:--:--</span></span>
-                    </div>
-                    <div class="aa-coupon__sub">Pay online and the discount is applied automatically at checkout.</div>
-                  </div>
-                </div>
+                <script>
+                  (function(){
+                    var chip=document.querySelector('.aa-echip');
+                    if(!chip)return;
+                    var cb=chip.querySelector('.aa-echip__cb');
+                    function form(){return document.querySelector('form[action^="/cart/add"], form.product-form, product-form form');}
+                    function sync(){
+                      var f=form(); if(!f)return;
+                      var inp=f.querySelector('input[data-aa-energise]');
+                      if(cb.checked){ if(!inp){inp=document.createElement('input');inp.type='hidden';inp.name='properties[Energised]';inp.setAttribute('data-aa-energise','');f.appendChild(inp);} inp.value='Yes · Pran Pratishta (Free)'; }
+                      else if(inp){ inp.remove(); }
+                    }
+                    cb.addEventListener('change',sync); setTimeout(sync,300);
+                  })();
+                </script>
                 <script>
                   (function () {
                     if (window.__aaOfferCountdown) return;
@@ -1415,6 +1428,48 @@
 
                 
                 <div class="optionplus-widget-container"></div>
+                <div class="aa-offers">
+                  <div class="aa-offers__head">
+                    <span class="aa-offers__badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><circle cx="7" cy="7" r="1.4" fill="#fff" stroke="none"></circle></svg></span>
+                    <span class="aa-offers__ttl">Exclusive Offers</span>
+                    <span class="aa-offers__timer"><span class="aa-offers__timer-lbl">Ends in</span> <span data-aa-countdown>--:--:--</span></span>
+                  </div>
+                  <div class="aa-offers__row">
+                    <div class="aa-offer">
+                      <div class="aa-offer__t"><span class="aa-offer__ic">🎉</span>Flat 20% &middot; First Order</div>
+                      <div class="aa-offer__d">Get 20% OFF on your first prepaid order! ✨ Apply at checkout.</div>
+                      <div class="aa-offer__foot"><span class="aa-offer__code">WELCOME20</span><button type="button" class="aa-offer__copy" data-code="WELCOME20">Copy</button></div>
+                    </div>
+                    <div class="aa-offer">
+                      <div class="aa-offer__t"><span class="aa-offer__ic">🎁</span>Flat 10% &middot; First Order</div>
+                      <div class="aa-offer__d">Get 10% OFF on your first order! ✨ Apply at checkout.</div>
+                      <div class="aa-offer__foot"><span class="aa-offer__code">WELCOME10</span><button type="button" class="aa-offer__copy" data-code="WELCOME10">Copy</button></div>
+                    </div>
+                    <div class="aa-offer">
+                      <div class="aa-offer__t"><span class="aa-offer__ic">💳</span>Flat 15% &middot; Prepaid</div>
+                      <div class="aa-offer__d">Get 15% OFF when you pay online! ✨ Apply at checkout.</div>
+                      <div class="aa-offer__foot"><span class="aa-offer__code">PREPAID15</span><button type="button" class="aa-offer__copy" data-code="PREPAID15">Copy</button></div>
+                    </div>
+                    <div class="aa-offer">
+                      <div class="aa-offer__t"><span class="aa-offer__ic">💫</span>Flat 7% &middot; Any Order</div>
+                      <div class="aa-offer__d">Get 7% OFF on Every Order! ✨ Apply at checkout.</div>
+                      <div class="aa-offer__foot"><span class="aa-offer__code">AURA7</span><button type="button" class="aa-offer__copy" data-code="AURA7">Copy</button></div>
+                    </div>
+                  </div>
+                </div>
+                <script>
+                  (function(){
+                    document.querySelectorAll('.aa-offer__copy').forEach(function(b){
+                      if(b.__aaBound)return; b.__aaBound=1;
+                      b.addEventListener('click',function(e){
+                        e.preventDefault();
+                        var c=b.getAttribute('data-code'), done=function(){var o=b.getAttribute('data-l')||'Copy';b.setAttribute('data-l',o);b.textContent='Copied ✓';b.classList.add('is-copied');setTimeout(function(){b.textContent=o;b.classList.remove('is-copied');},1400);};
+                        if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(c).then(done,fallback);}else{fallback();}
+                        function fallback(){var t=document.createElement('textarea');t.value=c;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{document.execCommand('copy');}catch(_){ }document.body.removeChild(t);done();}
+                      });
+                    });
+                  })();
+                </script>
                 {% comment %}
                   {% endif %}
                   {% endfor %}
