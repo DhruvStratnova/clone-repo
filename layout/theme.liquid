@@ -95,6 +95,7 @@
     {% endif %}
 
     {{ content_for_header }}
+    {% render 'aa-amplitude' %}
     <script>
       /* Amplitude context enrichment — registered from <head> with a fast poll so
          it beats the SDK's init-time events (Product Viewed fires at init; a

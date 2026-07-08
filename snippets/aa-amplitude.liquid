@@ -1,0 +1,34 @@
+{%- comment -%}
+  Amplitude Browser SDK in the MAIN page context.
+
+  The Shopify "Amplitude" app web pixel runs sandboxed (STRICT runtime, no DOM), so it
+  cannot power heatmaps or expose window.amplitude to the theme. Loading the Browser SDK
+  here does three things the sandboxed pixel can't:
+    1. autocapture.elementInteractions -> feeds Amplitude Heatmaps / element clicks.
+    2. activates the theme's existing window.amplitude.track() calls (Web_Shopify_*),
+       which were dormant no-ops without a main-context SDK.
+    3. getDeviceId() works, so the checkout stitch (stampCart writes _amp_device_id to the
+       cart -> order.note_attributes) can attach the server-side "Checkout Completed" event
+       (fired by the ops-tool order webhook) to this exact shopper.
+  API key is the public client key (safe in client JS), same project as the app pixel.
+{%- endcomment -%}
+<script>
+(function () {
+  if (window.amplitude && window.amplitude._iq) return; /* already loaded */
+  var s = document.createElement('script');
+  s.async = true;
+  s.src = 'https://cdn.amplitude.com/libs/analytics-browser-2.11.11-min.js.gz';
+  s.onload = function () {
+    try {
+      window.amplitude.init('955e3f5f6695674ba9db9bd3a94857ad', {
+        serverZone: 'US',
+        /* elementInteractions is OFF by default -> turn it on for heatmaps; the other
+           autocapture channels (pageViews, sessions, formInteractions, attribution)
+           keep their default (on). */
+        autocapture: { elementInteractions: true }
+      });
+    } catch (e) {}
+  };
+  (document.head || document.documentElement).appendChild(s);
+})();
+</script>
