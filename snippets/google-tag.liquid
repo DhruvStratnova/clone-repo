@@ -1,0 +1,92 @@
+{%- comment -%}
+  Google / Firebase Analytics (GA4) — client-side storefront tracking for the store's
+  Firebase project "shopify-b2c55", measurement id G-1JZ0C69544 (public GA4 web-stream
+  id, safe in client JS). gtag('config', G-…) feeds the SAME Firebase Analytics property
+  the config's getAnalytics() would — just lets us fire the ecommerce events cleanly.
+
+  Fires the funnel UP TO checkout: page_view (auto), view_item, add_to_cart,
+  begin_checkout. Mirrors meta-pixel.liquid. Purchase is intentionally NOT tracked here
+  (Shopify checkout/thank-you pages don't run theme code; handle server-side later if
+  needed). Every event is scoped with send_to so it targets only this store stream.
+{%- endcomment -%}
+<script>
+  (function () {
+    var GA_ID = 'G-1JZ0C69544';
+    var CUR = '{{ cart.currency.iso_code }}';
+    window.dataLayer = window.dataLayer || [];
+    if (!window.gtag) { window.gtag = function () { dataLayer.push(arguments); }; }
+    if (!document.querySelector('script[src*="googletagmanager.com/gtag/js"]')) {
+      var s = document.createElement('script'); s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+      document.head.appendChild(s);
+      gtag('js', new Date());
+    }
+    gtag('config', GA_ID);
+
+    {%- if request.page_type == 'product' and product -%}
+      gtag('event', 'view_item', {
+        send_to: GA_ID,
+        currency: CUR,
+        value: {{ product.selected_or_first_available_variant.price | divided_by: 100.0 }},
+        items: [{
+          item_id: '{{ product.selected_or_first_available_variant.id }}',
+          item_name: {{ product.title | json }},
+          price: {{ product.selected_or_first_available_variant.price | divided_by: 100.0 }},
+          quantity: 1
+        }]
+      });
+    {%- endif -%}
+
+    {%- if request.page_type == 'search' and search.performed -%}
+      gtag('event', 'search', { send_to: GA_ID, search_term: {{ search.terms | json }} });
+    {%- endif -%}
+
+    // add_to_cart — hook /cart/add. Own guard so it chains WITH the Meta pixel's fetch hook.
+    (function () {
+      if (window.__aaGtagFetchPatched) return;
+      window.__aaGtagFetchPatched = true;
+      var of = window.fetch;
+      window.fetch = function () {
+        var args = arguments;
+        var url = (args[0] && args[0].url) || args[0] || '';
+        var isAdd = typeof url === 'string' && url.indexOf('/cart/add') !== -1;
+        var p = of.apply(this, args);
+        if (isAdd) {
+          p.then(function (r) { return r.clone().json(); }).then(function (data) {
+            var items = (data && data.items) ? data.items : [data];
+            var gitems = [], val = 0;
+            items.forEach(function (it) {
+              if (!it || !it.id) return;
+              var qty = it.quantity || 1, unit = (it.price || 0) / 100.0;
+              val += (it.final_line_price != null ? it.final_line_price / 100.0 : unit * qty);
+              gitems.push({ item_id: String(it.id), item_name: it.product_title || it.title, price: unit, quantity: qty });
+            });
+            if (gitems.length) gtag('event', 'add_to_cart', { send_to: GA_ID, currency: CUR, value: val, items: gitems });
+          }).catch(function () {});
+        }
+        return p;
+      };
+    })();
+
+    // begin_checkout — checkout buttons (cart contents at page load)
+    var aaItems = [
+      {%- for item in cart.items -%}
+        { item_id: '{{ item.variant_id }}', item_name: {{ item.product.title | json }}, price: {{ item.final_price | divided_by: 100.0 }}, quantity: {{ item.quantity }} }{%- unless forloop.last -%},{%- endunless -%}
+      {%- endfor -%}
+    ];
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest) return;
+      var el = e.target.closest('[name="checkout"], #checkout, .cart__checkout-button, a[href$="/checkout"]');
+      if (el) {
+        try {
+          gtag('event', 'begin_checkout', {
+            send_to: GA_ID,
+            currency: CUR,
+            value: {{ cart.total_price | divided_by: 100.0 }},
+            items: aaItems
+          });
+        } catch (err) {}
+      }
+    }, true);
+  })();
+</script>
