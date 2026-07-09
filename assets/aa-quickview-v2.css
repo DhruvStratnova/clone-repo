@@ -69,11 +69,11 @@
 
 .qv-opt{margin:16px 0 0}
 .qv-opt-label{display:block;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#8a7480;font-weight:800;margin-bottom:8px}
-.qv-opt-vals{display:flex;flex-wrap:wrap;gap:9px}
-.qv-chip{position:relative;flex:1;min-width:90px;text-align:left;padding:11px 34px 11px 13px;border-radius:13px;border:1.5px solid rgba(36,16,25,.10);background:#fff;font-family:'Manrope',system-ui,sans-serif;font-size:14px;font-weight:800;letter-spacing:-.01em;cursor:pointer;transition:border-color .2s,box-shadow .2s;color:#241019}
-.qv-chip::after{content:'';position:absolute;top:10px;right:10px;width:14px;height:14px;border-radius:50%;box-sizing:border-box;border:1.5px solid rgba(36,16,25,.25);transition:border .18s}
-.qv-chip.is-sel{border-color:#2B0F26;box-shadow:0 0 0 1px #2B0F26}
-.qv-chip.is-sel::after{border:4.5px solid #2B0F26}
+.qv-opt-vals{display:flex;flex-wrap:wrap;gap:7px}
+/* Pill radios, matched to the PDP variant picker (.product-form__input--pill) */
+.qv-chip{position:relative;flex:0 0 auto;min-width:0;width:auto;text-align:center;padding:6px 12px;border-radius:8px;border:1.5px solid rgba(36,16,25,.22);background:#fff;font-family:'Manrope',system-ui,sans-serif;font-size:13px;font-weight:600;letter-spacing:-.01em;line-height:1.25;cursor:pointer;transition:border-color .18s,background .18s;color:#241019}
+.qv-chip::after{display:none}
+.qv-chip.is-sel{background:#F4E8EE;border-color:#2B0F26;box-shadow:none}
 
 .qv-actions{margin-top:18px;display:flex;gap:10px}
 .qv-add{flex:1;padding:15px 0;border-radius:14px;background:#151013;color:#fff;font:inherit;font-size:12.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;border:0;cursor:pointer;transition:transform .16s cubic-bezier(.32,.72,0,1),filter .2s}

@@ -161,18 +161,19 @@
       }
     }
     if(slider){ slider.addEventListener('scroll',syncMedia,{passive:true}); syncMedia(); }
-    /* PDP prepaid-offer box, verbatim from main-product.liquid so the quick
-       view matches the product page exactly (own countdown, started below). */
-    function dealHTML(){
-      return '<div class="aa-pdp-offer">'
-        +'<div class="aa-pdp-offer__head">'
-          +'<span class="aa-pdp-offer__pct" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M2 11.5V4a2 2 0 0 1 2-2h7.5a2 2 0 0 1 1.41.59l8 8a2 2 0 0 1 0 2.82l-7.5 7.5a2 2 0 0 1-2.82 0l-8-8A2 2 0 0 1 2 11.5Zm5-3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"/></svg></span>'
-          +'<span class="aa-pdp-offer__title">Prepaid Offer</span>'
-          +'<span class="aa-pdp-offer__timer"><span class="aa-pdp-offer__timer-label">Ends in</span> <span class="aa-pdp-offer__time" data-aa-countdown>--:--:--</span></span>'
-        +'</div>'
-        +'<h3 class="aa-pdp-offer__h">Flat <span>25% OFF</span> on Prepaid Orders</h3>'
-        +'<p class="aa-pdp-offer__desc">Pay online and the discount is applied automatically at checkout. No coupon needed.</p>'
-      +'</div>';
+    /* Offer is LIVE-SYNCED from the PDP's .aa-offers card (fetched once, cached on
+       window) so the quick view always matches the product page — no hardcoded copy
+       that drifts. It styles itself via the global aa-energised.css already on the page. */
+    function fillOffer(){
+      if(!info.querySelector('[data-qv-offer]')) return;
+      function put(html){ var s=info.querySelector('[data-qv-offer]'); if(s && html){ s.innerHTML=html; startOfferCountdown(); } }
+      if(window.__aaQVOffer!=null){ put(window.__aaQVOffer); return; }
+      fetch(p.url,{credentials:'same-origin'}).then(function(r){return r.text();}).then(function(h){
+        var d=document.createElement('div'); d.innerHTML=h;
+        var el=d.querySelector('.aa-offers');
+        window.__aaQVOffer = el ? el.outerHTML : '';
+        put(window.__aaQVOffer);
+      }).catch(function(){ window.__aaQVOffer=''; });
     }
     function paint(){
       var v=findVariant(p,sel)||p.variants[0];
@@ -187,7 +188,7 @@
           +'<span class="qv-pricebig">'+money(price)+'</span>'
           +(off?'<span class="qv-offtag"><span>'+off+'% OFF</span></span>':'')
         +'</div>'
-        +(v.available?dealHTML():'')
+        +(v.available?'<div class="qv-offer-slot" data-qv-offer></div>':'')
         +chips(p,sel)
         +'<div class="qv-actions">'
         +'<button type="button" class="qv-add"'+(v.available?'':' disabled')+'>'+(v.available?'Add to cart':'Sold out')+'</button>'
@@ -195,10 +196,11 @@
         +'</div>'
         +'<div class="qv-svc"><span>&#10003; Free shipping</span><span>&#10003; COD available</span><span>&#10003; 7-day returns</span><span>&#10003; Lab certified</span></div>'
         +'<a class="qv-link" href="'+p.url+'">View full details &rarr;</a>';
-      if(v.available) startOfferCountdown();
+      if(v.available) fillOffer();
     }
     content.onclick=function(e){
       var th=e.target.closest('.qv-thumb'); if(th){ var i=+th.dataset.i; var im=slider&&slider.children[i]; if(im){ slider.scrollTo({left:im.offsetLeft,behavior:'smooth'}); } return; }
+      var cp=e.target.closest('.aa-offer__copy'); if(cp){ var code=cp.getAttribute('data-code'); if(code){ try{navigator.clipboard.writeText(code);}catch(_){} var ot=cp.textContent; cp.textContent='Copied ✓'; setTimeout(function(){cp.textContent=ot;},1200); } return; }
       var c=e.target.closest('.qv-chip'); if(c){ sel[+c.dataset.oi]=c.dataset.val; paint(); return; }
       var b=e.target.closest('.qv-buy'); if(b){ buyNow(modal,findVariant(p,sel)||p.variants[0],b); return; }
       var a=e.target.closest('.qv-add'); if(a && !a.disabled){ addToCart(modal,findVariant(p,sel)||p.variants[0],a); }
