@@ -18,7 +18,7 @@
     #aa-reviews *,#aa-reviews *::before,#aa-reviews *::after{box-sizing:border-box;}
     /* Judge.me is fully replaced - keep any app-embed remnants hidden */
     .jdgm-widget,.jdgm-rev-widg,#judgeme_product_reviews,.jdgm-carousel-wrapper,[data-jdgm-widget]{display:none !important;}
-    #aa-reviews .aa-rv-heading{font-family:'Sora','Marcellus',Georgia,serif;color:var(--rv-ink);font-size:1.6em;font-weight:700;margin:0 0 6px;letter-spacing:.2px;text-align:center;flex-basis:100%;}
+    #aa-reviews .aa-rv-heading{font-family:'Sora','Marcellus',Georgia,serif;color:var(--rv-ink);font-size:1.6em;font-weight:700;margin:0 0 22px;letter-spacing:.2px;text-align:center;}
     /* SVG stars (brand webfonts lack the ★ glyph); fg row width-clips over bg */
     #aa-reviews .aa-rv-stars{position:relative;display:inline-block;line-height:0;white-space:nowrap;vertical-align:middle;font-size:0;}
     #aa-reviews .aa-rv-stars svg{display:inline-block;width:1em;height:1em;font-size:19px;vertical-align:top;margin-right:3px;}
@@ -71,8 +71,9 @@
     @media (prefers-reduced-motion:reduce){#aa-reviews *{transition:none !important;}}
   </style>
 
+  <h2 class="aa-rv-heading">Customer Reviews</h2>
+
   <div class="aa-rv-summary">
-    <h2 class="aa-rv-heading">Customer Reviews</h2>
     <div class="aa-rv-avg-block">
       <span class="aa-rv-avg-num">0</span>
       <span class="aa-rv-stars aa-rv-stars--lg" role="img" aria-label="0 out of 5 stars"><span class="aa-rv-stars-bg" aria-hidden="true">{{ aa_stars5 }}</span><span class="aa-rv-stars-fg" aria-hidden="true" style="width:0%;">{{ aa_stars5 }}</span></span>
