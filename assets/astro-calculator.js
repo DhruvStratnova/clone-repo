@@ -379,8 +379,58 @@ function aaCalcInit() {
     '</div>';
   }
 
+  /* ---- structured astrology sections (parity with the app result UI) ---- */
+  function calcSpecRow(label, value) {
+    if (!value) return '';
+    return '<div style="display:flex;gap:12px;margin-top:7px;align-items:flex-start">' +
+      '<span style="flex:0 0 92px;font-weight:700;font-size:9.5px;letter-spacing:.6px;text-transform:uppercase;opacity:.5">' + escapeHtml(label) + '</span>' +
+      '<span style="flex:1;font-size:13px;line-height:1.45">' + escapeHtml(value) + '</span></div>';
+  }
+  function calcTextCard(kicker, body) {
+    if (!body) return '';
+    return '<div style="margin-top:12px;padding:13px 15px;border:1px solid rgba(128,128,128,.22);border-radius:14px;background:rgba(128,128,128,.06)">' +
+      '<div style="font-weight:800;font-size:10px;letter-spacing:1.3px;text-transform:uppercase;opacity:.55;margin-bottom:6px">' + escapeHtml(kicker) + '</div>' +
+      '<div style="font-size:13.5px;line-height:1.55">' + escapeHtml(body) + '</div></div>';
+  }
+  function calcRxCard(kicker, accent, title, subtitle, rows, badge) {
+    var specs = rows.map(function (r) { return calcSpecRow(r[0], r[1]); }).join('');
+    var badgeHtml = badge ? '<span style="margin-left:8px;padding:2px 8px;border-radius:9px;background:' + accent + ';color:#fff;font-weight:900;font-size:8.5px;letter-spacing:.5px;vertical-align:middle">' + escapeHtml(badge) + '</span>' : '';
+    return '<div style="margin-top:12px;padding:15px 16px;border:1.3px solid ' + accent + '66;border-radius:16px;background:rgba(128,128,128,.05);box-shadow:0 4px 14px ' + accent + '18">' +
+      '<div style="font-weight:800;font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:' + accent + ';margin-bottom:7px">' + escapeHtml(kicker) + badgeHtml + '</div>' +
+      '<div style="font-weight:800;font-size:18px;line-height:1.2">' + escapeHtml(title) + '</div>' +
+      (subtitle ? '<div style="font-size:11.5px;opacity:.6;margin-top:2px">' + escapeHtml(subtitle) + '</div>' : '') +
+      specs + '</div>';
+  }
+  function sectionsHtml(sec) {
+    if (!sec || typeof sec !== 'object') return '';
+    var h = '';
+    if (sec.concern) h += '<p style="margin:8px 2px 0;font-size:12.5px;font-style:italic;opacity:.6">' + escapeHtml(sec.concern) + '</p>';
+    h += calcTextCard('What your chart shows', sec.chart_shows);
+    h += calcTextCard('Why this remedy', sec.why_remedy);
+    var pr = sec.primary_remedy;
+    if (pr && typeof pr === 'object' && pr.stone) {
+      var subs = (pr.substitutes && pr.substitutes.length) ? [].concat(pr.substitutes).join(', ') : '';
+      var badge = pr.tier === 'life_stone' ? 'LIFE STONE' : (pr.tier === 'tentative' ? 'TEST-WEAR 7 DAYS' : '');
+      h += calcRxCard('Your gemstone prescription', '#E9027A', pr.stone, pr.planet ? ('For ' + pr.planet + ', your strongest wearable planet') : '', [
+        ['Metal', pr.metal], ['Wear on', pr.finger],
+        ['First wear', pr.day ? (pr.day + ', shukla paksha morning') : ''],
+        ['Activation', pr.activation], ['Budget alt.', subs]
+      ], badge);
+    }
+    var rd = sec.rudraksha;
+    if (rd && typeof rd === 'object' && rd.mukhi) {
+      var mk = ('' + rd.mukhi).replace(/mukhi/i, 'Mukhi');
+      h += calcRxCard('Rudraksha support', '#C8860B', mk, rd.planet ? ('Channels ' + rd.planet + ' safely — good for everyone') : '', [
+        ['Wear as', rd.wear_as], ['First wear', rd.day], ['Activation', rd.activation]
+      ], '');
+    }
+    return h;
+  }
+
   function renderRemedies(data) {
-    var intro = data && data.intro ? '<div class="aa-rem-intro">' + renderMarkdown(data.intro) + '</div>' : '';
+    var intro = (data && data.sections)
+      ? sectionsHtml(data.sections)
+      : (data && data.intro ? '<div class="aa-rem-intro">' + renderMarkdown(data.intro) + '</div>' : '');
     var actions = '';
     if (data && data.action_items && data.action_items.length) {
       actions = '<div class="aa-rem-actions"><h3>Action items</h3><ul>' +
@@ -394,7 +444,8 @@ function aaCalcInit() {
         data.more.map(function (p) { return productCardHtml(p, false); }).join('') +
         '</div></div>';
     }
-    astroOutputDiv.innerHTML = intro + actions + hero + moreList;
+    var note = (data && data.sections && data.sections.note) ? '<p style="margin:16px 4px 0;font-size:12px;opacity:.6;text-align:center;line-height:1.5">' + escapeHtml(data.sections.note) + '</p>' : '';
+    astroOutputDiv.innerHTML = intro + actions + hero + moreList + note;
     astroResultsDiv.style.display = 'block';
     astroResultsDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }

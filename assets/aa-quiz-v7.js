@@ -475,6 +475,53 @@
       '<div class="aa-qc__pr"><span class="aa-qc__price">' + priceTag(p.price_inr) + '</span>' +
       '<button type="button" class="aa-qc__add"' + (handle ? ' data-quiz-padd="' + esc(handle) + '"' : ' onclick="window.location.href=\'' + esc(url) + '\'"') + '>Add</button></div></div></article>';
   }
+  /* ---- structured astrology sections (parity with the app result UI) ---- */
+  function specRow(label, value) {
+    if (!value) return '';
+    return '<div style="display:flex;gap:12px;margin-top:7px;align-items:flex-start">' +
+      '<span style="flex:0 0 92px;font-weight:700;font-size:9.5px;letter-spacing:.6px;text-transform:uppercase;opacity:.5">' + esc(label) + '</span>' +
+      '<span style="flex:1;font-size:13px;line-height:1.45">' + esc(value) + '</span></div>';
+  }
+  function textCard(kicker, body) {
+    if (!body) return '';
+    return '<div style="margin-top:12px;padding:13px 15px;border:1px solid rgba(128,128,128,.22);border-radius:14px;background:rgba(128,128,128,.06)">' +
+      '<div style="font-weight:800;font-size:10px;letter-spacing:1.3px;text-transform:uppercase;opacity:.55;margin-bottom:6px">' + esc(kicker) + '</div>' +
+      '<div style="font-size:13.5px;line-height:1.55">' + esc(body) + '</div></div>';
+  }
+  function rxCard(kicker, accent, title, subtitle, rows, badge) {
+    var specs = rows.map(function (r) { return specRow(r[0], r[1]); }).join('');
+    var badgeHtml = badge ? '<span style="margin-left:8px;padding:2px 8px;border-radius:9px;background:' + accent + ';color:#fff;font-weight:900;font-size:8.5px;letter-spacing:.5px;vertical-align:middle">' + esc(badge) + '</span>' : '';
+    return '<div style="margin-top:12px;padding:15px 16px;border:1.3px solid ' + accent + '66;border-radius:16px;background:rgba(128,128,128,.05);box-shadow:0 4px 14px ' + accent + '18">' +
+      '<div style="font-weight:800;font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:' + accent + ';margin-bottom:7px">' + esc(kicker) + badgeHtml + '</div>' +
+      '<div style="font-weight:800;font-size:18px;line-height:1.2">' + esc(title) + '</div>' +
+      (subtitle ? '<div style="font-size:11.5px;opacity:.6;margin-top:2px">' + esc(subtitle) + '</div>' : '') +
+      specs + '</div>';
+  }
+  function sectionsHtml(sec) {
+    if (!sec || typeof sec !== 'object') return '';
+    var h = '';
+    if (sec.concern) h += '<p style="margin:8px 2px 0;font-size:12.5px;font-style:italic;opacity:.6">' + esc(sec.concern) + '</p>';
+    h += textCard('What your chart shows', sec.chart_shows);
+    h += textCard('Why this remedy', sec.why_remedy);
+    var pr = sec.primary_remedy;
+    if (pr && typeof pr === 'object' && pr.stone) {
+      var subs = (pr.substitutes && pr.substitutes.length) ? [].concat(pr.substitutes).join(', ') : '';
+      var badge = pr.tier === 'life_stone' ? 'LIFE STONE' : (pr.tier === 'tentative' ? 'TEST-WEAR 7 DAYS' : '');
+      h += rxCard('Your gemstone prescription', '#E9027A', pr.stone, pr.planet ? ('For ' + pr.planet + ', your strongest wearable planet') : '', [
+        ['Metal', pr.metal], ['Wear on', pr.finger],
+        ['First wear', pr.day ? (pr.day + ', shukla paksha morning') : ''],
+        ['Activation', pr.activation], ['Budget alt.', subs]
+      ], badge);
+    }
+    var rd = sec.rudraksha;
+    if (rd && typeof rd === 'object' && rd.mukhi) {
+      var mk = ('' + rd.mukhi).replace(/mukhi/i, 'Mukhi');
+      h += rxCard('Rudraksha support', '#C8860B', mk, rd.planet ? ('Channels ' + rd.planet + ' safely — good for everyone') : '', [
+        ['Wear as', rd.wear_as], ['First wear', rd.day], ['Activation', rd.activation]
+      ], '');
+    }
+    return h;
+  }
   function renderApiResults(data) {
     if (!data || data.shown === false || (!data.hero && !(data.more && data.more.length))) { renderError(); return; }
     var cs = data.chart_summary || {};
@@ -485,9 +532,10 @@
       '<h2 class="aa-quiz__banner-title">' + esc(title) + '</h2>' +
       '<div class="aa-quiz__banner-sub">' + sub + '</div></div>';
 
-    // The personalised astrology reading (ascendant, afflicted house, dasha, why
-    // this planet) — the engine puts it in `intro`; render it before the products.
-    if (data.intro) h += '<div class="aa-quiz__reading">' + mdToHtml(data.intro) + '</div>';
+    // Structured astrology sections (parity with the app result UI); fall back to
+    // the plain intro reading only when the engine sections aren't present.
+    if (data.sections) h += sectionsHtml(data.sections);
+    else if (data.intro) h += '<div class="aa-quiz__reading">' + mdToHtml(data.intro) + '</div>';
 
     if (data.hero) h += heroCard(data.hero);
 
@@ -501,6 +549,8 @@
       h += '<div class="aa-quiz__rec-head">Daily practices</div><ul class="aa-quiz__acts">' +
         data.action_items.map(function (a) { return '<li>' + mdInline(a) + '</li>'; }).join('') + '</ul>';
     }
+
+    if (data.sections && data.sections.note) h += '<p style="margin:16px 4px 0;font-size:12px;opacity:.6;text-align:center;line-height:1.5">' + esc(data.sections.note) + '</p>';
 
     h += '<div class="aa-quiz__btm"></div>';
     resultsBox.innerHTML = h;
