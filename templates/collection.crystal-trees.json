@@ -1,12 +1,3 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "image_banner_zpGQzQ": {
@@ -94,54 +85,6 @@
         "padding_bottom": 36
       }
     },
-    "image_with_text_GGVXqL": {
-      "type": "image-with-text",
-      "blocks": {
-        "heading_b7m6wk": {
-          "type": "heading",
-          "settings": {
-            "heading": "Crystal Trees & You",
-            "heading_size": "h1"
-          }
-        },
-        "text_bkKARH": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Crystal trees are powerful symbols of growth, abundance, and positivity. Made from natural gemstones, they enhance harmony, attract prosperity, and balance the energy of any space \u2014 blending spiritual benefits with elegant d\u00e9cor.</p>",
-            "text_style": "body"
-          }
-        },
-        "button_FGMQRB": {
-          "type": "button",
-          "settings": {
-            "button_label": "Learn More",
-            "button_link": "shopify://collections/crystal-trees",
-            "button_style_secondary": true
-          }
-        }
-      },
-      "block_order": [
-        "heading_b7m6wk",
-        "text_bkKARH",
-        "button_FGMQRB"
-      ],
-      "name": "t:sections.image-with-text.presets.name",
-      "settings": {
-        "image": "shopify://shop_images/40209.jpg",
-        "height": "adapt",
-        "desktop_image_width": "small",
-        "layout": "image_first",
-        "image_behavior": "none",
-        "content_layout": "no-overlap",
-        "desktop_content_position": "top",
-        "desktop_content_alignment": "left",
-        "mobile_content_alignment": "left",
-        "section_color_scheme": "",
-        "color_scheme": "",
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
     "collapsible_content_EtJFbL": {
       "type": "collapsible-content",
       "blocks": {
@@ -209,7 +152,6 @@
     "image_banner_zpGQzQ",
     "banner",
     "product-grid",
-    "image_with_text_GGVXqL",
     "collapsible_content_EtJFbL"
   ]
 }

@@ -1,12 +1,3 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "main": {
@@ -432,54 +423,6 @@
         "include_margins": true
       }
     },
-    "image_with_text_BTVzcx": {
-      "type": "image-with-text",
-      "blocks": {
-        "heading_VXrBTe": {
-          "type": "heading",
-          "settings": {
-            "heading": "Rudraksha & You",
-            "heading_size": "h1"
-          }
-        },
-        "text_GABa9L": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Rudraksha beads, sacred to Lord Shiva, hold spiritual power and protective energy. Their vibrations balance mind, body, and soul, fostering peace, focus, and resilience. Wearing Rudraksha reduces stress, sharpens intuition, and shields from negativity. From single to multi-Mukhi, each bead supports life aspects, guiding spiritual growth and inner strength.</p>",
-            "text_style": "body"
-          }
-        },
-        "button_JLGGQF": {
-          "type": "button",
-          "settings": {
-            "button_label": "Learn More",
-            "button_link": "shopify://collections/rudrasha",
-            "button_style_secondary": true
-          }
-        }
-      },
-      "block_order": [
-        "heading_VXrBTe",
-        "text_GABa9L",
-        "button_JLGGQF"
-      ],
-      "name": "t:sections.image-with-text.presets.name",
-      "settings": {
-        "image": "shopify://shop_images/ChatGPT_Image_Sep_2_2025_01_34_17_PM.png",
-        "height": "adapt",
-        "desktop_image_width": "small",
-        "layout": "image_first",
-        "image_behavior": "none",
-        "content_layout": "no-overlap",
-        "desktop_content_position": "top",
-        "desktop_content_alignment": "left",
-        "mobile_content_alignment": "left",
-        "section_color_scheme": "",
-        "color_scheme": "",
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
     "collapsible_content_FVzxxR": {
       "type": "collapsible-content",
       "blocks": {
@@ -558,7 +501,6 @@
     "slideshow_gLGgpg",
     "slideshow_mHQYmL",
     "1758874356394114cb",
-    "image_with_text_BTVzcx",
     "collapsible_content_FVzxxR"
   ]
 }
