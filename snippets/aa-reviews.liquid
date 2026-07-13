@@ -355,7 +355,7 @@
         function mergeLive(rows){
           var lst=root.querySelector('.aa-rv-list');
           if(!lst){ var empty=root.querySelector('.aa-rv-empty'); lst=document.createElement('div'); lst.className='aa-rv-list'; if(empty){ empty.parentNode.replaceChild(lst,empty); } else { var ctrls=root.querySelector('.aa-rv-controls'); if(ctrls&&ctrls.parentNode){ ctrls.parentNode.insertBefore(lst,ctrls.nextSibling); } else { root.appendChild(lst); } } list=lst; }
-          var html=''; rows.forEach(function(r){ html+=liveCardHTML({author:r.author,rating:parseInt(r.rating,10)||0,body:r.review,date:r.created_at,photo:r.photo_url,verified:r.verified!==false}); });
+          var html=''; rows.forEach(function(r){ html+=liveCardHTML({author:r.author,rating:parseInt(r.rating,10)||0,body:r.review,date:r.created_at,photo:(r.photo_url&&r.status==='approved')?r.photo_url:null,verified:true}); });
           lst.insertAdjacentHTML('afterbegin',html);
           recomputeSummary();
         }
@@ -364,18 +364,12 @@
           var pid=(root.getAttribute('data-product-id')||'').trim();
           var H={apikey:C.anonKey,Authorization:'Bearer '+C.anonKey};
           var f=(pid&&pid!=='0')?('&product_id=eq.'+encodeURIComponent(pid)):'&limit=12';
-          function get(u){ return fetch(u,{headers:H}).then(function(r){return r.ok?r.json():[];}).catch(function(){return [];}); }
-          // customer_reviews = signed-in shoppers; product_reviews (view) = verified buyers
-          Promise.all([
-            get(C.supabaseUrl+'/rest/v1/customer_reviews?order=created_at.desc'+f),
-            get(C.supabaseUrl+'/rest/v1/product_reviews?order=created_at.desc'+f)
-          ]).then(function(res){
-            var rows=[];
-            (Array.isArray(res[0])?res[0]:[]).forEach(function(r){ r.verified=false; rows.push(r); });
-            (Array.isArray(res[1])?res[1]:[]).forEach(function(r){ r.verified=true; rows.push(r); });
-            rows.sort(function(a,b){ return String(b.created_at||'').localeCompare(String(a.created_at||'')); });
-            if(rows.length)mergeLive(rows);
-          });
+          // SINGLE source of truth: customer_reviews. Rows inserted directly in the
+          // DB show here too. Photos render only once status='approved' (moderation).
+          fetch(C.supabaseUrl+'/rest/v1/customer_reviews?order=created_at.desc'+f,{headers:H})
+            .then(function(r){return r.ok?r.json():[];})
+            .then(function(rows){ if(Array.isArray(rows)&&rows.length)mergeLive(rows); })
+            .catch(function(){});
         })();
         var modal=document.getElementById('aa-rv-modal'); if(!modal)return;
         var openBtn=root.querySelector('.aa-rv-write-btn');
@@ -448,34 +442,36 @@
             }
             if(!sess||!sess.access_token){ fail('Please sign in to submit your review.'); if(window.AAauth&&window.AAauth.open)window.AAauth.open(); return; }
             var AH={apikey:C.anonKey,Authorization:'Bearer '+sess.access_token,'Content-Type':'application/json'};
-            function succeed(verified){
+            function succeed(){
               if(submitBtn){submitBtn.disabled=false;submitBtn.textContent='Submit review';}
               if(errEl)errEl.textContent='';
-              try{ mergeLive([{author:name,rating:rating,review:text,created_at:new Date().toISOString(),verified:!!verified}]); }catch(e4){}
+              // optimistic card (photo appears after moderation approval, not here)
+              try{ mergeLive([{author:name,rating:rating,review:text,created_at:new Date().toISOString()}]); }catch(e4){}
               show(4); if(prog)prog.textContent='';
             }
-            // Primary: signed-in shopper review -> customer_reviews (sign-in is the only requirement)
-            fetch(C.supabaseUrl+'/rest/v1/customer_reviews',{method:'POST',
-              headers:Object.assign({Prefer:'return=minimal'},AH),
-              body:JSON.stringify({product_id:pid,author:name,rating:rating,review:text})
+            // optional photo -> Supabase Storage (review-photos bucket); moderated via status
+            var photoFile=(modal.querySelector('input[name="photo"]')||{}).files;
+            photoFile=photoFile&&photoFile[0]?photoFile[0]:null;
+            var photoP=Promise.resolve(null);
+            if(photoFile&&photoFile.size<=8*1024*1024){
+              var ext=((photoFile.name||'').split('.').pop()||'jpg').toLowerCase().replace(/[^a-z0-9]/g,'')||'jpg';
+              var path=Date.now()+'-'+Math.random().toString(36).slice(2)+'.'+ext;
+              photoP=fetch(C.supabaseUrl+'/storage/v1/object/review-photos/'+path,{method:'POST',
+                headers:{apikey:C.anonKey,Authorization:'Bearer '+sess.access_token,'Content-Type':photoFile.type||'image/jpeg'},
+                body:photoFile
+              }).then(function(r){ return r.ok?(C.supabaseUrl+'/storage/v1/object/public/review-photos/'+path):null; })
+                .catch(function(){ return null; });
+            }
+            photoP.then(function(photoUrl){
+              var payload={product_id:pid,author:name,rating:rating,review:text};
+              if(photoUrl)payload.photo_url=photoUrl;
+              return fetch(C.supabaseUrl+'/rest/v1/customer_reviews',{method:'POST',
+                headers:Object.assign({Prefer:'return=minimal'},AH),
+                body:JSON.stringify(payload)
+              });
             }).then(function(r){
-              if(r.ok){ succeed(false); return; }
-              // Fallback while customer_reviews is not yet provisioned: write onto the
-              // buyer's own purchased order (verified-buyer path, per current RLS).
-              fetch(C.supabaseUrl+'/rest/v1/shopify_orders?select=id,items,rating,review&stage=eq.purchased&order=created_at.desc&limit=100',{headers:AH})
-                .then(function(r2){ if(!r2.ok)return Promise.reject('orders '+r2.status); return r2.json(); })
-                .then(function(rows){
-                  var mine=(rows||[]).filter(function(o){ try{ return JSON.stringify(o.items||'').indexOf(pid)>-1; }catch(e3){ return false; } });
-                  if(!mine.length){ fail('Could not submit your review right now. Please try again shortly.'); return; }
-                  var target=null;
-                  for(var i=0;i<mine.length;i++){ if(!mine[i].rating&&!mine[i].review){ target=mine[i]; break; } }
-                  target=target||mine[0];
-                  return fetch(C.supabaseUrl+'/rest/v1/shopify_orders?id=eq.'+encodeURIComponent(target.id),{
-                    method:'PATCH',headers:Object.assign({Prefer:'return=minimal'},AH),
-                    body:JSON.stringify({rating:rating,review:text})
-                  }).then(function(r3){ if(!r3.ok)return Promise.reject('update '+r3.status); succeed(true); });
-                })
-                .catch(function(step){ fail('Could not submit your review ('+step+'). Please try again.'); });
+              if(r.ok){ succeed(); }
+              else { fail('Could not submit your review (save '+r.status+'). Please try again.'); }
             }).catch(function(){ fail('Network error. Please try again.'); });
           });
         });
