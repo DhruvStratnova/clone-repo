@@ -14,7 +14,19 @@ function aaCalcInit() {
   // -----------------------------------------------------------------
   // API config
   // -----------------------------------------------------------------
-  var REMEDIES_API_URL = 'https://ieakxiipnpwvyvpsjnkl.supabase.co/functions/v1/public-remedies-api';
+  var REMEDIES_API_URL = 'https://ieakxiipnpwvyvpsjnkl.supabase.co/functions/v1/public-quiz-remedy-api';
+  // Set when the user picks a place from the Geoapify suggestions — carries the
+  // lat/lon/timezone the chart engine hard-requires (a typed-only place has none).
+  var aaSelectedPlace = null;
+  function aaPickPlace(f) {
+    var p = (f && f.properties) || {};
+    return {
+      formatted: p.formatted || '',
+      lat: p.lat, lng: p.lon,
+      tz_name: (p.timezone && p.timezone.name) || '',
+      tz_offset: (p.timezone && typeof p.timezone.offset_STD_seconds === 'number') ? (p.timezone.offset_STD_seconds / 3600) : null
+    };
+  }
   var REMEDIES_API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImllYWt4aWlwbnB3dnl2cHNqbmtsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTUxOTA4NzcsImV4cCI6MjA3MDc2Njg3N30.R_seea1Eefbitn2ZI-ye0oASLsoazA7lynGTk7B1pH4';
   var GEOAPIFY_API_KEY = '55e9073809d4409fa8c39310584517f9';
 
@@ -112,6 +124,7 @@ function aaCalcInit() {
         item.addEventListener('mousedown', function (e) {
           e.preventDefault();
           placeInput.value = feature.properties.formatted;
+          aaSelectedPlace = aaPickPlace(feature);
           suggestionBox.style.display = 'none';
         });
         suggestionBox.appendChild(item);
@@ -134,6 +147,7 @@ function aaCalcInit() {
 
     placeInput.addEventListener('input', function () {
       var query = placeInput.value.trim();
+      aaSelectedPlace = null; // typing a new place invalidates the previous pick
       updatePosition();
       if (query.length < 3) { suggestionBox.style.display = 'none'; return; }
       clearTimeout(debounceTimer);
@@ -154,6 +168,7 @@ function aaCalcInit() {
         if (currentIndex >= 0 && suggestionsData[currentIndex]) {
           e.preventDefault();
           placeInput.value = suggestionsData[currentIndex].properties.formatted;
+          aaSelectedPlace = aaPickPlace(suggestionsData[currentIndex]);
           suggestionBox.style.display = 'none';
         }
       }
@@ -420,15 +435,32 @@ function aaCalcInit() {
       tob = parsed;
     }
 
+    if (!aaSelectedPlace || aaSelectedPlace.lat == null || aaSelectedPlace.tz_offset == null) {
+      astroOutputDiv.innerHTML = '<p class="aa-rem-error">Please pick your place of birth from the suggestions so we can read your chart.</p>';
+      astroResultsDiv.style.display = 'block';
+      return;
+    }
+
     var body = {
       phone: phone,
       dob: dobIso,
       tob: tob,
-      pob: data.placeName || '',
+      pob: aaSelectedPlace.formatted || data.placeName || '',
+      lat: aaSelectedPlace.lat,
+      lng: aaSelectedPlace.lng,
+      timezone: aaSelectedPlace.tz_name || '',
+      timezone_offset: aaSelectedPlace.tz_offset,
       name: data.name || 'Web user',
+      gender: data.gender || 'Any',
+      // The calculator has no problem-quiz, so feed the engine a neutral
+      // general-wellbeing leaf — it still returns the chart's best overall
+      // gemstone + rudraksha (it emits both regardless; the tab just frames copy).
+      goal: 'spiritual',
+      focus: { value: 'peace', title: 'Inner peace' },
+      obstacle: { value: '', title: '' },
       language: 'en'
     };
-    // Steer the API toward gemstone vs rudraksha focus
+    // Steer the copy toward gemstone vs rudraksha focus
     if (currentTab === 'by-rudraksha') body.question = 'Which Rudraksha should I wear, and how does it help me?';
     else body.question = 'Which Gemstone suits my chart, and how does it help me?';
 

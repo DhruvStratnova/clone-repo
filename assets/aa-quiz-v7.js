@@ -3,7 +3,7 @@
   'use strict';
   try { window.AA_QUIZ_VERSION = 'quiz-v5-api'; } catch (e) {}
 
-  var API_URL = 'https://ieakxiipnpwvyvpsjnkl.supabase.co/functions/v1/public-remedies-api';
+  var API_URL = 'https://ieakxiipnpwvyvpsjnkl.supabase.co/functions/v1/public-quiz-remedy-api';
   var API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImllYWt4aWlwbnB3dnl2cHNqbmtsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTUxOTA4NzcsImV4cCI6MjA3MDc2Njg3N30.R_seea1Eefbitn2ZI-ye0oASLsoazA7lynGTk7B1pH4';
 
   var GOAL_TITLE = {
@@ -109,24 +109,24 @@
   function combinedPhone() { var cc = state.ans.cc || '+91'; var d = (state.ans.phonenum || '').replace(/\D/g, ''); return d ? (cc + d) : null; }
   function phoneValid() { var cc = state.ans.cc || '+91'; var d = (state.ans.phonenum || '').replace(/\D/g, ''); return cc === '+91' ? d.length === 10 : (d.length >= 7 && d.length <= 13); }
 
-  /* ---- place-of-birth autocomplete (Photon / OpenStreetMap, keyless) ---- */
-  var pobTimer, pobSeq = 0;
+  /* ---- place-of-birth autocomplete (Geoapify — returns lat/lon + timezone,
+     which the chart engine hard-requires; Photon gave neither) ---- */
+  var GEOAPIFY_KEY = '55e9073809d4409fa8c39310584517f9';
+  var pobTimer, pobSeq = 0, pobFeatures = [];
   function pobSearch(q) {
     var listEl = root && root.querySelector('[data-pob-list]'); if (!listEl) return;
     q = ('' + (q || '')).trim();
     if (q.length < 3) { listEl.hidden = true; listEl.innerHTML = ''; return; }
     var seq = ++pobSeq;
-    fetch('https://photon.komoot.io/api/?q=' + encodeURIComponent(q) + '&limit=6&lang=en')
+    fetch('https://api.geoapify.com/v1/geocode/autocomplete?text=' + encodeURIComponent(q) + '&limit=6&apiKey=' + GEOAPIFY_KEY)
       .then(function (r) { return r.json(); })
       .then(function (d) {
         if (seq !== pobSeq || !root || root.hidden) return;
-        var out = [], seen = {};
-        (d.features || []).forEach(function (f) {
-          var p = f.properties || {}; var parts = [p.name, p.state || p.county, p.country].filter(Boolean);
-          var t = parts.join(', '); if (t && !seen[t]) { seen[t] = 1; out.push(t); }
-        });
-        if (!out.length) { listEl.hidden = true; listEl.innerHTML = ''; return; }
-        listEl.innerHTML = out.map(function (t) { return '<button type="button" class="aa-quiz__pob-opt" data-pob-pick="' + esc(t) + '">' + esc(t) + '</button>'; }).join('');
+        pobFeatures = (d.features || []).filter(function (f) { return f.properties && f.properties.formatted; });
+        if (!pobFeatures.length) { listEl.hidden = true; listEl.innerHTML = ''; return; }
+        listEl.innerHTML = pobFeatures.map(function (f, i) {
+          return '<button type="button" class="aa-quiz__pob-opt" data-pob-pick="' + i + '">' + esc(f.properties.formatted) + '</button>';
+        }).join('');
         listEl.hidden = false;
       }).catch(function () { listEl.hidden = true; });
   }
@@ -261,7 +261,7 @@
   function stepValid() {
     var s = stepDef(state.i);
     if (s.type === 'list') return !!state.ans[s.key];
-    if (s.type === 'birth') return !!(state.ans.dob && state.ans.pob && (state.ans.tob || state.ans.tob_unknown));
+    if (s.type === 'birth') return !!(state.ans.dob && state.ans.pob && state.ans.pob_lat != null && (state.ans.tob || state.ans.tob_unknown));
     if (s.type === 'phone') return phoneValid();
     return true;
   }
@@ -292,7 +292,18 @@
     if (e.target.closest && e.target.closest('[data-quiz-retry]')) { e.preventDefault(); finish(); return; }
     if (e.target.closest && e.target.closest('[data-quiz-tnk]')) { e.preventDefault(); state.ans.tob_unknown = !state.ans.tob_unknown; if (state.ans.tob_unknown) state.ans.tob = ''; renderStep(); return; }
     var pobPick = e.target.closest && e.target.closest('[data-pob-pick]');
-    if (pobPick) { e.preventDefault(); var pv = pobPick.getAttribute('data-pob-pick'); state.ans.pob = pv; var inp = root.querySelector('[data-pob]'); if (inp) inp.value = pv; var lst = root.querySelector('[data-pob-list]'); if (lst) { lst.hidden = true; lst.innerHTML = ''; } updateNext(); return; }
+    if (pobPick) {
+      e.preventDefault();
+      var f = pobFeatures[parseInt(pobPick.getAttribute('data-pob-pick'), 10)]; if (!f) return;
+      var pp = f.properties || {};
+      state.ans.pob = pp.formatted || '';
+      state.ans.pob_lat = pp.lat; state.ans.pob_lng = pp.lon;
+      state.ans.pob_tz = (pp.timezone && pp.timezone.name) || '';
+      state.ans.pob_tz_offset = (pp.timezone && typeof pp.timezone.offset_STD_seconds === 'number') ? (pp.timezone.offset_STD_seconds / 3600) : null;
+      var inp = root.querySelector('[data-pob]'); if (inp) inp.value = state.ans.pob;
+      var lst = root.querySelector('[data-pob-list]'); if (lst) { lst.hidden = true; lst.innerHTML = ''; }
+      updateNext(); return;
+    }
     var chip = e.target.closest && e.target.closest('[data-gender]');
     if (chip && root && !root.hidden) {
       e.preventDefault();
@@ -366,8 +377,14 @@
     return {
       phone: combinedPhone(),
       dob: state.ans.dob || '', tob: state.ans.tob_unknown ? '12:00' : (state.ans.tob || ''), pob: state.ans.pob || '',
+      lat: state.ans.pob_lat, lng: state.ans.pob_lng,
+      timezone: state.ans.pob_tz || '', timezone_offset: state.ans.pob_tz_offset,
       name: state.ans.name || 'Web user',
       gender: state.ans.gender || 'Any',
+      // Structured taxonomy for the deterministic engine (matches quiz-remedy-engine's leaves).
+      goal: state.ans.goal || '',
+      focus: { value: state.ans.f1 || '', title: state.ans.f1_t || '' },
+      obstacle: { value: state.ans.f2 || '', title: state.ans.f2_t || '' },
       question: buildQuestion(),
       language: 'en'
     };
