@@ -17,13 +17,28 @@
       padding:8px 10px 9px 10px;border:1px solid rgba(201,162,75,.55);border-right:0;border-radius:11px 0 0 11px;
       background:linear-gradient(165deg,#1c1330,#0b0913);color:#E8C97A;font-family:inherit;cursor:pointer;
       box-shadow:-6px 5px 18px rgba(12,10,31,.5),0 0 14px rgba(255,46,147,.18);
-      -webkit-tap-highlight-color:transparent;animation:aaqtPop 15s ease-in-out infinite;}
+      -webkit-tap-highlight-color:transparent;}
     .aa-qtab:active{filter:brightness(1.14);}
     .aa-qtab__orb{flex:0 0 auto;width:24px;height:24px;display:grid;place-items:center;filter:drop-shadow(0 0 6px rgba(255,110,120,.55));}
     .aa-qtab__mark{width:24px;height:24px;display:block;overflow:visible;}
     .aa-qtab__lbl{writing-mode:vertical-rl;text-orientation:mixed;font-size:11px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:#E8C97A;line-height:1;transform:rotate(180deg);}
   }
   html:has(#aa-quiz.is-open) .aa-qtab{display:none !important;}
-  @keyframes aaqtPop{0%,90%,100%{transform:translateY(-50%) scale(1)}93%{transform:translateY(-50%) scale(1.13)}96%{transform:translateY(-50%) scale(1)}}
-  @media(prefers-reduced-motion:reduce){.aa-qtab{animation:none;}}
 </style>
+<script>
+  /* Self-contained orb launcher: opens the quiz on EVERY tap (lazy-loads the quiz JS
+     on first tap, then calls AA_openQuiz every time). Bound once, Turbo-safe. */
+  (function(){
+    if(window.__aaOrbBound)return; window.__aaOrbBound=1;
+    var SRC="{{ 'aa-quiz-v7.js' | asset_url }}", loading=false;
+    document.addEventListener('click',function(e){
+      var t=e.target.closest&&e.target.closest('#aa-quiz-orb'); if(!t)return;
+      e.preventDefault();
+      if(typeof window.AA_openQuiz==='function'){window.AA_openQuiz();return;}
+      if(loading)return; loading=true;
+      var s=document.createElement('script'); s.src=SRC;
+      s.onload=function(){ if(typeof window.AA_openQuiz==='function') window.AA_openQuiz(); };
+      document.head.appendChild(s);
+    },true);
+  })();
+</script>

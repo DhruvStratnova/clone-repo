@@ -669,7 +669,6 @@
 
     {% sections 'header-group' %}
     {%- if request.page_type == 'index' -%}{% render 'aa-catnav' %}{%- endif -%}
-    {%- if request.page_type == 'index' -%}{% render 'aa-quiz-orb' %}{%- endif -%}
     <div class="aa-loadbar" id="aa-loadbar" data-turbo-permanent data-loadbar aria-hidden="true"></div>
 
     <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
@@ -828,5 +827,6 @@
     animation: aa-cta-gradient 4s ease infinite !important;
     box-shadow: 0 10px 30px rgba(255,46,147,.55), 0 0 24px rgba(255,140,66,.55), 0 0 0 1.6px rgba(255,185,95,.65) !important; }
 </style>
+{%- if request.page_type == 'index' -%}{% render 'aa-quiz-orb' %}{%- endif -%}
 </body>
 </html>
