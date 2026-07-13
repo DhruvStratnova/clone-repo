@@ -414,33 +414,46 @@
             if(nav&&nav.parentNode)nav.parentNode.insertBefore(errEl,nav); }
           errEl.textContent=msg;
         }
+        // Reviews are stored ON the customer's own PURCHASED order (shopify_orders):
+        // RLS allows the buyer to UPDATE only (photo_url, rating, review) on their
+        // own purchased rows. Flow: find their purchased order containing this
+        // product -> PATCH the review columns. product_reviews is the read view.
         if(form)form.addEventListener('submit',function(e){
           e.preventDefault(); if(!allReq())return;
           var C=window.AA_AUTH_CONFIG||{};
-          if(!C.supabaseUrl||!C.anonKey){ show(4); if(prog)prog.textContent=''; return; }
+          if(!C.supabaseUrl||!C.anonKey){ showErr('Reviews are unavailable right now.'); return; }
+          var sess=null;
+          try{ var s=JSON.parse(localStorage.getItem('sb-'+C.projectRef+'-auth-token')||'null'); if(s&&s.access_token)sess=s; }catch(e2){}
+          if(!sess){ showErr('Please sign in to submit your review.'); if(window.AAauth&&window.AAauth.open)window.AAauth.open(); return; }
           var title=((modal.querySelector('[name="title"]')||{}).value||'').trim();
           var body=((modal.querySelector('[name="body"]')||{}).value||'').trim();
           var name=((modal.querySelector('[name="name"]')||{}).value||'').trim();
           var rating=parseInt((ratingInput&&ratingInput.value)||'0',10)||0;
           var pid=(root.getAttribute('data-product-id')||'').trim();
           var text=title+(title&&body?'\n':'')+body;
-          var tok=C.anonKey;
-          try{ var s=JSON.parse(localStorage.getItem('sb-'+C.projectRef+'-auth-token')||'null'); if(s&&s.access_token)tok=s.access_token; }catch(e2){}
+          var AH={apikey:C.anonKey,Authorization:'Bearer '+sess.access_token,'Content-Type':'application/json'};
           if(submitBtn){submitBtn.disabled=true;submitBtn.textContent='Submitting...';}
-          fetch(C.supabaseUrl+'/rest/v1/product_reviews',{method:'POST',
-            headers:{apikey:C.anonKey,Authorization:'Bearer '+tok,'Content-Type':'application/json',Prefer:'return=minimal'},
-            body:JSON.stringify({product_id:Number(pid)||pid,rating:rating,review:text})
-          }).then(function(r){
-            if(submitBtn){submitBtn.disabled=false;submitBtn.textContent='Submit review';}
-            if(r.ok){
-              if(errEl)errEl.textContent='';
-              try{ mergeLive([{author:name,rating:rating,review:text,created_at:new Date().toISOString()}]); }catch(e3){}
-              show(4); if(prog)prog.textContent='';
-            } else { showErr('Could not submit your review. Please try again.'); }
-          }).catch(function(){
-            if(submitBtn){submitBtn.disabled=false;submitBtn.textContent='Submit review';}
-            showErr('Network error. Please try again.');
-          });
+          function fail(msg){ if(submitBtn){submitBtn.disabled=false;submitBtn.textContent='Submit review';} showErr(msg); }
+          fetch(C.supabaseUrl+'/rest/v1/shopify_orders?select=id,items,rating,review&stage=eq.purchased&order=created_at.desc&limit=100',{headers:AH})
+            .then(function(r){ return r.ok?r.json():Promise.reject('orders'); })
+            .then(function(rows){
+              var mine=(rows||[]).filter(function(o){ try{ return JSON.stringify(o.items||'').indexOf(pid)>-1; }catch(e3){ return false; } });
+              if(!mine.length){ fail('Reviews are for verified buyers. We could not find this product in your purchases.'); return; }
+              var target=null;
+              for(var i=0;i<mine.length;i++){ if(!mine[i].rating&&!mine[i].review){ target=mine[i]; break; } }
+              target=target||mine[0];
+              return fetch(C.supabaseUrl+'/rest/v1/shopify_orders?id=eq.'+encodeURIComponent(target.id),{
+                method:'PATCH',headers:Object.assign({Prefer:'return=minimal'},AH),
+                body:JSON.stringify({rating:rating,review:text})
+              }).then(function(r){
+                if(!r.ok)return Promise.reject('update');
+                if(submitBtn){submitBtn.disabled=false;submitBtn.textContent='Submit review';}
+                if(errEl)errEl.textContent='';
+                try{ mergeLive([{author:name,rating:rating,review:text,created_at:new Date().toISOString()}]); }catch(e4){}
+                show(4); if(prog)prog.textContent='';
+              });
+            })
+            .catch(function(){ fail('Could not submit your review. Please try again.'); });
         });
         document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&!modal.hidden)closeM(); });
       }
