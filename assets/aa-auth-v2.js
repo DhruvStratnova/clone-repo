@@ -255,11 +255,18 @@
   // product_id -> image map from the public /products.json (no token). Cached 7 days.
   function loadProductImages() {
     if (window.__aaPImg) return Promise.resolve(window.__aaPImg);
-    var c = cfg();
-    return fetch(c.productImagesUrl || '/products.json').then(function (r) { return r.json(); }).then(function (m) {
-      if (m && m.products) { var map = {}; m.products.forEach(function (p) { var img = p.images && p.images[0] && p.images[0].src; if (img) { map[p.id] = img; (p.variants || []).forEach(function (v) { map['v' + v.id] = img; }); } }); m = map; }
-      window.__aaPImg = m || {}; return window.__aaPImg;
-    }).catch(function () { window.__aaPImg = {}; return {}; });
+    // /products.json defaults to ~30 products; paginate at 250/page so every
+    // order thumbnail resolves (store has 400+ products).
+    var map = {};
+    function page(n) {
+      return fetch('/products.json?limit=250&page=' + n).then(function (r) { return r.json(); }).then(function (m) {
+        var prods = (m && m.products) || [];
+        prods.forEach(function (p) { var img = p.images && p.images[0] && p.images[0].src; if (img) { map[p.id] = img; (p.variants || []).forEach(function (v) { map['v' + v.id] = img; }); } });
+        if (prods.length === 250 && n < 8) return page(n + 1);
+      });
+    }
+    return page(1).then(function () { window.__aaPImg = map; return map; })
+      .catch(function () { window.__aaPImg = map; return map; });
   }
   function fillOrderImages(el) {
     loadProductImages().then(function (map) {
