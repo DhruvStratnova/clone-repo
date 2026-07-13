@@ -699,16 +699,51 @@
                     <span class="aa-pdp-stars" aria-hidden="true" style="--aa-rate: {{ aa_rfrac }};">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
                     <span class="aa-pdp-rating__num">{{ aa_rv.rating }}</span>
                     <span class="aa-pdp-rating__sep">&middot;</span>
-                    <a class="aa-pdp-rating__count" href="#judgeme_product_reviews" data-aa-reviews-link>{{ aa_rcount }} reviews</a>
+                    <a class="aa-pdp-rating__count" href="#aa-reviews" data-aa-reviews-link>{{ aa_rcount }} reviews</a>
                   </div>
                 {%- else -%}
                   <div class="aa-pdp-rating">
                     <span class="aa-pdp-stars" aria-hidden="true" style="--aa-rate: 0;">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
                     <span class="aa-pdp-rating__num">0.0</span>
                     <span class="aa-pdp-rating__sep">&middot;</span>
-                    <a class="aa-pdp-rating__count" href="#judgeme_product_reviews" data-aa-reviews-link>0 reviews</a>
+                    <a class="aa-pdp-rating__count" href="#aa-reviews" data-aa-reviews-link>0 reviews</a>
                   </div>
                 {%- endif -%}
+                <script>
+                  /* LIVE header rating: sync stars/avg/count from the product_reviews
+                     view (same source as the Customer Reviews section below). */
+                  (function () {
+                    function sync() {
+                      var C = window.AA_AUTH_CONFIG; if (!C || !C.supabaseUrl || !C.anonKey) return;
+                      var wrap = document.querySelector('.aa-pdp-rating'); if (!wrap || wrap.dataset.aaLive === '1') return;
+                      wrap.dataset.aaLive = '1';
+                      fetch(C.supabaseUrl + '/rest/v1/product_reviews?select=rating&product_id=eq.{{ product.id }}', {
+                        headers: { apikey: C.anonKey, Authorization: 'Bearer ' + C.anonKey }
+                      }).then(function (r) { return r.ok ? r.json() : null; }).then(function (rows) {
+                        if (!rows) return;
+                        var stars = wrap.querySelector('.aa-pdp-stars'), num = wrap.querySelector('.aa-pdp-rating__num'),
+                            sep = wrap.querySelector('.aa-pdp-rating__sep'), cnt = wrap.querySelector('.aa-pdp-rating__count');
+                        var n = rows.length;
+                        if (!n) {
+                          if (stars) stars.style.setProperty('--aa-rate', 0);
+                          if (num) num.style.display = 'none';
+                          if (sep) sep.style.display = 'none';
+                          if (cnt) cnt.textContent = 'Be the first to review';
+                          return;
+                        }
+                        var sum = 0; rows.forEach(function (r) { sum += (parseInt(r.rating, 10) || 0); });
+                        var avg = Math.round(sum / n * 10) / 10;
+                        if (stars) stars.style.setProperty('--aa-rate', avg / 5);
+                        if (num) { num.style.display = ''; num.textContent = avg.toFixed(1); }
+                        if (sep) sep.style.display = '';
+                        if (cnt) cnt.textContent = n + (n === 1 ? ' review' : ' reviews');
+                      }).catch(function () {});
+                    }
+                    if (document.readyState !== 'loading') sync();
+                    else document.addEventListener('DOMContentLoaded', sync);
+                    document.addEventListener('turbo:load', sync);
+                  })();
+                </script>
                 <script>
                   (function () {
                     if (window.__aaShareBtn) return;
@@ -740,7 +775,7 @@
                     document.addEventListener('click', function (e) {
                       var link = e.target.closest('[data-aa-reviews-link]');
                       if (!link) return;
-                      var t = document.querySelector('#judgeme_product_reviews, .jdgm-rev-widg, #shopify-product-reviews, .spr-container, .aa-rev, [id*="reviews"], [class*="testimonial"]');
+                      var t = document.querySelector('#aa-reviews, #judgeme_product_reviews, .jdgm-rev-widg, #shopify-product-reviews, .spr-container, .aa-rev, [id*="reviews"], [class*="testimonial"]');
                       if (!t) return;
                       e.preventDefault();
                       var y = t.getBoundingClientRect().top + window.pageYOffset - 80;
