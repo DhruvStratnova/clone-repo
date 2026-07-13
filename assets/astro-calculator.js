@@ -361,7 +361,7 @@ function aaCalcInit() {
     var howWear = p.how_to_wear ? '<div class="aa-rem-card__how"><strong>How to wear:</strong> ' + escapeHtml(p.how_to_wear) + '</div>' : '';
     var howSolves = p.how_it_solves ? '<div class="aa-rem-card__how"><strong>How it helps:</strong> ' + escapeHtml(p.how_it_solves) + '</div>' : '';
     var reason = p.reason ? '<div class="aa-rem-card__reason">' + escapeHtml(p.reason) + '</div>' : '';
-    var shopBtn = p.shop_url ? '<a href="' + escapeHtml(p.shop_url) + '" class="aa-rem-card__cta">View product →</a>' : '';
+    var shopBtn = p.shop_url ? '<a href="' + escapeHtml(p.shop_url) + '" class="aa-rem-card__cta">View product</a>' : '';
     // tag rides ON the image (homepage-card format); body keeps it only when no image
     var img = p.image_url ? '<div class="aa-rem-card__media"><img src="' + escapeHtml(p.image_url) + '" alt="' + escapeHtml(p.name || '') + '" loading="lazy">' + tag + '</div>' : '';
     return '<div class="aa-rem-card' + (isHero ? ' aa-rem-card--hero' : '') + '">' +
