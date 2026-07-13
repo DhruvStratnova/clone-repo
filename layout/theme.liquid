@@ -189,14 +189,33 @@
         // Stamp the visitor's analytics device id onto the cart when checkout
         // opens; Shopify copies cart attributes onto the order, so the server
         // order sync can attach Checkout Completed to this exact user.
+        function readCookie(n) {
+          var m = document.cookie.match('(?:^|; )' + n.replace(/([.$?*|{}()\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)');
+          return m ? decodeURIComponent(m[1]) : '';
+        }
         function stampCart() {
           try {
+            var attrs = {};
             var did = window.amplitude && window.amplitude.getDeviceId && window.amplitude.getDeviceId();
-            if (!did) return;
+            if (did) attrs._amp_device_id = did;
+            // GA4 / Firebase (G-1JZ0C69544) identifiers so the server order sync
+            // can send a server-side `purchase` via the Measurement Protocol
+            // (browser can't — Razorpay/thank-you pages don't run theme code).
+            //   client_id  = last 2 dot-segments of the _ga cookie
+            //   session_id = 3rd field of the _ga_<stream> cookie (ties the hit
+            //                to the gclid-bearing session for Google Ads import)
+            //   gclid      = from Google auto-tagging's _gcl_aw cookie (best-effort)
+            var ga = readCookie('_ga');
+            if (ga) { var gp = ga.split('.'); if (gp.length >= 4) attrs._ga_client_id = gp.slice(-2).join('.'); }
+            var gs = readCookie('_ga_1JZ0C69544');
+            if (gs) { var qp = gs.split('.'); if (qp.length >= 3) attrs._ga_session_id = qp[2]; }
+            var gcl = readCookie('_gcl_aw');
+            if (gcl) { var cp = gcl.split('.'); if (cp.length >= 3) attrs._gclid = cp.slice(2).join('.'); }
+            if (!Object.keys(attrs).length) return;
             fetch('/cart/update.js', {
               method: 'POST', credentials: 'same-origin',
               headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-              body: JSON.stringify({ attributes: { _amp_device_id: did } })
+              body: JSON.stringify({ attributes: attrs })
             });
           } catch (e) {}
         }
