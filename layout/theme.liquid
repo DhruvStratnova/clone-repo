@@ -655,6 +655,7 @@
 
     {% sections 'header-group' %}
     {%- if request.page_type == 'index' -%}{% render 'aa-catnav' %}{%- endif -%}
+    {%- if request.page_type == 'index' -%}{% render 'aa-quiz-orb' %}{%- endif -%}
     <div class="aa-loadbar" id="aa-loadbar" data-turbo-permanent data-loadbar aria-hidden="true"></div>
 
     <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
