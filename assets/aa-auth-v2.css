@@ -399,3 +399,31 @@ body.aa-au-locked{overflow:hidden}
 .aa-au-dbtn--pri:active{transform:translateY(1px)}
 .aa-au-dbtn--sec{background:none;border:1.5px solid var(--ink);color:var(--ink)}
 @media screen and (max-width:520px){.aa-au-daddrs{grid-template-columns:1fr}}
+
+/* ---- My Orders: write a review ---- */
+.aa-au-review{margin-top:8px}
+.aa-au-rv-stars{position:relative;display:inline-block;line-height:1;white-space:nowrap;font-size:16px;letter-spacing:2px}
+.aa-au-rv-stars-bg{color:#e3d9c9}
+.aa-au-rv-stars-fg{position:absolute;top:0;left:0;overflow:hidden;white-space:nowrap;color:#E0A020}
+.aa-au-rv-done{display:flex;flex-direction:column;gap:8px}
+.aa-au-rv-txt{margin:0;color:var(--ink-soft);font:400 14px/1.6 'Jost',sans-serif}
+.aa-au-rv-photo,.aa-au-rv-prev img{display:block;width:100%;max-width:220px;max-height:180px;object-fit:cover;border-radius:12px}
+.aa-au-rv-note{color:var(--muted);font:400 12.5px/1.4 'Jost',sans-serif}
+.aa-au-rv-edit{appearance:none;border:0;background:none;color:#E9027A;font:600 12.5px/1 'Jost',sans-serif;cursor:pointer;padding:0;text-decoration:underline}
+.aa-au-rv-thanks{color:#2E9E5B;font:600 14px/1.4 'Jost',sans-serif}
+.aa-au-rv-form{display:flex;flex-direction:column;gap:11px}
+.aa-au-rv-pick{display:inline-flex;gap:4px}
+.aa-au-rv-star{appearance:none;border:0;background:none;cursor:pointer;font-size:27px;line-height:1;color:#e3d9c9;padding:0 2px;transition:color .15s,transform .15s}
+.aa-au-rv-star.is-on{color:#E0A020}
+.aa-au-rv-star:hover{transform:scale(1.12)}
+.aa-au-rv-body{background:#fff;border:1px solid var(--line);border-radius:12px;color:var(--ink);font:500 14px/1.5 'Jost',sans-serif;padding:11px 13px;width:100%;box-sizing:border-box;resize:vertical;min-height:70px;outline:none}
+.aa-au-rv-body:focus{border-color:#E0A020}
+.aa-au-rv-row{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.aa-au-rv-photobtn{display:inline-flex;align-items:center;gap:6px;color:var(--muted);font:600 13px/1 'Jost',sans-serif;cursor:pointer}
+.aa-au-rv-submit{appearance:none;border:0;cursor:pointer;background:var(--grad);color:#fff;font:600 14px/1 'Jost',sans-serif;padding:12px 24px;border-radius:99px;box-shadow:0 6px 16px rgba(233,2,122,.22)}
+.aa-au-rv-submit[disabled]{opacity:.5;cursor:not-allowed;box-shadow:none}
+.aa-au-rv-msg{color:#B4462F;font:600 13px/1.4 'Jost',sans-serif}
+html[data-theme="dark"] .aa-au-rv-body{background:#0C0A1F;border-color:rgba(255,255,255,.1);color:#F4EFFA}
+html[data-theme="dark"] .aa-au-rv-stars-bg,html[data-theme="dark"] .aa-au-rv-star{color:rgba(255,255,255,.18)}
+html[data-theme="dark"] .aa-au-rv-stars-fg,html[data-theme="dark"] .aa-au-rv-star.is-on{color:#E8C97A}
+html[data-theme="dark"] .aa-au-rv-txt{color:#C9BEDD}

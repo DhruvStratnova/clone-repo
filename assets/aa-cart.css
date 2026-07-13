@@ -23,7 +23,7 @@ cart-drawer.aac {
 }
 cart-drawer.aac.active { visibility: visible; pointer-events: auto; }
 
-.aac__root { position: absolute; inset: 0; }
+.aac__root { position: absolute; inset: 0; overflow: hidden; }
 
 /* backdrop */
 .aac__overlay {

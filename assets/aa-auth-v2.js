@@ -305,6 +305,101 @@
       pid: it.product_id || '', vid: it.variant_id || ''
     };
   }
+  // ---- Reviews: per-order rating/review/photo, stored on shopify_orders ----
+  // (columns rating/review/photo_url are order-level, so the block reads/writes
+  //  the order row; on multi-item orders the same review covers the order.)
+  function rvStarsRO(n) {
+    var pct = Math.max(0, Math.min(5, n)) * 20;
+    return '<span class="aa-au-rv-stars" role="img" aria-label="' + n + ' out of 5 stars">'
+      + '<span class="aa-au-rv-stars-bg" aria-hidden="true">★★★★★</span>'
+      + '<span class="aa-au-rv-stars-fg" aria-hidden="true" style="width:' + pct + '%">★★★★★</span></span>';
+  }
+  function reviewBlockHTML(o) {
+    var done = o.rating ? true : false;
+    var doneView = done
+      ? '<div class="aa-au-rv-done">' + rvStarsRO(o.rating)
+        + (o.review ? '<p class="aa-au-rv-txt">' + esc(o.review) + '</p>' : '')
+        + (o.photo_url ? '<img class="aa-au-rv-photo" src="' + esc(o.photo_url) + '" alt="Review photo">' : '')
+        + '<div class="aa-au-rv-note">Submitted, pending approval. <button type="button" class="aa-au-rv-edit">Edit</button></div>'
+        + '</div>'
+      : '';
+    var pick = '';
+    for (var i = 1; i <= 5; i++) { pick += '<button type="button" class="aa-au-rv-star" data-val="' + i + '" aria-label="' + i + ' star">★</button>'; }
+    var form = '<div class="aa-au-rv-form"' + (done ? ' hidden' : '') + '>'
+      + '<div class="aa-au-rv-pick" role="radiogroup" aria-label="Your rating">' + pick + '</div>'
+      + '<input type="hidden" class="aa-au-rv-rating" value="' + (o.rating || 0) + '">'
+      + '<textarea class="aa-au-rv-body" rows="3" placeholder="Share your experience (optional)">' + esc(o.review || '') + '</textarea>'
+      + '<div class="aa-au-rv-row"><label class="aa-au-rv-photobtn"><input type="file" accept="image/*" hidden>'
+      + '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h3l2-2h6l2 2h3v12H4z"/><circle cx="12" cy="13" r="3.2"/></svg>Add photo</label>'
+      + '<button type="button" class="aa-au-rv-submit" disabled>Submit review</button></div>'
+      + '<div class="aa-au-rv-prev"' + (o.photo_url ? '' : ' hidden') + '><img src="' + esc(o.photo_url || '') + '" alt="Selected photo"></div>'
+      + '<div class="aa-au-rv-msg" hidden></div>'
+      + '</div>';
+    return '<h3 class="aa-au-dsec">Your review</h3>'
+      + '<div class="aa-au-review" data-oid="' + esc(o.id) + '"' + (done ? ' data-done="1"' : '') + '>' + doneView + form + '</div>';
+  }
+  function uploadReviewPhoto(file) {
+    var c = cfg();
+    return getValidSession().then(function (sess) {
+      if (!sess) return null;
+      var ext = (file.name.split('.').pop() || 'jpg').toLowerCase().replace(/[^a-z0-9]/g, '') || 'jpg';
+      var path = 'rv-' + Date.now() + '-' + Math.floor(Math.random() * 1e6) + '.' + ext;
+      return fetch(c.supabaseUrl + '/storage/v1/object/review-photos/' + path, {
+        method: 'POST',
+        headers: { apikey: c.anonKey, Authorization: 'Bearer ' + sess.access_token, 'Content-Type': file.type || 'application/octet-stream', 'x-upsert': 'true' },
+        body: file
+      }).then(function (r) { return r.ok ? (c.supabaseUrl + '/storage/v1/object/public/review-photos/' + path) : null; }).catch(function () { return null; });
+    });
+  }
+  function submitReview(oid, rating, review, photoUrl, cb) {
+    var c = cfg();
+    getValidSession().then(function (sess) {
+      if (!sess) { cb(false, 'Please sign in again.'); return; }
+      var body = { rating: rating, review: review, photo_url: photoUrl || null };
+      fetch(c.supabaseUrl + '/rest/v1/shopify_orders?id=eq.' + encodeURIComponent(oid), {
+        method: 'PATCH',
+        headers: { apikey: c.anonKey, Authorization: 'Bearer ' + sess.access_token, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
+        body: JSON.stringify(body)
+      }).then(function (r) { cb(r.ok, r.ok ? '' : 'Could not save your review. Please try again.'); })
+        .catch(function () { cb(false, 'Network error. Please try again.'); });
+    });
+  }
+  function bindReviews(scope) {
+    scope.querySelectorAll('.aa-au-review').forEach(function (box) {
+      if (box.dataset.rvBound === '1') return; box.dataset.rvBound = '1';
+      var oid = box.getAttribute('data-oid');
+      var form = box.querySelector('.aa-au-rv-form');
+      var stars = box.querySelectorAll('.aa-au-rv-star');
+      var ratingInput = box.querySelector('.aa-au-rv-rating');
+      var bodyEl = box.querySelector('.aa-au-rv-body');
+      var fileEl = box.querySelector('.aa-au-rv-photobtn input[type="file"]');
+      var prev = box.querySelector('.aa-au-rv-prev');
+      var submitBtn = box.querySelector('.aa-au-rv-submit');
+      var msg = box.querySelector('.aa-au-rv-msg');
+      var editBtn = box.querySelector('.aa-au-rv-edit');
+      function paint(v) { [].forEach.call(stars, function (s) { s.classList.toggle('is-on', (+s.getAttribute('data-val')) <= v); }); }
+      function cur() { return parseInt(ratingInput.value, 10) || 0; }
+      paint(cur());
+      if (submitBtn) submitBtn.disabled = cur() < 1;
+      [].forEach.call(stars, function (s) { s.addEventListener('click', function () { var v = +s.getAttribute('data-val'); ratingInput.value = v; paint(v); if (submitBtn) submitBtn.disabled = false; }); });
+      if (editBtn) editBtn.addEventListener('click', function () { var d = box.querySelector('.aa-au-rv-done'); if (d) d.style.display = 'none'; if (form) form.hidden = false; });
+      if (fileEl) fileEl.addEventListener('change', function () { var f = fileEl.files && fileEl.files[0]; if (f && prev) { prev.hidden = false; prev.querySelector('img').src = URL.createObjectURL(f); } });
+      if (submitBtn) submitBtn.addEventListener('click', function () {
+        var rating = cur(); if (rating < 1) return;
+        submitBtn.disabled = true; submitBtn.textContent = 'Submitting…';
+        if (msg) msg.hidden = true;
+        var review = (bodyEl && bodyEl.value || '').trim();
+        var f = fileEl && fileEl.files && fileEl.files[0];
+        (f ? uploadReviewPhoto(f) : Promise.resolve(null)).then(function (photoUrl) {
+          submitReview(oid, rating, review, photoUrl, function (ok, err) {
+            if (ok) { box.innerHTML = '<div class="aa-au-rv-done"><div class="aa-au-rv-thanks">Thanks! Your review is submitted and pending approval.</div></div>'; }
+            else { submitBtn.disabled = false; submitBtn.textContent = 'Submit review'; if (msg) { msg.hidden = false; msg.textContent = err || 'Could not save.'; } }
+          });
+        });
+      });
+    });
+  }
+
   // ONE CARD PER PRODUCT — each line item is its own card (shipments/tracking can
   // differ per product with vendor split). Summary shows order number + date (no
   // price, no AWB). Expands inline to the product (clickable to its PDP),
@@ -336,6 +431,7 @@
       + '<h3 class="aa-au-dsec">Item</h3>' + itemRow
       + '<h3 class="aa-au-dsec">Payment</h3><div class="aa-au-dkv">' + esc(paymentLabel(raw)) + '</div>'
       + delivery + track
+      + reviewBlockHTML(o)
       + '</div></div>';
 
     return '<div class="aa-au-ocard">' + summary + drop + '</div>';
@@ -343,7 +439,7 @@
 
   function renderOrdersPage(el) {
     if (!sessionToken()) { el.innerHTML = ordersEmpty('Please sign in', 'Sign in to see your orders.'); return; }
-    restGet('shopify_orders?select=order_number,amount,currency,items,tracking_url,created_at,raw&order=created_at.desc&limit=50')
+    restGet('shopify_orders?select=id,order_number,amount,currency,items,tracking_url,created_at,rating,review,photo_url,raw&order=created_at.desc&limit=50')
       .then(function (list) {
         if (!Array.isArray(list) || !list.length) { el.innerHTML = ordersEmpty('No orders yet', 'Your cosmic journey starts here.'); return; }
         var cards = [];
@@ -363,6 +459,7 @@
           });
         });
         fillOrderImages(el);
+        bindReviews(el);
       }).catch(function () { el.innerHTML = '<div class="aa-au-loading">Could not load orders. Please try again.</div>'; });
   }
 
