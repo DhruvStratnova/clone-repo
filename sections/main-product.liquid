@@ -724,13 +724,8 @@
                         var stars = wrap.querySelector('.aa-pdp-stars'), num = wrap.querySelector('.aa-pdp-rating__num'),
                             sep = wrap.querySelector('.aa-pdp-rating__sep'), cnt = wrap.querySelector('.aa-pdp-rating__count');
                         var n = rows.length;
-                        if (!n) {
-                          if (stars) stars.style.setProperty('--aa-rate', 0);
-                          if (num) num.style.display = 'none';
-                          if (sep) sep.style.display = 'none';
-                          if (cnt) cnt.textContent = 'No reviews yet';
-                          return;
-                        }
+                        // view empty -> keep the server-rendered metafield numbers
+                        if (!n) return;
                         var sum = 0; rows.forEach(function (r) { sum += (parseInt(r.rating, 10) || 0); });
                         var avg = Math.round(sum / n * 10) / 10;
                         if (stars) stars.style.setProperty('--aa-rate', avg / 5);

@@ -7,6 +7,37 @@
   No metafield reviews, no customer write path.
 {%- endcomment -%}
 
+{%- assign aa_reviews = product.metafields.custom.reviews.value -%}
+{%- assign aa_count = 0 -%}
+{%- if aa_reviews -%}{%- assign aa_count = aa_reviews.size -%}{%- endif -%}
+{%- assign aa_sum = 0 -%}
+{%- assign aa_c5 = 0 -%}{%- assign aa_c4 = 0 -%}{%- assign aa_c3 = 0 -%}{%- assign aa_c2 = 0 -%}{%- assign aa_c1 = 0 -%}
+{%- if aa_count > 0 -%}
+  {%- for r in aa_reviews -%}
+    {%- assign aa_sum = aa_sum | plus: r.rating -%}
+    {%- case r.rating -%}
+      {%- when 5 -%}{%- assign aa_c5 = aa_c5 | plus: 1 -%}
+      {%- when 4 -%}{%- assign aa_c4 = aa_c4 | plus: 1 -%}
+      {%- when 3 -%}{%- assign aa_c3 = aa_c3 | plus: 1 -%}
+      {%- when 2 -%}{%- assign aa_c2 = aa_c2 | plus: 1 -%}
+      {%- when 1 -%}{%- assign aa_c1 = aa_c1 | plus: 1 -%}
+    {%- endcase -%}
+  {%- endfor -%}
+{%- endif -%}
+{%- assign aa_avg = 0 -%}{%- assign aa_avg_pct = 0 -%}
+{%- if aa_count > 0 -%}
+  {%- assign aa_avg = aa_sum | times: 1.0 | divided_by: aa_count | round: 1 -%}
+  {%- assign aa_avg_pct = aa_avg | times: 20 -%}
+{%- endif -%}
+{%- assign aa_p5 = 0 -%}{%- assign aa_p4 = 0 -%}{%- assign aa_p3 = 0 -%}{%- assign aa_p2 = 0 -%}{%- assign aa_p1 = 0 -%}
+{%- if aa_count > 0 -%}
+  {%- assign aa_p5 = aa_c5 | times: 100 | divided_by: aa_count -%}
+  {%- assign aa_p4 = aa_c4 | times: 100 | divided_by: aa_count -%}
+  {%- assign aa_p3 = aa_c3 | times: 100 | divided_by: aa_count -%}
+  {%- assign aa_p2 = aa_c2 | times: 100 | divided_by: aa_count -%}
+  {%- assign aa_p1 = aa_c1 | times: 100 | divided_by: aa_count -%}
+{%- endif -%}
+
 {%- capture aa_star_svg -%}<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27l6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>{%- endcapture -%}
 {%- capture aa_stars5 -%}{{ aa_star_svg }}{{ aa_star_svg }}{{ aa_star_svg }}{{ aa_star_svg }}{{ aa_star_svg }}{%- endcapture -%}
 
@@ -75,23 +106,30 @@
 
   <div class="aa-rv-summary">
     <div class="aa-rv-avg-block">
-      <span class="aa-rv-avg-num">0</span>
-      <span class="aa-rv-stars aa-rv-stars--lg" role="img" aria-label="0 out of 5 stars"><span class="aa-rv-stars-bg" aria-hidden="true">{{ aa_stars5 }}</span><span class="aa-rv-stars-fg" aria-hidden="true" style="width:0%;">{{ aa_stars5 }}</span></span>
-      <span class="aa-rv-count">Based on 0 reviews</span>
+      <span class="aa-rv-avg-num">{{ aa_avg }}</span>
+      <span class="aa-rv-stars aa-rv-stars--lg" role="img" aria-label="{{ aa_avg }} out of 5 stars"><span class="aa-rv-stars-bg" aria-hidden="true">{{ aa_stars5 }}</span><span class="aa-rv-stars-fg" aria-hidden="true" style="width:{{ aa_avg_pct }}%;">{{ aa_stars5 }}</span></span>
+      <span class="aa-rv-count">Based on {{ aa_count }} {% if aa_count == 1 %}review{% else %}reviews{% endif %}</span>
     </div>
     <div class="aa-rv-bars">
       {%- assign aa_rows = "5,4,3,2,1" | split: "," -%}
       {%- for lvl in aa_rows -%}
+        {%- case lvl -%}
+          {%- when "5" -%}{%- assign aa_rc = aa_c5 -%}{%- assign aa_rp = aa_p5 -%}
+          {%- when "4" -%}{%- assign aa_rc = aa_c4 -%}{%- assign aa_rp = aa_p4 -%}
+          {%- when "3" -%}{%- assign aa_rc = aa_c3 -%}{%- assign aa_rp = aa_p3 -%}
+          {%- when "2" -%}{%- assign aa_rc = aa_c2 -%}{%- assign aa_rp = aa_p2 -%}
+          {%- when "1" -%}{%- assign aa_rc = aa_c1 -%}{%- assign aa_rp = aa_p1 -%}
+        {%- endcase -%}
         <div class="aa-rv-bar-row">
           <span class="aa-rv-bar-label">{{ lvl }} <span class="aa-rv-star" aria-hidden="true">{{ aa_star_svg }}</span></span>
-          <span class="aa-rv-bar-track"><span class="aa-rv-bar-fill" style="width:0%;"></span></span>
-          <span class="aa-rv-bar-count">0</span>
+          <span class="aa-rv-bar-track"><span class="aa-rv-bar-fill" style="width:{{ aa_rp }}%;"></span></span>
+          <span class="aa-rv-bar-count">{{ aa_rc }}</span>
         </div>
       {%- endfor -%}
     </div>
   </div>
 
-  <div class="aa-rv-controls" data-rv-controls hidden>
+  <div class="aa-rv-controls" data-rv-controls {% if aa_count < 2 %}hidden{% endif %}>
     <div class="aa-rv-sort">
       <span class="aa-rv-sort-label" id="aa-rv-sort-label">Sort</span>
       <div class="aa-rv-sort-group" role="group" aria-labelledby="aa-rv-sort-label">
@@ -102,7 +140,35 @@
     </div>
   </div>
 
-  <div class="aa-rv-empty">No reviews yet.</div>
+  {%- if aa_count > 0 -%}
+    <div class="aa-rv-list">
+      {%- for r in aa_reviews -%}
+        {%- assign r_pct = r.rating | times: 20 -%}
+        {%- assign r_initial = r.author | default: 'A' | strip | slice: 0 | upcase -%}
+        <article class="aa-rv-card" data-rating="{{ r.rating }}" data-date="{{ r.date }}">
+          <div class="aa-rv-card-top">
+            <span class="aa-rv-stars" role="img" aria-label="{{ r.rating }} out of 5 stars"><span class="aa-rv-stars-bg" aria-hidden="true">{{ aa_stars5 }}</span><span class="aa-rv-stars-fg" aria-hidden="true" style="width:{{ r_pct }}%;">{{ aa_stars5 }}</span></span>
+            {%- if r.date -%}<span class="aa-rv-date">{{ r.date | date: "%d/%m/%Y" }}</span>{%- endif -%}
+          </div>
+          <div class="aa-rv-card-head">
+            <span class="aa-rv-avatar" aria-hidden="true">{{ r_initial }}</span>
+            <span class="aa-rv-author">{{ r.author | escape }}</span>
+            {%- if r.verified -%}<span class="aa-rv-verified" title="Verified buyer" aria-label="Verified buyer"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#2E9E5B"/><path d="M7.5 12.4l2.8 2.8 6-6.4" stroke="#fff" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/></svg></span>{%- endif -%}
+          </div>
+          {%- if r.title != blank -%}<p class="aa-rv-title">{{ r.title | escape }}</p>{%- endif -%}
+          {%- if r.body != blank -%}<p class="aa-rv-body">{{ r.body | escape | newline_to_br }}</p>{%- endif -%}
+        </article>
+      {%- endfor -%}
+    </div>
+  {%- else -%}
+    <div class="aa-rv-empty">No reviews yet.</div>
+  {%- endif -%}
+
+  {%- if aa_count > 0 -%}
+    <script type="application/ld+json">
+    {"@context":"https://schema.org/","@type":"Product","name":{{ product.title | json }},"aggregateRating":{"@type":"AggregateRating","ratingValue":"{{ aa_avg }}","reviewCount":"{{ aa_count }}","bestRating":"5","worstRating":"1"},"review":[{%- for r in aa_reviews limit: 5 -%}{"@type":"Review","author":{"@type":"Person","name":{{ r.author | json }}},"datePublished":{{ r.date | json }},"reviewRating":{"@type":"Rating","ratingValue":"{{ r.rating }}","bestRating":"5","worstRating":"1"},"name":{{ r.title | json }},"reviewBody":{{ r.body | json }}}{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}]}
+    </script>
+  {%- endif -%}
 
   <script>
     (function(){
