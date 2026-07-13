@@ -153,7 +153,7 @@
     document.body.classList.remove('aa-au-locked');
     setTimeout(function () { if (!p.classList.contains('aa-au-in')) p.classList.remove('aa-au-open'); }, 420);
   }
-  window.AAauth = { open: open, close: close };
+  window.AAauth = { open: open, close: close, session: getValidSession, isLoggedIn: isLoggedIn };
 
   /* ---------- post-login: session, dropdown menu, profile/orders ------- */
   function sessionToken() {

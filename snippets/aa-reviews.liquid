@@ -422,38 +422,42 @@
           e.preventDefault(); if(!allReq())return;
           var C=window.AA_AUTH_CONFIG||{};
           if(!C.supabaseUrl||!C.anonKey){ showErr('Reviews are unavailable right now.'); return; }
-          var sess=null;
-          try{ var s=JSON.parse(localStorage.getItem('sb-'+C.projectRef+'-auth-token')||'null'); if(s&&s.access_token)sess=s; }catch(e2){}
-          if(!sess){ showErr('Please sign in to submit your review.'); if(window.AAauth&&window.AAauth.open)window.AAauth.open(); return; }
           var title=((modal.querySelector('[name="title"]')||{}).value||'').trim();
           var body=((modal.querySelector('[name="body"]')||{}).value||'').trim();
           var name=((modal.querySelector('[name="name"]')||{}).value||'').trim();
           var rating=parseInt((ratingInput&&ratingInput.value)||'0',10)||0;
           var pid=(root.getAttribute('data-product-id')||'').trim();
           var text=title+(title&&body?'\n':'')+body;
-          var AH={apikey:C.anonKey,Authorization:'Bearer '+sess.access_token,'Content-Type':'application/json'};
           if(submitBtn){submitBtn.disabled=true;submitBtn.textContent='Submitting...';}
-          function fail(msg){ if(submitBtn){submitBtn.disabled=false;submitBtn.textContent='Submit review';} showErr(msg); }
-          fetch(C.supabaseUrl+'/rest/v1/shopify_orders?select=id,items,rating,review&stage=eq.purchased&order=created_at.desc&limit=100',{headers:AH})
-            .then(function(r){ return r.ok?r.json():Promise.reject('orders'); })
-            .then(function(rows){
-              var mine=(rows||[]).filter(function(o){ try{ return JSON.stringify(o.items||'').indexOf(pid)>-1; }catch(e3){ return false; } });
-              if(!mine.length){ fail('Reviews are for verified buyers. We could not find this product in your purchases.'); return; }
-              var target=null;
-              for(var i=0;i<mine.length;i++){ if(!mine[i].rating&&!mine[i].review){ target=mine[i]; break; } }
-              target=target||mine[0];
-              return fetch(C.supabaseUrl+'/rest/v1/shopify_orders?id=eq.'+encodeURIComponent(target.id),{
-                method:'PATCH',headers:Object.assign({Prefer:'return=minimal'},AH),
-                body:JSON.stringify({rating:rating,review:text})
-              }).then(function(r){
-                if(!r.ok)return Promise.reject('update');
-                if(submitBtn){submitBtn.disabled=false;submitBtn.textContent='Submit review';}
-                if(errEl)errEl.textContent='';
-                try{ mergeLive([{author:name,rating:rating,review:text,created_at:new Date().toISOString()}]); }catch(e4){}
-                show(4); if(prog)prog.textContent='';
-              });
-            })
-            .catch(function(){ fail('Could not submit your review. Please try again.'); });
+          function fail(msg){ if(submitBtn){submitBtn.disabled=false;submitBtn.textContent='Submit review';} showErr(msg); try{console.warn('[aa-reviews]',msg);}catch(e0){} }
+          var sessP=(window.AAauth&&window.AAauth.session)?window.AAauth.session():Promise.resolve(null);
+          sessP.then(function(sess){
+            if(!sess||!sess.access_token){
+              try{ var s0=JSON.parse(localStorage.getItem('sb-'+C.projectRef+'-auth-token')||'null'); if(s0&&s0.access_token)sess=s0; }catch(e2){}
+            }
+            if(!sess||!sess.access_token){ fail('Please sign in to submit your review.'); if(window.AAauth&&window.AAauth.open)window.AAauth.open(); return; }
+            var AH={apikey:C.anonKey,Authorization:'Bearer '+sess.access_token,'Content-Type':'application/json'};
+            fetch(C.supabaseUrl+'/rest/v1/shopify_orders?select=id,items,rating,review&stage=eq.purchased&order=created_at.desc&limit=100',{headers:AH})
+              .then(function(r){ if(!r.ok)return Promise.reject('orders '+r.status); return r.json(); })
+              .then(function(rows){
+                var mine=(rows||[]).filter(function(o){ try{ return JSON.stringify(o.items||'').indexOf(pid)>-1; }catch(e3){ return false; } });
+                if(!mine.length){ fail('Reviews are for verified buyers. We could not find this product in your purchases.'); return; }
+                var target=null;
+                for(var i=0;i<mine.length;i++){ if(!mine[i].rating&&!mine[i].review){ target=mine[i]; break; } }
+                target=target||mine[0];
+                return fetch(C.supabaseUrl+'/rest/v1/shopify_orders?id=eq.'+encodeURIComponent(target.id),{
+                  method:'PATCH',headers:Object.assign({Prefer:'return=minimal'},AH),
+                  body:JSON.stringify({rating:rating,review:text})
+                }).then(function(r){
+                  if(!r.ok)return Promise.reject('update '+r.status);
+                  if(submitBtn){submitBtn.disabled=false;submitBtn.textContent='Submit review';}
+                  if(errEl)errEl.textContent='';
+                  try{ mergeLive([{author:name,rating:rating,review:text,created_at:new Date().toISOString()}]); }catch(e4){}
+                  show(4); if(prog)prog.textContent='';
+                });
+              })
+              .catch(function(step){ fail('Could not submit your review ('+step+'). Please try again.'); });
+          });
         });
         document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&!modal.hidden)closeM(); });
       }
