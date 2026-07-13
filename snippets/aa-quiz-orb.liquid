@@ -1,0 +1,29 @@
+{%- comment -%}
+  Quiz launcher, vertical right-EDGE tab (small orb on top + rotated "FIND MATCH").
+  Edge-hugging, tiny footprint, doesn't cover content. MOBILE-ONLY + homepage-only
+  (theme.liquid request.page_type=='index'). Hides while the quiz is open (:has).
+  Click handled by the global quiz loader in theme.liquid ([data-aa-quiz-open]).
+{%- endcomment -%}
+<button type="button" id="aa-quiz-orb" class="aa-qtab" data-aa-quiz-open aria-label="Find My Perfect Match quiz">
+  <span class="aa-qtab__orb" aria-hidden="true"><svg class="aa-qtab__mark" width="40" height="40" viewBox="-12 -12 124 124" aria-hidden="true"><defs><linearGradient id="aaqCore" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#01246B"/><stop offset=".2" stop-color="#223CCE"/><stop offset=".4" stop-color="#7D5AC8"/><stop offset=".6" stop-color="#BC5596"/><stop offset=".7" stop-color="#EA5684"/><stop offset="1" stop-color="#FC8E64"/></linearGradient><radialGradient id="aaqGlow"><stop offset="0" stop-color="#FFE067" stop-opacity=".55"/><stop offset=".6" stop-color="#FE6C07" stop-opacity=".3"/><stop offset="1" stop-color="#FE6C07" stop-opacity="0"/></radialGradient></defs><circle cx="50" cy="50" r="56" fill="url(#aaqGlow)"/><circle cx="50" cy="50" r="37" fill="url(#aaqCore)"/><g transform="rotate(-45 50 50)"><path d="M -4 50 a 54 29 0 1 0 108 0 a 54 29 0 1 0 -108 0" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="2.5" stroke-linecap="round"/><circle r="5" fill="#FFD700"><animateMotion dur="6s" repeatCount="indefinite" begin="-5.33s" path="M -4 50 a 54 29 0 1 0 108 0 a 54 29 0 1 0 -108 0"/></circle><circle r="5" fill="#2EDF37"><animateMotion dur="6s" repeatCount="indefinite" begin="-0.10s" path="M -4 50 a 54 29 0 1 0 108 0 a 54 29 0 1 0 -108 0"/></circle><circle r="5" fill="#FFFFFF"><animateMotion dur="6s" repeatCount="indefinite" begin="-0.86s" path="M -4 50 a 54 29 0 1 0 108 0 a 54 29 0 1 0 -108 0"/></circle><circle r="5" fill="#FFABAB"><animateMotion dur="6s" repeatCount="indefinite" begin="-3.29s" path="M -4 50 a 54 29 0 1 0 108 0 a 54 29 0 1 0 -108 0"/></circle></g><g transform="rotate(45 50 50)"><path d="M 4 50 a 46 27 0 1 0 92 0 a 46 27 0 1 0 -92 0" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="2.5" stroke-linecap="round"/><circle r="5" fill="#7474F5"><animateMotion dur="6s" repeatCount="indefinite" begin="-2.52s" path="M 4 50 a 46 27 0 1 0 92 0 a 46 27 0 1 0 -92 0"/></circle><circle r="5" fill="#E0E0E0"><animateMotion dur="6s" repeatCount="indefinite" begin="-5.81s" path="M 4 50 a 46 27 0 1 0 92 0 a 46 27 0 1 0 -92 0"/></circle></g></svg></span>
+  <span class="aa-qtab__lbl">Find Match</span>
+</button>
+<style>
+  @media(max-width:749px){html{overflow-x:clip;}}
+  .aa-qtab{display:none;}
+  @media(max-width:749px){
+    .aa-qtab{position:fixed;right:0;top:50%;transform:translateY(-50%);transform-origin:right center;z-index:9990;
+      display:flex;flex-direction:column;align-items:center;gap:4px;
+      padding:8px 10px 9px 10px;border:1px solid rgba(201,162,75,.55);border-right:0;border-radius:11px 0 0 11px;
+      background:linear-gradient(165deg,#1c1330,#0b0913);color:#E8C97A;font-family:inherit;cursor:pointer;
+      box-shadow:-6px 5px 18px rgba(12,10,31,.5),0 0 14px rgba(255,46,147,.18);
+      -webkit-tap-highlight-color:transparent;animation:aaqtPop 15s ease-in-out infinite;}
+    .aa-qtab:active{filter:brightness(1.14);}
+    .aa-qtab__orb{flex:0 0 auto;width:24px;height:24px;display:grid;place-items:center;filter:drop-shadow(0 0 6px rgba(255,110,120,.55));}
+    .aa-qtab__mark{width:24px;height:24px;display:block;overflow:visible;}
+    .aa-qtab__lbl{writing-mode:vertical-rl;text-orientation:mixed;font-size:11px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:#E8C97A;line-height:1;transform:rotate(180deg);}
+  }
+  html:has(#aa-quiz.is-open) .aa-qtab{display:none !important;}
+  @keyframes aaqtPop{0%,90%,100%{transform:translateY(-50%) scale(1)}93%{transform:translateY(-50%) scale(1.13)}96%{transform:translateY(-50%) scale(1)}}
+  @media(prefers-reduced-motion:reduce){.aa-qtab{animation:none;}}
+</style>

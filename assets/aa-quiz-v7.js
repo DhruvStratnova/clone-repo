@@ -153,13 +153,12 @@
     setTimeout(function () { try { window.location.href = 'aura://close'; } catch (e) {} }, 80);
   }
 
-  var root, body, progress, stepCount, nextBtn, backBtn, resultsBox;
+  var root, body, progress, nextBtn, backBtn, resultsBox;
   var state = { i: 0, ans: {} };
   function refs() {
     root = document.getElementById('aa-quiz'); if (!root) return false;
     body = root.querySelector('[data-quiz-body]');
     progress = root.querySelector('[data-quiz-progress]');
-    stepCount = root.querySelector('[data-quiz-stepcount]');
     nextBtn = root.querySelector('[data-quiz-next]');
     backBtn = root.querySelector('[data-quiz-back]');
     resultsBox = root.querySelector('[data-quiz-results]');
@@ -217,7 +216,6 @@
   function renderStep() {
     var s = stepDef(state.i);
     progress.style.width = ((state.i + 1) / STEP_COUNT * 100) + '%';
-    stepCount.textContent = 'STEP ' + (state.i + 1) + ' OF ' + STEP_COUNT;
     backBtn.hidden = state.i === 0;
     var h = '<div class="aa-quiz__kick">' + esc(s.kicker) + '</div><h2 class="aa-quiz__q">' + esc(s.q) + '</h2><p class="aa-quiz__sub">' + esc(s.sub) + '</p>';
     if (s.type === 'list') {
