@@ -181,10 +181,11 @@
     }
     showScreen('limit');
   }
-  function openQuiz() {
+  function openQuiz(direct) {
     if (!refs()) return;
     root.hidden = false; root.setAttribute('aria-hidden', 'false');
     if (inCooldown()) showLimit(cooldownMins());
+    else if (direct === true) startFlow(); // skip the intro sheet: straight into the quiz
     else showScreen('intro');
     document.body.style.overflow = 'hidden';
     requestAnimationFrame(function () { root.classList.add('is-open'); });

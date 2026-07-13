@@ -1,11 +1,11 @@
 {%- comment -%}
-  Quiz launcher V2: round FAB, BOTTOM-RIGHT (above the dock). Aura orb mark with
-  the original orbiting-dots animation + "Find Match" caption. MOBILE-ONLY +
-  homepage-only (gated in theme.liquid). position:fixed at body level. Smooth
-  shrink-fade transition into the quiz popup; hidden while the quiz is open.
+  Quiz launcher: ONE capsule FAB, bottom-right (animated Aura orb + "Find Match").
+  MOBILE-ONLY + homepage-only (gated in theme.liquid, rendered at body level).
+  Tap -> quiz flow opens DIRECTLY (AA_openQuiz(true) skips the intro sheet).
+  Shrink-fades while the quiz is open; returns on close.
 {%- endcomment -%}
 <button type="button" id="aa-quiz-orb" class="aa-qfab" aria-label="Find My Perfect Match quiz">
-  <span class="aa-qfab__disc" aria-hidden="true">
+  <span class="aa-qfab__orb" aria-hidden="true">
     <svg class="aa-qfab__mark" width="40" height="40" viewBox="-12 -12 124 124" aria-hidden="true"><defs><linearGradient id="aaqCore" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#01246B"/><stop offset=".2" stop-color="#223CCE"/><stop offset=".4" stop-color="#7D5AC8"/><stop offset=".6" stop-color="#BC5596"/><stop offset=".7" stop-color="#EA5684"/><stop offset="1" stop-color="#FC8E64"/></linearGradient><radialGradient id="aaqGlow"><stop offset="0" stop-color="#FFE067" stop-opacity=".55"/><stop offset=".6" stop-color="#FE6C07" stop-opacity=".3"/><stop offset="1" stop-color="#FE6C07" stop-opacity="0"/></radialGradient></defs><circle cx="50" cy="50" r="56" fill="url(#aaqGlow)"/><circle cx="50" cy="50" r="37" fill="url(#aaqCore)"/><g transform="rotate(-45 50 50)"><path d="M -4 50 a 54 29 0 1 0 108 0 a 54 29 0 1 0 -108 0" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="2.5" stroke-linecap="round"/><circle r="5" fill="#FFD700"><animateMotion dur="6s" repeatCount="indefinite" begin="-5.33s" path="M -4 50 a 54 29 0 1 0 108 0 a 54 29 0 1 0 -108 0"/></circle><circle r="5" fill="#2EDF37"><animateMotion dur="6s" repeatCount="indefinite" begin="-0.10s" path="M -4 50 a 54 29 0 1 0 108 0 a 54 29 0 1 0 -108 0"/></circle><circle r="5" fill="#FFFFFF"><animateMotion dur="6s" repeatCount="indefinite" begin="-0.86s" path="M -4 50 a 54 29 0 1 0 108 0 a 54 29 0 1 0 -108 0"/></circle><circle r="5" fill="#FFABAB"><animateMotion dur="6s" repeatCount="indefinite" begin="-3.29s" path="M -4 50 a 54 29 0 1 0 108 0 a 54 29 0 1 0 -108 0"/></circle></g><g transform="rotate(45 50 50)"><path d="M 4 50 a 46 27 0 1 0 92 0 a 46 27 0 1 0 -92 0" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="2.5" stroke-linecap="round"/><circle r="5" fill="#7474F5"><animateMotion dur="6s" repeatCount="indefinite" begin="-2.52s" path="M 4 50 a 46 27 0 1 0 92 0 a 46 27 0 1 0 -92 0"/></circle><circle r="5" fill="#E0E0E0"><animateMotion dur="6s" repeatCount="indefinite" begin="-5.81s" path="M 4 50 a 46 27 0 1 0 92 0 a 46 27 0 1 0 -92 0"/></circle></g></svg>
   </span>
   <span class="aa-qfab__lbl">Find Match</span>
@@ -14,34 +14,25 @@
   .aa-qfab{display:none;}
   @media(max-width:749px){
     .aa-qfab{
-      position:fixed;right:14px;bottom:calc(92px + env(safe-area-inset-bottom));z-index:9990;
-      display:flex;flex-direction:column;align-items:center;gap:5px;
-      background:none;border:0;padding:0;cursor:pointer;font-family:inherit;
+      position:fixed;right:14px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:9990;
+      display:inline-flex;align-items:center;gap:9px;
+      padding:8px 16px 8px 9px;border-radius:999px;border:1px solid rgba(201,162,75,.6);
+      background:linear-gradient(165deg,#241738,#0b0913);cursor:pointer;font-family:inherit;
+      box-shadow:0 8px 24px rgba(12,10,31,.45),0 0 18px rgba(255,46,147,.28),inset 0 0 12px rgba(125,90,200,.22);
       -webkit-tap-highlight-color:transparent;
       opacity:1;transform:scale(1);
       transition:opacity .28s cubic-bezier(.32,.72,0,1),transform .28s cubic-bezier(.32,.72,0,1);
     }
-    .aa-qfab.is-hiding{opacity:0;transform:scale(.7);pointer-events:none;}
-    .aa-qfab__disc{
-      width:58px;height:58px;border-radius:50%;display:grid;place-items:center;
-      background:linear-gradient(165deg,#241738,#0b0913);
-      border:1px solid rgba(201,162,75,.6);
-      box-shadow:0 8px 24px rgba(12,10,31,.45),0 0 18px rgba(255,46,147,.28),inset 0 0 12px rgba(125,90,200,.25);
-    }
-    .aa-qfab:active .aa-qfab__disc{transform:scale(.93);filter:brightness(1.15);}
-    .aa-qfab__disc{transition:transform .18s ease,filter .18s ease;}
-    .aa-qfab__mark{width:38px;height:38px;display:block;overflow:visible;filter:drop-shadow(0 0 7px rgba(255,110,120,.5));}
-    .aa-qfab__lbl{
-      font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;line-height:1;
-      color:#E8C97A;background:rgba(16,10,26,.88);border:1px solid rgba(201,162,75,.45);
-      padding:5px 10px;border-radius:999px;box-shadow:0 3px 10px rgba(12,10,31,.35);
-      -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);white-space:nowrap;
-    }
+    .aa-qfab:active{transform:scale(.94);filter:brightness(1.15);}
+    .aa-qfab.is-hiding{opacity:0;transform:scale(.72);pointer-events:none;}
+    .aa-qfab__orb{flex:0 0 auto;width:34px;height:34px;display:grid;place-items:center;}
+    .aa-qfab__mark{width:34px;height:34px;display:block;overflow:visible;filter:drop-shadow(0 0 7px rgba(255,110,120,.5));}
+    .aa-qfab__lbl{font-size:11.5px;font-weight:700;letter-spacing:.9px;text-transform:uppercase;line-height:1;color:#E8C97A;white-space:nowrap;}
   }
 </style>
 <script>
-  /* FAB launcher: opens the quiz on EVERY tap (lazy-loads the quiz JS on the first
-     tap). Shrink-fades into the popup; returns when the quiz closes. Bound once. */
+  /* Capsule launcher: tap -> quiz flow opens directly (no intro sheet). Lazy-loads
+     the quiz JS on the first tap. Hidden while the quiz is open. Bound once. */
   (function(){
     if(window.__aaOrbBound)return; window.__aaOrbBound=1;
     var SRC="{{ 'aa-quiz-v7.js' | asset_url }}", loading=false;
@@ -53,7 +44,7 @@
         if(!q||q.hidden||!q.classList.contains('is-open')){ if(f)f.classList.remove('is-hiding'); clearInterval(iv); }
       },400);
     }
-    function openIt(){ hideWhileOpen(); window.AA_openQuiz(); }
+    function openIt(){ hideWhileOpen(); window.AA_openQuiz(true); }
     document.addEventListener('click',function(e){
       var t=e.target.closest&&e.target.closest('#aa-quiz-orb'); if(!t)return;
       e.preventDefault();
