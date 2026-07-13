@@ -25,17 +25,27 @@
 </style>
 <script>
   /* Static orb launcher: opens the quiz on EVERY tap (lazy-loads the quiz JS on the
-     first tap, then calls AA_openQuiz every time). Bound once, Turbo-safe. */
+     first tap, then calls AA_openQuiz every time). Hides itself while the quiz sheet
+     is open (cheap self-clearing watcher, no :has). Bound once, Turbo-safe. */
   (function(){
     if(window.__aaOrbBound)return; window.__aaOrbBound=1;
     var SRC="{{ 'aa-quiz-v7.js' | asset_url }}", loading=false;
+    function hideWhileOpen(){
+      var orb=document.getElementById('aa-quiz-orb'); if(!orb)return;
+      orb.style.display='none';
+      var iv=setInterval(function(){
+        var q=document.getElementById('aa-quiz'), o=document.getElementById('aa-quiz-orb');
+        if(!q||q.hidden||!q.classList.contains('is-open')){ if(o)o.style.display=''; clearInterval(iv); }
+      },400);
+    }
+    function openIt(){ window.AA_openQuiz(); hideWhileOpen(); }
     document.addEventListener('click',function(e){
       var t=e.target.closest&&e.target.closest('#aa-quiz-orb'); if(!t)return;
       e.preventDefault();
-      if(typeof window.AA_openQuiz==='function'){window.AA_openQuiz();return;}
+      if(typeof window.AA_openQuiz==='function'){openIt();return;}
       if(loading)return; loading=true;
       var s=document.createElement('script'); s.src=SRC;
-      s.onload=function(){ if(typeof window.AA_openQuiz==='function') window.AA_openQuiz(); };
+      s.onload=function(){ if(typeof window.AA_openQuiz==='function') openIt(); };
       document.head.appendChild(s);
     },true);
   })();
