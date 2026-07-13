@@ -478,13 +478,13 @@
   /* ---- structured astrology sections (parity with the app result UI) ---- */
   function specRow(label, value) {
     if (!value) return '';
-    return '<div style="display:flex;gap:12px;margin-top:7px;align-items:flex-start">' +
-      '<span style="flex:0 0 92px;font-weight:700;font-size:9.5px;letter-spacing:.6px;text-transform:uppercase;opacity:.5">' + esc(label) + '</span>' +
-      '<span style="flex:1;font-size:13px;line-height:1.45">' + esc(value) + '</span></div>';
+    return '<div style="display:flex;gap:12px;margin-top:8px;align-items:flex-start">' +
+      '<span style="flex:0 0 92px;padding-top:2px;font-weight:700;font-size:9.5px;line-height:1.5;letter-spacing:.6px;text-transform:uppercase;opacity:.5">' + esc(label) + '</span>' +
+      '<span style="flex:1;font-size:13px;line-height:1.5">' + esc(value) + '</span></div>';
   }
   function textCard(kicker, body) {
     if (!body) return '';
-    return '<div style="margin-top:12px;padding:13px 15px;border:1px solid rgba(128,128,128,.22);border-radius:14px;background:rgba(128,128,128,.06)">' +
+    return '<div style="margin-top:12px;padding:15px 16px;border:1px solid rgba(128,128,128,.22);border-radius:16px;background:rgba(128,128,128,.06)">' +
       '<div style="font-weight:800;font-size:10px;letter-spacing:1.3px;text-transform:uppercase;opacity:.55;margin-bottom:6px">' + esc(kicker) + '</div>' +
       '<div style="font-size:13.5px;line-height:1.55">' + esc(body) + '</div></div>';
   }
@@ -532,12 +532,13 @@
       '<h2 class="aa-quiz__banner-title">' + esc(title) + '</h2>' +
       '<div class="aa-quiz__banner-sub">' + sub + '</div></div>';
 
+    // HERO FIRST: the main-remedy product card leads the result, then the reading.
+    if (data.hero) h += heroCard(data.hero);
+
     // Structured astrology sections (parity with the app result UI); fall back to
     // the plain intro reading only when the engine sections aren't present.
     if (data.sections) h += sectionsHtml(data.sections);
     else if (data.intro) h += '<div class="aa-quiz__reading">' + mdToHtml(data.intro) + '</div>';
-
-    if (data.hero) h += heroCard(data.hero);
 
     if (data.more && data.more.length) {
       h += '<div class="aa-quiz__rec-head">More remedies for you</div><div class="aa-qc-grid">';
