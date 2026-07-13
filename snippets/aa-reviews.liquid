@@ -275,21 +275,8 @@
           <input type="hidden" name="rating" value="0">
           <button type="button" class="aa-rv-next" data-next disabled>Continue</button>
         </div>
+        {%- comment -%} photo step disabled for now (moderation pipeline pending) {%- endcomment -%}
         <div class="aa-rv-step" data-step="2" hidden>
-          <h3 class="aa-rv-step__h">Add a photo</h3>
-          <p class="aa-rv-step__sub">Optional. Photos help other shoppers trust the review.</p>
-          <label class="aa-rv-upload">
-            <input type="file" accept="image/*" name="photo" hidden>
-            <span class="aa-rv-upload__ico" aria-hidden="true">&#128247;</span>
-            <span class="aa-rv-upload__txt">Tap to upload a photo</span>
-          </label>
-          <div class="aa-rv-preview" hidden><img alt="Selected photo preview"></div>
-          <div class="aa-rv-step__nav">
-            <button type="button" class="aa-rv-back" data-back>Back</button>
-            <button type="button" class="aa-rv-next" data-next>Continue</button>
-          </div>
-        </div>
-        <div class="aa-rv-step" data-step="3" hidden>
           <h3 class="aa-rv-step__h">Tell us more</h3>
           <p class="aa-rv-step__sub">A short headline and a few words about your experience.</p>
           <div class="aa-rv-field"><label for="aa-rvm-title">Headline</label><input type="text" id="aa-rvm-title" name="title" placeholder="Sum it up in a few words"></div>
@@ -301,7 +288,7 @@
             <button type="submit" class="aa-rv-submit">Submit review</button>
           </div>
         </div>
-        <div class="aa-rv-step aa-rv-step--done" data-step="4" hidden>
+        <div class="aa-rv-step aa-rv-step--done" data-step="3" hidden>
           <h3 class="aa-rv-step__h">Thank you!</h3>
           <p class="aa-rv-step__sub">Your review has been published.</p>
           <button type="button" class="aa-rv-next" data-rv-close>Done</button>
@@ -365,9 +352,9 @@
           var pid=(root.getAttribute('data-product-id')||'').trim();
           var H={apikey:C.anonKey,Authorization:'Bearer '+C.anonKey};
           var f=(pid&&pid!=='0')?('&product_id=eq.'+encodeURIComponent(pid)):'&limit=12';
-          // SINGLE source of truth: customer_reviews. Rows inserted directly in the
-          // DB show here too. Photos render only once status='approved' (moderation).
-          fetch(C.supabaseUrl+'/rest/v1/customer_reviews?order=created_at.desc'+f,{headers:H})
+          // Source of truth: the product_reviews VIEW over shopify_orders
+          // (stage=purchased AND rating set). Rows written in the DB show here too.
+          fetch(C.supabaseUrl+'/rest/v1/product_reviews?order=created_at.desc'+f,{headers:H})
             .then(function(r){return r.ok?r.json():[];})
             .then(function(rows){ if(Array.isArray(rows)&&rows.length)mergeLive(rows); })
             .catch(function(){});
@@ -378,7 +365,7 @@
         var prog=modal.querySelector('[data-rv-progress]');
         var ratingInput=modal.querySelector('input[name="rating"]');
         var stars=modal.querySelectorAll('.aa-rv-mstar');
-        var cur=1, TOTAL=3;
+        var cur=1, TOTAL=2;  // photo step disabled: rating -> details -> done
         function show(n){ cur=n; steps.forEach(function(s){ s.hidden=(+s.dataset.step!==n); }); if(prog)prog.textContent=(n<=TOTAL?('Step '+n+' of '+TOTAL):''); }
         function paint(v){ [].forEach.call(stars,function(s){ s.classList.toggle('is-on', +s.dataset.val<=v); }); }
         function reset(){ if(ratingInput)ratingInput.value='0'; paint(0); var pv=modal.querySelector('.aa-rv-preview'); if(pv)pv.hidden=true; var nb=modal.querySelector('.aa-rv-step[data-step="1"] .aa-rv-next'); if(nb)nb.disabled=true; var f=modal.querySelector('.aa-rv-mform'); if(f)f.reset(); var sb=modal.querySelector('.aa-rv-submit'); if(sb)sb.disabled=true; }
@@ -403,8 +390,6 @@
         var ms=modal.querySelector('.aa-rv-mstars'); if(ms)ms.addEventListener('mouseleave',function(){paint(ratingInput?+ratingInput.value:0);});
         [].forEach.call(modal.querySelectorAll('[data-next]'),function(b){ b.addEventListener('click',function(){ if(b.disabled)return; show(Math.min(cur+1,TOTAL)); }); });
         [].forEach.call(modal.querySelectorAll('[data-back]'),function(b){ b.addEventListener('click',function(){ show(Math.max(cur-1,1)); }); });
-        var file=modal.querySelector('input[name="photo"]');
-        if(file)file.addEventListener('change',function(){ var f=file.files&&file.files[0], pv=modal.querySelector('.aa-rv-preview'); if(f&&pv){ pv.querySelector('img').src=URL.createObjectURL(f); pv.hidden=false; } });
         var form=modal.querySelector('.aa-rv-mform');
         var submitBtn=modal.querySelector('.aa-rv-submit');
         var reqF=['title','name'].map(function(n){return modal.querySelector('[name="'+n+'"]');});
@@ -416,7 +401,7 @@
         var errEl=null;
         function showErr(msg){
           if(!errEl){ errEl=document.createElement('p'); errEl.className='aa-rv-form-msg';
-            var nav=modal.querySelector('.aa-rv-step[data-step="3"] .aa-rv-step__nav');
+            var nav=modal.querySelector('.aa-rv-step[data-step="2"] .aa-rv-step__nav');
             if(nav&&nav.parentNode)nav.parentNode.insertBefore(errEl,nav); }
           errEl.textContent=msg;
         }
@@ -446,34 +431,30 @@
             function succeed(){
               if(submitBtn){submitBtn.disabled=false;submitBtn.textContent='Submit review';}
               if(errEl)errEl.textContent='';
-              // optimistic card (photo appears after moderation approval, not here)
               try{ mergeLive([{author:name,rating:rating,review:text,created_at:new Date().toISOString()}]); }catch(e4){}
-              show(4); if(prog)prog.textContent='';
+              show(3); if(prog)prog.textContent='';
             }
-            // optional photo -> Supabase Storage (review-photos bucket); moderated via status
-            var photoFile=(modal.querySelector('input[name="photo"]')||{}).files;
-            photoFile=photoFile&&photoFile[0]?photoFile[0]:null;
-            var photoP=Promise.resolve(null);
-            if(photoFile&&photoFile.size<=8*1024*1024){
-              var ext=((photoFile.name||'').split('.').pop()||'jpg').toLowerCase().replace(/[^a-z0-9]/g,'')||'jpg';
-              var path=Date.now()+'-'+Math.random().toString(36).slice(2)+'.'+ext;
-              photoP=fetch(C.supabaseUrl+'/storage/v1/object/review-photos/'+path,{method:'POST',
-                headers:{apikey:C.anonKey,Authorization:'Bearer '+sess.access_token,'Content-Type':photoFile.type||'image/jpeg'},
-                body:photoFile
-              }).then(function(r){ return r.ok?(C.supabaseUrl+'/storage/v1/object/public/review-photos/'+path):null; })
-                .catch(function(){ return null; });
-            }
-            photoP.then(function(photoUrl){
-              var payload={product_id:pid,author:name,rating:rating,review:text};
-              if(photoUrl)payload.photo_url=photoUrl;
-              return fetch(C.supabaseUrl+'/rest/v1/customer_reviews',{method:'POST',
-                headers:Object.assign({Prefer:'return=minimal'},AH),
-                body:JSON.stringify(payload)
-              });
-            }).then(function(r){
-              if(r.ok){ succeed(); }
-              else { fail('Could not submit your review (save '+r.status+'). Please try again.'); }
-            }).catch(function(){ fail('Network error. Please try again.'); });
+            // The product_reviews VIEW attributes a review to items[0] of the order,
+            // so PATCH the buyer's own purchased order whose FIRST item is this
+            // product (falling back to any order containing it).
+            function firstItemPid(o){ try{ return String((o.items&&o.items[0]&&o.items[0].product_id)||''); }catch(e5){ return ''; } }
+            function containsPid(o){ try{ return JSON.stringify(o.items||'').indexOf(pid)>-1; }catch(e6){ return false; } }
+            fetch(C.supabaseUrl+'/rest/v1/shopify_orders?select=id,items,rating,review&stage=eq.purchased&order=created_at.desc&limit=100',{headers:AH})
+              .then(function(r){ if(!r.ok)return Promise.reject('orders '+r.status); return r.json(); })
+              .then(function(rows){
+                rows=rows||[];
+                var target=null,i;
+                for(i=0;i<rows.length;i++){ if(firstItemPid(rows[i])===pid && !rows[i].rating){ target=rows[i]; break; } }
+                if(!target)for(i=0;i<rows.length;i++){ if(firstItemPid(rows[i])===pid){ target=rows[i]; break; } }
+                if(!target)for(i=0;i<rows.length;i++){ if(containsPid(rows[i]) && !rows[i].rating){ target=rows[i]; break; } }
+                if(!target)for(i=0;i<rows.length;i++){ if(containsPid(rows[i])){ target=rows[i]; break; } }
+                if(!target){ fail('Reviews are for verified buyers. We could not find this product in your purchases.'); return; }
+                return fetch(C.supabaseUrl+'/rest/v1/shopify_orders?id=eq.'+encodeURIComponent(target.id),{
+                  method:'PATCH',headers:Object.assign({Prefer:'return=minimal'},AH),
+                  body:JSON.stringify({rating:rating,review:text})
+                }).then(function(r2){ if(!r2.ok)return Promise.reject('update '+r2.status); succeed(); });
+              })
+              .catch(function(step){ fail('Could not submit your review ('+step+'). Please try again.'); });
           });
         });
         document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&!modal.hidden)closeM(); });
