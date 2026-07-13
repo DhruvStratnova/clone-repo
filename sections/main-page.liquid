@@ -11,6 +11,15 @@
       linear-gradient(180deg, rgba(40, 18, 10, 0.32), rgba(40, 18, 10, 0.50)),
       url('{{ 'aa-calc-bg.jpg' | asset_url }}');
   }
+  @media (max-width: 749px) {
+    /* portrait variant: the devotee sits at the BOTTOM, top stays clean for the form */
+    .calculator-section {
+      background-image:
+        linear-gradient(180deg, rgba(40, 18, 10, 0.32), rgba(40, 18, 10, 0.50)),
+        url('{{ 'aa-calc-bg-m.jpg' | asset_url }}');
+      background-position: bottom center;
+    }
+  }
 {%- endstyle -%}
 
 {%- style -%}
