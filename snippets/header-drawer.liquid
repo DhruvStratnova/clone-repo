@@ -840,6 +840,7 @@
     document.querySelectorAll('cart-drawer.active, .drawer.active').forEach(function (el) {
       el.classList.remove('active');
     });
+    syncPark(); // re-park the closed panel (function is hoisted from below)
   }
   // Backdrop click closes the drawer
   document.addEventListener('click', function (e) {
@@ -918,8 +919,11 @@
     if (getOpenDrawer()) { unparkDrawer(); }
     else { parkT = setTimeout(parkDrawer, 700); }  // after the 420-620ms close veil
   }
-  // 'toggle' does not bubble; a capturing document listener still receives it.
+  // 'toggle' does not reliably delegate to document; nudge on every gesture
+  // instead (open sets [open] sync; close may drop it after ~300ms).
   document.addEventListener('toggle', syncPark, true);
+  document.addEventListener('click', function () { setTimeout(syncPark, 60); setTimeout(syncPark, 900); }, true);
+  document.addEventListener('keydown', function () { setTimeout(syncPark, 60); setTimeout(syncPark, 900); });
   document.addEventListener('turbo:load', syncPark);
   document.addEventListener('turbo:render', syncPark);
   parkDrawer();  // initial page load: drawer is closed -> park it immediately
