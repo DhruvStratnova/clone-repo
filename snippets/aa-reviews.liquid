@@ -86,6 +86,9 @@
     #aa-reviews .aa-rv-title{font-weight:700;font-size:1.22em;color:var(--rv-ink);margin:8px 0 4px;letter-spacing:-.2px;}
     #aa-reviews .aa-rv-body{color:var(--rv-text);font-size:1.02em;line-height:1.72;margin:0;}
     #aa-reviews .aa-rv-empty{background:transparent;border:1.5px solid rgba(31,8,32,.12);border-radius:16px;padding:28px 20px;text-align:center;color:var(--rv-muted);font-size:.95em;}
+    #aa-reviews .aa-rv-showall{display:block;margin:20px auto 0;appearance:none;background:transparent;border:1.5px solid rgba(31,8,32,.22);border-radius:999px;color:var(--rv-ink);font:inherit;font-size:.9em;font-weight:600;padding:11px 26px;cursor:pointer;transition:border-color .2s ease,background .2s ease;}
+    #aa-reviews .aa-rv-showall:hover{border-color:rgba(31,8,32,.4);background:var(--rv-active);}
+    html[data-theme="dark"] #aa-reviews .aa-rv-showall{border-color:rgba(255,255,255,.25);}
     @media (min-width:750px){#aa-reviews{padding:16px clamp(24px,3.6vw,56px) 48px;}#aa-reviews .aa-rv-heading{font-size:1.9em;}#aa-reviews .aa-rv-summary{flex-direction:row;align-items:center;gap:48px;padding:34px 40px;}#aa-reviews .aa-rv-avg-block{flex:0 0 auto;min-width:190px;padding-right:48px;border-right:1px solid var(--rv-border);}#aa-reviews .aa-rv-bars{flex:1 1 auto;}}
     @media (max-width:600px){
       #aa-reviews{padding:8px 16px 34px;}
@@ -222,6 +225,25 @@
           var ctl=root.querySelector('[data-rv-controls]');
           if(ctl&&lst.querySelectorAll('.aa-rv-card').length>1)ctl.hidden=false;
         }
+        // Curate: surface the 6 best reviews (highest rating, longest text first),
+        // hide the rest behind a "Show all" button.
+        (function(){
+          var lst=root.querySelector('.aa-rv-list'); if(!lst)return;
+          var cards=[].slice.call(lst.querySelectorAll('.aa-rv-card'));
+          if(cards.length<=6)return;
+          cards.slice().sort(function(a,b){
+            var d=(parseInt(b.dataset.rating,10)||0)-(parseInt(a.dataset.rating,10)||0); if(d)return d;
+            var bt=(b.querySelector('.aa-rv-body')||{textContent:''}).textContent.length;
+            var at=(a.querySelector('.aa-rv-body')||{textContent:''}).textContent.length;
+            return bt-at;
+          }).forEach(function(c){ lst.appendChild(c); });
+          var all=[].slice.call(lst.querySelectorAll('.aa-rv-card'));
+          all.forEach(function(c,i){ if(i>=6)c.hidden=true; });
+          var btn=document.createElement('button'); btn.type='button'; btn.className='aa-rv-showall';
+          btn.textContent='Show all reviews ('+all.length+')';
+          btn.addEventListener('click',function(){ all.forEach(function(c){c.hidden=false;}); btn.remove(); });
+          lst.parentNode.insertBefore(btn,lst.nextSibling);
+        })();
         // READ-ONLY feed: rows written in the DB (shopify_orders.rating/review via
         // the product_reviews view). Text: Name U+2063 ProductID U+2063 Title\nBody.
         (function(){
