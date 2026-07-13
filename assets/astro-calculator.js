@@ -274,7 +274,7 @@ function aaCalcInit() {
     origSwitchTab(tabName);
     setTimeout(function () { addSuggestionDropdown(); setupMobileDateTimePlaceholders(); }, 0);
   };
-  switchTab('by-gemstone');
+  switchTab('by-rudraksha');
 
   // -----------------------------------------------------------------
   // Helpers
