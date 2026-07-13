@@ -32,10 +32,36 @@
 </style>
 <script>
   /* Capsule launcher: tap -> quiz flow opens directly (no intro sheet). Lazy-loads
-     the quiz JS on the first tap. Hidden while the quiz is open. Bound once. */
+     the quiz JS on the first tap. Hidden while the quiz is open. Bound once.
+     VISUAL-VIEWPORT GLUE: iOS can inflate the layout viewport (any stray overflow)
+     which makes fixed elements drift; we pin the pill to the PHYSICAL screen corner
+     from visualViewport on every scroll/resize/zoom frame - it cannot move. */
   (function(){
     if(window.__aaOrbBound)return; window.__aaOrbBound=1;
     var SRC="{{ 'aa-quiz-v7.js' | asset_url }}", loading=false;
+    function glue(){
+      var vv=window.visualViewport; if(!vv||window.__aaFabGlued)return;
+      window.__aaFabGlued=1;
+      var raf=0;
+      function place(){
+        raf=0;
+        var fab=document.getElementById('aa-quiz-orb'); if(!fab)return;
+        var x=vv.offsetLeft+vv.width-fab.offsetWidth-14;
+        var y=vv.offsetTop+vv.height-fab.offsetHeight-20;
+        fab.style.setProperty('left',x+'px','important');
+        fab.style.setProperty('top',y+'px','important');
+        fab.style.setProperty('right','auto','important');
+        fab.style.setProperty('bottom','auto','important');
+      }
+      function queue(){ if(!raf) raf=requestAnimationFrame(place); }
+      vv.addEventListener('resize',queue);
+      vv.addEventListener('scroll',queue);
+      window.addEventListener('scroll',queue,{passive:true});
+      window.addEventListener('orientationchange',queue);
+      place();
+    }
+    if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded',glue); } else { glue(); }
+    document.addEventListener('turbo:load',glue);
     function hideWhileOpen(){
       var fab=document.getElementById('aa-quiz-orb'); if(!fab)return;
       fab.classList.add('is-hiding');
