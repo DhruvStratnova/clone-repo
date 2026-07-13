@@ -903,6 +903,10 @@
   function parkDrawer() {
     var md = drawerPanel();
     if (!md || getOpenDrawer()) return;
+    // display:none is the only state nothing can resurrect (a transition
+    // retarget quirk was overriding even inline-important visibility/transform
+    // after an open/close cycle). Runs 700ms after close, past the veil anim.
+    md.style.setProperty('display', 'none', 'important');
     md.style.setProperty('visibility', 'hidden', 'important');
     md.style.setProperty('transform', 'translateX(-110vw)', 'important');
     md.style.setProperty('-webkit-transform', 'translateX(-110vw)', 'important');
@@ -910,6 +914,7 @@
   function unparkDrawer() {
     var md = drawerPanel();
     if (!md) return;
+    md.style.removeProperty('display');
     md.style.removeProperty('visibility');
     md.style.removeProperty('transform');
     md.style.removeProperty('-webkit-transform');
