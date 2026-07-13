@@ -485,6 +485,10 @@
       '<h2 class="aa-quiz__banner-title">' + esc(title) + '</h2>' +
       '<div class="aa-quiz__banner-sub">' + sub + '</div></div>';
 
+    // The personalised astrology reading (ascendant, afflicted house, dasha, why
+    // this planet) — the engine puts it in `intro`; render it before the products.
+    if (data.intro) h += '<div class="aa-quiz__reading">' + mdToHtml(data.intro) + '</div>';
+
     if (data.hero) h += heroCard(data.hero);
 
     if (data.more && data.more.length) {
