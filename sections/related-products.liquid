@@ -1,3 +1,7 @@
+{%- comment -%} Customer reviews (Supabase-backed) render here so they sit BELOW the
+    certification section and ABOVE Customers Also Bought on every product template. {%- endcomment -%}
+{%- render 'aa-reviews', product: product -%}
+
 {{ 'component-card.css' | asset_url | stylesheet_tag }}
 {{ 'component-price.css' | asset_url | stylesheet_tag }}
 {{ 'section-related-products.css' | asset_url | stylesheet_tag }}
