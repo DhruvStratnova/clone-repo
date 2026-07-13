@@ -208,7 +208,13 @@
             var ga = readCookie('_ga');
             if (ga) { var gp = ga.split('.'); if (gp.length >= 4) attrs._ga_client_id = gp.slice(-2).join('.'); }
             var gs = readCookie('_ga_1JZ0C69544');
-            if (gs) { var qp = gs.split('.'); if (qp.length >= 3) attrs._ga_session_id = qp[2]; }
+            if (gs) {
+              // session id: "s<digits>" in the new GS2 cookie
+              // (GS2.1.s<sid>$o1$...), else the 3rd dot-segment in legacy GS1.
+              var sm = gs.match(/s(\d{6,})/);
+              var sid = sm ? sm[1] : (gs.split('.')[2] || '');
+              if (/^\d+$/.test(sid)) attrs._ga_session_id = sid;
+            }
             var gcl = readCookie('_gcl_aw');
             if (gcl) { var cp = gcl.split('.'); if (cp.length >= 3) attrs._gclid = cp.slice(2).join('.'); }
             if (!Object.keys(attrs).length) return;
