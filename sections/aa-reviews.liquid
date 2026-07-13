@@ -1,0 +1,9 @@
+{%- comment -%}
+  Customer reviews section wrapper. Renders snippets/aa-reviews.liquid as a
+  placeable section so it can sit in the product template order (at the bottom,
+  above the FAQ / collapsible-content section). Replaces the Judge.me widget.
+{%- endcomment -%}
+{% render 'aa-reviews', product: product %}
+{% schema %}
+{"name":"Customer Reviews","tag":"section","class":"aa-reviews-section","settings":[]}
+{% endschema %}
