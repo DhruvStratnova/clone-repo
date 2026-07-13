@@ -431,7 +431,7 @@
       + '<h3 class="aa-au-dsec">Item</h3>' + itemRow
       + '<h3 class="aa-au-dsec">Payment</h3><div class="aa-au-dkv">' + esc(paymentLabel(raw)) + '</div>'
       + delivery + track
-      + reviewBlockHTML(o)
+      /* review form removed: reviews are read-only on the storefront */
       + '</div></div>';
 
     return '<div class="aa-au-ocard">' + summary + drop + '</div>';
