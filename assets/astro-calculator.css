@@ -682,10 +682,17 @@
   .aa-rem-card--hero { grid-template-columns: 1fr; }
 }
 .aa-rem-card__media {
+  position: relative;   /* anchors the tag badge over the image (homepage-card format) */
   width: 100%;
   aspect-ratio: 1 / 1;
   background: #FFF;
   overflow: hidden;
+}
+.aa-rem-card__media .aa-rem-card__tag {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 2;
 }
 .aa-rem-card__media img {
   width: 100%; height: 100%;

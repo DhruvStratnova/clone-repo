@@ -362,11 +362,12 @@ function aaCalcInit() {
     var howSolves = p.how_it_solves ? '<div class="aa-rem-card__how"><strong>How it helps:</strong> ' + escapeHtml(p.how_it_solves) + '</div>' : '';
     var reason = p.reason ? '<div class="aa-rem-card__reason">' + escapeHtml(p.reason) + '</div>' : '';
     var shopBtn = p.shop_url ? '<a href="' + escapeHtml(p.shop_url) + '" class="aa-rem-card__cta">View product →</a>' : '';
-    var img = p.image_url ? '<div class="aa-rem-card__media"><img src="' + escapeHtml(p.image_url) + '" alt="' + escapeHtml(p.name || '') + '" loading="lazy"></div>' : '';
+    // tag rides ON the image (homepage-card format); body keeps it only when no image
+    var img = p.image_url ? '<div class="aa-rem-card__media"><img src="' + escapeHtml(p.image_url) + '" alt="' + escapeHtml(p.name || '') + '" loading="lazy">' + tag + '</div>' : '';
     return '<div class="aa-rem-card' + (isHero ? ' aa-rem-card--hero' : '') + '">' +
       img +
       '<div class="aa-rem-card__body">' +
-        tag +
+        (p.image_url ? '' : tag) +
         '<div class="aa-rem-card__cat">' + escapeHtml(p.category || '') + '</div>' +
         '<h3 class="aa-rem-card__name">' + escapeHtml(p.name || '') + '</h3>' +
         price +
@@ -425,6 +426,28 @@ function aaCalcInit() {
       ], '');
     }
     return h;
+  }
+
+  /* Rudraksha tab ROOT FIX: the engine always returns the gemstone as `hero`
+     (the tab only frames copy), so the Rudraksha toggle showed a gemstone
+     result. Promote the matching mukhi product from `more` to hero instead. */
+  function reorderForTab(data, tab) {
+    if (tab !== 'by-rudraksha' || !data || !data.more || !data.more.length) return data;
+    var mk = (data.sections && data.sections.rudraksha && data.sections.rudraksha.mukhi)
+      ? String(data.sections.rudraksha.mukhi).match(/\d+/) : null;
+    var idx = -1, fallback = -1;
+    for (var i = 0; i < data.more.length; i++) {
+      var p = data.more[i], nm = (p.name || '') + ' ' + (p.category || '');
+      if (!/rudraksha|mukhi/i.test(nm)) continue;
+      if (fallback < 0) fallback = i;
+      if (mk && new RegExp('\\b' + mk[0] + '[ _-]*mukhi', 'i').test(nm)) { idx = i; break; }
+    }
+    if (idx < 0) idx = fallback;
+    if (idx < 0) return data;
+    var rud = data.more.splice(idx, 1)[0];
+    if (data.hero) data.more.unshift(data.hero);
+    data.hero = rud;
+    return data;
   }
 
   function renderRemedies(data) {
@@ -546,7 +569,7 @@ function aaCalcInit() {
           astroOutputDiv.innerHTML = '<p class="aa-rem-error">No recommendation available for this profile. Please try again with valid birth details.</p>';
           return;
         }
-        renderRemedies(json);
+        renderRemedies(reorderForTab(json, currentTab));
       })
       .catch(function (err) {
         console.error('[astro-calc] error', err);
