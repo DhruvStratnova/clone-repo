@@ -775,7 +775,9 @@
                     document.addEventListener('click', function (e) {
                       var link = e.target.closest('[data-aa-reviews-link]');
                       if (!link) return;
-                      var t = document.querySelector('#aa-reviews, #judgeme_product_reviews, .jdgm-rev-widg, #shopify-product-reviews, .spr-container, .aa-rev, [id*="reviews"], [class*="testimonial"]');
+                      /* grouped querySelector returns the FIRST match in DOCUMENT order,
+                         which let earlier ids containing "reviews" win - target ours by id */
+                      var t = document.getElementById('aa-reviews') || document.querySelector('#judgeme_product_reviews, .jdgm-rev-widg, #shopify-product-reviews, .spr-container, .aa-rev, [id*="reviews"], [class*="testimonial"]');
                       if (!t) return;
                       e.preventDefault();
                       var y = t.getBoundingClientRect().top + window.pageYOffset - 80;

@@ -1,49 +1,11 @@
 {%- comment -%}
-  aa-reviews.liquid - READ-ONLY customer reviews (replaces Judge.me).
-  Customers can NOT write reviews. The ONLY source is rows written directly in
-  the DB: shopify_orders(rating, review) exposed through the product_reviews
-  view. The review text may carry "Name U+2063 ProductID U+2063 Title\nBody"
-  (invisible separators) - name is shown on the card and ProductID pins the
-  review to the intended product page (the view itself only knows items[0]).
-  Server-side metafield reviews (product.metafields.custom.reviews) still render
-  if ever populated.
+  aa-reviews.liquid - READ-ONLY customer reviews.
+  The ONLY source is rows written directly in the DB: shopify_orders(rating,
+  review) exposed through the product_reviews view. The review text may carry
+  "Name U+2063 ProductID U+2063 Title\nBody" (invisible separators) - the name
+  shows on the card and ProductID pins the review to the intended product page.
+  No metafield reviews, no customer write path.
 {%- endcomment -%}
-
-{%- assign aa_reviews = product.metafields.custom.reviews.value -%}
-{%- assign aa_count = 0 -%}
-{%- if aa_reviews -%}
-  {%- assign aa_count = aa_reviews.size -%}
-{%- endif -%}
-
-{%- assign aa_sum = 0 -%}
-{%- assign aa_c5 = 0 -%}{%- assign aa_c4 = 0 -%}{%- assign aa_c3 = 0 -%}{%- assign aa_c2 = 0 -%}{%- assign aa_c1 = 0 -%}
-{%- if aa_count > 0 -%}
-  {%- for r in aa_reviews -%}
-    {%- assign aa_sum = aa_sum | plus: r.rating -%}
-    {%- case r.rating -%}
-      {%- when 5 -%}{%- assign aa_c5 = aa_c5 | plus: 1 -%}
-      {%- when 4 -%}{%- assign aa_c4 = aa_c4 | plus: 1 -%}
-      {%- when 3 -%}{%- assign aa_c3 = aa_c3 | plus: 1 -%}
-      {%- when 2 -%}{%- assign aa_c2 = aa_c2 | plus: 1 -%}
-      {%- when 1 -%}{%- assign aa_c1 = aa_c1 | plus: 1 -%}
-    {%- endcase -%}
-  {%- endfor -%}
-{%- endif -%}
-
-{%- assign aa_avg = 0 -%}{%- assign aa_avg_pct = 0 -%}
-{%- if aa_count > 0 -%}
-  {%- assign aa_avg = aa_sum | times: 1.0 | divided_by: aa_count | round: 1 -%}
-  {%- assign aa_avg_pct = aa_avg | times: 20 -%}
-{%- endif -%}
-
-{%- assign aa_p5 = 0 -%}{%- assign aa_p4 = 0 -%}{%- assign aa_p3 = 0 -%}{%- assign aa_p2 = 0 -%}{%- assign aa_p1 = 0 -%}
-{%- if aa_count > 0 -%}
-  {%- assign aa_p5 = aa_c5 | times: 100 | divided_by: aa_count -%}
-  {%- assign aa_p4 = aa_c4 | times: 100 | divided_by: aa_count -%}
-  {%- assign aa_p3 = aa_c3 | times: 100 | divided_by: aa_count -%}
-  {%- assign aa_p2 = aa_c2 | times: 100 | divided_by: aa_count -%}
-  {%- assign aa_p1 = aa_c1 | times: 100 | divided_by: aa_count -%}
-{%- endif -%}
 
 {%- capture aa_star_svg -%}<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27l6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>{%- endcapture -%}
 {%- capture aa_stars5 -%}{{ aa_star_svg }}{{ aa_star_svg }}{{ aa_star_svg }}{{ aa_star_svg }}{{ aa_star_svg }}{%- endcapture -%}
@@ -54,7 +16,9 @@
     html[data-theme="dark"] #aa-reviews{--rv-surface:#160E2E;--rv-border:rgba(255,255,255,.08);--rv-ink:#F4EFFA;--rv-text:#C9BEDD;--rv-muted:#A99FC4;--rv-gold:#E8C97A;--rv-empty:rgba(255,255,255,.18);--rv-track:rgba(255,255,255,.10);--rv-active:rgba(255,255,255,.07);--rv-avatarbg:rgba(255,255,255,.08);}
     html[data-theme="dark"] #aa-reviews .aa-rv-summary,html[data-theme="dark"] #aa-reviews .aa-rv-empty,html[data-theme="dark"] #aa-reviews .aa-rv-card{border-color:rgba(255,255,255,.14);box-shadow:0 10px 28px rgba(0,0,0,.35);}
     #aa-reviews *,#aa-reviews *::before,#aa-reviews *::after{box-sizing:border-box;}
-    #aa-reviews .aa-rv-heading{font-family:'Sora','Marcellus',Georgia,serif;color:var(--rv-ink);font-size:1.6em;font-weight:700;margin:0 0 22px;letter-spacing:.2px;text-align:center;}
+    /* Judge.me is fully replaced - keep any app-embed remnants hidden */
+    .jdgm-widget,.jdgm-rev-widg,#judgeme_product_reviews,.jdgm-carousel-wrapper,[data-jdgm-widget]{display:none !important;}
+    #aa-reviews .aa-rv-heading{font-family:'Sora','Marcellus',Georgia,serif;color:var(--rv-ink);font-size:1.6em;font-weight:700;margin:0 0 6px;letter-spacing:.2px;text-align:center;flex-basis:100%;}
     /* SVG stars (brand webfonts lack the ★ glyph); fg row width-clips over bg */
     #aa-reviews .aa-rv-stars{position:relative;display:inline-block;line-height:0;white-space:nowrap;vertical-align:middle;font-size:0;}
     #aa-reviews .aa-rv-stars svg{display:inline-block;width:1em;height:1em;font-size:19px;vertical-align:top;margin-right:3px;}
@@ -63,11 +27,9 @@
     #aa-reviews .aa-rv-stars--lg svg{font-size:26px;}
     #aa-reviews .aa-rv-card-top .aa-rv-stars svg{font-size:21px;}
     #aa-reviews .aa-rv-bar-label svg{width:12px;height:12px;vertical-align:-1px;color:var(--rv-gold);}
-    #aa-reviews .aa-rv-summary{display:flex;flex-direction:column;gap:26px;background:transparent;border:1.5px solid rgba(31,8,32,.14);border-radius:18px;padding:30px 30px;box-shadow:0 12px 34px rgba(31,8,32,.08);}
+    #aa-reviews .aa-rv-summary{display:flex;flex-wrap:wrap;flex-direction:column;gap:26px;background:transparent;border:1.5px solid rgba(31,8,32,.14);border-radius:18px;padding:26px 30px 30px;box-shadow:0 12px 34px rgba(31,8,32,.08);}
     #aa-reviews .aa-rv-avg-block{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;}
     #aa-reviews .aa-rv-avg-num{font-family:'Sora','Marcellus',Georgia,serif;font-size:3.9em;font-weight:700;line-height:1;color:var(--rv-ink);}
-    #aa-reviews .aa-rv-avg-meta{display:flex;flex-direction:column;gap:6px;}
-    #aa-reviews .aa-rv-avg-meta .aa-rv-stars{font-size:1.35em;}
     #aa-reviews .aa-rv-count{color:var(--rv-muted);font-size:.86em;}
     #aa-reviews .aa-rv-bars{display:flex;flex-direction:column;gap:12px;width:100%;}
     #aa-reviews .aa-rv-bar-row{display:grid;grid-template-columns:44px 1fr 28px;align-items:center;gap:14px;}
@@ -92,13 +54,12 @@
     #aa-reviews .aa-rv-date{color:var(--rv-muted);font-size:.86em;letter-spacing:.3px;}
     #aa-reviews .aa-rv-title{font-weight:700;font-size:1.22em;color:var(--rv-ink);margin:8px 0 4px;letter-spacing:-.2px;}
     #aa-reviews .aa-rv-body{color:var(--rv-text);font-size:1.02em;line-height:1.72;margin:0;}
-    #aa-reviews .aa-rv-photo{display:block;width:100%;max-height:240px;object-fit:cover;border-radius:10px;margin-top:4px;}
     #aa-reviews .aa-rv-empty{background:transparent;border:1.5px solid rgba(31,8,32,.12);border-radius:16px;padding:28px 20px;text-align:center;color:var(--rv-muted);font-size:.95em;}
-    @media (min-width:750px){#aa-reviews{padding:16px clamp(24px,3.6vw,56px) 48px;}#aa-reviews .aa-rv-heading{font-size:1.9em;}#aa-reviews .aa-rv-summary{flex-direction:row;align-items:center;gap:48px;padding:34px 40px;}#aa-reviews .aa-rv-avg-block{flex:0 0 auto;min-width:190px;padding-right:48px;border-right:1px solid var(--rv-border);}#aa-reviews .aa-rv-bars{flex:1 1 auto;}}
+    @media (min-width:750px){#aa-reviews{padding:16px clamp(24px,3.6vw,56px) 48px;}#aa-reviews .aa-rv-heading{font-size:1.9em;}#aa-reviews .aa-rv-summary{flex-direction:row;align-items:center;gap:48px;padding:30px 40px 34px;}#aa-reviews .aa-rv-avg-block{flex:0 0 auto;min-width:190px;padding-right:48px;border-right:1px solid var(--rv-border);}#aa-reviews .aa-rv-bars{flex:1 1 auto;}}
     @media (max-width:600px){
       #aa-reviews{padding:8px 16px 34px;}
-      #aa-reviews .aa-rv-heading{font-size:1.6em;margin-bottom:16px;}
-      #aa-reviews .aa-rv-summary{flex-direction:column;padding:24px 20px;gap:24px;}
+      #aa-reviews .aa-rv-heading{font-size:1.5em;margin-bottom:10px;}
+      #aa-reviews .aa-rv-summary{flex-direction:column;padding:22px 20px 24px;gap:22px;}
       #aa-reviews .aa-rv-avg-block{flex-direction:row;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px 14px;padding:0;border:0;}
       #aa-reviews .aa-rv-summary .aa-rv-count{flex-basis:100%;text-align:center;}
       #aa-reviews .aa-rv-avg-num{font-size:2.9em;}
@@ -110,82 +71,43 @@
     @media (prefers-reduced-motion:reduce){#aa-reviews *{transition:none !important;}}
   </style>
 
-  <h2 class="aa-rv-heading">Customer Reviews</h2>
-
-  {%- comment -%} summary always renders (full UI even before the first review) {%- endcomment -%}
-    <div class="aa-rv-summary">
-      <div class="aa-rv-avg-block">
-        <span class="aa-rv-avg-num">{{ aa_avg }}</span>
-        <span class="aa-rv-stars aa-rv-stars--lg" role="img" aria-label="{{ aa_avg }} out of 5 stars"><span class="aa-rv-stars-bg" aria-hidden="true">{{ aa_stars5 }}</span><span class="aa-rv-stars-fg" aria-hidden="true" style="width:{{ aa_avg_pct }}%;">{{ aa_stars5 }}</span></span>
-        <span class="aa-rv-count">Based on {{ aa_count }} {% if aa_count == 1 %}review{% else %}reviews{% endif %}</span>
-      </div>
-      <div class="aa-rv-bars">
-        {%- assign aa_rows = "5,4,3,2,1" | split: "," -%}
-        {%- for lvl in aa_rows -%}
-          {%- case lvl -%}
-            {%- when "5" -%}{%- assign aa_rc = aa_c5 -%}{%- assign aa_rp = aa_p5 -%}
-            {%- when "4" -%}{%- assign aa_rc = aa_c4 -%}{%- assign aa_rp = aa_p4 -%}
-            {%- when "3" -%}{%- assign aa_rc = aa_c3 -%}{%- assign aa_rp = aa_p3 -%}
-            {%- when "2" -%}{%- assign aa_rc = aa_c2 -%}{%- assign aa_rp = aa_p2 -%}
-            {%- when "1" -%}{%- assign aa_rc = aa_c1 -%}{%- assign aa_rp = aa_p1 -%}
-          {%- endcase -%}
-          <div class="aa-rv-bar-row">
-            <span class="aa-rv-bar-label">{{ lvl }} <span class="aa-rv-star" aria-hidden="true">{{ aa_star_svg }}</span></span>
-            <span class="aa-rv-bar-track"><span class="aa-rv-bar-fill" style="width:{{ aa_rp }}%;"></span></span>
-            <span class="aa-rv-bar-count">{{ aa_rc }}</span>
-          </div>
-        {%- endfor -%}
-      </div>
+  <div class="aa-rv-summary">
+    <h2 class="aa-rv-heading">Customer Reviews</h2>
+    <div class="aa-rv-avg-block">
+      <span class="aa-rv-avg-num">0</span>
+      <span class="aa-rv-stars aa-rv-stars--lg" role="img" aria-label="0 out of 5 stars"><span class="aa-rv-stars-bg" aria-hidden="true">{{ aa_stars5 }}</span><span class="aa-rv-stars-fg" aria-hidden="true" style="width:0%;">{{ aa_stars5 }}</span></span>
+      <span class="aa-rv-count">Based on 0 reviews</span>
     </div>
-
-  <div class="aa-rv-controls">
-    {%- if aa_count > 1 -%}
-      <div class="aa-rv-sort">
-        <span class="aa-rv-sort-label" id="aa-rv-sort-label">Sort</span>
-        <div class="aa-rv-sort-group" role="group" aria-labelledby="aa-rv-sort-label">
-          <button type="button" class="aa-rv-sort-btn is-active" data-sort="recent" aria-pressed="true">Most recent</button>
-          <button type="button" class="aa-rv-sort-btn" data-sort="highest" aria-pressed="false">Highest</button>
-          <button type="button" class="aa-rv-sort-btn" data-sort="lowest" aria-pressed="false">Lowest</button>
+    <div class="aa-rv-bars">
+      {%- assign aa_rows = "5,4,3,2,1" | split: "," -%}
+      {%- for lvl in aa_rows -%}
+        <div class="aa-rv-bar-row">
+          <span class="aa-rv-bar-label">{{ lvl }} <span class="aa-rv-star" aria-hidden="true">{{ aa_star_svg }}</span></span>
+          <span class="aa-rv-bar-track"><span class="aa-rv-bar-fill" style="width:0%;"></span></span>
+          <span class="aa-rv-bar-count">0</span>
         </div>
-      </div>
-    {%- endif -%}
-  </div>
-
-  {%- if aa_count > 0 -%}
-    <div class="aa-rv-list">
-      {%- for r in aa_reviews -%}
-        {%- assign r_pct = r.rating | times: 20 -%}
-        {%- assign r_initial = r.author | default: 'A' | strip | slice: 0 | upcase -%}
-        <article class="aa-rv-card" data-rating="{{ r.rating }}" data-date="{{ r.date }}">
-          <div class="aa-rv-card-top">
-            <span class="aa-rv-stars" role="img" aria-label="{{ r.rating }} out of 5 stars"><span class="aa-rv-stars-bg" aria-hidden="true">{{ aa_stars5 }}</span><span class="aa-rv-stars-fg" aria-hidden="true" style="width:{{ r_pct }}%;">{{ aa_stars5 }}</span></span>
-            {%- if r.date -%}<span class="aa-rv-date">{{ r.date | date: "%d/%m/%Y" }}</span>{%- endif -%}
-          </div>
-          <div class="aa-rv-card-head">
-            <span class="aa-rv-avatar" aria-hidden="true">{{ r_initial }}</span>
-            <span class="aa-rv-author">{{ r.author | escape }}</span>
-            {%- if r.verified -%}<span class="aa-rv-verified" title="Verified buyer" aria-label="Verified buyer"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#2E9E5B"/><path d="M7.5 12.4l2.8 2.8 6-6.4" stroke="#fff" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/></svg></span>{%- endif -%}
-          </div>
-          {%- if r.title != blank -%}<p class="aa-rv-title">{{ r.title | escape }}</p>{%- endif -%}
-          {%- if r.body != blank -%}<p class="aa-rv-body">{{ r.body | escape | newline_to_br }}</p>{%- endif -%}
-        </article>
       {%- endfor -%}
     </div>
-  {%- else -%}
-    <div class="aa-rv-empty">No reviews yet.</div>
-  {%- endif -%}
+  </div>
 
-  {%- if aa_count > 0 -%}
-    <script type="application/ld+json">
-    {"@context":"https://schema.org/","@type":"Product","name":{{ product.title | json }},"aggregateRating":{"@type":"AggregateRating","ratingValue":"{{ aa_avg }}","reviewCount":"{{ aa_count }}","bestRating":"5","worstRating":"1"},"review":[{%- for r in aa_reviews limit: 5 -%}{"@type":"Review","author":{"@type":"Person","name":{{ r.author | json }}},"datePublished":{{ r.date | json }},"reviewRating":{"@type":"Rating","ratingValue":"{{ r.rating }}","bestRating":"5","worstRating":"1"},"name":{{ r.title | json }},"reviewBody":{{ r.body | json }}}{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}]}
-    </script>
-  {%- endif -%}
+  <div class="aa-rv-controls" data-rv-controls hidden>
+    <div class="aa-rv-sort">
+      <span class="aa-rv-sort-label" id="aa-rv-sort-label">Sort</span>
+      <div class="aa-rv-sort-group" role="group" aria-labelledby="aa-rv-sort-label">
+        <button type="button" class="aa-rv-sort-btn is-active" data-sort="recent" aria-pressed="true">Most recent</button>
+        <button type="button" class="aa-rv-sort-btn" data-sort="highest" aria-pressed="false">Highest</button>
+        <button type="button" class="aa-rv-sort-btn" data-sort="lowest" aria-pressed="false">Lowest</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="aa-rv-empty">No reviews yet.</div>
 
   <script>
     (function(){
       function init(){
         var root=document.getElementById('aa-reviews'); if(!root||root.dataset.aaBound==='1')return; root.dataset.aaBound='1';
-        var list=root.querySelector('.aa-rv-list'), sortBtns=root.querySelectorAll('.aa-rv-sort-btn');
+        var sortBtns=root.querySelectorAll('.aa-rv-sort-btn');
         function sortBy(mode){ var lst=root.querySelector('.aa-rv-list'); if(!lst)return; var cards=[].slice.call(lst.querySelectorAll('.aa-rv-card'));
           cards.sort(function(a,b){ if(mode==='highest')return b.dataset.rating-a.dataset.rating; if(mode==='lowest')return a.dataset.rating-b.dataset.rating; return (b.dataset.date||'').localeCompare(a.dataset.date||''); });
           cards.forEach(function(c){lst.appendChild(c);}); }
@@ -199,7 +121,7 @@
         function fmtDate(iso){ if(!iso)return ''; var d=new Date(iso); if(isNaN(d))return ''; return pad2(d.getDate())+'/'+pad2(d.getMonth()+1)+'/'+d.getFullYear(); }
         function isoDay(iso){ if(!iso)return ''; var d=new Date(iso); if(isNaN(d))return ''; return d.getFullYear()+'-'+pad2(d.getMonth()+1)+'-'+pad2(d.getDate()); }
         var RVCHK='<span class="aa-rv-verified" title="Verified buyer" aria-label="Verified buyer"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#2E9E5B"/><path d="M7.5 12.4l2.8 2.8 6-6.4" stroke="#fff" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/></svg></span>';
-        function liveCardHTML(rv){
+        function cardHTML(rv){
           var initial=((rv.author||'A').trim().charAt(0)||'A').toUpperCase();
           return '<article class="aa-rv-card" data-rating="'+rv.rating+'" data-date="'+isoDay(rv.date)+'">'
             +'<div class="aa-rv-card-top">'+starHTML(rv.rating)+(rv.date?'<span class="aa-rv-date">'+fmtDate(rv.date)+'</span>':'')+'</div>'
@@ -218,19 +140,22 @@
           var cnt=sumEl.querySelector('.aa-rv-count'); if(cnt)cnt.textContent='Based on '+n+' '+(n===1?'review':'reviews');
           [].forEach.call(sumEl.querySelectorAll('.aa-rv-bar-row'),function(row,idx){ var lvl=5-idx, fill=row.querySelector('.aa-rv-bar-fill'), bc=row.querySelector('.aa-rv-bar-count'); if(fill)fill.style.width=Math.round(c[lvl]*100/n)+'%'; if(bc)bc.textContent=c[lvl]; });
         }
-        function mergeLive(rows){
+        function render(rows){
+          var empty=root.querySelector('.aa-rv-empty');
           var lst=root.querySelector('.aa-rv-list');
-          if(!lst){ var empty=root.querySelector('.aa-rv-empty'); lst=document.createElement('div'); lst.className='aa-rv-list'; if(empty){ empty.parentNode.replaceChild(lst,empty); } else { root.appendChild(lst); } }
+          if(!lst){ lst=document.createElement('div'); lst.className='aa-rv-list'; if(empty){ empty.parentNode.replaceChild(lst,empty); } else { root.appendChild(lst); } }
           var html=''; rows.forEach(function(r){
             var t=String(r.review||''), title='', body=t;
             var nl=t.indexOf('\n'); if(nl>-1){ title=t.slice(0,nl); body=t.slice(nl+1); }
-            html+=liveCardHTML({author:r.author,rating:parseInt(r.rating,10)||0,title:title,body:body,date:r.created_at});
+            html+=cardHTML({author:r.author,rating:parseInt(r.rating,10)||0,title:title,body:body,date:r.created_at});
           });
           lst.insertAdjacentHTML('afterbegin',html);
           recomputeSummary();
+          var ctl=root.querySelector('[data-rv-controls]');
+          if(ctl&&lst.querySelectorAll('.aa-rv-card').length>1)ctl.hidden=false;
         }
         // READ-ONLY feed: rows written in the DB (shopify_orders.rating/review via
-        // the product_reviews view). Text format: Name U+2063 ProductID U+2063 Title\nBody.
+        // the product_reviews view). Text: Name U+2063 ProductID U+2063 Title\nBody.
         (function(){
           var C=window.AA_AUTH_CONFIG; if(!C||!C.supabaseUrl||!C.anonKey)return;
           var pid=(root.getAttribute('data-product-id')||'').trim();
@@ -246,7 +171,7 @@
                 var match=r._pid ? (r._pid===pid) : (String(r.product_id||'')===pid);
                 if(!pid||pid==='0'||match)keep.push(r);
               });
-              if(keep.length)mergeLive(keep);
+              if(keep.length)render(keep);
             })
             .catch(function(){});
         })();
