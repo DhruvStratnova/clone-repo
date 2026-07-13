@@ -1,8 +1,12 @@
 {%- comment -%}
-  aa-reviews.liquid
-  Self-contained custom product-review section for AstroAura (replaces Judge.me).
-  Data source: product.metafields.custom.reviews.value (list of objects:
-  author, rating (1-5), title, body, date "YYYY-MM-DD", verified).
+  aa-reviews.liquid - READ-ONLY customer reviews (replaces Judge.me).
+  Customers can NOT write reviews. The ONLY source is rows written directly in
+  the DB: shopify_orders(rating, review) exposed through the product_reviews
+  view. The review text may carry "Name U+2063 ProductID U+2063 Title\nBody"
+  (invisible separators) - name is shown on the card and ProductID pins the
+  review to the intended product page (the view itself only knows items[0]).
+  Server-side metafield reviews (product.metafields.custom.reviews) still render
+  if ever populated.
 {%- endcomment -%}
 
 {%- assign aa_reviews = product.metafields.custom.reviews.value -%}
@@ -44,15 +48,14 @@
 {%- capture aa_star_svg -%}<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27l6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>{%- endcapture -%}
 {%- capture aa_stars5 -%}{{ aa_star_svg }}{{ aa_star_svg }}{{ aa_star_svg }}{{ aa_star_svg }}{{ aa_star_svg }}{%- endcapture -%}
 
-<section id="aa-reviews" class="aa-rv" data-review-endpoint="" data-product-id="{{ product.id }}">
+<section id="aa-reviews" class="aa-rv" data-product-id="{{ product.id }}">
   <style>
-    #aa-reviews{--rv-surface:#ffffff;--rv-border:#EFE9DF;--rv-ink:#1F0820;--rv-text:#4A3D3F;--rv-muted:rgba(32,22,22,.55);--rv-gold:#E0A020;--rv-empty:#DCD3C4;--rv-track:#ECE4D6;--rv-active:rgba(31,8,32,.06);--rv-inputbg:#FBF7EF;--rv-pill-bg:#1F0820;--rv-pill-text:#fff;--rv-avatarbg:#EFE9DF;--rv-avataricon:#B7A597;--rv-shadow:0 2px 14px rgba(31,8,32,.06);--rv-grad:linear-gradient(90deg,#FF8C42,#FF2E93);--rv-onaccent:#ffffff;color:var(--rv-text);font-family:inherit;font-size:16px;max-width:none;margin:0;padding:8px 20px 36px;box-sizing:border-box;}
-    html[data-theme="dark"] #aa-reviews{--rv-surface:#160E2E;--rv-border:rgba(255,255,255,.08);--rv-ink:#F4EFFA;--rv-text:#C9BEDD;--rv-muted:#A99FC4;--rv-gold:#E8C97A;--rv-empty:rgba(255,255,255,.18);--rv-track:rgba(255,255,255,.10);--rv-active:rgba(255,255,255,.07);--rv-inputbg:#0C0A1F;--rv-onaccent:#0C0A1F;--rv-pill-bg:rgba(255,255,255,.14);--rv-pill-text:#F4EFFA;--rv-avatarbg:rgba(255,255,255,.08);--rv-avataricon:#A99FC4;--rv-shadow:0 2px 14px rgba(0,0,0,.4);}
+    #aa-reviews{--rv-surface:#ffffff;--rv-border:#EFE9DF;--rv-ink:#1F0820;--rv-text:#4A3D3F;--rv-muted:rgba(32,22,22,.55);--rv-gold:#E0A020;--rv-empty:#DCD3C4;--rv-track:#ECE4D6;--rv-active:rgba(31,8,32,.06);--rv-avatarbg:#EFE9DF;--rv-grad:linear-gradient(90deg,#FF8C42,#FF2E93);color:var(--rv-text);font-family:inherit;font-size:16px;max-width:none;margin:0;padding:8px 20px 36px;box-sizing:border-box;}
+    html[data-theme="dark"] #aa-reviews{--rv-surface:#160E2E;--rv-border:rgba(255,255,255,.08);--rv-ink:#F4EFFA;--rv-text:#C9BEDD;--rv-muted:#A99FC4;--rv-gold:#E8C97A;--rv-empty:rgba(255,255,255,.18);--rv-track:rgba(255,255,255,.10);--rv-active:rgba(255,255,255,.07);--rv-avatarbg:rgba(255,255,255,.08);}
     html[data-theme="dark"] #aa-reviews .aa-rv-summary,html[data-theme="dark"] #aa-reviews .aa-rv-empty,html[data-theme="dark"] #aa-reviews .aa-rv-card{border-color:rgba(255,255,255,.14);box-shadow:0 10px 28px rgba(0,0,0,.35);}
     #aa-reviews *,#aa-reviews *::before,#aa-reviews *::after{box-sizing:border-box;}
     #aa-reviews .aa-rv-heading{font-family:'Sora','Marcellus',Georgia,serif;color:var(--rv-ink);font-size:1.6em;font-weight:700;margin:0 0 22px;letter-spacing:.2px;text-align:center;}
-    /* Stars are inline SVG (font-proof: the brand webfonts lack the ★ glyph, so
-       text stars rendered zero-width/invisible). fg row is width-clipped over bg. */
+    /* SVG stars (brand webfonts lack the ★ glyph); fg row width-clips over bg */
     #aa-reviews .aa-rv-stars{position:relative;display:inline-block;line-height:0;white-space:nowrap;vertical-align:middle;font-size:0;}
     #aa-reviews .aa-rv-stars svg{display:inline-block;width:1em;height:1em;font-size:19px;vertical-align:top;margin-right:3px;}
     #aa-reviews .aa-rv-stars-bg{color:var(--rv-empty);display:inline-block;}
@@ -69,109 +72,30 @@
     #aa-reviews .aa-rv-bars{display:flex;flex-direction:column;gap:12px;width:100%;}
     #aa-reviews .aa-rv-bar-row{display:grid;grid-template-columns:44px 1fr 28px;align-items:center;gap:14px;}
     #aa-reviews .aa-rv-bar-label{color:var(--rv-ink);font-size:.86em;font-weight:600;white-space:nowrap;}
-    #aa-reviews .aa-rv-bar-label .aa-rv-star{color:var(--rv-gold);}
     #aa-reviews .aa-rv-bar-track{position:relative;height:11px;border-radius:99px;background:var(--rv-track);overflow:hidden;}
     #aa-reviews .aa-rv-bar-fill{display:block;height:100%;border-radius:99px;background:var(--rv-grad);transition:width .5s ease;}
     #aa-reviews .aa-rv-bar-count{color:var(--rv-muted);font-size:.82em;text-align:right;}
-    #aa-reviews .aa-rv-controls{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;margin:24px 0 18px;}
+    #aa-reviews .aa-rv-controls{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-start;gap:14px;margin:24px 0 18px;}
     #aa-reviews .aa-rv-sort{display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap;}
     #aa-reviews .aa-rv-sort-label{color:var(--rv-muted);font-size:.82em;}
     #aa-reviews .aa-rv-sort-group{display:inline-flex;border:1px solid var(--rv-border);border-radius:99px;padding:3px;background:var(--rv-surface);}
     #aa-reviews .aa-rv-sort-btn{appearance:none;border:0;background:transparent;color:var(--rv-muted);font:inherit;font-size:.8em;padding:6px 12px;border-radius:99px;cursor:pointer;transition:color .2s ease,background .2s ease;}
     #aa-reviews .aa-rv-sort-btn.is-active{color:var(--rv-ink);background:var(--rv-active);}
     #aa-reviews .aa-rv-sort-btn:focus-visible{outline:2px solid var(--rv-gold);outline-offset:2px;}
-    #aa-reviews .aa-rv-write-btn{appearance:none;border:0;cursor:pointer;font:inherit;font-weight:600;font-size:.95em;color:var(--rv-onaccent);background:var(--rv-grad);padding:13px 26px;border-radius:12px;transition:transform .2s ease,filter .2s ease;box-shadow:0 6px 16px rgba(255,46,147,.22);}
-    #aa-reviews .aa-rv-write-btn:hover{filter:brightness(1.05);transform:translateY(-1px);}
-    #aa-reviews .aa-rv-write-btn:focus-visible{outline:2px solid var(--rv-gold);outline-offset:2px;}
     #aa-reviews .aa-rv-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(345px,1fr));gap:18px;align-items:start;}
     #aa-reviews .aa-rv-card{background:transparent;border:1.5px solid rgba(31,8,32,.12);border-radius:12px;padding:28px 30px;box-shadow:0 6px 18px rgba(31,8,32,.05);display:flex;flex-direction:column;gap:15px;transition:border-color .18s,box-shadow .18s;}#aa-reviews .aa-rv-card:hover{border-color:rgba(31,8,32,.24);box-shadow:0 10px 26px rgba(31,8,32,.09);}#aa-reviews .aa-rv-card-top{display:flex;align-items:center;justify-content:space-between;gap:10px;}
     #aa-reviews .aa-rv-card-head{display:flex;align-items:center;gap:11px;}
     #aa-reviews .aa-rv-avatar{flex:0 0 auto;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-size:1.08em;font-weight:600;letter-spacing:.3px;background:var(--rv-avatarbg);color:var(--rv-ink);}
-    #aa-reviews .aa-rv-who{display:flex;flex-direction:column;gap:3px;min-width:0;}
-    #aa-reviews .aa-rv-author-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
     #aa-reviews .aa-rv-author{font-weight:600;font-size:1.08em;color:var(--rv-ink);}
     #aa-reviews .aa-rv-verified{display:inline-flex;align-items:center;line-height:0;}
-    #aa-reviews .aa-rv-card-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
-    #aa-reviews .aa-rv-card-meta .aa-rv-stars{font-size:.95em;}
-    #aa-reviews .aa-rv-date{color:var(--rv-muted);font-size:.86em;letter-spacing:.3px;}#aa-reviews .aa-rv-card-top .aa-rv-stars{font-size:1.3em;}
+    #aa-reviews .aa-rv-verified svg{display:block;}
+    #aa-reviews .aa-rv-date{color:var(--rv-muted);font-size:.86em;letter-spacing:.3px;}
     #aa-reviews .aa-rv-title{font-weight:700;font-size:1.22em;color:var(--rv-ink);margin:8px 0 4px;letter-spacing:-.2px;}
     #aa-reviews .aa-rv-body{color:var(--rv-text);font-size:1.02em;line-height:1.72;margin:0;}
     #aa-reviews .aa-rv-photo{display:block;width:100%;max-height:240px;object-fit:cover;border-radius:10px;margin-top:4px;}
-    #aa-reviews .aa-rv-photo{display:block;width:100%;max-height:240px;object-fit:cover;border-radius:10px;margin-top:4px;}
     #aa-reviews .aa-rv-empty{background:transparent;border:1.5px solid rgba(31,8,32,.12);border-radius:16px;padding:28px 20px;text-align:center;color:var(--rv-muted);font-size:.95em;}
-    #aa-reviews .aa-rv-form{background:var(--rv-surface);border:1px solid var(--rv-border);border-radius:16px;padding:22px 20px;margin-top:16px;}
-    #aa-reviews .aa-rv-form-title{font-family:'Sora','Marcellus',Georgia,serif;color:var(--rv-ink);font-size:1.15em;margin:0 0 16px;}
-    #aa-reviews .aa-rv-field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;}
-    #aa-reviews .aa-rv-field label{color:var(--rv-ink);font-size:.82em;font-weight:600;}
-    #aa-reviews .aa-rv-field input,#aa-reviews .aa-rv-field textarea{background:var(--rv-inputbg);border:1px solid var(--rv-border);border-radius:10px;color:var(--rv-ink);font:inherit;font-size:.9em;padding:11px 12px;width:100%;}
-    #aa-reviews .aa-rv-field textarea{min-height:110px;resize:vertical;}
-    #aa-reviews .aa-rv-field input::placeholder,#aa-reviews .aa-rv-field textarea::placeholder{color:var(--rv-muted);opacity:.8;}
-    #aa-reviews .aa-rv-field input:focus,#aa-reviews .aa-rv-field textarea:focus{outline:none;border-color:var(--rv-gold);}
-    #aa-reviews .aa-rv-form-stars{display:inline-flex;gap:4px;}
-    #aa-reviews .aa-rv-form-star{font-size:1.7em;line-height:1;color:var(--rv-empty);cursor:pointer;background:none;border:0;padding:0 2px;transition:color .15s ease,transform .15s ease;}
-    #aa-reviews .aa-rv-form-star.is-on{color:var(--rv-gold);}
-    #aa-reviews .aa-rv-form-star:hover{transform:scale(1.12);}
-    #aa-reviews .aa-rv-form-star:focus-visible{outline:2px solid var(--rv-gold);outline-offset:2px;border-radius:4px;}
-    #aa-reviews .aa-rv-submit{appearance:none;border:0;cursor:pointer;font:inherit;font-weight:600;font-size:.9em;color:var(--rv-onaccent);background:var(--rv-grad);padding:12px 24px;border-radius:99px;margin-top:4px;transition:filter .2s ease,transform .2s ease;}
-    #aa-reviews .aa-rv-submit:hover{filter:brightness(1.05);transform:translateY(-1px);}
-    #aa-reviews .aa-rv-submit:focus-visible{outline:2px solid var(--rv-gold);outline-offset:2px;}
-    #aa-reviews .aa-rv-form-msg{color:#B07A12;font-size:.95em;font-weight:600;padding:18px 4px;}
-    /* Judge.me is replaced by this section - hide any app-embed widget remnants */
-    .jdgm-widget,.jdgm-rev-widg,#judgeme_product_reviews,.jdgm-carousel-wrapper,[data-jdgm-widget]{display:none !important;}
     @media (min-width:750px){#aa-reviews{padding:16px clamp(24px,3.6vw,56px) 48px;}#aa-reviews .aa-rv-heading{font-size:1.9em;}#aa-reviews .aa-rv-summary{flex-direction:row;align-items:center;gap:48px;padding:34px 40px;}#aa-reviews .aa-rv-avg-block{flex:0 0 auto;min-width:190px;padding-right:48px;border-right:1px solid var(--rv-border);}#aa-reviews .aa-rv-bars{flex:1 1 auto;}}
-    @media (prefers-reduced-motion:reduce){#aa-reviews *{transition:none !important;}}
-  
-    #aa-reviews .aa-rv-verified svg{display:block;}
-    #aa-rv-modal{position:fixed;inset:0;z-index:100000;display:flex;align-items:flex-end;justify-content:center;font-family:inherit;font-size:16px;background:rgba(14,7,20,.5);-webkit-backdrop-filter:blur(12px) saturate(.85);backdrop-filter:blur(12px) saturate(.85);animation:aaRvFade .45s ease both;}
-    @keyframes aaRvFade{from{opacity:0}to{opacity:1}}
-    #aa-rv-modal[hidden]{display:none;}
-    #aa-rv-modal .aa-rv-modal__scrim{position:absolute;inset:0;}
-    #aa-rv-modal .aa-rv-modal__sheet{position:relative;width:100%;max-width:620px;background:var(--rv-surface);color:var(--rv-text);border-radius:16px 16px 0 0;padding:32px 36px calc(30px + env(safe-area-inset-bottom));box-shadow:0 -12px 44px rgba(0,0,0,.28);max-height:92vh;overflow-y:auto;animation:aaRvUp .6s cubic-bezier(.16,1,.3,1);}
-    @keyframes aaRvUp{from{transform:translateY(100%)}to{transform:none}}
-    @media(min-width:600px){#aa-rv-modal{align-items:center;}#aa-rv-modal .aa-rv-modal__sheet{border-radius:14px;animation:aaRvIn .55s cubic-bezier(.16,1,.3,1);}@keyframes aaRvIn{from{opacity:0;transform:translateY(20px) scale(.985)}to{opacity:1;transform:none}}}
-    #aa-rv-modal .aa-rv-modal__x{position:absolute;top:14px;right:14px;width:32px;height:32px;border-radius:50%;border:0;background:var(--rv-active);color:var(--rv-ink);font-size:18px;line-height:1;cursor:pointer;}
-    #aa-rv-modal .aa-rv-modal__product{display:flex;align-items:center;gap:13px;margin:0 0 22px;padding:0 58px 20px 0;border-bottom:1px solid var(--rv-border);}#aa-rv-modal .aa-rv-modal__pimg{width:54px;height:54px;border-radius:10px;object-fit:cover;flex:0 0 auto;background:var(--rv-inputbg);}#aa-rv-modal .aa-rv-modal__pname{font-family:'Sora','Marcellus',Georgia,serif;font-size:1em;font-weight:600;color:var(--rv-ink);line-height:1.35;}
-    #aa-rv-modal .aa-rv-step__h{font-family:'Sora','Marcellus',Georgia,serif;color:var(--rv-ink);font-size:1.6em;margin:0 0 6px;}
-    #aa-rv-modal .aa-rv-step__sub{color:var(--rv-muted);font-size:.86em;line-height:1.5;margin:0 0 18px;}
-    #aa-rv-modal .aa-rv-mstars{display:flex;gap:10px;justify-content:center;margin:18px 0 30px;}
-    #aa-rv-modal .aa-rv-mstar{font-size:3.4em;line-height:1;color:var(--rv-empty);background:none;border:0;cursor:pointer;padding:0 4px;transition:transform .12s ease,color .12s ease;}
-    #aa-rv-modal .aa-rv-mstar svg{width:1em;height:1em;display:block;fill:currentColor;}
-    #aa-rv-modal .aa-rv-mstar.is-on{color:var(--rv-gold);}
-    #aa-rv-modal .aa-rv-mstar:hover{transform:scale(1.16);}
-    #aa-rv-modal .aa-rv-upload{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;border:1.5px dashed var(--rv-border);border-radius:14px;padding:44px 16px;cursor:pointer;color:var(--rv-muted);background:var(--rv-inputbg);}
-    #aa-rv-modal .aa-rv-upload__ico{font-size:1.7em;}
-    #aa-rv-modal .aa-rv-upload__txt{font-size:.86em;}
-    #aa-rv-modal .aa-rv-preview{margin-top:14px;border-radius:12px;overflow:hidden;}
-    #aa-rv-modal .aa-rv-preview img{display:block;width:100%;max-height:220px;object-fit:cover;}
-    #aa-rv-modal .aa-rv-field{display:flex;flex-direction:column;gap:6px;margin-bottom:13px;}
-    #aa-rv-modal .aa-rv-field label{color:var(--rv-ink);font-size:.82em;font-weight:600;margin-bottom:1px;}#aa-rv-modal .aa-rv-field label small{color:var(--rv-muted);font-weight:400;}
-    #aa-rv-modal .aa-rv-field input,#aa-rv-modal .aa-rv-field textarea{-webkit-appearance:none;appearance:none;background:var(--rv-surface);border:1px solid var(--rv-border);border-radius:9px;color:var(--rv-ink);font:inherit;font-size:.92em;padding:12px 13px;width:100%;box-sizing:border-box;box-shadow:none;transition:border-color .15s,box-shadow .15s;}
-    #aa-rv-modal .aa-rv-field textarea{min-height:96px;resize:vertical;}
-    #aa-rv-modal .aa-rv-field input:focus,#aa-rv-modal .aa-rv-field textarea:focus{outline:none;border-color:#7a6b78;box-shadow:0 0 0 3px rgba(31,8,32,.07);}
-    #aa-rv-modal .aa-rv-step__nav{display:flex;gap:10px;margin-top:8px;}
-    #aa-rv-modal .aa-rv-next,#aa-rv-modal .aa-rv-submit{flex:1;appearance:none;border:0;cursor:pointer;font:inherit;font-weight:600;font-size:.95em;color:var(--rv-onaccent);background:var(--rv-grad);padding:14px;border-radius:11px;}
-    #aa-rv-modal .aa-rv-next[disabled],#aa-rv-modal .aa-rv-submit[disabled]{opacity:.4;cursor:not-allowed;}
-    #aa-rv-modal .aa-rv-back{flex:0 0 auto;appearance:none;border:1px solid var(--rv-border);background:transparent;color:var(--rv-ink);font:inherit;font-weight:600;font-size:.95em;padding:14px 24px;border-radius:11px;cursor:pointer;}
-    #aa-rv-modal .aa-rv-step--done{text-align:center;padding:12px 0;}
-    
-    html[data-theme="dark"] #aa-rv-modal .aa-rv-modal__scrim{background:rgba(0,0,0,.62);}
-    #aa-reviews .aa-rv-stars--lg{font-size:1.55em;}
-    #aa-rv-modal .aa-rv-step{animation:aaRvStep .5s cubic-bezier(.16,1,.3,1);}
-    @keyframes aaRvStep{from{opacity:0;transform:translateX(34px)}to{opacity:1;transform:none}}
-    @media (prefers-reduced-motion:reduce){#aa-reviews *,#aa-rv-modal *{animation:none !important;}}
-    #aa-rv-modal .aa-rv-step:not(.aa-rv-step--done) > .aa-rv-next{width:100%;}
     @media (max-width:600px){
-      #aa-rv-modal .aa-rv-modal__sheet{padding:22px 20px calc(20px + env(safe-area-inset-bottom));border-radius:20px 20px 0 0;}
-      #aa-rv-modal .aa-rv-modal__x{top:16px;right:16px;}
-      #aa-rv-modal .aa-rv-modal__product{margin-bottom:18px;padding-bottom:16px;}
-      #aa-rv-modal .aa-rv-modal__pimg{width:48px;height:48px;}
-      #aa-rv-modal .aa-rv-step__h{font-size:1.42em;}
-      #aa-rv-modal .aa-rv-step__sub{font-size:.92em;}
-      #aa-rv-modal .aa-rv-mstars{gap:10px;justify-content:center;margin:14px 0 26px;}
-      #aa-rv-modal .aa-rv-mstar{font-size:3em;}
-      #aa-rv-modal .aa-rv-field input,#aa-rv-modal .aa-rv-field textarea{font-size:16px;padding:13px 14px;}
-      #aa-rv-modal .aa-rv-step__nav{flex-direction:column-reverse;gap:12px;}
-      #aa-rv-modal .aa-rv-back{width:100%;}
       #aa-reviews{padding:8px 16px 34px;}
       #aa-reviews .aa-rv-heading{font-size:1.6em;margin-bottom:16px;}
       #aa-reviews .aa-rv-summary{flex-direction:column;padding:24px 20px;gap:24px;}
@@ -182,10 +106,8 @@
       #aa-reviews .aa-rv-card{padding:22px 22px;}
       #aa-reviews .aa-rv-title{font-size:1.14em;}
       #aa-reviews .aa-rv-body{font-size:.98em;}
-      #aa-reviews .aa-rv-controls{flex-direction:column;align-items:stretch;gap:14px;}
-      #aa-reviews .aa-rv-sort{justify-content:space-between;}
-      #aa-reviews .aa-rv-write-btn{width:100%;text-align:center;}
     }
+    @media (prefers-reduced-motion:reduce){#aa-reviews *{transition:none !important;}}
   </style>
 
   <h2 class="aa-rv-heading">Customer Reviews</h2>
@@ -226,10 +148,7 @@
           <button type="button" class="aa-rv-sort-btn" data-sort="lowest" aria-pressed="false">Lowest</button>
         </div>
       </div>
-    {%- else -%}
-      <span></span>
     {%- endif -%}
-    <button type="button" class="aa-rv-write-btn" aria-expanded="false" aria-controls="aa-rv-form">Write a review</button>
   </div>
 
   {%- if aa_count > 0 -%}
@@ -253,49 +172,8 @@
       {%- endfor -%}
     </div>
   {%- else -%}
-    <div class="aa-rv-empty">No reviews yet. Be the first to share your experience.</div>
+    <div class="aa-rv-empty">No reviews yet.</div>
   {%- endif -%}
-
-  <div class="aa-rv-modal" id="aa-rv-modal" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-label="Write a review">
-    <div class="aa-rv-modal__scrim" data-rv-close></div>
-    <div class="aa-rv-modal__sheet">
-      <button type="button" class="aa-rv-modal__x" data-rv-close aria-label="Close">&times;</button>
-      {% if product.featured_image %}<div class="aa-rv-modal__product"><img class="aa-rv-modal__pimg" src="{{ product.featured_image | image_url: width: 160 }}" alt="{{ product.title | escape }}" width="54" height="54" loading="lazy"><span class="aa-rv-modal__pname">{{ product.title | escape }}</span></div>{% endif %}
-      <form class="aa-rv-mform" novalidate>
-        <div class="aa-rv-step" data-step="1">
-          <h3 class="aa-rv-step__h">How would you rate it?</h3>
-          <p class="aa-rv-step__sub">Tap the stars to rate this product.</p>
-          <div class="aa-rv-mstars" role="radiogroup" aria-label="Rating">
-            <button type="button" class="aa-rv-mstar" data-val="1" aria-label="1 star">{{ aa_star_svg }}</button>
-            <button type="button" class="aa-rv-mstar" data-val="2" aria-label="2 stars">{{ aa_star_svg }}</button>
-            <button type="button" class="aa-rv-mstar" data-val="3" aria-label="3 stars">{{ aa_star_svg }}</button>
-            <button type="button" class="aa-rv-mstar" data-val="4" aria-label="4 stars">{{ aa_star_svg }}</button>
-            <button type="button" class="aa-rv-mstar" data-val="5" aria-label="5 stars">{{ aa_star_svg }}</button>
-          </div>
-          <input type="hidden" name="rating" value="0">
-          <button type="button" class="aa-rv-next" data-next disabled>Continue</button>
-        </div>
-        {%- comment -%} photo step disabled for now (moderation pipeline pending) {%- endcomment -%}
-        <div class="aa-rv-step" data-step="2" hidden>
-          <h3 class="aa-rv-step__h">Tell us more</h3>
-          <p class="aa-rv-step__sub">A short headline and a few words about your experience.</p>
-          <div class="aa-rv-field"><label for="aa-rvm-title">Headline</label><input type="text" id="aa-rvm-title" name="title" placeholder="Sum it up in a few words"></div>
-          <div class="aa-rv-field"><label for="aa-rvm-body">Your review <small>(optional)</small></label><textarea id="aa-rvm-body" name="body" placeholder="What did you think?"></textarea></div>
-          <div class="aa-rv-field"><label for="aa-rvm-name">Name</label><input type="text" id="aa-rvm-name" name="name" autocomplete="name" placeholder="Your name"></div>
-          <div class="aa-rv-field"><label for="aa-rvm-email">Email <small>(optional)</small></label><input type="email" id="aa-rvm-email" name="email" autocomplete="email" placeholder="you@example.com"></div>
-          <div class="aa-rv-step__nav">
-            <button type="button" class="aa-rv-back" data-back>Back</button>
-            <button type="submit" class="aa-rv-submit">Submit review</button>
-          </div>
-        </div>
-        <div class="aa-rv-step aa-rv-step--done" data-step="3" hidden>
-          <h3 class="aa-rv-step__h">Thank you!</h3>
-          <p class="aa-rv-step__sub">Your review has been published.</p>
-          <button type="button" class="aa-rv-next" data-rv-close>Done</button>
-        </div>
-      </form>
-    </div>
-  </div>
 
   {%- if aa_count > 0 -%}
     <script type="application/ld+json">
@@ -308,15 +186,15 @@
       function init(){
         var root=document.getElementById('aa-reviews'); if(!root||root.dataset.aaBound==='1')return; root.dataset.aaBound='1';
         var list=root.querySelector('.aa-rv-list'), sortBtns=root.querySelectorAll('.aa-rv-sort-btn');
-        function sortBy(mode){ if(!list)return; var cards=[].slice.call(list.querySelectorAll('.aa-rv-card'));
+        function sortBy(mode){ var lst=root.querySelector('.aa-rv-list'); if(!lst)return; var cards=[].slice.call(lst.querySelectorAll('.aa-rv-card'));
           cards.sort(function(a,b){ if(mode==='highest')return b.dataset.rating-a.dataset.rating; if(mode==='lowest')return a.dataset.rating-b.dataset.rating; return (b.dataset.date||'').localeCompare(a.dataset.date||''); });
-          cards.forEach(function(c){list.appendChild(c);}); }
+          cards.forEach(function(c){lst.appendChild(c);}); }
         [].forEach.call(sortBtns,function(btn){ btn.addEventListener('click',function(){ [].forEach.call(sortBtns,function(b){b.classList.remove('is-active');b.setAttribute('aria-pressed','false');}); btn.classList.add('is-active');btn.setAttribute('aria-pressed','true'); sortBy(btn.dataset.sort); }); });
-        // ---- merge verified customer reviews submitted via My Orders (Supabase) ----
         function esc2(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
-        var STAR='<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27l6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>';
-        var STARS5=STAR+STAR+STAR+STAR+STAR;
-        function starHTML(r){ var p=Math.max(0,Math.min(5,r))*20; return '<span class="aa-rv-stars" role="img" aria-label="'+r+' out of 5 stars"><span class="aa-rv-stars-bg" aria-hidden="true">'+STARS5+'</span><span class="aa-rv-stars-fg" aria-hidden="true" style="width:'+p+'%">'+STARS5+'</span></span>'; }
+        function starHTML(r){ var p=Math.max(0,Math.min(5,r))*20;
+          var STAR='<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27l6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>';
+          var S5=STAR+STAR+STAR+STAR+STAR;
+          return '<span class="aa-rv-stars" role="img" aria-label="'+r+' out of 5 stars"><span class="aa-rv-stars-bg" aria-hidden="true">'+S5+'</span><span class="aa-rv-stars-fg" aria-hidden="true" style="width:'+p+'%">'+S5+'</span></span>'; }
         function pad2(n){ return (n<10?'0':'')+n; }
         function fmtDate(iso){ if(!iso)return ''; var d=new Date(iso); if(isNaN(d))return ''; return pad2(d.getDate())+'/'+pad2(d.getMonth()+1)+'/'+d.getFullYear(); }
         function isoDay(iso){ if(!iso)return ''; var d=new Date(iso); if(isNaN(d))return ''; return d.getFullYear()+'-'+pad2(d.getMonth()+1)+'-'+pad2(d.getDate()); }
@@ -325,9 +203,9 @@
           var initial=((rv.author||'A').trim().charAt(0)||'A').toUpperCase();
           return '<article class="aa-rv-card" data-rating="'+rv.rating+'" data-date="'+isoDay(rv.date)+'">'
             +'<div class="aa-rv-card-top">'+starHTML(rv.rating)+(rv.date?'<span class="aa-rv-date">'+fmtDate(rv.date)+'</span>':'')+'</div>'
-            +'<div class="aa-rv-card-head"><span class="aa-rv-avatar" aria-hidden="true">'+esc2(initial)+'</span><span class="aa-rv-author">'+esc2(rv.author||(rv.verified?'Verified buyer':'Aura customer'))+'</span>'+(rv.verified?RVCHK:'')+'</div>'
+            +'<div class="aa-rv-card-head"><span class="aa-rv-avatar" aria-hidden="true">'+esc2(initial)+'</span><span class="aa-rv-author">'+esc2(rv.author||'Verified buyer')+'</span>'+RVCHK+'</div>'
+            +(rv.title?'<p class="aa-rv-title">'+esc2(rv.title)+'</p>':'')
             +(rv.body?'<p class="aa-rv-body">'+esc2(rv.body).replace(/\n/g,'<br>')+'</p>':'')
-            +(rv.photo?'<img class="aa-rv-photo" src="'+esc2(rv.photo)+'" alt="Customer photo" loading="lazy">':'')
             +'</article>';
         }
         function recomputeSummary(){
@@ -342,136 +220,40 @@
         }
         function mergeLive(rows){
           var lst=root.querySelector('.aa-rv-list');
-          if(!lst){ var empty=root.querySelector('.aa-rv-empty'); lst=document.createElement('div'); lst.className='aa-rv-list'; if(empty){ empty.parentNode.replaceChild(lst,empty); } else { var ctrls=root.querySelector('.aa-rv-controls'); if(ctrls&&ctrls.parentNode){ ctrls.parentNode.insertBefore(lst,ctrls.nextSibling); } else { root.appendChild(lst); } } list=lst; }
-          var html=''; rows.forEach(function(r){ html+=liveCardHTML({author:r.author,rating:parseInt(r.rating,10)||0,body:r.review,date:r.created_at,photo:(r.photo_url&&r.status==='approved')?r.photo_url:null,verified:true}); });
+          if(!lst){ var empty=root.querySelector('.aa-rv-empty'); lst=document.createElement('div'); lst.className='aa-rv-list'; if(empty){ empty.parentNode.replaceChild(lst,empty); } else { root.appendChild(lst); } }
+          var html=''; rows.forEach(function(r){
+            var t=String(r.review||''), title='', body=t;
+            var nl=t.indexOf('\n'); if(nl>-1){ title=t.slice(0,nl); body=t.slice(nl+1); }
+            html+=liveCardHTML({author:r.author,rating:parseInt(r.rating,10)||0,title:title,body:body,date:r.created_at});
+          });
           lst.insertAdjacentHTML('afterbegin',html);
           recomputeSummary();
         }
+        // READ-ONLY feed: rows written in the DB (shopify_orders.rating/review via
+        // the product_reviews view). Text format: Name U+2063 ProductID U+2063 Title\nBody.
         (function(){
           var C=window.AA_AUTH_CONFIG; if(!C||!C.supabaseUrl||!C.anonKey)return;
           var pid=(root.getAttribute('data-product-id')||'').trim();
-          var H={apikey:C.anonKey,Authorization:'Bearer '+C.anonKey};
-          var f=(pid&&pid!=='0')?('&product_id=eq.'+encodeURIComponent(pid)):'&limit=12';
-          // Source of truth: the product_reviews VIEW over shopify_orders
-          // (stage=purchased AND rating set). Rows written in the DB show here too.
-          fetch(C.supabaseUrl+'/rest/v1/product_reviews?order=created_at.desc'+f,{headers:H})
+          fetch(C.supabaseUrl+'/rest/v1/product_reviews?order=created_at.desc&limit=200',{headers:{apikey:C.anonKey,Authorization:'Bearer '+C.anonKey}})
             .then(function(r){return r.ok?r.json():[];})
             .then(function(rows){
               if(!Array.isArray(rows)||!rows.length)return;
-              // the customer's name is stored before an invisible U+2063 separator
+              var keep=[];
               rows.forEach(function(r){
                 var p=String(r.review||'').split('⁣');
-                if(p.length>1){ r.author=r.author||p[0]; r.review=p.slice(1).join('⁣'); }
+                if(p.length>=3){ r.author=r.author||p[0]; r._pid=p[1]; r.review=p.slice(2).join('⁣'); }
+                else if(p.length===2){ r.author=r.author||p[0]; r.review=p[1]; }
+                var match=r._pid ? (r._pid===pid) : (String(r.product_id||'')===pid);
+                if(!pid||pid==='0'||match)keep.push(r);
               });
-              mergeLive(rows);
+              if(keep.length)mergeLive(keep);
             })
             .catch(function(){});
         })();
-        var modal=document.getElementById('aa-rv-modal'); if(!modal)return;
-        var openBtn=root.querySelector('.aa-rv-write-btn');
-        var steps=[].slice.call(modal.querySelectorAll('.aa-rv-step'));
-        var prog=modal.querySelector('[data-rv-progress]');
-        var ratingInput=modal.querySelector('input[name="rating"]');
-        var stars=modal.querySelectorAll('.aa-rv-mstar');
-        var cur=1, TOTAL=2;  // photo step disabled: rating -> details -> done
-        function show(n){ cur=n; steps.forEach(function(s){ s.hidden=(+s.dataset.step!==n); }); if(prog)prog.textContent=(n<=TOTAL?('Step '+n+' of '+TOTAL):''); }
-        function paint(v){ [].forEach.call(stars,function(s){ s.classList.toggle('is-on', +s.dataset.val<=v); }); }
-        function reset(){ if(ratingInput)ratingInput.value='0'; paint(0); var pv=modal.querySelector('.aa-rv-preview'); if(pv)pv.hidden=true; var nb=modal.querySelector('.aa-rv-step[data-step="1"] .aa-rv-next'); if(nb)nb.disabled=true; var f=modal.querySelector('.aa-rv-mform'); if(f)f.reset(); var sb=modal.querySelector('.aa-rv-submit'); if(sb)sb.disabled=true; }
-        function openM(){ modal.hidden=false; modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; reset(); show(1); }
-        function closeM(){ modal.hidden=true; modal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
-        // Write a review: sign-in gate (OTP popup) then the in-page modal - no redirects.
-        function aaLoggedIn(){ var C=window.AA_AUTH_CONFIG||{}; try{ if(JSON.parse(localStorage.getItem('aa_auth_user')||'null'))return true; if(C.projectRef&&localStorage.getItem('sb-'+C.projectRef+'-auth-token'))return true; }catch(e){} return false; }
-        function gateThenOpen(){
-          if(aaLoggedIn()){ openM(); return; }
-          if(window.AAauth&&window.AAauth.open){
-            window.AAauth.open();
-            var tries=0, iv=setInterval(function(){
-              if(aaLoggedIn()){ clearInterval(iv); try{ if(window.AAauth.close)window.AAauth.close(); }catch(e){} openM(); }
-              else if(++tries>150){ clearInterval(iv); }
-            },800);
-          } else { openM(); }
-        }
-        if(openBtn)openBtn.addEventListener('click',gateThenOpen);
-        [].forEach.call(modal.querySelectorAll('[data-rv-close]'),function(el){ el.addEventListener('click',closeM); });
-        modal.addEventListener('click',function(e){ if(e.target===modal) closeM(); });
-        [].forEach.call(stars,function(s){ s.addEventListener('click',function(){ var v=+s.dataset.val; if(ratingInput)ratingInput.value=v; paint(v); var nb=modal.querySelector('.aa-rv-step[data-step="1"] .aa-rv-next'); if(nb)nb.disabled=false; }); s.addEventListener('mouseenter',function(){paint(+s.dataset.val);}); });
-        var ms=modal.querySelector('.aa-rv-mstars'); if(ms)ms.addEventListener('mouseleave',function(){paint(ratingInput?+ratingInput.value:0);});
-        [].forEach.call(modal.querySelectorAll('[data-next]'),function(b){ b.addEventListener('click',function(){ if(b.disabled)return; show(Math.min(cur+1,TOTAL)); }); });
-        [].forEach.call(modal.querySelectorAll('[data-back]'),function(b){ b.addEventListener('click',function(){ show(Math.max(cur-1,1)); }); });
-        var form=modal.querySelector('.aa-rv-mform');
-        var submitBtn=modal.querySelector('.aa-rv-submit');
-        var reqF=['title','name'].map(function(n){return modal.querySelector('[name="'+n+'"]');});
-        function allReq(){ return reqF.every(function(f){return f&&f.value.trim();}); }
-        function checkReq(){ if(submitBtn)submitBtn.disabled=!allReq(); }
-        reqF.forEach(function(f){ if(f)f.addEventListener('input',checkReq); });
-        checkReq();
-        // REAL submit: save to Supabase product_reviews, then optimistic card + done screen.
-        var errEl=null;
-        function showErr(msg){
-          if(!errEl){ errEl=document.createElement('p'); errEl.className='aa-rv-form-msg';
-            var nav=modal.querySelector('.aa-rv-step[data-step="2"] .aa-rv-step__nav');
-            if(nav&&nav.parentNode)nav.parentNode.insertBefore(errEl,nav); }
-          errEl.textContent=msg;
-        }
-        // Reviews are stored ON the customer's own PURCHASED order (shopify_orders):
-        // RLS allows the buyer to UPDATE only (photo_url, rating, review) on their
-        // own purchased rows. Flow: find their purchased order containing this
-        // product -> PATCH the review columns. product_reviews is the read view.
-        if(form)form.addEventListener('submit',function(e){
-          e.preventDefault(); if(!allReq())return;
-          var C=window.AA_AUTH_CONFIG||{};
-          if(!C.supabaseUrl||!C.anonKey){ showErr('Reviews are unavailable right now.'); return; }
-          var title=((modal.querySelector('[name="title"]')||{}).value||'').trim();
-          var body=((modal.querySelector('[name="body"]')||{}).value||'').trim();
-          var name=((modal.querySelector('[name="name"]')||{}).value||'').trim();
-          var rating=parseInt((ratingInput&&ratingInput.value)||'0',10)||0;
-          var pid=(root.getAttribute('data-product-id')||'').trim();
-          var text=title+(title&&body?'\n':'')+body;
-          if(submitBtn){submitBtn.disabled=true;submitBtn.textContent='Submitting...';}
-          function fail(msg){ if(submitBtn){submitBtn.disabled=false;submitBtn.textContent='Submit review';} showErr(msg); try{console.warn('[aa-reviews]',msg);}catch(e0){} }
-          var sessP=(window.AAauth&&window.AAauth.session)?window.AAauth.session():Promise.resolve(null);
-          sessP.then(function(sess){
-            if(!sess||!sess.access_token){
-              try{ var s0=JSON.parse(localStorage.getItem('sb-'+C.projectRef+'-auth-token')||'null'); if(s0&&s0.access_token)sess=s0; }catch(e2){}
-            }
-            if(!sess||!sess.access_token){ fail('Please sign in to submit your review.'); if(window.AAauth&&window.AAauth.open)window.AAauth.open(); return; }
-            var AH={apikey:C.anonKey,Authorization:'Bearer '+sess.access_token,'Content-Type':'application/json'};
-            function succeed(){
-              if(submitBtn){submitBtn.disabled=false;submitBtn.textContent='Submit review';}
-              if(errEl)errEl.textContent='';
-              try{ mergeLive([{author:name,rating:rating,review:text,created_at:new Date().toISOString()}]); }catch(e4){}
-              show(3); if(prog)prog.textContent='';
-            }
-            // The product_reviews VIEW attributes a review to items[0] of the order,
-            // so PATCH the buyer's own purchased order whose FIRST item is this
-            // product (falling back to any order containing it).
-            function firstItemPid(o){ try{ return String((o.items&&o.items[0]&&o.items[0].product_id)||''); }catch(e5){ return ''; } }
-            function containsPid(o){ try{ return JSON.stringify(o.items||'').indexOf(pid)>-1; }catch(e6){ return false; } }
-            fetch(C.supabaseUrl+'/rest/v1/shopify_orders?select=id,items,rating,review&stage=eq.purchased&order=created_at.desc&limit=100',{headers:AH})
-              .then(function(r){ if(!r.ok)return Promise.reject('orders '+r.status); return r.json(); })
-              .then(function(rows){
-                rows=rows||[];
-                var target=null,i;
-                for(i=0;i<rows.length;i++){ if(firstItemPid(rows[i])===pid && !rows[i].rating){ target=rows[i]; break; } }
-                if(!target)for(i=0;i<rows.length;i++){ if(firstItemPid(rows[i])===pid){ target=rows[i]; break; } }
-                if(!target)for(i=0;i<rows.length;i++){ if(containsPid(rows[i]) && !rows[i].rating){ target=rows[i]; break; } }
-                if(!target)for(i=0;i<rows.length;i++){ if(containsPid(rows[i])){ target=rows[i]; break; } }
-                if(!target){ fail('Reviews are for verified buyers. We could not find this product in your purchases.'); return; }
-                // the view has no author column: carry the name inside the review
-                // column behind an invisible separator (U+2063); display splits it.
-                var stored=(name?name+'⁣':'')+text;
-                return fetch(C.supabaseUrl+'/rest/v1/shopify_orders?id=eq.'+encodeURIComponent(target.id),{
-                  method:'PATCH',headers:Object.assign({Prefer:'return=minimal'},AH),
-                  body:JSON.stringify({rating:rating,review:stored})
-                }).then(function(r2){ if(!r2.ok)return Promise.reject('update '+r2.status); succeed(); });
-              })
-              .catch(function(step){ fail('Could not submit your review ('+step+'). Please try again.'); });
-          });
-        });
-        document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&!modal.hidden)closeM(); });
       }
       document.addEventListener('DOMContentLoaded',init);
       document.addEventListener('turbo:load',init);
+      if(document.readyState!=='loading')init();
     })();
   </script>
 </section>
