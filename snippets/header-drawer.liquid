@@ -5,7 +5,7 @@
 
 {%- comment -%}
   Premium drawer slide animation — inline to bypass aa-drawer.css CDN cache.
-  Cache-bust marker: AA-DRAWER-PREMIUM-V8-20260528-0235 (REAL backdrop element, no pseudo, fade-out cleanup)
+  Cache-bust marker: AA-DRAWER-PREMIUM-V9-20260713 (closed state parked off-screen LEFT + hidden; fixes iOS side-gap zoom-out + fixed-element glitch)
 {%- endcomment -%}
 <style>
   @media (max-width: 749px) {
@@ -28,9 +28,16 @@
       box-shadow: none !important;
       padding: 6px 16px calc(96px + env(safe-area-inset-bottom)) !important;
       box-sizing: border-box !important;
-      visibility: visible !important;
-      transform: none !important;
-      -webkit-transform: none !important;
+      /* CLOSED: fully off-screen LEFT + hidden. The old state (visible,
+         transform:none, clip-path 0) kept a permanent full-screen fixed
+         element in layout; Dawn's <sticky-header> transform made it the
+         containing block, so the drawer rode the header on scroll and hung
+         past the right edge -> iOS zoomed out (side gaps) and every fixed
+         element (quiz orb) glitched. Parked LEFT it can never expand the
+         viewport; visibility flips AFTER the close veil finishes. */
+      visibility: hidden !important;
+      transform: translateX(-110vw) !important;
+      -webkit-transform: translateX(-110vw) !important;
       opacity: 1 !important;
       clip-path: circle(0px at 30px 34px) !important;
       -webkit-clip-path: circle(0px at 30px 34px) !important;
@@ -38,7 +45,10 @@
       will-change: clip-path !important;
       transition:
         clip-path 420ms cubic-bezier(0.32, 0.72, 0, 1),
-        -webkit-clip-path 420ms cubic-bezier(0.32, 0.72, 0, 1) !important;
+        -webkit-clip-path 420ms cubic-bezier(0.32, 0.72, 0, 1),
+        visibility 0s linear 460ms,
+        transform 0s linear 460ms,
+        -webkit-transform 0s linear 460ms !important;
     }
     /* OPEN — covers [open] alone AND [open].menu-opening (Dawn adds it ~100ms later) */
     html body header-drawer details[open] #menu-drawer,
@@ -50,10 +60,15 @@
       clip-path: circle(165% at 30px 34px) !important;
       -webkit-clip-path: circle(165% at 30px 34px) !important;
       visibility: visible !important;
+      transform: none !important;
+      -webkit-transform: none !important;
       pointer-events: auto !important;
       transition:
         clip-path 620ms cubic-bezier(0.32, 0.72, 0, 1),
-        -webkit-clip-path 620ms cubic-bezier(0.32, 0.72, 0, 1) !important;
+        -webkit-clip-path 620ms cubic-bezier(0.32, 0.72, 0, 1),
+        visibility 0s linear 0s,
+        transform 0s linear 0s,
+        -webkit-transform 0s linear 0s !important;
     }
     /* FIRST-OPEN FIX: content inside a closed <details> is not rendered, so
        the first click can paint the drawer directly in its open state with no
@@ -872,5 +887,41 @@
   document.addEventListener('turbo:before-cache', forceCloseInstant);
   document.addEventListener('turbo:load', forceCloseInstant);
   document.addEventListener('turbo:render', forceCloseInstant);
+  /* PARK ENFORCER: the CLOSED drawer must never sit in the viewport. Several
+     !important rules (aa-drawer.css, component-menu-drawer.css, this block)
+     fight over transform/visibility, and Dawn's transformed <sticky-header>
+     can hijack the fixed containing block - the closed full-screen drawer then
+     hangs ~46px past the RIGHT edge, iOS zooms the layout out (side gaps) and
+     every fixed element (quiz orb) drifts/lags. Inline !important outranks all
+     stylesheet rules, so the closed state is enforced here. */
+  function drawerPanel() {
+    return document.getElementById('menu-drawer') ||
+      document.querySelector('header-drawer .menu-drawer, header-drawer .aa-drawer');
+  }
+  var parkT;
+  function parkDrawer() {
+    var md = drawerPanel();
+    if (!md || getOpenDrawer()) return;
+    md.style.setProperty('visibility', 'hidden', 'important');
+    md.style.setProperty('transform', 'translateX(-110vw)', 'important');
+    md.style.setProperty('-webkit-transform', 'translateX(-110vw)', 'important');
+  }
+  function unparkDrawer() {
+    var md = drawerPanel();
+    if (!md) return;
+    md.style.removeProperty('visibility');
+    md.style.removeProperty('transform');
+    md.style.removeProperty('-webkit-transform');
+  }
+  function syncPark() {
+    clearTimeout(parkT);
+    if (getOpenDrawer()) { unparkDrawer(); }
+    else { parkT = setTimeout(parkDrawer, 700); }  // after the 420-620ms close veil
+  }
+  // 'toggle' does not bubble; a capturing document listener still receives it.
+  document.addEventListener('toggle', syncPark, true);
+  document.addEventListener('turbo:load', syncPark);
+  document.addEventListener('turbo:render', syncPark);
+  parkDrawer();  // initial page load: drawer is closed -> park it immediately
 })();
 </script>
