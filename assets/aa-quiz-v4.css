@@ -489,7 +489,8 @@
 /* ---- product grid: namespaced cards (immune to Dawn's generic .media/.badge) ---- */
 .aa-qc-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
+  /* fixed 2-up: auto-fill(104px) made 3 narrow columns, so 4 products left 2 holes */
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
   padding: 0 var(--q-px) 4px;
 }
