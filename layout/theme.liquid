@@ -104,7 +104,11 @@
       (function () {
         var tries = 0;
         function reg() {
-          var a = window.amplitude;
+          // Unified instance: window.aaHeatmap is the ONLY initialized Amplitude
+          // instance (aa-amplitude.liquid). window.amplitude (the default) is never
+          // init'd, so every event/identify/getDeviceId must ride aaHeatmap or it is
+          // silently dropped and device ids don't stitch.
+          var a = window.aaHeatmap;
           if (!a || typeof a.add !== 'function') { if (tries++ < 400) setTimeout(reg, 50); return; }
           a.add({
             name: 'aa-context-enrichment',
@@ -151,7 +155,7 @@
           return false;
         }
         function track(name, props) {
-          try { if (window.amplitude) window.amplitude.track(name, props || {}); } catch (e) {}
+          try { if (window.aaHeatmap) window.aaHeatmap.track(name, props || {}); } catch (e) {}
         }
         // Own product-view event (the SDK plugin's Product Viewed arrives with no
         // properties on this theme): fire on initial load + Turbo SPA navs.
@@ -167,7 +171,7 @@
             '[Amplitude] Page Path': location.pathname
           });
         }
-        function pvWhenReady() { var t = 0; (function w() { if (window.amplitude && window.amplitude.track) pv(); else if (t++ < 100) setTimeout(w, 100); })(); }
+        function pvWhenReady() { var t = 0; (function w() { if (window.aaHeatmap && window.aaHeatmap.track) pv(); else if (t++ < 100) setTimeout(w, 100); })(); }
         pvWhenReady();
         addEventListener('turbo:load', pvWhenReady);
         // Tag the session's client: the Aura AI app webview sets the
@@ -176,7 +180,7 @@
         (function tagClient() {
           var t = 0;
           (function w() {
-            var a = window.amplitude;
+            var a = window.aaHeatmap;
             if (a && a.identify && a.Identify) {
               try { a.identify(new a.Identify().set('Web Client', document.cookie.indexOf('app_color_scheme=') > -1 ? 'aura_app' : 'browser')); } catch (e) {}
               return;
@@ -196,7 +200,7 @@
         function stampCart() {
           try {
             var attrs = {};
-            var did = window.amplitude && window.amplitude.getDeviceId && window.amplitude.getDeviceId();
+            var did = window.aaHeatmap && window.aaHeatmap.getDeviceId && window.aaHeatmap.getDeviceId();
             if (did) attrs._amp_device_id = did;
             // GA4 / Firebase (G-1JZ0C69544) identifiers so the server order sync
             // can send a server-side `purchase` via the Measurement Protocol
@@ -239,6 +243,16 @@
           })();
         })();
         addEventListener('turbo:load', function () { stampCart(); });
+        // Re-stamp once the Amplitude device id is available (aaHeatmap inits a
+        // moment after load), so _amp_device_id also lands on the cart — this is
+        // what stitches the server-side Amplitude Purchase to the browsing session.
+        (function ampStamp() {
+          var t = 0;
+          (function w() {
+            if (window.aaHeatmap && window.aaHeatmap.getDeviceId && window.aaHeatmap.getDeviceId()) { stampCart(); return; }
+            if (t++ < 200) setTimeout(w, 100);
+          })();
+        })();
         setInterval(function () {
           var now = overlayPresent();
           if (now && !open) { open = true; openedAt = Date.now(); track('Web_Shopify_Checkout_Opened'); stampCart(); }
