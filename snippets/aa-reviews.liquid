@@ -142,7 +142,8 @@
 
   {%- if aa_count > 0 -%}
     <div class="aa-rv-list">
-      {%- for r in aa_reviews -%}
+      {%- comment -%} show the 18 most recent; the summary keeps the full true count {%- endcomment -%}
+      {%- for r in aa_reviews limit: 18 -%}
         {%- assign r_pct = r.rating | times: 20 -%}
         {%- assign r_initial = r.author | default: 'A' | strip | slice: 0 | upcase -%}
         <article class="aa-rv-card" data-rating="{{ r.rating }}" data-date="{{ r.date }}">
