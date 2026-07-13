@@ -2519,7 +2519,7 @@ html body #ProductGridContainer .collection {
   }
   body.template-collection .product-grid .aa-pcard__rate,
   body.template-search .product-grid .aa-pcard__rate {
-    left: 8px !important; right: auto !important; bottom: 8px !important;
+    right: 8px !important; left: auto !important; top: 8px !important; bottom: auto !important;
   }
   body.template-collection .product-grid .aa-pcard__price,
   body.template-search .product-grid .aa-pcard__price {
@@ -2713,7 +2713,7 @@ html body #ProductGridContainer .collection {
 
 .template-collection .aa-pcard__rate {
   position: absolute;
-  bottom: 10px;
+  top: 10px;
   right: 10px;
   z-index: 2;
   display: inline-flex;
