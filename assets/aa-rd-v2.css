@@ -41,7 +41,7 @@ a{text-decoration:none;color:inherit} img{display:block;max-width:100%} .ph{disp
 .heart{position:absolute;top:9px;right:9px;width:30px;height:30px;border-radius:50%;background:rgba(255,253,249,.92);display:grid;place-items:center;color:#b6a08d;font-size:14px;border:1px solid var(--line);transition:.25s;cursor:pointer}
 .heart:hover{color:var(--magenta)}
 /* rating chip on the image (bottom-right) — collection-card style */
-.pcard .rate{position:absolute;bottom:10px;right:10px;z-index:2;display:inline-flex;align-items:center;gap:4px;background:rgba(255,255,255,.95);font:700 12px/1 'Jost',sans-serif;color:var(--ink);padding:4px 9px;border-radius:999px;box-shadow:0 2px 8px rgba(36,16,25,.10)}
+.pcard .rate{position:absolute;top:10px;right:10px;z-index:2;display:inline-flex;align-items:center;gap:4px;background:rgba(255,255,255,.95);font:700 12px/1 'Jost',sans-serif;color:var(--ink);padding:4px 9px;border-radius:999px;box-shadow:0 2px 8px rgba(36,16,25,.10)}
 .pcard .rate-star{color:#E8A23B}
 .pcard .body{padding:14px 14px 16px;display:flex;flex-direction:column;align-items:center;gap:0;flex:1;text-align:center}
 .pcard .nm{font-size:14.5px;font-weight:600;line-height:1.35;min-height:39px;text-align:center;margin:0}

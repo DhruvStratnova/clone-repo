@@ -28,26 +28,44 @@
      (cache-proof). Every rule carries the (0,6,2) chain to beat astroaura-styles.css
      which styles .aa-pcard__form/.aa-pcard__cta at (0,5,2). */
 
-  /* shared (both viewports): rating chip bottom-left + 2-line title */
+  /* shared (both viewports): rating chip WHITE + TOP-RIGHT (match collection card) + 2-line title */
   html body:not(.template-collection) .related-products .aa-pcard.card-wrapper.product-card-wrapper .aa-pcard__rate {
-    position: absolute !important; left: 10px !important; right: auto !important;
-    bottom: 10px !important; top: auto !important; z-index: 3 !important;
+    position: absolute !important; right: 10px !important; left: auto !important;
+    top: 10px !important; bottom: auto !important; z-index: 3 !important;
     display: inline-flex !important; align-items: center !important; gap: 4px !important;
     padding: 4px 9px !important; border-radius: 999px !important;
-    font-size: 12px !important; font-weight: 700 !important;
-    background: rgba(20, 10, 30, 0.72) !important; color: #FFFFFF !important;
-    -webkit-backdrop-filter: blur(6px) !important; backdrop-filter: blur(6px) !important;
-    border: 1px solid rgba(255, 255, 255, 0.14) !important;
+    font-family: var(--aa-font-ui) !important; font-size: 12px !important; font-weight: 700 !important;
+    background: rgba(255, 255, 255, 0.95) !important; color: var(--aa-ink) !important;
+    -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
+    border: 0 !important; box-shadow: 0 2px 8px rgba(36, 16, 25, 0.10) !important;
   }
-  html body:not(.template-collection) .related-products .aa-pcard.card-wrapper.product-card-wrapper .aa-pcard__rate-star { color: #FFC83D !important; }
+  html body:not(.template-collection) .related-products .aa-pcard.card-wrapper.product-card-wrapper .aa-pcard__rate-star { color: #E8A23B !important; }
   html body:not(.template-collection) .related-products .aa-pcard.card-wrapper.product-card-wrapper .aa-pcard__title {
     display: -webkit-box !important; -webkit-line-clamp: 2 !important; -webkit-box-orient: vertical !important;
     overflow: hidden !important; text-overflow: ellipsis !important;
+    font-family: var(--aa-font-disp) !important; font-size: 14px !important; font-weight: 500 !important;
   }
   html body:not(.template-collection) .related-products .aa-pcard.card-wrapper.product-card-wrapper .aa-pcard__title a { display: inline !important; }
+  /* match collection typography: green %off, display-font price, uppercase small CTA */
+  html body:not(.template-collection) .related-products .aa-pcard.card-wrapper.product-card-wrapper .aa-pcard__pct {
+    font-family: var(--aa-font-ui) !important; font-size: 12.5px !important; font-weight: 700 !important; color: #1d8a4e !important;
+  }
+  html body:not(.template-collection) .related-products .aa-pcard.card-wrapper.product-card-wrapper .aa-pcard__price {
+    font-family: var(--aa-font-disp) !important; font-size: 16px !important; font-weight: 600 !important; color: var(--aa-ink) !important;
+  }
+  html body:not(.template-collection) .related-products .aa-pcard.card-wrapper.product-card-wrapper .aa-pcard__strike {
+    font-family: var(--aa-font-ui) !important; font-size: 11px !important; font-weight: 500 !important; color: var(--aa-muted) !important;
+  }
+  html body:not(.template-collection) .related-products .aa-pcard.card-wrapper.product-card-wrapper .aa-pcard__cta {
+    font-family: var(--aa-font-ui) !important; font-size: 9.5px !important; font-weight: 700 !important;
+    letter-spacing: 0.12em !important; text-transform: uppercase !important;
+  }
 
-  /* DESKTOP card: full-width "Add to cart" pill, hide the floating "+" */
+  /* DESKTOP card: smaller cards to match the collection grid density (~230px) */
   @media screen and (min-width: 750px) {
+    html body:not(.template-collection) .related-products .grid.product-grid > .grid__item {
+      width: 230px !important; min-width: 230px !important; max-width: 230px !important; flex: 0 0 230px !important;
+    }
     html body:not(.template-collection) .related-products .aa-pcard.card-wrapper.product-card-wrapper .aa-pcard__form--float { display: none !important; }
     html body:not(.template-collection) .related-products .aa-pcard.card-wrapper.product-card-wrapper .aa-pcard__form--inline {
       display: block !important; position: static !important; width: 100% !important; margin-top: auto !important;
@@ -73,7 +91,7 @@
       box-shadow: 0 6px 16px rgba(255, 46, 147, 0.34) !important;
     }
     html body:not(.template-collection) .related-products .aa-pcard.card-wrapper.product-card-wrapper .aa-pcard__rate {
-      left: 8px !important; bottom: 8px !important; font-size: 11px !important; padding: 3px 8px !important;
+      right: 8px !important; left: auto !important; top: 8px !important; bottom: auto !important; font-size: 11px !important; padding: 3px 8px !important;
     }
   }
 {%- endstyle -%}
