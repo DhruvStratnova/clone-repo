@@ -168,6 +168,12 @@
       if(!info.querySelector('[data-qv-offer]')) return;
       function put(html){ var s=info.querySelector('[data-qv-offer]'); if(s && html){ s.innerHTML=html; startOfferCountdown(); } }
       if(window.__aaQVOffer!=null){ put(window.__aaQVOffer); return; }
+      // INSTANT path: theme.liquid ships the shared offers card in an inert <template>
+      var tpl=document.getElementById('aa-offers-tpl');
+      if(tpl && tpl.innerHTML && tpl.innerHTML.indexOf('aa-offers')>-1){
+        window.__aaQVOffer=tpl.innerHTML; put(window.__aaQVOffer); return;
+      }
+      // fallback (old behavior): scrape the PDP once, cached on window
       fetch(p.url,{credentials:'same-origin'}).then(function(r){return r.text();}).then(function(h){
         var d=document.createElement('div'); d.innerHTML=h;
         var el=d.querySelector('.aa-offers');

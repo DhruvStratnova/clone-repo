@@ -828,5 +828,10 @@
     box-shadow: 0 10px 30px rgba(255,46,147,.55), 0 0 24px rgba(255,140,66,.55), 0 0 0 1.6px rgba(255,185,95,.65) !important; }
 </style>
 {%- if request.page_type == 'index' -%}{% render 'aa-quiz-orb' %}{%- endif -%}
+{%- comment -%} inert offers template: quick view clones this instantly instead of
+    downloading a whole product page to scrape the card {%- endcomment -%}
+{%- if request.page_type == 'index' or request.page_type == 'collection' or request.page_type == 'search' or request.page_type == 'product' or request.page_type == 'list-collections' -%}
+<template id="aa-offers-tpl">{% render 'aa-offers' %}</template>
+{%- endif -%}
 </body>
 </html>

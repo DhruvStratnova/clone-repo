@@ -1,0 +1,36 @@
+{%- comment -%}
+  Exclusive Offers card - SINGLE SOURCE OF TRUTH.
+  Rendered visibly on the PDP (main-product.liquid, buy_buttons case) and inertly
+  inside <template id="aa-offers-tpl"> in theme.liquid so the quick view can clone
+  it instantly (no full-page fetch). Copy buttons are bound by the consumers:
+  the PDP inline script and the quick view's delegated click handler.
+{%- endcomment -%}
+<div class="aa-offers">
+  <div class="aa-offers__head">
+    <span class="aa-offers__badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><circle cx="7" cy="7" r="1.4" fill="#fff" stroke="none"></circle></svg></span>
+    <span class="aa-offers__ttl">Exclusive Offers</span>
+    <span class="aa-offers__timer"><span class="aa-offers__timer-lbl">Ends in</span> <span data-aa-countdown>--:--:--</span></span>
+  </div>
+  <div class="aa-offers__row">
+    <div class="aa-offer">
+      <div class="aa-offer__t"><span class="aa-offer__ic">🎉</span>Flat 20% &middot; First Order</div>
+      <div class="aa-offer__d">Get 20% OFF on your first prepaid order! ✨ Apply at checkout.</div>
+      <div class="aa-offer__foot"><span class="aa-offer__code">WELCOME20</span><button type="button" class="aa-offer__copy" data-code="WELCOME20">Copy</button></div>
+    </div>
+    <div class="aa-offer">
+      <div class="aa-offer__t"><span class="aa-offer__ic">🎁</span>Flat 10% &middot; First Order</div>
+      <div class="aa-offer__d">Get 10% OFF on your first order! ✨ Apply at checkout.</div>
+      <div class="aa-offer__foot"><span class="aa-offer__code">WELCOME10</span><button type="button" class="aa-offer__copy" data-code="WELCOME10">Copy</button></div>
+    </div>
+    <div class="aa-offer">
+      <div class="aa-offer__t"><span class="aa-offer__ic">💳</span>Flat 15% &middot; Prepaid</div>
+      <div class="aa-offer__d">Get 15% OFF when you pay online! ✨ Apply at checkout.</div>
+      <div class="aa-offer__foot"><span class="aa-offer__code">PREPAID15</span><button type="button" class="aa-offer__copy" data-code="PREPAID15">Copy</button></div>
+    </div>
+    <div class="aa-offer">
+      <div class="aa-offer__t"><span class="aa-offer__ic">💫</span>Flat 7% &middot; Any Order</div>
+      <div class="aa-offer__d">Get 7% OFF on Every Order! ✨ Apply at checkout.</div>
+      <div class="aa-offer__foot"><span class="aa-offer__code">SAVE7</span><button type="button" class="aa-offer__copy" data-code="SAVE7">Copy</button></div>
+    </div>
+  </div>
+</div>
