@@ -41,15 +41,24 @@
   {%- assign aa_p1 = aa_c1 | times: 100 | divided_by: aa_count -%}
 {%- endif -%}
 
+{%- capture aa_star_svg -%}<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27l6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>{%- endcapture -%}
+{%- capture aa_stars5 -%}{{ aa_star_svg }}{{ aa_star_svg }}{{ aa_star_svg }}{{ aa_star_svg }}{{ aa_star_svg }}{%- endcapture -%}
+
 <section id="aa-reviews" class="aa-rv" data-review-endpoint="" data-product-id="{{ product.id }}">
   <style>
     #aa-reviews{--rv-surface:#ffffff;--rv-border:#EFE9DF;--rv-ink:#1F0820;--rv-text:#4A3D3F;--rv-muted:rgba(32,22,22,.55);--rv-gold:#E0A020;--rv-empty:#DCD3C4;--rv-track:#ECE4D6;--rv-active:rgba(31,8,32,.06);--rv-inputbg:#FBF7EF;--rv-pill-bg:#1F0820;--rv-pill-text:#fff;--rv-avatarbg:#EFE9DF;--rv-avataricon:#B7A597;--rv-shadow:0 2px 14px rgba(31,8,32,.06);--rv-grad:linear-gradient(90deg,#FF8C42,#FF2E93);--rv-onaccent:#ffffff;color:var(--rv-text);font-family:inherit;font-size:16px;max-width:none;margin:0;padding:8px 20px 36px;box-sizing:border-box;}
     html[data-theme="dark"] #aa-reviews{--rv-surface:#160E2E;--rv-border:rgba(255,255,255,.08);--rv-ink:#F4EFFA;--rv-text:#C9BEDD;--rv-muted:#A99FC4;--rv-gold:#E8C97A;--rv-empty:rgba(255,255,255,.18);--rv-track:rgba(255,255,255,.10);--rv-active:rgba(255,255,255,.07);--rv-inputbg:#0C0A1F;--rv-onaccent:#0C0A1F;--rv-pill-bg:rgba(255,255,255,.14);--rv-pill-text:#F4EFFA;--rv-avatarbg:rgba(255,255,255,.08);--rv-avataricon:#A99FC4;--rv-shadow:0 2px 14px rgba(0,0,0,.4);}
     #aa-reviews *,#aa-reviews *::before,#aa-reviews *::after{box-sizing:border-box;}
     #aa-reviews .aa-rv-heading{font-family:'Sora','Marcellus',Georgia,serif;color:var(--rv-ink);font-size:1.5em;font-weight:700;margin:0 0 18px;letter-spacing:.2px;}
-    #aa-reviews .aa-rv-stars{position:relative;display:inline-block;line-height:1;white-space:nowrap;vertical-align:middle;}
-    #aa-reviews .aa-rv-stars-bg{color:var(--rv-empty);letter-spacing:2px;}
-    #aa-reviews .aa-rv-stars-fg{position:absolute;top:0;left:0;overflow:hidden;white-space:nowrap;color:var(--rv-gold);letter-spacing:2px;}
+    /* Stars are inline SVG (font-proof: the brand webfonts lack the ★ glyph, so
+       text stars rendered zero-width/invisible). fg row is width-clipped over bg. */
+    #aa-reviews .aa-rv-stars{position:relative;display:inline-block;line-height:0;white-space:nowrap;vertical-align:middle;font-size:0;}
+    #aa-reviews .aa-rv-stars svg{display:inline-block;width:1em;height:1em;font-size:19px;vertical-align:top;margin-right:3px;}
+    #aa-reviews .aa-rv-stars-bg{color:var(--rv-empty);display:inline-block;}
+    #aa-reviews .aa-rv-stars-fg{position:absolute;top:0;left:0;overflow:hidden;white-space:nowrap;color:var(--rv-gold);display:inline-block;}
+    #aa-reviews .aa-rv-stars--lg svg{font-size:26px;}
+    #aa-reviews .aa-rv-card-top .aa-rv-stars svg{font-size:21px;}
+    #aa-reviews .aa-rv-bar-label svg{width:12px;height:12px;vertical-align:-1px;color:var(--rv-gold);}
     #aa-reviews .aa-rv-summary{display:flex;flex-direction:column;gap:26px;background:var(--rv-surface);border:1px solid var(--rv-border);border-radius:18px;padding:30px 30px;box-shadow:var(--rv-shadow);}
     #aa-reviews .aa-rv-avg-block{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;}
     #aa-reviews .aa-rv-avg-num{font-family:'Sora','Marcellus',Georgia,serif;font-size:3.9em;font-weight:700;line-height:1;color:var(--rv-ink);}
@@ -123,6 +132,7 @@
     #aa-rv-modal .aa-rv-step__sub{color:var(--rv-muted);font-size:.86em;line-height:1.5;margin:0 0 18px;}
     #aa-rv-modal .aa-rv-mstars{display:flex;gap:10px;justify-content:center;margin:18px 0 30px;}
     #aa-rv-modal .aa-rv-mstar{font-size:3.4em;line-height:1;color:var(--rv-empty);background:none;border:0;cursor:pointer;padding:0 4px;transition:transform .12s ease,color .12s ease;}
+    #aa-rv-modal .aa-rv-mstar svg{width:1em;height:1em;display:block;fill:currentColor;}
     #aa-rv-modal .aa-rv-mstar.is-on{color:var(--rv-gold);}
     #aa-rv-modal .aa-rv-mstar:hover{transform:scale(1.16);}
     #aa-rv-modal .aa-rv-upload{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;border:1.5px dashed var(--rv-border);border-radius:14px;padding:44px 16px;cursor:pointer;color:var(--rv-muted);background:var(--rv-inputbg);}
@@ -181,7 +191,7 @@
     <div class="aa-rv-summary">
       <div class="aa-rv-avg-block">
         <span class="aa-rv-avg-num">{{ aa_avg }}</span>
-        <span class="aa-rv-stars aa-rv-stars--lg" role="img" aria-label="{{ aa_avg }} out of 5 stars"><span class="aa-rv-stars-bg" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span class="aa-rv-stars-fg" aria-hidden="true" style="width:{{ aa_avg_pct }}%;">&#9733;&#9733;&#9733;&#9733;&#9733;</span></span>
+        <span class="aa-rv-stars aa-rv-stars--lg" role="img" aria-label="{{ aa_avg }} out of 5 stars"><span class="aa-rv-stars-bg" aria-hidden="true">{{ aa_stars5 }}</span><span class="aa-rv-stars-fg" aria-hidden="true" style="width:{{ aa_avg_pct }}%;">{{ aa_stars5 }}</span></span>
         <span class="aa-rv-count">Based on {{ aa_count }} {% if aa_count == 1 %}review{% else %}reviews{% endif %}</span>
       </div>
       <div class="aa-rv-bars">
@@ -195,7 +205,7 @@
             {%- when "1" -%}{%- assign aa_rc = aa_c1 -%}{%- assign aa_rp = aa_p1 -%}
           {%- endcase -%}
           <div class="aa-rv-bar-row">
-            <span class="aa-rv-bar-label">{{ lvl }} <span class="aa-rv-star" aria-hidden="true">&#9733;</span></span>
+            <span class="aa-rv-bar-label">{{ lvl }} <span class="aa-rv-star" aria-hidden="true">{{ aa_star_svg }}</span></span>
             <span class="aa-rv-bar-track"><span class="aa-rv-bar-fill" style="width:{{ aa_rp }}%;"></span></span>
             <span class="aa-rv-bar-count">{{ aa_rc }}</span>
           </div>
@@ -227,7 +237,7 @@
         {%- assign r_initial = r.author | default: 'A' | strip | slice: 0 | upcase -%}
         <article class="aa-rv-card" data-rating="{{ r.rating }}" data-date="{{ r.date }}">
           <div class="aa-rv-card-top">
-            <span class="aa-rv-stars" role="img" aria-label="{{ r.rating }} out of 5 stars"><span class="aa-rv-stars-bg" aria-hidden="true">★★★★★</span><span class="aa-rv-stars-fg" aria-hidden="true" style="width:{{ r_pct }}%;">★★★★★</span></span>
+            <span class="aa-rv-stars" role="img" aria-label="{{ r.rating }} out of 5 stars"><span class="aa-rv-stars-bg" aria-hidden="true">{{ aa_stars5 }}</span><span class="aa-rv-stars-fg" aria-hidden="true" style="width:{{ r_pct }}%;">{{ aa_stars5 }}</span></span>
             {%- if r.date -%}<span class="aa-rv-date">{{ r.date | date: "%d/%m/%Y" }}</span>{%- endif -%}
           </div>
           <div class="aa-rv-card-head">
@@ -254,11 +264,11 @@
           <h3 class="aa-rv-step__h">How would you rate it?</h3>
           <p class="aa-rv-step__sub">Tap the stars to rate this product.</p>
           <div class="aa-rv-mstars" role="radiogroup" aria-label="Rating">
-            <button type="button" class="aa-rv-mstar" data-val="1" aria-label="1 star">&#9733;</button>
-            <button type="button" class="aa-rv-mstar" data-val="2" aria-label="2 stars">&#9733;</button>
-            <button type="button" class="aa-rv-mstar" data-val="3" aria-label="3 stars">&#9733;</button>
-            <button type="button" class="aa-rv-mstar" data-val="4" aria-label="4 stars">&#9733;</button>
-            <button type="button" class="aa-rv-mstar" data-val="5" aria-label="5 stars">&#9733;</button>
+            <button type="button" class="aa-rv-mstar" data-val="1" aria-label="1 star">{{ aa_star_svg }}</button>
+            <button type="button" class="aa-rv-mstar" data-val="2" aria-label="2 stars">{{ aa_star_svg }}</button>
+            <button type="button" class="aa-rv-mstar" data-val="3" aria-label="3 stars">{{ aa_star_svg }}</button>
+            <button type="button" class="aa-rv-mstar" data-val="4" aria-label="4 stars">{{ aa_star_svg }}</button>
+            <button type="button" class="aa-rv-mstar" data-val="5" aria-label="5 stars">{{ aa_star_svg }}</button>
           </div>
           <input type="hidden" name="rating" value="0">
           <button type="button" class="aa-rv-next" data-next disabled>Continue</button>
@@ -315,7 +325,9 @@
         [].forEach.call(sortBtns,function(btn){ btn.addEventListener('click',function(){ [].forEach.call(sortBtns,function(b){b.classList.remove('is-active');b.setAttribute('aria-pressed','false');}); btn.classList.add('is-active');btn.setAttribute('aria-pressed','true'); sortBy(btn.dataset.sort); }); });
         // ---- merge verified customer reviews submitted via My Orders (Supabase) ----
         function esc2(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
-        function starHTML(r){ var p=Math.max(0,Math.min(5,r))*20; return '<span class="aa-rv-stars" role="img" aria-label="'+r+' out of 5 stars"><span class="aa-rv-stars-bg" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span class="aa-rv-stars-fg" aria-hidden="true" style="width:'+p+'%">&#9733;&#9733;&#9733;&#9733;&#9733;</span></span>'; }
+        var STAR='<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27l6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>';
+        var STARS5=STAR+STAR+STAR+STAR+STAR;
+        function starHTML(r){ var p=Math.max(0,Math.min(5,r))*20; return '<span class="aa-rv-stars" role="img" aria-label="'+r+' out of 5 stars"><span class="aa-rv-stars-bg" aria-hidden="true">'+STARS5+'</span><span class="aa-rv-stars-fg" aria-hidden="true" style="width:'+p+'%">'+STARS5+'</span></span>'; }
         function pad2(n){ return (n<10?'0':'')+n; }
         function fmtDate(iso){ if(!iso)return ''; var d=new Date(iso); if(isNaN(d))return ''; return pad2(d.getDate())+'/'+pad2(d.getMonth()+1)+'/'+d.getFullYear(); }
         function isoDay(iso){ if(!iso)return ''; var d=new Date(iso); if(isNaN(d))return ''; return d.getFullYear()+'-'+pad2(d.getMonth()+1)+'-'+pad2(d.getDate()); }
