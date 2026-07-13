@@ -445,7 +445,8 @@ function aaCalcInit() {
         '</div></div>';
     }
     var note = (data && data.sections && data.sections.note) ? '<p style="margin:16px 4px 0;font-size:12px;opacity:.6;text-align:center;line-height:1.5">' + escapeHtml(data.sections.note) + '</p>' : '';
-    astroOutputDiv.innerHTML = intro + actions + hero + moreList + note;
+    // HERO FIRST: the recommended-product card leads the result, then the reading.
+    astroOutputDiv.innerHTML = hero + intro + actions + moreList + note;
     astroResultsDiv.style.display = 'block';
     astroResultsDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }

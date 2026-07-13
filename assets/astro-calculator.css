@@ -641,7 +641,9 @@
 .aa-rem-actions li { margin: 6px 0; line-height: 1.5; font-size: 14px; }
 
 .aa-rem-hero-wrap { margin: 0 0 22px; }
-.aa-rem-more h3 {
+/* child combinator on purpose: a bare descendant `h3` also captured every card's
+   .aa-rem-card__name (h3), blowing it up to 22px gold serif */
+.aa-rem-more > h3 {
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-size: 22px;
   color: #D4A857;
@@ -725,6 +727,14 @@
   line-height: 1.2;
 }
 .aa-rem-card--hero .aa-rem-card__name { font-size: 19px; }
+/* grid cards: 2-line name so every card stays the same height */
+.aa-rem-card:not(.aa-rem-card--hero) .aa-rem-card__name {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 2.4em;
+}
 .aa-rem-card__price {
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-size: 16px;
@@ -768,7 +778,7 @@
 .aa-rem-card:not(.aa-rem-card--hero) .aa-rem-card__how { display: none; }
 
 .aa-rem-card__cta {
-  margin-top: 4px;
+  margin-top: auto;   /* pin to the card bottom so CTAs align across the grid */
   display: inline-block;
   align-self: stretch;
   text-align: center;
