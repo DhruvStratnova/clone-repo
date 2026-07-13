@@ -225,6 +225,20 @@
             });
           } catch (e) {}
         }
+        // Stamp EARLY — on load once the _ga cookie exists — NOT only at
+        // overlay-open. Razorpay Magic Checkout snapshots the cart before our
+        // overlay-open poll fires, so the late stamp lost the race every time
+        // (verified: 0/299 orders ever carried the ids). Stamping on load (and
+        // on each SPA nav) puts the ids on the cart well before Magic Checkout
+        // reads it. The overlay-open stamp below stays as a fallback.
+        (function earlyStamp() {
+          var t = 0;
+          (function w() {
+            if (document.cookie.indexOf('_ga=') > -1) { stampCart(); return; }
+            if (t++ < 100) setTimeout(w, 100);
+          })();
+        })();
+        addEventListener('turbo:load', function () { stampCart(); });
         setInterval(function () {
           var now = overlayPresent();
           if (now && !open) { open = true; openedAt = Date.now(); track('Web_Shopify_Checkout_Opened'); stampCart(); }
