@@ -356,7 +356,15 @@
           // (stage=purchased AND rating set). Rows written in the DB show here too.
           fetch(C.supabaseUrl+'/rest/v1/product_reviews?order=created_at.desc'+f,{headers:H})
             .then(function(r){return r.ok?r.json():[];})
-            .then(function(rows){ if(Array.isArray(rows)&&rows.length)mergeLive(rows); })
+            .then(function(rows){
+              if(!Array.isArray(rows)||!rows.length)return;
+              // the customer's name is stored before an invisible U+2063 separator
+              rows.forEach(function(r){
+                var p=String(r.review||'').split('⁣');
+                if(p.length>1){ r.author=r.author||p[0]; r.review=p.slice(1).join('⁣'); }
+              });
+              mergeLive(rows);
+            })
             .catch(function(){});
         })();
         var modal=document.getElementById('aa-rv-modal'); if(!modal)return;
@@ -449,9 +457,12 @@
                 if(!target)for(i=0;i<rows.length;i++){ if(containsPid(rows[i]) && !rows[i].rating){ target=rows[i]; break; } }
                 if(!target)for(i=0;i<rows.length;i++){ if(containsPid(rows[i])){ target=rows[i]; break; } }
                 if(!target){ fail('Reviews are for verified buyers. We could not find this product in your purchases.'); return; }
+                // the view has no author column: carry the name inside the review
+                // column behind an invisible separator (U+2063); display splits it.
+                var stored=(name?name+'⁣':'')+text;
                 return fetch(C.supabaseUrl+'/rest/v1/shopify_orders?id=eq.'+encodeURIComponent(target.id),{
                   method:'PATCH',headers:Object.assign({Prefer:'return=minimal'},AH),
-                  body:JSON.stringify({rating:rating,review:text})
+                  body:JSON.stringify({rating:rating,review:stored})
                 }).then(function(r2){ if(!r2.ok)return Promise.reject('update '+r2.status); succeed(); });
               })
               .catch(function(step){ fail('Could not submit your review ('+step+'). Please try again.'); });
