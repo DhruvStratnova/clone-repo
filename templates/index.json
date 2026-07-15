@@ -19,8 +19,8 @@
         "slide_tXFfw7": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/GemsAura_banner2.jpg",
-            "image_mobile": "shopify://shop_images/GemsAura_phonebanner2.jpg",
+            "image": "shopify://shop_images/aa-banner-rudraksha-desk.jpg",
+            "image_mobile": "shopify://shop_images/aa-banner-rudraksha-mob.jpg",
             "image_overlay_opacity": 0,
             "heading": "",
             "heading_size": "h1",
@@ -149,7 +149,7 @@
     "spiritual_aa": {
       "type": "aa-rd-imgtext",
       "settings": {
-        "dev": "॥ रुद्राक्ष ॥",
+        "dev": "\u0965 \u0930\u0941\u0926\u094d\u0930\u093e\u0915\u094d\u0937 \u0965",
         "heading": "Spiritual Essential",
         "text": "A sacred seed, Rudraksha carries divine protection, inner peace and clarity for a steady journey toward balance and enlightenment.",
         "btn_label": "Shop Rudraksha",
@@ -184,7 +184,7 @@
     "ourshop_aa": {
       "type": "aa-rd-imgtext",
       "settings": {
-        "dev": "॥ शुभ लाभ ॥",
+        "dev": "\u0965 \u0936\u0941\u092d \u0932\u093e\u092d \u0965",
         "heading": "Our Shop",
         "text": "Gemstones, Rudraksha and crystal bracelets where beauty meets energy. Rudraksha brings peace, gemstones invite prosperity, crystals lift your healing vibration.",
         "btn_label": "Shop all",
@@ -227,7 +227,7 @@
         "tile_2"
       ],
       "settings": {
-        "dev": "॥ अपनी राशि चुनें ॥",
+        "dev": "\u0965 \u0905\u092a\u0928\u0940 \u0930\u093e\u0936\u093f \u091a\u0941\u0928\u0947\u0902 \u0965",
         "heading": "Shop by Aura"
       }
     },
@@ -377,7 +377,7 @@
         "review_1": {
           "type": "review",
           "settings": {
-            "quote": "Not just décor, it genuinely helps me focus during meditation. You feel the difference within a few days of wearing it.",
+            "quote": "Not just d\u00e9cor, it genuinely helps me focus during meditation. You feel the difference within a few days of wearing it.",
             "name": "Siddharth Kumar",
             "product": "Amethyst Bracelet"
           }
@@ -492,7 +492,7 @@
     "dhanyog_aa": {
       "type": "aa-rd-dhanyog",
       "settings": {
-        "eyebrow": "॥ धन योग ॥",
+        "eyebrow": "\u0965 \u0927\u0928 \u092f\u094b\u0917 \u0965",
         "heading": "The Dhan Yog Bracelet",
         "body": "Strung with citrine, tiger eye and the sacred Dhan Yog bead, worn to draw wealth, abundance and balanced energy into everyday life.",
         "cta": "Discover the Bracelet",
