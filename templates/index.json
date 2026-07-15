@@ -19,8 +19,8 @@
         "slide_tXFfw7": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/aa-banner-rudraksha-desk-v2.jpg",
-            "image_mobile": "shopify://shop_images/aa-banner-rudraksha-mob.jpg",
+            "image": "shopify://shop_images/aa-banner-rudraksha-desk-v3.jpg",
+            "image_mobile": "shopify://shop_images/aa-banner-rudraksha-mob-v2.jpg",
             "image_overlay_opacity": 0,
             "heading": "",
             "heading_size": "h1",
@@ -58,8 +58,8 @@
         "slide_93RPaQ": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/GemsAura_banner1.jpg",
-            "image_mobile": "shopify://shop_images/GemsAura_phonebanner1.jpg",
+            "image": "shopify://shop_images/aa-banner-bracelets-desk.jpg",
+            "image_mobile": "shopify://shop_images/aa-banner-bracelets-mob.jpg",
             "image_overlay_opacity": 0,
             "heading": "",
             "heading_size": "h2",
@@ -77,8 +77,8 @@
         "slide_FnJjtn": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/aa-banner-gemstones-desk.jpg",
-            "image_mobile": "shopify://shop_images/aa-banner-gemstones-mob.jpg",
+            "image": "shopify://shop_images/aa-banner-gemstones-desk-v2.jpg",
+            "image_mobile": "shopify://shop_images/aa-banner-gemstones-mob-v2.jpg",
             "image_overlay_opacity": 0,
             "heading": "",
             "heading_size": "h1",
