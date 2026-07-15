@@ -77,8 +77,8 @@
         "slide_FnJjtn": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/GemsAura_banner6.jpg",
-            "image_mobile": "shopify://shop_images/GemsAura_phonebanner6.jpg",
+            "image": "shopify://shop_images/aa-banner-gemstones-desk.jpg",
+            "image_mobile": "shopify://shop_images/aa-banner-gemstones-mob.jpg",
             "image_overlay_opacity": 0,
             "heading": "",
             "heading_size": "h1",
