@@ -29,7 +29,7 @@
         mid-page + jump to top). Back/forward restore still uses the cache. {%- endcomment -%}
     <meta name="turbo-cache-control" content="no-preview">
     {%- comment -%} AstroAura: the cart is the slide-up drawer only — kill the standalone /cart page {%- endcomment -%}
-    <script>if(location.pathname.replace(/\/+$/,'')==='/cart'){location.replace('/?cart=open');}</script>
+    <script>if(location.pathname.replace(/\/+$/,'')==='/cart'){var q=location.search.replace(/^\?/,'');location.replace('/?cart=open'+(q?'&'+q:''));}</script>
     <meta name="theme-color" content="#1F0820">
     <link rel="canonical" href="{{ canonical_url }}">
 

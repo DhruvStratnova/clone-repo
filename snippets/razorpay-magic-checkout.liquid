@@ -1,1 +1,37 @@
 <div id="magic-checkout-data-container"><script src="https://magic-plugins.razorpay.com/shopify/magic-shopify.js" crossorigin="anonymous" defer></script><script id="RazorpayMagicCheckoutConfig" type="application/json">{"oneClickCheckoutEnabled":"{{shop.metafields.magic_checkout.oneClickCheckoutEnabled}}","buyNowEnabled":"{{shop.metafields.magic_checkout.buyNowEnabled}}","config":{{shop.metafields.magic_checkout.config}},"email":"{{customer.email}}","phone":"{{customer.phone}}"}</script></div>
+<script>
+/* aa-magic-autofire: WhatsApp cart-revival links (?magic_order_id=...) should open
+   Magic Checkout WITHOUT a customer click. magic-shopify.js restores the cart and
+   redirects (dropping the param), so a sessionStorage timestamp carries intent
+   across page loads. On every page, while the intent is fresh (<90s), poll every
+   2s: once the cart has items and Razorpay is armed, click the real drawer
+   checkout anchor; keep retrying until the Razorpay overlay is actually visible,
+   then clear the intent. Silent no-op for normal visitors. */
+(function () {
+  try {
+    var qs = new URLSearchParams(location.search);
+    if (qs.has('magic_order_id') || qs.has('aa_auto')) sessionStorage.setItem('aaMagicAuto', String(Date.now()));
+    var t0 = parseInt(sessionStorage.getItem('aaMagicAuto') || '0', 10);
+    if (!t0) return;
+    var overlayVisible = function () {
+      var el = document.querySelector('.razorpay-container');
+      if (!el) return false;
+      var cs = getComputedStyle(el);
+      if (cs.display === 'none' || cs.visibility === 'hidden') return false;
+      var r = el.getBoundingClientRect();
+      return r.width >= 200 && r.height >= 200;
+    };
+    var done = function (timer) { clearInterval(timer); sessionStorage.removeItem('aaMagicAuto'); };
+    var timer = setInterval(function () {
+      if (Date.now() - t0 > 90000) { done(timer); return; }
+      if (overlayVisible()) { done(timer); return; }
+      if (!window.Razorpay) return;
+      fetch('/cart.js').then(function (r) { return r.json(); }).then(function (c) {
+        if (!c || !c.item_count || overlayVisible()) return;
+        var btn = document.querySelector('[data-aac-checkout]');
+        if (btn) btn.click();
+      }).catch(function () {});
+    }, 2000);
+  } catch (e) {}
+})();
+</script>
