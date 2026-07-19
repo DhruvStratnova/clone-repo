@@ -1,0 +1,33 @@
+{%- comment -%}
+  aa-collection-hero: full-bleed collection banner from the 2026-07 program.
+  Same image at all viewports (art text baked into the banner).
+{%- endcomment -%}
+
+{%- assign img = section.settings.image_asset | strip -%}
+{%- if img != blank -%}
+<div class="aa-ch">
+  <img
+    class="aa-ch__img"
+    src="{{ img | asset_img_url: '1500x' }}"
+    srcset="{{ img | asset_img_url: '750x' }} 750w, {{ img | asset_img_url: '1100x' }} 1100w, {{ img | asset_img_url: '1500x' }} 1500w, {{ img | asset_img_url: '2000x' }} 2000w, {{ img | asset_img_url: '2520x' }} 2520w"
+    sizes="100vw"
+    alt="{{ collection.title | escape }}"
+    width="2520" height="1080"
+    loading="eager" fetchpriority="high">
+</div>
+
+{% style %}
+.aa-ch { line-height: 0; }
+.aa-ch__img { width: 100%; height: auto; aspect-ratio: 2520 / 1080; object-fit: cover; }
+{% endstyle %}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "AA Collection Hero",
+  "settings": [
+    { "type": "text", "id": "image_asset", "label": "Asset filename (in /assets)" }
+  ],
+  "presets": [{ "name": "AA Collection Hero" }]
+}
+{% endschema %}

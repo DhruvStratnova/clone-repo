@@ -26,18 +26,6 @@
             alt="{{ block.settings.heading | escape }}"
             width="2520" height="1080"
             {% if forloop.first %}loading="eager" fetchpriority="high"{% else %}loading="lazy" decoding="async"{% endif %}>
-          <span class="aa-hc__scrim" aria-hidden="true"></span>
-          <span class="aa-hc__content">
-            {%- if block.settings.kicker != blank -%}
-              <span class="aa-hc__kicker">{{ block.settings.kicker }}</span>
-            {%- endif -%}
-            {%- if block.settings.heading != blank -%}
-              <span class="aa-hc__heading">{{ block.settings.heading }}</span>
-            {%- endif -%}
-            {%- if block.settings.cta != blank -%}
-              <span class="aa-hc__cta">{{ block.settings.cta }}</span>
-            {%- endif -%}
-          </span>
         </a>
       {%- endfor -%}
     </div>
@@ -78,7 +66,6 @@
 @media (prefers-reduced-motion: reduce) {
   .aa-hc__belt { transition: none; }
 }
-.aa-hc__scrim, .aa-hc__content { display: none; }
 
 .aa-hc__progress {
   position: absolute; left: 50%; transform: translateX(-50%); bottom: 14px;
@@ -95,31 +82,8 @@
 @media (prefers-reduced-motion: reduce) { .aa-hc__seg.is-active .aa-hc__fill { animation: none; width: 100%; } }
 
 @media screen and (max-width: 749px) {
-  .aa-hc__img { aspect-ratio: 4 / 5; }
-  .aa-hc__img--left   { object-position: 12% 50%; }
-  .aa-hc__img--center { object-position: 50% 50%; }
-  .aa-hc__img--right  { object-position: 88% 50%; }
-  .aa-hc__scrim {
-    display: block; position: absolute; inset: 0; pointer-events: none;
-    background: linear-gradient(to top, rgba(10, 8, 24, 0.72) 0%, rgba(10, 8, 24, 0.25) 34%, rgba(10, 8, 24, 0) 55%);
-  }
-  .aa-hc__content {
-    position: absolute; left: 18px; right: 18px; bottom: 34px;
-    display: flex; flex-direction: column; align-items: flex-start; gap: 8px;
-    line-height: 1.25;
-  }
-  .aa-hc__kicker {
-    font-size: 10.5px; font-weight: 600; letter-spacing: 2.4px;
-    color: rgba(255, 255, 255, 0.82); text-transform: uppercase;
-  }
-  .aa-hc__heading { font-size: 25px; font-weight: 700; color: #FFFFFF; }
-  .aa-hc__cta {
-    margin-top: 4px; padding: 8px 18px; border: 1px solid rgba(255, 255, 255, 0.55);
-    border-radius: 999px; font-size: 12.5px; font-weight: 600; color: #fff;
-    letter-spacing: 0.4px; backdrop-filter: blur(4px);
-  }
-  .aa-hc__progress { bottom: 12px; }
-  .aa-hc__seg { width: 14px; }
+  .aa-hc__progress { bottom: 8px; }
+  .aa-hc__seg { width: 12px; height: 2.5px; }
 }
 {% endstyle %}
 

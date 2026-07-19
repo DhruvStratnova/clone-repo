@@ -3,7 +3,7 @@
     "image_banner_zpGQzQ": {
       "type": "aa-collection-hero",
       "settings": {
-        "image_asset": "aa-hero-gemstones.jpg"
+        "image_asset": "aa-hero-zodiac.jpg"
       }
     },
     "banner": {
@@ -26,7 +26,7 @@
         "show_secondary_image": false,
         "show_vendor": false,
         "show_rating": false,
-        "quick_add": "standard",
+        "quick_add": "none",
         "enable_filtering": true,
         "filter_type": "horizontal",
         "enable_sorting": true,
@@ -34,51 +34,51 @@
         "padding_bottom": 36
       }
     },
-    "collapsible_content_M7gqi6": {
+    "collapsible_content_gVeE7N": {
       "type": "collapsible-content",
       "blocks": {
-        "collapsible_row_XJBMpX": {
+        "collapsible_row_PUawMt": {
           "type": "collapsible_row",
           "settings": {
             "heading": "What are its benefits?",
             "icon": "none",
-            "row_content": "<p>Gemstones balance planetary energies and maintain<br/>positive energies in your life. Depending on the stone, they can maintain<br/>mental clarity, draw abundance into your life, strengthen relationships, heal<br/>your health, or provide spiritual protection.</p>",
+            "row_content": "<p>Bracelets channel the natural energy of Rudraksha or crystals, helping<br/>with focus, positivity, and emotional balance. They also enhance style while<br/>offering subtle spiritual support.</p>",
             "page": ""
           }
         },
-        "collapsible_row_yLw6xq": {
+        "collapsible_row_64qYq3": {
           "type": "collapsible_row",
           "settings": {
-            "heading": "How natural and authentic is this gemstone?",
+            "heading": "How natural and authentic is this Bracelets?",
             "icon": "none",
-            "row_content": "<p>We provide 100% natural, certified gemstones that have<br/>been ethically sourced and lab-tested for authenticity. Each gemstone comes<br/>with a certificate of authenticity, ensuring purity and trust.</p>",
+            "row_content": "<p>Each bracelet is crafted with authentic Rudraksha seeds or natural<br/>crystals. AstroAura ensures that no artificial or synthetic substitutes are<br/>used.</p>",
             "page": ""
           }
         },
-        "collapsible_row_dCTPWW": {
+        "collapsible_row_kUMiiQ": {
           "type": "collapsible_row",
           "settings": {
             "heading": "What is the return policy and estimated delivery duration?",
             "icon": "none",
-            "row_content": "<p>Since gemstones are spiritual and customized, returns<br/>are not allowed. However, if there is damage or incorrect shipping,<br/>replacements are assessed case-by-case. Time of delivery is area-based: 5–7<br/>working days for Indian delivery and 10–14 working days for international<br/>delivery.</p>",
+            "row_content": "<p>Bracelets are shipped securely worldwide. Returns are accepted within<br/>the return window if the bracelet is unworn and in its original condition.</p>",
             "page": ""
           }
         },
-        "collapsible_row_daCmTz": {
+        "collapsible_row_jyQ3gB": {
           "type": "collapsible_row",
           "settings": {
             "heading": "How is this energized and how can i wear it?",
             "icon": "none",
-            "row_content": "<p>Every gemstone is ritually cleansed and charged (pran<br/>pratishtha) by Vedic methods before dispatch so that it absorbs the<br/>sought-after planetary energies. Directions are issued for using the<br/>stone—whether as a ring, pendant, or bracelet—and the recommended metal and<br/>auspicious day for wearing.</p>",
+            "row_content": "<p>Bracelets can be worn directly on the wrist. They are pre-energized<br/>before dispatch but can also be recharged by mantra chanting or meditation.</p>",
             "page": ""
           }
         }
       },
       "block_order": [
-        "collapsible_row_XJBMpX",
-        "collapsible_row_yLw6xq",
-        "collapsible_row_dCTPWW",
-        "collapsible_row_daCmTz"
+        "collapsible_row_PUawMt",
+        "collapsible_row_64qYq3",
+        "collapsible_row_kUMiiQ",
+        "collapsible_row_jyQ3gB"
       ],
       "name": "t:sections.collapsible_content.presets.name",
       "settings": {
@@ -101,6 +101,6 @@
     "image_banner_zpGQzQ",
     "banner",
     "product-grid",
-    "collapsible_content_M7gqi6"
+    "collapsible_content_gVeE7N"
   ]
 }
