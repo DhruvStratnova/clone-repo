@@ -38,10 +38,11 @@
     line-height: 1.08; color: #1B1620; }
   .aa-whyb__intro { margin: 18px 0 0; font-size: 16px; line-height: 1.65; color: #6B655C; max-width: 46ch; }
   @media screen and (min-width: 750px) {
-    .aa-whyb { display: grid; grid-template-columns: 1fr 1fr; gap: 64px;
+    .aa-whyb { display: grid; grid-template-columns: 1.05fr 0.85fr; gap: 56px;
       align-items: center; padding: 72px clamp(20px, 4vw, 44px); }
     .aa-whyb__media { display: block; }
-    .aa-whyb__media img { width: 100%; height: auto; border-radius: 24px; display: block; }
+    .aa-whyb__media img { width: 100%; max-width: 360px; height: auto;
+      border-radius: 22px; display: block; margin: 0 auto; }
     .aa-whyb__title { font-size: clamp(40px, 4.2vw, 56px); }
     .aa-whyb__intro { font-size: 18px; margin-top: 22px; max-width: 44ch; }
   }
