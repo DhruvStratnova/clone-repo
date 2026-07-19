@@ -1,52 +1,49 @@
 {%- comment -%}
   aa-hero-carousel: homepage hero carousel (2026-07 banner program).
-  Desktop: full-bleed 21:9 banners with baked-in art text.
+  Desktop: full-bleed 21:9 banners with baked-in art text, grab-drag to browse.
   Mobile: same image cropped to the product side (per-slide focus) with a
-  clean HTML overlay (kicker / heading / pill CTA) since baked text would
-  be unreadable at phone widths.
+  clean HTML overlay (kicker / heading / pill CTA).
+  Transform-based belt (no native scroll container) with touch-action: pan-y,
+  so vertical page scrolling is never trapped by the carousel.
   Turbo-safe: init is idempotent and re-runs on turbo:load.
 {%- endcomment -%}
 
 <div class="aa-hc" data-aa-hc data-autoplay="{{ section.settings.autoplay_ms | default: 6000 }}">
   <div class="aa-hc__track" data-aa-hc-track>
-    {%- for block in section.blocks -%}
-      {%- assign img = block.settings.image_asset | strip -%}
-      <a class="aa-hc__slide"
-         href="{{ block.settings.url | default: '/' }}"
-         data-aa-hc-slide
-         aria-label="{{ block.settings.heading | escape }}"
-         {{ block.shopify_attributes }}>
-        <img
-          class="aa-hc__img aa-hc__img--{{ block.settings.mobile_focus | default: 'center' }}"
-          src="{{ img | asset_img_url: '1500x' }}"
-          srcset="{{ img | asset_img_url: '750x' }} 750w, {{ img | asset_img_url: '1100x' }} 1100w, {{ img | asset_img_url: '1500x' }} 1500w, {{ img | asset_img_url: '2000x' }} 2000w, {{ img | asset_img_url: '2520x' }} 2520w"
-          sizes="100vw"
-          alt="{{ block.settings.heading | escape }}"
-          width="2520" height="1080"
-          {% if forloop.first %}loading="eager" fetchpriority="high"{% else %}loading="lazy" decoding="async"{% endif %}>
-        <span class="aa-hc__scrim" aria-hidden="true"></span>
-        <span class="aa-hc__content">
-          {%- if block.settings.kicker != blank -%}
-            <span class="aa-hc__kicker">{{ block.settings.kicker }}</span>
-          {%- endif -%}
-          {%- if block.settings.heading != blank -%}
-            <span class="aa-hc__heading">{{ block.settings.heading }}</span>
-          {%- endif -%}
-          {%- if block.settings.cta != blank -%}
-            <span class="aa-hc__cta">{{ block.settings.cta }}</span>
-          {%- endif -%}
-        </span>
-      </a>
-    {%- endfor -%}
+    <div class="aa-hc__belt" data-aa-hc-belt>
+      {%- for block in section.blocks -%}
+        {%- assign img = block.settings.image_asset | strip -%}
+        <a class="aa-hc__slide"
+           href="{{ block.settings.url | default: '/' }}"
+           data-aa-hc-slide
+           aria-label="{{ block.settings.heading | escape }}"
+           {{ block.shopify_attributes }}>
+          <img
+            class="aa-hc__img aa-hc__img--{{ block.settings.mobile_focus | default: 'center' }}"
+            src="{{ img | asset_img_url: '1500x' }}"
+            srcset="{{ img | asset_img_url: '750x' }} 750w, {{ img | asset_img_url: '1100x' }} 1100w, {{ img | asset_img_url: '1500x' }} 1500w, {{ img | asset_img_url: '2000x' }} 2000w, {{ img | asset_img_url: '2520x' }} 2520w"
+            sizes="100vw"
+            alt="{{ block.settings.heading | escape }}"
+            width="2520" height="1080"
+            {% if forloop.first %}loading="eager" fetchpriority="high"{% else %}loading="lazy" decoding="async"{% endif %}>
+          <span class="aa-hc__scrim" aria-hidden="true"></span>
+          <span class="aa-hc__content">
+            {%- if block.settings.kicker != blank -%}
+              <span class="aa-hc__kicker">{{ block.settings.kicker }}</span>
+            {%- endif -%}
+            {%- if block.settings.heading != blank -%}
+              <span class="aa-hc__heading">{{ block.settings.heading }}</span>
+            {%- endif -%}
+            {%- if block.settings.cta != blank -%}
+              <span class="aa-hc__cta">{{ block.settings.cta }}</span>
+            {%- endif -%}
+          </span>
+        </a>
+      {%- endfor -%}
+    </div>
   </div>
 
   {%- if section.blocks.size > 1 -%}
-    <button class="aa-hc__arrow aa-hc__arrow--prev" type="button" aria-label="Previous slide" data-aa-hc-prev>
-      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg>
-    </button>
-    <button class="aa-hc__arrow aa-hc__arrow--next" type="button" aria-label="Next slide" data-aa-hc-next>
-      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
-    </button>
     <div class="aa-hc__progress" data-aa-hc-progress aria-hidden="true">
       {%- for block in section.blocks -%}
         <span class="aa-hc__seg"><span class="aa-hc__fill"></span></span>
@@ -56,44 +53,39 @@
 </div>
 
 {% style %}
-.aa-hc { position: relative; overflow: hidden; background: #0C0A1F; }
-.aa-hc__track {
-  display: flex; overflow-x: auto; scroll-snap-type: x mandatory;
-  scrollbar-width: none; -ms-overflow-style: none; scroll-behavior: smooth;
+.aa-hc { position: relative; overflow: hidden; line-height: 0; }
+.aa-hc__track { overflow: hidden; touch-action: pan-y; cursor: grab; }
+.aa-hc__track.is-dragging { cursor: grabbing; }
+.aa-hc__belt {
+  display: flex; width: 100%;
+  transition: transform 560ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  will-change: transform;
 }
-.aa-hc__track::-webkit-scrollbar { display: none; }
 .aa-hc__slide {
-  position: relative; flex: 0 0 100%; scroll-snap-align: start;
+  position: relative; flex: 0 0 100%; min-width: 100%;
   display: block; line-height: 0;
+  -webkit-user-drag: none; user-select: none;
 }
 .aa-hc__img {
-  width: 100%; aspect-ratio: 2520 / 1080; max-height: 82vh;
+  width: 100%; aspect-ratio: 2520 / 1080; height: auto;
   object-fit: cover; object-position: center;
+  pointer-events: none;
 }
 @media (prefers-reduced-motion: no-preference) {
   .aa-hc__slide.is-active .aa-hc__img { animation: aa-hc-drift 9s ease-out both; }
   @keyframes aa-hc-drift { from { transform: scale(1.045); } to { transform: scale(1); } }
 }
-.aa-hc__scrim, .aa-hc__content { display: none; }
-
-.aa-hc__arrow {
-  position: absolute; top: 50%; transform: translateY(-50%);
-  width: 42px; height: 42px; border-radius: 50%; border: 0;
-  display: flex; align-items: center; justify-content: center;
-  background: rgba(12, 10, 31, 0.45); color: #fff; cursor: pointer;
-  opacity: 0; transition: opacity .25s ease, background .2s ease; z-index: 2;
+@media (prefers-reduced-motion: reduce) {
+  .aa-hc__belt { transition: none; }
 }
-.aa-hc:hover .aa-hc__arrow { opacity: 1; }
-.aa-hc__arrow:hover { background: rgba(12, 10, 31, 0.75); }
-.aa-hc__arrow--prev { left: 16px; }
-.aa-hc__arrow--next { right: 16px; }
+.aa-hc__scrim, .aa-hc__content { display: none; }
 
 .aa-hc__progress {
   position: absolute; left: 50%; transform: translateX(-50%); bottom: 14px;
   display: flex; gap: 6px; z-index: 2;
 }
 .aa-hc__seg {
-  width: 28px; height: 3px; border-radius: 3px; overflow: hidden;
+  width: 22px; height: 3px; border-radius: 3px; overflow: hidden;
   background: rgba(255, 255, 255, 0.35);
 }
 .aa-hc__fill { display: block; width: 0; height: 100%; background: #fff; border-radius: 3px; }
@@ -103,7 +95,7 @@
 @media (prefers-reduced-motion: reduce) { .aa-hc__seg.is-active .aa-hc__fill { animation: none; width: 100%; } }
 
 @media screen and (max-width: 749px) {
-  .aa-hc__img { aspect-ratio: 4 / 5; max-height: none; }
+  .aa-hc__img { aspect-ratio: 4 / 5; }
   .aa-hc__img--left   { object-position: 12% 50%; }
   .aa-hc__img--center { object-position: 50% 50%; }
   .aa-hc__img--right  { object-position: 88% 50%; }
@@ -126,8 +118,8 @@
     border-radius: 999px; font-size: 12.5px; font-weight: 600; color: #fff;
     letter-spacing: 0.4px; backdrop-filter: blur(4px);
   }
-  .aa-hc__arrow { display: none; }
   .aa-hc__progress { bottom: 12px; }
+  .aa-hc__seg { width: 14px; }
 }
 {% endstyle %}
 
@@ -138,9 +130,10 @@
         if (root.dataset.aaWired) return;
         root.dataset.aaWired = '1';
         var track = root.querySelector('[data-aa-hc-track]');
+        var belt = root.querySelector('[data-aa-hc-belt]');
         var slides = Array.prototype.slice.call(root.querySelectorAll('[data-aa-hc-slide]'));
         var segs = Array.prototype.slice.call(root.querySelectorAll('.aa-hc__seg'));
-        if (!track || slides.length < 2) { if (slides[0]) slides[0].classList.add('is-active'); return; }
+        if (!belt || slides.length < 2) { if (slides[0]) slides[0].classList.add('is-active'); return; }
         var ms = parseInt(root.dataset.autoplay, 10) || 6000;
         root.style.setProperty('--aa-hc-ms', ms + 'ms');
         var idx = 0, timer = null, paused = false;
@@ -156,9 +149,13 @@
             }
           });
         }
-        function goTo(i, smooth) {
+        function setX(px) {
+          belt.style.transform = 'translateX(calc(' + (-idx * 100) + '% + ' + px + 'px))';
+        }
+        function goTo(i) {
           idx = (i + slides.length) % slides.length;
-          track.scrollTo({ left: idx * track.clientWidth, behavior: smooth === false ? 'auto' : 'smooth' });
+          belt.style.transition = '';
+          setX(0);
           paint();
         }
         function arm() {
@@ -168,25 +165,44 @@
           }, ms);
         }
 
-        var scrollT;
-        track.addEventListener('scroll', function () {
-          clearTimeout(scrollT);
-          scrollT = setTimeout(function () {
-            var i = Math.round(track.scrollLeft / track.clientWidth);
-            if (i !== idx) { idx = i; paint(); arm(); }
-          }, 90);
+        /* Horizontal grab-drag via pointer events. touch-action: pan-y keeps
+           vertical page scrolling native; only horizontal drags reach us. */
+        var startX = null, dragging = false, clickBlock = false;
+        track.addEventListener('pointerdown', function (e) {
+          startX = e.clientX; dragging = false; paused = true;
         }, { passive: true });
+        track.addEventListener('pointermove', function (e) {
+          if (startX === null) return;
+          var dx = e.clientX - startX;
+          if (!dragging && Math.abs(dx) > 9) {
+            dragging = true;
+            track.classList.add('is-dragging');
+            belt.style.transition = 'none';
+          }
+          if (dragging) setX(dx);
+        }, { passive: true });
+        function endDrag(e) {
+          if (startX === null) return;
+          var dx = (e.clientX || 0) - startX;
+          startX = null; paused = false;
+          if (!dragging) return;
+          dragging = false; clickBlock = true;
+          track.classList.remove('is-dragging');
+          setTimeout(function () { clickBlock = false; }, 80);
+          belt.style.transition = '';
+          if (dx < -48) goTo(idx + 1);
+          else if (dx > 48) goTo(idx - 1);
+          else setX(0);
+          arm();
+        }
+        track.addEventListener('pointerup', endDrag, { passive: true });
+        track.addEventListener('pointercancel', endDrag, { passive: true });
+        track.addEventListener('click', function (e) {
+          if (clickBlock) { e.preventDefault(); e.stopPropagation(); }
+        }, true);
 
-        ['pointerdown', 'touchstart'].forEach(function (ev) {
-          track.addEventListener(ev, function () { paused = true; }, { passive: true });
-        });
-        ['pointerup', 'touchend', 'mouseleave'].forEach(function (ev) {
-          root.addEventListener(ev, function () { paused = false; }, { passive: true });
-        });
-        var prev = root.querySelector('[data-aa-hc-prev]');
-        var next = root.querySelector('[data-aa-hc-next]');
-        if (prev) prev.addEventListener('click', function (e) { e.preventDefault(); goTo(idx - 1); arm(); });
-        if (next) next.addEventListener('click', function (e) { e.preventDefault(); goTo(idx + 1); arm(); });
+        root.addEventListener('mouseenter', function () { paused = true; });
+        root.addEventListener('mouseleave', function () { paused = false; });
 
         paint();
         arm();
@@ -203,7 +219,7 @@
 {% schema %}
 {
   "name": "AA Hero Carousel",
-  "max_blocks": 6,
+  "max_blocks": 12,
   "settings": [
     { "type": "range", "id": "autoplay_ms", "min": 3000, "max": 9500, "step": 500, "default": 6000, "label": "Autoplay interval (ms)" }
   ],

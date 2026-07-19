@@ -415,6 +415,17 @@
         "slide_4": {
           "type": "slide",
           "settings": {
+            "image_asset": "aa-hero-zodiac.jpg",
+            "kicker": "12 SIGNS • ONE UNIVERSE",
+            "heading": "Wear Your Constellation",
+            "cta": "Explore Zodiac",
+            "url": "shopify://collections/rashi-bracelets",
+            "mobile_focus": "left"
+          }
+        },
+        "slide_5": {
+          "type": "slide",
+          "settings": {
             "image_asset": "aa-hero-malas.jpg",
             "kicker": "PREMIUM ENERGISED",
             "heading": "Jap Malas for Daily Practice",
@@ -423,7 +434,7 @@
             "mobile_focus": "left"
           }
         },
-        "slide_5": {
+        "slide_6": {
           "type": "slide",
           "settings": {
             "image_asset": "aa-hero-crystals.jpg",
@@ -433,6 +444,72 @@
             "url": "shopify://collections/crystals-wonders",
             "mobile_focus": "right"
           }
+        },
+        "slide_7": {
+          "type": "slide",
+          "settings": {
+            "image_asset": "aa-hero-pendants.jpg",
+            "kicker": "CRAFTED FOR MANIFESTATION",
+            "heading": "Energised Crystal Pendants",
+            "cta": "Shop Pendants",
+            "url": "shopify://collections/pendants",
+            "mobile_focus": "center"
+          }
+        },
+        "slide_8": {
+          "type": "slide",
+          "settings": {
+            "image_asset": "aa-hero-anklets.jpg",
+            "kicker": "SHIELD YOUR AURA",
+            "heading": "Black Tourmaline Anklets",
+            "cta": "Explore Anklets",
+            "url": "shopify://collections/anklets",
+            "mobile_focus": "left"
+          }
+        },
+        "slide_9": {
+          "type": "slide",
+          "settings": {
+            "image_asset": "aa-hero-crystal-trees.jpg",
+            "kicker": "NATURAL CRYSTAL DECOR",
+            "heading": "Amethyst Crystal Trees",
+            "cta": "Shop Crystal Trees",
+            "url": "shopify://collections/crystal-trees",
+            "mobile_focus": "left"
+          }
+        },
+        "slide_10": {
+          "type": "slide",
+          "settings": {
+            "image_asset": "aa-hero-remedies.jpg",
+            "kicker": "WELCOME MONEY",
+            "heading": "Wear Confidence",
+            "cta": "Shop Collection",
+            "url": "shopify://collections/remedies-bracelets",
+            "mobile_focus": "left"
+          }
+        },
+        "slide_11": {
+          "type": "slide",
+          "settings": {
+            "image_asset": "aa-hero-mani.jpg",
+            "kicker": "ANCIENT ENERGY",
+            "heading": "Modern Elegance, Divya Mani",
+            "cta": "Explore Mani",
+            "url": "shopify://collections/mani",
+            "mobile_focus": "left"
+          }
+        },
+        "slide_12": {
+          "type": "slide",
+          "settings": {
+            "image_asset": "aa-hero-vastu.jpg",
+            "kicker": "SPIRITUAL LUXURY",
+            "heading": "Guardian Vastu Collection",
+            "cta": "Discover Vastu",
+            "url": "shopify://collections/vastu",
+            "mobile_focus": "left"
+          }
         }
       },
       "block_order": [
@@ -440,7 +517,14 @@
         "slide_2",
         "slide_3",
         "slide_4",
-        "slide_5"
+        "slide_5",
+        "slide_6",
+        "slide_7",
+        "slide_8",
+        "slide_9",
+        "slide_10",
+        "slide_11",
+        "slide_12"
       ],
       "settings": {
         "autoplay_ms": 6000
