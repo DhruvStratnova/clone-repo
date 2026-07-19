@@ -38,16 +38,13 @@
     line-height: 1.08; color: #1B1620; }
   .aa-whyb__intro { margin: 18px 0 0; font-size: 16px; line-height: 1.65; color: #6B655C; max-width: 46ch; }
   @media screen and (min-width: 750px) {
-    .aa-whyb { display: grid; grid-template-columns: 1fr 1.05fr; gap: 56px;
+    .aa-whyb { display: grid; grid-template-columns: 1fr 1fr; gap: 56px;
       align-items: center; max-width: 1180px; margin: 0 auto;
       padding: 60px clamp(20px, 4vw, 40px); }
     .aa-whyb__media { display: block; }
-    .aa-whyb__frame { background: #FBF8F1; border: 1px solid #E7E0CE;
-      border-radius: 24px; aspect-ratio: 16 / 10; display: flex;
-      align-items: center; justify-content: center;
-      padding: clamp(20px, 2.2vw, 34px); box-shadow: 0 18px 46px rgba(90,60,20,.07); }
-    .aa-whyb__frame img { width: 100%; height: auto; max-height: 100%;
-      object-fit: contain; display: block; border-radius: 8px; }
+    .aa-whyb__frame { border: 1px solid #E7E0CE; border-radius: 22px;
+      overflow: hidden; line-height: 0; box-shadow: 0 18px 46px rgba(90,60,20,.07); }
+    .aa-whyb__frame img { width: 100%; height: auto; display: block; }
     .aa-whyb__title { font-size: clamp(38px, 4vw, 52px); }
     .aa-whyb__intro { font-size: 18px; margin-top: 22px; max-width: 44ch; }
   }
