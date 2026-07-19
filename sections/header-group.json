@@ -14,32 +14,48 @@
     "announcement-bar": {
       "type": "announcement-bar",
       "blocks": {
-        "announcement_prepaid25": {
+        "offer_1": {
           "type": "announcement",
           "settings": {
-            "text": "🎁 Grab 25% off on all prepaid orders",
+            "text": "🎁 FLAT 20% OFF on your first prepaid order",
             "link": ""
           }
         },
-        "announcement-bar-0": {
+        "offer_2": {
           "type": "announcement",
           "settings": {
-            "text": "💳 Cash on Delivery Available",
+            "text": "✨ FLAT 10% OFF on your first order",
             "link": ""
           }
         },
-        "announcement_KU66py": {
+        "offer_3": {
           "type": "announcement",
           "settings": {
-            "text": "🚚 Free Shipping",
+            "text": "💳 FLAT 15% OFF when you pay online",
+            "link": ""
+          }
+        },
+        "offer_4": {
+          "type": "announcement",
+          "settings": {
+            "text": "🌟 FLAT 7% OFF on all orders",
+            "link": ""
+          }
+        },
+        "offer_5": {
+          "type": "announcement",
+          "settings": {
+            "text": "🚚 Free Shipping across India • Cash on Delivery Available",
             "link": ""
           }
         }
       },
       "block_order": [
-        "announcement_prepaid25",
-        "announcement-bar-0",
-        "announcement_KU66py"
+        "offer_1",
+        "offer_2",
+        "offer_3",
+        "offer_4",
+        "offer_5"
       ],
       "settings": {
         "auto_rotate": true,

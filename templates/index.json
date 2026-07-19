@@ -13,129 +13,6 @@
       "type": "aa-rd-cosmos",
       "settings": {}
     },
-    "slideshow_PLf6zm": {
-      "type": "slideshow",
-      "blocks": {
-        "slide_tXFfw7": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/aa-banner-rudraksha-desk-v4.jpg",
-            "image_mobile": "shopify://shop_images/aa-banner-rudraksha-mob-v5.jpg",
-            "image_overlay_opacity": 0,
-            "heading": "",
-            "heading_size": "h1",
-            "subheading": "",
-            "button_label": "",
-            "link": "shopify://collections/rudrasha",
-            "button_style_secondary": false,
-            "show_text_box": false,
-            "box_align": "middle-center",
-            "text_alignment": "center",
-            "text_alignment_mobile": "center",
-            "color_scheme": "scheme-1"
-          }
-        },
-        "slide_HTLxGt": {
-          "type": "slide",
-          "disabled": true,
-          "settings": {
-            "image": "shopify://shop_images/rudraksha_diwali_desktop.png",
-            "image_mobile": "shopify://shop_images/Rudraksah_mobile_diwlai.png",
-            "image_overlay_opacity": 0,
-            "heading": "",
-            "heading_size": "h1",
-            "subheading": "",
-            "button_label": "",
-            "link": "",
-            "button_style_secondary": false,
-            "show_text_box": true,
-            "box_align": "middle-center",
-            "text_alignment": "center",
-            "text_alignment_mobile": "center",
-            "color_scheme": "scheme-1"
-          }
-        },
-        "slide_93RPaQ": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/aa-banner-bracelets-desk-v2.jpg",
-            "image_mobile": "shopify://shop_images/aa-banner-bracelets-mob-v2.jpg",
-            "image_overlay_opacity": 0,
-            "heading": "",
-            "heading_size": "h2",
-            "subheading": "",
-            "button_label": "",
-            "link": "shopify://collections/bracelets",
-            "button_style_secondary": false,
-            "show_text_box": false,
-            "box_align": "middle-center",
-            "text_alignment": "center",
-            "text_alignment_mobile": "center",
-            "color_scheme": ""
-          }
-        },
-        "slide_FnJjtn": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/aa-banner-gemstones-desk-v2.jpg",
-            "image_mobile": "shopify://shop_images/aa-banner-gemstones-mob-v2.jpg",
-            "image_overlay_opacity": 0,
-            "heading": "",
-            "heading_size": "h1",
-            "subheading": "",
-            "button_label": "",
-            "link": "shopify://collections/gemstones",
-            "button_style_secondary": false,
-            "show_text_box": false,
-            "box_align": "middle-center",
-            "text_alignment": "center",
-            "text_alignment_mobile": "center",
-            "color_scheme": ""
-          }
-        },
-        "slide_BaHAmK": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/GemsAura_banner5.jpg",
-            "image_mobile": "shopify://shop_images/GemsAura_phonebanner5.jpg",
-            "image_overlay_opacity": 0,
-            "heading": "",
-            "heading_size": "h1",
-            "subheading": "",
-            "button_label": "",
-            "link": "shopify://collections/crystal-rakhi",
-            "button_style_secondary": false,
-            "show_text_box": false,
-            "box_align": "middle-center",
-            "text_alignment": "center",
-            "text_alignment_mobile": "center",
-            "color_scheme": "scheme-1"
-          }
-        }
-      },
-      "block_order": [
-        "slide_tXFfw7",
-        "slide_HTLxGt",
-        "slide_93RPaQ",
-        "slide_FnJjtn",
-        "slide_BaHAmK"
-      ],
-      "custom_css": [
-        "slideshow-component {position: relative; display: flex; flex-direction: column; margin: 0 0 4rem 0;}",
-        ".slideshow__controls {display: none;}"
-      ],
-      "name": "t:sections.slideshow.presets.name",
-      "settings": {
-        "layout": "full_bleed",
-        "slide_height": "adapt_image",
-        "slider_visual": "dots",
-        "auto_rotate": true,
-        "change_slides_speed": 3,
-        "image_behavior": "none",
-        "show_text_below": true,
-        "accessibility_info": ""
-      }
-    },
     "ts_aa": {
       "type": "aa-rd-slider",
       "settings": {
@@ -149,7 +26,7 @@
     "spiritual_aa": {
       "type": "aa-rd-imgtext",
       "settings": {
-        "dev": "\u0965 \u0930\u0941\u0926\u094d\u0930\u093e\u0915\u094d\u0937 \u0965",
+        "dev": "॥ रुद्राक्ष ॥",
         "heading": "Spiritual Essential",
         "text": "A sacred seed, Rudraksha carries divine protection, inner peace and clarity for a steady journey toward balance and enlightenment.",
         "btn_label": "Shop Rudraksha",
@@ -184,7 +61,7 @@
     "ourshop_aa": {
       "type": "aa-rd-imgtext",
       "settings": {
-        "dev": "\u0965 \u0936\u0941\u092d \u0932\u093e\u092d \u0965",
+        "dev": "॥ शुभ लाभ ॥",
         "heading": "Our Shop",
         "text": "Gemstones, Rudraksha and crystal bracelets where beauty meets energy. Rudraksha brings peace, gemstones invite prosperity, crystals lift your healing vibration.",
         "btn_label": "Shop all",
@@ -227,7 +104,7 @@
         "tile_2"
       ],
       "settings": {
-        "dev": "\u0965 \u0905\u092a\u0928\u0940 \u0930\u093e\u0936\u093f \u091a\u0941\u0928\u0947\u0902 \u0965",
+        "dev": "॥ अपनी राशि चुनें ॥",
         "heading": "Shop by Aura"
       }
     },
@@ -377,7 +254,7 @@
         "review_1": {
           "type": "review",
           "settings": {
-            "quote": "Not just d\u00e9cor, it genuinely helps me focus during meditation. You feel the difference within a few days of wearing it.",
+            "quote": "Not just décor, it genuinely helps me focus during meditation. You feel the difference within a few days of wearing it.",
             "name": "Siddharth Kumar",
             "product": "Amethyst Bracelet"
           }
@@ -492,17 +369,87 @@
     "dhanyog_aa": {
       "type": "aa-rd-dhanyog",
       "settings": {
-        "eyebrow": "\u0965 \u0927\u0928 \u092f\u094b\u0917 \u0965",
+        "eyebrow": "॥ धन योग ॥",
         "heading": "The Dhan Yog Bracelet",
         "body": "Strung with citrine, tiger eye and the sacred Dhan Yog bead, worn to draw wealth, abundance and balanced energy into everyday life.",
         "cta": "Discover the Bracelet",
         "product_url": "shopify://products/dhan-yog-bracelet"
       }
+    },
+    "aa_hero": {
+      "type": "aa-hero-carousel",
+      "blocks": {
+        "slide_1": {
+          "type": "slide",
+          "settings": {
+            "image_asset": "aa-hero-bracelets.jpg",
+            "kicker": "AUTHENTIC & CERTIFIED",
+            "heading": "The Energy of Real Bracelets",
+            "cta": "Shop Bracelets",
+            "url": "shopify://collections/bracelets",
+            "mobile_focus": "left"
+          }
+        },
+        "slide_2": {
+          "type": "slide",
+          "settings": {
+            "image_asset": "aa-hero-rudraksha.jpg",
+            "kicker": "100% ORIGINAL • LAB CERTIFIED",
+            "heading": "Shiva-Blessed Rudraksha",
+            "cta": "Explore Rudraksha",
+            "url": "shopify://collections/rudrasha",
+            "mobile_focus": "right"
+          }
+        },
+        "slide_3": {
+          "type": "slide",
+          "settings": {
+            "image_asset": "aa-hero-gemstones.jpg",
+            "kicker": "REAL STONES. REAL REPORTS.",
+            "heading": "Certified Natural Gemstones",
+            "cta": "Shop Gemstones",
+            "url": "shopify://collections/gemstones",
+            "mobile_focus": "right"
+          }
+        },
+        "slide_4": {
+          "type": "slide",
+          "settings": {
+            "image_asset": "aa-hero-malas.jpg",
+            "kicker": "PREMIUM ENERGISED",
+            "heading": "Jap Malas for Daily Practice",
+            "cta": "Shop Malas",
+            "url": "shopify://collections/mala",
+            "mobile_focus": "left"
+          }
+        },
+        "slide_5": {
+          "type": "slide",
+          "settings": {
+            "image_asset": "aa-hero-crystals.jpg",
+            "kicker": "CHANNEL THE UNIVERSE",
+            "heading": "Unlock Your Cosmic Potential",
+            "cta": "Shop Crystals",
+            "url": "shopify://collections/crystals-wonders",
+            "mobile_focus": "right"
+          }
+        }
+      },
+      "block_order": [
+        "slide_1",
+        "slide_2",
+        "slide_3",
+        "slide_4",
+        "slide_5"
+      ],
+      "settings": {
+        "autoplay_ms": 6000
+      }
     }
   },
   "order": [
     "cosmos_aa",
-    "slideshow_PLf6zm",
+    "aa_hero",
     "ts_aa",
     "aura_aa",
     "ourshop_aa",
