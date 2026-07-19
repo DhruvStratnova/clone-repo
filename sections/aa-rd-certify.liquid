@@ -7,22 +7,48 @@
     {%- if section.settings.image_1 != blank -%}
       <img class="aa-why__img" src="{{ section.settings.image_1 | image_url: width: 1600 }}" alt="Why Aura AI" width="1536" height="672" loading="lazy">
     {%- else -%}
-      <picture>
-        <source media="(max-width: 749px)" srcset="{{ 'aa-trust-mobile.webp' | asset_url }}">
-        <img class="aa-why__img" src="{{ 'aa-trust.webp' | asset_url }}" alt="Why Aura AI - trusted by thousands, 100% genuine and certified, easy 7-day returns, free shipping all over India" width="1536" height="672" loading="lazy">
-      </picture>
+      <div class="aa-whyb">
+        <div class="aa-whyb__body">
+          <span class="aa-whyb__kicker">Certified &amp; Energised</span>
+          <h2 class="aa-whyb__title">Real energy you can actually trust.</h2>
+          <p class="aa-whyb__intro">Every Aura AI piece is 100% natural, lab-certified, and energised before it ever reaches you. Shipped free across India with easy 7-day returns, so the only thing you ever feel is the energy, never the doubt.</p>
+        </div>
+        <div class="aa-whyb__media">
+          <img src="{{ 'aa-trust.webp' | asset_url }}" alt="Why Aura AI - trusted by thousands, 100% genuine and certified, easy 7-day returns, free shipping" width="1536" height="672" loading="lazy">
+        </div>
+      </div>
+      <img class="aa-why__mob" src="{{ 'aa-trust-mobile.webp' | asset_url }}" alt="Why Aura AI - trusted by thousands, 100% genuine and certified, easy 7-day returns, free shipping all over India" width="896" height="1152" loading="lazy">
     {%- endif -%}
   </div>
 </section>
 <style>
   .aa-why { padding: 14px 0 46px; }
   .aa-why__wrap { width: 100%; margin: 0; padding: 0; }
-  .aa-why picture { display: block; max-width: 1240px; margin: 0 auto; padding: 0 clamp(16px, 3vw, 40px); }
-  .aa-why__img { display: block; width: 100%; height: auto; border-radius: 22px; }
+  .aa-why__img { display: block; width: 100%; height: auto; border-radius: 18px; }
+  .aa-why__mob { display: none; width: 100%; height: auto; border-radius: 14px; }
+  .aa-whyb { background: transparent; padding: 30px 4px; }
+  .aa-whyb__media { display: none; }
+  .aa-whyb__kicker { display: inline-block; font-size: 13px; font-weight: 700;
+    letter-spacing: 3.5px; text-transform: uppercase; color: #D81B60; }
+  .aa-whyb__title { margin: 16px 0 0;
+    font-family: 'Poppins', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 800; letter-spacing: -0.02em; font-size: clamp(30px, 7vw, 40px);
+    line-height: 1.08; color: #1B1620; }
+  .aa-whyb__intro { margin: 18px 0 0; font-size: 16px; line-height: 1.65; color: #6B655C; max-width: 46ch; }
+  @media screen and (min-width: 750px) {
+    .aa-whyb { display: grid; grid-template-columns: 1fr 1.1fr; gap: 50px;
+      align-items: center; max-width: 1200px; margin: 0 auto;
+      padding: 64px clamp(20px, 4vw, 40px); }
+    .aa-whyb__media { display: block; }
+    .aa-whyb__media img { width: 100%; max-width: 580px; height: auto;
+      border-radius: 18px; display: block; margin: 0 auto; }
+    .aa-whyb__title { font-size: clamp(38px, 4vw, 52px); }
+    .aa-whyb__intro { font-size: 18px; margin-top: 22px; max-width: 44ch; }
+  }
   @media screen and (max-width: 749px) {
     .aa-why { padding: 8px 0 28px; }
-    .aa-why picture { padding: 0 12px; }
-    .aa-why__img { border-radius: 14px; }
+    .aa-whyb { display: none; }
+    .aa-why__mob { display: block; }
   }
 </style>
 
