@@ -7,28 +7,27 @@
     {%- if section.settings.image_1 != blank -%}
       <img class="aa-why__img" src="{{ section.settings.image_1 | image_url: width: 1600 }}" alt="Why Aura AI" width="1536" height="672" loading="lazy">
     {%- else -%}
+      {%- assign trust_img = section.settings.trust_image_asset | default: 'aa-why.jpg' | strip -%}
       <div class="aa-whyb">
-        <svg class="aa-whyb__d aa-whyb__d--sun" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="10"/><path d="M50 4v20M50 76v20M4 50h20M76 50h20M17 17l14 14M83 17L69 31M17 83l14-14M83 83L69 69"/></svg>
-        <svg class="aa-whyb__d aa-whyb__d--moon" viewBox="0 0 100 100" aria-hidden="true"><path d="M74 50a30 30 0 1 1-30-30 24 24 0 0 0 30 30z"/></svg>
-        <span class="aa-whyb__sp aa-whyb__sp--1"></span><span class="aa-whyb__sp aa-whyb__sp--2"></span>
-        <h2 class="aa-whyb__title">Why Aura AI?</h2>
-        <svg class="aa-whyb__swash" viewBox="0 0 190 22" fill="none" aria-hidden="true"><path d="M4 14C34 3 54 3 74 11s34 10 62-3" stroke="url(#aaWSg)" stroke-width="3.4" stroke-linecap="round"/><defs><linearGradient id="aaWSg" x1="0" y1="0" x2="190" y2="0"><stop stop-color="#E8913F"/><stop offset="1" stop-color="#E56B86"/></linearGradient></defs></svg>
-        <div class="aa-whyb__grid">
-          <div class="aa-whyb__card aa-whyb__card--peach">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-            <div><b>Trusted by Thousands</b><span>of happy customers across India</span></div>
-          </div>
-          <div class="aa-whyb__card aa-whyb__card--rose">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="m9 13.5-2 7 5-3 5 3-2-7"/><path d="m10 9 1.5 1.5L15 7"/></svg>
-            <div><b>100% Genuine &amp; Certified</b><span>lab-tested and energised</span></div>
-          </div>
-          <div class="aa-whyb__card aa-whyb__card--gold">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
-            <div><b>Easy 7-Day Returns</b><span>hassle-free exchange</span></div>
-          </div>
-          <div class="aa-whyb__card aa-whyb__card--lav">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="7.5" cy="18" r="2"/><circle cx="17.5" cy="18" r="2"/></svg>
-            <div><b>Free Shipping</b><span>fast delivery all over India</span></div>
+        <div class="aa-whyb__media">
+          <img src="{{ trust_img | asset_url }}" alt="Aura AI certified natural crystals and spiritual products" loading="lazy">
+        </div>
+        <div class="aa-whyb__body">
+          <h2 class="aa-whyb__title">What Makes Aura AI Special</h2>
+          <p class="aa-whyb__intro">We believe real energy comes only from real stones. Every piece is 100% natural, lab-certified, and energised before dispatch, crafted for those who take their practice seriously.</p>
+          <div class="aa-whyb__grid">
+            <div class="aa-whyb__card">
+              <b>100% Genuine &amp; Certified</b>
+              <span>Every order is lab-tested, energised, and ships with its own verifiable authenticity certificate.</span>
+            </div>
+            <div class="aa-whyb__card">
+              <b>Trusted by Thousands</b>
+              <span>Thousands of happy customers across India choose Aura AI for authentic spiritual products.</span>
+            </div>
+            <div class="aa-whyb__card">
+              <b>Easy Returns &amp; Free Shipping</b>
+              <span>Hassle-free 7-day exchange, with fast, free delivery all over India.</span>
+            </div>
           </div>
         </div>
       </div>
@@ -39,46 +38,36 @@
   .aa-why { padding: 10px 0 42px; }
   .aa-why__wrap { width: 100%; margin: 0; padding: 0; }
   .aa-why__img { display: block; width: 100%; height: auto; border-radius: 18px; }
-  /* live HTML trust band - razor sharp at any size */
-  .aa-whyb { position: relative; overflow: hidden; border-radius: 18px;
-    background: radial-gradient(120% 140% at 12% 8%, #FBF8EC 0%, #F5F1E1 55%, #F2EDDA 100%);
-    padding: 42px clamp(20px, 4vw, 56px) 46px; }
-  .aa-whyb__d { position: absolute; opacity: .09; fill: none; stroke: #B89463; stroke-width: 1.4; }
-  .aa-whyb__d--sun  { width: 90px; height: 90px; top: 26px; left: 45%; }
-  .aa-whyb__d--moon { width: 78px; height: 78px; top: 30px; right: 40px; }
-  .aa-whyb__sp { position: absolute; background: #C9A55F; opacity: .32;
-    width: 12px; height: 12px; clip-path: polygon(50% 0,58% 42%,100% 50%,58% 58%,50% 100%,42% 58%,0 50%,42% 42%); }
-  .aa-whyb__sp--1 { top: 150px; right: 22%; }
-  .aa-whyb__sp--2 { bottom: 60px; left: 18%; opacity: .22; }
+  /* split trust band - existing image left, trust cards right (Lumera style) */
+  .aa-whyb { border-radius: 18px; background: #F9F5EC; padding: 28px 18px 32px; }
+  .aa-whyb__media { display: none; }
   .aa-whyb__title { margin: 0; font-family: 'Cormorant Garamond', Georgia, serif;
-    font-weight: 700; font-size: clamp(34px, 4.2vw, 60px); color: #2B2820;
-    letter-spacing: .5px; line-height: 1; position: relative; z-index: 1; }
-  .aa-whyb__swash { display: block; width: 170px; height: 20px; margin: 8px 0 30px 4px; position: relative; z-index: 1; }
-  .aa-whyb__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 26px 34px;
-    position: relative; z-index: 1; }
-  .aa-whyb__card { display: flex; align-items: center; gap: 22px; color: #2A2721;
-    border-radius: 28px; padding: 26px 32px; border: 2px solid rgba(255,255,255,.9);
-    box-shadow: 0 10px 26px rgba(120,90,45,.10), inset 0 1px 0 rgba(255,255,255,.5);
-    transition: transform 300ms cubic-bezier(0.22,1,0.36,1), box-shadow 300ms ease; }
-  .aa-whyb__card:hover { transform: translateY(-3px); box-shadow: 0 16px 34px rgba(120,90,45,.16); }
-  .aa-whyb__card svg { width: 48px; height: 48px; flex: 0 0 48px; color: #33302A; }
-  .aa-whyb__card b { display: block; font-weight: 700; font-size: 23px; line-height: 1.18; letter-spacing: .2px; }
-  .aa-whyb__card span { display: block; font-weight: 400; font-size: 16px; color: #5C564A; margin-top: 4px; }
-  .aa-whyb__card--peach { background: linear-gradient(135deg,#F8DBB9,#F1C08D); }
-  .aa-whyb__card--rose  { background: linear-gradient(135deg,#F6D5C9,#EEB2AB); }
-  .aa-whyb__card--gold  { background: linear-gradient(135deg,#F2E6BC,#E7D08F); }
-  .aa-whyb__card--lav   { background: linear-gradient(135deg,#DBD6F0,#C4BDE3); }
+    font-weight: 700; font-size: clamp(28px, 6vw, 36px); color: #23211A; line-height: 1.12; }
+  .aa-whyb__intro { margin: 12px 0 20px; font-size: 15px; line-height: 1.6; color: #57513F; }
+  .aa-whyb__grid { display: grid; grid-template-columns: 1fr; gap: 13px; }
+  .aa-whyb__card { background: #FFFFFF; border: 1px solid #E8E1CF; border-radius: 14px;
+    padding: 17px 20px; transition: box-shadow 260ms ease, transform 260ms ease; }
+  .aa-whyb__card:hover { box-shadow: 0 10px 26px rgba(120,90,45,.10); transform: translateY(-2px); }
+  .aa-whyb__card b { display: block; font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 700; font-size: 21px; color: #23211A; line-height: 1.2; }
+  .aa-whyb__card span { display: block; font-size: 14px; line-height: 1.55; color: #5C564A; margin-top: 5px; }
+  @media screen and (min-width: 750px) {
+    .aa-whyb { display: grid; grid-template-columns: minmax(360px, 440px) 1fr;
+      gap: 48px; align-items: center; padding: 46px; }
+    .aa-whyb__media { display: block; align-self: stretch; }
+    .aa-whyb__media img { width: 100%; height: 100%; min-height: 460px;
+      object-fit: cover; border-radius: 16px; display: block; }
+    .aa-whyb__title { font-size: clamp(32px, 2.6vw, 42px); }
+    .aa-whyb__intro { font-size: 16px; margin: 14px 0 24px; max-width: 60ch; }
+    .aa-whyb__card { padding: 20px 26px; }
+    .aa-whyb__card b { font-size: 23px; }
+    .aa-whyb__card span { font-size: 14.5px; }
+  }
   @media screen and (max-width: 749px) {
     .aa-why { padding: 6px 0 26px; }
-    .aa-whyb { padding: 26px 16px 30px; border-radius: 14px; }
-    .aa-whyb__d--sun, .aa-whyb__d--moon { display: none; }
-    .aa-whyb__title { font-size: 30px; }
-    .aa-whyb__swash { width: 130px; margin-bottom: 20px; }
-    .aa-whyb__grid { grid-template-columns: 1fr; gap: 13px; }
-    .aa-whyb__card { padding: 17px 18px; border-radius: 20px; gap: 15px; }
-    .aa-whyb__card svg { width: 38px; height: 38px; flex-basis: 38px; }
-    .aa-whyb__card b { font-size: 17.5px; }
-    .aa-whyb__card span { font-size: 13.5px; }
+    .aa-whyb { padding: 24px 16px 28px; border-radius: 14px; }
+    .aa-whyb__title { font-size: 28px; }
+    .aa-whyb__card b { font-size: 19px; }
   }
 </style>
 
