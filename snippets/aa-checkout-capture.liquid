@@ -88,8 +88,10 @@
               headers: {
                 'Content-Type': 'application/json',
                 'apikey': C.anonKey,
-                'Authorization': 'Bearer ' + tok,
-                'Prefer': 'resolution=ignore-duplicates'
+                'Authorization': 'Bearer ' + tok
+                // no Prefer: resolution=ignore-duplicates -> its ON CONFLICT trips
+                // RLS 42501 (table has no SELECT policy for authenticated); the
+                // cart_token unique index + the sessionStorage guard dedup instead
               },
               body: JSON.stringify({
                 phone: ph, cart_token: cart.token, items: items,
