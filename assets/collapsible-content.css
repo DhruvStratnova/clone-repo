@@ -105,8 +105,27 @@
 }
 
 .collapsible-content summary:hover .accordion__title {
-  text-decoration: underline;
-  text-underline-offset: 0.3rem;
+  text-decoration: none;
+}
+
+/* FAQ rows: centered question text, caret pinned to the right */
+.collapsible-content summary {
+  align-items: center;
+}
+.collapsible-content summary .accordion__title {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  text-align: center;
+  padding: 0 2.4rem;
+}
+.collapsible-content summary .icon-caret {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 /* check for flexbox gap in older Safari versions */
