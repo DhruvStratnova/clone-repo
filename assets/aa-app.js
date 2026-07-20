@@ -414,7 +414,7 @@
     }
     function lbDone() {
       if (!bar() || !bar().classList.contains('is-on')) return;   /* never shown → nothing to finish */
-      var wait = 480 - (Date.now() - lbShownAt);   /* keep it on screen long enough to be seen, even on instant navs */
+      var wait = 700 - (Date.now() - lbShownAt);   /* keep it on screen long enough to be seen, even on instant navs */
       if (wait > 0) setTimeout(lbFinish, wait); else lbFinish();
     }
     /* start as early as the tap/visit; finish on load. lbShow() + window load also

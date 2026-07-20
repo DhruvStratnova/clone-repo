@@ -295,13 +295,13 @@ a, button, .button, [role="button"], .aa-tab, summary, label {
   position: fixed;
   left: 0; top: 0;
   height: 8px; width: 0;
-  z-index: 1100;
+  z-index: 2147483000;
   background: linear-gradient(90deg, #FF8C42 0%, #FF2E93 100%);
-  box-shadow: 0 0 12px rgba(255, 46, 147, 0.5);
+  box-shadow: 0 0 16px rgba(255, 46, 147, 0.85), 0 0 6px rgba(255, 140, 66, 0.7);
   border-radius: 0 4px 4px 0;
   opacity: 0;
   pointer-events: none;
-  transition: width 9s cubic-bezier(0.08, 0.7, 0.18, 1), opacity 220ms ease;
+  transition: width 0.5s cubic-bezier(0.1, 0.7, 0.2, 1), opacity 220ms ease;
 }
 .aa-loadbar.is-on { opacity: 1; }
 @media (prefers-reduced-motion: reduce) { .aa-loadbar { transition: opacity 200ms ease; } }
