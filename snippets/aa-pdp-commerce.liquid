@@ -29,8 +29,31 @@
 
 {%- elsif part == 'post' -%}
 
-  {%- comment -%} Why AstroAura trust band (4 stats) + occasion tiles.
-     Tiles reuse existing collection photos and link to the mapped collection. {%- endcomment -%}
+  {%- comment -%} Original trust image band restored: desktop above GWW, mobile below GWW. {%- endcomment -%}
+  <div class="aa-trustband aa-trustband--d">
+    <img class="aa-trust-d" src="{{ 'aa-trust.webp' | asset_url }}" alt="Why Aura AI - trusted by thousands, 100% genuine and certified, easy 7-day returns, free shipping all over India" width="1536" height="672" loading="lazy">
+  </div>
+  <style>
+    .aa-trustband { padding: 14px 0 26px; }
+    .aa-trustband img { display: block; width: 100%; height: auto; margin: 0 auto; border-radius: 16px; }
+    .aa-trustband--m { display: none; }
+    @media (max-width: 749px) {
+      .aa-trustband--d { display: none; }
+      .aa-trustband--m { display: block; padding: 8px 0 18px; margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw); }
+      .aa-trustband--m img { border-radius: 14px; }
+    }
+  </style>
+  <div class="aa-gww" id="AaGww" hidden>
+    <div class="aa-gww-h">Goes Well With</div>
+    <div class="aa-gww-list" id="AaGwwList"></div>
+  </div>
+  <div class="aa-trustband aa-trustband--m">
+    <img class="aa-trust-m" src="{{ 'aa-trust-mobile.webp' | asset_url }}" alt="Why Aura AI - trusted by thousands, 100% genuine and certified, easy 7-day returns, free shipping all over India" width="896" height="1152" loading="lazy">
+  </div>
+
+  {%- comment -%} Why AstroAura stat band + occasion tiles, placed BELOW Goes Well With.
+     Occasion boxes show THIS product's own images where available; fall back to the
+     mapped collection photo for any box the product doesn't have an image for. {%- endcomment -%}
   {%- assign aa_occ = "bracelets|Daily wear,pendants|At work,mala|Pooja &amp; rituals,combos|Gifting" | split: "," -%}
   <div class="aa-why">
     <div class="aa-why__eyebrow">Why AstroAura</div>
@@ -41,13 +64,23 @@
       <div class="aa-why__stat"><div class="aa-why__num">7+ Yrs</div><div class="aa-why__lbl">Rooted in Vedic tradition</div></div>
       <div class="aa-why__stat"><div class="aa-why__num">Free</div><div class="aa-why__lbl">Shipping across India</div></div>
     </div>
+    {%- comment -%} All-or-nothing: 4+ own images -> own photos in every box (done);
+       otherwise keep the generic occasion tiles (pending until more photos). {%- endcomment -%}
+    {%- assign aa_own = false -%}
+    {%- if product.images.size >= 4 -%}{%- assign aa_own = true -%}{%- endif -%}
     <div class="aa-why__tiles">
       {%- for o in aa_occ -%}
         {%- assign op = o | split: "|" -%}
-        {%- assign oc = collections[op[0]] -%}
-        {%- assign oimg = oc.image | default: oc.products.first.featured_image -%}
-        <a class="aa-why__tile" href="{{ oc.url | default: '#' }}">
-          <span class="aa-why__thumb">{% if oimg != blank %}<img src="{{ oimg | image_url: width: 500 }}" alt="{{ op[1] }}" loading="lazy" width="500" height="500">{% endif %}</span>
+        {%- if aa_own -%}
+          {%- assign timg = product.images[forloop.index0] -%}
+          {%- assign turl = product.url -%}
+        {%- else -%}
+          {%- assign oc = collections[op[0]] -%}
+          {%- assign timg = oc.image | default: oc.products.first.featured_image -%}
+          {%- assign turl = oc.url | default: product.url -%}
+        {%- endif -%}
+        <a class="aa-why__tile" href="{{ turl | default: '#' }}">
+          <span class="aa-why__thumb">{% if timg != blank %}<img src="{{ timg | image_url: width: 500 }}" alt="{{ product.title | escape }} - {{ op[1] }}" loading="lazy" width="500" height="500">{% endif %}</span>
           <span class="aa-why__cap">{{ op[1] }}</span>
         </a>
       {%- endfor -%}
@@ -76,10 +109,6 @@
       .aa-why__tiles{ grid-template-columns:repeat(2,1fr); }
     }
   </style>
-  <div class="aa-gww" id="AaGww" hidden>
-    <div class="aa-gww-h">Goes Well With</div>
-    <div class="aa-gww-list" id="AaGwwList"></div>
-  </div>
 
   {%- comment -%} Fallback products (from this product's own collection) for when
   Shopify's /recommendations API returns empty — so the cards always populate. {%- endcomment -%}
