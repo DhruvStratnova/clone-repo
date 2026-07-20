@@ -29,19 +29,41 @@
 
 {%- elsif part == 'post' -%}
 
-  <div class="aa-trustband aa-trustband--d">
+  <div class="aa-trustband aa-trustband--d" id="AaTrustBandD">
     <img class="aa-trust-d" src="{{ 'aa-trust.webp' | asset_url }}" alt="Why Aura AI - trusted by thousands, 100% genuine and certified, easy 7-day returns, free shipping all over India" width="1536" height="672" loading="lazy">
   </div>
   <style>
     .aa-trustband { padding: 14px 0 26px; }
     .aa-trustband img { display: block; width: 100%; height: auto; margin: 0 auto; border-radius: 16px; }
+    .aa-trustband--d img { border-radius: 0; }
     .aa-trustband--m { display: none; }
     @media (max-width: 749px) {
       .aa-trustband--d { display: none; }
       .aa-trustband--m { display: block; padding: 8px 0 18px; margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw); }
-      .aa-trustband--m img { border-radius: 0; }
+      .aa-trustband--m img { border-radius: 14px; }
     }
   </style>
+  <script>
+  (function () {
+    /* Full-viewport-width band: the desktop image lives in the right 50% info
+       column, so a CSS 50vw bleed can't reach the true screen edges. Measure the
+       band's live position and pull both edges out to the viewport. Recomputes on
+       resize/load; skipped below the 750px mobile breakpoint (mobile has its own
+       CSS bleed). */
+    var el = document.getElementById('AaTrustBandD');
+    if (!el) return;
+    function bleed() {
+      el.style.marginLeft = '0'; el.style.marginRight = '0';
+      if (window.innerWidth <= 749) return;
+      var r = el.getBoundingClientRect();
+      el.style.marginLeft = (-r.left) + 'px';
+      el.style.marginRight = (-(document.documentElement.clientWidth - r.right)) + 'px';
+    }
+    bleed();
+    window.addEventListener('resize', bleed);
+    window.addEventListener('load', bleed);
+  })();
+  </script>
   <div class="aa-gww" id="AaGww" hidden>
     <div class="aa-gww-h">Goes Well With</div>
     <div class="aa-gww-list" id="AaGwwList"></div>
