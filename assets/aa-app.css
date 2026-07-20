@@ -305,6 +305,11 @@ a, button, .button, [role="button"], .aa-tab, summary, label {
 }
 .aa-loadbar.is-on { opacity: 1; }
 @media (prefers-reduced-motion: reduce) { .aa-loadbar { transition: opacity 200ms ease; } }
+/* A storefront app lays <body> out as a grid and force-hides stray direct children
+   of body (display:none) — which was hiding this fixed load bar entirely, so it
+   never rendered. Force it displayed with high specificity (it stays invisible when
+   idle anyway: opacity 0 + width 0). This beats the app rule regardless of order. */
+html body #aa-loadbar.aa-loadbar { display: block !important; }
 
 /* Offer bar: hard-locked to a fixed slim height so it can never expand/glitch
    (even while the slider re-initialises during a Turbo navigation). */
