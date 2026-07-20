@@ -29,24 +29,26 @@
 
 {%- elsif part == 'post' -%}
 
-  <div class="aa-trustband">
+  <div class="aa-trustband aa-trustband--d">
     <img class="aa-trust-d" src="{{ 'aa-trust.webp' | asset_url }}" alt="Why Aura AI - trusted by thousands, 100% genuine and certified, easy 7-day returns, free shipping all over India" width="1536" height="672" loading="lazy">
-    <img class="aa-trust-m" src="{{ 'aa-trust-mobile.webp' | asset_url }}" alt="Why Aura AI - trusted by thousands, 100% genuine and certified, easy 7-day returns, free shipping all over India" width="896" height="1152" loading="lazy">
   </div>
   <style>
     .aa-trustband { padding: 14px 0 26px; }
     .aa-trustband img { display: block; width: 100%; height: auto; margin: 0 auto; border-radius: 16px; }
-    .aa-trustband .aa-trust-d { aspect-ratio: 2 / 1; object-fit: cover; object-position: center; }
-    .aa-trustband .aa-trust-m { display: none; }
+    .aa-trustband--d .aa-trust-d { aspect-ratio: 2 / 1; object-fit: cover; object-position: center; }
+    .aa-trustband--m { display: none; }
     @media (max-width: 749px) {
-      .aa-trustband { padding: 8px 0 18px; }
-      .aa-trustband .aa-trust-d { display: none; }
-      .aa-trustband .aa-trust-m { display: block; border-radius: 14px; }
+      .aa-trustband--d { display: none; }
+      .aa-trustband--m { display: block; padding: 8px 0 18px; }
+      .aa-trustband--m img { border-radius: 14px; }
     }
   </style>
   <div class="aa-gww" id="AaGww" hidden>
     <div class="aa-gww-h">Goes Well With</div>
     <div class="aa-gww-list" id="AaGwwList"></div>
+  </div>
+  <div class="aa-trustband aa-trustband--m">
+    <img class="aa-trust-m" src="{{ 'aa-trust-mobile.webp' | asset_url }}" alt="Why Aura AI - trusted by thousands, 100% genuine and certified, easy 7-day returns, free shipping all over India" width="896" height="1152" loading="lazy">
   </div>
 
   {%- comment -%} Fallback products (from this product's own collection) for when
