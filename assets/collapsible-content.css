@@ -127,6 +127,11 @@
   margin-top: auto;
   margin-bottom: auto;
 }
+.collapsible-content .accordion__content,
+.collapsible-content .accordion__content .rte,
+.collapsible-content .accordion__content p {
+  text-align: center;
+}
 
 /* check for flexbox gap in older Safari versions */
 @supports not (inset: 10px) {
