@@ -51,68 +51,6 @@
     <img class="aa-trust-m" src="{{ 'aa-trust-mobile.webp' | asset_url }}" alt="Why Aura AI - trusted by thousands, 100% genuine and certified, easy 7-day returns, free shipping all over India" width="896" height="1152" loading="lazy">
   </div>
 
-  {%- comment -%} Why AstroAura stat band + occasion tiles, placed BELOW Goes Well With.
-     Occasion boxes show THIS product's own images where available; fall back to the
-     mapped collection photo for any box the product doesn't have an image for. {%- endcomment -%}
-  {%- assign aa_occ = "bracelets|Daily wear,pendants|At work,mala|Pooja &amp; rituals,combos|Gifting" | split: "," -%}
-  <div class="aa-why">
-    <div class="aa-why__inner">
-    <div class="aa-why__eyebrow">Why AstroAura</div>
-    <h2 class="aa-why__title">Trusted, certified, energised</h2>
-    <div class="aa-why__stats">
-      <div class="aa-why__stat"><div class="aa-why__num">10 Lakh+</div><div class="aa-why__lbl">Happy customers across India</div></div>
-      <div class="aa-why__stat"><div class="aa-why__num">100%</div><div class="aa-why__lbl">Lab-certified natural stones</div></div>
-      <div class="aa-why__stat"><div class="aa-why__num">7+ Yrs</div><div class="aa-why__lbl">Rooted in Vedic tradition</div></div>
-      <div class="aa-why__stat"><div class="aa-why__num">Free</div><div class="aa-why__lbl">Shipping across India</div></div>
-    </div>
-    {%- comment -%} All-or-nothing: 4+ own images -> own photos in every box (done);
-       otherwise keep the generic occasion tiles (pending until more photos). {%- endcomment -%}
-    {%- assign aa_own = false -%}
-    {%- if product.images.size >= 4 -%}{%- assign aa_own = true -%}{%- endif -%}
-    <div class="aa-why__tiles">
-      {%- for o in aa_occ -%}
-        {%- assign op = o | split: "|" -%}
-        {%- if aa_own -%}
-          {%- assign timg = product.images[forloop.index0] -%}
-          {%- assign turl = product.url -%}
-        {%- else -%}
-          {%- assign oc = collections[op[0]] -%}
-          {%- assign timg = oc.image | default: oc.products.first.featured_image -%}
-          {%- assign turl = oc.url | default: product.url -%}
-        {%- endif -%}
-        <a class="aa-why__tile" href="{{ turl | default: '#' }}">
-          <span class="aa-why__thumb">{% if timg != blank %}<img src="{{ timg | image_url: width: 500 }}" alt="{{ product.title | escape }} - {{ op[1] }}" loading="lazy" width="500" height="500">{% endif %}</span>
-          <span class="aa-why__cap">{{ op[1] }}</span>
-        </a>
-      {%- endfor -%}
-    </div>
-    </div>
-  </div>
-  <style>
-    .aa-why{ background:#F0E8DA; border-radius:22px; padding:26px 18px 24px; margin:18px 0 26px; text-align:center; font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif; }
-    .aa-why__inner{ max-width:1160px; margin:0 auto; }
-    .aa-why__eyebrow{ color:#E9027A; font-size:12px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; }
-    .aa-why__title{ margin:8px 0 20px; color:#2A2233; font-weight:800; font-size:30px; line-height:1.12; letter-spacing:-.5px; font-family:inherit; }
-    .aa-why__stats{ display:grid; grid-template-columns:repeat(4,1fr); background:#FBF7EF; border-radius:18px; padding:22px 6px; }
-    .aa-why__stat{ position:relative; padding:2px 12px; }
-    .aa-why__stat + .aa-why__stat::before{ content:''; position:absolute; left:0; top:14%; bottom:14%; width:1px; background:rgba(42,34,51,.10); }
-    .aa-why__num{ font-size:30px; font-weight:800; color:#2A2233; letter-spacing:-.5px; line-height:1.04; }
-    .aa-why__lbl{ margin-top:7px; font-size:12.5px; line-height:1.32; color:#6E6773; }
-    .aa-why__tiles{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-top:20px; }
-    .aa-why__tile{ display:block; text-decoration:none; }
-    .aa-why__thumb{ display:block; aspect-ratio:1/1; border-radius:16px; overflow:hidden; background:#EAE2D3; }
-    .aa-why__thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
-    .aa-why__cap{ display:block; margin-top:10px; font-size:14px; font-weight:600; color:#2A2233; }
-    @media (max-width:749px){
-      .aa-why{ padding:22px 14px 20px; border-radius:18px; }
-      .aa-why__title{ font-size:23px; margin-bottom:16px; }
-      .aa-why__stats{ grid-template-columns:repeat(2,1fr); gap:16px 0; padding:18px 6px; }
-      .aa-why__num{ font-size:24px; }
-      .aa-why__stat:nth-child(3)::before{ display:none; }
-      .aa-why__tiles{ grid-template-columns:repeat(2,1fr); }
-    }
-  </style>
-
   {%- comment -%} Fallback products (from this product's own collection) for when
   Shopify's /recommendations API returns empty — so the cards always populate. {%- endcomment -%}
   {%- liquid
@@ -181,4 +119,68 @@
     }).catch(function(){});
 })();
 </script>
+{%- elsif part == 'why' -%}
+
+  {%- comment -%} Why AstroAura stat band + occasion tiles, placed BELOW Goes Well With.
+     Occasion boxes show THIS product's own images where available; fall back to the
+     mapped collection photo for any box the product doesn't have an image for. {%- endcomment -%}
+  {%- assign aa_occ = "bracelets|Daily wear,pendants|At work,mala|Pooja &amp; rituals,combos|Gifting" | split: "," -%}
+  <div class="aa-why">
+    <div class="aa-why__inner">
+    <div class="aa-why__eyebrow">Why AstroAura</div>
+    <h2 class="aa-why__title">Trusted, certified, energised</h2>
+    <div class="aa-why__stats">
+      <div class="aa-why__stat"><div class="aa-why__num">10 Lakh+</div><div class="aa-why__lbl">Happy customers across India</div></div>
+      <div class="aa-why__stat"><div class="aa-why__num">100%</div><div class="aa-why__lbl">Lab-certified natural stones</div></div>
+      <div class="aa-why__stat"><div class="aa-why__num">7+ Yrs</div><div class="aa-why__lbl">Rooted in Vedic tradition</div></div>
+      <div class="aa-why__stat"><div class="aa-why__num">Free</div><div class="aa-why__lbl">Shipping across India</div></div>
+    </div>
+    {%- comment -%} All-or-nothing: 4+ own images -> own photos in every box (done);
+       otherwise keep the generic occasion tiles (pending until more photos). {%- endcomment -%}
+    {%- assign aa_own = false -%}
+    {%- if product.images.size >= 4 -%}{%- assign aa_own = true -%}{%- endif -%}
+    <div class="aa-why__tiles">
+      {%- for o in aa_occ -%}
+        {%- assign op = o | split: "|" -%}
+        {%- if aa_own -%}
+          {%- assign timg = product.images[forloop.index0] -%}
+          {%- assign turl = product.url -%}
+        {%- else -%}
+          {%- assign oc = collections[op[0]] -%}
+          {%- assign timg = oc.image | default: oc.products.first.featured_image -%}
+          {%- assign turl = oc.url | default: product.url -%}
+        {%- endif -%}
+        <a class="aa-why__tile" href="{{ turl | default: '#' }}">
+          <span class="aa-why__thumb">{% if timg != blank %}<img src="{{ timg | image_url: width: 500 }}" alt="{{ product.title | escape }} - {{ op[1] }}" loading="lazy" width="500" height="500">{% endif %}</span>
+          <span class="aa-why__cap">{{ op[1] }}</span>
+        </a>
+      {%- endfor -%}
+    </div>
+    </div>
+  </div>
+  <style>
+    .aa-why{ background:#F0E8DA; margin-left:calc(50% - 50vw); margin-right:calc(50% - 50vw); padding:42px 20px 48px; text-align:center; font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif; }
+    .aa-why__inner{ max-width:1160px; margin:0 auto; }
+    .aa-why__eyebrow{ color:#E9027A; font-size:12px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; }
+    .aa-why__title{ margin:8px 0 20px; color:#2A2233; font-weight:800; font-size:30px; line-height:1.12; letter-spacing:-.5px; font-family:inherit; }
+    .aa-why__stats{ display:grid; grid-template-columns:repeat(4,1fr); background:#FBF7EF; border-radius:18px; padding:22px 6px; }
+    .aa-why__stat{ position:relative; padding:2px 12px; }
+    .aa-why__stat + .aa-why__stat::before{ content:''; position:absolute; left:0; top:14%; bottom:14%; width:1px; background:rgba(42,34,51,.10); }
+    .aa-why__num{ font-size:30px; font-weight:800; color:#2A2233; letter-spacing:-.5px; line-height:1.04; }
+    .aa-why__lbl{ margin-top:7px; font-size:12.5px; line-height:1.32; color:#6E6773; }
+    .aa-why__tiles{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-top:20px; }
+    .aa-why__tile{ display:block; text-decoration:none; }
+    .aa-why__thumb{ display:block; aspect-ratio:1/1; border-radius:16px; overflow:hidden; background:#EAE2D3; }
+    .aa-why__thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
+    .aa-why__cap{ display:block; margin-top:10px; font-size:14px; font-weight:600; color:#2A2233; }
+    @media (max-width:749px){
+      .aa-why{ padding:30px 14px 34px; }
+      .aa-why__title{ font-size:23px; margin-bottom:16px; }
+      .aa-why__stats{ grid-template-columns:repeat(2,1fr); gap:16px 0; padding:18px 6px; }
+      .aa-why__num{ font-size:24px; }
+      .aa-why__stat:nth-child(3)::before{ display:none; }
+      .aa-why__tiles{ grid-template-columns:repeat(2,1fr); }
+    }
+  </style>
+
 {%- endif -%}

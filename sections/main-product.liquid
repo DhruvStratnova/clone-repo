@@ -1862,6 +1862,10 @@
       </div>
     </div>
 
+    {%- comment -%} Why AstroAura band + occasion tiles: rendered here (inside .page-width,
+       after the 2-col grid) so it spans full content width and can go edge-to-edge. {%- endcomment -%}
+    {% render 'aa-pdp-commerce', part: 'why', product: product %}
+
     {% render 'product-media-modal', variant_images: variant_images %}
 
     {% assign popups = section.blocks | where: 'type', 'popup' %}
