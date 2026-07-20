@@ -553,6 +553,16 @@
        Dawn drawer CSS (astroaura-cart-v8 + component-cart/totals/price/discounts/
        cart-items), which are unreferenced here but kept on disk for the /cart
        fallback page and easy revert. {%- endcomment -%}
+    {%- comment -%} CRITICAL (no-FOUC): aa-cart.css loads async (below), so pin the
+       server-rendered cart drawer out-of-flow + hidden from the FIRST paint —
+       otherwise its contents ("Your cart", empty state, checkout) flash unstyled at
+       the top of every page. Mirrors the default state in aa-cart.css; the async
+       file then takes over. Also styles Turbo's page-load bar as a slim brand-
+       gradient line at the top for a subtle, nice load. {%- endcomment -%}
+    <style>
+      cart-drawer.aac{position:fixed;inset:0;z-index:1150;visibility:hidden;pointer-events:none;}
+      .turbo-progress-bar{height:3px !important;background:linear-gradient(90deg,#FF8C42 0%,#FF2E93 100%) !important;}
+    </style>
     <link rel="stylesheet" href="{{ 'aa-cart.css' | asset_url }}" media="print" onload="this.media='all'">
     <noscript>{{ 'aa-cart.css' | asset_url | stylesheet_tag }}</noscript>
 
