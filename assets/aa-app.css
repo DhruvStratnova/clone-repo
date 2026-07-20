@@ -291,10 +291,10 @@ a, button, .button, [role="button"], .aa-tab, summary, label {
 .aa-loadbar {
   position: fixed;
   left: 0; top: 0;
-  height: 5px; width: 0;
+  height: 8px; width: 0;
   z-index: 1000;
-  background: linear-gradient(90deg, #B8915A 0%, #E8CD8F 45%, #D8B465 70%, #B8915A 100%);
-  box-shadow: 0 0 10px rgba(184, 145, 90, 0.55);
+  background: linear-gradient(90deg, #FF8C42 0%, #FF2E93 100%);
+  box-shadow: 0 0 12px rgba(255, 46, 147, 0.5);
   border-radius: 0 4px 4px 0;
   opacity: 0;
   pointer-events: none;

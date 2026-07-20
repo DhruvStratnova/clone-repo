@@ -394,21 +394,25 @@
       var h = document.querySelector('.shopify-section-group-header-group') || document.querySelector('.section-header') || document.querySelector('header.header') || document.querySelector('header');
       return h ? Math.max(0, Math.round(h.getBoundingClientRect().bottom)) : 0;
     }
-    var lbTimer;
+    function headerTop() {
+      /* top edge of the header (i.e. right below the offer bar; 0 once the offer
+         bar has scrolled away and the header is pinned) */
+      var h = document.querySelector('header.header') || document.querySelector('.section-header') || document.querySelector('header');
+      return h ? Math.max(0, Math.round(h.getBoundingClientRect().top)) : 0;
+    }
     function lbShow() {
       var e = bar(); if (!e || e.classList.contains('is-on')) return;
-      e.style.transition = 'none'; e.style.width = '0%'; e.classList.add('is-on');   /* stays pinned at top:0 (over the dark offer bar) */
+      e.style.top = headerTop() + 'px';   /* sit between the offer bar and the header */
+      e.style.transition = 'none'; e.style.width = '0%'; e.classList.add('is-on');
       void e.offsetWidth;            /* reflow so the next width animates */
       e.style.transition = '';
       e.style.width = '90%';
     }
     function lbStart() {
-      /* only reveal the bar if the nav is actually slow (>180ms); instant
-         prerendered / Turbo-cached navigations never flash a bar */
-      clearTimeout(lbTimer); lbTimer = setTimeout(lbShow, 180);
+      /* show on EVERY navigation immediately (no delay) so the bar is always visible */
+      lbShow();
     }
     function lbDone() {
-      clearTimeout(lbTimer);
       var e = bar(); if (!e || !e.classList.contains('is-on')) return;   /* never shown → nothing to finish */
       e.style.width = '100%';
       setTimeout(function () { e.classList.remove('is-on'); setTimeout(function () { e.style.transition = 'none'; e.style.width = '0%'; }, 240); }, 150);
