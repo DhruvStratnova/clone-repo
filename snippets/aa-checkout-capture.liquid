@@ -1,0 +1,81 @@
+{%- comment -%}
+  aa-checkout-capture
+  -------------------
+  When a LOGGED-IN shopper opens Magic checkout, record a "reached checkout"
+  event (their phone + current cart) to Supabase so the WhatsApp recovery engine
+  can follow up.
+
+  Why this exists: a shopper who logs in, fills address and lands on the Magic
+  "Review Order" screen then closes was invisible to both engine sources:
+    - Razorpay never creates a status=created order for these (their dashboard's
+      "Checkout Summary" bucket is always empty), and
+    - the guest cart row in Supabase has no phone, so it was skipped.
+  This beacon closes that gap for every identified shopper.
+
+  Fires once per cart per session, only when we already know the phone (from the
+  MSG91 login session). Silent no-op for guests. Completed purchases are safe:
+  the engine skips any phone that later pays.
+
+  Include once in layout/theme.liquid right after {% render 'aa-auth-config' %}.
+{%- endcomment -%}
+<script>
+(function () {
+  try {
+    var C = window.AA_AUTH_CONFIG || {};
+    if (!C.supabaseUrl || !C.anonKey) return;
+
+    function phone() {
+      try {
+        var u = JSON.parse(localStorage.getItem('aa_auth_user') || 'null');
+        var p = u && u.phone ? String(u.phone).replace(/[^\d+]/g, '') : '';
+        if (p && p[0] !== '+') p = '+91' + p.slice(-10);
+        return p;
+      } catch (e) { return ''; }
+    }
+    function jwt() {
+      try {
+        var raw = localStorage.getItem('sb-' + C.projectRef + '-auth-token');
+        var s = raw && JSON.parse(raw);
+        return (s && s.access_token) || '';
+      } catch (e) { return ''; }
+    }
+    function capture() {
+      var ph = phone(), tok = jwt();
+      if (!ph || !tok) return;                       // identified shoppers only
+      fetch('/cart.js', { credentials: 'same-origin' })
+        .then(function (r) { return r.json(); })
+        .then(function (cart) {
+          if (!cart || !cart.item_count) return;
+          var key = 'aaCR_' + cart.token;
+          if (sessionStorage.getItem(key)) return;   // once per cart per session
+          var items = (cart.items || []).map(function (i) {
+            return {
+              variant_id: i.variant_id, product_id: i.product_id,
+              quantity: i.quantity, title: i.product_title || i.title
+            };
+          });
+          fetch(C.supabaseUrl + '/rest/v1/aa_checkout_reached', {
+            method: 'POST', keepalive: true,
+            headers: {
+              'Content-Type': 'application/json',
+              'apikey': C.anonKey,
+              'Authorization': 'Bearer ' + tok,
+              'Prefer': 'resolution=ignore-duplicates'
+            },
+            body: JSON.stringify({
+              phone: ph, cart_token: cart.token, items: items,
+              amount: (cart.total_price || 0) / 100
+            })
+          }).then(function () { try { sessionStorage.setItem(key, '1'); } catch (e) {} })
+            .catch(function () {});
+        }).catch(function () {});
+    }
+
+    // Capture phase so this runs even though aa-cart.js also handles the click.
+    document.addEventListener('click', function (e) {
+      var t = e.target;
+      if (t && t.closest && t.closest('[data-aac-checkout]')) capture();
+    }, true);
+  } catch (e) {}
+})();
+</script>
