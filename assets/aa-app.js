@@ -394,15 +394,8 @@
       var h = document.querySelector('.shopify-section-group-header-group') || document.querySelector('.section-header') || document.querySelector('header.header') || document.querySelector('header');
       return h ? Math.max(0, Math.round(h.getBoundingClientRect().bottom)) : 0;
     }
-    function headerTop() {
-      /* top edge of the header (i.e. right below the offer bar; 0 once the offer
-         bar has scrolled away and the header is pinned) */
-      var h = document.querySelector('header.header') || document.querySelector('.section-header') || document.querySelector('header');
-      return h ? Math.max(0, Math.round(h.getBoundingClientRect().top)) : 0;
-    }
     function lbShow() {
-      var e = bar(); if (!e || e.classList.contains('is-on')) return;
-      e.style.top = headerTop() + 'px';   /* sit between the offer bar and the header */
+      var e = bar(); if (!e || e.classList.contains('is-on')) return;   /* CSS pins it at top:0, over the offer bar */
       e.style.transition = 'none'; e.style.width = '0%'; e.classList.add('is-on');
       void e.offsetWidth;            /* reflow so the next width animates */
       e.style.transition = '';

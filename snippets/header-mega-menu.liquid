@@ -379,9 +379,10 @@
 
   /* Mega menu panel — absolutely positioned BELOW the header-wrapper (no fixed-vs-header-height race) */
   .header-wrapper, sticky-header { position: relative !important; }
-  /* Header stays pinned at the top while the offer bar scrolls away above it.
-     sticky is still a positioning context, so the mega panel still anchors here. */
-  .section-header { position: sticky !important; top: 0 !important; z-index: 850 !important; }
+  /* Header is RELATIVE; the whole header-group (.aa-sticky) pins at the top now
+     (offer bar + header together, see aa-app.css). relative is still a positioning
+     context, so the mega panel still anchors here. */
+  .section-header { position: relative !important; top: auto !important; z-index: 850 !important; }
   .aa-mega__panel {
     position: absolute !important;
     left: 0 !important;

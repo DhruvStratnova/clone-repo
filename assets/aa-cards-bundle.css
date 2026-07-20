@@ -953,17 +953,18 @@ cart-drawer .tax-note {
 
 
 /* ============================================================
-   Header always stays visible while scrolling (sticky, never hides).
-   Dawn's JS adds .shopify-section-header-hidden on scroll-down which
-   slides the header off-screen via `top: calc(-1 * --header-height)`.
-   Neutralize that so the header stays at top: 0.
+   Header sits RELATIVE inside the sticky header-group (.aa-sticky pins the
+   whole group — offer bar + header — at top:0, see aa-app.css). Keeping the
+   header relative (not itself sticky) avoids a double-sticky overlap and lets
+   the offer bar stay pinned with it. Also neutralizes any Dawn header-hidden
+   top-shift. Still a positioning context so the mega panel anchors here.
    ============================================================ */
 .section-header,
 .section-header.shopify-section-header-sticky,
 .section-header.shopify-section-header-hidden,
 .section-header.shopify-section-header-hidden.animate {
-  position: sticky !important;
-  top: 0 !important;
+  position: relative !important;
+  top: auto !important;
   z-index: 5 !important;
 }
 
