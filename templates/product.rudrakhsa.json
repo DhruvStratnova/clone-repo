@@ -50,6 +50,13 @@
           "type": "quantity_selector",
           "settings": {}
         },
+        "text_PPjNd7": {
+          "type": "text",
+          "settings": {
+            "text": "* Actual product may vary slightly from the image, as each piece is natural.",
+            "text_style": "body"
+          }
+        },
         "buy_buttons": {
           "type": "buy_buttons",
           "settings": {
@@ -76,6 +83,7 @@
         "variant_picker",
         "option_plus_option_plus_block_qytF6m",
         "quantity_selector",
+        "text_PPjNd7",
         "buy_buttons",
         "description",
         "share"
