@@ -548,6 +548,7 @@
     <link rel="stylesheet" href="{{ 'aa-auth-v2.css' | asset_url }}" media="print" onload="this.media='all'">
     {% render 'aa-auth-config' %}
     <script src="{{ 'aa-auth-v2.js' | asset_url }}" defer="defer"></script>
+    {% render 'aa-checkout-capture' %}
 
     {%- comment -%} DeDawn lean cart styling (namespaced .aac-*). Replaces the old
        Dawn drawer CSS (astroaura-cart-v8 + component-cart/totals/price/discounts/
@@ -684,7 +685,7 @@
       {%- render 'cart-drawer' -%}
     {%- endif -%}
 
-    {% sections 'header-group' %}
+    <div id="aa-headwrap">{% sections 'header-group' %}</div>
     {%- if request.page_type == 'index' -%}{% render 'aa-catnav' %}{%- endif -%}
     <div class="aa-loadbar" id="aa-loadbar" data-turbo-permanent data-loadbar aria-hidden="true"></div>
 

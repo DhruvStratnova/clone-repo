@@ -240,12 +240,14 @@ a, button, .button, [role="button"], .aa-tab, summary, label {
 }
 
 /* ---- 6. Offer bar + header pin together ----
-   .aa-sticky is added by aa-app.js to the whole header-group. Making the GROUP
-   sticky at top:0 keeps the offer bar AND the header pinned together while the
-   page scrolls (the header itself is relative — see aa-cards-bundle.css /
-   header-mega-menu.liquid — so there's no double-sticky overlap). */
-.shopify-section-group-header-group,
-.aa-sticky { position: sticky; top: 0; z-index: 850; }
+   #aa-headwrap (theme.liquid) is a single div wrapping BOTH the offer bar and
+   the header sections. Sticking that ONE wrapper pins them together as a block
+   while the page scrolls. The sections inside stay relative (see
+   aa-cards-bundle.css / header-mega-menu.liquid) so there's no double-sticky.
+   NOTE: `.shopify-section-group-header-group` is a class on EACH section (not a
+   single wrapper), so it must NOT be made sticky here. */
+#aa-headwrap { position: sticky; top: 0; z-index: 850; }
+.aa-sticky { position: relative; z-index: 1; }
 .aa-sticky .section-header { position: relative; top: auto; z-index: 2; }
 
 /* ---- 7. Wishlist heart active state ---- */

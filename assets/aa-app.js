@@ -390,12 +390,14 @@
   /* ---- navigation loading bar (attached under the header) ---- */
   (function () {
     function bar() { return document.querySelector('[data-loadbar]'); }
+    var lbShownAt = 0;
     function headerBottom() {
       var h = document.querySelector('.shopify-section-group-header-group') || document.querySelector('.section-header') || document.querySelector('header.header') || document.querySelector('header');
       return h ? Math.max(0, Math.round(h.getBoundingClientRect().bottom)) : 0;
     }
     function lbShow() {
       var e = bar(); if (!e || e.classList.contains('is-on')) return;   /* CSS pins it at top:0, over the offer bar */
+      lbShownAt = Date.now();
       e.style.transition = 'none'; e.style.width = '0%'; e.classList.add('is-on');
       void e.offsetWidth;            /* reflow so the next width animates */
       e.style.transition = '';
@@ -405,17 +407,26 @@
       /* show on EVERY navigation immediately (no delay) so the bar is always visible */
       lbShow();
     }
-    function lbDone() {
-      var e = bar(); if (!e || !e.classList.contains('is-on')) return;   /* never shown → nothing to finish */
+    function lbFinish() {
+      var e = bar(); if (!e || !e.classList.contains('is-on')) return;
       e.style.width = '100%';
       setTimeout(function () { e.classList.remove('is-on'); setTimeout(function () { e.style.transition = 'none'; e.style.width = '0%'; }, 240); }, 150);
     }
-    /* start as early as the tap, plus the visit; finish on load */
+    function lbDone() {
+      if (!bar() || !bar().classList.contains('is-on')) return;   /* never shown → nothing to finish */
+      var wait = 480 - (Date.now() - lbShownAt);   /* keep it on screen long enough to be seen, even on instant navs */
+      if (wait > 0) setTimeout(lbFinish, wait); else lbFinish();
+    }
+    /* start as early as the tap/visit; finish on load. lbShow() + window load also
+       fire the bar on the FIRST page load and on full-reload landings, so it shows
+       on every load, not only Turbo SPA navigations. */
     document.addEventListener('turbo:click', lbStart);
     document.addEventListener('turbo:before-visit', lbStart);
     document.addEventListener('turbo:visit', lbStart);
     document.addEventListener('turbo:load', lbDone);
     document.addEventListener('turbo:fetch-request-error', lbDone);
+    lbShow();
+    window.addEventListener('load', lbDone);
   })();
   window.addEventListener('pageshow', function () { refreshCart(); setWishBadge(); markHearts(); });
   ['cart:updated', 'cart:added', 'cart:refresh'].forEach(function (ev) { document.addEventListener(ev, refreshCart); });
