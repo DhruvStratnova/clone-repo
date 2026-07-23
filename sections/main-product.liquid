@@ -1863,9 +1863,8 @@
       </div>
     </div>
 
-    {%- comment -%} Why AstroAura band moved to the bottom of the PDP (end of related-products section). {%- endcomment -%}
-    {%- comment -%} Trust-story cards: rendered here (inside .page-width, after the 2-col grid) so they sit ABOVE the Customer Reviews section. {%- endcomment -%}
-    {%- unless product.product_type == 'Charging Plate' -%}{% render 'aa-pdp-commerce', part: 'trust', product: product %}{%- endunless -%}
+    {%- comment -%} Why AstroAura stat band, then the trust-story cards, both above the Customer Reviews section. {%- endcomment -%}
+    {%- unless product.product_type == 'Charging Plate' -%}{% render 'aa-pdp-commerce', part: 'why', product: product %}{% render 'aa-pdp-commerce', part: 'trust', product: product %}{%- endunless -%}
 
     {% render 'product-media-modal', variant_images: variant_images %}
 

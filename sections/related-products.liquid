@@ -180,10 +180,6 @@
   {% if section.settings.image_shape == 'arch' %}
     {{ 'mask-arch.svg' | inline_asset_content }}
   {%- endif -%}
-  {%- comment -%} Why AstroAura stat band, moved here so it sits BELOW reviews + recommendations. {%- endcomment -%}
-  {%- unless product.product_type == 'Charging Plate' -%}
-    <div class="page-width">{% render 'aa-pdp-commerce', part: 'why', product: product %}</div>
-  {%- endunless -%}
 </div>
 
 {% schema %}
