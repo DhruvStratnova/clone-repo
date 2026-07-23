@@ -1,3 +1,8 @@
+{%- comment -%} Why stat band + trust-story cards, rendered immediately ABOVE the customer reviews. {%- endcomment -%}
+{%- unless product.product_type == 'Charging Plate' -%}
+  <div class="page-width">{% render 'aa-pdp-commerce', part: 'why', product: product %}{% render 'aa-pdp-commerce', part: 'trust', product: product %}</div>
+{%- endunless -%}
+
 {%- comment -%} Customer reviews (Supabase-backed) render here so they sit BELOW the
     certification section and ABOVE Customers Also Bought on every product template. {%- endcomment -%}
 {%- render 'aa-reviews', product: product -%}

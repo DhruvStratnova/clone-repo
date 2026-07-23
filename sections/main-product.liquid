@@ -1863,8 +1863,7 @@
       </div>
     </div>
 
-    {%- comment -%} Why AstroAura stat band, then the trust-story cards, both above the Customer Reviews section. {%- endcomment -%}
-    {%- unless product.product_type == 'Charging Plate' -%}{% render 'aa-pdp-commerce', part: 'why', product: product %}{% render 'aa-pdp-commerce', part: 'trust', product: product %}{%- endunless -%}
+    {%- comment -%} Why stat band + trust cards now render just above the customer reviews (top of related-products section). {%- endcomment -%}
 
     {% render 'product-media-modal', variant_images: variant_images %}
 
