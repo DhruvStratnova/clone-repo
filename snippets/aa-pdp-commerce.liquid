@@ -27,6 +27,61 @@
     </div>
   </div>
 
+{%- elsif part == 'plateaddon' -%}
+
+  {%- comment -%} Rs.49 Raw Selenite Plate add-on (Add button, opt-in). Shows only on bracelet /
+     crystals PDPs. The Add button is a real /cart/add form (aa-cart-v9 intercepts -> instant
+     drawer add). Reads the plate by handle 'raw-selenite-plate'; button is disabled until that
+     product exists. {%- endcomment -%}
+  {%- assign aa_fp = false -%}
+  {%- if product.template_suffix == 'bracelet' or product.template_suffix == 'crystals' -%}{%- assign aa_fp = true -%}{%- endif -%}
+  {%- if aa_fp -%}
+    {%- assign aa_fp_noun = 'bracelet' -%}
+    {%- if product.template_suffix == 'crystals' -%}{%- assign aa_fp_noun = 'crystal' -%}{%- endif -%}
+    {%- assign aa_plate = all_products['raw-selenite-plate'] -%}
+    {%- assign aa_pvid = '' -%}
+    {%- if aa_plate != blank and aa_plate.available -%}{%- assign aa_pvid = aa_plate.selected_or_first_available_variant.id -%}{%- endif -%}
+    <div class="aa-plate">
+      <img class="aa-plate__img" src="{{ 'aa-selenite-plate.webp' | asset_url }}" alt="Raw selenite charging plate" width="120" height="120" loading="lazy">
+      <div class="aa-plate__body">
+        <div class="aa-plate__title">Raw Selenite Plate</div>
+        <div class="aa-plate__sub">Cleanse &amp; charge your {{ aa_fp_noun }} on real selenite</div>
+      </div>
+      <div class="aa-plate__cta">
+        <span class="aa-plate__price">+&#8377;49</span>
+        {%- if aa_pvid != blank -%}
+          <form action="/cart/add" method="post" class="aa-plate__form">
+            <input type="hidden" name="id" value="{{ aa_pvid }}">
+            <button type="submit" class="aa-plate__add">Add</button>
+          </form>
+        {%- else -%}
+          <button type="button" class="aa-plate__add" disabled aria-disabled="true">Add</button>
+        {%- endif -%}
+      </div>
+    </div>
+    <style>
+      .aa-plate{ display:flex; align-items:center; gap:13px; background:#FFFCF6; border:1px solid rgba(181,142,62,.35); border-radius:16px; padding:11px 14px; margin:0 0 14px; font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif; }
+      .aa-plate__img{ flex:0 0 auto; width:56px; height:56px; border-radius:12px; object-fit:cover; background:#F1EADB; }
+      .aa-plate__body{ flex:1 1 auto; min-width:0; }
+      .aa-plate__title{ font-size:14.5px; font-weight:800; color:#241019; line-height:1.2; }
+      .aa-plate__sub{ font-size:12px; color:#8a7480; margin-top:3px; line-height:1.3; }
+      .aa-plate__cta{ flex:0 0 auto; display:flex; align-items:center; gap:11px; }
+      .aa-plate__price{ font-size:14px; font-weight:800; color:#241019; white-space:nowrap; }
+      .aa-plate__form{ margin:0; }
+      .aa-plate__add{ appearance:none; -webkit-appearance:none; border:0; cursor:pointer; background:#241019; color:#fff; font-size:13px; font-weight:800; border-radius:999px; padding:9px 22px; line-height:1; }
+      .aa-plate__add[disabled]{ opacity:.4; cursor:not-allowed; }
+      @media (max-width:749px){
+        .aa-plate{ gap:11px; padding:10px 12px; }
+        .aa-plate__img{ width:50px; height:50px; }
+        .aa-plate__title{ font-size:13.5px; }
+        .aa-plate__sub{ font-size:11.5px; margin-top:2px; }
+        .aa-plate__cta{ gap:9px; }
+        .aa-plate__price{ font-size:13px; }
+        .aa-plate__add{ padding:8px 18px; }
+      }
+    </style>
+  {%- endif -%}
+
 {%- elsif part == 'post' -%}
 
   {%- comment -%} Original trust image band restored: desktop above GWW, mobile below GWW. {%- endcomment -%}
