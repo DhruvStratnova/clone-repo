@@ -34,10 +34,11 @@
      drawer add). Reads the plate by handle 'raw-selenite-plate'; button is disabled until that
      product exists. {%- endcomment -%}
   {%- assign aa_fp = false -%}
-  {%- if product.template_suffix == 'bracelet' or product.template_suffix == 'crystals' -%}{%- assign aa_fp = true -%}{%- endif -%}
+  {%- if product.template_suffix == 'bracelet' or product.template_suffix == 'crystals' or product.template_suffix == 'mala' -%}{%- assign aa_fp = true -%}{%- endif -%}
   {%- if aa_fp -%}
     {%- assign aa_fp_noun = 'bracelet' -%}
     {%- if product.template_suffix == 'crystals' -%}{%- assign aa_fp_noun = 'crystal' -%}{%- endif -%}
+    {%- if product.template_suffix == 'mala' -%}{%- assign aa_fp_noun = 'mala' -%}{%- endif -%}
     {%- assign aa_plate = all_products['raw-selenite-plate'] -%}
     {%- assign aa_pvid = '' -%}
     {%- if aa_plate != blank and aa_plate.available -%}{%- assign aa_pvid = aa_plate.selected_or_first_available_variant.id -%}{%- endif -%}
