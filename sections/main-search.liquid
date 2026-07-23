@@ -296,6 +296,7 @@
                 {%- assign skip_card_product_styles = false -%}
                 {%- for item in search.results -%}
                   {% if item.type == 'mws_apo_generated' %}{% continue %}{% endif %}
+                  {% if item.type == 'Charging Plate' %}{% continue %}{% endif %}
                   {% assign lazy_load = false %}
                   {%- if forloop.index > 2 -%}
                     {%- assign lazy_load = true -%}
