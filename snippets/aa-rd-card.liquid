@@ -1,8 +1,15 @@
 {%- comment -%} AstroAura redesign product card with quick-view. Params: product, cat {%- endcomment -%}
 {%- liquid
   assign p = product
-  assign cprice = p.compare_at_price
   assign price = p.price
+  # Pair compare-at with the SAME cheapest variant that supplies the shown "from" price.
+  # product.compare_at_price is the min compare across ALL variants -> can be a different variant -> wrong %.
+  assign cprice = 0
+  for aa_v in p.variants
+    if aa_v.price == price and aa_v.compare_at_price > cprice
+      assign cprice = aa_v.compare_at_price
+    endif
+  endfor
   assign off = 0
   if cprice > price
     assign off = cprice | minus: price | times: 100.0 | divided_by: cprice | round

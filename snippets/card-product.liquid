@@ -23,10 +23,19 @@
   {%- liquid
     assign on_sale = false
     assign discount = 0
-    if card_product.compare_at_price > card_product.price and card_product.available
+    # Pair compare-at with the SAME cheapest variant that supplies the shown "from" price;
+    # card_product.compare_at_price (min compare across all variants) can be a different variant -> wrong % + strike.
+    assign cp_price = card_product.price
+    assign cp_compare = 0
+    for aa_v in card_product.variants
+      if aa_v.price == cp_price and aa_v.compare_at_price > cp_compare
+        assign cp_compare = aa_v.compare_at_price
+      endif
+    endfor
+    if cp_compare > cp_price and card_product.available
       assign on_sale = true
-      assign diff_x100 = card_product.compare_at_price | minus: card_product.price | times: 100.0
-      assign discount = diff_x100 | divided_by: card_product.compare_at_price | round: 0
+      assign diff_x100 = cp_compare | minus: cp_price | times: 100.0
+      assign discount = diff_x100 | divided_by: cp_compare | round: 0
     endif
 
     # Combos / multi-item / contextual photos need object-fit: contain
@@ -188,7 +197,7 @@
       <div class="aa-pcard__price-row">
         <span class="aa-pcard__price">{{ card_product.price | money }}</span>
         {%- if on_sale -%}
-          <span class="aa-pcard__strike">{{ card_product.compare_at_price | money }}</span>
+          <span class="aa-pcard__strike">{{ cp_compare | money }}</span>
           {%- if aa_coll_card -%}
             <span class="aa-pcard__pct">{{ discount }}% off</span>
           {%- endif -%}
