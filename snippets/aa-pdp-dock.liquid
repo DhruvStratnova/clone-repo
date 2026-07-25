@@ -4,8 +4,10 @@
   floats above the bottom edge with a gap on all sides. Buttons delegate to the real
   Add-to-Cart / custom Buy Now. Price mirrors the live price element.
 {%- endcomment -%}
-{%- assign aa_cur = product.price -%}
-{%- assign aa_cmp = product.compare_at_price -%}
+{%- comment -%} Pair price+compare from the same (default) variant so the initial % matches the shown price. {%- endcomment -%}
+{%- assign aa_dv = product.selected_or_first_available_variant -%}
+{%- assign aa_cur = aa_dv.price | default: product.price -%}
+{%- assign aa_cmp = aa_dv.compare_at_price -%}
 {%- assign aa_disc = 0 -%}
 {%- if aa_cmp > aa_cur -%}{%- assign aa_disc = aa_cmp | minus: aa_cur | times: 100.0 | divided_by: aa_cmp | round -%}{%- endif -%}
 <div class="aa-dock" id="AaDock" aria-hidden="true">
