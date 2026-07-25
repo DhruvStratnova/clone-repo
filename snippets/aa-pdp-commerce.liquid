@@ -185,10 +185,10 @@
     <div class="aa-why__eyebrow">Why AstroAura</div>
     <h2 class="aa-why__title">Trusted, certified, energised</h2>
     <div class="aa-why__stats">
-      <div class="aa-why__stat"><div class="aa-why__num">10 Lakh+</div><div class="aa-why__lbl">Happy customers across India</div></div>
       <div class="aa-why__stat"><div class="aa-why__num">100%</div><div class="aa-why__lbl">Lab-certified natural stones</div></div>
-      <div class="aa-why__stat"><div class="aa-why__num">7+ Yrs</div><div class="aa-why__lbl">Rooted in Vedic tradition</div></div>
       <div class="aa-why__stat"><div class="aa-why__num">Free</div><div class="aa-why__lbl">Shipping across India</div></div>
+      <div class="aa-why__stat"><div class="aa-why__num">7-Day</div><div class="aa-why__lbl">Easy returns</div></div>
+      <div class="aa-why__stat"><div class="aa-why__num">Vedic</div><div class="aa-why__lbl">Astrology backed</div></div>
     </div>
     </div>
   </div>
@@ -208,6 +208,39 @@
       .aa-why__stats{ grid-template-columns:repeat(2,1fr); gap:16px 0; padding:20px 6px; }
       .aa-why__num{ font-size:24px; }
       .aa-why__stat:nth-child(3)::before{ display:none; }
+    }
+  </style>
+
+{%- elsif part == 'trust' -%}
+
+  {%- comment -%} 4-card trust-story band (fixed brand images), shown ABOVE Customer Reviews. {%- endcomment -%}
+  <div class="aa-tcards">
+    <div class="aa-tc" style="--aa-tc-img:url('{{ 'aa-trust-ritual.webp' | asset_url }}');">
+      <div class="aa-tc__b"><div class="aa-tc__t">Energised by hand</div><div class="aa-tc__s">Siddh Pran Pratishta before dispatch</div></div>
+    </div>
+    <div class="aa-tc" style="--aa-tc-img:url('{{ 'aa-trust-cert.webp' | asset_url }}');">
+      <div class="aa-tc__b"><div class="aa-tc__t">Lab certified</div><div class="aa-tc__s">Authenticity you can verify</div></div>
+    </div>
+    <div class="aa-tc" style="--aa-tc-img:url('{{ 'aa-trust-packaging.webp' | asset_url }}');">
+      <div class="aa-tc__b"><div class="aa-tc__t">Safe delivery</div><div class="aa-tc__s">Sealed, insured, pan-India</div></div>
+    </div>
+    <div class="aa-tc" style="--aa-tc-img:url('{{ 'aa-trust-customer.webp' | asset_url }}');">
+      <div class="aa-tc__b"><div class="aa-tc__t">Loved across India</div><div class="aa-tc__s">Handcrafted with authentic stones</div></div>
+    </div>
+  </div>
+  <style>
+    .aa-tcards{ display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin:28px 0; font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif; }
+    .aa-tc{ position:relative; aspect-ratio:3/4; border-radius:22px; overflow:hidden; background-color:#1b1230; background-image:var(--aa-tc-img); background-size:cover; background-position:center; display:flex; align-items:flex-end; }
+    .aa-tc::after{ content:''; position:absolute; inset:0; background:linear-gradient(180deg, rgba(20,10,25,.08) 0%, rgba(20,10,25,.5) 52%, rgba(14,7,20,.93) 100%); }
+    .aa-tc__b{ position:relative; z-index:1; width:100%; padding:22px 16px; text-align:center; }
+    .aa-tc__t{ color:#fff; font-weight:800; font-size:19px; letter-spacing:-.2px; line-height:1.15; }
+    .aa-tc__s{ color:rgba(255,255,255,.72); font-size:13px; margin-top:6px; line-height:1.3; }
+    @media (max-width:749px){
+      .aa-tcards{ grid-template-columns:repeat(2,1fr); gap:12px; margin:20px 0; }
+      .aa-tc{ border-radius:18px; }
+      .aa-tc__b{ padding:16px 12px; }
+      .aa-tc__t{ font-size:16px; }
+      .aa-tc__s{ font-size:12px; }
     }
   </style>
 
