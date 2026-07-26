@@ -45,3 +45,22 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+
+def test_spec_name_carries_variant_and_properties():
+    from ithink.mapper import _spec_name
+    li = {
+        "title": "Original 5 Mukhi Rudraksha (Nepal Origin)",
+        "variant_title": "Premium / With Silver Capping / With X-Ray Certificate",
+        "properties": [{"name": "Ring Size", "value": "9"}, {"name": "_hidden", "value": "x"}],
+    }
+    name = _spec_name(li)
+    assert "Premium / With Silver Capping / With X-Ray Certificate" in name
+    assert "Ring Size: 9" in name
+    assert "_hidden" not in name
+
+
+def test_spec_name_single_variant_is_clean():
+    from ithink.mapper import _spec_name
+    assert _spec_name({"title": "Amethyst Bracelet", "variant_title": "Default Title"}) == "Amethyst Bracelet"

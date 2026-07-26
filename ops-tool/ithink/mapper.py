@@ -41,12 +41,34 @@ def _grams_to_kg_string(grams: int | float | None) -> str:
     return str(int(grams))
 
 
+def _spec_name(item: dict) -> str:
+    """Label-ready product name: "Title | Variant options | Prop: value".
+
+    Appends the variant options (variant_title, e.g. "Premium / With Silver Capping /
+    With X-Ray Certificate") and any custom line-item properties (e.g. "Ring Size: 9")
+    so iThink and the printed shipping label carry the FULL spec with no manual entry.
+    """
+    base = str(item.get("title") or item.get("name") or "Product").strip()
+    parts = [base]
+    variant = str(item.get("variant_title") or "").strip()
+    if variant and variant.lower() not in ("default title", "none"):
+        parts.append(variant)
+    for prop in (item.get("properties") or []):
+        if not isinstance(prop, dict):
+            continue
+        pname = str(prop.get("name") or "").strip()
+        pval = str(prop.get("value") or "").strip()
+        if pname and pval and not pname.startswith("_"):  # skip Shopify hidden props
+            parts.append(f"{pname}: {pval}")
+    return " | ".join(parts)[:230]
+
+
 def _line_item_to_product(item: dict) -> dict:
     """Shopify line_item → iThink product dict."""
     qty = int(item.get("quantity", 1))
     price = float(item.get("price", 0))
     return {
-        "product_name": str(item.get("title") or item.get("name") or "Product"),
+        "product_name": _spec_name(item),
         "product_sku": str(item.get("sku") or ""),
         "product_quantity": str(qty),
         "product_price": str(price),
