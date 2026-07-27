@@ -63,6 +63,24 @@ def _spec_name(item: dict) -> str:
     return " | ".join(parts)[:230]
 
 
+def _line_discount(item: dict) -> float:
+    """Total discount allocated to this line item (all units).
+
+    Order-level coupons (e.g. WELCOME10) are allocated per line in
+    discount_allocations[].amount and leave line_item.total_discount = 0, so we sum the
+    allocations; fall back to total_discount for purely line-level discounts.
+    """
+    total = 0.0
+    for alloc in (item.get("discount_allocations") or []):
+        try:
+            total += float(alloc.get("amount") or 0)
+        except (TypeError, ValueError):
+            continue
+    if total == 0.0:
+        total = float(item.get("total_discount") or 0)
+    return round(total, 2)
+
+
 def _line_item_to_product(item: dict) -> dict:
     """Shopify line_item → iThink product dict."""
     qty = int(item.get("quantity", 1))
@@ -74,7 +92,7 @@ def _line_item_to_product(item: dict) -> dict:
         "product_price": str(price),
         "product_tax_rate": "0",
         "product_hsn_code": str(item.get("hsn_code") or ""),
-        "product_discount": str(float(item.get("total_discount", 0))),
+        "product_discount": str(_line_discount(item)),
     }
 
 
@@ -137,14 +155,22 @@ def shopify_order_to_ithink(order: dict, *, default_dimensions: dict | None = No
     line_items = order.get("line_items") or []
     products = [_line_item_to_product(li) for li in line_items]
 
-    payment_mode, _full_cod_amount = _detect_payment_mode(order)
-    # When this is a vendor-specific sub-order, totals/COD are scoped to that vendor's items.
-    if vendor and "_vendor_subtotal" in order:
-        total_amount = float(order["_vendor_subtotal"])
-        cod_amount = total_amount if payment_mode == "COD" else 0.0
-    else:
-        total_amount = float(order.get("total_price") or 0)
-        cod_amount = _full_cod_amount
+    # iThink cross-checks total_amount against the sum of the product lines, then subtracts
+    # total_discount. Order-level coupons land in each line's discount_allocations (NOT
+    # line_item.total_discount), so we reconcile straight from the product lines instead of
+    # mixing full-price products with a post-discount order.total_price (which made the sum
+    # disagree and iThink silently reject the order):
+    #   total_amount   = pre-discount product sum
+    #   total_discount = sum of allocated discounts
+    #   cod / net      = product sum - discounts  (AstroAura ships free, so == total_price)
+    # This is also correct for vendor sub-orders, where `products` is already vendor-scoped.
+    product_sum = round(sum(float(p["product_price"]) * int(p["product_quantity"]) for p in products), 2)
+    discount_sum = round(sum(float(p["product_discount"]) for p in products), 2)
+    net_collectible = round(product_sum - discount_sum, 2)
+
+    payment_mode, _ = _detect_payment_mode(order)
+    total_amount = product_sum
+    cod_amount = net_collectible if payment_mode == "COD" else 0.0
     weight_grams = _aggregate_weight_grams(line_items)
 
     # Customer name fallbacks
@@ -230,7 +256,7 @@ def shopify_order_to_ithink(order: dict, *, default_dimensions: dict | None = No
         "shipping_charges": "0",
         "giftwrap_charges": "0",
         "transaction_charges": "0",
-        "total_discount": str(float(order.get("total_discounts") or 0)),
+        "total_discount": str(discount_sum),
         "first_attemp_discount": "0",
         "cod_charges": "0",
         "advance_amount": "0",

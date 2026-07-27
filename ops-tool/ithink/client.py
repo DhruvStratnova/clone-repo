@@ -19,6 +19,31 @@ class IThinkError(Exception):
         self.response = response
 
 
+def _raise_on_shipment_errors(resp: Any) -> None:
+    """Surface per-shipment failures from /order/add.
+
+    iThink can return top-level status='success' while an individual shipment inside
+    `data` failed (e.g. data["1"] = {"status": "error", "remark": "Invalid order total
+    Amount ..."}). Those were silently swallowed — no waybill, no error, no alert. A
+    shipment with a non-success status and no waybill is a failure; raise it loudly.
+    """
+    data = resp.get("data") if isinstance(resp, dict) else None
+    if not isinstance(data, dict):
+        return
+    errors = []
+    for key, sh in data.items():
+        if not isinstance(sh, dict) or "status" not in sh:
+            continue
+        status = str(sh.get("status", "")).lower()
+        has_waybill = bool(str(sh.get("waybill") or sh.get("awb_number") or "").strip())
+        if status == "error" or (status != "success" and not has_waybill):
+            msg = (sh.get("remark") or sh.get("message") or sh.get("html_message")
+                   or sh.get("error") or json.dumps(sh)[:300])
+            errors.append(f"shipment {key}: {msg}")
+    if errors:
+        raise IThinkError("iThink rejected shipment(s): " + "; ".join(errors), response=resp)
+
+
 class IThinkClient:
     """All iThink endpoints. Every method returns the parsed JSON response.
     Raises IThinkError on non-2xx or status != 'success'."""
@@ -83,7 +108,9 @@ class IThinkClient:
                 **self._auth(),
             }
         }
-        return self._post("/order/add.json", payload)
+        resp = self._post("/order/add.json", payload)
+        _raise_on_shipment_errors(resp)
+        return resp
 
     def track_order(self, awb_numbers: str | list[str]) -> dict:
         """Track one or more AWBs (comma-separated string OR list)."""

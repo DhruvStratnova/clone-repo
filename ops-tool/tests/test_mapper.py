@@ -64,3 +64,35 @@ def test_spec_name_carries_variant_and_properties():
 def test_spec_name_single_variant_is_clean():
     from ithink.mapper import _spec_name
     assert _spec_name({"title": "Amethyst Bracelet", "variant_title": "Default Title"}) == "Amethyst Bracelet"
+
+
+def test_order_level_coupon_reconciles():
+    """WELCOME10-style order-level discount (lands in discount_allocations, line
+    total_discount=0) must reconcile: total_amount = pre-discount product sum, so
+    iThink's total-consistency check passes. Regression for silently-unbooked #1338."""
+    from ithink.mapper import shopify_order_to_ithink
+    order = {
+        "name": "#1338", "created_at": "2026-07-27T10:00:00Z",
+        "total_price": "2636.10", "total_discounts": "292.90",
+        "financial_status": "pending", "payment_gateway_names": ["Cash on Delivery (COD)"],
+        "line_items": [{"title": "Rudraksha", "price": "2929.00", "quantity": 1, "sku": "R",
+                        "total_discount": "0.00", "discount_allocations": [{"amount": "292.90"}]}],
+        "shipping_address": {"first_name": "T", "last_name": "U", "address1": "x", "zip": "201003",
+                             "city": "Ghaziabad", "province": "UP", "country": "India", "phone": "9999999999"},
+    }
+    s = shopify_order_to_ithink(order)
+    assert s["products"][0]["product_discount"] == "292.9"
+    assert float(s["total_amount"]) == 2929.0          # pre-discount product sum
+    assert float(s["total_discount"]) == 292.90
+    assert float(s["cod_amount"]) == 2636.10
+    assert round(float(s["total_amount"]) - float(s["total_discount"]), 2) == float(s["cod_amount"])
+
+
+def test_add_order_surfaces_per_shipment_error():
+    """Top-level status=success but data['1'].status='error' must raise, not be swallowed."""
+    import pytest
+    from ithink.client import _raise_on_shipment_errors, IThinkError
+    bad = {"status": "success", "data": {"1": {"status": "error", "remark": "Invalid order total Amount"}}}
+    with pytest.raises(IThinkError):
+        _raise_on_shipment_errors(bad)
+    _raise_on_shipment_errors({"status": "success", "data": {"1": {"status": "success", "waybill": "AWB1"}}})
