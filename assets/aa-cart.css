@@ -472,3 +472,14 @@ html[data-theme="dark"] .aac__step:hover { background: rgba(255, 255, 255, 0.08)
 html[data-theme="dark"] .aac__empty-ico { color: rgba(255, 255, 255, 0.3); }
 html[data-theme="dark"] .aac__rec-img { background: #1A0B2E; }
 html[data-theme="dark"] .aac__rec-add { background: var(--aac-grad); box-shadow: 0 4px 12px rgba(255, 46, 147, 0.30); }
+
+/* gemstone line items: chosen setting chips + sankalpa/ring-size properties */
+.aac__specs{display:flex;flex-wrap:wrap;gap:5px;margin:4px 0 2px}
+.aac__spec{font-size:11px;line-height:1;background:#F4E8EE;color:#2B0F26;border-radius:999px;padding:5px 9px;font-weight:600}
+.aac__props{display:flex;flex-direction:column;gap:2px;margin:4px 0 2px}
+.aac__prop{font-size:12px;color:#6c5b64;line-height:1.45}
+.aac__prop b{font-weight:600;color:#241019}
+
+/* add-to-cart failure notice (never leave a silent empty drawer) */
+.aac__error{margin:12px 16px;padding:11px 13px;border-radius:10px;background:#FCEDEE;border:1px solid #E8B9BE;color:#8C2733;font-size:13px;line-height:1.4}
+.aac__error[hidden]{display:none}

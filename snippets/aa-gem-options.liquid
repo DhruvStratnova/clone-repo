@@ -1,0 +1,427 @@
+{%- comment -%}
+  AstroAura gemstone options — Type / Carat / Material selector.
+  Wires the product's native variants (option order: Type, Carat Size, Material).
+  Loose "Gemstone" type has no metal → Material hidden, uses the loose variant.
+  Params: product, form_id (the product form id whose [name="id"] we set).
+{%- endcomment -%}
+{%- liquid
+  assign p = product
+  assign type_pos = 0
+  assign carat_pos = 0
+  assign mat_pos = 0
+  for o in p.options_with_values
+    assign nm = o.name | downcase
+    if nm contains 'type'
+      assign type_pos = forloop.index
+    elsif nm contains 'carat' or nm contains 'size'
+      assign carat_pos = forloop.index
+    elsif nm contains 'material' or nm contains 'metal'
+      assign mat_pos = forloop.index
+    endif
+  endfor
+  assign type_idx = type_pos | minus: 1
+  assign carat_idx = carat_pos | minus: 1
+  assign mat_idx = mat_pos | minus: 1
+-%}
+
+<div class="aa-gem" id="AaGem" data-formid="{{ form_id }}" data-typepos="{{ type_pos }}" data-caratpos="{{ carat_pos }}" data-matpos="{{ mat_pos }}">
+
+  {%- comment -%} ---- TYPE ---- {%- endcomment -%}
+  {%- if type_pos > 0 -%}
+  {%- assign type_opt = p.options_with_values[type_idx] -%}
+  <div class="aa-gem__grp">
+    <div class="aa-gem__lab">Type</div>
+    <div class="aa-gem__types">
+      {%- for val in type_opt.values -%}
+        {%- assign v = val | downcase -%}
+        <button type="button" class="aa-gem__type" data-opt="type" data-val="{{ val | escape }}">
+          <span class="aa-gem__ico">
+            {%- if v contains 'ring' -%}
+              <svg viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="28" r="11"/><path d="M16.5 18l5.5-8 5.5 8"/><path d="M22 10l-2.6 3.4h5.2z" class="fill"/></svg>
+            {%- elsif v contains 'pendant' -%}
+              <svg viewBox="0 0 44 44" aria-hidden="true"><path d="M7 9c8 7.5 22 7.5 30 0"/><path d="M22 16.5l6.4 6.4L22 34l-6.4-10.6z"/><path d="M16 22.5h12"/></svg>
+            {%- else -%}
+              <svg viewBox="0 0 44 44" aria-hidden="true"><path d="M13 8h18l7 11-16 19L6 19z"/><path d="M6 19h32M17 8l-3.5 11 8.5 19 8.5-19L27 8"/></svg>
+            {%- endif -%}
+          </span>
+          <span class="aa-gem__tn">{{ val }}</span>
+        </button>
+      {%- endfor -%}
+    </div>
+  </div>
+  {%- endif -%}
+
+  {%- comment -%} ---- CARAT + RING SIZE (side-by-side dropdowns) ---- {%- endcomment -%}
+  {%- assign carat_opt = p.options_with_values[carat_idx] -%}
+  <div class="aa-gem__row">
+    <div class="aa-gem__grp aa-gem__cell">
+      <div class="aa-gem__lab">{{ carat_opt.name | default: 'Carat Size' }}</div>
+      <select class="aa-gem__select" data-aa-carat aria-label="{{ carat_opt.name | default: 'Carat Size' }}">
+        {%- for val in carat_opt.values -%}
+          <option value="{{ val | escape }}">{{ val }} ct</option>
+        {%- endfor -%}
+      </select>
+    </div>
+    <div class="aa-gem__grp aa-gem__cell" data-ringgrp hidden>
+      <div class="aa-gem__lab">Ring Size
+        <button type="button" class="aa-gem__sizelink" data-sizeguide-open>Size guide</button>
+      </div>
+      <select class="aa-gem__select" name="properties[Ring Size]" form="{{ form_id }}" data-aa-ringsize disabled>
+        <option value="">Select size</option>
+        {%- for n in (9..30) -%}
+          <option value="{{ n }}">{{ n }}</option>
+        {%- endfor -%}
+      </select>
+      <p class="aa-gem__rserr" data-rserr hidden>Please select your ring size (see the size guide).</p>
+    </div>
+  </div>
+
+  {%- comment -%} ---- MATERIAL (conditional) ---- {%- endcomment -%}
+  {%- if mat_pos > 0 -%}
+  {%- assign mat_opt = p.options_with_values[mat_idx] -%}
+  <div class="aa-gem__grp" data-matgrp hidden>
+    <div class="aa-gem__lab">Material</div>
+    <div class="aa-gem__mats">
+      {%- for val in mat_opt.values -%}
+        {%- assign m = val | downcase | strip -%}
+        {%- comment -%} Gold is custom-order only: never render it as a variant tile,
+        even if stray Gold variants exist (e.g. the old preview product). {%- endcomment -%}
+        {%- if m contains 'gold' or m == 'none' or m == 'no setting' -%}{%- continue -%}{%- endif -%}
+        <button type="button" class="aa-gem__mat" data-opt="material" data-val="{{ val | escape }}" data-metal="{{ m }}">
+          <span class="aa-gem__sw"><i></i></span><span class="aa-gem__mn">{{ val }}</span><span class="aa-gem__md" data-matdelta></span>
+        </button>
+      {%- endfor -%}
+      <button type="button" class="aa-gem__mat aa-gem__mat--gold" data-opt="material" data-val="__gold" data-metal="gold">
+        <span class="aa-gem__goldbadge">Custom</span>
+        <span class="aa-gem__sw"><i></i></span><span class="aa-gem__mn">Gold</span>
+        <span class="aa-gem__md">made to order</span>
+      </button>
+    </div>
+  </div>
+  <div class="aa-gem__goldpanel" data-goldpanel hidden>
+    <div class="aa-gem__goldtitle">Gold settings are crafted to order</div>
+    <p class="aa-gem__goldtext">Every gold setting is made for your stone in your chosen karat. You pay the day's gold rate plus a flat 13.5% making charge, nothing hidden. Share your details and our team confirms the exact price within 24 hours.</p>
+    <a class="aa-gem__goldcta" data-goldcta href="#" target="_blank" rel="noopener">Request Gold Quote</a>
+  </div>
+  {%- endif -%}
+
+
+
+  <div class="aa-gsg" data-sizeguide hidden>
+    <div class="aa-gsg__overlay" data-sizeguide-close></div>
+    <div class="aa-gsg__panel" role="dialog" aria-modal="true" aria-label="Ring size guide">
+      <div class="aa-gsg__head">
+        <div class="aa-gsg__title">Ring Size Guide</div>
+        <button type="button" class="aa-gsg__x" data-sizeguide-close aria-label="Close">&#10005;</button>
+      </div>
+      <div class="aa-gsg__tabs" role="tablist">
+        <button type="button" class="aa-gsg__tab" data-gsg-tab="chart" aria-selected="true">Size Chart</button>
+        <button type="button" class="aa-gsg__tab" data-gsg-tab="measure" aria-selected="false">How to Measure</button>
+      </div>
+      <div class="aa-gsg__body" data-gsg-pane="chart">
+        <table class="aa-gsg__table">
+          <thead>
+            <tr><th rowspan="2">Indian Size</th><th colspan="2">Circumference</th><th colspan="2">Diameter</th></tr>
+            <tr><th>mm</th><th>inch</th><th>mm</th><th>inch</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>9</td><td>49.3</td><td>1.94</td><td>15.7</td><td>0.62</td></tr>
+            <tr><td>10</td><td>50.6</td><td>1.99</td><td>16.1</td><td>0.63</td></tr>
+            <tr><td>11</td><td>51.8</td><td>2.04</td><td>16.5</td><td>0.65</td></tr>
+            <tr><td>12</td><td>53.1</td><td>2.09</td><td>16.9</td><td>0.67</td></tr>
+            <tr><td>13</td><td>54.3</td><td>2.14</td><td>17.3</td><td>0.68</td></tr>
+            <tr><td>14</td><td>55.6</td><td>2.19</td><td>17.7</td><td>0.70</td></tr>
+            <tr><td>15</td><td>56.9</td><td>2.24</td><td>18.1</td><td>0.71</td></tr>
+            <tr><td>16</td><td>58.1</td><td>2.29</td><td>18.5</td><td>0.73</td></tr>
+            <tr><td>17</td><td>59.4</td><td>2.34</td><td>18.9</td><td>0.74</td></tr>
+            <tr><td>18</td><td>60.6</td><td>2.39</td><td>19.3</td><td>0.76</td></tr>
+            <tr><td>19</td><td>61.9</td><td>2.44</td><td>19.7</td><td>0.78</td></tr>
+            <tr><td>20</td><td>63.1</td><td>2.49</td><td>20.1</td><td>0.79</td></tr>
+            <tr><td>21</td><td>64.4</td><td>2.54</td><td>20.5</td><td>0.81</td></tr>
+            <tr><td>22</td><td>65.7</td><td>2.59</td><td>20.9</td><td>0.82</td></tr>
+            <tr><td>23</td><td>66.9</td><td>2.63</td><td>21.3</td><td>0.84</td></tr>
+            <tr><td>24</td><td>68.2</td><td>2.68</td><td>21.7</td><td>0.85</td></tr>
+            <tr><td>25</td><td>69.4</td><td>2.73</td><td>22.1</td><td>0.87</td></tr>
+            <tr><td>26</td><td>70.7</td><td>2.78</td><td>22.5</td><td>0.89</td></tr>
+            <tr><td>27</td><td>71.9</td><td>2.83</td><td>22.9</td><td>0.90</td></tr>
+            <tr><td>28</td><td>73.2</td><td>2.88</td><td>23.3</td><td>0.92</td></tr>
+            <tr><td>29</td><td>74.5</td><td>2.93</td><td>23.7</td><td>0.93</td></tr>
+            <tr><td>30</td><td>75.7</td><td>2.98</td><td>24.1</td><td>0.95</td></tr>
+          </tbody>
+        </table>
+        <p class="aa-gsg__note">Sizes follow the standard Indian ring scale. Between two sizes? Choose the larger one.</p>
+      </div>
+      <div class="aa-gsg__body" data-gsg-pane="measure" hidden>
+        <div class="aa-gsg__method">
+          <div class="aa-gsg__mhead">Method 1 &middot; With a thread</div>
+          <div class="aa-gsg__fig" aria-hidden="true">
+            <svg viewBox="0 0 120 64"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 58V26c0-10 6-18 15-18s15 8 15 18v32"/><ellipse cx="33" cy="34" rx="16" ry="5.5"/><path d="M49 34l7-4" stroke-dasharray="2 3"/></g></svg>
+            <svg viewBox="0 0 120 64"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 40h104"/><path d="M8 34v12M24 36v10M40 34v12M56 36v10M72 34v12M88 36v10M104 34v12"/><path d="M14 24c22-8 58-8 84 0"/><circle cx="98" cy="24" r="2.6" fill="currentColor" stroke="none"/></g></svg>
+          </div>
+          <ol class="aa-gsg__steps">
+            <li><span class="aa-gsg__n">1</span>Wrap a thin thread snugly around the base of the finger you will wear the ring on.</li>
+            <li><span class="aa-gsg__n">2</span>Mark the exact point where the thread overlaps.</li>
+            <li><span class="aa-gsg__n">3</span>Lay the thread flat and measure up to the mark in millimetres.</li>
+            <li><span class="aa-gsg__n">4</span>Match that length to the Circumference column in the size chart.</li>
+          </ol>
+        </div>
+        <div class="aa-gsg__method">
+          <div class="aa-gsg__mhead">Method 2 &middot; With a ring that already fits</div>
+          <div class="aa-gsg__fig" aria-hidden="true">
+            <svg viewBox="0 0 120 64"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="60" cy="26" r="17"/><circle cx="60" cy="26" r="12"/><path d="M50 26h20"/><path d="M50 26l3-2.6M50 26l3 2.6M70 26l-3-2.6M70 26l-3 2.6"/><path d="M10 52h100M14 48v8M32 50v6M50 48v8M68 50v6M86 48v8M104 50v6"/></g></svg>
+          </div>
+          <ol class="aa-gsg__steps">
+            <li><span class="aa-gsg__n">1</span>Place the ring on a ruler and measure the inside width at the widest point, in millimetres.</li>
+            <li><span class="aa-gsg__n">2</span>Match that width to the Diameter column in the size chart.</li>
+          </ol>
+        </div>
+        <p class="aa-gsg__note">Measure at the end of the day when fingers are at their largest, and avoid measuring when your hands are cold.</p>
+      </div>
+    </div>
+  </div>
+
+  <script type="application/json" data-aa-gem-variants>
+    [{%- for v in p.variants -%}{"id":{{ v.id }},"o":[{% for o in v.options %}{{ o | json }}{% unless forloop.last %},{% endunless %}{% endfor %}],"p":{{ v.price }},"a":{{ v.available }}}{% unless forloop.last %},{% endunless %}{%- endfor -%}]
+  </script>
+</div>
+
+<style>
+  .aa-gem{ font-family: var(--font-body-family); color:#241019; display:flex; flex-direction:column; gap:26px; margin:6px 0 4px; }
+  .aa-gem__lab{ font-family: var(--font-heading-family); font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:#8a7680; margin:0 0 13px; font-weight:500; }
+  .aa-gem__types{ display:flex; gap:10px; }
+  .aa-gem__type{ flex:1 1 0; max-width:152px; appearance:none; cursor:pointer; background:#fff; border:1.5px solid rgba(36,16,25,.16); border-radius:12px;
+    padding:13px 6px 10px; display:flex; flex-direction:column; align-items:center; gap:6px; transition:border-color .18s cubic-bezier(.23,1,.32,1), background .18s; }
+  .aa-gem__ico svg{ width:29px; height:29px; fill:none; stroke:#b6a2ab; stroke-width:1.5; stroke-linejoin:round; stroke-linecap:round; transition:stroke .18s; }
+  .aa-gem__ico svg .fill{ fill:#b6a2ab; stroke:none; }
+  .aa-gem__tn{ font-size:14px; font-weight:600; color:#7a6670; transition:color .18s; }
+  .aa-gem__type:hover{ border-color:rgba(36,16,25,.32); }
+  .aa-gem__type[aria-pressed="true"]{ border-color:#2B0F26; background:#F4E8EE; }
+  .aa-gem__type[aria-pressed="true"] .aa-gem__tn{ color:#241019; }
+  .aa-gem__type[aria-pressed="true"] .aa-gem__ico svg{ stroke:#2B0F26; }
+  .aa-gem__type[aria-pressed="true"] .aa-gem__ico svg .fill{ fill:#2B0F26; }
+
+  .aa-gem__chips{ display:flex; flex-wrap:wrap; gap:8px; }
+  .aa-gem__chip{ flex:0 0 auto; cursor:pointer; background:#fff; border:1.5px solid rgba(36,16,25,.16); border-radius:11px;
+    min-width:60px; padding:9px 6px 8px; display:flex; flex-direction:column; align-items:center; gap:1px; transition:border-color .18s, background .18s; }
+  .aa-gem__chip--rs{ min-width:52px; padding:11px 6px; }
+  .aa-gem__cn{ font-size:17px; font-weight:700; line-height:1; font-variant-numeric:tabular-nums; }
+  .aa-gem__cu{ font-size:11px; color:#8a7680; letter-spacing:.02em; }
+  .aa-gem__chip:hover{ border-color:rgba(36,16,25,.32); }
+  .aa-gem__chip[aria-pressed="true"]{ border-color:#2B0F26; background:#F4E8EE; }
+
+  .aa-gem__mats{ display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:14px 8px; }
+  @media(max-width:989px){ .aa-gem__mats{ grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px 8px; } }
+  .aa-gem__mat{ appearance:none; border:none; background:transparent; cursor:pointer; padding:0; display:flex; flex-direction:column; align-items:center; gap:6px; width:100%; }
+  .aa-gem__mn{ text-align:center; line-height:1.2; min-height:16px; }
+  .aa-gem__md{ text-align:center; min-height:14px; }
+  .aa-gem__sw{ width:50px; height:50px; border-radius:13px; padding:4px; border:1.5px solid rgba(36,16,25,.14); transition:border-color .18s; }
+  .aa-gem__sw i{ display:block; width:100%; height:100%; border-radius:9px; box-shadow:inset 0 2px 3px rgba(255,255,255,.4), inset 0 -5px 8px rgba(0,0,0,.16); }
+  .aa-gem__mn{ font-size:12.5px; font-weight:600; color:#7a6670; transition:color .18s; }
+  .aa-gem__mat[aria-pressed="true"] .aa-gem__sw{ border-color:#2B0F26; }
+  .aa-gem__mat[aria-pressed="true"] .aa-gem__mn{ color:#241019; }
+  .aa-gem__mat[data-metal="silver"]     i{ background:linear-gradient(135deg,#e6e6ea,#a9a9b2); }
+  .aa-gem__mat[data-metal="panchdhatu"] i, .aa-gem__mat[data-metal="panch dhatu"] i{ background:linear-gradient(135deg,#d6a765,#9a6f34); }
+  .aa-gem__mat[data-metal="gold"]       i{ background:linear-gradient(135deg,#f4cf60,#cc9a1e); }
+  .aa-gem__mat[data-metal="ashtdhatu"]  i, .aa-gem__mat[data-metal="asht dhatu"] i{ background:linear-gradient(135deg,#bd9350,#7c5926); }
+  .aa-gem__mat[data-metal="copper"]     i{ background:linear-gradient(135deg,#d0844c,#974a27); }
+  .aa-gem__mat[data-metal="brass"]      i{ background:linear-gradient(135deg,#ccab4c,#93802b); }
+  [data-matgrp][hidden], [data-ringgrp][hidden]{ display:none; }
+  .aa-gem__md{ font-size:11px; color:#8a7680; font-variant-numeric:tabular-nums; }
+  .aa-gem__md strong{ color:#241019; font-weight:600; }
+  .aa-gem__mat--gold{ position:relative; }
+  .aa-gem__goldbadge{ position:absolute; top:-7px; right:-4px; background:#8A6A2F; color:#fff; font-size:9px; letter-spacing:.09em; text-transform:uppercase; border-radius:999px; padding:2.5px 7px; }
+  .aa-gem__goldpanel{ border:1.5px solid #E4D3AE; background:#F7F0E1; border-radius:13px; padding:17px 18px; margin-top:-8px; }
+  .aa-gem__goldpanel[hidden]{ display:none; }
+  .aa-gem__goldtitle{ font-family: var(--font-heading-family); font-size:16.5px; color:#8A6A2F; margin-bottom:5px; }
+  .aa-gem__goldtext{ font-size:13px; line-height:1.5; color:#6E5A33; margin:0 0 12px; }
+  .aa-gem__goldcta{ display:inline-block; background:#8A6A2F; color:#fff; text-decoration:none; font-size:13.5px; font-weight:600; border-radius:9px; padding:11px 20px; }
+  body.aa-gold-quote .product-form__buttons{ display:none !important; }
+  body.aa-gold-quote .aa-gem__price{ display:none; }
+  .aa-gem__sizelink{ appearance:none; background:none; border:none; padding:0; margin-left:10px; font-family:var(--font-body-family); font-size:12px; letter-spacing:.02em; text-transform:none; color:#7A3B63; text-decoration:underline; cursor:pointer; }
+  .aa-gem__row{ display:flex; gap:12px; align-items:flex-start; }
+  /* the ring cell is taller (it carries the inline error), so tops must align,
+     not bottoms - otherwise the ring column rides up above the carat column */
+  .aa-gem__cell{ position:relative; }
+  .aa-gem__rserr{ position:absolute; left:0; top:100%; margin:6px 0 0; }
+  .aa-gem__cell .aa-gem__lab{ display:flex; align-items:baseline; min-height:18px; margin-bottom:12px; }
+  .aa-gem__cell{ flex:1 1 0; min-width:0; }
+  .aa-gem__select{ width:100%; appearance:none; -webkit-appearance:none; background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232B0F26' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 14px center/14px; border:1.5px solid rgba(36,16,25,.2); border-radius:11px; padding:12px 40px 12px 14px; font-family:var(--font-body-family); font-size:15px; font-weight:600; color:#241019; cursor:pointer; }
+  .aa-gem__select:focus, .aa-gem__select:focus-visible{ border-color:#2B0F26; outline:none !important; box-shadow:none !important; }
+  .aa-gem__rserr{ margin:8px 0 0; font-size:12.5px; color:#A8323E; }
+  @keyframes aaShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+  .aa-shake{ animation:aaShake .45s ease; }
+  .aa-shake .aa-gem__select{ border-color:#A8323E; }
+  .aa-gsg{ position:fixed; inset:0; z-index:2147483000; align-items:center; justify-content:center; padding:18px; }
+  /* body-level + !important: the app webview grids <body> and display:none's stray
+     children, so the modal must win with specificity (see aa-app.css gotcha) */
+  body > .aa-gsg:not([hidden]), .aa-gsg:not([hidden]){ display:flex !important; }
+  .aa-gsg[hidden]{ display:none !important; }
+  .aa-gsg__overlay{ position:absolute; inset:0; background:rgba(20,8,17,.55); }
+  .aa-gsg__panel{ position:relative; background:#fff; border-radius:16px; width:min(560px, 100%); max-height:86vh; overflow:auto; box-shadow:0 24px 60px rgba(20,8,17,.35); }
+  .aa-gsg__head{ display:flex; align-items:center; justify-content:space-between; padding:18px 20px 0; }
+  .aa-gsg__title{ font-family:var(--font-heading-family); font-size:20px; color:#2B0F26; }
+  .aa-gsg__x{ appearance:none; background:none; border:none; font-size:16px; color:#8a7680; cursor:pointer; padding:6px; }
+  .aa-gsg__tabs{ display:flex; gap:0; margin:14px 20px 0; border-bottom:1.5px solid rgba(43,15,38,.12); }
+  .aa-gsg__tab{ appearance:none; background:none; border:none; padding:10px 14px; font-family:var(--font-heading-family); font-size:14px; color:#8a7680; cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-1.5px; }
+  .aa-gsg__tab[aria-selected="true"]{ color:#2B0F26; border-bottom-color:#2B0F26; }
+  .aa-gsg__body{ padding:16px 20px 22px; }
+  .aa-gsg__table{ width:100%; border-collapse:collapse; font-size:13px; font-variant-numeric:tabular-nums; }
+  .aa-gsg__table th{ font-family:var(--font-heading-family); font-weight:400; font-size:12px; letter-spacing:.06em; color:#2B0F26; background:#F4E8EE; padding:8px 6px; border:1px solid rgba(43,15,38,.12); }
+  .aa-gsg__table td{ text-align:center; padding:7px 6px; border:1px solid rgba(43,15,38,.1); color:#241019; }
+  .aa-gsg__table tbody tr:nth-child(even) td{ background:#FBF6F9; }
+  .aa-gsg__note{ margin:12px 0 0; font-size:12px; color:#8a7680; }
+  .aa-gsg__method{ border:1px solid rgba(43,15,38,.12); border-radius:12px; padding:14px 16px; margin-bottom:12px; }
+  .aa-gsg__mhead{ font-family:var(--font-heading-family); font-size:14.5px; color:#2B0F26; margin-bottom:10px; }
+  .aa-gsg__steps{ list-style:none; margin:0; padding:0; display:grid; gap:9px; }
+  .aa-gsg__steps li{ display:flex; gap:10px; font-size:13px; color:#54484E; align-items:flex-start; }
+    .aa-gsg__fig{ display:flex; gap:18px; margin:2px 0 12px; color:#7A3B63; }
+  .aa-gsg__fig svg{ width:110px; height:58px; flex:none; }
+  .aa-gsg__tab:focus, .aa-gsg__tab:focus-visible, .aa-gsg__x:focus, .aa-gsg__x:focus-visible,
+  .aa-gem__sizelink:focus, .aa-gem__sizelink:focus-visible{ outline:none !important; box-shadow:none !important; }
+  .aa-gsg__n{ flex:none; width:20px; height:20px; border-radius:50%; border:1px solid #2B0F26; color:#2B0F26; font-size:11px; display:flex; align-items:center; justify-content:center; font-family:var(--font-heading-family); margin-top:1px; }
+</style>
+
+<script>
+(function(){
+  var root=document.getElementById("AaGem"); if(!root||root.dataset.wired)return; root.dataset.wired="1";
+  var data=JSON.parse(root.querySelector("[data-aa-gem-variants]").textContent);
+  var tp=+root.dataset.typepos-1, cp=+root.dataset.caratpos-1, mp=+root.dataset.matpos-1;
+  var formId=root.dataset.formid;
+  var looseMat=null; // material value used by loose Gemstone variants
+  var gv=data.find(function(v){return (v.o[tp]||"").toLowerCase()==="gemstone";});
+  if(gv) looseMat=gv.o[mp];
+  var state={type:null,carat:null,material:null,ringsize:null};
+
+  function pressed(sel,val){ root.querySelectorAll(sel).forEach(function(b){ b.setAttribute("aria-pressed", b.dataset.val===val); }); }
+  function isLoose(){ return (state.type||"").toLowerCase()==="gemstone"; }
+  function findVar(){
+    var mat = isLoose()? looseMat : state.material;
+    return data.find(function(v){ return v.o[tp]===state.type && v.o[cp]===state.carat && v.o[mp]===mat; });
+  }
+  function money(paise){ return "₹"+Math.round(paise/100).toLocaleString("en-IN"); }
+  function looseVar(carat){ return data.find(function(v){ return (v.o[tp]||"").toLowerCase()==="gemstone" && v.o[cp]===carat; }); }
+  function isGold(){ return state.material==="__gold"; }
+  var WA="https://wa.me/919667561344?text=";
+  function apply(){
+    var isRing=(state.type||"").toLowerCase()==="ring";
+    pressed('[data-opt="type"]',state.type);
+    pressed('[data-opt="material"]',state.material);
+    var cSel=root.querySelector("[data-aa-carat]");
+    if(cSel && cSel.value!==state.carat){ cSel.value=state.carat; }
+    root.querySelector("[data-matgrp]").hidden = isLoose();
+    var rg=root.querySelector("[data-ringgrp]"); if(rg){ rg.hidden=!isRing; }
+    var rs=root.querySelector("[data-aa-ringsize]");
+    if(rs){ rs.disabled=!isRing; if(!isRing){ rs.value=""; } }
+    // material tiles: show the setting delta for the current type+carat
+    var lv=looseVar(state.carat);
+    root.querySelectorAll('.aa-gem__mat:not(.aa-gem__mat--gold)').forEach(function(b){
+      var el=b.querySelector('[data-matdelta]'); if(!el) return;
+      var mv=data.find(function(x){ return x.o[tp]===state.type && x.o[cp]===state.carat && x.o[mp]===b.dataset.val; });
+      if(!isLoose() && mv && lv && mv.p>lv.p){ el.innerHTML="+ <strong>"+money(mv.p-lv.p)+"</strong>"; }
+      else { el.textContent=""; }
+    });
+    // gold = custom order, no variant: swap buy UI for the quote panel
+    var gp=root.querySelector('[data-goldpanel]');
+    var goldOn=isGold() && !isLoose();
+    if(gp){
+      gp.hidden=!goldOn;
+      document.body.classList.toggle("aa-gold-quote", goldOn);
+      if(goldOn){
+        var cta=root.querySelector('[data-goldcta]');
+        if(cta){ cta.href=WA+encodeURIComponent("Hi! I'd like a gold "+state.type.toLowerCase()+" quote for {{ p.title | escape }}, "+state.carat+" ct. (Gold rate + 13.5% making)"); }
+      }
+    }
+    if(goldOn){ return; }
+    var v=findVar();
+    // update the product form's variant id + fire change so price/buy update
+    if(v){
+      var form=formId?document.getElementById(formId):null;
+      var input=form?form.querySelector('input[name="id"]'):document.querySelector('form[action*="/cart/add"] input[name="id"]');
+      // NB: do NOT dispatch a change event here. Dawn's variant-selects listens
+      // for it, re-fetches the section and replaces #ProductInfo's innerHTML,
+      // which destroys this snippet's DOM and resets the selection to defaults
+      // (the "cart adds the loose stone" bug). We own the price update instead.
+      if(input){ input.value=v.id; }
+      // single source of truth: update the theme's own price block (the sticky
+      // bar mirrors it by observing this wrapper) - no duplicate price here.
+      var info=root.closest('[id^="ProductInfo"]')||document;
+      info.querySelectorAll('.price-item--regular, .price-item--sale').forEach(function(el){ el.textContent=money(v.p); });
+    }
+    document.dispatchEvent(new CustomEvent("aa:gem:change",{detail:{carat:state.carat,type:state.type}}));
+  }
+  root.addEventListener("click",function(e){
+    var b=e.target.closest("[data-opt]"); if(!b)return;
+    state[b.dataset.opt]=b.dataset.val; apply();
+  });
+  var caratSel=root.querySelector("[data-aa-carat]");
+  if(caratSel){ caratSel.addEventListener("change",function(){ state.carat=caratSel.value; apply(); }); }
+  // Dawn swaps the whole buy-buttons block on variant change; re-assert our id
+  // whenever that happens so Buy Now / any native path also gets it right.
+  var form0=formId?document.getElementById(formId):null;
+  if(form0 && window.MutationObserver){
+    var mo=new MutationObserver(function(){
+      var v=findVar(); if(!v) return;
+      var inp=form0.querySelector('input[name="id"]');
+      if(inp && inp.value!==String(v.id)){ inp.value=v.id; }
+    });
+    mo.observe(form0,{childList:true,subtree:true});
+  }
+  // ring size is required for rings: registered as an add-to-cart guard
+  // (the cart drawer intercepts add clicks document-wide, so a form submit
+  // listener never fires - the guard registry is the only reliable gate).
+  // Dawn re-renders the form section and resets input[name="id"], so the cart
+  // asks us for the true variant at click time instead of trusting the input.
+  window.AA_addResolvers = window.AA_addResolvers || [];
+  window.AA_addResolvers.push(function(f){
+    if(!f || (f.getAttribute && f.getAttribute('id')) !== formId) return null;
+    var v = findVar();
+    return v ? v.id : null;
+  });
+  window.AA_addGuards = window.AA_addGuards || [];
+  window.AA_addGuards.push(function(f){
+    if(!f || (f.getAttribute && f.getAttribute('id')) !== formId) return true; // form.id is shadowed by <input name="id">
+    if((state.type||"").toLowerCase() !== "ring") return true;
+    var rs=root.querySelector("[data-aa-ringsize]");
+    var err=root.querySelector("[data-rserr]");
+    if(rs && !rs.value){
+      if(err) err.hidden=false;
+      var cell=rs.closest(".aa-gem__cell")||rs;
+      cell.classList.remove("aa-shake"); void cell.offsetWidth; cell.classList.add("aa-shake");
+      rs.scrollIntoView({block:"center",behavior:"smooth"});
+      setTimeout(function(){ rs.focus({preventScroll:true}); }, 350);
+      return false;
+    }
+    if(err) err.hidden=true;
+    return true;
+  });
+  var rsSel=root.querySelector("[data-aa-ringsize]");
+  if(rsSel){ rsSel.addEventListener("change",function(){ var err=root.querySelector("[data-rserr]"); if(err) err.hidden=true; }); }
+  // size guide modal
+  var sg=root.querySelector("[data-sizeguide]");
+  if(sg && sg.parentElement !== document.body){
+    // position:fixed is trapped by the transformed product__info-wrapper ancestor;
+    // the modal must live on <body> to actually cover the viewport.
+    document.body.appendChild(sg);
+  }
+  if(sg){
+    root.querySelectorAll("[data-sizeguide-open]").forEach(function(b){
+      b.addEventListener("click",function(){ sg.hidden=false; document.documentElement.style.overflow="hidden"; });
+    });
+    sg.querySelectorAll("[data-sizeguide-close]").forEach(function(b){
+      b.addEventListener("click",function(){ sg.hidden=true; document.documentElement.style.overflow=""; });
+    });
+    document.addEventListener("keydown",function(e){ if(e.key==="Escape"&&!sg.hidden){ sg.hidden=true; document.documentElement.style.overflow=""; } });
+    sg.querySelectorAll("[data-gsg-tab]").forEach(function(t){
+      t.addEventListener("click",function(){
+        sg.querySelectorAll("[data-gsg-tab]").forEach(function(x){ x.setAttribute("aria-selected", x===t?"true":"false"); });
+        sg.querySelectorAll("[data-gsg-pane]").forEach(function(p){ p.hidden = p.dataset.gsgPane!==t.dataset.gsgTab; });
+      });
+    });
+  }
+  // defaults from first available variant
+  var d0=data.find(function(v){return v.a;})||data[0];
+  state.type=d0.o[tp]; state.carat=d0.o[cp]; state.material=isLooseVal(d0.o[tp])?looseMat:d0.o[mp];
+  function isLooseVal(t){return (t||"").toLowerCase()==="gemstone";}
+  apply();
+})();
+</script>

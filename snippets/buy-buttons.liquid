@@ -147,8 +147,20 @@
     if (!btn) return;
     var TAG = '[AA-BUYNOW]';
 
+    function ownForm() {
+      // the Buy Now button lives inside the PDP form; never trust
+      // querySelector('form[action*="/cart/add"]') which can match a product card
+      return btn.closest('form[action*="/cart/add"]') ||
+             document.querySelector('product-form form[action*="/cart/add"]');
+    }
     function getCurrentVariantId() {
-      var mainForm = document.querySelector('product-form form[action*="/cart/add"], form[action*="/cart/add"]');
+      var mainForm = ownForm();
+      // components that own their selection (gemstone Type/Carat/Material) answer here
+      if (mainForm && window.AA_addResolvers) {
+        for (var i = 0; i < window.AA_addResolvers.length; i++) {
+          try { var rv = window.AA_addResolvers[i](mainForm); if (rv) return String(rv); } catch (e) {}
+        }
+      }
       if (mainForm) {
         var inp = mainForm.querySelector('input[name="id"]');
         if (inp && inp.value) return inp.value;
@@ -212,8 +224,18 @@
       if (btn._aaBusy) return;
       btn._aaBusy = true; btn.style.pointerEvents = 'none';
       function reset() { btn._aaBusy = false; btn.style.pointerEvents = ''; }
+      var theForm = ownForm();
+      // same validation as Add to Cart (e.g. ring size required)
+      if (theForm && window.AA_addGuards) {
+        for (var gi = 0; gi < window.AA_addGuards.length; gi++) {
+          var ok = true;
+          try { ok = window.AA_addGuards[gi](theForm) !== false; } catch (e) {}
+          if (!ok) { console.warn(TAG, 'blocked by guard'); reset(); return; }
+        }
+      }
+      var buyProps = (theForm && window.AA_collectProps) ? window.AA_collectProps(theForm) : {};
       var variantId = getCurrentVariantId();
-      console.log(TAG, 'buy now clicked, variant =', variantId);
+      console.log(TAG, 'buy now clicked, variant =', variantId, 'props =', buyProps);
       try {
         if (window.aaHeatmap) window.aaHeatmap.track('Web_Shopify_Buy_Now_Clicked', {
           '[Amplitude] Product ID': {{ product.id | json }},
@@ -228,13 +250,31 @@
         var fd = new FormData();
         fd.append('id', variantId);
         fd.append('quantity', '1');
+        Object.keys(buyProps).forEach(function (k) { fd.append('properties[' + k + ']', buyProps[k]); });
         fd.append('sections', 'cart-drawer');
         fd.append('sections_url', '/');
         return fetch('/cart/add.js', { method: 'POST', credentials: 'same-origin', headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' }, body: fd });
       })
-      .then(function(r) { return r.json(); })
-      .then(function(data) { console.log(TAG, 'added to cart, swapping drawer'); swapDrawer(data); requestAnimationFrame(function () { openMagicCheckout(reset); }); })
-      .catch(function(err) { console.warn(TAG, 'error', err); reset(); });
+      .then(function(r) {
+        if (!r.ok) return r.text().then(function (t) {
+          var m = ''; try { var j = JSON.parse(t); m = j.description || j.message || ''; } catch (e) {}
+          throw new Error(m || 'Could not start checkout');
+        });
+        return r.json();
+      })
+      .then(function(data) {
+        console.log(TAG, 'added to cart, swapping drawer');
+        if (theForm && window.AA_addHooks) {
+          window.AA_addHooks.forEach(function (h) { try { h(theForm); } catch (e) {} });
+        }
+        swapDrawer(data);
+        requestAnimationFrame(function () { openMagicCheckout(reset); });
+      })
+      .catch(function(err) {
+        console.warn(TAG, 'error', err);
+        try { window.alert(err && err.message ? err.message : 'Could not start checkout. Please try again.'); } catch (e) {}
+        reset();
+      });
     });
   })();
 </script>

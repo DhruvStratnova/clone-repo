@@ -1,0 +1,251 @@
+{%- comment -%}
+  AstroAura — certificate-style specifications for gemstone PDPs.
+  Params: product. Namespaced aa-gsp.
+  Rows come from the product's own metafields; species constants (RI/SG/Mohs)
+  from a compact lookup consistent with the certificate program. Empty rows hide.
+  Rows are per-product (Origin/Planet/Colour/Shape from metafields) plus
+  species constants (Cut, Refractive Index). Empty rows hide.
+{%- endcomment -%}
+{%- liquid
+  comment
+    TRUTH RULES (Dhruv 2026-07-28): several products carry copied, mismatched
+    custom.* metafields (e.g. a Cat's Eye product with type_of_gemstone=Amethyst).
+    The product TITLE is authoritative for species. Metafield-driven rows
+    (origin, planet, best day, chips, hindi) render ONLY when the metafield
+    species agrees with the title-derived species; otherwise we show just the
+    species constants + live carat/ratti + certificate rows, all of which are true.
+  endcomment
+  assign t = product.title | downcase
+
+  assign species = ''
+  if t contains 'amethyst'
+    assign species = 'Amethyst'
+  elsif t contains 'cat' and t contains 'eye'
+    assign species = "Cat's Eye"
+  elsif t contains 'citrine'
+    assign species = 'Citrine'
+  elsif t contains 'coral'
+    assign species = 'Coral'
+  elsif t contains 'emerald' or t contains 'panna'
+    assign species = 'Emerald'
+  elsif t contains 'gomedh' or t contains 'hessonite'
+    assign species = 'Gomedh'
+  elsif t contains 'onyx'
+    assign species = 'Onyx'
+  elsif t contains 'opal'
+    assign species = 'Opal'
+  elsif t contains 'pearl' or t contains 'moti'
+    assign species = 'Pearl'
+  elsif t contains 'ruby' or t contains 'manik'
+    assign species = 'Ruby'
+  elsif t contains 'blue sapphire' or t contains 'neelam'
+    assign species = 'Blue Sapphire'
+  elsif t contains 'yellow sapphire' or t contains 'pukhraj'
+    assign species = 'Yellow Sapphire'
+  elsif t contains 'sapphire'
+    assign species = 'Sapphire'
+  endif
+
+  assign mf_species = product.metafields.custom.type_of_gemstone.value | first | default: ''
+  assign trusted = false
+  assign sp_l = species | downcase
+  assign mf_l = mf_species | downcase
+  comment
+    Trust check. Two things must agree: the species from the title and the
+    custom.type_of_gemstone metafield. Several -copy products carry inherited
+    metafields from a different stone, and those rows must stay hidden.
+    Compare canonically, because the catalog stores "Cat Eye" while the title
+    yields "Cat's Eye", and it stores a bare "Sapphire" for blue/yellow ones.
+  endcomment
+  assign mf_sp = ''
+  if mf_l contains 'amethyst'
+    assign mf_sp = 'Amethyst'
+  elsif mf_l contains 'cat'
+    assign mf_sp = "Cat's Eye"
+  elsif mf_l contains 'citrine'
+    assign mf_sp = 'Citrine'
+  elsif mf_l contains 'coral'
+    assign mf_sp = 'Coral'
+  elsif mf_l contains 'emerald' or mf_l contains 'panna'
+    assign mf_sp = 'Emerald'
+  elsif mf_l contains 'gomedh' or mf_l contains 'hessonite'
+    assign mf_sp = 'Gomedh'
+  elsif mf_l contains 'onyx'
+    assign mf_sp = 'Onyx'
+  elsif mf_l contains 'opal'
+    assign mf_sp = 'Opal'
+  elsif mf_l contains 'pearl' or mf_l contains 'moti'
+    assign mf_sp = 'Pearl'
+  elsif mf_l contains 'ruby' or mf_l contains 'manik'
+    assign mf_sp = 'Ruby'
+  elsif mf_l contains 'sapphire' or mf_l contains 'neelam' or mf_l contains 'pukhraj'
+    assign mf_sp = 'Sapphire'
+  endif
+  if species != '' and mf_sp != ''
+    if mf_sp == species
+      assign trusted = true
+    endif
+    if mf_sp == 'Sapphire' and sp_l contains 'sapphire'
+      assign trusted = true
+    endif
+  endif
+
+  assign ri = ''
+  assign sg = ''
+  assign mohs = ''
+  assign colour = ''
+  assign cut = ''
+  case species
+    when 'Amethyst'
+      assign ri = '1.544 – 1.553'
+      assign sg = '2.65'
+      assign mohs = '7'
+      assign colour = 'Purple'
+      assign cut = 'Faceted'
+    when 'Citrine'
+      assign ri = '1.544 – 1.553'
+      assign sg = '2.65'
+      assign mohs = '7'
+      assign colour = 'Golden Yellow'
+      assign cut = 'Faceted'
+    when "Cat's Eye"
+      assign ri = '1.746 – 1.755'
+      assign sg = '3.71 – 3.75'
+      assign mohs = '8.5'
+      assign colour = 'Greenish Grey'
+      assign cut = 'Cabochon'
+    when 'Coral'
+      assign ri = '1.486 – 1.658'
+      assign sg = '2.60 – 2.70'
+      assign mohs = '3.5 – 4'
+      assign colour = 'Red'
+      assign cut = 'Cabochon'
+    when 'Emerald'
+      assign ri = '1.577 – 1.583'
+      assign sg = '2.67 – 2.78'
+      assign mohs = '7.5 – 8'
+      assign colour = 'Green'
+      assign cut = 'Faceted'
+    when 'Gomedh'
+      assign ri = '1.730 – 1.760'
+      assign sg = '3.57 – 3.73'
+      assign mohs = '7 – 7.5'
+      assign colour = 'Honey Brown'
+      assign cut = 'Faceted'
+    when 'Onyx'
+      assign ri = '1.530 – 1.543'
+      assign sg = '2.55 – 2.70'
+      assign mohs = '6.5 – 7'
+      assign colour = 'Black'
+      assign cut = 'Cabochon'
+    when 'Opal'
+      assign ri = '1.370 – 1.470'
+      assign sg = '1.98 – 2.25'
+      assign mohs = '5 – 6.5'
+      assign colour = 'Multicolour Play'
+      assign cut = 'Cabochon'
+    when 'Pearl'
+      assign ri = '1.520 – 1.690'
+      assign sg = '2.60 – 2.85'
+      assign mohs = '2.5 – 4.5'
+      assign colour = 'White'
+      assign cut = 'Cabochon'
+    when 'Ruby'
+      assign ri = '1.762 – 1.770'
+      assign sg = '3.97 – 4.05'
+      assign mohs = '9'
+      assign colour = 'Red'
+      assign cut = 'Faceted'
+    when 'Blue Sapphire'
+      assign ri = '1.762 – 1.770'
+      assign sg = '3.95 – 4.03'
+      assign mohs = '9'
+      assign colour = 'Blue'
+      assign cut = 'Faceted'
+    when 'Yellow Sapphire'
+      assign ri = '1.762 – 1.770'
+      assign sg = '3.95 – 4.03'
+      assign mohs = '9'
+      assign colour = 'Yellow'
+      assign cut = 'Faceted'
+    when 'Sapphire'
+      assign ri = '1.762 – 1.770'
+      assign sg = '3.95 – 4.03'
+      assign mohs = '9'
+      assign colour = 'Blue'
+      assign cut = 'Faceted'
+  endcase
+
+  assign origin = ''
+  assign planet = ''
+  assign bestday = ''
+  assign hindi = ''
+  assign chips = null
+  if trusted
+    assign origin = product.metafields.custom.origin.value | first | default: ''
+    assign planet = product.metafields.custom.planet.value | first | default: ''
+    assign bestday = product.metafields.custom.best_day_to_wear | strip | default: ''
+    assign hindi = product.metafields.custom.hindi_title | default: ''
+    assign shape_av = product.metafields.custom.shape_available | default: ''
+    assign treatment = product.metafields.custom.treatment | default: ''
+    assign colour_mf = product.metafields.custom.stone_colour | default: ''
+    if colour_mf != ''
+      assign colour = colour_mf
+    endif
+    assign chips = product.metafields.custom.key_feature.value
+    unless chips
+      assign chips = product.metafields.custom.purpose.value
+    endunless
+  endif
+-%}
+<div class="aa-gsp" id="AaGsp">
+  <div class="aa-gsp__title">Product Specifications</div>
+
+  <div class="aa-gsp__sheet">
+    {%- if origin != '' -%}
+    <div class="aa-gsp__row"><span class="aa-gsp__k">Origin</span><span class="aa-gsp__colon">:</span><span class="aa-gsp__v">{{ origin }}</span></div>
+    {%- endif -%}
+    {%- if planet != '' -%}
+    <div class="aa-gsp__row"><span class="aa-gsp__k">Planet</span><span class="aa-gsp__colon">:</span><span class="aa-gsp__v">{{ planet }}</span></div>
+    {%- endif -%}
+    {%- if colour != '' -%}
+    <div class="aa-gsp__row"><span class="aa-gsp__k">Colour</span><span class="aa-gsp__colon">:</span><span class="aa-gsp__v">{{ colour }}</span></div>
+    {%- endif -%}
+    {%- if shape_av != '' -%}
+    <div class="aa-gsp__row"><span class="aa-gsp__k">Shape Available</span><span class="aa-gsp__colon">:</span><span class="aa-gsp__v">{{ shape_av }}</span></div>
+    {%- endif -%}
+    {%- if cut != '' -%}
+    <div class="aa-gsp__row"><span class="aa-gsp__k">Cut</span><span class="aa-gsp__colon">:</span><span class="aa-gsp__v">{{ cut }}</span></div>
+    {%- endif -%}
+    <div class="aa-gsp__row"><span class="aa-gsp__k">Composition</span><span class="aa-gsp__colon">:</span><span class="aa-gsp__v">Natural</span></div>
+    {%- if treatment != '' -%}
+    <div class="aa-gsp__row"><span class="aa-gsp__k">Treatment</span><span class="aa-gsp__colon">:</span><span class="aa-gsp__v">{{ treatment }}</span></div>
+    {%- endif -%}
+    {%- if ri != '' -%}
+    <div class="aa-gsp__row"><span class="aa-gsp__k">Refractive Index</span><span class="aa-gsp__colon">:</span><span class="aa-gsp__v">{{ ri }}</span></div>
+    {%- endif -%}
+  </div>
+</div>
+
+<style>
+  .aa-gsp{ margin:30px 0 6px;  border-radius:14px; padding:22px 20px 20px;  font-family: var(--font-body-family); color:#241019; background: rgb(var(--color-background)); box-shadow: 0 12px 28px rgba(36,16,25,.10), 0 2px 8px rgba(36,16,25,.06); border:1px solid rgba(43,15,38,.08);}
+  .aa-gsp__eyebrow{ font-family: var(--font-heading-family); font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:#7A3B63; margin-bottom:6px; }
+  .aa-gsp__title{ font-family: var(--font-heading-family); font-size:22px; color:#2B0F26; margin-bottom:4px; }
+  .aa-gsp__sub{ font-size:13.5px; color:#6c5b64; margin:0 0 14px; }
+  .aa-gsp__chips{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px; }
+  .aa-gsp__chip{ display:inline-flex; align-items:center; gap:6px; background:#fff; border:1px solid rgba(43,15,38,.16); border-radius:999px; padding:6px 12px; font-size:12px; color:#241019; }
+  .aa-gsp__chip svg{ width:12px; height:12px; stroke:#2E6B4F; stroke-width:2; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+  .aa-gsp__sheet{ background:#fff; border:1px solid rgba(43,15,38,.12); border-radius:11px; padding:6px 18px; }
+  .aa-gsp__row{ display:grid; grid-template-columns:150px 14px 1fr; align-items:baseline; padding:10.5px 0; border-bottom:1px solid rgba(43,15,38,.08); font-size:13.5px; }
+  .aa-gsp__row:last-child{ border-bottom:none; }
+  .aa-gsp__row::after{ content:none; }
+  .aa-gsp__k{ color:#241019; font-weight:600; }
+  .aa-gsp__k::after{ content:""; }
+  .aa-gsp__row > .aa-gsp__k + .aa-gsp__v{ }
+  .aa-gsp__colon{ color:#8a7680; }
+  .aa-gsp__v{ color:#54484E; text-align:left; font-weight:400; font-variant-numeric:tabular-nums; white-space:normal; overflow:visible; }
+  .aa-gsp__v a{ color:#7A3B63; }
+  @media(max-width:560px){ .aa-gsp__row{ grid-template-columns:118px 12px 1fr; font-size:13px; } }
+  .aa-gsp__certline{ margin-top:14px; display:flex; align-items:center; gap:9px; font-size:12px; color:#8a7680; }
+  .aa-gsp__certline svg{ width:15px; height:15px; stroke:#7A3B63; stroke-width:1.5; fill:none; stroke-linecap:round; stroke-linejoin:round; flex:none; }
+</style>

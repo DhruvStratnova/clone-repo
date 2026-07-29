@@ -48,7 +48,25 @@
               </a>
               <div class="aac__info">
                 <a class="aac__name" href="{{ item.url }}">{{ item.product.title | escape }}</a>
-                {%- unless item.product.has_only_default_variant -%}
+                {%- if item.product.type == 'Gemstone' -%}
+                  {%- comment -%} 143-variant products: labelled setting lines, no in-cart switcher {%- endcomment -%}
+                  <div class="aac__props">
+                    {%- for opt in item.options_with_values -%}
+                      {%- assign ov = opt.value | strip -%}
+                      {%- if opt.name == 'Type' -%}
+                        {%- if ov == 'Gemstone' -%}
+                          <span class="aac__prop"><b>Type:</b> Loose Stone</span>
+                        {%- else -%}
+                          <span class="aac__prop"><b>Type:</b> {{ ov }}</span>
+                        {%- endif -%}
+                      {%- elsif opt.name contains 'Carat' -%}
+                        <span class="aac__prop"><b>Carat:</b> {{ ov }} ct</span>
+                      {%- elsif opt.name == 'Material' and ov != 'No Setting' -%}
+                        <span class="aac__prop"><b>Material:</b> {{ ov }}</span>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </div>
+                {%- elsif item.product.has_only_default_variant == false -%}
                   <label class="aac__variant">
                     <span class="aac__variant-lbl">Variant:</span>
                     <select class="aac__variant-sel" data-aac-variant data-key="{{ item.key }}" data-handle="{{ item.product.handle }}" data-current="{{ item.variant_id }}" data-hydrated>
@@ -57,7 +75,22 @@
                       {%- endfor -%}
                     </select>
                   </label>
-                {%- endunless -%}
+                {%- endif -%}
+                {%- assign has_props = false -%}
+                {%- for p in item.properties -%}
+                  {%- assign k0 = p.first | slice: 0, 1 -%}
+                  {%- if p.last != blank and k0 != '_' -%}{%- assign has_props = true -%}{%- endif -%}
+                {%- endfor -%}
+                {%- if has_props -%}
+                  <div class="aac__props">
+                    {%- for p in item.properties -%}
+                      {%- assign k0 = p.first | slice: 0, 1 -%}
+                      {%- if p.last != blank and k0 != '_' -%}
+                        <span class="aac__prop"><b>{{ p.first }}:</b> {{ p.last }}</span>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </div>
+                {%- endif -%}
                 <div class="aac__ctl">
                   <div class="aac__stepper" data-aac-stepper>
                     <button type="button" class="aac__step" data-aac-dec aria-label="{{ 'products.product.quantity.decrease' | t: product: item.product.title | escape }}">

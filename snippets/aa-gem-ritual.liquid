@@ -1,0 +1,95 @@
+{%- comment -%}
+  AstroAura — Puja & Mantra Jaap: FREE with every gemstone (Dhruv 2026-07-29).
+  Params: product, form_id.
+  No add-on product, no price, no extra cart line. This block explains what we
+  do and collects the sankalpa details, which ride along on the MAIN product
+  line as line-item properties (form="" association) so the team can perform the
+  ritual in the wearer's name. Details are OPTIONAL: blank still ships a
+  cleansed, energised stone, so nothing here can ever block a sale.
+{%- endcomment -%}
+<div class="aa-grt" id="AaGrt" data-formid="{{ form_id }}" data-product="{{ product.title | escape }}">
+  <div class="aa-grt__head">
+    <div>
+      <div class="aa-grt__eyebrow">Included &middot; performed before dispatch</div>
+      <div class="aa-grt__title">Puja &amp; Mantra Jaap</div>
+    </div>
+    <span class="aa-grt__free">Free</span>
+  </div>
+  <p class="aa-grt__sub">Every stone is energised before it ships. Our priests perform the jaap for the stone&rsquo;s ruling graha with full Vedic procedure, at no extra cost.</p>
+
+  <ol class="aa-grt__steps">
+    <li><span class="aa-grt__n">1</span><span class="aa-grt__st"><b>Sankalpa</b>The intention is taken in the wearer&rsquo;s name, using the birth details you share below.</span></li>
+    <li><span class="aa-grt__n">2</span><span class="aa-grt__st"><b>Shuddhi</b>The stone is cleansed the traditional way before any mantra is chanted.</span></li>
+    <li><span class="aa-grt__n">3</span><span class="aa-grt__st"><b>Jaap &amp; Havan</b>Mantras of the ruling graha are chanted for your stone, completed with a havan.</span></li>
+    <li><span class="aa-grt__n">4</span><span class="aa-grt__st"><b>Sealed</b>It is sealed straight after the ritual so it reaches you undisturbed.</span></li>
+  </ol>
+
+  <div class="aa-grt__form">
+    <div class="aa-grt__formhead">Details for the Sankalpa <span>optional</span></div>
+    <p class="aa-grt__hint">Share these and the ritual is performed in the wearer&rsquo;s name. Leave them blank and your stone is still cleansed and energised before dispatch.</p>
+    <div class="aa-grt__grid">
+      <div class="aa-grt__f">
+        <label for="aa-grt-name">Name of Wearer</label>
+        <input id="aa-grt-name" type="text" autocomplete="name" placeholder="Full name" name="properties[Wearer Name]" form="{{ form_id }}">
+      </div>
+      <div class="aa-grt__f">
+        <label for="aa-grt-dob">Date of Birth</label>
+        <input id="aa-grt-dob" type="text" inputmode="numeric" placeholder="DD-MM-YYYY" name="properties[Date of Birth]" form="{{ form_id }}">
+      </div>
+      <div class="aa-grt__f">
+        <label for="aa-grt-pob">Place of Birth</label>
+        <input id="aa-grt-pob" type="text" placeholder="City, State" name="properties[Place of Birth]" form="{{ form_id }}">
+      </div>
+      <div class="aa-grt__f">
+        <label for="aa-grt-tob">Time of Birth</label>
+        <input id="aa-grt-tob" type="text" placeholder="HH:MM AM/PM" name="properties[Time of Birth]" form="{{ form_id }}">
+      </div>
+      <div class="aa-grt__f">
+        <label for="aa-grt-gender">Gender</label>
+        <select id="aa-grt-gender" name="properties[Gender]" form="{{ form_id }}">
+          <option value="">Select</option><option>Female</option><option>Male</option><option>Other</option>
+        </select>
+      </div>
+      <div class="aa-grt__f">
+        <label for="aa-grt-gotra">Clan / Gotra</label>
+        <input id="aa-grt-gotra" type="text" placeholder="Gotra" name="properties[Gotra]" form="{{ form_id }}">
+      </div>
+      <div class="aa-grt__f aa-grt__f--wide">
+        <label for="aa-grt-purpose">Primary Purpose</label>
+        <select id="aa-grt-purpose" name="properties[Primary Purpose]" form="{{ form_id }}">
+          <option value="">Select</option>
+          <option>Career &amp; Business</option><option>Marriage &amp; Relationships</option>
+          <option>Health &amp; Wellbeing</option><option>Wealth &amp; Prosperity</option>
+          <option>Education &amp; Focus</option><option>Protection from Negativity</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <p class="aa-grt__note">The ritual is performed for the gemstone itself. Metal settings and jewellery components are not part of the ritual process.</p>
+</div>
+
+<style>
+  .aa-grt{ margin:30px 0 6px; border-radius:14px; padding:22px 20px 20px; font-family: var(--font-body-family); color:#241019; background: rgb(var(--color-background)); box-shadow: 0 12px 28px rgba(36,16,25,.10), 0 2px 8px rgba(36,16,25,.06); border:1px solid rgba(43,15,38,.08); }
+  .aa-grt__head{ display:flex; align-items:flex-start; justify-content:space-between; gap:14px; }
+  .aa-grt__eyebrow{ font-family: var(--font-heading-family); font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:#7A3B63; margin-bottom:6px; }
+  .aa-grt__title{ font-family: var(--font-heading-family); font-size:22px; color:#2B0F26; }
+  .aa-grt__free{ flex:none; font-family: var(--font-heading-family); font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:#2E6B4F; background:#EAF5EF; border:1px solid #BFE0CD; border-radius:999px; padding:5px 12px; }
+  .aa-grt__sub{ font-size:13.5px; color:#6c5b64; margin:6px 0 16px; max-width:62ch; }
+  .aa-grt__steps{ list-style:none; margin:0 0 6px; padding:0; display:grid; gap:11px; }
+  @media(min-width:750px){ .aa-grt__steps{ grid-template-columns:1fr 1fr; gap:12px 22px; } }
+  .aa-grt__steps li{ display:flex; gap:11px; align-items:flex-start; }
+  .aa-grt__n{ flex:none; width:24px; height:24px; border-radius:50%; border:1.5px solid #2B0F26; color:#2B0F26; font-family: var(--font-heading-family); font-size:12px; display:flex; align-items:center; justify-content:center; margin-top:1px; }
+  .aa-grt__st{ font-size:12.8px; color:#6c5b64; line-height:1.45; }
+  .aa-grt__st b{ display:block; font-family: var(--font-heading-family); font-weight:400; font-size:14.5px; color:#2B0F26; margin-bottom:1px; }
+  .aa-grt__form{ margin-top:20px; border-top:1px solid rgba(43,15,38,.12); padding-top:18px; }
+  .aa-grt__formhead{ font-family: var(--font-heading-family); font-size:11.5px; letter-spacing:.2em; text-transform:uppercase; color:#2B0F26; margin-bottom:6px; }
+  .aa-grt__formhead span{ font-family: var(--font-body-family); letter-spacing:0; text-transform:none; color:#8a7680; font-size:12px; margin-left:8px; }
+  .aa-grt__hint{ font-size:12.5px; color:#8a7680; margin:0 0 14px; max-width:64ch; }
+  .aa-grt__grid{ display:grid; grid-template-columns:1fr; gap:13px; }
+  @media(min-width:750px){ .aa-grt__grid{ grid-template-columns:1fr 1fr; } .aa-grt__f--wide{ grid-column:1/-1; } }
+  .aa-grt__f label{ display:block; font-size:12.5px; font-weight:600; color:#241019; margin-bottom:5px; }
+  .aa-grt__f input, .aa-grt__f select{ width:100%; background:#fff; border:1.5px solid rgba(43,15,38,.18); border-radius:9px; padding:10px 11px; font-size:14px; color:#241019; font-family:inherit; }
+  .aa-grt__f input:focus, .aa-grt__f select:focus, .aa-grt__f input:focus-visible, .aa-grt__f select:focus-visible{ border-color:#2B0F26; outline:none !important; box-shadow:none !important; }
+  .aa-grt__note{ font-size:12px; color:#8a7680; margin:16px 0 0; }
+</style>

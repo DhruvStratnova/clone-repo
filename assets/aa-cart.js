@@ -26,14 +26,37 @@
   function setCount(n) { var d = drawer(); var c = d && $('[data-aac-count]', d); if (c) c.textContent = n; }
   function setSubtotal(cents) { var d = drawer(); var s = d && $('[data-aac-subtotal]', d); if (s) s.textContent = money(cents); updateTotalBar({ total_price: cents }); }
   function rowHTML(it) {
-    var opt = (it.product_has_only_default_variant || it.variant_title == null)
-      ? ''
-      : '<label class="aac__variant">' +
+    var opt;
+    if (it.product_type === 'Gemstone' && it.options_with_values) {
+      // 143-variant products: labelled setting lines, no in-cart switcher
+      var specs = [];
+      it.options_with_values.forEach(function (o) {
+        var v = (o.value || '').trim();
+        if (o.name === 'Type') { specs.push('<b>Type:</b> ' + (v === 'Gemstone' ? 'Loose Stone' : esc(v))); return; }
+        if (o.name.indexOf('Carat') >= 0) { specs.push('<b>Carat:</b> ' + esc(v) + ' ct'); return; }
+        if (o.name === 'Material' && v !== 'No Setting') { specs.push('<b>Material:</b> ' + esc(v)); }
+      });
+      opt = '<div class="aac__props">' + specs.map(function (t) { return '<span class="aac__prop">' + t + '</span>'; }).join('') + '</div>';
+    } else if (it.product_has_only_default_variant || it.variant_title == null) {
+      opt = '';
+    } else {
+      opt = '<label class="aac__variant">' +
           '<span class="aac__variant-lbl">Variant:</span>' +
           '<select class="aac__variant-sel" data-aac-variant data-key="' + esc(it.key) + '" data-handle="' + esc(it.handle) + '" data-current="' + it.variant_id + '">' +
             '<option value="' + it.variant_id + '" selected>' + esc(it.variant_title) + ' &middot; ' + money(it.final_price) + '</option>' +
           '</select>' +
         '</label>';
+    }
+    var props = '';
+    if (it.properties) {
+      var kept = [];
+      Object.keys(it.properties).forEach(function (k) {
+        var v = it.properties[k];
+        if (v && k.charAt(0) !== '_') kept.push('<span class="aac__prop"><b>' + esc(k) + ':</b> ' + esc(String(v)) + '</span>');
+      });
+      if (kept.length) props = '<div class="aac__props">' + kept.join('') + '</div>';
+    }
+    opt = opt + props;
     var src = it.image ? (it.image + (it.image.indexOf('?') >= 0 ? '&' : '?') + 'width=180') : '';
     var img = src ? '<img src="' + esc(src) + '" alt="" width="90" height="90" loading="lazy">' : '';
     return '<li class="aac__item" data-aac-line data-key="' + esc(it.key) + '" data-variant="' + it.variant_id + '">' +
@@ -119,7 +142,45 @@
       .then(function (c) { cartReq = null; return c; });
     return cartReq;
   }
-  function addToCart(id, qty, card) {
+  // Add-to-cart pipeline hooks (used by the gemstone PDP):
+  //   AA_addGuards: fn(form) -> false blocks the add (validation, e.g. ring size)
+  //   AA_addHooks:  fn(form) run after the main line is posted (e.g. ritual add-on line)
+  window.AA_addGuards = window.AA_addGuards || [];
+  window.AA_addHooks = window.AA_addHooks || [];
+  // AA_addResolvers: fn(form) -> variantId. Dawn re-renders the product form
+  // section on variant change and clobbers input[name="id"], so a component
+  // that owns its own selection state must be able to override the id.
+  window.AA_addResolvers = window.AA_addResolvers || [];
+  function resolveId(form, fallback) {
+    for (var i = 0; i < window.AA_addResolvers.length; i++) {
+      try { var v = window.AA_addResolvers[i](form); if (v) return String(v); } catch (_) {}
+    }
+    return fallback;
+  }
+  function runGuards(form) {
+    for (var i = 0; i < window.AA_addGuards.length; i++) {
+      try { if (window.AA_addGuards[i](form) === false) return false; } catch (_) {}
+    }
+    return true;
+  }
+  function runHooks(form) {
+    window.AA_addHooks.forEach(function (f) { try { f(form); } catch (_) {} });
+  }
+  function collectProps(form) {
+    // form.elements includes external controls associated via the form="" attribute,
+    // which is how the gemstone snippets attach Ring Size + sankalpa properties.
+    var o = {};
+    if (!form || !form.elements) return o;
+    for (var i = 0; i < form.elements.length; i++) {
+      var el = form.elements[i];
+      if (el.disabled || !el.name) continue;
+      var m = el.name.match(/^properties\[(.+)\]$/);
+      if (m && el.value) o[m[1]] = el.value;
+    }
+    return o;
+  }
+  window.AA_collectProps = collectProps;
+  function addToCart(id, qty, card, props) {
     id = String(id || ''); if (!id) return;
     if (busy[id]) return; busy[id] = true;
     qty = Math.max(1, parseInt(qty, 10) || 1);
@@ -134,11 +195,19 @@
     var fd = new FormData();
     fd.append('id', id);
     fd.append('quantity', String(qty));
+    if (props) { Object.keys(props).forEach(function (k) { fd.append('properties[' + k + ']', props[k]); }); }
     fetch('/cart/add.js', {
       method: 'POST', credentials: 'same-origin',
       headers: { Accept: 'application/json', 'X-Requested-With': 'XMLHttpRequest' }, body: fd
     })
-      .then(function (r) { if (!r.ok) return r.text().then(function (t) { throw new Error(t); }); return r.json(); })
+      .then(function (r) {
+        if (!r.ok) return r.text().then(function (t) {
+          var msg = '';
+          try { msg = (JSON.parse(t) || {}).description || (JSON.parse(t) || {}).message || ''; } catch (_) { msg = ''; }
+          var err = new Error(msg || 'Could not add to cart'); err.aaMessage = msg; throw err;
+        });
+        return r.json();
+      })
       .then(function (item) {
         // Render straight from the add response — no second /cart.js round-trip.
         var d = drawer(); if (d) d.classList.remove('is-empty');
@@ -171,8 +240,31 @@
           });
         } catch (e) {}
       })
-      .catch(function () { byVariant[id] = prev; loadCart(); })
+      .catch(function (err) {
+        byVariant[id] = prev;
+        if (li && li.parentNode) li.parentNode.removeChild(li);
+        showAddError(err && err.aaMessage ? err.aaMessage
+          : 'Sorry, we could not add that to your cart. Please try again.');
+        loadCart();
+      })
       .then(function () { busy[id] = false; });
+  }
+  function showAddError(msg) {
+    var d = drawer(); if (!d) return;
+    var body = $('[data-aac-body]', d) || $('.aac__panel', d); if (!body) return;
+    var box = $('[data-aac-error]', d);
+    if (!box) {
+      box = document.createElement('div');
+      box.className = 'aac__error';
+      box.setAttribute('data-aac-error', '');
+      box.setAttribute('role', 'alert');
+      body.insertBefore(box, body.firstChild);
+    }
+    box.textContent = msg;
+    box.hidden = false;
+    announce(msg);
+    clearTimeout(showAddError._t);
+    showAddError._t = setTimeout(function () { if (box) box.hidden = true; }, 6000);
   }
   function optimisticRow(card) {
     var d = drawer(); if (!d) return null;
@@ -428,8 +520,10 @@
     var fid = form && (form.querySelector('[name="id"]') || (form.elements && form.elements.namedItem && form.elements.namedItem('id')));
     if (!fid || !fid.value) return;
     e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation();
+    if (!runGuards(form)) { closeDrawer(); return; }
     var qf = form.elements && form.elements.namedItem ? form.elements.namedItem('quantity') : form.querySelector('[name="quantity"]');
-    addToCart(fid.value, qf && qf.value ? qf.value : 1, form.closest('.aa-pcard, .pcard, .card-wrapper'));
+    addToCart(resolveId(form, fid.value), qf && qf.value ? qf.value : 1, form.closest('.aa-pcard, .pcard, .card-wrapper'), collectProps(form));
+    runHooks(form);
   }, true);
   document.addEventListener('submit', function (e) {
     var form = e.target.closest && e.target.closest('form[action*="/cart/add"], .aa-pcard__form, .aa-rd-form, product-form form');
@@ -437,8 +531,10 @@
     var fid = form.querySelector('[name="id"]') || (form.elements && form.elements.namedItem && form.elements.namedItem('id'));
     if (!fid || !fid.value) return;
     e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation();
+    if (!runGuards(form)) { closeDrawer(); return; }
     var qf = form.querySelector('[name="quantity"]');
-    addToCart(fid.value, qf && qf.value ? qf.value : 1, form.closest('.aa-pcard, .pcard, .card-wrapper'));
+    addToCart(resolveId(form, fid.value), qf && qf.value ? qf.value : 1, form.closest('.aa-pcard, .pcard, .card-wrapper'), collectProps(form));
+    runHooks(form);
   }, true);
   window.AA_addToCart = function (id, qty) { addToCart(id, qty || 1, null); };
   defineElement();

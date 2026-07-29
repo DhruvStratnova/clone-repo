@@ -1415,7 +1415,13 @@
   %}
 
 {%- when 'variant_picker' -%}
-  {% render 'aa-pdp-variants', product: product, block: block, product_form_id: product_form_id %}
+  {%- if product.type == 'Gemstone' -%}
+    {%- comment -%} Gemstone selector renders in the buy_buttons block instead, so
+    Add to Cart sits directly below the material picker (template block order puts
+    buy_buttons before variant_picker). {%- endcomment -%}
+  {%- else -%}
+    {% render 'aa-pdp-variants', product: product, block: block, product_form_id: product_form_id %}
+  {%- endif -%}
 
 
 
@@ -1491,6 +1497,9 @@
                     });
                   })();
                 </script>
+                {%- if product.type == 'Gemstone' -%}
+                  {% render 'aa-gem-options', product: product, form_id: product_form_id %}
+                {%- endif -%}
                 {% render 'aa-pdp-extras', part: 'preform', product: product %}
                 {% render 'aa-pdp-commerce', part: 'plateaddon', product: product %}
                 {%- render 'buy-buttons',
@@ -1854,7 +1863,7 @@
                 {% render 'icon-with-text', block: block %}
             {%- endcase -%}
           {%- endfor -%}
-          {% render 'aa-pdp-commerce', part: 'post', product: product %}
+          {% render 'aa-pdp-commerce', part: 'post', product: product, form_id: product_form_id %}
           <a href="{{ product.url }}" class="link product__view-details animate-arrow">
             {{ 'products.product.view_full_details' | t }}
             {{- 'icon-arrow.svg' | inline_asset_content -}}

@@ -107,6 +107,13 @@
     <img class="aa-trust-m" src="{{ 'aa-trust-mobile.webp' | asset_url }}" alt="Why Aura AI - trusted by thousands, 100% genuine and certified, easy 7-day returns, free shipping all over India" width="896" height="1152" loading="lazy">
   </div>
 
+  {%- comment -%} Gemstone-only info blocks, placed after the Why Aura AI band (Dhruv 2026-07-28). {%- endcomment -%}
+  {%- if product.type == 'Gemstone' -%}
+    {% render 'aa-gem-ritual', product: product, form_id: form_id %}
+    {% render 'aa-gem-journey' %}
+    {% render 'aa-gem-specs', product: product %}
+  {%- endif -%}
+
   {%- comment -%} Fallback products (from this product's own collection) for when
   Shopify's /recommendations API returns empty — so the cards always populate. {%- endcomment -%}
   {%- liquid
