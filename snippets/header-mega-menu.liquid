@@ -140,6 +140,12 @@
                         elsif tile_object.products.first.featured_image
                           assign tile_image = tile_object.products.first.featured_image
                         endif
+                        comment
+                          Curated Nightfall tile art (aa-nav-<handle>.jpg) beats raw
+                          product/collection photos for these handles.
+                        endcomment
+                        assign aa_nav_icons = 'ruby,south-sea-pearl-moti,red-coral-moonga,emerald-panna,yellow-sapphire-pukhraj,blue-sapphire-neelam,gomedh-hessonite-garnet,cat-s-eye-lehsunia,crystal-bracelets,remedies-bracelets,silver-bracelets,rashi-bracelets,for-her,for-him,certified-originals,crystal-rakhi,combos,crystal-trees,vastu-turtles,crystals,mala,pendants,anklets,mani' | split: ','
+                        assign aa_tile_h = childlink.object.handle | default: ''
                       -%}
                       <a
                         id="HeaderMenu-{{ link.handle }}-{{ childlink.handle }}"
@@ -148,7 +154,10 @@
                         {% if childlink.current %}aria-current="page"{% endif %}
                       >
                         <span class="aa-tile__circle">
-                          {%- if tile_image -%}
+                          {%- if aa_nav_icons contains aa_tile_h -%}
+                            {%- assign aa_icon_file = 'aa-nav-' | append: aa_tile_h | append: '.jpg' -%}
+                            <img class="aa-tile__img" src="{{ aa_icon_file | asset_img_url: '200x' }}" srcset="{{ aa_icon_file | asset_img_url: '200x' }} 1x, {{ aa_icon_file | asset_img_url: '400x' }} 2x" width="96" height="96" loading="lazy" alt="{{ childlink.title | escape }}">
+                          {%- elsif tile_image -%}
                             {{ tile_image | image_url: width: 200 | image_tag:
                               loading: 'lazy',
                               width: 96,

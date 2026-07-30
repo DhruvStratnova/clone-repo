@@ -278,6 +278,8 @@
                   elsif childlink.object.image
                     assign tile_image = childlink.object.image
                   endif
+                  assign aa_nav_icons = 'ruby,south-sea-pearl-moti,red-coral-moonga,emerald-panna,yellow-sapphire-pukhraj,blue-sapphire-neelam,gomedh-hessonite-garnet,cat-s-eye-lehsunia,crystal-bracelets,remedies-bracelets,silver-bracelets,rashi-bracelets,for-her,for-him,certified-originals,crystal-rakhi,combos,crystal-trees,vastu-turtles,crystals,mala,pendants,anklets,mani' | split: ','
+                  assign aa_tile_h = childlink.object.handle | default: ''
                 -%}
                 {%- if childlink.links != blank -%}
                   {%- comment -%} Grouped child (Shop By): heading + chip links, since tiles can't hold a 3rd level {%- endcomment -%}
@@ -292,7 +294,10 @@
                 {%- else -%}
                 <a href="{{ childlink.url }}" class="aa-drawer__tile">
                   <span class="aa-drawer__tile-circle">
-                    {%- if tile_image -%}
+                    {%- if aa_nav_icons contains aa_tile_h -%}
+                      {%- assign aa_icon_file = 'aa-nav-' | append: aa_tile_h | append: '.jpg' -%}
+                      <img class="aa-drawer__tile-img" src="{{ aa_icon_file | asset_img_url: '160x' }}" width="80" height="80" loading="lazy" alt="{{ childlink.title | escape }}">
+                    {%- elsif tile_image -%}
                       {{ tile_image | image_url: width: 160 | image_tag:
                         loading: 'lazy',
                         width: 80,
