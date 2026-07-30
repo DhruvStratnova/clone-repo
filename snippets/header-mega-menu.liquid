@@ -275,19 +275,16 @@
   /* === Aura AI nav — compact, truly centered (no margin hacks: with 8 pillars
      the old 80px shift pushed the row over the header icons and clipped it) === */
   .aa-nav__list {
-    display: flex !important;
-    /* all 14 titles live in the bar: wrap into two centered rows (Astrotalk band) */
-    flex-wrap: wrap !important;
+    /* Deliberate 7-column grid: 14 titles = two BALANCED rows of 7 with
+       aligned columns (Astrotalk fundamentals), not a ragged flex wrap. */
+    display: grid !important;
+    grid-template-columns: repeat(7, auto) !important;
     justify-content: center !important;
+    justify-items: center !important;
     align-items: center !important;
-    gap: 7px 24px !important;
+    gap: 13px 38px !important;
     margin: 0 !important;
     padding: 0 !important;
-    max-width: 1000px;
-  }
-  /* Two-deck header gives the nav its own full row: let it breathe */
-  @media screen and (min-width: 990px) {
-    .aa-nav__link { font-size: 14px !important; }
   }
   .header__inline-menu,
   .header .header__inline-menu,
@@ -296,11 +293,10 @@
     margin-left: 0 !important;
     min-width: 0 !important;
   }
-  /* Narrow desktop: tighten further so all pillars + icons always fit */
+  /* Narrow desktop: same grid, gently tightened */
   @media screen and (min-width: 990px) and (max-width: 1279px) {
-    .aa-nav__list { gap: 0 10px !important; }
-    .aa-nav__link { font-size: 12px !important; padding: 6px 1px !important; }
-    .aa-nav__link .aa-chevron { margin-left: 2px; }
+    .aa-nav__list { gap: 10px 22px !important; }
+    .aa-nav__link { font-size: 13.5px !important; }
   }
   .aa-nav__item { list-style: none; }
   /* Seasonal entry (Rakhi Special): maroon accent, like a festival tag */
@@ -308,18 +304,20 @@
   .aa-nav__item > header-menu > details > summary,
   .aa-nav__item > .aa-nav__link { white-space: nowrap; }
   .aa-nav__link {
-    padding: 6px 2px !important;
-    font-family: 'Cormorant Garamond', Georgia, serif !important;
-    font-size: 13px !important;
-    font-weight: 700 !important;
+    padding: 4px 2px !important;
+    font-family: 'Jost', system-ui, sans-serif !important;
+    /* breathing room: larger, regular-medium weight — not cramped bold */
+    font-size: 15px !important;
+    font-weight: 500 !important;
     color: #1A1A1A !important;
-    letter-spacing: 0 !important;
+    letter-spacing: 0.01em !important;
     transition: color 0.18s ease !important;
     display: inline-flex !important;
     align-items: center !important;
-    gap: 3px !important;
+    gap: 4px !important;
     white-space: nowrap !important;
   }
+  .aa-nav__link[id*="rakhi"] { font-weight: 600 !important; }
   /* Animated subtle underline on hover for premium feel */
   .aa-nav__link {
     position: relative;
