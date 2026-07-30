@@ -519,6 +519,8 @@
     grid-template-columns: repeat(4, 1fr) !important;
     gap: 16px 4px !important;
   }
+  /* chip groups (Shop By) span the full row, never squeeze into tile columns */
+  .aa-drawer__secgrid > .aa-drawer__grp { grid-column: 1 / -1 !important; }
   /* plain top-level links (e.g. Astro Calculator): quiet full-width row */
   .aa-drawer__cats > .aa-drawer__tile {
     flex-direction: row !important; justify-content: flex-start !important;
