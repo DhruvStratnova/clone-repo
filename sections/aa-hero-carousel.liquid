@@ -179,13 +179,9 @@
           if (clickBlock) { e.preventDefault(); e.stopPropagation(); }
         }, true);
 
-        /* Hover-pause ONLY on real mouse devices. On touch, a synthesized
-           mouseenter fired on tap/swipe with no matching mouseleave, which left
-           paused=true forever and froze the carousel on one slide. */
-        if (window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-          root.addEventListener('mouseenter', function () { paused = true; });
-          root.addEventListener('mouseleave', function () { paused = false; });
-        }
+        /* No hover-pause: autoplay keeps running while the mouse is over the
+           carousel. Only an active drag pauses (pointerdown), and it resumes on
+           release (pointerup/pointercancel, which setPointerCapture guarantees). */
 
         paint();
         arm();
