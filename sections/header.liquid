@@ -285,6 +285,11 @@
             row-gap: 0 !important;
             padding-top: 14px !important;
             padding-bottom: 0 !important;
+            /* legacy CSS pins the header to a fixed height; the second deck
+               must be allowed to grow it */
+            height: auto !important;
+            min-height: 0 !important;
+            max-height: none !important;
           }
           header.header > .header__heading,
           header.header > h1.header__heading,
