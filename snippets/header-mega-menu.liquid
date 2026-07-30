@@ -106,14 +106,10 @@
                         {%- endfor -%}
                       </div>
                     {%- elsif aa_parent contains 'rudraksha' -%}
-                      {%- comment -%} Mukhi picker: labeled chip rows instead of 14 identical tiles {%- endcomment -%}
+                      {%- comment -%} Mukhi picker: plain chips, no labels or merch effects {%- endcomment -%}
                       <div class="aa-mega__chiprows">
                         {%- for childlink in link.links -%}
-                          {%- if forloop.index == 1 -%}<p class="aa-mega__rowlab">Daily Beads &middot; 1&ndash;7 Mukhi</p>{%- endif -%}
-                          {%- if forloop.index == 8 -%}<p class="aa-mega__rowlab">Power Beads &middot; 8&ndash;14 Mukhi</p>{%- endif -%}
-                          {%- assign is_hero = false -%}
-                          {%- if childlink.title contains '5 Mukhi' -%}{%- assign is_hero = true -%}{%- endif -%}
-                          <a href="{{ childlink.url }}" class="aa-mchip{% if is_hero %} aa-mchip--hero{% endif %}">{% if is_hero %}&#9733; {% endif %}{{ childlink.title | escape }}{% if is_hero %} &middot; Bestseller{% elsif childlink.title contains '14 Mukhi' %} &middot; Collector{% endif %}</a>
+                          <a href="{{ childlink.url }}" class="aa-mchip">{{ childlink.title | escape }}</a>
                         {%- endfor -%}
                       </div>
                     {%- else -%}
@@ -475,10 +471,11 @@
     margin: 0 !important;
   }
   .aa-mega__inner {
-    max-width: 1280px; margin: 0 auto; padding: 0 40px;
-    display: flex; align-items: flex-start; gap: 40px;
+    max-width: 1040px; margin: 0 auto; padding: 0 40px;
+    display: flex; align-items: center; justify-content: center; gap: 56px;
   }
-  .aa-mega__inner > .aa-tile-grid, .aa-mega__inner > .aa-mega__cols { flex: 1 1 auto; min-width: 0; }
+  .aa-mega__inner > .aa-tile-grid { flex: 0 1 auto; min-width: 0; }
+  .aa-mega__inner > .aa-mega__cols, .aa-mega__inner > .aa-lens { flex: 1 1 auto; min-width: 0; }
   /* Trust strip: closes every curtain */
   .aa-mega__trust {
     display: flex; justify-content: center; gap: 34px; flex-wrap: wrap;
@@ -499,7 +496,8 @@
   }
   .aa-mega__feat:hover { transform: translateY(-3px); border-color: rgba(74, 25, 66, 0.35); }
   .aa-mega__feat-img { display: block; border-radius: 11px; overflow: hidden; aspect-ratio: 1; background: #FAF5EC; }
-  .aa-mega__feat-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  /* contain, never crop: product shots carry baked-in art/text at the edges */
+  .aa-mega__feat-img img { width: 100%; height: 100%; object-fit: contain; display: block; }
   .aa-mega__feat-pill {
     display: inline-block; margin: 10px 0 5px; padding: 3px 10px; border-radius: 999px;
     background: linear-gradient(90deg, #FF8C42, #FF2E93);
@@ -586,7 +584,7 @@
     display: flex !important;
     flex-wrap: wrap !important;
     justify-content: center !important;
-    gap: 28px 12px !important;
+    gap: 30px 28px !important;
     max-width: 1100px;
     margin: 0 auto;
   }
@@ -619,8 +617,8 @@
   }
   .aa-tile:hover { transform: translateY(-3px); }
   .aa-tile__circle {
-    width: 76px;
-    height: 76px;
+    width: 96px;
+    height: 96px;
     border-radius: 50%;
     background: #FAEFD9;
     overflow: hidden;
