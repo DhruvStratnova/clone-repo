@@ -51,184 +51,106 @@
               >
                 <div class="aa-mega__inner page-width">
                   {%- liquid
-                    comment
-                      Curtain featured card: the pillar collection's own bestseller
-                      (collections sort by best-selling, so first product = top seller).
-                    endcomment
-                    assign aa_feat = link.object.products.first
+                    assign aa_parent = link.title | downcase | strip
+                    assign aa_has_groups = false
+                    for cl in link.links
+                      if cl.links != blank
+                        assign aa_has_groups = true
+                        break
+                      endif
+                    endfor
+                    assign aa_nav_icons = 'ruby,south-sea-pearl-moti,red-coral-moonga,emerald-panna,yellow-sapphire-pukhraj,blue-sapphire-neelam,gomedh-hessonite-garnet,cat-s-eye-lehsunia,crystal-bracelets,remedies-bracelets,silver-bracelets,rashi-bracelets,for-her,for-him,certified-originals,crystal-rakhi,combos,crystal-trees,vastu-turtles,crystals,mala,pendants,anklets,mani' | split: ','
+                    assign aa_mode = 'products'
+                    if aa_has_groups
+                      assign aa_mode = 'chips'
+                    elsif aa_parent contains 'rudraksha'
+                      assign aa_mode = 'mukhi'
+                    elsif aa_parent contains 'gemstone'
+                      assign aa_mode = 'cards'
+                    endif
                   -%}
-                  {%- if aa_feat and link.links != blank -%}
-                    <a href="{{ aa_feat.url }}" class="aa-mega__feat">
-                      <span class="aa-mega__feat-img">
-                        {%- if aa_feat.featured_image -%}
-                          {{ aa_feat.featured_image | image_url: width: 420 | image_tag: loading: 'lazy', alt: aa_feat.title }}
-                        {%- endif -%}
-                      </span>
-                      <span class="aa-mega__feat-pill">&#9733; Bestseller</span>
-                      <span class="aa-mega__feat-title">{{ aa_feat.title | split: '(' | first | strip | escape }}</span>
-                      <span class="aa-mega__feat-price">{{ aa_feat.price | money }}{% if aa_feat.compare_at_price > aa_feat.price %}<s>{{ aa_feat.compare_at_price | money }}</s>{% endif %}</span>
-                    </a>
-                  {%- endif -%}
-                  <div class="aa-tile-grid">
-                    {%- assign aa_parent = link.title | downcase | strip -%}
-                    {%- if aa_parent contains 'combo' -%}
-                      {%- comment -%} Combos dropdown: render the whole combos collection (nav menu only has the old few) {%- endcomment -%}
-                      {%- for cp in collections['combos'].products limit: 50 -%}
-                        <a href="{{ cp.url }}" class="aa-tile{% if cp.url == request.path %} aa-tile--active{% endif %}">
-                          <span class="aa-tile__circle">
-                            {%- if cp.featured_image -%}{{ cp.featured_image | image_url: width: 200 | image_tag: loading: 'lazy', width: 96, height: 96, class: 'aa-tile__img', alt: cp.title }}{%- else -%}<span class="aa-tile__placeholder">C</span>{%- endif -%}
-                          </span>
-                          <span class="aa-tile__label">{{ cp.title | split: '(' | first | strip | escape }}</span>
-                        </a>
-                      {%- endfor -%}
+                  <aside class="aa-rail" role="tablist">
+                    {%- if aa_mode == 'mukhi' -%}
+                      <button type="button" class="aa-rail__item on" data-i="0"><span>Shop by Mukhi</span></button>
+                    {%- elsif aa_mode == 'cards' -%}
+                      <button type="button" class="aa-rail__item on" data-i="0"><span>Navratna &middot; by Planet</span></button>
                     {%- else -%}
-                    {%- comment -%} Grouped mega panel (e.g. Shop By): children that have their own
-                        links render as titled text columns, not tiles. {%- endcomment -%}
-                    {%- assign aa_has_groups = false -%}
-                    {%- for cl in link.links -%}
-                      {%- if cl.links != blank -%}{%- assign aa_has_groups = true -%}{%- break -%}{%- endif -%}
-                    {%- endfor -%}
-                    {%- if aa_has_groups -%}
-                      {%- comment -%} Lens dock: tab chips switch one visible pane of merch chips {%- endcomment -%}
-                      <div class="aa-lens">
-                        <div class="aa-lens__tabs" role="tablist">
-                          {%- for grp in link.links -%}
-                            <button type="button" class="aa-lens__tab{% if forloop.first %} on{% endif %}" data-i="{{ forloop.index0 }}" role="tab">{{ grp.title | escape }}</button>
-                          {%- endfor -%}
-                        </div>
-                        {%- for grp in link.links -%}
-                          <div class="aa-lens__pane{% if forloop.first %} on{% endif %}" data-i="{{ forloop.index0 }}">
-                            {%- for gl in grp.links -%}
-                              <a href="{{ gl.url }}" class="aa-mchip">{{ gl.title | escape }}</a>
-                            {%- endfor -%}
+                      {%- for cl in link.links -%}
+                        {%- liquid
+                          assign rh = cl.object.handle | default: ''
+                          assign rimg = nil
+                          if cl.object.featured_image
+                            assign rimg = cl.object.featured_image
+                          elsif cl.object.image
+                            assign rimg = cl.object.image
+                          elsif cl.object.products.first.featured_image
+                            assign rimg = cl.object.products.first.featured_image
+                          endif
+                        -%}
+                        <button type="button" class="aa-rail__item{% if forloop.first %} on{% endif %}" data-i="{{ forloop.index0 }}">
+                          {%- if aa_nav_icons contains rh -%}
+                            {%- assign rif = 'aa-nav-' | append: rh | append: '.jpg' -%}
+                            <img class="aa-rail__thumb" src="{{ rif | asset_img_url: '80x' }}" width="38" height="38" loading="lazy" alt="">
+                          {%- elsif rimg -%}
+                            {{ rimg | image_url: width: 80 | image_tag: loading: 'lazy', width: 38, height: 38, class: 'aa-rail__thumb', alt: '' }}
+                          {%- endif -%}
+                          <span>{{ cl.title | escape }}</span>
+                          <svg class="aa-rail__chev" width="8" height="12" viewBox="0 0 8 12" fill="none" aria-hidden="true"><path d="M1.5 1.5L6.5 6L1.5 10.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </button>
+                      {%- endfor -%}
+                    {%- endif -%}
+                    <div class="aa-rail__util">
+                      <a href="/collections/certified-originals">&#128737; Certified Originals</a>
+                      <a href="/pages/calculator">&#10022; Astro Calculator</a>
+                    </div>
+                  </aside>
+                  <div class="aa-panes">
+                    {%- if aa_mode == 'chips' -%}
+                      {%- for grp in link.links -%}
+                        <div class="aa-pane{% if forloop.first %} on{% endif %}" data-i="{{ forloop.index0 }}">
+                          <div class="aa-pane__chips">
+                            {%- for gl in grp.links -%}<a href="{{ gl.url }}" class="aa-mchip">{{ gl.title | escape }}</a>{%- endfor -%}
                             <a href="{{ grp.url }}" class="aa-mchip aa-mchip--hero">View all &rarr;</a>
                           </div>
-                        {%- endfor -%}
+                        </div>
+                      {%- endfor -%}
+                    {%- elsif aa_mode == 'mukhi' -%}
+                      <div class="aa-pane on" data-i="0">
+                        <div class="aa-pane__chips">
+                          {%- for cl in link.links -%}<a href="{{ cl.url }}" class="aa-mchip">{{ cl.title | escape }}</a>{%- endfor -%}
+                        </div>
                       </div>
-                    {%- elsif aa_parent contains 'rudraksha' -%}
-                      {%- comment -%} Mukhi picker: plain chips, no labels or merch effects {%- endcomment -%}
-                      <div class="aa-mega__chiprows">
-                        {%- for childlink in link.links -%}
-                          <a href="{{ childlink.url }}" class="aa-mchip">{{ childlink.title | escape }}</a>
+                    {%- elsif aa_mode == 'cards' -%}
+                      <div class="aa-pane on" data-i="0">
+                        {%- for cl in link.links -%}
+                          {%- assign gh = cl.object.handle | default: '' -%}
+                          <a href="{{ cl.url }}" class="aa-gcard">
+                            <span class="aa-gcard__img">
+                              {%- if aa_nav_icons contains gh -%}
+                                {%- assign gif = 'aa-nav-' | append: gh | append: '.jpg' -%}
+                                <img src="{{ gif | asset_img_url: '300x' }}" srcset="{{ gif | asset_img_url: '300x' }} 1x, {{ gif | asset_img_url: '480x' }} 2x" loading="lazy" alt="{{ cl.title | escape }}">
+                              {%- elsif cl.object.products.first.featured_image -%}
+                                {{ cl.object.products.first.featured_image | image_url: width: 300 | image_tag: loading: 'lazy', alt: cl.title }}
+                              {%- endif -%}
+                            </span>
+                            <span class="aa-gcard__lbl">{{ cl.title | escape }}</span>
+                          </a>
                         {%- endfor -%}
                       </div>
                     {%- else -%}
-                    {%- for childlink in link.links -%}
-                      {%- liquid
-                        assign title_lower = childlink.title | downcase | strip
-
-                        # Skip generic "All Products" / "View All" / "Shop All" links + discontinued Pyramids
-                        assign skip_titles = 'all products,all-products,view all,view-all,shop all,pyramid'
-                        assign skip_list = skip_titles | split: ','
-                        assign should_skip = false
-                        for s in skip_list
-                          if title_lower contains s
-                            assign should_skip = true
-                            break
-                          endif
-                        endfor
-                        if should_skip
-                          continue
-                        endif
-
-                        assign tile_image = nil
-                        assign tile_object = childlink.object
-                        if tile_object.featured_image
-                          assign tile_image = tile_object.featured_image
-                        elsif tile_object.image
-                          assign tile_image = tile_object.image
-                        elsif tile_object.products.first.featured_image
-                          assign tile_image = tile_object.products.first.featured_image
-                        endif
-                        comment
-                          Curated Nightfall tile art (aa-nav-<handle>.jpg) beats raw
-                          product/collection photos for these handles.
-                        endcomment
-                        assign aa_nav_icons = 'ruby,south-sea-pearl-moti,red-coral-moonga,emerald-panna,yellow-sapphire-pukhraj,blue-sapphire-neelam,gomedh-hessonite-garnet,cat-s-eye-lehsunia,crystal-bracelets,remedies-bracelets,silver-bracelets,rashi-bracelets,for-her,for-him,certified-originals,crystal-rakhi,combos,crystal-trees,vastu-turtles,crystals,mala,pendants,anklets,mani' | split: ','
-                        assign aa_tile_h = childlink.object.handle | default: ''
-                      -%}
-                      <a
-                        id="HeaderMenu-{{ link.handle }}-{{ childlink.handle }}"
-                        href="{{ childlink.url }}"
-                        class="aa-tile{% if childlink.current %} aa-tile--active{% endif %}"
-                        {% if childlink.current %}aria-current="page"{% endif %}
-                      >
-                        <span class="aa-tile__circle">
-                          {%- if aa_nav_icons contains aa_tile_h -%}
-                            {%- assign aa_icon_file = 'aa-nav-' | append: aa_tile_h | append: '.jpg' -%}
-                            <img class="aa-tile__img" src="{{ aa_icon_file | asset_img_url: '200x' }}" srcset="{{ aa_icon_file | asset_img_url: '200x' }} 1x, {{ aa_icon_file | asset_img_url: '400x' }} 2x" width="96" height="96" loading="lazy" alt="{{ childlink.title | escape }}">
-                          {%- elsif tile_image -%}
-                            {{ tile_image | image_url: width: 200 | image_tag:
-                              loading: 'lazy',
-                              width: 96,
-                              height: 96,
-                              class: 'aa-tile__img',
-                              alt: childlink.title }}
-                          {%- else -%}
-                            <span class="aa-tile__placeholder">
-                              {{- childlink.title | slice: 0, 1 | upcase -}}
-                            </span>
-                          {%- endif -%}
-                        </span>
-                        <span class="aa-tile__label">{{ childlink.title | escape }}</span>
-                      </a>
-                    {%- endfor -%}
-                    {%- endif -%}
-                    {%- endif -%}
-                    {%- comment -%} AstroAura: always include the Divya Mani category tile under the Product menu {%- endcomment -%}
-                    {%- if aa_parent contains 'product' -%}
-                      {%- assign aa_mani = collections['mani'] -%}
-                      <a href="/collections/mani" class="aa-tile">
-                        <span class="aa-tile__circle">
-                          {%- if aa_mani.image -%}
-                            {{ aa_mani.image | image_url: width: 200 | image_tag: loading: 'lazy', width: 96, height: 96, class: 'aa-tile__img', alt: 'Mani' }}
-                          {%- elsif aa_mani.products.first.featured_image -%}
-                            {{ aa_mani.products.first.featured_image | image_url: width: 200 | image_tag: loading: 'lazy', width: 96, height: 96, class: 'aa-tile__img', alt: 'Mani' }}
-                          {%- else -%}
-                            <span class="aa-tile__placeholder">M</span>
-                          {%- endif -%}
-                        </span>
-                        <span class="aa-tile__label">Mani</span>
-                      </a>
-                      {%- assign aa_ank = collections['anklets'] -%}
-                      <a href="/collections/anklets" class="aa-tile">
-                        <span class="aa-tile__circle">
-                          {%- if aa_ank.image -%}
-                            {{ aa_ank.image | image_url: width: 200 | image_tag: loading: 'lazy', width: 96, height: 96, class: 'aa-tile__img', alt: 'Anklets' }}
-                          {%- elsif aa_ank.products.first.featured_image -%}
-                            {{ aa_ank.products.first.featured_image | image_url: width: 200 | image_tag: loading: 'lazy', width: 96, height: 96, class: 'aa-tile__img', alt: 'Anklets' }}
-                          {%- else -%}
-                            <span class="aa-tile__placeholder">A</span>
-                          {%- endif -%}
-                        </span>
-                        <span class="aa-tile__label">Anklets</span>
-                      </a>
-                      {%- assign aa_vastu = collections['vastu'] -%}
-                      <a href="/collections/vastu" class="aa-tile">
-                        <span class="aa-tile__circle">
-                          {%- if aa_vastu.image -%}
-                            {{ aa_vastu.image | image_url: width: 200 | image_tag: loading: 'lazy', width: 96, height: 96, class: 'aa-tile__img', alt: 'Vastu' }}
-                          {%- elsif aa_vastu.products.first.featured_image -%}
-                            {{ aa_vastu.products.first.featured_image | image_url: width: 200 | image_tag: loading: 'lazy', width: 96, height: 96, class: 'aa-tile__img', alt: 'Vastu' }}
-                          {%- else -%}
-                            <span class="aa-tile__placeholder">V</span>
-                          {%- endif -%}
-                        </span>
-                        <span class="aa-tile__label">Vastu</span>
-                      </a>
-                      {%- assign aa_combos = collections['combos'] -%}
-                      <a href="/collections/combos" class="aa-tile">
-                        <span class="aa-tile__circle">
-                          {%- if aa_combos.image -%}
-                            {{ aa_combos.image | image_url: width: 200 | image_tag: loading: 'lazy', width: 96, height: 96, class: 'aa-tile__img', alt: 'Combos' }}
-                          {%- elsif aa_combos.products.first.featured_image -%}
-                            {{ aa_combos.products.first.featured_image | image_url: width: 200 | image_tag: loading: 'lazy', width: 96, height: 96, class: 'aa-tile__img', alt: 'Combos' }}
-                          {%- else -%}
-                            <span class="aa-tile__placeholder">C</span>
-                          {%- endif -%}
-                        </span>
-                        <span class="aa-tile__label">Combos</span>
-                      </a>
+                      {%- for cl in link.links -%}
+                        <div class="aa-pane{% if forloop.first %} on{% endif %}" data-i="{{ forloop.index0 }}">
+                          {%- for p in cl.object.products limit: 4 -%}
+                            <a href="{{ p.url }}" class="aa-gcard aa-gcard--prod">
+                              <span class="aa-gcard__img">
+                                {%- if p.featured_image -%}{{ p.featured_image | image_url: width: 360 | image_tag: loading: 'lazy', alt: p.title }}{%- endif -%}
+                              </span>
+                              <span class="aa-gcard__lbl">{{ p.title | split: '(' | first | strip | escape }}</span>
+                              <span class="aa-gcard__price">{{ p.price | money }}</span>
+                            </a>
+                          {%- endfor -%}
+                        </div>
+                      {%- endfor -%}
                     {%- endif -%}
                   </div>
                 </div>
@@ -480,45 +402,48 @@
     margin: 0 !important;
   }
   .aa-mega__inner {
-    max-width: 1040px; margin: 0 auto; padding: 0 40px;
-    display: flex; align-items: center; justify-content: center; gap: 56px;
+    max-width: 1150px; margin: 0 auto; padding: 0 40px;
+    display: grid; grid-template-columns: 270px 1fr; gap: 44px; align-items: start;
   }
-  .aa-mega__inner > .aa-tile-grid { flex: 0 1 auto; min-width: 0; }
-  .aa-mega__inner > .aa-mega__cols, .aa-mega__inner > .aa-lens { flex: 1 1 auto; min-width: 0; }
-  /* Trust strip: closes every curtain */
-  .aa-mega__trust {
-    display: flex; justify-content: center; gap: 34px; flex-wrap: wrap;
-    margin: 22px 0 0; padding: 12px 20px 14px;
-    border-top: 1px solid rgba(36, 16, 25, 0.08);
-    font-size: 11.5px; letter-spacing: 0.05em; color: #7A6E76;
+  /* Left rail (view modes / sub-categories) */
+  .aa-rail { display: flex; flex-direction: column; gap: 4px; }
+  .aa-rail__item {
+    appearance: none; display: flex; align-items: center; gap: 12px; width: 100%; text-align: left;
+    padding: 12px 14px; border: 0; border-left: 3px solid transparent; border-radius: 0 12px 12px 0;
+    background: transparent; cursor: pointer; font-family: 'Jost', system-ui, sans-serif;
+    font-size: 14.5px; font-weight: 600; color: #241019;
+    transition: background 0.15s, border-color 0.15s;
   }
-  .aa-mega__trust b { color: #9A6B18; font-weight: 700; }
-  /* Featured bestseller card (left rail of each curtain) */
-  .aa-mega__feat,
-  .aa-mega__feat:hover, .aa-mega__feat:visited {
-    flex: 0 0 208px; display: block; text-decoration: none !important;
-    background: #FFFFFF;
-    border: 1px solid rgba(36, 16, 25, 0.09);
-    border-radius: 16px; padding: 12px 12px 14px;
-    box-shadow: 0 4px 14px rgba(74, 43, 46, 0.08);
-    transition: transform 0.18s ease, border-color 0.18s ease;
+  .aa-rail__item.on { background: rgba(224, 50, 122, 0.07); border-left-color: #E0327A; }
+  .aa-rail__item:hover { background: rgba(36, 16, 25, 0.045); }
+  .aa-rail__thumb { width: 38px; height: 38px; border-radius: 10px; object-fit: cover; flex: 0 0 auto; background: #fff; }
+  .aa-rail__chev { margin-left: auto; color: rgba(36, 16, 25, 0.4); flex: 0 0 auto; }
+  .aa-rail__item.on .aa-rail__chev { color: #E0327A; }
+  .aa-rail__util {
+    margin-top: 16px; padding: 14px 0 0 14px; border-top: 1px solid rgba(36, 16, 25, 0.1);
+    display: flex; flex-direction: column; gap: 10px;
   }
-  .aa-mega__feat:hover { transform: translateY(-3px); border-color: rgba(74, 25, 66, 0.35); }
-  .aa-mega__feat-img { display: block; border-radius: 11px; overflow: hidden; aspect-ratio: 1; background: #FAF5EC; }
-  /* contain, never crop: product shots carry baked-in art/text at the edges */
-  .aa-mega__feat-img img { width: 100%; height: 100%; object-fit: contain; display: block; }
-  .aa-mega__feat-pill {
-    display: inline-block; margin: 10px 0 5px; padding: 3px 10px; border-radius: 999px;
-    background: linear-gradient(90deg, #FF8C42, #FF2E93);
-    color: #fff; font-size: 10px; font-weight: 800; letter-spacing: 0.07em; text-transform: uppercase;
+  .aa-rail__util a { font-size: 13.5px; font-weight: 600; color: #8A2B4A !important; text-decoration: none !important; }
+  .aa-rail__util a:hover { color: #4A1942 !important; }
+  /* Right panes */
+  .aa-pane { display: none; }
+  .aa-pane.on { display: flex; flex-wrap: wrap; gap: 24px 18px; align-content: flex-start; }
+  .aa-pane__chips { display: flex; flex-wrap: wrap; gap: 9px; }
+  /* Cards (gems / products) */
+  .aa-gcard, .aa-gcard:visited { display: flex; flex-direction: column; gap: 8px; width: 158px; text-decoration: none !important; }
+  .aa-gcard__img {
+    display: block; width: 158px; height: 158px; border-radius: 18px; overflow: hidden; background: #FFFFFF;
+    border: 1px solid rgba(36, 16, 25, 0.07); box-shadow: 0 2px 10px rgba(74, 43, 46, 0.07);
+    transition: box-shadow 0.18s, transform 0.18s;
   }
-  .aa-mega__feat-title {
-    display: block; font-size: 13.5px; font-weight: 600; color: #241019; line-height: 1.3;
+  .aa-gcard__img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .aa-gcard:hover .aa-gcard__img { box-shadow: 0 10px 24px rgba(74, 25, 66, 0.15); transform: translateY(-2px); }
+  .aa-gcard__lbl {
+    font-family: 'Jost', system-ui, sans-serif; font-size: 13.5px; font-weight: 600; color: #241019;
+    text-align: center; line-height: 1.3;
     display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
   }
-  .aa-mega__feat-price { display: block; margin-top: 4px; font-size: 13px; font-weight: 700; color: #9A6B18; }
-  .aa-mega__feat-price s { color: #A99A8F; font-weight: 500; margin-left: 6px; }
-  @media (max-width: 1100px) { .aa-mega__feat { display: none !important; } }
+  .aa-gcard__price { font-size: 12.5px; font-weight: 700; color: #9A6B18; text-align: center; }
 
   /* Grouped mega panel (Shop By): titled text columns, quiet + scannable */
   .aa-mega__cols {
@@ -552,22 +477,7 @@
     transition: color 0.15s ease;
   }
   .aa-mega__collink:hover, .aa-mega__collink--active { color: #4A1942 !important; }
-  /* Lens dock (Shop By): tab chips switch one visible pane */
-  .aa-lens { width: 100%; }
-  .aa-lens__tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
-  .aa-lens__tab {
-    appearance: none; cursor: pointer;
-    border: 1.4px solid rgba(36, 16, 25, 0.16); border-radius: 999px;
-    background: #FFFFFF; color: #241019;
-    padding: 8px 18px; font-family: 'Jost', system-ui, sans-serif;
-    font-size: 12.5px; font-weight: 700; letter-spacing: 0.02em;
-    transition: all 0.16s ease;
-  }
-  .aa-lens__tab.on {
-    background: #4A1942; border-color: #4A1942; color: #FFFFFF;
-  }
-  .aa-lens__pane { display: none; }
-  .aa-lens__pane.on { display: flex; flex-wrap: wrap; gap: 9px; }
+
   /* merch chips (lens panes + mukhi rows) */
   .aa-mchip, .aa-mchip:visited {
     display: inline-flex; align-items: center; gap: 6px;
@@ -588,110 +498,7 @@
   .aa-mega__rowlab:not(:first-child) { margin-top: 14px; }
   .aa-mega__chiprows { flex: 1 1 auto; min-width: 0; display: flex; flex-wrap: wrap; gap: 9px; align-content: flex-start; }
 
-  /* Tile grid — centered, Astrotalk-style */
-  .aa-tile-grid {
-    display: flex !important;
-    flex-wrap: wrap !important;
-    justify-content: center !important;
-    gap: 30px 28px !important;
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-  .aa-tile,
-  .aa-tile:hover,
-  .aa-tile:focus,
-  .aa-tile:active,
-  .aa-tile:visited {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    gap: 10px !important;
-    text-decoration: none !important;
-    color: #1A1A1A !important;
-    transition: transform 0.18s ease !important;
-    padding: 4px;
-    width: 120px;
-    flex: 0 0 120px;
-    border: none !important;
-    box-shadow: none !important;
-    background: none !important;
-  }
-  .aa-tile *,
-  .aa-tile:hover *,
-  .aa-tile__label,
-  .aa-tile:hover .aa-tile__label,
-  .aa-tile:focus .aa-tile__label {
-    text-decoration: none !important;
-    border-bottom: none !important;
-  }
-  .aa-tile:hover { transform: translateY(-3px); }
-  .aa-tile__circle {
-    width: 96px;
-    height: 96px;
-    border-radius: 50%;
-    background: #FAEFD9;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: box-shadow 0.18s, background 0.18s, transform 0.18s;
-    position: relative;
-  }
-  .aa-tile__circle::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    box-shadow: inset 0 0 0 1px rgba(74, 25, 66, 0.10);
-    pointer-events: none;
-  }
-  .aa-tile:hover .aa-tile__circle {
-    background: #F5E5C5;
-    box-shadow: 0 6px 16px rgba(74, 25, 66, 0.18);
-  }
-  .aa-tile__img {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-    display: block;
-  }
-  /* "All Products" tile — astrology zodiac icon, fills the tile cleanly */
-  .aa-tile--all .aa-tile__circle {
-    background: linear-gradient(135deg, #FFF6EF 0%, #FFD8B0 100%);
-  }
-  .aa-tile__img--svg {
-    object-fit: contain !important;
-    padding: 4px;
-    box-sizing: border-box;
-  }
-  .aa-tile__placeholder {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 26px;
-    font-weight: 500;
-    color: #4A1942;
-  }
-  .aa-tile__label {
-    font-family: 'Jost', system-ui, sans-serif;
-    font-size: 12.5px;
-    font-weight: 500;
-    color: #241019;
-    text-align: center;
-    line-height: 1.25;
-    letter-spacing: 0.01em;
-    white-space: normal !important;
-    word-wrap: normal;
-    overflow-wrap: normal;
-    word-break: keep-all;
-    hyphens: none;
-    width: 100%;
-    max-width: 120px;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-  .aa-tile:hover .aa-tile__label { color: #4A1942; }
-  .aa-tile--active .aa-tile__label { color: #4A1942; font-weight: 600; }
+
 
   /* Adapt at smaller viewports to keep nav single-line */
   @media (min-width: 750px) and (max-width: 1199px) {
@@ -756,17 +563,18 @@
 </script>
 
 <script>
-  /* Lens dock: tab chips switch panes. Delegated once — Turbo-safe. */
-  if (!window.__aaLensBound) {
-    window.__aaLensBound = true;
+  /* Rail switcher: left rail items swap the visible right pane. Delegated once — Turbo-safe. */
+  if (!window.__aaRailBound) {
+    window.__aaRailBound = true;
     document.addEventListener('click', function (e) {
-      var t = e.target.closest('.aa-lens__tab');
+      var t = e.target.closest('.aa-rail__item');
       if (!t) return;
       e.preventDefault();
-      var lens = t.closest('.aa-lens');
+      var inner = t.closest('.aa-mega__inner');
+      if (!inner) return;
       var i = t.getAttribute('data-i');
-      lens.querySelectorAll('.aa-lens__tab').forEach(function (b) { b.classList.toggle('on', b === t); });
-      lens.querySelectorAll('.aa-lens__pane').forEach(function (p) { p.classList.toggle('on', p.getAttribute('data-i') === i); });
+      inner.querySelectorAll('.aa-rail__item').forEach(function (b) { b.classList.toggle('on', b === t); });
+      inner.querySelectorAll('.aa-pane').forEach(function (p) { p.classList.toggle('on', p.getAttribute('data-i') === i); });
     });
   }
 </script>
