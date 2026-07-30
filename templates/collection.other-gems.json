@@ -1,58 +1,9 @@
 {
   "sections": {
     "image_banner_zpGQzQ": {
-      "type": "image-banner",
-      "blocks": {
-        "heading_Nwhn7g": {
-          "type": "heading",
-          "settings": {
-            "heading": "Image banner",
-            "heading_size": "h1"
-          }
-        },
-        "text_TiJNKb": {
-          "type": "text",
-          "settings": {
-            "text": "Give customers details about the banner image(s) or content on the template.",
-            "text_style": "body"
-          }
-        },
-        "buttons_yt67QM": {
-          "type": "buttons",
-          "settings": {
-            "button_label_1": "Button label",
-            "button_link_1": "",
-            "button_style_secondary_1": false,
-            "button_label_2": "Button label",
-            "button_link_2": "",
-            "button_style_secondary_2": false
-          }
-        }
-      },
-      "block_order": [
-        "heading_Nwhn7g",
-        "text_TiJNKb",
-        "buttons_yt67QM"
-      ],
-      "custom_css": [
-        ".tabber_coll {}",
-        ".tabber_content {padding: 2rem; display: flex; justify-content: center;}",
-        ".tabcontent {background-color: #ffffff; border: 1px solid #eaeaea; border-radius: 12px; padding: 40px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); max-width: 1400px; margin: 2rem 2rem;}",
-        ".banner__media {width: 100%; aspect-ratio: 2560 / 1024;}"
-      ],
-      "name": "t:sections.image-banner.presets.name",
+      "type": "aa-collection-hero",
       "settings": {
-        "image": "shopify://shop_images/ChatGPTImageSep3202511_16_17PM.jpg",
-        "image_overlay_opacity": 0,
-        "image_height": "adapt",
-        "image_behavior": "none",
-        "desktop_content_position": "middle-center",
-        "desktop_content_alignment": "center",
-        "show_text_box": true,
-        "color_scheme": "",
-        "stack_images_on_mobile": true,
-        "mobile_content_alignment": "center",
-        "show_text_below": true
+        "image_asset": "aa-hero-gemstones.jpg"
       }
     },
     "banner": {
