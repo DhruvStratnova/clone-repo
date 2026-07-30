@@ -17,6 +17,7 @@
         zodiac: split(li.getAttribute('data-zodiac')),
         planet: split(li.getAttribute('data-planet')),
         category: split(li.getAttribute('data-category')),
+        grade: split(li.getAttribute('data-grade')),
         price: parseFloat(li.getAttribute('data-price') || '0')
       };
       var t = li.querySelector('.aa-pcard__title, .card__heading');
@@ -50,7 +51,7 @@
     }
 
     function apply() {
-      var groups = ['purpose', 'zodiac', 'planet', 'category'];
+      var groups = ['purpose', 'zodiac', 'planet', 'category', 'grade'];
       var sel = {}; groups.forEach(function (g) { sel[g] = selectedVals(g); });
       var priceSel = selectedVals('price');
       var minEl = root.querySelector('[data-aa-min]'), maxEl = root.querySelector('[data-aa-max]');
@@ -80,7 +81,7 @@
       });
 
       // per-group headers + pill active state
-      ['purpose', 'zodiac', 'planet', 'category', 'price'].forEach(function (g) {
+      ['purpose', 'zodiac', 'planet', 'category', 'grade', 'price'].forEach(function (g) {
         var cnt = (g === 'price') ? priceCount : sel[g].length;
         var hdr = root.querySelector('.aa-fltr__grp[data-group="' + g + '"] .aa-fltr__selcount');
         if (hdr) hdr.textContent = cnt + ' selected';

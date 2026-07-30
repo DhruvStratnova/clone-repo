@@ -30,7 +30,7 @@
         "heading": "Spiritual Essential",
         "text": "A sacred seed, Rudraksha carries divine protection, inner peace and clarity for a steady journey toward balance and enlightenment.",
         "btn_label": "Shop Rudraksha",
-        "btn_url": "shopify://collections/rudrasha",
+        "btn_url": "shopify://collections/rudraksha",
         "btn_ghost": false,
         "image": "shopify://shop_images/Gemini_Generated_Image_kasoikasoikasoik-clean_3709f244-f751-4e5b-8e3d-79631cc8bc58.png",
         "image_asset": "aa-spiritual.jpg",
@@ -398,7 +398,7 @@
             "kicker": "100% ORIGINAL • LAB CERTIFIED",
             "heading": "Shiva-Blessed Rudraksha",
             "cta": "Explore Rudraksha",
-            "url": "shopify://collections/rudrasha",
+            "url": "shopify://collections/rudraksha",
             "mobile_focus": "right",
             "image_asset_mobile": "aa-hero-rudraksha-mobile.webp"
           }
@@ -446,7 +446,7 @@
             "kicker": "CHANNEL THE UNIVERSE",
             "heading": "Unlock Your Cosmic Potential",
             "cta": "Shop Crystals",
-            "url": "shopify://collections/crystals-wonders",
+            "url": "shopify://collections/crystals",
             "mobile_focus": "right",
             "image_asset_mobile": "aa-hero-crystals-mobile.webp"
           }
