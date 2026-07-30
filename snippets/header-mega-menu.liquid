@@ -63,6 +63,26 @@
                         </a>
                       {%- endfor -%}
                     {%- else -%}
+                    {%- comment -%} Grouped mega panel (e.g. Shop By): children that have their own
+                        links render as titled text columns, not tiles. {%- endcomment -%}
+                    {%- assign aa_has_groups = false -%}
+                    {%- for cl in link.links -%}
+                      {%- if cl.links != blank -%}{%- assign aa_has_groups = true -%}{%- break -%}{%- endif -%}
+                    {%- endfor -%}
+                    {%- if aa_has_groups -%}
+                      <div class="aa-mega__cols">
+                        {%- for grp in link.links -%}
+                          <div class="aa-mega__col{% if grp.links.size > 9 %} aa-mega__col--split{% endif %}">
+                            <a href="{{ grp.url }}" class="aa-mega__colhead">{{ grp.title | escape }}</a>
+                            <ul class="aa-mega__collist" role="list">
+                              {%- for gl in grp.links -%}
+                                <li><a href="{{ gl.url }}" class="aa-mega__collink{% if gl.current %} aa-mega__collink--active{% endif %}">{{ gl.title | escape }}</a></li>
+                              {%- endfor -%}
+                            </ul>
+                          </div>
+                        {%- endfor -%}
+                      </div>
+                    {%- else -%}
                     {%- for childlink in link.links -%}
                       {%- liquid
                         assign title_lower = childlink.title | downcase | strip
@@ -87,6 +107,8 @@
                           assign tile_image = tile_object.featured_image
                         elsif tile_object.image
                           assign tile_image = tile_object.image
+                        elsif tile_object.products.first.featured_image
+                          assign tile_image = tile_object.products.first.featured_image
                         endif
                       -%}
                       <a
@@ -112,6 +134,7 @@
                         <span class="aa-tile__label">{{ childlink.title | escape }}</span>
                       </a>
                     {%- endfor -%}
+                    {%- endif -%}
                     {%- endif -%}
                     {%- comment -%} AstroAura: always include the Divya Mani category tile under the Product menu {%- endcomment -%}
                     {%- if aa_parent contains 'product' -%}
@@ -276,13 +299,14 @@
     .aa-logo { gap: 6px !important; }
   }
 
-  /* === Aura AI nav — shifted right so it appears centered on viewport === */
+  /* === Aura AI nav — compact, truly centered (no margin hacks: with 8 pillars
+     the old 80px shift pushed the row over the header icons and clipped it) === */
   .aa-nav__list {
     display: flex !important;
     flex-wrap: nowrap !important;
     justify-content: center !important;
     align-items: center !important;
-    gap: 0 18px !important;
+    gap: 0 16px !important;
     margin: 0 !important;
     padding: 0 !important;
     white-space: nowrap !important;
@@ -291,7 +315,14 @@
   .header .header__inline-menu,
   header.header > .header__inline-menu {
     justify-self: center !important;
-    margin-left: 80px !important;
+    margin-left: 0 !important;
+    min-width: 0 !important;
+  }
+  /* Narrow desktop: tighten further so all pillars + icons always fit */
+  @media screen and (min-width: 990px) and (max-width: 1279px) {
+    .aa-nav__list { gap: 0 10px !important; }
+    .aa-nav__link { font-size: 12px !important; padding: 6px 1px !important; }
+    .aa-nav__link .aa-chevron { margin-left: 2px; }
   }
   .aa-nav__item { list-style: none; }
   .aa-nav__item > header-menu > details > summary,
@@ -403,6 +434,39 @@
     margin: 0 !important;
   }
   .aa-mega__inner { max-width: 1280px; margin: 0 auto; padding: 0 32px; }
+
+  /* Grouped mega panel (Shop By): titled text columns, quiet + scannable */
+  .aa-mega__cols {
+    display: flex !important;
+    justify-content: center !important;
+    gap: 64px !important;
+    max-width: 1100px;
+    margin: 0 auto;
+    line-height: 1.2;
+  }
+  .aa-mega__colhead {
+    display: inline-block;
+    font-size: 11.5px !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: #4A1942 !important;
+    text-decoration: none !important;
+    margin-bottom: 12px;
+    padding-bottom: 6px;
+    border-bottom: 1.5px solid rgba(74, 25, 66, 0.22);
+  }
+  .aa-mega__collist { list-style: none; margin: 0; padding: 0; }
+  .aa-mega__col--split .aa-mega__collist { columns: 2; column-gap: 34px; }
+  .aa-mega__collist li { margin: 0 0 8px; break-inside: avoid; }
+  .aa-mega__collink {
+    font-size: 13.5px !important;
+    color: #1A1A1A !important;
+    text-decoration: none !important;
+    white-space: nowrap;
+    transition: color 0.15s ease;
+  }
+  .aa-mega__collink:hover, .aa-mega__collink--active { color: #4A1942 !important; }
 
   /* Tile grid — centered, Astrotalk-style */
   .aa-tile-grid {

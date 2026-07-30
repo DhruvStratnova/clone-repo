@@ -281,6 +281,17 @@
                     assign tile_image = childlink.object.image
                   endif
                 -%}
+                {%- if childlink.links != blank -%}
+                  {%- comment -%} Grouped child (Shop By): heading + chip links, since tiles can't hold a 3rd level {%- endcomment -%}
+                  <div class="aa-drawer__grp">
+                    <a href="{{ childlink.url }}" class="aa-drawer__grphead">{{ childlink.title | escape }}</a>
+                    <div class="aa-drawer__chips">
+                      {%- for gl in childlink.links -%}
+                        <a href="{{ gl.url }}" class="aa-drawer__chip">{{ gl.title | escape }}</a>
+                      {%- endfor -%}
+                    </div>
+                  </div>
+                {%- else -%}
                 <a href="{{ childlink.url }}" class="aa-drawer__tile">
                   <span class="aa-drawer__tile-circle">
                     {%- if tile_image -%}
@@ -296,6 +307,7 @@
                   </span>
                   <span class="aa-drawer__tile-label">{{ childlink.title | escape }}</span>
                 </a>
+                {%- endif -%}
                 {%- assign cl_check = cl_lower | strip -%}
                 {%- if cl_check == 'mala' -%}
                   {%- assign mala_passed = true -%}
