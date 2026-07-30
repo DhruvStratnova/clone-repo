@@ -21,9 +21,10 @@
            {{ block.shopify_attributes }}>
           <picture>
             {%- if img_m != blank -%}
+              {%- comment -%} asset_url (not asset_img_url): Shopify's img resizer returns a no-image placeholder for .webp source assets. {%- endcomment -%}
               <source media="(max-width: 749px)"
-                srcset="{{ img_m | asset_img_url: '600x' }} 600w, {{ img_m | asset_img_url: '900x' }} 900w, {{ img_m | asset_img_url: '1200x' }} 1200w"
-                sizes="100vw" width="1200" height="1500">
+                srcset="{{ img_m | asset_url }}"
+                width="1200" height="1500">
             {%- endif -%}
             <img
               class="aa-hc__img aa-hc__img--{{ block.settings.mobile_focus | default: 'center' }}"
