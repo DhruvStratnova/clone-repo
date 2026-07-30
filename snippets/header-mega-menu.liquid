@@ -89,16 +89,31 @@
                       {%- if cl.links != blank -%}{%- assign aa_has_groups = true -%}{%- break -%}{%- endif -%}
                     {%- endfor -%}
                     {%- if aa_has_groups -%}
-                      <div class="aa-mega__cols">
+                      {%- comment -%} Lens dock: tab chips switch one visible pane of merch chips {%- endcomment -%}
+                      <div class="aa-lens">
+                        <div class="aa-lens__tabs" role="tablist">
+                          {%- for grp in link.links -%}
+                            <button type="button" class="aa-lens__tab{% if forloop.first %} on{% endif %}" data-i="{{ forloop.index0 }}" role="tab">{{ grp.title | escape }}</button>
+                          {%- endfor -%}
+                        </div>
                         {%- for grp in link.links -%}
-                          <div class="aa-mega__col{% if grp.links.size > 9 %} aa-mega__col--split{% endif %}">
-                            <a href="{{ grp.url }}" class="aa-mega__colhead">{{ grp.title | escape }}</a>
-                            <ul class="aa-mega__collist" role="list">
-                              {%- for gl in grp.links -%}
-                                <li><a href="{{ gl.url }}" class="aa-mega__collink{% if gl.current %} aa-mega__collink--active{% endif %}">{{ gl.title | escape }}</a></li>
-                              {%- endfor -%}
-                            </ul>
+                          <div class="aa-lens__pane{% if forloop.first %} on{% endif %}" data-i="{{ forloop.index0 }}">
+                            {%- for gl in grp.links -%}
+                              <a href="{{ gl.url }}" class="aa-mchip">{{ gl.title | escape }}</a>
+                            {%- endfor -%}
+                            <a href="{{ grp.url }}" class="aa-mchip aa-mchip--hero">View all &rarr;</a>
                           </div>
+                        {%- endfor -%}
+                      </div>
+                    {%- elsif aa_parent contains 'rudraksha' -%}
+                      {%- comment -%} Mukhi picker: labeled chip rows instead of 14 identical tiles {%- endcomment -%}
+                      <div class="aa-mega__chiprows">
+                        {%- for childlink in link.links -%}
+                          {%- if forloop.index == 1 -%}<p class="aa-mega__rowlab">Daily Beads &middot; 1&ndash;7 Mukhi</p>{%- endif -%}
+                          {%- if forloop.index == 8 -%}<p class="aa-mega__rowlab">Power Beads &middot; 8&ndash;14 Mukhi</p>{%- endif -%}
+                          {%- assign is_hero = false -%}
+                          {%- if childlink.title contains '5 Mukhi' -%}{%- assign is_hero = true -%}{%- endif -%}
+                          <a href="{{ childlink.url }}" class="aa-mchip{% if is_hero %} aa-mchip--hero{% endif %}">{% if is_hero %}&#9733; {% endif %}{{ childlink.title | escape }}{% if is_hero %} &middot; Bestseller{% elsif childlink.title contains '14 Mukhi' %} &middot; Collector{% endif %}</a>
                         {%- endfor -%}
                       </div>
                     {%- else -%}
@@ -448,12 +463,13 @@
     width: 100vw !important;
     max-width: 100vw !important;
     min-width: 0 !important;
-    /* Nightfall Curtain: the app's cosmos drops over the parchment storefront */
-    background: radial-gradient(120% 170% at 88% -10%, #2A1440 0%, #171030 38%, #0C0A1F 72%) !important;
-    border-top: 1px solid rgba(255, 180, 122, 0.16) !important;
-    box-shadow: 0 24px 60px rgba(8, 5, 24, 0.45) !important;
-    padding: 26px 0 0 !important;
-    color: #EFE9F8 !important;
+    /* Lens Deck: panels stay in the parchment theme (the dark curtain read as a
+       foreign colour against the storefront — reverted 2026-07-30). */
+    background: #F6F0E3 !important;
+    border-top: 1px solid rgba(36, 16, 25, 0.07) !important;
+    box-shadow: 0 14px 34px rgba(74, 43, 46, 0.12) !important;
+    padding: 24px 0 0 !important;
+    color: #1A1A1A !important;
     z-index: 1000 !important;
     border-radius: 0 0 20px 20px !important;
     margin: 0 !important;
@@ -466,22 +482,23 @@
   /* Trust strip: closes every curtain */
   .aa-mega__trust {
     display: flex; justify-content: center; gap: 34px; flex-wrap: wrap;
-    margin: 24px 0 0; padding: 13px 20px 15px;
-    border-top: 1px solid rgba(255, 255, 255, 0.07);
-    font-size: 11.5px; letter-spacing: 0.05em; color: #A99BC8;
+    margin: 22px 0 0; padding: 12px 20px 14px;
+    border-top: 1px solid rgba(36, 16, 25, 0.08);
+    font-size: 11.5px; letter-spacing: 0.05em; color: #7A6E76;
   }
-  .aa-mega__trust b { color: #E8C87E; font-weight: 700; }
+  .aa-mega__trust b { color: #9A6B18; font-weight: 700; }
   /* Featured bestseller card (left rail of each curtain) */
   .aa-mega__feat,
   .aa-mega__feat:hover, .aa-mega__feat:visited {
     flex: 0 0 208px; display: block; text-decoration: none !important;
-    background: rgba(255, 255, 255, 0.035);
-    border: 1px solid rgba(255, 255, 255, 0.09);
+    background: #FFFFFF;
+    border: 1px solid rgba(36, 16, 25, 0.09);
     border-radius: 16px; padding: 12px 12px 14px;
+    box-shadow: 0 4px 14px rgba(74, 43, 46, 0.08);
     transition: transform 0.18s ease, border-color 0.18s ease;
   }
-  .aa-mega__feat:hover { transform: translateY(-3px); border-color: rgba(255, 180, 122, 0.35); }
-  .aa-mega__feat-img { display: block; border-radius: 11px; overflow: hidden; aspect-ratio: 1; background: #171331; }
+  .aa-mega__feat:hover { transform: translateY(-3px); border-color: rgba(74, 25, 66, 0.35); }
+  .aa-mega__feat-img { display: block; border-radius: 11px; overflow: hidden; aspect-ratio: 1; background: #FAF5EC; }
   .aa-mega__feat-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .aa-mega__feat-pill {
     display: inline-block; margin: 10px 0 5px; padding: 3px 10px; border-radius: 999px;
@@ -489,11 +506,11 @@
     color: #fff; font-size: 10px; font-weight: 800; letter-spacing: 0.07em; text-transform: uppercase;
   }
   .aa-mega__feat-title {
-    display: block; font-size: 13.5px; font-weight: 600; color: #F3EEFA; line-height: 1.3;
+    display: block; font-size: 13.5px; font-weight: 600; color: #241019; line-height: 1.3;
     display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
   }
-  .aa-mega__feat-price { display: block; margin-top: 4px; font-size: 13px; font-weight: 700; color: #FFB47A; }
-  .aa-mega__feat-price s { color: #776C99; font-weight: 500; margin-left: 6px; }
+  .aa-mega__feat-price { display: block; margin-top: 4px; font-size: 13px; font-weight: 700; color: #9A6B18; }
+  .aa-mega__feat-price s { color: #A99A8F; font-weight: 500; margin-left: 6px; }
   @media (max-width: 1100px) { .aa-mega__feat { display: none !important; } }
 
   /* Grouped mega panel (Shop By): titled text columns, quiet + scannable */
@@ -511,23 +528,58 @@
     font-weight: 800 !important;
     letter-spacing: 0.11em;
     text-transform: uppercase;
-    color: #FFB47A !important;
+    color: #4A1942 !important;
     text-decoration: none !important;
     margin-bottom: 12px;
     padding-bottom: 6px;
-    border-bottom: 1.5px solid rgba(255, 180, 122, 0.28);
+    border-bottom: 1.5px solid rgba(74, 25, 66, 0.22);
   }
   .aa-mega__collist { list-style: none; margin: 0; padding: 0; }
   .aa-mega__col--split .aa-mega__collist { columns: 2; column-gap: 34px; }
   .aa-mega__collist li { margin: 0 0 8px; break-inside: avoid; }
   .aa-mega__collink {
     font-size: 13.5px !important;
-    color: #CFC5E2 !important;
+    color: #1A1A1A !important;
     text-decoration: none !important;
     white-space: nowrap;
     transition: color 0.15s ease;
   }
-  .aa-mega__collink:hover, .aa-mega__collink--active { color: #FFFFFF !important; }
+  .aa-mega__collink:hover, .aa-mega__collink--active { color: #4A1942 !important; }
+  /* Lens dock (Shop By): tab chips switch one visible pane */
+  .aa-lens { width: 100%; }
+  .aa-lens__tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+  .aa-lens__tab {
+    appearance: none; cursor: pointer;
+    border: 1.4px solid rgba(36, 16, 25, 0.16); border-radius: 999px;
+    background: #FFFFFF; color: #241019;
+    padding: 8px 18px; font-family: 'Jost', system-ui, sans-serif;
+    font-size: 12.5px; font-weight: 700; letter-spacing: 0.02em;
+    transition: all 0.16s ease;
+  }
+  .aa-lens__tab.on {
+    background: #4A1942; border-color: #4A1942; color: #FFFFFF;
+  }
+  .aa-lens__pane { display: none; }
+  .aa-lens__pane.on { display: flex; flex-wrap: wrap; gap: 9px; }
+  /* merch chips (lens panes + mukhi rows) */
+  .aa-mchip, .aa-mchip:visited {
+    display: inline-flex; align-items: center; gap: 6px;
+    border: 1.4px solid rgba(36, 16, 25, 0.14); border-radius: 999px;
+    background: #FFFFFF; color: #241019 !important;
+    padding: 8px 16px; font-size: 13px; font-weight: 600;
+    text-decoration: none !important; white-space: nowrap;
+    transition: all 0.16s ease;
+  }
+  .aa-mchip:hover { border-color: #4A1942; color: #4A1942 !important; transform: translateY(-1px); }
+  .aa-mchip--hero, .aa-mchip--hero:visited { background: #4A1942; border-color: #4A1942; color: #FFFFFF !important; }
+  .aa-mchip--hero:hover { color: #FFFFFF !important; }
+  .aa-mega__rowlab {
+    width: 100%; margin: 2px 0 8px;
+    font-size: 10.5px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase;
+    color: #9A6B18;
+  }
+  .aa-mega__rowlab:not(:first-child) { margin-top: 14px; }
+  .aa-mega__chiprows { flex: 1 1 auto; min-width: 0; display: flex; flex-wrap: wrap; gap: 9px; align-content: flex-start; }
 
   /* Tile grid — centered, Astrotalk-style */
   .aa-tile-grid {
@@ -570,7 +622,7 @@
     width: 76px;
     height: 76px;
     border-radius: 50%;
-    background: #171331;
+    background: #FAEFD9;
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -583,12 +635,12 @@
     position: absolute;
     inset: 0;
     border-radius: 50%;
-    box-shadow: inset 0 0 0 1.2px rgba(232, 200, 126, 0.34);
+    box-shadow: inset 0 0 0 1px rgba(74, 25, 66, 0.10);
     pointer-events: none;
   }
   .aa-tile:hover .aa-tile__circle {
-    background: #1E1840;
-    box-shadow: 0 0 0 3px rgba(255, 140, 66, 0.16), 0 8px 22px rgba(255, 46, 147, 0.22);
+    background: #F5E5C5;
+    box-shadow: 0 6px 16px rgba(74, 25, 66, 0.18);
   }
   .aa-tile__img {
     width: 100% !important;
@@ -609,13 +661,13 @@
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-size: 26px;
     font-weight: 500;
-    color: #E8C87E;
+    color: #4A1942;
   }
   .aa-tile__label {
     font-family: 'Jost', system-ui, sans-serif;
     font-size: 12.5px;
     font-weight: 500;
-    color: #D8CFEC;
+    color: #241019;
     text-align: center;
     line-height: 1.25;
     letter-spacing: 0.01em;
@@ -631,8 +683,8 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
-  .aa-tile:hover .aa-tile__label { color: #FFFFFF; }
-  .aa-tile--active .aa-tile__label { color: #FFB47A; font-weight: 600; }
+  .aa-tile:hover .aa-tile__label { color: #4A1942; }
+  .aa-tile--active .aa-tile__label { color: #4A1942; font-weight: 600; }
 
   /* Adapt at smaller viewports to keep nav single-line */
   @media (min-width: 750px) and (max-width: 1199px) {
@@ -694,4 +746,20 @@
       }
     });
   })();
+</script>
+
+<script>
+  /* Lens dock: tab chips switch panes. Delegated once — Turbo-safe. */
+  if (!window.__aaLensBound) {
+    window.__aaLensBound = true;
+    document.addEventListener('click', function (e) {
+      var t = e.target.closest('.aa-lens__tab');
+      if (!t) return;
+      e.preventDefault();
+      var lens = t.closest('.aa-lens');
+      var i = t.getAttribute('data-i');
+      lens.querySelectorAll('.aa-lens__tab').forEach(function (b) { b.classList.toggle('on', b === t); });
+      lens.querySelectorAll('.aa-lens__pane').forEach(function (p) { p.classList.toggle('on', p.getAttribute('data-i') === i); });
+    });
+  }
 </script>
