@@ -3,18 +3,17 @@
   Self-contained styles. Images auto-pulled from each collection (or its first product).
   Categories curated by hand; edit the `cats` list below to change order/labels.
 {%- endcomment -%}
-{%- assign cats = "combos|Combos,rudrasha|Rudraksha,gemstones|Gemstones,bracelets|Bracelets,remedies-bracelets|Remedies Bracelets,mala|Malas,pendants|Pendants,vastu|Vastu,crystal-bracelets|Crystal Bracelets,anklets|Anklets,mani|Divya Mani" | split: "," -%}
+{%- comment -%} handle|label|icon-asset — icons are the generated Nightfall tile set (aa-cat-*.jpg) {%- endcomment -%}
+{%- assign cats = "crystal-rakhi|Rakhi|aa-cat-rakhi.jpg,bracelets|Bracelets|aa-cat-bracelets.jpg,rudraksha|Rudraksha|aa-cat-rudraksha.jpg,gemstones|Gemstones|aa-cat-gemstones.jpg,mala|Malas|aa-cat-malas.jpg,combos|Combos|aa-cat-combos.jpg,pendants|Pendants|aa-cat-pendants.jpg,vastu|Vastu|aa-cat-vastu.jpg,crystal-trees|Crystal Trees|aa-cat-crystal-trees.jpg,anklets|Anklets|aa-cat-anklets.jpg,mani|Divya Mani|aa-cat-mani.jpg,crystals|Crystals|aa-cat-crystals.jpg,certified-originals|Certified ✓|aa-cat-gifts.jpg" | split: "," -%}
 <nav class="aa-catnav" id="aa-catnav-bar" data-turbo-permanent aria-label="Shop by category">
   <div class="aa-catnav__track">
     {%- for c in cats -%}
       {%- assign parts = c | split: "|" -%}
       {%- assign col = collections[parts[0]] -%}
       {%- if col != blank -%}
-        {%- assign im = col.image -%}
-        {%- unless im -%}{%- assign im = col.products.first.featured_image -%}{%- endunless -%}
         <a class="aa-catnav__item" href="{{ col.url }}">
           <span class="aa-catnav__thumb">
-            {%- if im -%}{{ im | image_url: width: 220 | image_tag: loading: 'lazy', widths: '110,160,220', sizes: '70px', alt: parts[1] | escape }}{%- endif -%}
+            <img src="{{ parts[2] | asset_img_url: '160x' }}" srcset="{{ parts[2] | asset_img_url: '160x' }} 1x, {{ parts[2] | asset_img_url: '320x' }} 2x" width="66" height="66" loading="lazy" alt="{{ parts[1] | escape }}">
           </span>
           <span class="aa-catnav__lbl">{{ parts[1] }}</span>
         </a>
@@ -61,9 +60,9 @@
       width: 66px; height: 66px;
       border-radius: 50%;
       overflow: hidden;
-      background: #fff;
-      border: 1px solid rgba(184, 145, 90, 0.65);
-      box-shadow: 0 2px 8px rgba(74, 43, 46, 0.08);
+      background: #0C0A1F;
+      border: 1.4px solid rgba(232, 200, 126, 0.75);
+      box-shadow: 0 3px 12px rgba(74, 25, 66, 0.22);
       display: grid; place-items: center;
     }
     .aa-catnav__thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }

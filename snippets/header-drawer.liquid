@@ -35,20 +35,21 @@
          past the right edge -> iOS zoomed out (side gaps) and every fixed
          element (quiz orb) glitched. Parked LEFT it can never expand the
          viewport; visibility flips AFTER the close veil finishes. */
+      /* Curtain drop (2026-07-30, replaces the circle veil): the whole sheet
+         slides DOWN from above like a curtain — matches the desktop Nightfall
+         mega panels. Closed: parked above the viewport, hidden after motion. */
       visibility: hidden !important;
-      transform: translateX(-110vw) !important;
-      -webkit-transform: translateX(-110vw) !important;
+      transform: translateY(-104%) !important;
+      -webkit-transform: translateY(-104%) !important;
       opacity: 1 !important;
-      clip-path: circle(0px at 30px 34px) !important;
-      -webkit-clip-path: circle(0px at 30px 34px) !important;
+      clip-path: none !important;
+      -webkit-clip-path: none !important;
       pointer-events: none !important;
-      will-change: clip-path !important;
+      will-change: transform !important;
       transition:
-        clip-path 420ms cubic-bezier(0.32, 0.72, 0, 1),
-        -webkit-clip-path 420ms cubic-bezier(0.32, 0.72, 0, 1),
-        visibility 0s linear 460ms,
-        transform 0s linear 460ms,
-        -webkit-transform 0s linear 460ms !important;
+        transform 480ms cubic-bezier(0.55, 0, 0.75, 0.4),
+        -webkit-transform 480ms cubic-bezier(0.55, 0, 0.75, 0.4),
+        visibility 0s linear 500ms !important;
     }
     /* OPEN — covers [open] alone AND [open].menu-opening (Dawn adds it ~100ms later) */
     html body header-drawer details[open] #menu-drawer,
@@ -57,18 +58,16 @@
     html body header-drawer details[open].menu-opening #menu-drawer,
     html body header-drawer details[open].menu-opening .menu-drawer,
     html body header-drawer details[open].menu-opening .aa-drawer {
-      clip-path: circle(165% at 30px 34px) !important;
-      -webkit-clip-path: circle(165% at 30px 34px) !important;
+      clip-path: none !important;
+      -webkit-clip-path: none !important;
       visibility: visible !important;
-      transform: none !important;
-      -webkit-transform: none !important;
+      transform: translateY(0) !important;
+      -webkit-transform: translateY(0) !important;
       pointer-events: auto !important;
       transition:
-        clip-path 620ms cubic-bezier(0.32, 0.72, 0, 1),
-        -webkit-clip-path 620ms cubic-bezier(0.32, 0.72, 0, 1),
-        visibility 0s linear 0s,
-        transform 0s linear 0s,
-        -webkit-transform 0s linear 0s !important;
+        transform 640ms cubic-bezier(0.22, 1.1, 0.3, 1),
+        -webkit-transform 640ms cubic-bezier(0.22, 1.1, 0.3, 1),
+        visibility 0s linear 0s !important;
     }
     /* FIRST-OPEN FIX: content inside a closed <details> is not rendered, so
        the first click can paint the drawer directly in its open state with no
@@ -81,8 +80,8 @@
       html body header-drawer details[open].menu-opening #menu-drawer,
       html body header-drawer details[open].menu-opening .menu-drawer,
       html body header-drawer details[open].menu-opening .aa-drawer {
-        clip-path: circle(0px at 30px 34px) !important;
-        -webkit-clip-path: circle(0px at 30px 34px) !important;
+        transform: translateY(-104%) !important;
+        -webkit-transform: translateY(-104%) !important;
       }
     }
     /* Backdrop — REAL element (not pseudo) so opacity transitions out cleanly to 0
@@ -234,10 +233,8 @@
             </svg>
           </button>
         </div>
-        <div class="aa-drawer__grid aa-st aa-s1">
-          {%- assign mala_passed = false -%}
+        <div class="aa-drawer__cats aa-st aa-s1">
           {%- for link in section.settings.menu.links -%}
-            {%- if mala_passed -%}{%- continue -%}{%- endif -%}
             {%- liquid
               assign t_lower = link.title | downcase | strip
               assign is_utility = false
@@ -257,8 +254,9 @@
             -%}
 
             {%- if link.links != blank -%}
+              <p class="aa-drawer__sec"><span>{{ link.title | escape }}</span></p>
+              <div class="aa-drawer__secgrid">
               {%- for childlink in link.links -%}
-                {%- if mala_passed -%}{%- continue -%}{%- endif -%}
                 {%- liquid
                   assign skip_titles = 'all products,all-products,view all,view-all,shop all,pyramid'
                   assign cl_lower = childlink.title | downcase
@@ -308,11 +306,8 @@
                   <span class="aa-drawer__tile-label">{{ childlink.title | escape }}</span>
                 </a>
                 {%- endif -%}
-                {%- assign cl_check = cl_lower | strip -%}
-                {%- if cl_check == 'mala' -%}
-                  {%- assign mala_passed = true -%}
-                {%- endif -%}
               {%- endfor -%}
+              </div>
             {%- else -%}
               {%- liquid
                 assign tile_image = nil
@@ -337,41 +332,9 @@
                 </span>
                 <span class="aa-drawer__tile-label">{{ link.title | escape }}</span>
               </a>
-              {%- if t_lower == 'mala' -%}
-                {%- assign mala_passed = true -%}
-              {%- endif -%}
             {%- endif -%}
           {%- endfor -%}
-          {%- comment -%} AstroAura: Mani / Anklets / Vastu are not in the nav menu, hardcode them so they always appear in the drawer grid {%- endcomment -%}
-          {%- assign aa_mani = collections['mani'] -%}
-          <a href="/collections/mani" class="aa-drawer__tile">
-            <span class="aa-drawer__tile-circle">
-              {%- if aa_mani.image -%}{{ aa_mani.image | image_url: width: 160 | image_tag: loading: 'lazy', width: 80, height: 80, class: 'aa-drawer__tile-img', alt: 'Mani' }}{%- else -%}<span class="aa-drawer__tile-placeholder">M</span>{%- endif -%}
-            </span>
-            <span class="aa-drawer__tile-label">Mani</span>
-          </a>
-          {%- assign aa_ank = collections['anklets'] -%}
-          <a href="/collections/anklets" class="aa-drawer__tile">
-            <span class="aa-drawer__tile-circle">
-              {%- if aa_ank.image -%}{{ aa_ank.image | image_url: width: 160 | image_tag: loading: 'lazy', width: 80, height: 80, class: 'aa-drawer__tile-img', alt: 'Anklets' }}{%- else -%}<span class="aa-drawer__tile-placeholder">A</span>{%- endif -%}
-            </span>
-            <span class="aa-drawer__tile-label">Anklets</span>
-          </a>
-          {%- assign aa_vastu = collections['vastu'] -%}
-          <a href="/collections/vastu" class="aa-drawer__tile">
-            <span class="aa-drawer__tile-circle">
-              {%- if aa_vastu.image -%}{{ aa_vastu.image | image_url: width: 160 | image_tag: loading: 'lazy', width: 80, height: 80, class: 'aa-drawer__tile-img', alt: 'Vastu' }}{%- else -%}<span class="aa-drawer__tile-placeholder">V</span>{%- endif -%}
-            </span>
-            <span class="aa-drawer__tile-label">Vastu</span>
-          </a>
-          {%- assign aa_combos = collections['combos'] -%}
-          <a href="/collections/combos" class="aa-drawer__tile">
-            <span class="aa-drawer__tile-circle">
-              {%- if aa_combos.image -%}{{ aa_combos.image | image_url: width: 160 | image_tag: loading: 'lazy', width: 80, height: 80, class: 'aa-drawer__tile-img', alt: 'Combos' }}{%- else -%}<span class="aa-drawer__tile-placeholder">C</span>{%- endif -%}
-            </span>
-            <span class="aa-drawer__tile-label">Combos</span>
-          </a>
-        </div>
+                  </div>
 
         {%- comment -%} ====== Section 2: Shop By Aura (colored pills) ====== {%- endcomment -%}
         {%- liquid
@@ -387,32 +350,32 @@
 
         <h2 class="aa-drawer__title aa-orn aa-st aa-s2"><i aria-hidden="true">&#10022;</i><span>Shop By Aura</span><i aria-hidden="true">&#10022;</i></h2>
         <div class="aa-drawer__purpose aa-st aa-s2">
-          <a href="/collections/love-1" class="aa-drawer__purpose-tile aa-purpose--love">
+          <a href="/collections/purpose-love-relationships" class="aa-drawer__purpose-tile aa-purpose--love">
             <span class="aa-drawer__purpose-img-wrap">
-              {%- if collections['love-1'].image -%}
-                <img src="{{ collections['love-1'].image | image_url: width: 280 }}" alt="For Love" class="aa-drawer__purpose-img" loading="lazy">
-              {%- elsif collections['love-1'].featured_image -%}
-                <img src="{{ collections['love-1'].featured_image | image_url: width: 280 }}" alt="For Love" class="aa-drawer__purpose-img" loading="lazy">
+              {%- if collections['purpose-love-relationships'].image -%}
+                <img src="{{ collections['purpose-love-relationships'].image | image_url: width: 280 }}" alt="For Love" class="aa-drawer__purpose-img" loading="lazy">
+              {%- elsif collections['purpose-love-relationships'].featured_image -%}
+                <img src="{{ collections['purpose-love-relationships'].featured_image | image_url: width: 280 }}" alt="For Love" class="aa-drawer__purpose-img" loading="lazy">
               {%- else -%}
                 <span class="aa-drawer__purpose-label" aria-hidden="true">♥</span>
               {%- endif -%}
             </span>
             <span class="aa-drawer__purpose-label">For Love</span>
           </a>
-          <a href="/collections/health" class="aa-drawer__purpose-tile aa-purpose--health">
+          <a href="/collections/purpose-health-wellness" class="aa-drawer__purpose-tile aa-purpose--health">
             <span class="aa-drawer__purpose-img-wrap">
-              {%- if collections['health'].featured_image -%}
-                <img src="{{ collections['health'].featured_image | image_url: width: 280 }}" alt="For Health" class="aa-drawer__purpose-img" loading="lazy">
+              {%- if collections['purpose-health-wellness'].featured_image -%}
+                <img src="{{ collections['purpose-health-wellness'].featured_image | image_url: width: 280 }}" alt="For Health" class="aa-drawer__purpose-img" loading="lazy">
               {%- else -%}
                 <img src="https://cdn.shopify.com/s/files/1/0938/8843/3134/files/emerald-necklace.jpg" alt="For Health" class="aa-drawer__purpose-img" loading="lazy">
               {%- endif -%}
             </span>
             <span class="aa-drawer__purpose-label">For Health</span>
           </a>
-          <a href="/collections/wealth" class="aa-drawer__purpose-tile aa-purpose--success">
+          <a href="/collections/purpose-wealth-prosperity" class="aa-drawer__purpose-tile aa-purpose--success">
             <span class="aa-drawer__purpose-img-wrap">
-              {%- if collections['wealth'].featured_image -%}
-                <img src="{{ collections['wealth'].featured_image | image_url: width: 280 }}" alt="For Wealth" class="aa-drawer__purpose-img" loading="lazy">
+              {%- if collections['purpose-wealth-prosperity'].featured_image -%}
+                <img src="{{ collections['purpose-wealth-prosperity'].featured_image | image_url: width: 280 }}" alt="For Wealth" class="aa-drawer__purpose-img" loading="lazy">
               {%- else -%}
                 <img src="https://cdn.shopify.com/s/files/1/0938/8843/3134/files/sapphire-ring.jpg" alt="For Wealth" class="aa-drawer__purpose-img" loading="lazy">
               {%- endif -%}
@@ -530,7 +493,7 @@
   }
   .aa-drawer__title:first-of-type { margin-top: 6px !important; }
 
-  /* === Categories: 4-column tile grid (compact for 86vw drawer) === */
+  /* === Categories: titled sections, each a 4-column tile grid === */
   .aa-drawer__grid {
     display: grid !important;
     grid-template-columns: repeat(4, 1fr) !important;
@@ -538,6 +501,30 @@
     margin-bottom: 22px !important;
     padding: 0 !important;
   }
+  .aa-drawer__cats { display: block !important; margin-bottom: 22px !important; padding: 0 !important; }
+  .aa-drawer__sec {
+    display: flex !important; align-items: center !important; gap: 10px !important;
+    margin: 20px 0 12px !important;
+    font-family: 'Jost', system-ui, sans-serif !important;
+    font-size: 11px !important; font-weight: 800 !important;
+    letter-spacing: 0.13em !important; text-transform: uppercase !important;
+    color: #4A1942 !important;
+  }
+  .aa-drawer__sec::after {
+    content: ''; flex: 1; height: 1px;
+    background: linear-gradient(90deg, rgba(74, 25, 66, 0.28), rgba(74, 25, 66, 0));
+  }
+  .aa-drawer__secgrid {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 16px 4px !important;
+  }
+  /* plain top-level links (e.g. Astro Calculator): quiet full-width row */
+  .aa-drawer__cats > .aa-drawer__tile {
+    flex-direction: row !important; justify-content: flex-start !important;
+    gap: 12px !important; margin-top: 18px !important;
+  }
+  .aa-drawer__cats > .aa-drawer__tile .aa-drawer__tile-circle { width: 40px !important; height: 40px !important; }
   .aa-drawer__tile {
     display: flex !important;
     flex-direction: column !important;
