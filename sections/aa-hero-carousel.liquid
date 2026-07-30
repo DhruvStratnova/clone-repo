@@ -145,6 +145,9 @@
         var startX = null, dragging = false, clickBlock = false;
         track.addEventListener('pointerdown', function (e) {
           startX = e.clientX; dragging = false; paused = true;
+          /* Capture so pointerup/pointercancel ALWAYS land back here and reset
+             paused, even if the finger lifts off the carousel. */
+          try { track.setPointerCapture(e.pointerId); } catch (_) {}
         }, { passive: true });
         track.addEventListener('pointermove', function (e) {
           if (startX === null) return;
@@ -176,8 +179,13 @@
           if (clickBlock) { e.preventDefault(); e.stopPropagation(); }
         }, true);
 
-        root.addEventListener('mouseenter', function () { paused = true; });
-        root.addEventListener('mouseleave', function () { paused = false; });
+        /* Hover-pause ONLY on real mouse devices. On touch, a synthesized
+           mouseenter fired on tap/swipe with no matching mouseleave, which left
+           paused=true forever and froze the carousel on one slide. */
+        if (window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+          root.addEventListener('mouseenter', function () { paused = true; });
+          root.addEventListener('mouseleave', function () { paused = false; });
+        }
 
         paint();
         arm();

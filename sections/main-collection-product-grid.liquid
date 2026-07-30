@@ -169,6 +169,17 @@
       </form>
     </div> {% endcomment %}
     <div class="{% if section.settings.filter_type == 'vertical' %} facets-vertical page-width{% endif %}">
+      {%- comment -%} Critical closed-state CSS, inline so it applies on first paint.
+        aa-filter.css is a body-level <link>; on Turbo SPA navigation Turbo paints
+        the swapped body before that stylesheet loads, so every dropdown panel
+        flashed open (all checkboxes visible). Hiding panels here (same opacity/
+        visibility mechanism aa-filter.css uses) kills that flash without touching
+        the open toggle. {%- endcomment -%}
+      <style>
+        .aa-fltr{display:flex;flex-wrap:wrap;align-items:center;gap:8px 6px}
+        .aa-fltr__panel{position:absolute;opacity:0;visibility:hidden}
+        .aa-fltr__grp.open .aa-fltr__panel{opacity:1;visibility:visible}
+      </style>
       {{ 'aa-filter.css' | asset_url | stylesheet_tag }}
       <script src="{{ 'aa-filter.js' | asset_url }}" defer="defer"></script>
       {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
