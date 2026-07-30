@@ -71,9 +71,9 @@
                   -%}
                   <aside class="aa-rail" role="tablist">
                     {%- if aa_mode == 'mukhi' -%}
-                      <button type="button" class="aa-rail__item on" data-i="0"><span>Shop by Mukhi</span></button>
+                      <a href="{{ link.url }}" class="aa-rail__item on" data-i="0"><span>Shop by Mukhi</span></a>
                     {%- elsif aa_mode == 'cards' -%}
-                      <button type="button" class="aa-rail__item on" data-i="0"><span>Navratna &middot; by Planet</span></button>
+                      <a href="{{ link.url }}" class="aa-rail__item on" data-i="0"><span>Navratna &middot; by Planet</span></a>
                     {%- else -%}
                       {%- for cl in link.links -%}
                         {%- liquid
@@ -87,7 +87,7 @@
                             assign rimg = cl.object.products.first.featured_image
                           endif
                         -%}
-                        <button type="button" class="aa-rail__item{% if forloop.first %} on{% endif %}" data-i="{{ forloop.index0 }}">
+                        <a href="{{ cl.url }}" class="aa-rail__item{% if forloop.first %} on{% endif %}" data-i="{{ forloop.index0 }}">
                           {%- if aa_nav_icons contains rh -%}
                             {%- assign rif = 'aa-nav-' | append: rh | append: '.jpg' -%}
                             <img class="aa-rail__thumb" src="{{ rif | asset_img_url: '80x' }}" width="38" height="38" loading="lazy" alt="">
@@ -96,7 +96,7 @@
                           {%- endif -%}
                           <span>{{ cl.title | escape }}</span>
                           <svg class="aa-rail__chev" width="8" height="12" viewBox="0 0 8 12" fill="none" aria-hidden="true"><path d="M1.5 1.5L6.5 6L1.5 10.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                        </button>
+                        </a>
                       {%- endfor -%}
                     {%- endif -%}
                     <div class="aa-rail__util">
@@ -115,10 +115,17 @@
                         </div>
                       {%- endfor -%}
                     {%- elsif aa_mode == 'mukhi' -%}
-                      <div class="aa-pane on" data-i="0">
-                        <div class="aa-pane__chips">
-                          {%- for cl in link.links -%}<a href="{{ cl.url }}" class="aa-mchip">{{ cl.title | escape }}</a>{%- endfor -%}
-                        </div>
+                      <div class="aa-pane aa-pane--dense on" data-i="0">
+                        {%- for cl in link.links -%}
+                          <a href="{{ cl.url }}" class="aa-gcard">
+                            <span class="aa-gcard__img">
+                              {%- if cl.object.products.first.featured_image -%}
+                                {{ cl.object.products.first.featured_image | image_url: width: 240 | image_tag: loading: 'lazy', alt: cl.title }}
+                              {%- endif -%}
+                            </span>
+                            <span class="aa-gcard__lbl">{{ cl.title | escape }}</span>
+                          </a>
+                        {%- endfor -%}
                       </div>
                     {%- elsif aa_mode == 'cards' -%}
                       <div class="aa-pane on" data-i="0">
@@ -291,6 +298,8 @@
     .aa-nav__link .aa-chevron { margin-left: 2px; }
   }
   .aa-nav__item { list-style: none; }
+  /* Seasonal entry (Rakhi Special): maroon accent, like a festival tag */
+  .aa-nav__link[id*="rakhi"] , .aa-nav__link[id*="rakhi"] span { color: #B3123E !important; }
   .aa-nav__item > header-menu > details > summary,
   .aa-nav__item > .aa-nav__link { white-space: nowrap; }
   .aa-nav__link {
@@ -400,10 +409,13 @@
     z-index: 1000 !important;
     border-radius: 0 0 20px 20px !important;
     margin: 0 !important;
+    max-height: calc(100vh - 130px) !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain !important;
   }
   .aa-mega__inner {
-    max-width: 1150px; margin: 0 auto; padding: 0 40px;
-    display: grid; grid-template-columns: 270px 1fr; gap: 44px; align-items: start;
+    max-width: 1240px; margin: 0 auto; padding: 0 40px;
+    display: grid; grid-template-columns: 300px 1fr; gap: 48px; align-items: start;
   }
   /* Left rail (view modes / sub-categories) */
   .aa-rail { display: flex; flex-direction: column; gap: 4px; }
@@ -427,12 +439,16 @@
   .aa-rail__util a:hover { color: #4A1942 !important; }
   /* Right panes */
   .aa-pane { display: none; }
-  .aa-pane.on { display: flex; flex-wrap: wrap; gap: 24px 18px; align-content: flex-start; }
+  .aa-pane.on { display: flex; flex-wrap: wrap; gap: 20px 16px; align-content: flex-start; }
+  .aa-pane--dense.on { gap: 16px 14px; }
+  .aa-pane--dense .aa-gcard, .aa-pane--dense .aa-gcard:visited { width: 112px; }
+  .aa-pane--dense .aa-gcard__img { width: 112px; height: 112px; border-radius: 14px; }
+  .aa-pane--dense .aa-gcard__lbl { font-size: 12.5px; }
   .aa-pane__chips { display: flex; flex-wrap: wrap; gap: 9px; }
   /* Cards (gems / products) */
-  .aa-gcard, .aa-gcard:visited { display: flex; flex-direction: column; gap: 8px; width: 158px; text-decoration: none !important; }
+  .aa-gcard, .aa-gcard:visited { display: flex; flex-direction: column; gap: 8px; width: 150px; text-decoration: none !important; }
   .aa-gcard__img {
-    display: block; width: 158px; height: 158px; border-radius: 18px; overflow: hidden; background: #FFFFFF;
+    display: block; width: 150px; height: 150px; border-radius: 18px; overflow: hidden; background: #FFFFFF;
     border: 1px solid rgba(36, 16, 25, 0.07); box-shadow: 0 2px 10px rgba(74, 43, 46, 0.07);
     transition: box-shadow 0.18s, transform 0.18s;
   }
@@ -563,13 +579,13 @@
 </script>
 
 <script>
-  /* Rail switcher: left rail items swap the visible right pane. Delegated once — Turbo-safe. */
+  /* Rail: HOVER switches the visible pane, CLICK navigates to the collection.
+     Delegated once — Turbo-safe. */
   if (!window.__aaRailBound) {
     window.__aaRailBound = true;
-    document.addEventListener('click', function (e) {
+    document.addEventListener('mouseover', function (e) {
       var t = e.target.closest('.aa-rail__item');
-      if (!t) return;
-      e.preventDefault();
+      if (!t || t.classList.contains('on')) return;
       var inner = t.closest('.aa-mega__inner');
       if (!inner) return;
       var i = t.getAttribute('data-i');
