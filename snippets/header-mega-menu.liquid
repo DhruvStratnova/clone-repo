@@ -276,13 +276,14 @@
      the old 80px shift pushed the row over the header icons and clipped it) === */
   .aa-nav__list {
     display: flex !important;
-    flex-wrap: nowrap !important;
+    /* all 14 titles live in the bar: wrap into two centered rows (Astrotalk band) */
+    flex-wrap: wrap !important;
     justify-content: center !important;
     align-items: center !important;
-    gap: 0 26px !important;
+    gap: 7px 24px !important;
     margin: 0 !important;
     padding: 0 !important;
-    white-space: nowrap !important;
+    max-width: 1000px;
   }
   /* Two-deck header gives the nav its own full row: let it breathe */
   @media screen and (min-width: 990px) {
