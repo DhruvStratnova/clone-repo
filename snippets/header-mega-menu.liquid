@@ -281,10 +281,12 @@
        No column tracks — short words never get stretched spacing. */
     display: flex !important;
     flex-wrap: wrap !important;
-    justify-content: center !important;
+    /* the Astrotalk difference: rows DISTRIBUTE across the full width between
+       logo and icons (both rows share the same edges) — not a centered lump */
+    justify-content: space-between !important;
     align-items: center !important;
-    /* measured off astrotalk.store: 40px horizontal gaps, rows nearly touching */
-    gap: 3px 40px !important;
+    width: 100% !important;
+    gap: 3px 18px !important;
     margin: 0 !important;
     padding: 0 !important;
   }
