@@ -387,7 +387,8 @@
             "heading": "The Energy of Real Bracelets",
             "cta": "Shop Bracelets",
             "url": "shopify://collections/bracelets",
-            "mobile_focus": "left"
+            "mobile_focus": "left",
+            "image_asset_mobile": "aa-hero-bracelets-mobile.webp"
           }
         },
         "slide_2": {
@@ -398,7 +399,8 @@
             "heading": "Shiva-Blessed Rudraksha",
             "cta": "Explore Rudraksha",
             "url": "shopify://collections/rudrasha",
-            "mobile_focus": "right"
+            "mobile_focus": "right",
+            "image_asset_mobile": "aa-hero-rudraksha-mobile.webp"
           }
         },
         "slide_3": {
@@ -409,7 +411,8 @@
             "heading": "Certified Natural Gemstones",
             "cta": "Shop Gemstones",
             "url": "shopify://collections/gemstones",
-            "mobile_focus": "right"
+            "mobile_focus": "right",
+            "image_asset_mobile": "aa-hero-gemstones-mobile.webp"
           }
         },
         "slide_4": {
@@ -420,7 +423,8 @@
             "heading": "Wear Your Constellation",
             "cta": "Explore Zodiac",
             "url": "shopify://collections/rashi-bracelets",
-            "mobile_focus": "left"
+            "mobile_focus": "left",
+            "image_asset_mobile": "aa-hero-zodiac-mobile.webp"
           }
         },
         "slide_5": {
@@ -431,7 +435,8 @@
             "heading": "Jap Malas for Daily Practice",
             "cta": "Shop Malas",
             "url": "shopify://collections/mala",
-            "mobile_focus": "left"
+            "mobile_focus": "left",
+            "image_asset_mobile": "aa-hero-malas-mobile.webp"
           }
         },
         "slide_6": {
@@ -442,7 +447,8 @@
             "heading": "Unlock Your Cosmic Potential",
             "cta": "Shop Crystals",
             "url": "shopify://collections/crystals-wonders",
-            "mobile_focus": "right"
+            "mobile_focus": "right",
+            "image_asset_mobile": "aa-hero-crystals-mobile.webp"
           }
         },
         "slide_7": {
@@ -453,7 +459,8 @@
             "heading": "Energised Crystal Pendants",
             "cta": "Shop Pendants",
             "url": "shopify://collections/pendants",
-            "mobile_focus": "center"
+            "mobile_focus": "center",
+            "image_asset_mobile": "aa-hero-pendants-mobile.webp"
           }
         },
         "slide_8": {
@@ -464,7 +471,8 @@
             "heading": "Black Tourmaline Anklets",
             "cta": "Explore Anklets",
             "url": "shopify://collections/anklets",
-            "mobile_focus": "left"
+            "mobile_focus": "left",
+            "image_asset_mobile": "aa-hero-anklets-mobile.webp"
           }
         },
         "slide_9": {
@@ -475,7 +483,8 @@
             "heading": "Amethyst Crystal Trees",
             "cta": "Shop Crystal Trees",
             "url": "shopify://collections/vastu",
-            "mobile_focus": "left"
+            "mobile_focus": "left",
+            "image_asset_mobile": "aa-hero-crystal-trees-mobile.webp"
           }
         },
         "slide_10": {
@@ -486,7 +495,8 @@
             "heading": "Wear Confidence",
             "cta": "Shop Collection",
             "url": "shopify://collections/remedies-bracelets",
-            "mobile_focus": "left"
+            "mobile_focus": "left",
+            "image_asset_mobile": "aa-hero-remedies-mobile.webp"
           }
         },
         "slide_11": {
@@ -497,7 +507,8 @@
             "heading": "Modern Elegance, Divya Mani",
             "cta": "Explore Mani",
             "url": "shopify://collections/mani",
-            "mobile_focus": "left"
+            "mobile_focus": "left",
+            "image_asset_mobile": "aa-hero-mani-mobile.webp"
           }
         },
         "slide_12": {
@@ -508,11 +519,25 @@
             "heading": "Guardian Vastu Collection",
             "cta": "Discover Vastu",
             "url": "shopify://collections/vastu",
-            "mobile_focus": "left"
+            "mobile_focus": "left",
+            "image_asset_mobile": "aa-hero-vastu-mobile.webp"
+          }
+        },
+        "slide_rakhi": {
+          "type": "slide",
+          "settings": {
+            "image_asset": "aa-hero-rakhi.jpg",
+            "image_asset_mobile": "aa-hero-rakhi-mobile.webp",
+            "kicker": "Celebrate the Bond",
+            "heading": "Raksha Bandhan",
+            "cta": "Explore the Rakhi Collection",
+            "url": "shopify://collections/crystal-rakhi",
+            "mobile_focus": "center"
           }
         }
       },
       "block_order": [
+        "slide_rakhi",
         "slide_1",
         "slide_2",
         "slide_3",

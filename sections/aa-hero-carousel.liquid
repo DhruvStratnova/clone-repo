@@ -13,19 +13,27 @@
     <div class="aa-hc__belt" data-aa-hc-belt>
       {%- for block in section.blocks -%}
         {%- assign img = block.settings.image_asset | strip -%}
-        <a class="aa-hc__slide"
+        {%- assign img_m = block.settings.image_asset_mobile | strip -%}
+        <a class="aa-hc__slide{% if img_m != blank %} aa-hc__slide--hasmobile{% endif %}"
            href="{{ block.settings.url | default: '/' }}"
            data-aa-hc-slide
            aria-label="{{ block.settings.heading | escape }}"
            {{ block.shopify_attributes }}>
-          <img
-            class="aa-hc__img aa-hc__img--{{ block.settings.mobile_focus | default: 'center' }}"
-            src="{{ img | asset_img_url: '1500x' }}"
-            srcset="{{ img | asset_img_url: '750x' }} 750w, {{ img | asset_img_url: '1100x' }} 1100w, {{ img | asset_img_url: '1500x' }} 1500w, {{ img | asset_img_url: '2000x' }} 2000w, {{ img | asset_img_url: '2520x' }} 2520w"
-            sizes="100vw"
-            alt="{{ block.settings.heading | escape }}"
-            width="2520" height="1080"
-            {% if forloop.first %}loading="eager" fetchpriority="high"{% else %}loading="lazy" decoding="async"{% endif %}>
+          <picture>
+            {%- if img_m != blank -%}
+              <source media="(max-width: 749px)"
+                srcset="{{ img_m | asset_img_url: '600x' }} 600w, {{ img_m | asset_img_url: '900x' }} 900w, {{ img_m | asset_img_url: '1200x' }} 1200w"
+                sizes="100vw" width="1200" height="1500">
+            {%- endif -%}
+            <img
+              class="aa-hc__img aa-hc__img--{{ block.settings.mobile_focus | default: 'center' }}"
+              src="{{ img | asset_img_url: '1500x' }}"
+              srcset="{{ img | asset_img_url: '750x' }} 750w, {{ img | asset_img_url: '1100x' }} 1100w, {{ img | asset_img_url: '1500x' }} 1500w, {{ img | asset_img_url: '2000x' }} 2000w, {{ img | asset_img_url: '2520x' }} 2520w"
+              sizes="100vw"
+              alt="{{ block.settings.heading | escape }}"
+              width="2520" height="1080"
+              {% if forloop.first %}loading="eager" fetchpriority="high"{% else %}loading="lazy" decoding="async"{% endif %}>
+          </picture>
         </a>
       {%- endfor -%}
     </div>
@@ -82,8 +90,10 @@
 @media (prefers-reduced-motion: reduce) { .aa-hc__seg.is-active .aa-hc__fill { animation: none; width: 100%; } }
 
 @media screen and (max-width: 749px) {
-  .aa-hc__progress { bottom: 6px; }
+  .aa-hc__progress { bottom: 10px; }
   .aa-hc__seg { width: 12px; height: 2.5px; }
+  /* "Long" mobile: show the dedicated 4:5 portrait banner full, not the cropped 21:9 strip */
+  .aa-hc__slide--hasmobile .aa-hc__img { aspect-ratio: 1200 / 1500; object-position: center; }
 }
 {% endstyle %}
 
@@ -183,7 +193,7 @@
 {% schema %}
 {
   "name": "AA Hero Carousel",
-  "max_blocks": 12,
+  "max_blocks": 13,
   "settings": [
     { "type": "range", "id": "autoplay_ms", "min": 3000, "max": 9500, "step": 500, "default": 6000, "label": "Autoplay interval (ms)" }
   ],
@@ -192,7 +202,8 @@
       "type": "slide",
       "name": "Slide",
       "settings": [
-        { "type": "text", "id": "image_asset", "label": "Asset filename (in /assets)" },
+        { "type": "text", "id": "image_asset", "label": "Asset filename (desktop 21:9, in /assets)" },
+        { "type": "text", "id": "image_asset_mobile", "label": "Mobile asset filename (4:5, in /assets)" },
         { "type": "text", "id": "kicker", "label": "Mobile kicker" },
         { "type": "text", "id": "heading", "label": "Mobile heading" },
         { "type": "text", "id": "cta", "label": "Mobile CTA label" },
