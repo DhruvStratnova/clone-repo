@@ -29,6 +29,7 @@
           continue
         endif
       -%}
+      {%- if forloop.index == 8 -%}<li class="aa-nav__rowbreak" aria-hidden="true"></li>{%- endif -%}
       <li class="aa-nav__item">
         {%- if link.links != blank -%}
           <header-menu>
@@ -275,17 +276,18 @@
   /* === Aura AI nav — compact, truly centered (no margin hacks: with 8 pillars
      the old 80px shift pushed the row over the header icons and clipped it) === */
   .aa-nav__list {
-    /* Deliberate 7-column grid: 14 titles = two BALANCED rows of 7 with
-       aligned columns (Astrotalk fundamentals), not a ragged flex wrap. */
-    display: grid !important;
-    grid-template-columns: repeat(7, auto) !important;
+    /* Two independently centered rows with ONE consistent gap (the Astrotalk
+       look): a forced break after item 7 splits 14 titles into balanced rows.
+       No column tracks — short words never get stretched spacing. */
+    display: flex !important;
+    flex-wrap: wrap !important;
     justify-content: center !important;
-    justify-items: center !important;
     align-items: center !important;
-    gap: 13px 38px !important;
+    gap: 12px 34px !important;
     margin: 0 !important;
     padding: 0 !important;
   }
+  .aa-nav__rowbreak { flex-basis: 100% !important; height: 0 !important; margin: 0 !important; padding: 0 !important; list-style: none; }
   .header__inline-menu,
   .header .header__inline-menu,
   header.header > .header__inline-menu {
