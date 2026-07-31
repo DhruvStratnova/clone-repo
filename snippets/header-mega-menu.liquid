@@ -486,9 +486,8 @@
      the full-width mega panels to their own nav item (spills off-screen). */
   details.aa-mega:has(> .aa-mega__panel--list) { position: relative; }
   .aa-mega__panel--list {
-    /* blends with the bar; -18px offsets the item padding so list text aligns
-       flush with the nav title */
-    left: -18px !important; right: auto !important;
+    /* the list BOX opens straight-aligned under the nav title */
+    left: 0 !important; right: auto !important;
     transform: none !important;
     width: max-content !important; min-width: 0 !important; max-width: 300px !important;
     padding: 6px 0 8px !important;
