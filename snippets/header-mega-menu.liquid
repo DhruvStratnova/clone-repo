@@ -209,10 +209,12 @@
         </header-menu>
       </li>
       {%- else -%}
+      {%- assign r2_href = link.url -%}
+      {%- if t_lower_r2 == 'gifting' -%}{%- assign r2_href = '/collections/gifting' -%}{%- endif -%}
       <li class="aa-nav__item aa-nav__item--link">
         <a
           id="HeaderMenu-{{ link.handle }}"
-          href="{{ link.url }}"
+          href="{{ r2_href }}"
           class="header__menu-item list-menu__item link link--text focus-inset aa-nav__link"
           {% if link.current or link.child_active %}aria-current="page"{% endif %}
         >

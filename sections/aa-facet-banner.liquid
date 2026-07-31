@@ -13,6 +13,9 @@
   elsif h contains 'planet'
     assign cat = 'planet'
     assign kicker = 'Shop by Planet'
+  elsif h == 'gifting'
+    assign cat = 'gifting'
+    assign kicker = 'Curated Gifts'
   endif
   assign bg = 'aa-facet-bg-' | append: h | append: '.jpg'
   assign tagline = collection.metafields.custom.banner_tagline
