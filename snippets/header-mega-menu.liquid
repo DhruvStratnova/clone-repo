@@ -127,7 +127,7 @@
                                 {{ cl.object.products.first.featured_image | image_url: width: 300 | image_tag: loading: 'lazy', alt: cl.title }}
                               {%- endif -%}
                             </span>
-                            <span class="aa-gcard__lbl">{{ cl.title | split: '\u00b7' | first | strip | escape }}</span>
+                            <span class="aa-gcard__lbl">{{ cl.title | split: '·' | first | strip | escape }}</span>
                           </a>
                         {%- endfor -%}
                       </div>
