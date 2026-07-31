@@ -40,11 +40,19 @@
   .aa-fb__title { font-family: 'Marcellus', Georgia, serif; font-weight: 400; font-size: clamp(38px, 6vw, 74px); line-height: 1.02; color: #241019; margin: 0 0 16px; }
   .aa-fb__sub { font-family: 'Jost', system-ui, sans-serif; font-weight: 400; font-size: clamp(15px, 1.6vw, 19px); line-height: 1.5; color: #5A4A42; margin: 0; max-width: 450px; }
   @media (max-width: 749px) {
-    .aa-fb { aspect-ratio: 1080 / 900; }
-    .aa-fb__bg { object-position: center 28%; }
-    .aa-fb__inner { align-items: flex-end; padding-bottom: 34px; }
-    .aa-fb__text { max-width: 100%; text-align: center; }
-    .aa-fb__sub { margin: 0 auto; }
+    /* Portrait crop that keeps the motif (right side of the art) visible up top,
+       with a cream scrim fading in at the bottom so the centred text stays legible. */
+    .aa-fb { aspect-ratio: 1000 / 1120; }
+    .aa-fb__bg { object-position: 76% center; }
+    .aa-fb::after {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background: linear-gradient(to bottom, rgba(247,240,227,0) 38%, rgba(247,240,227,0.86) 72%, rgba(247,240,227,0.98) 100%);
+    }
+    .aa-fb__inner { position: relative; z-index: 2; align-items: flex-end; padding-bottom: 30px; }
+    .aa-fb__text { max-width: 100%; text-align: center; padding: 0 18px; }
+    .aa-fb__kicker { margin-bottom: 10px; }
+    .aa-fb__title { font-size: clamp(40px, 12.5vw, 60px); margin-bottom: 12px; }
+    .aa-fb__sub { margin: 0 auto; max-width: 340px; font-size: 15px; }
   }
 {% endstyle %}
 
