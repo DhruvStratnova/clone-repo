@@ -127,7 +127,7 @@
                                 {{ cl.object.products.first.featured_image | image_url: width: 300 | image_tag: loading: 'lazy', alt: cl.title }}
                               {%- endif -%}
                             </span>
-                            <span class="aa-gcard__lbl">{{ cl.title | escape }}</span>
+                            <span class="aa-gcard__lbl">{{ cl.title | split: '\u00b7' | first | strip | escape }}</span>
                           </a>
                         {%- endfor -%}
                       </div>
@@ -496,9 +496,9 @@
   /* Capped width so cards wrap into balanced multiple rows (e.g. 14 mukhi = 7+7,
      not 13+1). Centered. */
   .aa-panes--full .aa-pane.on { display: flex; flex-wrap: wrap; justify-content: center; align-content: flex-start; gap: 18px 16px; max-width: 640px; margin: 0 auto; }
-  .aa-panes--full .aa-pane--dense.on { display: flex; flex-wrap: wrap; justify-content: center; align-content: flex-start; gap: 16px 14px; max-width: 620px; margin: 0 auto; }
+  .aa-panes--full .aa-pane--dense.on { display: flex; flex-wrap: wrap; justify-content: center; align-content: flex-start; gap: 18px 16px; max-width: 780px; margin: 0 auto; }
   .aa-panes--full .aa-gcard { width: 84px; }
-  .aa-panes--full .aa-pane--dense .aa-gcard { width: 72px; }
+  .aa-panes--full .aa-pane--dense .aa-gcard { width: 92px; }
   .aa-panes--full .aa-gcard__img { border-radius: 12px; }
   .aa-panes--full .aa-gcard__lbl { font-size: 11.5px; }
   /* strike-through compare-at on cards */
@@ -544,7 +544,7 @@
   .aa-gcard__lbl {
     font-family: 'Jost', system-ui, sans-serif; font-size: 13.5px; font-weight: 600; color: #241019;
     text-align: center; line-height: 1.3;
-    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
   }
   .aa-gcard__price { font-size: 12.5px; font-weight: 700; color: #9A6B18; text-align: center; }
   /* Trust strip: black left-to-right running marquee */
