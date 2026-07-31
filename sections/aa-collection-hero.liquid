@@ -4,6 +4,10 @@
 {%- endcomment -%}
 
 {%- assign img = section.settings.image_asset | strip -%}
+{%- if img == blank -%}
+  {%- comment -%} auto mode: derive the banner from the collection handle {%- endcomment -%}
+  {%- assign img = 'aa-banner-' | append: collection.handle | append: '.jpg' -%}
+{%- endif -%}
 {%- if img != blank -%}
 <div class="aa-ch">
   <img
