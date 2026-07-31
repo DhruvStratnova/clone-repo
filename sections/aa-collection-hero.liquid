@@ -1,28 +1,39 @@
 {%- comment -%}
   aa-collection-hero: full-bleed collection banner from the 2026-07 program.
-  Same image at all viewports (art text baked into the banner).
+  Desktop banner at all viewports by default; optional separate mobile banner.
 {%- endcomment -%}
 
 {%- assign img = section.settings.image_asset | strip -%}
+{%- assign imgm = section.settings.image_asset_mobile | strip -%}
 {%- if img == blank -%}
   {%- comment -%} auto mode: derive the banner from the collection handle {%- endcomment -%}
   {%- assign img = 'aa-banner-' | append: collection.handle | append: '.jpg' -%}
 {%- endif -%}
 {%- if img != blank -%}
 <div class="aa-ch">
-  <img
-    class="aa-ch__img"
-    src="{{ img | asset_img_url: '1500x' }}"
-    srcset="{{ img | asset_img_url: '750x' }} 750w, {{ img | asset_img_url: '1100x' }} 1100w, {{ img | asset_img_url: '1500x' }} 1500w, {{ img | asset_img_url: '2000x' }} 2000w, {{ img | asset_img_url: '2520x' }} 2520w"
-    sizes="100vw"
-    alt="{{ collection.title | escape }}"
-    width="2520" height="1080"
-    loading="eager" fetchpriority="high">
+  <picture>
+    {%- if imgm != blank -%}
+    <source media="(max-width: 749px)"
+      srcset="{{ imgm | asset_img_url: '600x' }} 600w, {{ imgm | asset_img_url: '900x' }} 900w, {{ imgm | asset_img_url: '1200x' }} 1200w"
+      sizes="100vw">
+    {%- endif -%}
+    <img
+      class="aa-ch__img{% if imgm != blank %} aa-ch__img--has-mobile{% endif %}"
+      src="{{ img | asset_img_url: '1500x' }}"
+      srcset="{{ img | asset_img_url: '750x' }} 750w, {{ img | asset_img_url: '1100x' }} 1100w, {{ img | asset_img_url: '1500x' }} 1500w, {{ img | asset_img_url: '2000x' }} 2000w, {{ img | asset_img_url: '2520x' }} 2520w"
+      sizes="100vw"
+      alt="{{ collection.title | escape }}"
+      width="2520" height="1080"
+      loading="eager" fetchpriority="high">
+  </picture>
 </div>
 
 {% style %}
 .aa-ch { line-height: 0; }
 .aa-ch__img { width: 100%; height: auto; aspect-ratio: 2520 / 1080; object-fit: cover; }
+@media (max-width: 749px) {
+  .aa-ch__img--has-mobile { aspect-ratio: 4 / 5; }
+}
 {% endstyle %}
 {%- endif -%}
 
@@ -30,7 +41,8 @@
 {
   "name": "AA Collection Hero",
   "settings": [
-    { "type": "text", "id": "image_asset", "label": "Asset filename (in /assets)" }
+    { "type": "text", "id": "image_asset", "label": "Asset filename (in /assets)" },
+    { "type": "text", "id": "image_asset_mobile", "label": "Mobile asset filename (optional, in /assets)" }
   ],
   "presets": [{ "name": "AA Collection Hero" }]
 }
