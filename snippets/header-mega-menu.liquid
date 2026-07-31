@@ -72,12 +72,9 @@
                       assign aa_mode = 'cards'
                     endif
                   -%}
-                  {%- unless aa_mode == 'grid' -%}
+                  {%- unless aa_mode == 'grid' or aa_mode == 'mukhi' or aa_mode == 'cards' -%}
                   <aside class="aa-rail" role="tablist">
-                    {%- if aa_mode == 'mukhi' -%}
-                      <a href="{{ link.url }}" class="aa-rail__item on" data-i="0"><span>Shop by Mukhi</span></a>
-                    {%- elsif aa_mode == 'cards' -%}
-                      <a href="{{ link.url }}" class="aa-rail__item on" data-i="0"><span>Navratna &middot; by Planet</span></a>
+                    {%- if false -%}
                     {%- else -%}
                       {%- for cl in link.links -%}
                         {%- liquid
@@ -105,7 +102,7 @@
                     {%- endif -%}
                   </aside>
                   {%- endunless -%}
-                  <div class="aa-panes{% if aa_mode == 'grid' %} aa-panes--full{% endif %}">
+                  <div class="aa-panes{% if aa_mode == 'grid' or aa_mode == 'mukhi' or aa_mode == 'cards' %} aa-panes--full{% endif %}">
                     {%- if aa_mode == 'grid' -%}
                       <div class="aa-pane on" data-i="0">
                         {%- for p in link.object.products limit: 8 -%}
@@ -471,6 +468,7 @@
   /* single-category panels: full-width product grid, no rail */
   .aa-mega__inner:has(> .aa-panes--full) { grid-template-columns: 1fr; }
   .aa-panes--full .aa-pane.on { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+  .aa-panes--full .aa-pane--dense.on { grid-template-columns: repeat(auto-fill, minmax(116px, 1fr)); }
   /* Right panes */
   .aa-pane { display: none; }
   /* fluid grid: cards stretch to use the full pane width at any viewport */
