@@ -1,0 +1,54 @@
+{%- comment -%}
+  aa-facet-banner: dynamic hero for Rashi / Planet / Purpose collection pages.
+  Background chosen by the collection handle prefix; heading = collection title;
+  subtext = collection metafield custom.banner_tagline.
+{%- endcomment -%}
+{%- liquid
+  assign h = collection.handle
+  assign cat = 'purpose'
+  assign kicker = 'Shop by Purpose'
+  if h contains 'rashi'
+    assign cat = 'rashi'
+    assign kicker = 'Shop by Rashi'
+  elsif h contains 'planet'
+    assign cat = 'planet'
+    assign kicker = 'Shop by Planet'
+  endif
+  assign bg = 'aa-facet-bg-' | append: cat | append: '.jpg'
+  assign tagline = collection.metafields.custom.banner_tagline
+-%}
+<div class="aa-fb">
+  <img class="aa-fb__bg" src="{{ bg | asset_img_url: '2400x' }}" srcset="{{ bg | asset_img_url: '1200x' }} 1200w, {{ bg | asset_img_url: '1800x' }} 1800w, {{ bg | asset_img_url: '2400x' }} 2400w" sizes="100vw" alt="" loading="eager" fetchpriority="high" width="2400" height="960">
+  <div class="aa-fb__inner page-width">
+    <div class="aa-fb__text">
+      <p class="aa-fb__kicker">{{ kicker }}</p>
+      <h1 class="aa-fb__title">{{ collection.title | escape }}</h1>
+      {%- if tagline != blank -%}<p class="aa-fb__sub">{{ tagline | escape }}</p>{%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% style %}
+  .aa-fb { position: relative; width: 100%; aspect-ratio: 2400 / 820; overflow: hidden; line-height: 0; }
+  .aa-fb__bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center right; }
+  .aa-fb__inner { position: relative; height: 100%; display: flex; align-items: center; }
+  .aa-fb__text { max-width: 540px; padding: 0 12px; }
+  .aa-fb__kicker { font-family: 'Jost', system-ui, sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.24em; text-transform: uppercase; color: #9A6B18; margin: 0 0 14px; line-height: 1; }
+  .aa-fb__title { font-family: 'Marcellus', Georgia, serif; font-weight: 400; font-size: clamp(38px, 6vw, 74px); line-height: 1.02; color: #241019; margin: 0 0 16px; }
+  .aa-fb__sub { font-family: 'Jost', system-ui, sans-serif; font-weight: 400; font-size: clamp(15px, 1.6vw, 19px); line-height: 1.5; color: #5A4A42; margin: 0; max-width: 450px; }
+  @media (max-width: 749px) {
+    .aa-fb { aspect-ratio: 1080 / 900; }
+    .aa-fb__bg { object-position: center 28%; }
+    .aa-fb__inner { align-items: flex-end; padding-bottom: 34px; }
+    .aa-fb__text { max-width: 100%; text-align: center; }
+    .aa-fb__sub { margin: 0 auto; }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "AA Facet Banner",
+  "settings": [],
+  "presets": [{ "name": "AA Facet Banner" }]
+}
+{% endschema %}
