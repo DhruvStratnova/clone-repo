@@ -29,7 +29,7 @@
           continue
         endif
       -%}
-      {%- if forloop.index == 8 -%}<li class="aa-nav__rowbreak" aria-hidden="true"></li>{%- endif -%}
+      {%- if forloop.index == 7 -%}<li class="aa-nav__rowbreak" aria-hidden="true"></li>{%- endif -%}
       <li class="aa-nav__item">
         {%- if link.links != blank -%}
           <header-menu>
@@ -287,7 +287,7 @@
     justify-content: center !important;
     /* baseline: plain links and dropdown summaries sit on the same text line */
     align-items: baseline !important;
-    gap: 0 32px !important;
+    gap: 0 26px !important;
     margin: 0 auto !important;
     padding: 0 !important;
   }
@@ -327,11 +327,11 @@
     font-family: 'Manrope', sans-serif !important;
   }
   .aa-nav__link {
-    font-size: 16px !important;
+    font-size: 15px !important;
     font-weight: 400 !important;
     line-height: 1.25 !important;
     color: #241019 !important;
-    letter-spacing: 0.03em !important;
+    letter-spacing: 0.025em !important;
     transition: color 0.18s ease !important;
     display: inline-flex !important;
     align-items: center !important;
