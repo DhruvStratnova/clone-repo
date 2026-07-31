@@ -252,11 +252,11 @@
     flex-wrap: wrap !important;
     /* 17 items, rows fill edge-to-edge: space-between with 9+8 per row keeps
        gaps moderate and leaves zero gutter beside the logo/icons */
-    justify-content: space-between !important;
+    justify-content: center !important;
     /* baseline: plain links and dropdown summaries sit on the same text line */
     align-items: baseline !important;
     width: 100% !important;
-    gap: 0 18px !important;
+    gap: 4px 34px !important;
     margin: 0 !important;
     padding: 0 !important;
   }
@@ -409,15 +409,53 @@
   }
   .aa-mega__inner {
     max-width: 1240px; margin: 0 auto; padding: 0 40px;
-    display: grid; grid-template-columns: 300px 1fr; gap: 48px; align-items: start;
+    display: block;
   }
-  /* Right panes */
+  /* Panes */
   .aa-pane { display: none; }
   /* fluid grid: cards stretch to use the full pane width at any viewport */
   .aa-pane.on { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 22px 18px; align-content: flex-start; }
   .aa-pane--dense.on { grid-template-columns: repeat(auto-fill, minmax(116px, 1fr)); gap: 16px 14px; }
   .aa-pane--dense .aa-gcard__img { border-radius: 14px; }
   .aa-pane--dense .aa-gcard__lbl { font-size: 12.5px; }
+  /* fixed card sizes, centered; fixed panel height with internal scroll */
+  .aa-panes--full { max-height: 485px; overflow-y: auto; overscroll-behavior: contain; padding-right: 8px; }
+  .aa-panes--full::-webkit-scrollbar { width: 8px; }
+  .aa-panes--full::-webkit-scrollbar-thumb { background: rgba(74, 25, 66, 0.18); border-radius: 8px; }
+  .aa-panes--full::-webkit-scrollbar-track { background: transparent; }
+  .aa-panes--full .aa-pane.on { grid-template-columns: repeat(auto-fill, 160px); justify-content: center; gap: 20px 16px; }
+  .aa-panes--full .aa-pane--dense.on { grid-template-columns: repeat(auto-fill, 112px); justify-content: center; gap: 16px 14px; }
+  /* strike-through compare-at on cards */
+  .aa-gcard__price s { color: #A99A8F; font-weight: 500; margin-left: 6px; }
+  /* View All pill in mega panels */
+  .aa-mega__viewall, .aa-mega__viewall:visited {
+    display: table; margin: 16px auto 0;
+    padding: 8px 24px; border: 1.4px solid rgba(74, 25, 66, 0.35); border-radius: 999px;
+    font-family: 'Marcellus', Georgia, serif; font-size: 14px; color: #4A1942 !important;
+    text-decoration: none !important; transition: all 0.15s ease;
+  }
+  .aa-mega__viewall:hover { background: #4A1942; color: #fff !important; border-color: #4A1942; }
+  /* Compact text-list flyout (By Purpose/Rashi/Planet) */
+  details.aa-mega:has(> .aa-mega__panel--list) { position: relative; }
+  .aa-mega__panel--list {
+    left: 0 !important; right: auto !important;
+    transform: none !important;
+    width: max-content !important; min-width: 0 !important; max-width: 300px !important;
+    padding: 6px 0 8px !important;
+    background: #FBF6EE !important;
+    border-radius: 0 0 12px 12px !important;
+    border-top: 0 !important;
+    box-shadow: 0 16px 26px rgba(74, 43, 46, 0.14) !important;
+    overflow: visible !important;
+    max-height: none !important;
+  }
+  .aa-mlist { list-style: none; margin: 0; padding: 0; text-align: left; }
+  .aa-mlist li > a {
+    display: block; padding: 6px 18px;
+    font-family: 'Marcellus', Georgia, serif; font-size: 14px; color: #241019;
+    text-align: left; text-decoration: none; white-space: nowrap; transition: background 0.12s, color 0.12s;
+  }
+  .aa-mlist li:hover > a { background: rgba(224, 50, 122, 0.06); color: #4A1942; }
   /* Cards (gems / products) */
   .aa-gcard, .aa-gcard:visited { display: flex; flex-direction: column; gap: 8px; width: auto; min-width: 0; text-decoration: none !important; }
   .aa-gcard__img {
