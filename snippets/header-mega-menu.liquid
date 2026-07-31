@@ -16,7 +16,7 @@
     Everything else renders as a plain STATIC link in ROW 2 — so dragging down
     to a row-1 panel never crosses another dropdown (fixes the hover cross-over).
   endcomment
-  assign hover_list = 'bracelets,rudraksha,gemstones,malas,wearables,combos' | split: ','
+  assign hover_list = 'bracelets,rudraksha,gemstones,wearables,combos,vastu & home' | split: ','
 -%}
 
 <nav class="header__inline-menu aa-nav">
@@ -297,7 +297,7 @@
     /* baseline: plain links and dropdown summaries sit on the same text line */
     align-items: baseline !important;
     width: 100% !important;
-    gap: 2px 26px !important;
+    gap: 6px 40px !important;
     margin: 0 !important;
     padding: 0 !important;
   }
@@ -311,8 +311,8 @@
   }
   /* Narrow desktop: gently tightened */
   @media screen and (min-width: 990px) and (max-width: 1279px) {
-    .aa-nav__list { gap: 3px 26px !important; }
-    .aa-nav__link { font-size: 13px !important; }
+    .aa-nav__list { gap: 4px 28px !important; }
+    .aa-nav__link { font-size: 14px !important; }
   }
   .aa-nav__item { list-style: none; line-height: 1.3 !important; }
   .aa-nav__item > header-menu > details > summary { margin-bottom: 0 !important; }
@@ -337,7 +337,7 @@
     font-family: 'Manrope', sans-serif !important;
   }
   .aa-nav__link {
-    font-size: 13.5px !important;
+    font-size: 15px !important;
     font-weight: 500 !important;
     line-height: 1.25 !important;
     color: #1D0F17 !important;
@@ -348,7 +348,7 @@
     gap: 6px !important;
     white-space: nowrap !important;
   }
-  .aa-nav__link[id*="rakhi"] { font-weight: 700 !important; font-size: 13px !important; letter-spacing: 0.01em !important; }
+  .aa-nav__link[id*="rakhi"] { font-weight: 700 !important; font-size: 14px !important; letter-spacing: 0.01em !important; }
   /* Animated subtle underline on hover for premium feel */
   .aa-nav__link {
     position: relative;
@@ -466,8 +466,10 @@
   .aa-panes--full::-webkit-scrollbar-track { background: transparent; }
   /* Cards are laid out with centered flex-wrap (auto-fill grid left empty
      columns on the right, so items never actually centered). Way smaller now. */
-  .aa-panes--full .aa-pane.on { display: flex; flex-wrap: wrap; justify-content: center; align-content: flex-start; gap: 16px 14px; }
-  .aa-panes--full .aa-pane--dense.on { display: flex; flex-wrap: wrap; justify-content: center; align-content: flex-start; gap: 14px 12px; }
+  /* Capped width so cards wrap into balanced multiple rows (e.g. 14 mukhi = 7+7,
+     not 13+1). Centered. */
+  .aa-panes--full .aa-pane.on { display: flex; flex-wrap: wrap; justify-content: center; align-content: flex-start; gap: 18px 16px; max-width: 640px; margin: 0 auto; }
+  .aa-panes--full .aa-pane--dense.on { display: flex; flex-wrap: wrap; justify-content: center; align-content: flex-start; gap: 16px 14px; max-width: 620px; margin: 0 auto; }
   .aa-panes--full .aa-gcard { width: 84px; }
   .aa-panes--full .aa-pane--dense .aa-gcard { width: 72px; }
   .aa-panes--full .aa-gcard__img { border-radius: 12px; }
