@@ -74,7 +74,9 @@
   align-items: center;
   gap: 10px;
 }
-.aa-logo__orb-wrap {
+/* scoped to footer only — unscoped versions were shrinking the HEADER orb */
+.aa-footer .aa-logo__orb-wrap,
+footer .aa-logo__orb-wrap {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -85,7 +87,8 @@
   box-shadow: 0 0 0 1px rgba(74, 25, 66, 0.18), 0 2px 8px rgba(74, 25, 66, 0.1);
   flex-shrink: 0;
 }
-.aa-logo__orb {
+.aa-footer .aa-logo__orb,
+footer .aa-logo__orb {
   width: 32px;
   height: 32px;
   display: block;
