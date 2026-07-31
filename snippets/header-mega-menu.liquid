@@ -17,6 +17,7 @@
     to a row-1 panel never crosses another dropdown (fixes the hover cross-over).
   endcomment
   assign hover_list = 'bracelets,rudraksha,gemstones,wearables,combos,vastu & home' | split: ','
+  assign facet_dd = 'by purpose,by rashi,by planet' | split: ','
 -%}
 
 <nav class="header__inline-menu aa-nav">
@@ -182,7 +183,32 @@
         if hover_list contains t_lower_r2
           continue
         endif
+        assign is_facet_dd = false
+        if facet_dd contains t_lower_r2
+          if link.links != blank
+            assign is_facet_dd = true
+          endif
+        endif
       -%}
+      {%- if is_facet_dd -%}
+      <li class="aa-nav__item">
+        <header-menu>
+          <details class="mega-menu aa-mega">
+            <summary id="HeaderMenu-{{ link.handle }}" class="header__menu-item list-menu__item link focus-inset aa-nav__link" data-aa-url="{{ link.url }}">
+              <span{% if link.child_active %} class="header__active-menu-item"{% endif %}>{{ link.title | escape }}</span>
+              <svg class="aa-chevron" width="9" height="9" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 3.5L5 6.5L8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </summary>
+            <div class="mega-menu__content aa-mega__panel aa-mega__panel--list motion-reduce" tabindex="-1">
+              <ul class="aa-mlist" role="list">
+                {%- for cl in link.links -%}
+                  <li><a href="{{ cl.url }}">{{ cl.title | escape }}</a></li>
+                {%- endfor -%}
+              </ul>
+            </div>
+          </details>
+        </header-menu>
+      </li>
+      {%- else -%}
       <li class="aa-nav__item aa-nav__item--link">
         <a
           id="HeaderMenu-{{ link.handle }}"
@@ -193,6 +219,7 @@
           <span{% if link.current or link.child_active %} class="header__active-menu-item"{% endif %}>{{ link.title | escape }}</span>
         </a>
       </li>
+      {%- endif -%}
     {%- endfor -%}
   </ul>
 </nav>
