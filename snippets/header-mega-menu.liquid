@@ -527,8 +527,9 @@
   .aa-panes--full::-webkit-scrollbar-track { background: transparent; }
   /* single-category panels: full-width product grid, no rail */
   .aa-mega__inner:has(> .aa-panes--full) { grid-template-columns: 1fr; }
-  .aa-panes--full .aa-pane.on { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
-  .aa-panes--full .aa-pane--dense.on { grid-template-columns: repeat(auto-fill, minmax(116px, 1fr)); }
+  /* fixed card sizes, centered — 1fr stretch was ballooning cards on wide screens */
+  .aa-panes--full .aa-pane.on { grid-template-columns: repeat(auto-fill, 160px); justify-content: center; gap: 20px 16px; }
+  .aa-panes--full .aa-pane--dense.on { grid-template-columns: repeat(auto-fill, 112px); justify-content: center; gap: 16px 14px; }
   /* Right panes */
   .aa-pane { display: none; }
   /* fluid grid: cards stretch to use the full pane width at any viewport */
