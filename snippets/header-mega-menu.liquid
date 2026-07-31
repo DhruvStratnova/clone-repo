@@ -64,12 +64,15 @@
                     assign aa_mode = 'products'
                     if aa_has_groups
                       assign aa_mode = 'chips'
+                    elsif link.links.size == 1
+                      assign aa_mode = 'grid'
                     elsif aa_parent contains 'rudraksha'
                       assign aa_mode = 'mukhi'
                     elsif aa_parent contains 'gemstone'
                       assign aa_mode = 'cards'
                     endif
                   -%}
+                  {%- unless aa_mode == 'grid' -%}
                   <aside class="aa-rail" role="tablist">
                     {%- if aa_mode == 'mukhi' -%}
                       <a href="{{ link.url }}" class="aa-rail__item on" data-i="0"><span>Shop by Mukhi</span></a>
@@ -100,13 +103,22 @@
                         </a>
                       {%- endfor -%}
                     {%- endif -%}
-                    <div class="aa-rail__util">
-                      <a href="/collections/certified-originals">Certified Originals</a>
-                      <a href="/pages/calculator">Astro Calculator</a>
-                    </div>
                   </aside>
-                  <div class="aa-panes">
-                    {%- if aa_mode == 'chips' -%}
+                  {%- endunless -%}
+                  <div class="aa-panes{% if aa_mode == 'grid' %} aa-panes--full{% endif %}">
+                    {%- if aa_mode == 'grid' -%}
+                      <div class="aa-pane on" data-i="0">
+                        {%- for p in link.object.products limit: 8 -%}
+                          <a href="{{ p.url }}" class="aa-gcard aa-gcard--prod">
+                            <span class="aa-gcard__img">
+                              {%- if p.featured_image -%}{{ p.featured_image | image_url: width: 360 | image_tag: loading: 'lazy', alt: p.title }}{%- endif -%}
+                            </span>
+                            <span class="aa-gcard__lbl">{{ p.title | split: '(' | first | strip | escape }}</span>
+                            <span class="aa-gcard__price">{{ p.price | money }}</span>
+                          </a>
+                        {%- endfor -%}
+                      </div>
+                    {%- elsif aa_mode == 'chips' -%}
                       {%- for grp in link.links -%}
                         <div class="aa-pane{% if forloop.first %} on{% endif %}" data-i="{{ forloop.index0 }}">
                           <div class="aa-pane__chips">
@@ -455,18 +467,9 @@
   .aa-rail__thumb { width: 38px; height: 38px; border-radius: 10px; object-fit: cover; flex: 0 0 auto; background: #fff; }
   .aa-rail__chev { margin-left: auto; color: rgba(36, 16, 25, 0.4); flex: 0 0 auto; }
   .aa-rail__item.on .aa-rail__chev { color: #E0327A; }
-  .aa-rail__util {
-    margin-top: 16px; padding: 16px 0 0 17px; border-top: 1px solid rgba(36, 16, 25, 0.1);
-    display: flex; flex-direction: column; gap: 12px;
-  }
-  .aa-rail__util a {
-    font-size: 13px; font-weight: 600; letter-spacing: 0.02em;
-    color: #8A2B4A !important; text-decoration: none !important;
-    transition: color 0.15s ease;
-  }
-  .aa-rail__util a::after { content: ' \2192'; opacity: 0; transition: opacity 0.15s ease; }
-  .aa-rail__util a:hover { color: #4A1942 !important; }
-  .aa-rail__util a:hover::after { opacity: 1; }
+  /* single-category panels: full-width product grid, no rail */
+  .aa-mega__inner:has(> .aa-panes--full) { grid-template-columns: 1fr; }
+  .aa-panes--full .aa-pane.on { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
   /* Right panes */
   .aa-pane { display: none; }
   /* fluid grid: cards stretch to use the full pane width at any viewport */
