@@ -29,7 +29,7 @@
           continue
         endif
       -%}
-      {%- if forloop.index == 7 -%}<li class="aa-nav__rowbreak" aria-hidden="true"></li>{%- endif -%}
+      {%- if forloop.index == 10 -%}<li class="aa-nav__rowbreak" aria-hidden="true"></li>{%- endif -%}
       <li class="aa-nav__item">
         {%- if link.links != blank -%}
           <header-menu>
@@ -281,14 +281,14 @@
        No column tracks — short words never get stretched spacing. */
     display: flex !important;
     flex-wrap: wrap !important;
-    /* Measured off the Astrotalk reference: ONE uniform ~52px gap on BOTH rows
-       (never space-between — that stretches short titles apart on wide screens),
-       rows centered; row widths may differ slightly, exactly like the reference. */
-    justify-content: center !important;
+    /* 17 items, rows fill edge-to-edge: space-between with 9+8 per row keeps
+       gaps moderate and leaves zero gutter beside the logo/icons */
+    justify-content: space-between !important;
     /* baseline: plain links and dropdown summaries sit on the same text line */
     align-items: baseline !important;
-    gap: 0 26px !important;
-    margin: 0 auto !important;
+    width: 100% !important;
+    gap: 0 18px !important;
+    margin: 0 !important;
     padding: 0 !important;
   }
   .aa-nav__rowbreak { flex-basis: 100% !important; height: 0 !important; margin: 0 !important; padding: 0 !important; list-style: none; }
