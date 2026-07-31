@@ -11,10 +11,17 @@
   endcomment
   assign utility_keywords = 'about us,about-us,support,help'
   assign utility_list = utility_keywords | split: ','
+  comment
+    ROW 1 = product categories that keep a hover mega panel.
+    Everything else renders as a plain STATIC link in ROW 2 — so dragging down
+    to a row-1 panel never crosses another dropdown (fixes the hover cross-over).
+  endcomment
+  assign hover_list = 'bracelets,rudraksha,gemstones,malas,wearables,combos' | split: ','
 -%}
 
 <nav class="header__inline-menu aa-nav">
   <ul class="list-menu list-menu--inline aa-nav__list" role="list">
+    {%- comment -%} ROW 1 — product categories with hover mega panels {%- endcomment -%}
     {%- for link in section.settings.menu.links -%}
       {%- liquid
         assign t_lower_main = link.title | downcase | strip
@@ -28,8 +35,10 @@
         if is_utility_main
           continue
         endif
+        unless hover_list contains t_lower_main
+          continue
+        endunless
       -%}
-      {%- if forloop.index == 8 -%}<li class="aa-nav__rowbreak" aria-hidden="true"></li>{%- endif -%}
       <li class="aa-nav__item">
         {%- if link.links != blank -%}
           <header-menu>
@@ -153,6 +162,38 @@
         {%- endif -%}
       </li>
     {%- endfor -%}
+
+    <li class="aa-nav__rowbreak" aria-hidden="true"></li>
+
+    {%- comment -%} ROW 2 — static quick links (no dropdowns → crossing them never swaps a panel) {%- endcomment -%}
+    {%- for link in section.settings.menu.links -%}
+      {%- liquid
+        assign t_lower_r2 = link.title | downcase | strip
+        assign is_util_r2 = false
+        for u in utility_list
+          if t_lower_r2 == u
+            assign is_util_r2 = true
+            break
+          endif
+        endfor
+        if is_util_r2
+          continue
+        endif
+        if hover_list contains t_lower_r2
+          continue
+        endif
+      -%}
+      <li class="aa-nav__item aa-nav__item--link">
+        <a
+          id="HeaderMenu-{{ link.handle }}"
+          href="{{ link.url }}"
+          class="header__menu-item list-menu__item link link--text focus-inset aa-nav__link"
+          {% if link.current or link.child_active %}aria-current="page"{% endif %}
+        >
+          <span{% if link.current or link.child_active %} class="header__active-menu-item"{% endif %}>{{ link.title | escape }}</span>
+        </a>
+      </li>
+    {%- endfor -%}
   </ul>
 </nav>
 
@@ -256,7 +297,7 @@
     /* baseline: plain links and dropdown summaries sit on the same text line */
     align-items: baseline !important;
     width: 100% !important;
-    gap: 4px 34px !important;
+    gap: 2px 26px !important;
     margin: 0 !important;
     padding: 0 !important;
   }
@@ -296,7 +337,7 @@
     font-family: 'Manrope', sans-serif !important;
   }
   .aa-nav__link {
-    font-size: 15.5px !important;
+    font-size: 13.5px !important;
     font-weight: 500 !important;
     line-height: 1.25 !important;
     color: #1D0F17 !important;
@@ -307,7 +348,7 @@
     gap: 6px !important;
     white-space: nowrap !important;
   }
-  .aa-nav__link[id*="rakhi"] { font-weight: 700 !important; font-size: 14.5px !important; letter-spacing: 0.01em !important; }
+  .aa-nav__link[id*="rakhi"] { font-weight: 700 !important; font-size: 13px !important; letter-spacing: 0.01em !important; }
   /* Animated subtle underline on hover for premium feel */
   .aa-nav__link {
     position: relative;
@@ -423,8 +464,14 @@
   .aa-panes--full::-webkit-scrollbar { width: 8px; }
   .aa-panes--full::-webkit-scrollbar-thumb { background: rgba(74, 25, 66, 0.18); border-radius: 8px; }
   .aa-panes--full::-webkit-scrollbar-track { background: transparent; }
-  .aa-panes--full .aa-pane.on { grid-template-columns: repeat(auto-fill, 160px); justify-content: center; gap: 20px 16px; }
-  .aa-panes--full .aa-pane--dense.on { grid-template-columns: repeat(auto-fill, 112px); justify-content: center; gap: 16px 14px; }
+  /* Cards are laid out with centered flex-wrap (auto-fill grid left empty
+     columns on the right, so items never actually centered). Way smaller now. */
+  .aa-panes--full .aa-pane.on { display: flex; flex-wrap: wrap; justify-content: center; align-content: flex-start; gap: 16px 14px; }
+  .aa-panes--full .aa-pane--dense.on { display: flex; flex-wrap: wrap; justify-content: center; align-content: flex-start; gap: 14px 12px; }
+  .aa-panes--full .aa-gcard { width: 84px; }
+  .aa-panes--full .aa-pane--dense .aa-gcard { width: 72px; }
+  .aa-panes--full .aa-gcard__img { border-radius: 12px; }
+  .aa-panes--full .aa-gcard__lbl { font-size: 11.5px; }
   /* strike-through compare-at on cards */
   .aa-gcard__price s { color: #A99A8F; font-weight: 500; margin-left: 6px; }
   /* View All pill in mega panels */
@@ -463,7 +510,7 @@
     border: 1px solid rgba(36, 16, 25, 0.07); box-shadow: 0 2px 10px rgba(74, 43, 46, 0.07);
     transition: box-shadow 0.18s, transform 0.18s;
   }
-  .aa-gcard__img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .aa-gcard__img img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
   .aa-gcard:hover .aa-gcard__img { box-shadow: 0 10px 24px rgba(74, 25, 66, 0.15); transform: translateY(-2px); }
   .aa-gcard__lbl {
     font-family: 'Jost', system-ui, sans-serif; font-size: 13.5px; font-weight: 600; color: #241019;
@@ -596,7 +643,7 @@
 
       d.addEventListener('mouseleave', () => {
         if (window.innerWidth < 750) return;
-        activeTimer = setTimeout(() => d.removeAttribute('open'), 120);
+        activeTimer = setTimeout(() => d.removeAttribute('open'), 180);
       });
 
       /* On desktop, click on summary opens the link target if it exists */
