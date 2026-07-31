@@ -90,7 +90,9 @@
   height: 32px;
   display: block;
 }
-.aa-logo__text {
+/* scoped to footer only — the unscoped version was shrinking the HEADER logo */
+.aa-footer .aa-logo__text,
+footer .aa-logo__text {
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-size: 24px;
   font-weight: 600;
