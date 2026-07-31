@@ -707,6 +707,14 @@
       var i = t.getAttribute('data-i');
       inner.querySelectorAll('.aa-rail__item').forEach(function (b) { b.classList.toggle('on', b === t); });
       inner.querySelectorAll('.aa-pane').forEach(function (p) { p.classList.toggle('on', p.getAttribute('data-i') === i); });
+      /* View All follows the hovered sub-category */
+      var panel = t.closest('.aa-mega__panel');
+      var va = panel && panel.querySelector('.aa-mega__viewall');
+      var label = t.querySelector('span');
+      if (va && label && t.href) {
+        va.href = t.href;
+        va.innerHTML = 'View All ' + label.textContent.trim() + ' →';
+      }
     });
     /* Desktop: panels open on hover, so CLICKING a main title navigates to its page */
     document.addEventListener('click', function (e) {
