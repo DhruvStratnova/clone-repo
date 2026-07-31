@@ -37,6 +37,7 @@
               <summary
                 id="HeaderMenu-{{ link.handle }}"
                 class="header__menu-item list-menu__item link focus-inset aa-nav__link"
+                data-aa-url="{{ link.url }}"
               >
                 <span{% if link.child_active %} class="header__active-menu-item"{% endif %}>
                   {{- link.title | escape -}}
@@ -45,33 +46,43 @@
                   <path d="M2 3.5L5 6.5L8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </summary>
+              {%- liquid
+                assign aa_parent = link.title | downcase | strip
+                assign aa_has_groups = false
+                for cl in link.links
+                  if cl.links != blank
+                    assign aa_has_groups = true
+                    break
+                  endif
+                endfor
+                assign aa_nav_icons = 'ruby,south-sea-pearl-moti,red-coral-moonga,emerald-panna,yellow-sapphire-pukhraj,blue-sapphire-neelam,gomedh-hessonite-garnet,cat-s-eye-lehsunia,crystal-bracelets,remedies-bracelets,silver-bracelets,rashi-bracelets,for-her,for-him,certified-originals,crystal-rakhi,combos,crystal-trees,vastu-turtles,crystals,mala,pendants,anklets,mani' | split: ','
+                assign aa_mode = 'products'
+                if aa_parent == 'by purpose' or aa_parent == 'by rashi' or aa_parent == 'by planet' or aa_parent == 'by stone' or aa_parent == 'gifting'
+                  assign aa_mode = 'list'
+                elsif aa_has_groups
+                  assign aa_mode = 'chips'
+                elsif link.links.size == 1
+                  assign aa_mode = 'grid'
+                elsif aa_parent contains 'rudraksha'
+                  assign aa_mode = 'mukhi'
+                elsif aa_parent contains 'gemstone'
+                  assign aa_mode = 'cards'
+                endif
+              -%}
               <div
                 id="MegaMenu-Content-{{ forloop.index }}"
-                class="mega-menu__content aa-mega__panel motion-reduce"
+                class="mega-menu__content aa-mega__panel{% if aa_mode == 'list' %} aa-mega__panel--list{% endif %} motion-reduce"
                 tabindex="-1"
               >
+                {%- if aa_mode == 'list' -%}
+                  <ul class="aa-mlist" role="list">
+                    {%- for cl in link.links -%}
+                      <li><a href="{{ cl.url }}">{{ cl.title | escape }}</a></li>
+                    {%- endfor -%}
+                    <li class="aa-mlist__all"><a href="{{ link.url }}">View All &rarr;</a></li>
+                  </ul>
+                {%- else -%}
                 <div class="aa-mega__inner page-width">
-                  {%- liquid
-                    assign aa_parent = link.title | downcase | strip
-                    assign aa_has_groups = false
-                    for cl in link.links
-                      if cl.links != blank
-                        assign aa_has_groups = true
-                        break
-                      endif
-                    endfor
-                    assign aa_nav_icons = 'ruby,south-sea-pearl-moti,red-coral-moonga,emerald-panna,yellow-sapphire-pukhraj,blue-sapphire-neelam,gomedh-hessonite-garnet,cat-s-eye-lehsunia,crystal-bracelets,remedies-bracelets,silver-bracelets,rashi-bracelets,for-her,for-him,certified-originals,crystal-rakhi,combos,crystal-trees,vastu-turtles,crystals,mala,pendants,anklets,mani' | split: ','
-                    assign aa_mode = 'products'
-                    if aa_has_groups
-                      assign aa_mode = 'chips'
-                    elsif link.links.size == 1
-                      assign aa_mode = 'grid'
-                    elsif aa_parent contains 'rudraksha'
-                      assign aa_mode = 'mukhi'
-                    elsif aa_parent contains 'gemstone'
-                      assign aa_mode = 'cards'
-                    endif
-                  -%}
                   {%- unless aa_mode == 'grid' or aa_mode == 'mukhi' or aa_mode == 'cards' -%}
                   <aside class="aa-rail" role="tablist">
                     {%- if false -%}
@@ -171,11 +182,13 @@
                     {%- endif -%}
                   </div>
                 </div>
+                <a class="aa-mega__viewall" href="{{ link.url }}">View All {{ link.title | escape }} &rarr;</a>
                 <div class="aa-mega__trust" aria-hidden="true">
                   <span><b>Lab-Certified</b>&nbsp; Originals, Every Single Piece</span>
                   <span><b>Energised &amp; Blessed</b>&nbsp; Before Dispatch</span>
                   <span><b>Free Shipping</b>&nbsp; Across India</span>
                 </div>
+                {%- endif -%}
               </div>
             </details>
           </header-menu>
@@ -465,6 +478,31 @@
   .aa-rail__thumb { width: 38px; height: 38px; border-radius: 10px; object-fit: cover; flex: 0 0 auto; background: #fff; }
   .aa-rail__chev { margin-left: auto; color: rgba(36, 16, 25, 0.4); flex: 0 0 auto; }
   .aa-rail__item.on .aa-rail__chev { color: #E0327A; }
+  /* Compact text-list flyout (By Purpose/Rashi/Planet/Stone, Gifting) */
+  details.aa-mega { position: relative; }
+  .aa-mega__panel--list {
+    left: 50% !important; right: auto !important;
+    transform: translateX(-50%) !important;
+    width: max-content !important; min-width: 230px !important; max-width: 320px !important;
+    padding: 10px 0 !important;
+    border-radius: 0 0 14px 14px !important;
+  }
+  .aa-mlist { list-style: none; margin: 0; padding: 0; }
+  .aa-mlist li a {
+    display: block; padding: 9px 22px;
+    font-family: 'Marcellus', Georgia, serif; font-size: 15px; color: #241019;
+    text-decoration: none; white-space: nowrap; transition: background 0.12s, color 0.12s;
+  }
+  .aa-mlist li a:hover { background: rgba(224, 50, 122, 0.06); color: #4A1942; }
+  .aa-mlist__all a { font-weight: 600; color: #8A2B4A !important; border-top: 1px solid rgba(36,16,25,0.08); margin-top: 6px; padding-top: 12px !important; }
+  /* View All button in mega panels */
+  .aa-mega__viewall, .aa-mega__viewall:visited {
+    display: table; margin: 18px auto 0;
+    padding: 9px 26px; border: 1.4px solid rgba(74, 25, 66, 0.35); border-radius: 999px;
+    font-family: 'Marcellus', Georgia, serif; font-size: 14px; color: #4A1942 !important;
+    text-decoration: none !important; transition: all 0.15s ease;
+  }
+  .aa-mega__viewall:hover { background: #4A1942; color: #fff !important; border-color: #4A1942; }
   /* single-category panels: full-width product grid, no rail */
   .aa-mega__inner:has(> .aa-panes--full) { grid-template-columns: 1fr; }
   .aa-panes--full .aa-pane.on { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
@@ -650,6 +688,14 @@
       var i = t.getAttribute('data-i');
       inner.querySelectorAll('.aa-rail__item').forEach(function (b) { b.classList.toggle('on', b === t); });
       inner.querySelectorAll('.aa-pane').forEach(function (p) { p.classList.toggle('on', p.getAttribute('data-i') === i); });
+    });
+    /* Desktop: panels open on hover, so CLICKING a main title navigates to its page */
+    document.addEventListener('click', function (e) {
+      var sm = e.target.closest('summary.aa-nav__link[data-aa-url]');
+      if (!sm) return;
+      if (!window.matchMedia || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+      e.preventDefault();
+      window.location.href = sm.getAttribute('data-aa-url');
     });
   }
 </script>
