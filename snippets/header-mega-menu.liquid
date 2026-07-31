@@ -56,17 +56,13 @@
                   endif
                 endfor
                 assign aa_nav_icons = 'ruby,south-sea-pearl-moti,red-coral-moonga,emerald-panna,yellow-sapphire-pukhraj,blue-sapphire-neelam,gomedh-hessonite-garnet,cat-s-eye-lehsunia,crystal-bracelets,remedies-bracelets,silver-bracelets,rashi-bracelets,for-her,for-him,certified-originals,crystal-rakhi,combos,crystal-trees,vastu-turtles,crystals,mala,pendants,anklets,mani' | split: ','
-                assign aa_mode = 'products'
-                if aa_parent == 'by purpose' or aa_parent == 'by rashi' or aa_parent == 'by planet' or aa_parent == 'by stone' or aa_parent == 'gifting'
+                assign aa_mode = 'cards'
+                if aa_parent == 'by purpose' or aa_parent == 'by rashi' or aa_parent == 'by planet'
                   assign aa_mode = 'list'
-                elsif aa_has_groups
-                  assign aa_mode = 'chips'
                 elsif link.links.size == 1
                   assign aa_mode = 'grid'
                 elsif aa_parent contains 'rudraksha'
                   assign aa_mode = 'mukhi'
-                elsif aa_parent contains 'gemstone'
-                  assign aa_mode = 'cards'
                 endif
               -%}
               <div
@@ -82,37 +78,7 @@
                   </ul>
                 {%- else -%}
                 <div class="aa-mega__inner page-width">
-                  {%- unless aa_mode == 'grid' or aa_mode == 'mukhi' or aa_mode == 'cards' -%}
-                  <aside class="aa-rail" role="tablist">
-                    {%- if false -%}
-                    {%- else -%}
-                      {%- for cl in link.links -%}
-                        {%- liquid
-                          assign rh = cl.object.handle | default: ''
-                          assign rimg = nil
-                          if cl.object.featured_image
-                            assign rimg = cl.object.featured_image
-                          elsif cl.object.image
-                            assign rimg = cl.object.image
-                          elsif cl.object.products.first.featured_image
-                            assign rimg = cl.object.products.first.featured_image
-                          endif
-                        -%}
-                        <a href="{{ cl.url }}" class="aa-rail__item{% if forloop.first %} on{% endif %}" data-i="{{ forloop.index0 }}">
-                          {%- if aa_nav_icons contains rh -%}
-                            {%- assign rif = 'aa-nav-' | append: rh | append: '.jpg' -%}
-                            <img class="aa-rail__thumb" src="{{ rif | asset_img_url: '80x' }}" width="38" height="38" loading="lazy" alt="">
-                          {%- elsif rimg -%}
-                            {{ rimg | image_url: width: 80 | image_tag: loading: 'lazy', width: 38, height: 38, class: 'aa-rail__thumb', alt: '' }}
-                          {%- endif -%}
-                          <span>{{ cl.title | escape }}</span>
-                          <svg class="aa-rail__chev" width="8" height="12" viewBox="0 0 8 12" fill="none" aria-hidden="true"><path d="M1.5 1.5L6.5 6L1.5 10.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                        </a>
-                      {%- endfor -%}
-                    {%- endif -%}
-                  </aside>
-                  {%- endunless -%}
-                  <div class="aa-panes{% if aa_mode == 'grid' or aa_mode == 'mukhi' or aa_mode == 'cards' %} aa-panes--full{% endif %}">
+                  <div class="aa-panes aa-panes--full">
                     {%- if aa_mode == 'grid' -%}
                       <div class="aa-pane on" data-i="0">
                         {%- for p in link.object.products limit: 24 -%}
@@ -125,15 +91,6 @@
                           </a>
                         {%- endfor -%}
                       </div>
-                    {%- elsif aa_mode == 'chips' -%}
-                      {%- for grp in link.links -%}
-                        <div class="aa-pane{% if forloop.first %} on{% endif %}" data-i="{{ forloop.index0 }}">
-                          <div class="aa-pane__chips">
-                            {%- for gl in grp.links -%}<a href="{{ gl.url }}" class="aa-mchip">{{ gl.title | escape }}</a>{%- endfor -%}
-                            <a href="{{ grp.url }}" class="aa-mchip aa-mchip--hero">View all &rarr;</a>
-                          </div>
-                        </div>
-                      {%- endfor -%}
                     {%- elsif aa_mode == 'mukhi' -%}
                       <div class="aa-pane aa-pane--dense on" data-i="0">
                         {%- for cl in link.links -%}
@@ -164,20 +121,6 @@
                           </a>
                         {%- endfor -%}
                       </div>
-                    {%- else -%}
-                      {%- for cl in link.links -%}
-                        <div class="aa-pane{% if forloop.first %} on{% endif %}" data-i="{{ forloop.index0 }}">
-                          {%- for p in cl.object.products limit: 4 -%}
-                            <a href="{{ p.url }}" class="aa-gcard aa-gcard--prod">
-                              <span class="aa-gcard__img">
-                                {%- if p.featured_image -%}{{ p.featured_image | image_url: width: 360 | image_tag: loading: 'lazy', alt: p.title }}{%- endif -%}
-                              </span>
-                              <span class="aa-gcard__lbl">{{ p.title | split: '(' | first | strip | escape }}</span>
-                              <span class="aa-gcard__price">{{ p.price | money }}{% if p.compare_at_price > p.price %}<s>{{ p.compare_at_price | money }}</s>{% endif %}</span>
-                            </a>
-                          {%- endfor -%}
-                        </div>
-                      {%- endfor -%}
                     {%- endif -%}
                   </div>
                 </div>
@@ -468,68 +411,6 @@
     max-width: 1240px; margin: 0 auto; padding: 0 40px;
     display: grid; grid-template-columns: 300px 1fr; gap: 48px; align-items: start;
   }
-  /* Left rail (view modes / sub-categories) */
-  .aa-rail { display: flex; flex-direction: column; gap: 4px; }
-  .aa-rail__item {
-    appearance: none; display: flex; align-items: center; gap: 12px; width: 100%; text-align: left;
-    padding: 12px 14px; border: 0; border-left: 3px solid transparent; border-radius: 0 12px 12px 0;
-    background: transparent; cursor: pointer; font-family: 'Jost', system-ui, sans-serif;
-    font-size: 14.5px; font-weight: 600; color: #241019;
-    transition: background 0.15s, border-color 0.15s;
-  }
-  .aa-rail__item.on { background: rgba(224, 50, 122, 0.07); border-left-color: #E0327A; }
-  .aa-rail__item:hover { background: rgba(36, 16, 25, 0.045); }
-  .aa-rail__thumb { width: 38px; height: 38px; border-radius: 10px; object-fit: cover; flex: 0 0 auto; background: #fff; }
-  .aa-rail__chev { margin-left: auto; color: rgba(36, 16, 25, 0.4); flex: 0 0 auto; }
-  .aa-rail__item.on .aa-rail__chev { color: #E0327A; }
-  /* Compact text-list flyout (By Purpose/Rashi/Planet/Stone, Gifting).
-     position:relative ONLY on list-mode details — on all details it re-anchors
-     the full-width mega panels to their own nav item (spills off-screen). */
-  details.aa-mega:has(> .aa-mega__panel--list) { position: relative; }
-  .aa-mega__panel--list {
-    /* the list BOX opens straight-aligned under the nav title */
-    left: 0 !important; right: auto !important;
-    transform: none !important;
-    width: max-content !important; min-width: 0 !important; max-width: 300px !important;
-    padding: 6px 0 8px !important;
-    background: #FBF6EE !important;
-    border-radius: 0 0 12px 12px !important;
-    border-top: 0 !important;
-    box-shadow: 0 16px 26px rgba(74, 43, 46, 0.14) !important;
-    overflow: visible !important;
-    max-height: none !important;
-  }
-  .aa-mlist { list-style: none; margin: 0; padding: 0; text-align: left; }
-  /* li stays STATIC so every hover-preview anchors to the SAME slot on the
-     panel's right edge — per-li anchoring made neighbouring popups overlap
-     and ghost while the cursor travelled the list */
-  .aa-mlist li { position: static; }
-  .aa-mlist li > a {
-    display: block; padding: 6px 18px;
-    font-family: 'Marcellus', Georgia, serif; font-size: 14px; color: #241019;
-    text-align: left; text-decoration: none; white-space: nowrap; transition: background 0.12s, color 0.12s;
-  }
-  .aa-mlist li:hover > a { background: rgba(224, 50, 122, 0.06); color: #4A1942; }
-  /* strike-through compare-at on cards */
-  .aa-gcard__price s { color: #A99A8F; font-weight: 500; margin-left: 6px; }
-  /* View All pill in mega panels (NOT in flyout lists) */
-  .aa-mega__viewall, .aa-mega__viewall:visited {
-    display: table; margin: 16px auto 0;
-    padding: 8px 24px; border: 1.4px solid rgba(74, 25, 66, 0.35); border-radius: 999px;
-    font-family: 'Marcellus', Georgia, serif; font-size: 14px; color: #4A1942 !important;
-    text-decoration: none !important; transition: all 0.15s ease;
-  }
-  .aa-mega__viewall:hover { background: #4A1942; color: #fff !important; border-color: #4A1942; }
-  /* full grids: fixed height, scroll inside */
-  .aa-panes--full { max-height: 485px; overflow-y: auto; overscroll-behavior: contain; padding-right: 8px; }
-  .aa-panes--full::-webkit-scrollbar { width: 8px; }
-  .aa-panes--full::-webkit-scrollbar-thumb { background: rgba(74, 25, 66, 0.18); border-radius: 8px; }
-  .aa-panes--full::-webkit-scrollbar-track { background: transparent; }
-  /* single-category panels: full-width product grid, no rail */
-  .aa-mega__inner:has(> .aa-panes--full) { grid-template-columns: 1fr; }
-  /* fixed card sizes, centered — 1fr stretch was ballooning cards on wide screens */
-  .aa-panes--full .aa-pane.on { grid-template-columns: repeat(auto-fill, 160px); justify-content: center; gap: 20px 16px; }
-  .aa-panes--full .aa-pane--dense.on { grid-template-columns: repeat(auto-fill, 112px); justify-content: center; gap: 16px 14px; }
   /* Right panes */
   .aa-pane { display: none; }
   /* fluid grid: cards stretch to use the full pane width at any viewport */
@@ -537,8 +418,6 @@
   .aa-pane--dense.on { grid-template-columns: repeat(auto-fill, minmax(116px, 1fr)); gap: 16px 14px; }
   .aa-pane--dense .aa-gcard__img { border-radius: 14px; }
   .aa-pane--dense .aa-gcard__lbl { font-size: 12.5px; }
-  .aa-pane.on > .aa-pane__chips { grid-column: 1 / -1; }
-  .aa-pane__chips { display: flex; flex-wrap: wrap; gap: 9px; }
   /* Cards (gems / products) */
   .aa-gcard, .aa-gcard:visited { display: flex; flex-direction: column; gap: 8px; width: auto; min-width: 0; text-decoration: none !important; }
   .aa-gcard__img {
@@ -660,6 +539,7 @@
   /* Hover-to-open mega menu on desktop */
   (function() {
     if (window.innerWidth < 750) return;
+    document.addEventListener('mousemove', function () { window.__aaLastMove = Date.now(); }, { passive: true });
     const megas = document.querySelectorAll('details.aa-mega');
     let activeTimer = null;
 
@@ -668,6 +548,9 @@
 
       d.addEventListener('mouseenter', () => {
         if (window.innerWidth < 750) return;
+        /* scroll-under-pointer fires mouseenter without mousemove — require real
+           pointer travel so scrolling a tall panel can't switch panels */
+        if (Date.now() - (window.__aaLastMove || 0) > 250) return;
         clearTimeout(activeTimer);
         megas.forEach(other => { if (other !== d) other.removeAttribute('open'); });
         d.setAttribute('open', '');
@@ -699,23 +582,6 @@
      Delegated once — Turbo-safe. */
   if (!window.__aaRailBound) {
     window.__aaRailBound = true;
-    document.addEventListener('mouseover', function (e) {
-      var t = e.target.closest('.aa-rail__item');
-      if (!t || t.classList.contains('on')) return;
-      var inner = t.closest('.aa-mega__inner');
-      if (!inner) return;
-      var i = t.getAttribute('data-i');
-      inner.querySelectorAll('.aa-rail__item').forEach(function (b) { b.classList.toggle('on', b === t); });
-      inner.querySelectorAll('.aa-pane').forEach(function (p) { p.classList.toggle('on', p.getAttribute('data-i') === i); });
-      /* View All follows the hovered sub-category */
-      var panel = t.closest('.aa-mega__panel');
-      var va = panel && panel.querySelector('.aa-mega__viewall');
-      var label = t.querySelector('span');
-      if (va && label && t.href) {
-        va.href = t.href;
-        va.innerHTML = 'View All ' + label.textContent.trim() + ' →';
-      }
-    });
     /* Desktop: panels open on hover, so CLICKING a main title navigates to its page */
     document.addEventListener('click', function (e) {
       var sm = e.target.closest('summary.aa-nav__link[data-aa-url]');
