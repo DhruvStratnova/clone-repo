@@ -181,6 +181,7 @@
                     {%- endif -%}
                   </div>
                 </div>
+                <a class="aa-mega__viewall" href="{{ link.url }}">View All {{ link.title | escape }} &rarr;</a>
                 <div class="aa-mega__trust" aria-hidden="true">
                   <div class="aa-mega__trust-track">
                     {%- for i in (1..2) -%}
@@ -511,6 +512,14 @@
   .aa-mlist li:hover > a { background: rgba(224, 50, 122, 0.06); color: #4A1942; }
   /* strike-through compare-at on cards */
   .aa-gcard__price s { color: #A99A8F; font-weight: 500; margin-left: 6px; }
+  /* View All pill in mega panels (NOT in flyout lists) */
+  .aa-mega__viewall, .aa-mega__viewall:visited {
+    display: table; margin: 16px auto 0;
+    padding: 8px 24px; border: 1.4px solid rgba(74, 25, 66, 0.35); border-radius: 999px;
+    font-family: 'Marcellus', Georgia, serif; font-size: 14px; color: #4A1942 !important;
+    text-decoration: none !important; transition: all 0.15s ease;
+  }
+  .aa-mega__viewall:hover { background: #4A1942; color: #fff !important; border-color: #4A1942; }
   /* full grids: fixed height, scroll inside */
   .aa-panes--full { max-height: 430px; overflow-y: auto; overscroll-behavior: contain; padding-right: 8px; }
   .aa-panes--full::-webkit-scrollbar { width: 8px; }
