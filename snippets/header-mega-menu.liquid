@@ -29,7 +29,7 @@
           continue
         endif
       -%}
-      {%- if forloop.index == 9 -%}<li class="aa-nav__rowbreak" aria-hidden="true"></li>{%- endif -%}
+      {%- if forloop.index == 8 -%}<li class="aa-nav__rowbreak" aria-hidden="true"></li>{%- endif -%}
       <li class="aa-nav__item">
         {%- if link.links != blank -%}
           <header-menu>
@@ -312,13 +312,14 @@
   .aa-nav__item > .aa-nav__link { white-space: nowrap; }
   .aa-nav__link {
     padding: 3px 0 !important;
-    /* Manrope: crisper, more expensive read than Jost at nav size */
+    /* Professional, not shouty: Manrope medium — bold is reserved for the
+       seasonal entry only */
     font-family: 'Manrope', 'Jost', system-ui, sans-serif !important;
     font-size: 14px !important;
-    font-weight: 700 !important;
+    font-weight: 500 !important;
     line-height: 1.3 !important;
     color: #241019 !important;
-    letter-spacing: 0.005em !important;
+    letter-spacing: 0.01em !important;
     transition: color 0.18s ease !important;
     display: inline-flex !important;
     align-items: center !important;
