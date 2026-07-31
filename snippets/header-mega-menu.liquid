@@ -77,22 +77,8 @@
                 {%- if aa_mode == 'list' -%}
                   <ul class="aa-mlist" role="list">
                     {%- for cl in link.links -%}
-                      <li>
-                        <a href="{{ cl.url }}">{{ cl.title | escape }}</a>
-                        {%- if cl.object.products.size > 0 -%}
-                          <div class="aa-mlist__sub" aria-hidden="true">
-                            {%- for p in cl.object.products limit: 3 -%}
-                              <a href="{{ p.url }}" class="aa-msub__card">
-                                <span class="aa-msub__img">{%- if p.featured_image -%}{{ p.featured_image | image_url: width: 200 | image_tag: loading: 'lazy', alt: p.title }}{%- endif -%}</span>
-                                <span class="aa-msub__ttl">{{ p.title | split: '(' | first | strip | escape }}</span>
-                                <span class="aa-msub__pr">{{ p.price | money }}</span>
-                              </a>
-                            {%- endfor -%}
-                          </div>
-                        {%- endif -%}
-                      </li>
+                      <li><a href="{{ cl.url }}">{{ cl.title | escape }}</a></li>
                     {%- endfor -%}
-                    <li class="aa-mlist__all"><a href="{{ link.url }}">View All &rarr;</a></li>
                   </ul>
                 {%- else -%}
                 <div class="aa-mega__inner page-width">
@@ -129,13 +115,13 @@
                   <div class="aa-panes{% if aa_mode == 'grid' or aa_mode == 'mukhi' or aa_mode == 'cards' %} aa-panes--full{% endif %}">
                     {%- if aa_mode == 'grid' -%}
                       <div class="aa-pane on" data-i="0">
-                        {%- for p in link.object.products limit: 8 -%}
+                        {%- for p in link.object.products limit: 24 -%}
                           <a href="{{ p.url }}" class="aa-gcard aa-gcard--prod">
                             <span class="aa-gcard__img">
                               {%- if p.featured_image -%}{{ p.featured_image | image_url: width: 360 | image_tag: loading: 'lazy', alt: p.title }}{%- endif -%}
                             </span>
                             <span class="aa-gcard__lbl">{{ p.title | split: '(' | first | strip | escape }}</span>
-                            <span class="aa-gcard__price">{{ p.price | money }}</span>
+                            <span class="aa-gcard__price">{{ p.price | money }}{% if p.compare_at_price > p.price %}<s>{{ p.compare_at_price | money }}</s>{% endif %}</span>
                           </a>
                         {%- endfor -%}
                       </div>
@@ -187,7 +173,7 @@
                                 {%- if p.featured_image -%}{{ p.featured_image | image_url: width: 360 | image_tag: loading: 'lazy', alt: p.title }}{%- endif -%}
                               </span>
                               <span class="aa-gcard__lbl">{{ p.title | split: '(' | first | strip | escape }}</span>
-                              <span class="aa-gcard__price">{{ p.price | money }}</span>
+                              <span class="aa-gcard__price">{{ p.price | money }}{% if p.compare_at_price > p.price %}<s>{{ p.compare_at_price | money }}</s>{% endif %}</span>
                             </a>
                           {%- endfor -%}
                         </div>
@@ -195,7 +181,6 @@
                     {%- endif -%}
                   </div>
                 </div>
-                <a class="aa-mega__viewall" href="{{ link.url }}">View All {{ link.title | escape }} &rarr;</a>
                 <div class="aa-mega__trust" aria-hidden="true">
                   <div class="aa-mega__trust-track">
                     {%- for i in (1..2) -%}
@@ -501,8 +486,9 @@
      the full-width mega panels to their own nav item (spills off-screen). */
   details.aa-mega:has(> .aa-mega__panel--list) { position: relative; }
   .aa-mega__panel--list {
-    /* blends with the bar: same parchment, flush under the title, no card-float */
-    left: 0 !important; right: auto !important;
+    /* blends with the bar; -18px offsets the item padding so list text aligns
+       flush with the nav title */
+    left: -18px !important; right: auto !important;
     transform: none !important;
     width: max-content !important; min-width: 0 !important; max-width: 300px !important;
     padding: 6px 0 8px !important;
@@ -524,29 +510,13 @@
     text-align: left; text-decoration: none; white-space: nowrap; transition: background 0.12s, color 0.12s;
   }
   .aa-mlist li:hover > a { background: rgba(224, 50, 122, 0.06); color: #4A1942; }
-  .aa-mlist__all a { font-weight: 600; color: #8A2B4A !important; border-top: 1px solid rgba(36,16,25,0.08); margin-top: 5px; padding-top: 10px !important; }
-  /* hover product preview to the right of the list item */
-  .aa-mlist__sub {
-    display: none; position: absolute; left: 100%; top: 0; z-index: 5;
-    padding: 14px; background: #FBF6EE;
-    border-radius: 0 12px 12px 12px; box-shadow: 14px 16px 30px rgba(74, 43, 46, 0.16);
-    white-space: nowrap;
-  }
-  .aa-mlist li:hover .aa-mlist__sub { display: flex; gap: 12px; }
-  .aa-msub__card, .aa-msub__card:visited { display: flex; flex-direction: column; gap: 5px; width: 108px; text-decoration: none !important; }
-  .aa-msub__img { width: 108px; height: 108px; border-radius: 10px; overflow: hidden; background: #fff; border: 1px solid rgba(36,16,25,0.06); }
-  .aa-msub__img img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .aa-msub__ttl { font-family: 'Jost', sans-serif; font-size: 11.5px; font-weight: 600; color: #241019; white-space: normal; line-height: 1.25;
-    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-  .aa-msub__pr { font-size: 11px; font-weight: 700; color: #9A6B18; }
-  /* View All button in mega panels */
-  .aa-mega__viewall, .aa-mega__viewall:visited {
-    display: table; margin: 18px auto 0;
-    padding: 9px 26px; border: 1.4px solid rgba(74, 25, 66, 0.35); border-radius: 999px;
-    font-family: 'Marcellus', Georgia, serif; font-size: 14px; color: #4A1942 !important;
-    text-decoration: none !important; transition: all 0.15s ease;
-  }
-  .aa-mega__viewall:hover { background: #4A1942; color: #fff !important; border-color: #4A1942; }
+  /* strike-through compare-at on cards */
+  .aa-gcard__price s { color: #A99A8F; font-weight: 500; margin-left: 6px; }
+  /* full grids: fixed height, scroll inside */
+  .aa-panes--full { max-height: 430px; overflow-y: auto; overscroll-behavior: contain; padding-right: 8px; }
+  .aa-panes--full::-webkit-scrollbar { width: 8px; }
+  .aa-panes--full::-webkit-scrollbar-thumb { background: rgba(74, 25, 66, 0.18); border-radius: 8px; }
+  .aa-panes--full::-webkit-scrollbar-track { background: transparent; }
   /* single-category panels: full-width product grid, no rail */
   .aa-mega__inner:has(> .aa-panes--full) { grid-template-columns: 1fr; }
   .aa-panes--full .aa-pane.on { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
