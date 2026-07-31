@@ -16,30 +16,17 @@
     Everything else renders as a plain STATIC link in ROW 2 — so dragging down
     to a row-1 panel never crosses another dropdown (fixes the hover cross-over).
   endcomment
-  assign hover_list = 'bracelets,rudraksha,gemstones,wearables,combos,vastu & home' | split: ','
+  assign hover_list = 'bracelets,rudraksha,gemstones,wearables,vastu & home,combos' | split: ','
   assign facet_dd = 'by purpose,by rashi,by planet' | split: ','
 -%}
 
 <nav class="header__inline-menu aa-nav">
   <ul class="list-menu list-menu--inline aa-nav__list" role="list">
-    {%- comment -%} ROW 1 — product categories with hover mega panels {%- endcomment -%}
+    {%- comment -%} ROW 1 — product categories with hover mega panels, rendered in the explicit hover_list order {%- endcomment -%}
+    {%- for want in hover_list -%}
     {%- for link in section.settings.menu.links -%}
-      {%- liquid
-        assign t_lower_main = link.title | downcase | strip
-        assign is_utility_main = false
-        for u in utility_list
-          if t_lower_main == u
-            assign is_utility_main = true
-            break
-          endif
-        endfor
-        if is_utility_main
-          continue
-        endif
-        unless hover_list contains t_lower_main
-          continue
-        endunless
-      -%}
+      {%- assign t_lower_main = link.title | downcase | strip -%}
+      {%- unless t_lower_main == want -%}{%- continue -%}{%- endunless -%}
       <li class="aa-nav__item">
         {%- if link.links != blank -%}
           <header-menu>
@@ -162,6 +149,7 @@
           </a>
         {%- endif -%}
       </li>
+    {%- endfor -%}
     {%- endfor -%}
 
     <li class="aa-nav__rowbreak" aria-hidden="true"></li>
