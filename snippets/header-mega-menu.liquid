@@ -184,9 +184,14 @@
                 </div>
                 <a class="aa-mega__viewall" href="{{ link.url }}">View All {{ link.title | escape }} &rarr;</a>
                 <div class="aa-mega__trust" aria-hidden="true">
-                  <span><b>Lab-Certified</b>&nbsp; Originals, Every Single Piece</span>
-                  <span><b>Energised &amp; Blessed</b>&nbsp; Before Dispatch</span>
-                  <span><b>Free Shipping</b>&nbsp; Across India</span>
+                  <div class="aa-mega__trust-track">
+                    {%- for i in (1..2) -%}
+                    <span><b>Lab-Certified</b>&nbsp;Originals, Every Single Piece</span><i>&#10022;</i>
+                    <span><b>Energised &amp; Blessed</b>&nbsp;Before Dispatch</span><i>&#10022;</i>
+                    <span><b>Free Shipping</b>&nbsp;Across India</span><i>&#10022;</i>
+                    <span><b>100% Natural</b>&nbsp;Stones, Lab Tested</span><i>&#10022;</i>
+                    {%- endfor -%}
+                  </div>
                 </div>
                 {%- endif -%}
               </div>
@@ -478,8 +483,10 @@
   .aa-rail__thumb { width: 38px; height: 38px; border-radius: 10px; object-fit: cover; flex: 0 0 auto; background: #fff; }
   .aa-rail__chev { margin-left: auto; color: rgba(36, 16, 25, 0.4); flex: 0 0 auto; }
   .aa-rail__item.on .aa-rail__chev { color: #E0327A; }
-  /* Compact text-list flyout (By Purpose/Rashi/Planet/Stone, Gifting) */
-  details.aa-mega { position: relative; }
+  /* Compact text-list flyout (By Purpose/Rashi/Planet/Stone, Gifting).
+     position:relative ONLY on list-mode details — on all details it re-anchors
+     the full-width mega panels to their own nav item (spills off-screen). */
+  details.aa-mega:has(> .aa-mega__panel--list) { position: relative; }
   .aa-mega__panel--list {
     left: 50% !important; right: auto !important;
     transform: translateX(-50%) !important;
@@ -487,11 +494,11 @@
     padding: 10px 0 !important;
     border-radius: 0 0 14px 14px !important;
   }
-  .aa-mlist { list-style: none; margin: 0; padding: 0; }
+  .aa-mlist { list-style: none; margin: 0; padding: 0; text-align: left; }
   .aa-mlist li a {
-    display: block; padding: 9px 22px;
-    font-family: 'Marcellus', Georgia, serif; font-size: 15px; color: #241019;
-    text-decoration: none; white-space: nowrap; transition: background 0.12s, color 0.12s;
+    display: block; padding: 7px 22px;
+    font-family: 'Marcellus', Georgia, serif; font-size: 14.5px; color: #241019;
+    text-align: left; text-decoration: none; white-space: nowrap; transition: background 0.12s, color 0.12s;
   }
   .aa-mlist li a:hover { background: rgba(224, 50, 122, 0.06); color: #4A1942; }
   .aa-mlist__all a { font-weight: 600; color: #8A2B4A !important; border-top: 1px solid rgba(36,16,25,0.08); margin-top: 6px; padding-top: 12px !important; }
@@ -531,32 +538,28 @@
     display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
   }
   .aa-gcard__price { font-size: 12.5px; font-weight: 700; color: #9A6B18; text-align: center; }
-  /* Trust carousel: one refined line at a time, slow crossfade */
+  /* Trust strip: black left-to-right running marquee */
   .aa-mega__trust {
-    position: relative; display: block; height: 42px;
-    margin: 20px 0 0;
-    border-top: 1px solid rgba(36, 16, 25, 0.08);
-    overflow: hidden;
+    display: block; margin: 20px 0 0; overflow: hidden;
+    background: #0C0A14; height: 40px;
+    border-radius: 0 0 20px 20px;
   }
-  .aa-mega__trust span {
-    position: absolute; inset: 0;
-    display: flex; align-items: center; justify-content: center;
+  .aa-mega__trust-track {
+    display: inline-flex; align-items: center; gap: 42px; height: 40px;
+    white-space: nowrap; will-change: transform;
+    animation: aa-trust-run 26s linear infinite;
+  }
+  .aa-mega__trust-track span {
     font-size: 11px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase;
-    color: #7A6E76; opacity: 0;
-    animation: aa-trust-cycle 10.5s linear infinite;
+    color: #B9AFC6;
   }
-  .aa-mega__trust span:nth-child(2) { animation-delay: 3.5s; }
-  .aa-mega__trust span:nth-child(3) { animation-delay: 7s; }
-  .aa-mega__trust b { color: #9A6B18; font-weight: 700; }
-  @keyframes aa-trust-cycle {
-    0% { opacity: 0; transform: translateY(6px); }
-    4%, 29% { opacity: 1; transform: translateY(0); }
-    33%, 100% { opacity: 0; transform: translateY(-6px); }
+  .aa-mega__trust-track b { color: #E8C87E; font-weight: 700; }
+  .aa-mega__trust-track i { color: #6B5F7A; font-style: normal; font-size: 10px; }
+  @keyframes aa-trust-run {
+    from { transform: translateX(-50%); }
+    to { transform: translateX(0); }
   }
-  @media (prefers-reduced-motion: reduce) {
-    .aa-mega__trust span { animation: none; }
-    .aa-mega__trust span:first-child { opacity: 1; }
-  }
+  @media (prefers-reduced-motion: reduce) { .aa-mega__trust-track { animation: none; } }
 
   /* Grouped mega panel (Shop By): titled text columns, quiet + scannable */
   .aa-mega__cols {
