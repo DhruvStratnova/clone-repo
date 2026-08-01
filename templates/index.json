@@ -68,6 +68,26 @@
         "view_label": "View all Zodiac Bracelets"
       }
     },
+    "rakhi_aa": {
+      "type": "aa-rd-slider",
+      "settings": {
+        "heading": "Rakhi Special",
+        "collection": "crystal-rakhi",
+        "count": 24,
+        "view_url": "shopify://collections/crystal-rakhi",
+        "view_label": "View all Rakhi"
+      }
+    },
+    "wearables_aa": {
+      "type": "aa-rd-slider",
+      "settings": {
+        "heading": "Wearables",
+        "collection": "wearables",
+        "count": 24,
+        "view_url": "shopify://collections/wearables",
+        "view_label": "View all Wearables"
+      }
+    },
     "ourshop_aa": {
       "type": "aa-rd-imgtext",
       "settings": {
@@ -572,9 +592,11 @@
     "ts_aa",
     "aura_aa",
     "ourshop_aa",
+    "rakhi_aa",
     "zodiac_aa",
-    "mani_aa",
     "spiritual_aa",
+    "mani_aa",
+    "wearables_aa",
     "combos_aa",
     "collage_aa",
     "dhanyog_aa",
