@@ -43,7 +43,7 @@
       "settings": {
         "heading": "Combos",
         "collection": "combos",
-        "count": 12,
+        "count": 50,
         "view_url": "shopify://collections/combos",
         "view_label": "View all combos"
       }
@@ -56,6 +56,16 @@
         "count": 24,
         "view_url": "shopify://collections/vastu",
         "view_label": "View all Vaastu & Home"
+      }
+    },
+    "zodiac_aa": {
+      "type": "aa-rd-slider",
+      "settings": {
+        "heading": "Zodiac Collection",
+        "collection": "rashi-bracelets",
+        "count": 24,
+        "view_url": "shopify://collections/rashi-bracelets",
+        "view_label": "View all Zodiac Bracelets"
       }
     },
     "ourshop_aa": {
@@ -562,9 +572,10 @@
     "ts_aa",
     "aura_aa",
     "ourshop_aa",
+    "zodiac_aa",
     "mani_aa",
-    "combos_aa",
     "spiritual_aa",
+    "combos_aa",
     "collage_aa",
     "dhanyog_aa",
     "products_aa",
