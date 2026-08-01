@@ -372,42 +372,75 @@
         '</div>' +
       '</div>';
   }
-  /* Line mutations are batched: rapid +/-/remove clicks collect into `desired`
-     (line key -> target qty) and flush as ONE /cart/update.js -> ONE render.
-     Only one request is ever in flight (flushing guard), so back-to-back removes
-     never race or resurrect half-animated rows. */
-  var desired = {}, flushT = null, flushing = false;
-  function flushCart() {
-    flushT = null;
-    if (flushing) { flushT = setTimeout(flushCart, 70); return; }   // wait for in-flight request
-    var keys = Object.keys(desired); if (!keys.length) return;
-    var updates = {}; keys.forEach(function (k) { updates[k] = desired[k]; });
-    desired = {};
-    flushing = true; working(true);
-    fetch('/cart/update.js', {
+  /* Surgically update cart meta (count / subtotal / bubble / empty) WITHOUT
+     rebuilding the rows — so in-progress row animations are never wiped. */
+  function applyMeta(cart) {
+    var d = drawer(); if (!d || !cart) return;
+    byVariant = {}; cartProductIds = {};
+    (cart.items || []).forEach(function (it) { byVariant[String(it.variant_id)] = it.quantity; cartProductIds[it.product_id] = 1; });
+    lastTotal = cart.total_price || 0;
+    var cnt = $('[data-aac-count]', d); if (cnt) cnt.textContent = cart.item_count;
+    var sub = $('[data-aac-subtotal]', d); if (sub) sub.textContent = money(cart.total_price);
+    d.classList.toggle('is-empty', (cart.item_count || 0) === 0);
+    updateBubble(cart.item_count); updateTotalBar(cart); syncCards();
+    if ((cart.item_count || 0) === 0) { var items = $('[data-aac-items]', d); if (items) items.innerHTML = ''; renderRecs(cart); }
+  }
+  function cartChange(body) {
+    return fetch('/cart/change.js', {
       method: 'POST', credentials: 'same-origin',
       headers: { 'Content-Type': 'application/json', Accept: 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
-      body: JSON.stringify({ updates: updates })
-    })
-      .then(function (r) { return r.json(); })
-      .then(function (cart) { render(cart); announce('Cart updated'); })
-      .catch(function () { loadCart(); })
-      .then(function () {
-        flushing = false; working(false);
-        if (Object.keys(desired).length) flushT = setTimeout(flushCart, 0);  // drain anything queued mid-flight
+      body: JSON.stringify(body)
+    }).then(function (r) { return r.json(); });
+  }
+  /* One line mutation at a time. Rapid removes queue up; each plays a confirm
+     progress bar, then the row collapses and is removed surgically (no full
+     re-render) — so back-to-back deletes never race or resurrect rows. */
+  var opQ = [], opBusy = false;
+  function pump() { if (opBusy || !opQ.length) return; opBusy = true; opQ.shift()(function () { opBusy = false; pump(); }); }
+  function removeLine(key, row) {
+    if (row.getAttribute('data-aac-doomed')) return;   // already queued for removal
+    row.setAttribute('data-aac-doomed', '1');
+    row.classList.add('aac-confirming');
+    opQ.push(function (done) {
+      var t0 = Date.now();
+      cartChange({ id: key, quantity: 0 })
+        .then(function (cart) {
+          var wait = Math.max(0, 470 - (Date.now() - t0));   // let the confirm bar finish
+          setTimeout(function () {
+            var h = row.offsetHeight; row.style.maxHeight = h + 'px';
+            requestAnimationFrame(function () { row.classList.remove('aac-confirming'); row.classList.add('aac-removing'); });
+            setTimeout(function () { if (row.parentNode) row.parentNode.removeChild(row); applyMeta(cart); announce('Item removed'); done(); }, 300);
+          }, wait);
+        })
+        .catch(function () { row.classList.remove('aac-confirming'); row.removeAttribute('data-aac-doomed'); loadCart(); done(); });
+    });
+    pump();
+  }
+  var qtyT = {};
+  function qtyChange(key, qty, row) {
+    if (row) row.classList.add('aac-busy');
+    if (qtyT[key]) clearTimeout(qtyT[key]);
+    qtyT[key] = setTimeout(function () {
+      delete qtyT[key];
+      opQ.push(function (done) {
+        cartChange({ id: key, quantity: qty })
+          .then(function (cart) {
+            if (row) {
+              row.classList.remove('aac-busy');
+              var it = (cart.items || []).filter(function (i) { return i.key === key; })[0];
+              var lt = $('[data-aac-linetotal]', row); if (lt && it) lt.textContent = money(it.final_line_price);
+            }
+            applyMeta(cart); announce('Cart updated'); done();
+          })
+          .catch(function () { if (row) row.classList.remove('aac-busy'); loadCart(); done(); });
       });
+      pump();
+    }, DEBOUNCE);
   }
   function changeLine(key, qty, row) {
     qty = Math.max(0, qty);
-    desired[key] = qty;
-    if (qty <= 0 && row) {
-      var h = row.offsetHeight; row.style.maxHeight = h + 'px';
-      requestAnimationFrame(function () { row.classList.add('aac-removing'); });
-    } else if (row) {
-      row.classList.add('aac-busy');
-    }
-    if (flushT) clearTimeout(flushT);
-    flushT = setTimeout(flushCart, qty <= 0 ? 300 : DEBOUNCE);   // 300ms > row collapse anim so it finishes first
+    if (qty <= 0) { if (row) removeLine(key, row); }
+    else qtyChange(key, qty, row);
   }
   function changeVariant(id, qty) {
     id = String(id);
@@ -426,11 +459,21 @@
       .filter(function (el) { return el.offsetParent !== null; });
   }
   function openDrawer() {
-    var d = drawer(); if (!d || d.classList.contains('active')) { if (d) d.classList.add('active'); return; }
+    var d = drawer(); if (!d) return;
+    if (d.classList.contains('active')) return;   // already open
     focusReturn = document.activeElement;
-    requestAnimationFrame(function () { d.classList.add('active', 'animate'); });
-    document.body.classList.add('overflow-hidden', 'aa-overlay-open');
     var panel = $('.aac__panel', d);
+    d.classList.add('active');                     // visibility:visible
+    if (panel) {
+      // Force a clean start at the closed position EVERY open, then animate to open,
+      // so the slide plays consistently (not just the first time).
+      panel.style.transition = 'none';
+      panel.style.transform = 'translateX(100%)';
+      void panel.offsetWidth;                       // reflow so the start position sticks
+      panel.style.transition = '';
+      requestAnimationFrame(function () { panel.style.transform = ''; });  // -> CSS .active (translateX 0), transitions in
+    }
+    document.body.classList.add('overflow-hidden', 'aa-overlay-open');
     setTimeout(function () { var f = $('[data-aac-close]', d) || panel; if (f) f.focus(); }, 60);
   }
   function closeDrawer() {

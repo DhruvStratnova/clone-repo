@@ -145,6 +145,24 @@ cart-drawer.aac.active .aac__panel { transform: translateX(0); }
               max-height 260ms var(--aac-ease), padding 260ms var(--aac-ease);
 }
 .aac__item.aac-busy { opacity: 0.55; pointer-events: none; }
+/* Remove confirmation: dim the row + run a progress bar, then it collapses out */
+.aac__item.aac-confirming { position: relative; pointer-events: none; }
+.aac__item.aac-confirming > * { opacity: 0.42; transition: opacity 160ms ease; }
+.aac__item.aac-confirming::before {
+  content: ""; position: absolute; left: 16px; right: 16px; top: 50%;
+  transform: translateY(-50%); height: 4px; border-radius: 3px;
+  background: rgba(20, 10, 15, 0.12); z-index: 2;
+}
+.aac__item.aac-confirming::after {
+  content: ""; position: absolute; left: 16px; top: 50%;
+  transform: translateY(-50%); height: 4px; width: 0; border-radius: 3px;
+  background: #151013; z-index: 3;
+  animation: aacConfirmBar 460ms var(--aac-ease) forwards;
+}
+@keyframes aacConfirmBar { from { width: 0; } to { width: calc(100% - 32px); } }
+@media (prefers-reduced-motion: reduce) {
+  .aac__item.aac-confirming::after { animation-duration: 1ms; }
+}
 
 .aac__thumb {
   display: block;
