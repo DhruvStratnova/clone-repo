@@ -51,11 +51,11 @@
     "mani_aa": {
       "type": "aa-rd-slider",
       "settings": {
-        "heading": "New Arrivals",
-        "collection": "new-arrivals",
+        "heading": "Vaastu & Home",
+        "collection": "vastu",
         "count": 24,
-        "view_url": "shopify://collections/new-arrivals",
-        "view_label": "View all New Arrivals"
+        "view_url": "shopify://collections/vastu",
+        "view_label": "View all Vaastu & Home"
       }
     },
     "ourshop_aa": {

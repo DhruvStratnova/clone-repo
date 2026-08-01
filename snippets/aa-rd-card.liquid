@@ -31,9 +31,7 @@
       <button type="button" class="aa-marr aa-marr--r" aria-label="Next image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
     {%- endif -%}
     <a href="{{ p.url }}" class="media__link" aria-label="{{ p.title | escape }}">
-      {%- assign aa_is_new = false -%}
-      {%- if p.tags contains 'new arrival' or p.tags contains 'New Arrival' or p.tags contains 'new-arrival' -%}{%- assign aa_is_new = true -%}{%- endif -%}
-      {%- if aa_is_combo -%}<span class="badge">Best Value</span>{%- elsif aa_is_new -%}<span class="badge">New Arrival</span>{%- elsif off > 0 -%}<span class="badge">-{{ off }}%</span>{%- endif -%}
+      {%- if aa_is_combo -%}<span class="badge">Best Value</span>{%- elsif off > 0 -%}<span class="badge">-{{ off }}%</span>{%- endif -%}
       {%- if p.featured_media -%}{{ p.featured_media | image_url: width: 600 | image_tag: loading: 'lazy', decoding: 'async', widths: '165,200,300,440,600', width: 600, height: 600, sizes: '(max-width: 749px) 45vw, 230px', alt: '' }}{%- endif -%}
       {%- assign aa_rv = p.metafields.reviews.rating.value.rating | default: 0 -%}
       {%- assign aa_rc = p.metafields.reviews.rating_count.value | default: 0 | plus: 0 -%}
