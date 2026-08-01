@@ -88,6 +88,20 @@
         "view_label": "View all Wearables"
       }
     },
+    "reels_aa": {
+      "type": "aa-rd-reels",
+      "blocks": {
+        "r1": { "type": "reel", "settings": {} },
+        "r2": { "type": "reel", "settings": {} },
+        "r3": { "type": "reel", "settings": {} },
+        "r4": { "type": "reel", "settings": {} }
+      },
+      "block_order": ["r1", "r2", "r3", "r4"],
+      "settings": {
+        "eyebrow": "Loved by 40 early customers",
+        "heading": "Worn and loved across India"
+      }
+    },
     "ourshop_aa": {
       "type": "aa-rd-imgtext",
       "settings": {
@@ -598,6 +612,7 @@
     "mani_aa",
     "wearables_aa",
     "combos_aa",
+    "reels_aa",
     "collage_aa",
     "dhanyog_aa",
     "products_aa",
