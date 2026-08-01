@@ -405,7 +405,7 @@
       var t0 = Date.now();
       cartChange({ id: key, quantity: 0 })
         .then(function (cart) {
-          var wait = Math.max(0, 470 - (Date.now() - t0));   // let the confirm bar finish
+          var wait = Math.max(0, 560 - (Date.now() - t0));   // let the shimmer sweep finish
           setTimeout(function () {
             var h = row.offsetHeight; row.style.maxHeight = h + 'px';
             requestAnimationFrame(function () { row.classList.remove('aac-confirming'); row.classList.add('aac-removing'); });
@@ -458,26 +458,33 @@
     return $$('a[href],button:not([disabled]),input:not([disabled]),[tabindex]:not([tabindex="-1"])', panel)
       .filter(function (el) { return el.offsetParent !== null; });
   }
+  var openAnim = null;
   function openDrawer() {
     var d = drawer(); if (!d) return;
     if (d.classList.contains('active')) return;   // already open
     focusReturn = document.activeElement;
     var panel = $('.aac__panel', d);
-    d.classList.add('active');                     // visibility:visible
-    if (panel) {
-      // Force a clean start at the closed position EVERY open, then animate to open,
-      // so the slide plays consistently (not just the first time).
-      panel.style.transition = 'none';
-      panel.style.transform = 'translateX(100%)';
-      void panel.offsetWidth;                       // reflow so the start position sticks
-      panel.style.transition = '';
-      requestAnimationFrame(function () { panel.style.transform = ''; });  // -> CSS .active (translateX 0), transitions in
-    }
+    d.classList.add('active');                     // visibility:visible; underlying transform -> 0
     document.body.classList.add('overflow-hidden', 'aa-overlay-open');
+    if (panel && panel.animate) {
+      // Drive the slide with the Web Animations API so it plays IDENTICALLY every
+      // open, independent of CSS-transition trigger timing (the cause of the
+      // inconsistent fast/slow opens). Suppress the CSS transition during it.
+      panel.style.transition = 'none';
+      if (openAnim) { try { openAnim.cancel(); } catch (e) {} }
+      openAnim = panel.animate(
+        [{ transform: 'translateX(100%)' }, { transform: 'translateX(0)' }],
+        { duration: 460, easing: 'cubic-bezier(0.22,1,0.36,1)', fill: 'both' }
+      );
+      openAnim.onfinish = function () { panel.style.transition = ''; };  // restore for close/drag
+    }
     setTimeout(function () { var f = $('[data-aac-close]', d) || panel; if (f) f.focus(); }, 60);
   }
   function closeDrawer() {
     var d = drawer(); if (!d) return;
+    var panel = $('.aac__panel', d);
+    if (openAnim) { try { openAnim.cancel(); } catch (e) {} openAnim = null; }
+    if (panel) panel.style.transition = '';   // let the CSS transition drive the slide-out
     d.classList.remove('active');
     document.body.classList.remove('overflow-hidden', 'aa-overlay-open');
     if (focusReturn && focusReturn.focus) { try { focusReturn.focus(); } catch (e) {} }
