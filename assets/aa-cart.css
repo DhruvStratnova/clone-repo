@@ -32,7 +32,7 @@ cart-drawer.aac.active { visibility: visible; pointer-events: auto; }
   background: rgba(10, 4, 14, 0);
   backdrop-filter: blur(0px);
   -webkit-backdrop-filter: blur(0px);
-  transition: background 300ms var(--aac-ease), backdrop-filter 300ms var(--aac-ease);
+  transition: background 420ms var(--aac-ease), backdrop-filter 420ms var(--aac-ease);
   -webkit-tap-highlight-color: transparent;
 }
 cart-drawer.aac.active .aac__overlay {
@@ -59,7 +59,7 @@ body:has(cart-drawer.aac.active) #MainContent {
   color: var(--aac-ink);
   box-shadow: -18px 0 50px rgba(10, 4, 14, 0.22);
   transform: translateX(100%);
-  transition: transform 280ms var(--aac-ease);
+  transition: transform 460ms var(--aac-ease);
   will-change: transform;
   font-family: var(--font-body-family, "Manrope", system-ui, sans-serif);
 }
@@ -486,15 +486,24 @@ html[data-theme="dark"] .aac__rec-add { background: var(--aac-grad); box-shadow:
 
 /* Aura AI Wallet cashback banner - full-width, centered text, curved bottom */
 .aac__cashback{
-  display:flex;align-items:center;justify-content:center;gap:9px;
-  margin:0;padding:12px 18px;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  margin:0;padding:11px 16px;
   border-radius:0 0 16px 16px;                /* curved rectangle on the bottom */
   background:linear-gradient(180deg,#FFF2F7 0%,#FFE7F0 100%);
   border-bottom:1px solid #F3C0D6;
-  color:#3A1226;font-size:13px;font-weight:600;line-height:1.32;text-align:center;
+  color:#3A1226;font-size:12.5px;font-weight:600;line-height:1.3;text-align:center;
   text-decoration:none;-webkit-tap-highlight-color:transparent;
 }
-.aac__cashback-ic{font-size:17px;flex:0 0 auto;line-height:1}
-.aac__cashback-tx{flex:0 1 auto}
-.aac__cashback-tx b{font-weight:800;color:#D6357E}
+.aac__cashback-ic{font-size:16px;flex:0 0 auto;line-height:1}
+.aac__cashback-tx{flex:0 1 auto;text-wrap:balance}
+.aac__cashback-tx b{font-weight:800;color:#D6357E;white-space:nowrap}
 .aac__cashback:active{filter:brightness(.99)}
+@media (max-width:420px){
+  .aac__cashback{gap:7px;padding:10px 14px;font-size:11.5px}
+  .aac__cashback-ic{font-size:15px}
+}
+/* Quiz "Find Match" orb must not sit over the cart drawer (or any overlay) */
+body.aa-overlay-open #aa-quiz-orb{
+  opacity:0;visibility:hidden;transform:translateX(120%);pointer-events:none;
+  transition:opacity .28s var(--aac-ease),transform .34s var(--aac-ease),visibility .34s;
+}

@@ -372,26 +372,42 @@
         '</div>' +
       '</div>';
   }
+  /* Line mutations are batched: rapid +/-/remove clicks collect into `desired`
+     (line key -> target qty) and flush as ONE /cart/update.js -> ONE render.
+     Only one request is ever in flight (flushing guard), so back-to-back removes
+     never race or resurrect half-animated rows. */
+  var desired = {}, flushT = null, flushing = false;
+  function flushCart() {
+    flushT = null;
+    if (flushing) { flushT = setTimeout(flushCart, 70); return; }   // wait for in-flight request
+    var keys = Object.keys(desired); if (!keys.length) return;
+    var updates = {}; keys.forEach(function (k) { updates[k] = desired[k]; });
+    desired = {};
+    flushing = true; working(true);
+    fetch('/cart/update.js', {
+      method: 'POST', credentials: 'same-origin',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+      body: JSON.stringify({ updates: updates })
+    })
+      .then(function (r) { return r.json(); })
+      .then(function (cart) { render(cart); announce('Cart updated'); })
+      .catch(function () { loadCart(); })
+      .then(function () {
+        flushing = false; working(false);
+        if (Object.keys(desired).length) flushT = setTimeout(flushCart, 0);  // drain anything queued mid-flight
+      });
+  }
   function changeLine(key, qty, row) {
-    if (pending[key]) clearTimeout(pending[key]);
+    qty = Math.max(0, qty);
+    desired[key] = qty;
     if (qty <= 0 && row) {
       var h = row.offsetHeight; row.style.maxHeight = h + 'px';
       requestAnimationFrame(function () { row.classList.add('aac-removing'); });
     } else if (row) {
       row.classList.add('aac-busy');
     }
-    pending[key] = setTimeout(function () {
-      working(true);
-      fetch('/cart/change.js', {
-        method: 'POST', credentials: 'same-origin',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
-        body: JSON.stringify({ id: key, quantity: qty })
-      })
-        .then(function (r) { return r.json(); })
-        .then(function (cart) { render(cart); announce(qty <= 0 ? 'Item removed' : 'Cart updated'); })
-        .catch(function () { loadCart(); })
-        .then(function () { working(false); delete pending[key]; });
-    }, qty <= 0 ? 220 : DEBOUNCE);
+    if (flushT) clearTimeout(flushT);
+    flushT = setTimeout(flushCart, qty <= 0 ? 300 : DEBOUNCE);   // 300ms > row collapse anim so it finishes first
   }
   function changeVariant(id, qty) {
     id = String(id);
