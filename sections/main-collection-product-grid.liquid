@@ -363,6 +363,23 @@
                 background:linear-gradient(130deg,#E9027A 0%,#EC1F4F 30%,#F04930 62%,#F58220 100%)!important;
                 background-color:#E9027A!important;
                 color:#fff!important;
+                box-shadow:0 3px 0 rgba(120,0,60,.42),0 10px 20px rgba(233,2,122,.30)!important;
+              }
+              /* AA: 3D curved-rectangle Add-to-cart (inline to beat cache-stuck asset) */
+              html body .product-grid .aa-pcard__cta,
+              html body #product-grid .aa-pcard__cta,
+              html body ul.product-grid li .aa-pcard__cta{
+                border-radius:13px!important;
+                background:linear-gradient(180deg,#2a2026 0%,#151013 100%)!important;
+                box-shadow:0 3px 0 rgba(0,0,0,.30),0 7px 14px rgba(20,10,15,.18)!important;
+                padding:11px 14px!important;
+                transition:background .2s,transform .12s,box-shadow .16s!important;
+              }
+              html body .product-grid .aa-pcard__cta:active,
+              html body #product-grid .aa-pcard__cta:active,
+              html body ul.product-grid li .aa-pcard__cta:active{
+                transform:translateY(2px)!important;
+                box-shadow:0 1px 0 rgba(0,0,0,.30),0 4px 9px rgba(20,10,15,.18)!important;
               }
             </style>
             <script>
