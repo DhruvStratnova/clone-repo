@@ -483,3 +483,18 @@ html[data-theme="dark"] .aac__rec-add { background: var(--aac-grad); box-shadow:
 /* add-to-cart failure notice (never leave a silent empty drawer) */
 .aac__error{margin:12px 16px;padding:11px 13px;border-radius:10px;background:#FCEDEE;border:1px solid #E8B9BE;color:#8C2733;font-size:13px;line-height:1.4}
 .aac__error[hidden]{display:none}
+
+/* Aura AI Wallet cashback banner - full-width, centered text, curved bottom */
+.aac__cashback{
+  display:flex;align-items:center;justify-content:center;gap:9px;
+  margin:0;padding:12px 18px;
+  border-radius:0 0 16px 16px;                /* curved rectangle on the bottom */
+  background:linear-gradient(180deg,#FFF2F7 0%,#FFE7F0 100%);
+  border-bottom:1px solid #F3C0D6;
+  color:#3A1226;font-size:13px;font-weight:600;line-height:1.32;text-align:center;
+  text-decoration:none;-webkit-tap-highlight-color:transparent;
+}
+.aac__cashback-ic{font-size:17px;flex:0 0 auto;line-height:1}
+.aac__cashback-tx{flex:0 1 auto}
+.aac__cashback-tx b{font-weight:800;color:#D6357E}
+.aac__cashback:active{filter:brightness(.99)}

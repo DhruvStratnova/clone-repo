@@ -34,6 +34,11 @@
         </button>
       </div>
 
+      <div class="aac__cashback">
+        <span class="aac__cashback-ic" aria-hidden="true">🎁</span>
+        <span class="aac__cashback-tx">Pay online &amp; get an extra <b>5% back in your Aura AI Wallet</b></span>
+      </div>
+
       <p class="aac__sr" data-aac-live aria-live="polite" role="status"></p>
 
       {%- comment -%} Populated state {%- endcomment -%}
@@ -153,7 +158,7 @@
 <script src="{{ 'aa-cart.js' | asset_url }}" defer="defer"></script>
 <style>
   .aac__promo{ background:linear-gradient(90deg,#FBF0E8,#FCE3EC); overflow:hidden; padding:5px 0; flex:0 0 auto; }
-  .aac__promo-track{ display:inline-flex; white-space:nowrap; will-change:transform; animation:aac-marquee 22s linear infinite; }
+  .aac__promo-track{ display:inline-flex; white-space:nowrap; will-change:transform; animation:aac-marquee 22s linear infinite reverse; }
   .aac__promo-track span{ display:inline-block; padding:0 34px; color:#3a2c3f; font:600 12px/1.25 'Jost',system-ui,sans-serif; letter-spacing:.01em; }
   .aac__promo-track b{ color:#E9027A; font-weight:700; }
   .aac__promo:hover .aac__promo-track{ animation-play-state:paused; }

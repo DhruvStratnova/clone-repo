@@ -851,6 +851,7 @@
     downloading a whole product page to scrape the card {%- endcomment -%}
 {%- if request.page_type == 'index' or request.page_type == 'collection' or request.page_type == 'search' or request.page_type == 'product' or request.page_type == 'list-collections' -%}
 <template id="aa-offers-tpl">{% render 'aa-offers' %}</template>
+{% render 'aa-cashback-guide' %}
 {%- endif -%}
 </body>
 </html>

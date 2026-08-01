@@ -4,6 +4,8 @@
   inside <template id="aa-offers-tpl"> in theme.liquid so the quick view can clone
   it instantly (no full-page fetch). Copy buttons are bound by the consumers:
   the PDP inline script and the quick view's delegated click handler.
+  The two PREPAID offers (WELCOME20, PREPAID15) carry an Aura AI Wallet cashback
+  ribbon (semi-curved tab) — pay online, get an extra 5% back in the wallet.
 {%- endcomment -%}
 <div class="aa-offers">
   <div class="aa-offers__head">
@@ -12,25 +14,28 @@
     <span class="aa-offers__timer"><span class="aa-offers__timer-lbl">Ends in</span> <span data-aa-countdown>--:--:--</span></span>
   </div>
   <div class="aa-offers__row">
-    <div class="aa-offer">
+    <div class="aa-offer aa-offer--cb">
+      <span class="aa-offer__ribbon">+5% back in Aura AI Wallet</span>
       <div class="aa-offer__t"><span class="aa-offer__ic">🎉</span>Flat 20% &middot; First Order</div>
-      <div class="aa-offer__d">Get 20% OFF on your first prepaid order! ✨ Apply at checkout.</div>
+      <div class="aa-offer__d">20% off your first prepaid order. Auto-applied at checkout.</div>
       <div class="aa-offer__foot"><span class="aa-offer__code">WELCOME20</span><button type="button" class="aa-offer__copy" data-code="WELCOME20">Copy</button></div>
     </div>
-    <div class="aa-offer">
-      <div class="aa-offer__t"><span class="aa-offer__ic">🎁</span>Flat 10% &middot; First Order</div>
-      <div class="aa-offer__d">Get 10% OFF on your first order! ✨ Apply at checkout.</div>
-      <div class="aa-offer__foot"><span class="aa-offer__code">WELCOME10</span><button type="button" class="aa-offer__copy" data-code="WELCOME10">Copy</button></div>
-    </div>
-    <div class="aa-offer">
+    <div class="aa-offer aa-offer--cb">
+      <span class="aa-offer__ribbon">+5% back in Aura AI Wallet</span>
       <div class="aa-offer__t"><span class="aa-offer__ic">💳</span>Flat 15% &middot; Prepaid</div>
-      <div class="aa-offer__d">Get 15% OFF when you pay online! ✨ Apply at checkout.</div>
+      <div class="aa-offer__d">15% off when you pay online. Auto-applied at checkout.</div>
       <div class="aa-offer__foot"><span class="aa-offer__code">PREPAID15</span><button type="button" class="aa-offer__copy" data-code="PREPAID15">Copy</button></div>
     </div>
     <div class="aa-offer">
+      <div class="aa-offer__t"><span class="aa-offer__ic">🎁</span>Flat 10% &middot; First Order</div>
+      <div class="aa-offer__d">10% off your first order. Auto-applied at checkout.</div>
+      <div class="aa-offer__foot"><span class="aa-offer__code">WELCOME10</span><button type="button" class="aa-offer__copy" data-code="WELCOME10">Copy</button></div>
+    </div>
+    <div class="aa-offer">
       <div class="aa-offer__t"><span class="aa-offer__ic">💫</span>Flat 7% &middot; Any Order</div>
-      <div class="aa-offer__d">Get 7% OFF on Every Order! ✨ Apply at checkout.</div>
+      <div class="aa-offer__d">7% off every order. Auto-applied at checkout.</div>
       <div class="aa-offer__foot"><span class="aa-offer__code">SAVE7</span><button type="button" class="aa-offer__copy" data-code="SAVE7">Copy</button></div>
     </div>
   </div>
+  <button type="button" class="aa-offers__how" data-cbg-open>How the 5% Wallet cashback works &rarr;</button>
 </div>
