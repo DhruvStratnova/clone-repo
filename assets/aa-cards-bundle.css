@@ -1669,26 +1669,30 @@ product-recommendations .aa-pcard__media img {
 .aa-pcard__cta {
   margin-top: auto;
   width: 100%;
-  background: var(--aa-ink);
+  background: linear-gradient(180deg, #2a2026 0%, var(--aa-ink) 100%);
   color: var(--aa-bg);
   border: 0;
-  border-radius: 999px;
-  padding: 10px 14px;
+  border-radius: 13px;
+  padding: 11px 14px;
   font-family: var(--aa-font-ui);
   font-size: 9.5px;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: background 200ms, transform 200ms, box-shadow 200ms;
+  box-shadow: 0 3px 0 rgba(0,0,0,.30), 0 7px 14px rgba(20,10,15,.18);
+  transition: background 200ms, transform 120ms, box-shadow 160ms;
   display: block;
 }
 .aa-pcard__cta:hover {
   background: linear-gradient(130deg, #E9027A 0%, #EC1F4F 32%, #F04930 64%, #F58220 100%) !important;
   background-color: #E9027A !important;
   color: #fff !important;
-  transform: translateY(-1px);
-  box-shadow: 0 8px 18px rgba(233,2,122,0.30);
+  box-shadow: 0 3px 0 rgba(120,0,60,.42), 0 10px 20px rgba(233,2,122,0.30);
+}
+.aa-pcard__cta:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 rgba(0,0,0,.30), 0 4px 9px rgba(20,10,15,.18);
 }
 
 /* ===== Add-to-cart loading + success states ===== */

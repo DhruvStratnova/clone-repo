@@ -142,13 +142,7 @@
                       }
                 }
           },
-          "block_order": [
-                "r1",
-                "r2",
-                "r3",
-                "r5",
-                "r4"
-          ],
+          "block_order": ["r1", "r5", "r3", "r2", "r4"],
           "settings": {
                 "heading": "Worn and loved across India"
           }
