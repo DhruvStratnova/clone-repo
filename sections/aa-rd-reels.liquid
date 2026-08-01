@@ -5,7 +5,6 @@
       <h2 class="aa-reels__title" style="font-family:'Cormorant Garamond',Georgia,serif !important;font-weight:600">{{ section.settings.heading | default: 'Worn and loved across India' }}</h2>
     </div>
     <div class="aa-reels__wrap" data-rise>
-      <button class="aa-reels__nav aa-reels__nav--prev" type="button" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
       <div class="aa-reels__rail">
         {%- for block in section.blocks -%}
           {%- assign prod = all_products[block.settings.product_handle] -%}
@@ -42,7 +41,6 @@
           </button>
         {%- endfor -%}
       </div>
-      <button class="aa-reels__nav aa-reels__nav--next" type="button" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
     </div>
   </div>
 
@@ -77,21 +75,18 @@
   .aa-reels__head{text-align:center;margin-bottom:26px}
   .aa-reels__title{margin:0;color:#241b2e;font-size:clamp(1.7rem,3.4vw,2.5rem)}
   .aa-reels__wrap{position:relative}
-  .aa-reels__rail{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding:6px 2px;scrollbar-width:none}
+  .aa-reels__rail{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding:6px 2px;scrollbar-width:none}
   .aa-reels__rail::-webkit-scrollbar{display:none}
-  .aa-reel-card{flex:0 0 auto;width:min(230px,44vw);aspect-ratio:9/16;border-radius:20px;overflow:hidden;background:#E9E1D2;position:relative;padding:0;border:0;cursor:pointer;scroll-snap-align:start;box-shadow:0 8px 22px rgba(60,40,25,.10)}
+  .aa-reel-card{flex:0 0 auto;width:min(230px,42vw);aspect-ratio:9/16;border-radius:20px;overflow:hidden;background:#E9E1D2;position:relative;padding:0;border:0;cursor:pointer;scroll-snap-align:start;box-shadow:0 8px 22px rgba(60,40,25,.10)}
   .aa-reel-card__vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
   .aa-reel-card__ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:#a8997e}
   .aa-reel-card__ph svg{width:42px;height:42px}
   .aa-reel-card__ph em{font-style:normal;font-size:.78rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase}
   .aa-reel-card__ic{position:absolute;right:12px;bottom:12px;display:flex;flex-direction:column;gap:12px;filter:drop-shadow(0 1px 3px rgba(0,0,0,.5))}
   .aa-reel-card__ic svg{width:22px;height:22px}
-  .aa-reels__nav{position:absolute;top:50%;transform:translateY(-50%);z-index:2;width:44px;height:44px;border-radius:50%;border:0;background:#fff;color:#241b2e;box-shadow:0 6px 18px rgba(0,0,0,.18);cursor:pointer;display:none;align-items:center;justify-content:center}
-  .aa-reels__nav svg{width:22px;height:22px}
-  .aa-reels__nav--prev{left:-14px}.aa-reels__nav--next{right:-14px}
-  @media(min-width:900px){.aa-reels__nav{display:flex}.aa-reels__rail{gap:20px}.aa-reel-card{width:220px}}
+  @media(min-width:900px){.aa-reels__rail{display:grid;grid-template-columns:repeat(5,1fr);gap:18px;overflow:visible}.aa-reel-card{width:auto}}
   /* modal */
-  .aa-rm{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center}
+  .aa-rm{position:fixed;inset:0;z-index:100000;display:flex;align-items:center;justify-content:center}
   .aa-rm[hidden]{display:none}
   .aa-rm__backdrop{position:absolute;inset:0;background:rgba(15,10,20,.82);backdrop-filter:blur(4px)}
   .aa-rm__stage{position:relative;z-index:2;width:min(430px,92vw);aspect-ratio:9/16;max-height:92vh;border-radius:22px;overflow:hidden;background:#000;box-shadow:0 20px 60px rgba(0,0,0,.5)}
@@ -130,9 +125,7 @@
   var rail=root.querySelector('.aa-reels__rail');
   var modal=root.querySelector('.aa-rm'), video=modal.querySelector('.aa-rm__vid');
   var cur=0;
-  root.querySelector('.aa-reels__nav--prev').addEventListener('click',function(){rail.scrollBy({left:-rail.clientWidth*0.8,behavior:'smooth'});});
-  root.querySelector('.aa-reels__nav--next').addEventListener('click',function(){rail.scrollBy({left:rail.clientWidth*0.8,behavior:'smooth'});});
-  function money(){return}
+  document.body.appendChild(modal); /* escape any transformed/overflow ancestor so fixed overlay covers viewport */
   function render(i){
     if(i<0)i=cards.length-1; if(i>=cards.length)i=0; cur=i;
     var d=cards[i].dataset;
