@@ -89,18 +89,69 @@
       }
     },
     "reels_aa": {
-      "type": "aa-rd-reels",
-      "blocks": {
-        "r1": { "type": "reel", "settings": {} },
-        "r2": { "type": "reel", "settings": {} },
-        "r3": { "type": "reel", "settings": {} },
-        "r4": { "type": "reel", "settings": {} }
-      },
-      "block_order": ["r1", "r2", "r3", "r4"],
-      "settings": {
-        "eyebrow": "Loved by 40 early customers",
-        "heading": "Worn and loved across India"
-      }
+          "type": "aa-rd-reels",
+          "blocks": {
+                "r1": {
+                      "type": "reel",
+                      "settings": {
+                            "video_mp4": "https://cdn.shopify.com/videos/c/vp/7aecff6877b34e26a6c1117f00f73e0d/7aecff6877b34e26a6c1117f00f73e0d.HD-1080p-7.2Mbps-90532232.mp4",
+                            "poster_url": "https://cdn.shopify.com/s/files/1/0947/9467/8574/files/preview_images/7aecff6877b34e26a6c1117f00f73e0d.thumbnail.0000000000.jpg?v=1785622213",
+                            "product_handle": "amazonite",
+                            "likes": "24",
+                            "shares": "9"
+                      }
+                },
+                "r2": {
+                      "type": "reel",
+                      "settings": {
+                            "video_mp4": "https://cdn.shopify.com/videos/c/vp/55108a93609a4352ac158d8af1ae4af4/55108a93609a4352ac158d8af1ae4af4.HD-1080p-7.2Mbps-90532236.mp4",
+                            "poster_url": "https://cdn.shopify.com/s/files/1/0947/9467/8574/files/preview_images/55108a93609a4352ac158d8af1ae4af4.thumbnail.0000000000.jpg?v=1785622203",
+                            "product_handle": "citrine",
+                            "likes": "18",
+                            "shares": "7"
+                      }
+                },
+                "r3": {
+                      "type": "reel",
+                      "settings": {
+                            "video_mp4": "https://cdn.shopify.com/videos/c/vp/30a1f4a1b6e24f8d8bec2929cad8061a/30a1f4a1b6e24f8d8bec2929cad8061a.HD-1080p-7.2Mbps-90532239.mp4",
+                            "poster_url": "https://cdn.shopify.com/s/files/1/0947/9467/8574/files/preview_images/30a1f4a1b6e24f8d8bec2929cad8061a.thumbnail.0000000000.jpg?v=1785622211",
+                            "product_handle": "green-aventurine-pendant",
+                            "likes": "31",
+                            "shares": "12"
+                      }
+                },
+                "r4": {
+                      "type": "reel",
+                      "settings": {
+                            "video_mp4": "https://cdn.shopify.com/videos/c/vp/4e1faf24d65a454a991a19e8a17ae899/4e1faf24d65a454a991a19e8a17ae899.HD-1080p-7.2Mbps-90532245.mp4",
+                            "poster_url": "https://cdn.shopify.com/s/files/1/0947/9467/8574/files/preview_images/4e1faf24d65a454a991a19e8a17ae899.thumbnail.0000000000.jpg?v=1785622228",
+                            "product_handle": "rhodonite-jap-mala-108-beads",
+                            "likes": "16",
+                            "shares": "6"
+                      }
+                },
+                "r5": {
+                      "type": "reel",
+                      "settings": {
+                            "video_mp4": "https://cdn.shopify.com/videos/c/vp/fe2fac35616f427a9b40eb645505821f/fe2fac35616f427a9b40eb645505821f.HD-720p-1.6Mbps-90532253.mp4",
+                            "poster_url": "https://cdn.shopify.com/s/files/1/0947/9467/8574/files/preview_images/fe2fac35616f427a9b40eb645505821f.thumbnail.0000000000.jpg?v=1785622217",
+                            "product_handle": "",
+                            "likes": "12",
+                            "shares": "5"
+                      }
+                }
+          },
+          "block_order": [
+                "r1",
+                "r2",
+                "r3",
+                "r4",
+                "r5"
+          ],
+          "settings": {
+                "heading": "Worn and loved across India"
+          }
     },
     "ourshop_aa": {
       "type": "aa-rd-imgtext",

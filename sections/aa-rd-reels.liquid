@@ -1,71 +1,187 @@
-{%- comment -%} Customer video reels: vertical cards, autoplay muted loop. Add videos per block. {%- endcomment -%}
-<section class="aa-reels sec">
+{%- comment -%} Shoppable customer video reels: grid rail -> click opens modal player with sound + product card. {%- endcomment -%}
+<section class="aa-reels sec" id="aa-reels-{{ section.id }}">
   <div class="wrap">
     <div class="aa-reels__head" data-rise>
-      {%- if section.settings.eyebrow != blank -%}<p class="aa-reels__eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
-      <h2 class="aa-reels__title">{{ section.settings.heading | default: 'Worn and loved across India' }}</h2>
+      <h2 class="aa-reels__title" style="font-family:'Cormorant Garamond',Georgia,serif !important;font-weight:600">{{ section.settings.heading | default: 'Worn and loved across India' }}</h2>
     </div>
-    <div class="aa-reels__grid" data-rise>
-      {%- for block in section.blocks -%}
-        {%- assign v = block.settings.video -%}
-        {%- capture inner -%}
-          {%- if v != blank -%}
-            <video class="aa-reel__vid" autoplay muted loop playsinline preload="metadata"{% if block.settings.poster != blank %} poster="{{ block.settings.poster | image_url: width: 640 }}"{% endif %}>
-              {%- for s in v.sources -%}<source src="{{ s.url }}" type="{{ s.mime_type }}">{%- endfor -%}
-            </video>
-          {%- else -%}
-            <div class="aa-reel__ph">
-              <span class="aa-reel__play"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2"><circle cx="24" cy="24" r="17"/><path d="M20 17l12 7-12 7z" fill="currentColor" stroke="none"/></svg></span>
-              <span class="aa-reel__lbl">Customer Reel</span>
-            </div>
-          {%- endif -%}
-        {%- endcapture -%}
-        {%- if block.settings.link != blank -%}
-          <a class="aa-reel" href="{{ block.settings.link }}" {{ block.shopify_attributes }}>{{ inner }}</a>
-        {%- else -%}
-          <div class="aa-reel" {{ block.shopify_attributes }}>{{ inner }}</div>
-        {%- endif -%}
-      {%- endfor -%}
+    <div class="aa-reels__wrap" data-rise>
+      <button class="aa-reels__nav aa-reels__nav--prev" type="button" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <div class="aa-reels__rail">
+        {%- for block in section.blocks -%}
+          {%- assign prod = all_products[block.settings.product_handle] -%}
+          {%- assign vid = prod.selected_or_first_available_variant.id | default: prod.variants.first.id -%}
+          {%- assign price = prod.price -%}
+          {%- assign cap = prod.compare_at_price -%}
+          {%- assign off = 0 -%}
+          {%- if cap > price -%}{%- assign off = cap | minus: price | times: 100 | divided_by: cap -%}{%- endif -%}
+          <button class="aa-reel-card" type="button" {{ block.shopify_attributes }}
+            data-video="{{ block.settings.video_mp4 | escape }}"
+            data-poster="{{ block.settings.poster_url | escape }}"
+            data-likes="{{ block.settings.likes | default: '0' }}"
+            data-shares="{{ block.settings.shares | default: '0' }}"
+            {%- if prod != blank %}
+            data-vid="{{ vid }}"
+            data-title="{{ prod.title | escape }}"
+            data-price="{{ price | money }}"
+            data-compare="{% if cap > price %}{{ cap | money }}{% endif %}"
+            data-off="{% if off > 0 %}{{ off }}% Off{% endif %}"
+            data-img="{{ prod.featured_image | image_url: width: 200 }}"
+            data-url="{{ prod.url }}"
+            {%- endif %}>
+            {%- if block.settings.video_mp4 != blank -%}
+              <video class="aa-reel-card__vid" muted autoplay loop playsinline preload="metadata"{% if block.settings.poster_url != blank %} poster="{{ block.settings.poster_url }}"{% endif %}>
+                <source src="{{ block.settings.video_mp4 }}" type="video/mp4">
+              </video>
+            {%- else -%}
+              <span class="aa-reel-card__ph"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2"><circle cx="24" cy="24" r="17"/><path d="M20 17l12 7-12 7z" fill="currentColor" stroke="none"/></svg><em>Customer Reel</em></span>
+            {%- endif -%}
+            <span class="aa-reel-card__ic">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 1 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8z"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4z"/></svg>
+            </span>
+          </button>
+        {%- endfor -%}
+      </div>
+      <button class="aa-reels__nav aa-reels__nav--next" type="button" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
     </div>
+  </div>
+
+  {%- comment -%} Modal player {%- endcomment -%}
+  <div class="aa-rm" hidden aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="aa-rm__backdrop" data-rm-close></div>
+    <button class="aa-rm__arrow aa-rm__arrow--prev" type="button" aria-label="Previous reel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <div class="aa-rm__stage">
+      <button class="aa-rm__x" type="button" aria-label="Close" data-rm-close><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      <button class="aa-rm__mute" type="button" aria-label="Mute"><svg class="aa-rm__mute-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M23 9l-6 6M17 9l6 6"/></svg><svg class="aa-rm__mute-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" hidden><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a9 9 0 0 1 0 14"/></svg></button>
+      <video class="aa-rm__vid" playsinline loop></video>
+      <div class="aa-rm__rail">
+        <span class="aa-rm__stat"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 1 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8z"/></svg><b data-rm-likes>0</b></span>
+        <span class="aa-rm__stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4z"/></svg><b data-rm-shares>0</b></span>
+      </div>
+      <a class="aa-rm__prod" data-rm-prodlink href="#">
+        <img data-rm-img src="" alt="">
+        <div class="aa-rm__prod-info">
+          <span class="aa-rm__prod-title" data-rm-title></span>
+          <span class="aa-rm__prod-price"><b data-rm-price></b> <s data-rm-compare></s> <em data-rm-off></em></span>
+        </div>
+        <span class="aa-rm__prod-open"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></span>
+      </a>
+      <button class="aa-rm__atc" type="button" data-rm-atc>Add to cart</button>
+    </div>
+    <button class="aa-rm__arrow aa-rm__arrow--next" type="button" aria-label="Next reel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
   </div>
 </section>
 
 <style>
   .aa-reels{padding:48px 0}
-  .aa-reels__head{text-align:center;margin-bottom:28px}
-  .aa-reels__eyebrow{margin:0 0 10px;color:#FF2E93;font-size:.78rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase}
-  .aa-reels__title{margin:0;color:#241b2e;font-weight:800;line-height:1.1;font-size:clamp(1.7rem,3.6vw,2.6rem);font-family:'Poppins','Nunito',system-ui,-apple-system,'Segoe UI',sans-serif}
-  .aa-reels__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
-  .aa-reel{position:relative;display:block;aspect-ratio:9/16;border-radius:24px;overflow:hidden;background:#E9E1D2;text-decoration:none}
-  .aa-reel__vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
-  .aa-reel__ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;color:#b3a58c}
-  .aa-reel__play{width:44px;height:44px;color:#a8997e}
-  .aa-reel__play svg{width:100%;height:100%}
-  .aa-reel__lbl{font-size:.82rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#a8997e}
-  @media(max-width:749px){
-    .aa-reels__grid{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:64%;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;gap:14px;padding:0 4px 6px}
-    .aa-reels__grid::-webkit-scrollbar{display:none}
-    .aa-reel{scroll-snap-align:center}
+  .aa-reels__head{text-align:center;margin-bottom:26px}
+  .aa-reels__title{margin:0;color:#241b2e;font-size:clamp(1.7rem,3.4vw,2.5rem)}
+  .aa-reels__wrap{position:relative}
+  .aa-reels__rail{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding:6px 2px;scrollbar-width:none}
+  .aa-reels__rail::-webkit-scrollbar{display:none}
+  .aa-reel-card{flex:0 0 auto;width:min(230px,44vw);aspect-ratio:9/16;border-radius:20px;overflow:hidden;background:#E9E1D2;position:relative;padding:0;border:0;cursor:pointer;scroll-snap-align:start;box-shadow:0 8px 22px rgba(60,40,25,.10)}
+  .aa-reel-card__vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+  .aa-reel-card__ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:#a8997e}
+  .aa-reel-card__ph svg{width:42px;height:42px}
+  .aa-reel-card__ph em{font-style:normal;font-size:.78rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase}
+  .aa-reel-card__ic{position:absolute;right:12px;bottom:12px;display:flex;flex-direction:column;gap:12px;filter:drop-shadow(0 1px 3px rgba(0,0,0,.5))}
+  .aa-reel-card__ic svg{width:22px;height:22px}
+  .aa-reels__nav{position:absolute;top:50%;transform:translateY(-50%);z-index:2;width:44px;height:44px;border-radius:50%;border:0;background:#fff;color:#241b2e;box-shadow:0 6px 18px rgba(0,0,0,.18);cursor:pointer;display:none;align-items:center;justify-content:center}
+  .aa-reels__nav svg{width:22px;height:22px}
+  .aa-reels__nav--prev{left:-14px}.aa-reels__nav--next{right:-14px}
+  @media(min-width:900px){.aa-reels__nav{display:flex}.aa-reels__rail{gap:20px}.aa-reel-card{width:220px}}
+  /* modal */
+  .aa-rm{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center}
+  .aa-rm[hidden]{display:none}
+  .aa-rm__backdrop{position:absolute;inset:0;background:rgba(15,10,20,.82);backdrop-filter:blur(4px)}
+  .aa-rm__stage{position:relative;z-index:2;width:min(430px,92vw);aspect-ratio:9/16;max-height:92vh;border-radius:22px;overflow:hidden;background:#000;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+  .aa-rm__vid{width:100%;height:100%;object-fit:cover;display:block}
+  .aa-rm__x,.aa-rm__mute{position:absolute;top:12px;z-index:4;width:40px;height:40px;border-radius:50%;border:0;background:rgba(255,255,255,.92);color:#241b2e;cursor:pointer;display:flex;align-items:center;justify-content:center}
+  .aa-rm__x{right:12px}.aa-rm__x svg{width:20px;height:20px}
+  .aa-rm__mute{left:12px;background:rgba(0,0,0,.45);color:#fff}.aa-rm__mute svg{width:20px;height:20px}
+  .aa-rm__rail{position:absolute;right:12px;top:50%;transform:translateY(-50%);z-index:4;display:flex;flex-direction:column;gap:20px;align-items:center;color:#fff;filter:drop-shadow(0 1px 4px rgba(0,0,0,.6))}
+  .aa-rm__stat{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:.8rem;font-weight:700}
+  .aa-rm__stat svg{width:28px;height:28px}
+  .aa-rm__prod{position:absolute;left:12px;right:12px;bottom:64px;z-index:4;display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.94);border-radius:14px;padding:8px 10px;text-decoration:none;color:#241b2e}
+  .aa-rm__prod img{width:44px;height:44px;border-radius:9px;object-fit:cover;flex:0 0 auto;background:#eee}
+  .aa-rm__prod-info{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+  .aa-rm__prod-title{font-size:.86rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .aa-rm__prod-price{font-size:.85rem;display:flex;align-items:center;gap:6px}
+  .aa-rm__prod-price s{color:#9a8f80;font-size:.78rem}.aa-rm__prod-price em{color:#1a8a44;font-style:normal;font-size:.78rem;font-weight:700}
+  .aa-rm__prod-open svg{width:18px;height:18px;color:#6b5f52}
+  .aa-rm__atc{position:absolute;left:12px;right:12px;bottom:12px;z-index:4;height:46px;border:0;border-radius:12px;background:#1f1420;color:#fff;font-size:.95rem;font-weight:700;cursor:pointer}
+  .aa-rm__arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:48px;height:48px;border-radius:50%;border:0;background:rgba(255,255,255,.92);color:#241b2e;cursor:pointer;display:none;align-items:center;justify-content:center}
+  .aa-rm__arrow svg{width:24px;height:24px}
+  .aa-rm__arrow--prev{left:max(16px,calc(50% - min(430px,92vw)/2 - 64px))}
+  .aa-rm__arrow--next{right:max(16px,calc(50% - min(430px,92vw)/2 - 64px))}
+  .aa-rm.has-prod .aa-rm__vid{}
+  .aa-rm:not(.has-prod) .aa-rm__prod,.aa-rm:not(.has-prod) .aa-rm__atc{display:none}
+  @media(min-width:900px){.aa-rm__arrow{display:flex}}
+  @media(max-width:899px){
+    .aa-rm__stage{width:100vw;height:100dvh;max-height:none;aspect-ratio:auto;border-radius:0}
+    .aa-rm__prod{bottom:76px}.aa-rm__atc{bottom:20px}
   }
 </style>
+
+<script>
+(function(){
+  var root=document.getElementById('aa-reels-{{ section.id }}'); if(!root) return;
+  var cards=[].slice.call(root.querySelectorAll('.aa-reel-card'));
+  var rail=root.querySelector('.aa-reels__rail');
+  var modal=root.querySelector('.aa-rm'), video=modal.querySelector('.aa-rm__vid');
+  var cur=0;
+  root.querySelector('.aa-reels__nav--prev').addEventListener('click',function(){rail.scrollBy({left:-rail.clientWidth*0.8,behavior:'smooth'});});
+  root.querySelector('.aa-reels__nav--next').addEventListener('click',function(){rail.scrollBy({left:rail.clientWidth*0.8,behavior:'smooth'});});
+  function money(){return}
+  function render(i){
+    if(i<0)i=cards.length-1; if(i>=cards.length)i=0; cur=i;
+    var d=cards[i].dataset;
+    video.src=d.video||''; if(d.poster)video.poster=d.poster;
+    video.muted=false; video.currentTime=0; var p=video.play(); if(p&&p.catch)p.catch(function(){video.muted=true;video.play();});
+    setMuteIcon();
+    modal.querySelector('[data-rm-likes]').textContent=d.likes||'0';
+    modal.querySelector('[data-rm-shares]').textContent=d.shares||'0';
+    if(d.vid){
+      modal.classList.add('has-prod');
+      modal.querySelector('[data-rm-img]').src=d.img||'';
+      modal.querySelector('[data-rm-title]').textContent=d.title||'';
+      modal.querySelector('[data-rm-price]').innerHTML=d.price||'';
+      modal.querySelector('[data-rm-compare]').innerHTML=d.compare||'';
+      modal.querySelector('[data-rm-off]').textContent=d.off||'';
+      modal.querySelector('[data-rm-prodlink]').setAttribute('href',d.url||'#');
+      modal.querySelector('[data-rm-atc]').dataset.vid=d.vid;
+    } else { modal.classList.remove('has-prod'); }
+  }
+  function open(i){modal.hidden=false;modal.setAttribute('aria-hidden','false');document.documentElement.style.overflow='hidden';render(i);}
+  function close(){modal.hidden=true;modal.setAttribute('aria-hidden','true');document.documentElement.style.overflow='';try{video.pause();video.removeAttribute('src');video.load();}catch(e){}}
+  function setMuteIcon(){var on=modal.querySelector('.aa-rm__mute-on'),off=modal.querySelector('.aa-rm__mute-off');if(video.muted){on.hidden=true;off.hidden=false;}else{on.hidden=false;off.hidden=true;}}
+  cards.forEach(function(c,i){c.addEventListener('click',function(){open(i);});});
+  modal.querySelectorAll('[data-rm-close]').forEach(function(b){b.addEventListener('click',close);});
+  modal.querySelector('.aa-rm__arrow--prev').addEventListener('click',function(){render(cur-1);});
+  modal.querySelector('.aa-rm__arrow--next').addEventListener('click',function(){render(cur+1);});
+  modal.querySelector('.aa-rm__mute').addEventListener('click',function(){video.muted=!video.muted;setMuteIcon();});
+  modal.querySelector('.aa-rm__vid').addEventListener('click',function(){if(video.paused)video.play();else video.pause();});
+  modal.querySelector('[data-rm-atc]').addEventListener('click',function(){var v=this.dataset.vid;if(v&&window.AA_addToCart)window.AA_addToCart(v,1);});
+  document.addEventListener('keydown',function(e){if(modal.hidden)return;if(e.key==='Escape')close();if(e.key==='ArrowRight')render(cur+1);if(e.key==='ArrowLeft')render(cur-1);});
+})();
+</script>
 
 {% schema %}
 {
   "name": "AA Reels",
   "settings": [
-    {"type":"text","id":"eyebrow","label":"Eyebrow","default":"Loved by 40 early customers"},
     {"type":"text","id":"heading","label":"Heading","default":"Worn and loved across India"}
   ],
   "blocks": [
     {"type":"reel","name":"Reel","settings":[
-      {"type":"video","id":"video","label":"Video (vertical 9:16)"},
-      {"type":"image_picker","id":"poster","label":"Poster image (optional)"},
-      {"type":"url","id":"link","label":"Link (optional)"}
+      {"type":"url","id":"video_mp4","label":"Video MP4 URL"},
+      {"type":"url","id":"poster_url","label":"Poster image URL"},
+      {"type":"text","id":"product_handle","label":"Product handle (for shoppable card)"},
+      {"type":"text","id":"likes","label":"Likes count","default":"0"},
+      {"type":"text","id":"shares","label":"Shares count","default":"0"}
     ]}
   ],
-  "max_blocks": 8,
-  "presets": [
-    {"name":"AA Reels","blocks":[{"type":"reel"},{"type":"reel"},{"type":"reel"},{"type":"reel"}]}
-  ]
+  "max_blocks": 12,
+  "presets": [{"name":"AA Reels"}]
 }
 {% endschema %}
