@@ -6,7 +6,7 @@ a{text-decoration:none;color:inherit} img{display:block;max-width:100%} .ph{disp
 .grain{position:fixed;inset:0;z-index:9999;pointer-events:none;opacity:.04;mix-blend-mode:multiply;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 .wrap{max-width:1240px;margin:0 auto;padding:0 36px}
 
-.sec{padding:46px 0} .sec.tight{padding:32px 0}
+.sec{padding:46px 0} .sec.tight{padding:32px 0} .sec--slider{padding:22px 0}
 /* Pull the first section (Top Selling) up tight beneath the hero banner.
    NOTE: slideshow-component is a TAG, not a class — no leading dot. */
 .shopify-section:has(.slideshow.banner) + .shopify-section .sec{padding-top:14px !important}
@@ -152,6 +152,7 @@ html body .sec h2,html body .sec h3,html body .efeat .ov h3,html body .rtop h2,h
   .wrap{padding-inline:16px}
   .sec{padding:50px 0}
   .sec.tight{padding:38px 0}
+  .sec--slider{padding:26px 0}
   /* Kill the gap between the hero banner and the first section (Top Selling) */
   .shopify-section:has(.slideshow.banner) + .shopify-section .sec{padding-top:0 !important}
   .shopify-section:has(.slideshow.banner) + .shopify-section{margin-top:-42px !important}

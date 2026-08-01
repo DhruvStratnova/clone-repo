@@ -2,7 +2,7 @@
   assign coll = collections[section.settings.collection]
   assign limit = section.settings.count | default: 12
 -%}
-<section class="sec">
+<section class="sec sec--slider">
   <div class="wrap"><div class="sh" data-rise><h2 style="font-family:'Cormorant Garamond',Georgia,serif !important;font-weight:600">{{ section.settings.heading | default: 'Top Selling' }}</h2></div></div>
   <div class="fb" data-rise>
     <div class="sbtn sprev">{% render 'aa-rd-icon', name: 'caret-left' %}</div>
@@ -15,9 +15,6 @@
       {%- endfor -%}
     </div>
   </div>
-  {%- if section.settings.view_url != blank -%}
-  <div class="wrap"><div class="view-wrap" data-rise><a class="view" href="{{ section.settings.view_url }}">{{ section.settings.view_label | default: 'View all' }} {% render 'aa-rd-icon', name: 'arrow-right' %}</a></div></div>
-  {%- endif -%}
 </section>
 {% schema %}
 {"name":"AA Slider","settings":[
