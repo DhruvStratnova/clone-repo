@@ -50,17 +50,13 @@
     <button class="aa-rm__arrow aa-rm__arrow--prev" type="button" aria-label="Previous reel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
     <div class="aa-rm__stage">
       <div class="aa-rm__top">
-        <button class="aa-rm__ctrl" type="button" data-rm-fs aria-label="Fullscreen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/></svg></button>
-        <span class="aa-rm__top-r">
-          <button class="aa-rm__ctrl aa-rm__mute" type="button" aria-label="Toggle sound"></button>
-          <button class="aa-rm__ctrl aa-rm__x" type="button" aria-label="Close" data-rm-close><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
-        </span>
+        <button class="aa-rm__ctrl aa-rm__x" type="button" aria-label="Close" data-rm-close><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+        <button class="aa-rm__ctrl aa-rm__mute" type="button" aria-label="Toggle sound"></button>
       </div>
       <video class="aa-rm__vid" playsinline loop></video>
       <div class="aa-rm__rail">
         <button class="aa-rm__stat" type="button" data-rm-like aria-label="Like"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 1 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8z"/></svg><b data-rm-likes>0</b></button>
         <button class="aa-rm__stat" type="button" data-rm-share aria-label="Share"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4z"/></svg><b data-rm-shares>0</b></button>
-        <a class="aa-rm__stat" data-rm-cartlink href="/cart" aria-label="Cart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg><b data-rm-cart>0</b></a>
       </div>
       <a class="aa-rm__prod" data-rm-prodlink href="#">
         <img data-rm-img src="" alt="">
@@ -73,12 +69,10 @@
       <button class="aa-rm__atc" type="button" data-rm-atc>Add to cart</button>
       <div class="aa-rm__share-sheet" hidden>
         <div class="aa-rm__share-card">
-          <div class="aa-rm__share-head"><b>Share on</b><button type="button" data-rm-share-close aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
-          <div class="aa-rm__share-opts">
-            <a class="aa-rm__share-opt" data-rm-wa target="_blank" rel="noopener"><span class="aa-rm__share-ic" style="background:#25D366"><svg viewBox="0 0 24 24" fill="#fff"><path d="M12 2a10 10 0 0 0-8.5 15.2L2 22l4.9-1.4A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8s.7-2 .9-2.2c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5s.8 1.9.8 2 .1.3 0 .5c-.1.2-.2.3-.3.5l-.4.5c-.1.1-.3.3-.1.6s.6 1 1.3 1.6c.9.8 1.6 1 1.9 1.2s.4.1.6-.1c.2-.2.7-.8.9-1s.4-.2.6-.1 1.5.7 1.7.9c.3.1.4.2.5.3.1.2.1.7-.1 1.2z"/></svg></span>WhatsApp</a>
-            <a class="aa-rm__share-opt" data-rm-x target="_blank" rel="noopener"><span class="aa-rm__share-ic" style="background:#000"><svg viewBox="0 0 24 24" fill="#fff"><path d="M18.9 2H22l-7 8 8.2 12h-6.4l-5-7.3L6 22H2.9l7.5-8.6L2 2h6.6l4.5 6.7L18.9 2zm-1.1 18h1.7L7.3 3.8H5.5L17.8 20z"/></svg></span>X</a>
-            <button class="aa-rm__share-opt" type="button" data-rm-copy><span class="aa-rm__share-ic" style="background:#7c3aed"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg></span>Copy link</button>
-          </div>
+          <button class="aa-rm__share-x" type="button" data-rm-share-close aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+          <p class="aa-rm__share-title">Loved this? Send it to someone</p>
+          <a class="aa-rm__share-btn aa-rm__share-btn--wa" data-rm-wa target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.5 15.2L2 22l4.9-1.4A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8s.7-2 .9-2.2c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5s.8 1.9.8 2 .1.3 0 .5c-.1.2-.2.3-.3.5l-.4.5c-.1.1-.3.3-.1.6s.6 1 1.3 1.6c.9.8 1.6 1 1.9 1.2s.4.1.6-.1c.2-.2.7-.8.9-1s.4-.2.6-.1 1.5.7 1.7.9c.3.1.4.2.5.3.1.2.1.7-.1 1.2z"/></svg>Share on WhatsApp</a>
+          <button class="aa-rm__share-btn aa-rm__share-btn--copy" type="button" data-rm-copy><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg><span>Copy link</span></button>
         </div>
       </div>
     </div>
@@ -103,9 +97,9 @@
   .aa-reel-card__ic svg{width:22px;height:22px}
   @media(min-width:900px){.aa-reels__rail{display:grid;grid-template-columns:repeat(5,1fr);gap:18px;overflow:visible}.aa-reel-card{width:auto}}
   /* modal */
-  .aa-rm{position:fixed;inset:0;z-index:100000;display:flex;align-items:center;justify-content:center}
+  .aa-rm{position:fixed;inset:0;z-index:100000;display:flex;align-items:center;justify-content:center;font-family:'Jost',system-ui,sans-serif;background:rgba(10,7,16,.9);-webkit-backdrop-filter:blur(9px);backdrop-filter:blur(9px)}
   .aa-rm[hidden]{display:none}
-  .aa-rm__backdrop{position:absolute;inset:0;background:rgba(15,10,20,.82);backdrop-filter:blur(4px)}
+  .aa-rm__backdrop{position:absolute;inset:0;background:transparent}
   .aa-rm__stage{position:relative;z-index:2;width:min(430px,92vw);aspect-ratio:9/16;max-height:92vh;border-radius:22px;overflow:hidden;background:#000;box-shadow:0 20px 60px rgba(0,0,0,.5)}
   .aa-rm__vid{width:100%;height:100%;object-fit:cover;display:block}
   .aa-rm__top{position:absolute;top:12px;left:12px;right:12px;z-index:5;display:flex;justify-content:space-between;align-items:center}
@@ -118,15 +112,15 @@
   .aa-rm__stat svg{width:28px;height:28px;transition:transform .15s}
   .aa-rm__stat:active svg{transform:scale(.85)}
   .aa-rm__stat.is-liked svg{fill:#ff3b5c;stroke:#ff3b5c;color:#ff3b5c}
-  .aa-rm__share-sheet{position:absolute;inset:0;z-index:6;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.35)}
+  .aa-rm__share-sheet{position:absolute;inset:0;z-index:6;display:flex;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.45)}
   .aa-rm__share-sheet[hidden]{display:none}
-  .aa-rm__share-card{background:#fff;border-radius:16px;width:88%;max-width:340px;padding:16px 18px 20px;box-shadow:0 16px 40px rgba(0,0,0,.3)}
-  .aa-rm__share-head{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #eee;padding-bottom:12px;margin-bottom:16px}
-  .aa-rm__share-head b{font-size:1rem;color:#241b2e}
-  .aa-rm__share-head button{background:none;border:0;color:#241b2e;cursor:pointer}.aa-rm__share-head svg{width:20px;height:20px}
-  .aa-rm__share-opts{display:flex;justify-content:space-around;gap:8px}
-  .aa-rm__share-opt{display:flex;flex-direction:column;align-items:center;gap:8px;font-size:.78rem;font-weight:600;color:#241b2e;text-decoration:none;background:none;border:0;cursor:pointer}
-  .aa-rm__share-ic{width:56px;height:56px;border-radius:16px;display:flex;align-items:center;justify-content:center}.aa-rm__share-ic svg{width:28px;height:28px}
+  .aa-rm__share-card{position:relative;background:#fff;border-radius:22px 22px 0 0;width:100%;padding:26px 20px calc(20px + env(safe-area-inset-bottom));box-shadow:0 -10px 40px rgba(0,0,0,.3);display:flex;flex-direction:column;gap:12px}
+  .aa-rm__share-x{position:absolute;top:16px;right:16px;background:none;border:0;color:#8a8092;cursor:pointer;padding:0}.aa-rm__share-x svg{width:20px;height:20px}
+  .aa-rm__share-title{margin:0 0 6px;font-size:1.02rem;font-weight:700;color:#241b2e}
+  .aa-rm__share-btn{display:flex;align-items:center;justify-content:center;gap:10px;height:50px;border-radius:14px;font-size:.95rem;font-weight:700;cursor:pointer;text-decoration:none;border:0}
+  .aa-rm__share-btn svg{width:22px;height:22px}
+  .aa-rm__share-btn--wa{background:#25D366;color:#fff}
+  .aa-rm__share-btn--copy{background:#fff;color:#241b2e;border:1.5px solid #e5dfd4}
   .aa-rm__prod{position:absolute;left:12px;right:12px;bottom:64px;z-index:4;display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.94);border-radius:14px;padding:8px 10px;text-decoration:none;color:#241b2e}
   .aa-rm__prod img{width:44px;height:44px;border-radius:9px;object-fit:cover;flex:0 0 auto;background:#eee}
   .aa-rm__prod-info{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
@@ -153,16 +147,16 @@
   var root=document.getElementById('aa-reels-{{ section.id }}'); if(!root) return;
   var cards=[].slice.call(root.querySelectorAll('.aa-reel-card'));
   var modal=root.querySelector('.aa-rm'), video=modal.querySelector('.aa-rm__vid');
-  var muteBtn=modal.querySelector('.aa-rm__mute'), stage=modal.querySelector('.aa-rm__stage');
+  var muteBtn=modal.querySelector('.aa-rm__mute');
   var likeBtn=modal.querySelector('[data-rm-like]'), shareBtn=modal.querySelector('[data-rm-share]');
   var sheet=modal.querySelector('.aa-rm__share-sheet');
-  var cur=0, liked={};
+  var cur=0, liked={}, tapTimer=null;
   document.body.appendChild(modal); /* escape any transformed/overflow ancestor so fixed overlay covers viewport */
   var IC_MUTE='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M23 9l-6 6M17 9l6 6"/></svg>';
   var IC_SOUND='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a9 9 0 0 1 0 14"/></svg>';
   function setMuteIcon(){muteBtn.innerHTML=video.muted?IC_MUTE:IC_SOUND;}
-  function cartCount(){var b=document.querySelector('#cart-icon-bubble .cart-count-bubble');if(b){var m=b.textContent.match(/\d+/);if(m)return m[0];}return '0';}
   function renderLike(){var base=parseInt(cards[cur].dataset.likes||'0',10);var on=!!liked[cur];modal.querySelector('[data-rm-likes]').textContent=base+(on?1:0);likeBtn.classList.toggle('is-liked',on);}
+  function like(){liked[cur]=!liked[cur];renderLike();}
   function shareUrl(){var d=cards[cur].dataset;return d.url?(location.origin+d.url):location.href;}
   function render(i){
     if(i<0)i=cards.length-1; if(i>=cards.length)i=0; cur=i;
@@ -171,7 +165,6 @@
     video.muted=false; video.currentTime=0; var p=video.play(); if(p&&p.catch)p.catch(function(){video.muted=true;video.play();setMuteIcon();});
     setMuteIcon(); renderLike();
     modal.querySelector('[data-rm-shares]').textContent=d.shares||'0';
-    modal.querySelector('[data-rm-cart]').textContent=cartCount();
     if(d.vid){
       modal.classList.add('has-prod');
       modal.querySelector('[data-rm-img]').src=d.img||'';
@@ -189,22 +182,24 @@
   modal.querySelectorAll('[data-rm-close]').forEach(function(b){b.addEventListener('click',close);});
   modal.querySelector('.aa-rm__arrow--prev').addEventListener('click',function(){render(cur-1);});
   modal.querySelector('.aa-rm__arrow--next').addEventListener('click',function(){render(cur+1);});
-  muteBtn.addEventListener('click',function(){video.muted=!video.muted;setMuteIcon();});
-  video.addEventListener('click',function(){if(video.paused)video.play();else video.pause();});
-  likeBtn.addEventListener('click',function(){liked[cur]=!liked[cur];renderLike();});
-  modal.querySelector('[data-rm-fs]').addEventListener('click',function(){var el=stage;if(!document.fullscreenElement){(el.requestFullscreen||el.webkitRequestFullscreen||function(){}).call(el);}else{(document.exitFullscreen||document.webkitExitFullscreen||function(){}).call(document);}});
+  muteBtn.addEventListener('click',function(e){e.stopPropagation();video.muted=!video.muted;setMuteIcon();});
+  /* single tap = play/pause, double tap = like (Instagram-style) */
+  video.addEventListener('click',function(){
+    if(tapTimer){clearTimeout(tapTimer);tapTimer=null;liked[cur]=true;renderLike();return;}
+    tapTimer=setTimeout(function(){tapTimer=null;if(video.paused)video.play();else video.pause();},240);
+  });
+  likeBtn.addEventListener('click',function(e){e.stopPropagation();like();});
   /* share */
-  shareBtn.addEventListener('click',function(){
-    var u=encodeURIComponent(shareUrl());
-    modal.querySelector('[data-rm-wa]').href='https://wa.me/?text='+u;
-    modal.querySelector('[data-rm-x]').href='https://twitter.com/intent/tweet?url='+u;
+  shareBtn.addEventListener('click',function(e){
+    e.stopPropagation();
+    modal.querySelector('[data-rm-wa]').href='https://wa.me/?text='+encodeURIComponent(shareUrl());
     sheet.hidden=false;
   });
   modal.querySelector('[data-rm-share-close]').addEventListener('click',function(){sheet.hidden=true;});
   sheet.addEventListener('click',function(e){if(e.target===sheet)sheet.hidden=true;});
-  modal.querySelector('[data-rm-copy]').addEventListener('click',function(){var b=this;try{navigator.clipboard.writeText(shareUrl());}catch(e){}var t=b.querySelector('span:last-child')||b;var o=b.textContent;b.lastChild.textContent=' Copied!';setTimeout(function(){b.lastChild.textContent='Copy link';},1400);});
-  /* add to cart -> add then close modal (cart drawer opens) */
-  modal.querySelector('[data-rm-atc]').addEventListener('click',function(){var v=this.dataset.vid;if(v&&window.AA_addToCart)window.AA_addToCart(v,1);close();});
+  modal.querySelector('[data-rm-copy]').addEventListener('click',function(){try{navigator.clipboard.writeText(shareUrl());}catch(e){}var s=this.querySelector('span');if(s){s.textContent='Copied!';setTimeout(function(){s.textContent='Copy link';},1400);}});
+  /* add to cart -> close modal first, then add (cart drawer opens) */
+  modal.querySelector('[data-rm-atc]').addEventListener('click',function(){var v=this.dataset.vid;close();if(v&&window.AA_addToCart)window.AA_addToCart(v,1);});
   document.addEventListener('keydown',function(e){if(modal.hidden)return;if(e.key==='Escape'){if(!sheet.hidden){sheet.hidden=true;return;}close();}if(e.key==='ArrowRight')render(cur+1);if(e.key==='ArrowLeft')render(cur-1);});
 })();
 </script>
