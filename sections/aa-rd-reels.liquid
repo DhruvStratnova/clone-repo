@@ -73,11 +73,12 @@
 <style>
   .aa-reels{padding:48px 0}
   .aa-reels__head{text-align:center;margin-bottom:26px}
-  .aa-reels__title{margin:0;color:#241b2e;font-size:clamp(1.7rem,3.4vw,2.5rem)}
+  .aa-reels__title{margin:0;color:#241b2e;font-size:clamp(1.5rem,3vw,2.1rem)}
   .aa-reels__wrap{position:relative}
   .aa-reels__rail{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding:6px 2px;scrollbar-width:none}
   .aa-reels__rail::-webkit-scrollbar{display:none}
-  .aa-reel-card{flex:0 0 auto;width:min(230px,42vw);aspect-ratio:9/16;border-radius:20px;overflow:hidden;background:#E9E1D2;position:relative;padding:0;border:0;cursor:pointer;scroll-snap-align:start;box-shadow:0 8px 22px rgba(60,40,25,.10)}
+  .aa-reel-card{flex:0 0 auto;width:min(230px,42vw);aspect-ratio:9/16;border-radius:20px;overflow:hidden;background:#E9E1D2;position:relative;padding:0;border:0;cursor:pointer;scroll-snap-align:start;box-shadow:0 8px 22px rgba(60,40,25,.10);outline:none;-webkit-tap-highlight-color:transparent}
+  .aa-reel-card:focus,.aa-reel-card:focus-visible{outline:none;box-shadow:0 8px 22px rgba(60,40,25,.10)}
   .aa-reel-card__vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
   .aa-reel-card__ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:#a8997e}
   .aa-reel-card__ph svg{width:42px;height:42px}
@@ -146,7 +147,7 @@
     } else { modal.classList.remove('has-prod'); }
   }
   function open(i){modal.hidden=false;modal.setAttribute('aria-hidden','false');document.documentElement.style.overflow='hidden';render(i);}
-  function close(){modal.hidden=true;modal.setAttribute('aria-hidden','true');document.documentElement.style.overflow='';try{video.pause();video.removeAttribute('src');video.load();}catch(e){}}
+  function close(){modal.hidden=true;modal.setAttribute('aria-hidden','true');document.documentElement.style.overflow='';if(document.activeElement&&document.activeElement.blur)document.activeElement.blur();try{video.pause();video.removeAttribute('src');video.load();}catch(e){}}
   function setMuteIcon(){var on=modal.querySelector('.aa-rm__mute-on'),off=modal.querySelector('.aa-rm__mute-off');if(video.muted){on.hidden=true;off.hidden=false;}else{on.hidden=false;off.hidden=true;}}
   cards.forEach(function(c,i){c.addEventListener('click',function(){open(i);});});
   modal.querySelectorAll('[data-rm-close]').forEach(function(b){b.addEventListener('click',close);});
