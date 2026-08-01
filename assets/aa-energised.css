@@ -112,11 +112,13 @@ html[data-theme="dark"] .aa-cart-nrg b{color:#EDE7FA}
 .aa-offers__row{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
 .aa-offers__row::-webkit-scrollbar{height:0}
 .aa-offer{flex:0 0 186px;scroll-snap-align:start;background:#fff;border:1.5px dashed #E2CFC0;border-radius:12px;
-  padding:13px 14px;display:flex;flex-direction:column;gap:7px;min-height:126px;box-shadow:0 3px 10px rgba(36,16,25,.04)}
+  padding:12px 13px;display:flex;flex-direction:column;gap:5px;
+  -webkit-mask:radial-gradient(circle 9px at 0 50%,transparent 8.5px,#000 9px),radial-gradient(circle 9px at 100% 50%,transparent 8.5px,#000 9px);
+  -webkit-mask-composite:source-in;mask:radial-gradient(circle 9px at 0 50%,transparent 8.5px,#000 9px),radial-gradient(circle 9px at 100% 50%,transparent 8.5px,#000 9px);mask-composite:intersect}
 .aa-offer__t{display:flex;align-items:center;gap:8px;font-weight:800;font-size:1.02rem;color:#241019;line-height:1.2}
 .aa-offer__ic{font-size:1.1rem;flex:0 0 auto}
-.aa-offer__d{font-size:.86rem;color:#6b6058;line-height:1.4;flex:1}
-.aa-offer__foot{display:flex;align-items:center;justify-content:space-between;gap:8px;border-top:1px dashed #E2CFC0;padding-top:9px}
+.aa-offer__d{font-size:.82rem;color:#6b6058;line-height:1.38;flex:1}
+.aa-offer__foot{display:flex;align-items:center;justify-content:space-between;gap:8px;border-top:1px dashed #E2CFC0;padding-top:8px}
 .aa-offer__code{font-weight:800;font-size:.98rem;letter-spacing:.03em;color:#C0392B;font-family:ui-monospace,"SF Mono",monospace}
 .aa-offer__copy{background:none;border:none;cursor:pointer;font-weight:700;font-size:.9rem;color:#241019;padding:2px 4px}
 .aa-offer__copy.is-copied{color:#0f7a4d}
@@ -129,6 +131,38 @@ html[data-theme="dark"] .aa-offer__d{color:#b3aacb}
 html[data-theme="dark"] .aa-offer__foot{border-color:#3a2d4a}
 html[data-theme="dark"] .aa-offer__copy{color:#EDE7FA}
 html[data-theme="dark"] .aa-offer__code{color:#ff8a7a}
+
+/* Aura AI Wallet cashback ribbon - a semi-curved tab that sits on TOP of the two
+   PREPAID offer cards (WELCOME20, PREPAID15). Dark cosmic band + gold text so it
+   reads as a bonus on those cards only. Whole ribbon deep-links to the app. */
+.aa-offer--cb{position:relative;overflow:hidden;border-color:#C79A54}
+.aa-offer__ribbon{
+  display:block;margin:-13px -14px 10px;padding:9px 12px;
+  border-radius:11px 11px 0 0;                               /* straight rectangle, rounded top only */
+  background:linear-gradient(110deg,#2a1030 0%,#43193a 60%,#5a2145 100%);
+  color:#F3CE7E;font-weight:800;font-size:.9rem;letter-spacing:.01em;
+  text-align:center;text-decoration:none;line-height:1.2;white-space:nowrap;
+  box-shadow:0 4px 10px -5px rgba(30,10,40,.6);
+  -webkit-tap-highlight-color:transparent;position:relative;overflow:hidden;
+}
+.aa-offer__ribbon::after{content:"";position:absolute;top:0;left:-60%;width:38%;height:100%;
+  background:linear-gradient(105deg,transparent,rgba(255,255,255,.22),transparent);
+  transform:skewX(-18deg);animation:aa-rib-shine 4.5s ease-in-out infinite;pointer-events:none}
+@keyframes aa-rib-shine{0%{left:-60%}45%,100%{left:150%}}
+.aa-offer__ribbon:active{filter:brightness(1.12)}
+html[data-theme="dark"] .aa-offer--cb{border-color:#6a4a2a}
+@media (max-width:430px){ .aa-offer__ribbon{font-size:.82rem;padding:8px 8px} }
+@media (prefers-reduced-motion:reduce){ .aa-offer__ribbon::after{display:none} }
+
+
+/* "How cashback works" trigger - clean pink text link, centered under the offers row */
+.aa-offers:has(.aa-offers__how){display:flex;flex-direction:column}
+.aa-offers__how{align-self:center;margin:9px auto 0;padding:2px 4px;
+  background:none;border:none;cursor:pointer;font:inherit;font-weight:800;font-size:.86rem;
+  color:#D6357E;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1.5px;
+  text-decoration-color:rgba(214,53,126,.4);-webkit-tap-highlight-color:transparent;transition:color .15s}
+.aa-offers__how:hover{color:#B02566;text-decoration-color:#D6357E}
+html[data-theme="dark"] .aa-offers__how{color:#FF8FB8}
 
 /* ---------- energised note sits inside the price row, one line, aligned right ---------- */
 .aa-pdp-pricerow:has(.aa-echip){flex-wrap:nowrap;gap:8px 20px}

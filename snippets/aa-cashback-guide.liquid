@@ -1,0 +1,102 @@
+{%- comment -%}
+  Aura AI Wallet cashback guide popup. Rendered once globally (theme.liquid) so the
+  modal exists on every page; opened via delegated clicks on any [data-cbg-open]
+  trigger (the "How it works" link lives in aa-offers.liquid, cloned into quick view).
+  Same open/close/Escape + move-to-body pattern as the ring size guide (aa-gsg).
+  Clean, minimal styling. Scoped .aa-cbg-* classes; self-contained CSS + JS.
+{%- endcomment -%}
+<div class="aa-cbg" data-cbg hidden>
+  <div class="aa-cbg__overlay" data-cbg-close></div>
+  <div class="aa-cbg__panel" role="dialog" aria-modal="true" aria-label="How Aura AI Wallet cashback works">
+    <div class="aa-cbg__head">
+      <div class="aa-cbg__htxt">
+        <div class="aa-cbg__title">How Wallet Cashback Works</div>
+        <div class="aa-cbg__sub">Pay online and get 5% back for the Aura&nbsp;AI app.</div>
+      </div>
+      <button type="button" class="aa-cbg__x" data-cbg-close aria-label="Close">&#10005;</button>
+    </div>
+
+    <div class="aa-cbg__body">
+      <ol class="aa-cbg__steps">
+        <li><span class="aa-cbg__n">1</span><div><b>Apply a prepaid offer</b><span>Use code WELCOME20 (first order) or PREPAID15 at checkout.</span></div></li>
+        <li><span class="aa-cbg__n">2</span><div><b>Pay online</b><span>Complete payment with UPI, card or netbanking.</span></div></li>
+        <li><span class="aa-cbg__n">3</span><div><b>Cashback lands in your wallet</b><span>5% is credited to your Aura&nbsp;AI Wallet once the order is confirmed.</span></div></li>
+        <li><span class="aa-cbg__n">4</span><div><b>Use it in the Aura&nbsp;AI app</b><span>Open the app and spend your balance on chats with your astrologer.</span></div></li>
+      </ol>
+
+      <ul class="aa-cbg__facts">
+        <li>The cashback is extra, you still keep the discount today.</li>
+        <li>Use it for chats in the Aura&nbsp;AI app.</li>
+        <li>Prepaid orders only (pay online, not COD).</li>
+      </ul>
+
+      <a class="aa-cbg__cta" href="https://astroaura.ai/app/chat" target="_blank" rel="noopener">Open my Wallet</a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .aa-cbg{position:fixed;inset:0;z-index:100000;display:flex;align-items:center;justify-content:center;padding:18px;
+    background:rgba(40,12,28,.42);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+  .aa-cbg[hidden]{display:none}
+  .aa-cbg__overlay{position:absolute;inset:0}
+  .aa-cbg__panel{position:relative;width:100%;max-width:412px;max-height:88vh;overflow:auto;
+    background:#fff;border:1.5px solid #F2A9C7;border-radius:18px;
+    box-shadow:0 24px 64px -18px rgba(180,40,95,.4);
+    animation:aa-cbg-in .2s cubic-bezier(.22,1,.36,1) both}
+  @keyframes aa-cbg-in{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
+  .aa-cbg__head{position:relative;padding:18px 50px 15px 20px;background:#FFF3F8;border-bottom:1px solid #F6D3E1}
+  .aa-cbg__title{font-weight:800;font-size:1.14rem;letter-spacing:-.01em;color:#241019;line-height:1.2}
+  .aa-cbg__sub{font-size:.86rem;color:#6b6058;margin-top:3px}
+  .aa-cbg__sub b{color:#D6357E}
+  .aa-cbg__x{position:absolute;top:14px;right:14px;width:30px;height:30px;border:none;cursor:pointer;
+    background:#FBE0EC;color:#C43D74;border-radius:50%;font-size:14px;line-height:1;display:grid;place-items:center}
+  .aa-cbg__x:hover{background:#F6CBDD}
+  .aa-cbg__body{padding:18px 20px 20px;background:#fff;border-radius:0 0 17px 17px}
+  .aa-cbg__steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:15px}
+  .aa-cbg__steps li{display:flex;gap:13px;align-items:flex-start}
+  .aa-cbg__n{flex:0 0 auto;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;
+    font-weight:800;font-size:.8rem;color:#fff !important;background:#1f1420}
+  .aa-cbg__steps li div{display:flex;flex-direction:column;gap:2px}
+  .aa-cbg__steps li b{font-size:.94rem;color:#241019;font-weight:800}
+  .aa-cbg__steps li span{font-size:.85rem;color:#6b6058;line-height:1.45}
+  .aa-cbg__facts{margin:18px 0 0;padding:15px 0 0;border-top:1px solid #F0E4E9;list-style:none;display:flex;flex-direction:column;gap:9px}
+  .aa-cbg__facts li{position:relative;padding-left:20px;font-size:.85rem;color:#5a5058;line-height:1.45}
+  .aa-cbg__facts li::before{content:"";position:absolute;left:2px;top:.5em;width:6px;height:6px;border-radius:50%;background:#1f1420}
+  .aa-cbg__cta{display:block;text-align:center;margin-top:20px;padding:14px 16px;border-radius:12px;
+    font-weight:800;font-size:.98rem;text-decoration:none;color:#fff;background:#1f1420}
+  .aa-cbg__cta:hover{background:#000}
+  /* mobile: bottom sheet, full breathing room */
+  @media (max-width:480px){
+    .aa-cbg{padding:0;align-items:flex-end}
+    .aa-cbg__panel{max-width:none;max-height:92vh;border-radius:20px 20px 0 0;border-bottom:none;
+      animation:aa-cbg-up .24s cubic-bezier(.22,1,.36,1) both}
+    .aa-cbg__head{padding:18px 50px 14px 18px}
+    .aa-cbg__body{padding:16px 18px calc(20px + env(safe-area-inset-bottom))}
+  }
+  @keyframes aa-cbg-up{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+  html[data-theme="dark"] .aa-cbg__panel{background:#1c1622;border-color:#8a3a63}
+  html[data-theme="dark"] .aa-cbg__head{background:#251826;border-color:#4a2338}
+  html[data-theme="dark"] .aa-cbg__body{background:#1c1622}
+  html[data-theme="dark"] .aa-cbg__facts{border-color:#332a38}
+  html[data-theme="dark"] .aa-cbg__title,html[data-theme="dark"] .aa-cbg__steps li b{color:#FCE8F1}
+  html[data-theme="dark"] .aa-cbg__sub,html[data-theme="dark"] .aa-cbg__steps li span,html[data-theme="dark"] .aa-cbg__facts li{color:#c3aeb8}
+  html[data-theme="dark"] .aa-cbg__x{background:#4a2338;color:#FF8FB8}
+  @media (prefers-reduced-motion:reduce){ .aa-cbg__panel{animation:none} }
+</style>
+
+<script>
+  (function(){
+    if(window.__aaCbgInit) return; window.__aaCbgInit=true;
+    function modal(){ return document.querySelector('[data-cbg]'); }
+    function open(){ var m=modal(); if(!m)return; if(m.parentElement!==document.body) document.body.appendChild(m);
+      m.hidden=false; document.documentElement.style.overflow='hidden'; }
+    function close(){ var m=modal(); if(!m)return; m.hidden=true; document.documentElement.style.overflow=''; }
+    document.addEventListener('click',function(e){
+      var t=e.target.closest('[data-cbg-open]');
+      if(t){ e.preventDefault(); open(); return; }
+      if(e.target.closest('[data-cbg-close]')){ e.preventDefault(); close(); }
+    });
+    document.addEventListener('keydown',function(e){ var m=modal(); if(e.key==='Escape'&&m&&!m.hidden) close(); });
+  })();
+</script>
