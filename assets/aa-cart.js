@@ -463,16 +463,18 @@
     if (d.classList.contains('active')) return;   // already open
     focusReturn = document.activeElement;
     var panel = $('.aac__panel', d);
-    // Pure class toggle: the panel's closed transform is always committed in the DOM,
-    // so adding .active transitions it in consistently every time (no inline-style or
-    // WAAPI hacks that could leave a stuck transition = the fast/slow inconsistency).
+    // Two-step so the slide transition actually fires: .active makes it visible at the
+    // CLOSED position (painted this frame), then .aac-in (next frame) moves the transform
+    // -> the browser has a start state to transition FROM. (Combining them makes the
+    // panel snap in because visibility + transform change in the same frame.)
     d.classList.add('active');
     document.body.classList.add('overflow-hidden', 'aa-overlay-open');
+    requestAnimationFrame(function () { requestAnimationFrame(function () { d.classList.add('aac-in'); }); });
     setTimeout(function () { var f = $('[data-aac-close]', d) || panel; if (f) f.focus(); }, 60);
   }
   function closeDrawer() {
     var d = drawer(); if (!d) return;
-    d.classList.remove('active');   // CSS transition drives the slide-out
+    d.classList.remove('active', 'aac-in');   // CSS transition drives the slide-out
     document.body.classList.remove('overflow-hidden', 'aa-overlay-open');
     if (focusReturn && focusReturn.focus) { try { focusReturn.focus(); } catch (e) {} }
   }

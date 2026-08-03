@@ -63,19 +63,11 @@ body:has(cart-drawer.aac.active) #MainContent {
   will-change: transform;
   font-family: var(--font-body-family, "Manrope", system-ui, sans-serif);
 }
-cart-drawer.aac.active .aac__panel { transform: translateX(0); }
+/* .aac-in (added a frame after .active) drives the slide, so visibility (from
+   .active) and the transform change land on separate frames — otherwise the
+   browser skips the transition and the panel snaps in (desktop bug). */
+cart-drawer.aac.active.aac-in .aac__panel { transform: translateX(0); }
 .aac__panel.aac-dragging { transition: none; }
-/* Mobile: bottom-sheet — slides up from the bottom instead of in from the right */
-@media (max-width: 749px) {
-  .aac__panel {
-    top: auto; right: 0; left: 0; bottom: 0;
-    width: 100%; height: min(94vh, 100%);
-    border-radius: 22px 22px 0 0;
-    box-shadow: 0 -16px 46px rgba(10, 4, 14, 0.26);
-    transform: translateY(100%);
-  }
-  cart-drawer.aac.active .aac__panel { transform: translateY(0); }
-}
 
 /* header */
 .aac__head {
@@ -471,7 +463,7 @@ cart-drawer.aac.is-empty .aac__empty { display: flex; }
     border-radius: 0;
     transform: translateY(100%);
   }
-  cart-drawer.aac.active .aac__panel { transform: translateY(0); }
+  cart-drawer.aac.active.aac-in .aac__panel { transform: translateY(0); }
   .aac__head { padding-top: calc(14px + env(safe-area-inset-top)); }
 }
 
