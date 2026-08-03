@@ -44,11 +44,9 @@ cart-drawer.aac.active .aac__overlay {
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
 }
-/* blur the page content behind the cart (the old code's backdrop logic) */
-body:has(cart-drawer.aac.active) #MainContent {
-  filter: blur(4px);
-  transition: filter 300ms var(--aac-ease);
-}
+/* NOTE: the page-behind blur is handled by the overlay's backdrop-filter above.
+   A `filter: blur()` on the whole #MainContent forced a full-page raster on open,
+   which blocked the first frames of the panel slide (made it look instant). Removed. */
 
 /* panel */
 .aac__panel {
