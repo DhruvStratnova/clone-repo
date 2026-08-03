@@ -463,18 +463,16 @@
     if (d.classList.contains('active')) return;   // already open
     focusReturn = document.activeElement;
     var panel = $('.aac__panel', d);
-    // Two-step so the slide transition actually fires: .active makes it visible at the
-    // CLOSED position (painted this frame), then .aac-in (next frame) moves the transform
-    // -> the browser has a start state to transition FROM. (Combining them makes the
-    // panel snap in because visibility + transform change in the same frame.)
+    // Single class toggle. The panel is always painted (off-screen, clipped by
+    // .aac__root overflow:hidden — not visibility:hidden), so adding .active
+    // transitions the transform in reliably every time, on desktop and mobile.
     d.classList.add('active');
     document.body.classList.add('overflow-hidden', 'aa-overlay-open');
-    requestAnimationFrame(function () { requestAnimationFrame(function () { d.classList.add('aac-in'); }); });
     setTimeout(function () { var f = $('[data-aac-close]', d) || panel; if (f) f.focus(); }, 60);
   }
   function closeDrawer() {
     var d = drawer(); if (!d) return;
-    d.classList.remove('active', 'aac-in');   // CSS transition drives the slide-out
+    d.classList.remove('active');   // CSS transition drives the slide-out
     document.body.classList.remove('overflow-hidden', 'aa-overlay-open');
     if (focusReturn && focusReturn.focus) { try { focusReturn.focus(); } catch (e) {} }
   }
