@@ -67,8 +67,13 @@ body:has(cart-drawer.aac.active) #MainContent {
   will-change: transform;
   font-family: var(--font-body-family, "Manrope", system-ui, sans-serif);
 }
-cart-drawer.aac.active .aac__panel { transform: translateX(0); }
-.aac__panel.aac-dragging { transition: none; }
+/* Open via @keyframes (not a transition): an animation always runs its keyframes
+   from -> to when applied, so it can NEVER be skipped for lack of a painted start
+   state (the transition snap bug). transform:translateX(0) is the resting/fallback. */
+cart-drawer.aac.active .aac__panel { transform: translateX(0); animation: aacSlideInX 560ms var(--aac-ease) both; }
+@keyframes aacSlideInX { from { transform: translateX(100%); } to { transform: translateX(0); } }
+@keyframes aacSlideInY { from { transform: translateY(100%); } to { transform: translateY(0); } }
+.aac__panel.aac-dragging { transition: none; animation: none; }
 
 /* header */
 .aac__head {
@@ -464,7 +469,7 @@ cart-drawer.aac.is-empty .aac__empty { display: flex; }
     border-radius: 0;
     transform: translateY(100%);
   }
-  cart-drawer.aac.active .aac__panel { transform: translateY(0); }
+  cart-drawer.aac.active .aac__panel { transform: translateY(0); animation-name: aacSlideInY; }
   .aac__head { padding-top: calc(14px + env(safe-area-inset-top)); }
 }
 
