@@ -29,7 +29,7 @@
 
 {%- elsif part == 'plateaddon' -%}
 
-  {%- comment -%} Rs.49 Raw Selenite Plate add-on (Add button, opt-in). Shows only on bracelet /
+  {%- comment -%} Rs.149 Raw Selenite Plate add-on (Add button, opt-in). Shows only on bracelet /
      crystals PDPs. The Add button is a real /cart/add form (aa-cart-v9 intercepts -> instant
      drawer add). Reads the plate by handle 'raw-selenite-plate'; button is disabled until that
      product exists. {%- endcomment -%}
@@ -49,7 +49,7 @@
         <div class="aa-plate__sub">Cleanse &amp; charge your {{ aa_fp_noun }} on real selenite</div>
       </div>
       <div class="aa-plate__cta">
-        <span class="aa-plate__price">+&#8377;49</span>
+        <span class="aa-plate__price">+&#8377;149</span>
         {%- if aa_pvid != blank -%}
           <form action="/cart/add" method="post" class="aa-plate__form">
             <input type="hidden" name="id" value="{{ aa_pvid }}">
