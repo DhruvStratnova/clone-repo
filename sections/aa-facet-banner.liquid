@@ -20,6 +20,27 @@
   assign bg = 'aa-facet-bg-' | append: h | append: '.jpg'
   assign tagline = collection.metafields.custom.banner_tagline
 -%}
+{%- if collection.handle == 'gifting' -%}
+  {%- comment -%} Gifting: pre-designed full-bleed banner (text baked into the art),
+     separate desktop + mobile crops, no overlay. Same aspect spec as aa-collection-hero. {%- endcomment -%}
+  <div class="aa-gh">
+    <picture>
+      <source media="(max-width: 749px)"
+        srcset="{{ 'aa-banner-gifting-mobile.jpg' | asset_img_url: '600x' }} 600w, {{ 'aa-banner-gifting-mobile.jpg' | asset_img_url: '900x' }} 900w, {{ 'aa-banner-gifting-mobile.jpg' | asset_img_url: '1200x' }} 1200w"
+        sizes="100vw">
+      <img class="aa-gh__img"
+        src="{{ 'aa-banner-gifting.jpg' | asset_img_url: '1500x' }}"
+        srcset="{{ 'aa-banner-gifting.jpg' | asset_img_url: '750x' }} 750w, {{ 'aa-banner-gifting.jpg' | asset_img_url: '1100x' }} 1100w, {{ 'aa-banner-gifting.jpg' | asset_img_url: '1500x' }} 1500w, {{ 'aa-banner-gifting.jpg' | asset_img_url: '2000x' }} 2000w, {{ 'aa-banner-gifting.jpg' | asset_img_url: '2520x' }} 2520w"
+        sizes="100vw" alt="{{ collection.title | escape }}"
+        width="2520" height="1080" loading="eager" fetchpriority="high">
+    </picture>
+  </div>
+  {% style %}
+    .aa-gh { line-height: 0; }
+    .aa-gh__img { display: block; width: 100%; height: auto; aspect-ratio: 2520 / 1080; object-fit: cover; }
+    @media (max-width: 749px) { .aa-gh__img { aspect-ratio: 4 / 5; } }
+  {% endstyle %}
+{%- else -%}
 <div class="aa-fb">
   <img class="aa-fb__bg" src="{{ bg | asset_img_url: '2400x' }}" srcset="{{ bg | asset_img_url: '1200x' }} 1200w, {{ bg | asset_img_url: '1800x' }} 1800w, {{ bg | asset_img_url: '2400x' }} 2400w" sizes="100vw" alt="" loading="eager" fetchpriority="high" width="2400" height="960">
   <div class="aa-fb__inner page-width">
@@ -55,6 +76,7 @@
     .aa-fb__sub { margin: 0 auto; max-width: 340px; font-size: 15px; }
   }
 {% endstyle %}
+{%- endif -%}
 
 {% schema %}
 {
