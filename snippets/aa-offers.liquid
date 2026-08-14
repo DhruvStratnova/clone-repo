@@ -15,6 +15,12 @@
   </div>
   <div class="aa-offers__row">
     <div class="aa-offer aa-offer--cb">
+      <span class="aa-offer__ribbon">🎁 Free 5 Mukhi Rudraksha</span>
+      <div class="aa-offer__t"><span class="aa-offer__ic">🎁</span>Worth &#8377;599 &middot; Yours free</div>
+      <div class="aa-offer__d">Free with any order. Nepal origin, Shiva-blessed.</div>
+      <div class="aa-offer__foot"><span class="aa-offer__code">FREE</span><button type="button" class="aa-offer__copy" data-aa-claim-mukhi>Claim</button></div>
+    </div>
+    <div class="aa-offer aa-offer--cb">
       <span class="aa-offer__ribbon">+5% back in Aura AI Wallet</span>
       <div class="aa-offer__t"><span class="aa-offer__ic">🎉</span>Flat 20% &middot; First Order</div>
       <div class="aa-offer__d">20% off your first prepaid order. Auto-applied at checkout.</div>
@@ -39,3 +45,37 @@
   </div>
   <button type="button" class="aa-offers__how" data-cbg-open>How the 5% Wallet cashback works &rarr;</button>
 </div>
+<style>
+  @keyframes aa-shake{10%,90%{transform:translateX(-1px)}20%,80%{transform:translateX(2px)}30%,50%,70%{transform:translateX(-4px)}40%,60%{transform:translateX(4px)}}
+  .aa-offer__copy.aa-shake{animation:aa-shake .4s both}
+</style>
+<script>
+(function(){
+  if(window.__aaMukhiClaim)return; window.__aaMukhiClaim=true;
+  function flash(b,txt,ms){ b.disabled=true; b.textContent=txt; setTimeout(function(){ b.textContent='Claim'; b.disabled=false; b.classList.remove('aa-shake'); }, ms||1600); }
+  function shake(b,txt){ b.classList.remove('aa-shake'); void b.offsetWidth; b.classList.add('aa-shake'); flash(b,txt,1600); }
+  document.addEventListener('click',function(e){
+    var b=e.target.closest('[data-aa-claim-mukhi]'); if(!b)return;
+    // Capture phase + stop: our button reuses .aa-offer__copy for styling, so block the
+    // theme's copy-code handler from also firing and flashing "Copied".
+    e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation();
+    if(b.disabled)return;
+    if(typeof window.AA_giftStatus!=='function'){ window.location.href='/cart'; return; }
+    b.disabled=true;
+    window.AA_giftStatus().then(function(st){
+      b.disabled=false;
+      if(st==='add'){
+        // Qualifies and gift not yet in cart: attach it free + open cart.
+        if(typeof window.AA_claimMukhi==='function') window.AA_claimMukhi();
+        flash(b,'Added ✓',1800);
+      } else if(st==='in_cart'){
+        // Already claimed: shake + tell them, don't re-open.
+        shake(b,'Already in cart');
+      } else {
+        // Empty / no qualifying item: shake + tell them, don't open the cart.
+        shake(b,'Add an item first');
+      }
+    }).catch(function(){ b.disabled=false; window.location.href='/cart'; });
+  }, true);
+})();
+</script>

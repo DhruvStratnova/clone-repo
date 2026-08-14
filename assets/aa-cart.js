@@ -22,10 +22,44 @@
   var recsCache = {};       // productId -> rendered rail HTML ('' = none); persists across Turbo navs
   var productCache = {};     // handle -> variants[] (for the in-cart variant changer)
   var lastTotal = 0;        // cents, last known subtotal (optimistic)
+  // --- FREEMUKHI free-gift-with-purchase (automatic discount zeroes it in cart) ---
+  var GIFT_VID = '51117996835118';                                  // free 5 Mukhi Rudraksha (Standard / no cap / no cert)
+  var GIFT_PRICE = 59900;                                           // cents, for the struck-through ₹599
+  var GIFT_EXCLUDE = { 'Charging Plate': 1, 'Energising Oil': 1 };  // types that DON'T count as a qualifying paid buy
+  var giftBusy = false;                                             // reentrancy guard for gift add/remove round-trips
+  var giftUnavailable = false;                                      // set when the gift can't be attached free (sold out / throttled / not zeroed) -> stop retrying
+  function giftDeclined() { try { return sessionStorage.getItem('aa_mukhi_off') === '1'; } catch (e) { return false; } }
+  function setGiftDeclined(v) { try { v ? sessionStorage.setItem('aa_mukhi_off', '1') : sessionStorage.removeItem('aa_mukhi_off'); } catch (e) {} }
+  // Offers-card "Claim" hook: un-dismiss the gift + clear the unavailable latch, re-sync, show it.
+  // NOTE: never clobber giftBusy here — if an op is in flight, loadCart's render will attach the gift once it lands.
+  window.AA_claimMukhi = function () { setGiftDeclined(false); giftUnavailable = false; loadCart(); openDrawer(); };
+  // Offers-card Claim gate -> 'in_cart' (gift already there) | 'add' (qualifies, attach it) | 'empty' (nothing qualifies)
+  window.AA_giftStatus = function () {
+    return fetch('/cart.js', { headers: { Accept: 'application/json' }, credentials: 'same-origin' })
+      .then(function (r) { return r.json(); })
+      .then(function (c) { return giftLineOf(c) ? 'in_cart' : (qualifyingCount(c) >= 1 ? 'add' : 'empty'); })
+      .catch(function () { return 'empty'; });
+  };
   function cartCount() { var t = 0; for (var k in byVariant) t += byVariant[k]; return t; }
   function setCount(n) { var d = drawer(); var c = d && $('[data-aac-count]', d); if (c) c.textContent = n; }
   function setSubtotal(cents) { var d = drawer(); var s = d && $('[data-aac-subtotal]', d); if (s) s.textContent = money(cents); updateTotalBar({ total_price: cents }); }
   function rowHTML(it) {
+    if (String(it.variant_id) === GIFT_VID) {
+      // Free-gift row: locked qty, struck ₹599 → FREE, still removable so the customer can decline.
+      var gsrc = it.image ? (it.image + (it.image.indexOf('?') >= 0 ? '&' : '?') + 'width=180') : '';
+      var isFree = (it.final_line_price === 0);
+      return '<li class="aac__item aac__item--gift" data-aac-line data-key="' + esc(it.key) + '" data-variant="' + it.variant_id + '">' +
+          '<a class="aac__thumb" href="' + esc(it.url) + '" tabindex="-1" aria-hidden="true">' + (gsrc ? '<img src="' + esc(gsrc) + '" alt="" width="90" height="90" loading="lazy">' : '') + '</a>' +
+          '<div class="aac__info">' +
+            '<span class="aac__gift-tag">🎁 Free gift</span>' +
+            '<a class="aac__name" href="' + esc(it.url) + '">' + esc(it.product_title) + '</a>' +
+            '<div class="aac__ctl">' +
+              '<button type="button" class="aac__remove" data-aac-remove aria-label="Remove free gift">Remove</button>' +
+            '</div>' +
+          '</div>' +
+          '<div class="aac__linetotal aac__linetotal--gift">' + (isFree ? '<s>' + money(GIFT_PRICE) + '</s> <b>FREE</b>' : money(it.final_line_price)) + '</div>' +
+        '</li>';
+    }
     var opt;
     if (it.product_type === 'Gemstone' && it.options_with_values) {
       // 143-variant products: labelled setting lines, no in-cart switcher
@@ -95,6 +129,80 @@
     syncCards();
     renderRecs(cart);
     hydrateVariants();
+    renderGiftCta(cart);
+    enforceGift(cart);
+  }
+  function qualifyingCount(cart) {
+    // paid items that qualify the order for the free gift (everything except the gift itself and the excluded types)
+    var n = 0;
+    (cart.items || []).forEach(function (it) {
+      if (String(it.variant_id) === GIFT_VID) return;
+      if (GIFT_EXCLUDE[it.product_type]) return;
+      n += it.quantity;
+    });
+    return n;
+  }
+  function giftLineOf(cart) {
+    var g = null;
+    (cart.items || []).forEach(function (it) { if (String(it.variant_id) === GIFT_VID) g = it; });
+    return g;
+  }
+  function renderGiftCta(cart) {
+    var d = drawer(); var el = d && $('[data-aac-gift-cta]', d); if (!el) return;
+    var hasGift = !!giftLineOf(cart);
+    var count = cart.item_count || 0;
+    // Gift already in cart (shown as its own FREE line) or empty cart -> no banner.
+    if (hasGift || count === 0) { el.hidden = true; el.innerHTML = ''; return; }
+    if (qualifyingCount(cart) >= 1) {
+      // Qualifies but gift absent (e.g. declined earlier) -> let them re-claim it.
+      el.innerHTML = '<span class="aac__gift-cta-tx">🎁 Claim your <b>free 5 Mukhi Rudraksha</b></span>' +
+        '<button type="button" class="aac__gift-cta-btn" data-aac-gift-add>Add free</button>';
+    } else {
+      // Cart has only non-qualifying items (plate/oil) -> nudge, no button.
+      el.innerHTML = '<span class="aac__gift-cta-tx">🎁 Add a product for a <b>free 5 Mukhi Rudraksha</b></span>';
+    }
+    el.hidden = false;
+  }
+  function postGiftChange(key, qty) {
+    return fetch('/cart/change.js', {
+      method: 'POST', credentials: 'same-origin',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+      body: JSON.stringify({ id: key, quantity: qty })
+    }).then(function (r) { return r.ok ? r.json() : null; });  // never hand an error body to render()
+  }
+  // Only re-render on a real cart; on failure leave the last good state (no error-body-as-empty-cart, no retry loop).
+  function afterGiftOp(c) { giftBusy = false; if (c && c.items) render(c); }
+  function giftFail() { giftBusy = false; }
+  function enforceGift(cart) {
+    if (giftBusy || !cart) return;
+    var gift = giftLineOf(cart);
+    var qual = qualifyingCount(cart);
+    // 1) The free item can NEVER stand alone. No qualifying paid item -> pull the gift.
+    if (gift && qual === 0) {
+      giftBusy = true; postGiftChange(gift.key, 0).then(afterGiftOp).catch(giftFail); return;
+    }
+    // 2) Lock the gift to a single unit (heal any qty > 1 before judging whether it's actually free).
+    if (gift && gift.quantity > 1) {
+      giftBusy = true; postGiftChange(gift.key, 1).then(afterGiftOp).catch(giftFail); return;
+    }
+    // 3) Safety net: if the server did NOT zero the gift (eligibility drift / per-order limit), pull it so the
+    //    customer is never charged for a "free" gift, and latch off so we don't re-add it in a loop.
+    if (gift && gift.final_line_price > 0) {
+      giftUnavailable = true;
+      giftBusy = true; postGiftChange(gift.key, 0).then(afterGiftOp).catch(giftFail); return;
+    }
+    // 4) Attach the gift once the order qualifies (unless dismissed this session or latched unavailable).
+    if (!gift && qual >= 1 && !giftDeclined() && !giftUnavailable) {
+      giftBusy = true;
+      var fd = new FormData(); fd.append('id', GIFT_VID); fd.append('quantity', '1');
+      fetch('/cart/add.js', { method: 'POST', credentials: 'same-origin', headers: { Accept: 'application/json', 'X-Requested-With': 'XMLHttpRequest' }, body: fd })
+        .then(function (r) {
+          if (!r.ok) { giftUnavailable = true; giftBusy = false; return null; }  // sold out / 429 -> latch off, do NOT loop
+          return fetch('/cart.js', { headers: { Accept: 'application/json' }, credentials: 'same-origin' }).then(function (r2) { return r2.ok ? r2.json() : null; });
+        })
+        .then(function (c) { giftBusy = false; if (c && c.items) render(c); })
+        .catch(function () { giftBusy = false; });
+    }
   }
   function updateBubble(count) {
     var n = count > 99 ? '99+' : count;
@@ -226,6 +334,10 @@
         setSubtotal(lastTotal);
         setCount(cartCount());
         announce('Item added to cart');
+        // A qualifying paid item was just added — pull in the free gift (fast-add path skips render()).
+        if (item && String(item.variant_id) !== GIFT_VID && !GIFT_EXCLUDE[item.product_type] && !byVariant[GIFT_VID] && !giftDeclined() && !giftUnavailable) {
+          loadCart();
+        }
         // Amplitude: the custom cart bypasses the Shopify plugin's automatic
         // add-to-cart capture, so fire the plugin-shaped event here (the one
         // source all ATC paths funnel through: PDP, cards, quickview).
@@ -384,6 +496,9 @@
     d.classList.toggle('is-empty', (cart.item_count || 0) === 0);
     updateBubble(cart.item_count); updateTotalBar(cart); syncCards();
     if ((cart.item_count || 0) === 0) { var items = $('[data-aac-items]', d); if (items) items.innerHTML = ''; renderRecs(cart); }
+    // qty/remove paths use applyMeta (not render), so enforce the gift here too (auto-pull if it's now alone, etc.)
+    renderGiftCta(cart);
+    enforceGift(cart);
   }
   function cartChange(body) {
     return fetch('/cart/change.js', {
@@ -514,7 +629,9 @@
       if (cur <= 0) { changeLine(key, 0, row); }
       else { if (qEl) qEl.textContent = cur; changeLine(key, cur, row); }
     } else if (e.target.closest('[data-aac-remove]')) {
-      e.preventDefault(); changeLine(key, 0, row);
+      e.preventDefault();
+      if (String(row.getAttribute('data-variant')) === GIFT_VID) setGiftDeclined(true);  // customer declined the gift this session
+      changeLine(key, 0, row);
     }
   });
   document.addEventListener('click', function (e) {
@@ -534,6 +651,12 @@
     var qEl = row && row.querySelector('[data-aac-qty]');
     var qty = parseInt(qEl && qEl.textContent, 10) || 1;
     swapVariant(key, newId, qty);
+  });
+  document.addEventListener('click', function (e) {
+    var g = e.target.closest && e.target.closest('[data-aac-gift-add]');
+    if (!g) return;
+    e.preventDefault();
+    if (typeof window.AA_claimMukhi === 'function') window.AA_claimMukhi();  // un-decline + re-sync -> gift attaches free
   });
   document.addEventListener('click', function (e) {
     var b = e.target.closest && e.target.closest('[data-aac-rec]');

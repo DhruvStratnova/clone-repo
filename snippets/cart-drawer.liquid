@@ -24,7 +24,7 @@
       aria-label="{{ 'sections.cart.title' | t }}"
       tabindex="-1"
     >
-      <div class="aac__promo" data-aac-promo><div class="aac__promo-track"><span>🚚 Free shipping across India • no minimum</span><span>💎 100% authentic &amp; energised products</span><span>🏷️ Pay online &amp; get <b>25% OFF</b> your order</span><span>🚚 Free shipping across India • no minimum</span><span>💎 100% authentic &amp; energised products</span><span>🏷️ Pay online &amp; get <b>25% OFF</b> your order</span></div></div>
+      <div class="aac__promo" data-aac-promo><div class="aac__promo-track"><span>🚚 Free shipping across India • no minimum</span><span>💎 100% authentic &amp; energised products</span><span>🔒 Safe &amp; secure checkout</span><span>🚚 Free shipping across India • no minimum</span><span>💎 100% authentic &amp; energised products</span><span>🔒 Safe &amp; secure checkout</span></div></div>
       <div class="aac__head">
         <h2 class="aac__title">{{ 'sections.cart.title' | t }}</h2>
         <button class="drawer__close aac__close" type="button" data-aac-close aria-label="{{ 'accessibility.close' | t }}">
@@ -35,7 +35,7 @@
       </div>
 
       <div class="aac__cashback">
-        <span class="aac__cashback-ic" aria-hidden="true">🎁</span>
+        <span class="aac__cashback-ic" aria-hidden="true">💳</span>
         <span class="aac__cashback-tx">Pay online &amp; get an extra <b>5% back in your Aura AI Wallet</b></span>
       </div>
 
@@ -115,6 +115,8 @@
             </li>
           {%- endfor -%}
         </ul>
+        {%- comment -%} FREEMUKHI nudge, sits under the product lines (JS fills/hides by state) {%- endcomment -%}
+        <div class="aac__gift-cta" data-aac-gift-cta hidden></div>
         <div class="aac__recs" data-aac-recs hidden></div>
       </div>
 
@@ -167,4 +169,23 @@
   .aac__head{ padding-top:6px !important; }
   /* brighten the faint empty-cart icon in dark (was rgba(255,255,255,.3), near-invisible) */
   html[data-theme="dark"] .aac__empty-ico{ color:rgba(255,255,255,.62) !important; }
+  /* FREEMUKHI free-gift line: reward tag + struck ₹599 → FREE */
+  .aac__gift-tag{ display:inline-block; align-self:flex-start; width:fit-content; max-width:max-content; font:700 10px/1 'Jost',system-ui,sans-serif; letter-spacing:.04em; text-transform:uppercase; color:#E9027A; background:#FCE3EC; padding:3px 8px; border-radius:100px; margin-bottom:4px; }
+  .aac__linetotal--gift s{ color:#9a8ea0; font-weight:500; margin-right:6px; }
+  .aac__linetotal--gift b{ color:#1a7f37; font-weight:700; }
+  html[data-theme="dark"] .aac__gift-tag{ color:#ff8fc4; background:rgba(233,2,122,.18); }
+  html[data-theme="dark"] .aac__linetotal--gift b{ color:#5bd07f; }
+  /* in-cart FREEMUKHI nudge — full-bleed, hangs off a full-width divider, dashed sides, black CTA */
+  .aac__gift-cta{ display:flex; align-items:center; gap:8px; margin:0 -20px 8px; padding:9px 20px; background:transparent; border:1px dashed #c4bcc0; border-top:1px solid var(--aac-line); border-radius:0; }
+  .aac__gift-cta[hidden]{ display:none; }
+  /* drop the last item's own inset border when the nudge is showing, so the full-width line is the only divider */
+  .aac__body:has(.aac__gift-cta:not([hidden])) .aac__items .aac__item:last-child{ border-bottom:0; }
+  .aac__gift-cta-tx{ flex:1; font:600 11px/1.25 'Jost',system-ui,sans-serif; color:#2a2230; }
+  .aac__gift-cta-tx b{ color:#141018; font-weight:700; }
+  .aac__gift-cta-btn{ flex:0 0 auto; border:0; background:#141018; color:#fff; font:700 10.5px/1 'Jost',system-ui,sans-serif; padding:6px 12px; border-radius:100px; cursor:pointer; }
+  .aac__gift-cta-btn:hover{ filter:brightness(1.25); }
+  html[data-theme="dark"] .aac__gift-cta{ border-color:rgba(255,255,255,.28); border-top-color:var(--aac-line); }
+  html[data-theme="dark"] .aac__gift-cta-tx{ color:#e7dbe1; }
+  html[data-theme="dark"] .aac__gift-cta-tx b{ color:#fff; }
+  html[data-theme="dark"] .aac__gift-cta-btn{ background:#fff; color:#141018; }
 </style>
