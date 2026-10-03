@@ -643,6 +643,55 @@
       "settings": {
         "autoplay_ms": 3000
       }
+    },
+    "aa_home_faq": {
+      "type": "aa-homepage-faq",
+      "blocks": {
+        "faq_0": {
+          "type": "faq",
+          "settings": {
+            "q": "Are your crystals and gemstones natural and certified?",
+            "a": "Yes. Every stone is lab tested for authenticity and hand selected. No synthetics, no shortcuts."
+          }
+        },
+        "faq_1": {
+          "type": "faq",
+          "settings": {
+            "q": "How do I care for my jewellery?",
+            "a": "Keep it away from water and perfume, wipe it gently with a soft cloth, and recharge it under moonlight now and then."
+          }
+        },
+        "faq_2": {
+          "type": "faq",
+          "settings": {
+            "q": "Do the crystals and rudraksha actually work?",
+            "a": "Each piece is energised with intention to support your focus and calm. Wear yours daily and stay consistent for the best results."
+          }
+        },
+        "faq_3": {
+          "type": "faq",
+          "settings": {
+            "q": "How fast is delivery?",
+            "a": "Orders ship free across India and usually arrive within 5 to 7 business days."
+          }
+        },
+        "faq_4": {
+          "type": "faq",
+          "settings": {
+            "q": "Can I return or exchange my order?",
+            "a": "Yes. If something isn't right you can return it. See our returns policy for the full details."
+          }
+        }
+      },
+      "block_order": ["faq_0", "faq_1", "faq_2", "faq_3", "faq_4"],
+      "settings": {
+        "heading": "Questions, answered",
+        "card_heading": "Still have a question?",
+        "card_text": "Our team is here to help, real people, quick replies. Ask us anything about your order or which piece fits your intention.",
+        "card_hours": "Mon to Sat · 10am to 7pm",
+        "whatsapp_number": "917303100616",
+        "whatsapp_text": "Hi, I have a question"
+      }
     }
   },
   "order": [
@@ -664,6 +713,7 @@
     "why_aa",
     "certified_aa",
     "steps_aa",
-    "testimonials_aa"
+    "testimonials_aa",
+    "aa_home_faq"
   ]
 }
