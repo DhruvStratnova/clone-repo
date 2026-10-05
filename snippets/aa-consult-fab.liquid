@@ -1,0 +1,33 @@
+{%- comment -%} Always-visible floating WhatsApp consult. Product name rides into the message on PDPs. {%- endcomment -%}
+{%- if template.name == 'product' and product -%}
+  {%- assign aa_fab_msg = 'Get my remedies (looking at ' | append: product.title | append: ')' -%}
+{%- else -%}
+  {%- assign aa_fab_msg = 'Get my remedies' -%}
+{%- endif -%}
+<a class="aa-cfab" href="https://wa.me/919667561344?text={{ aa_fab_msg | url_encode }}" target="_blank" rel="noopener" aria-label="Expert consultation on WhatsApp">
+  <span class="aa-cfab__ic" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="#fff"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.2 1.2-1.7 1.2-.4.1-1 .1-1.6-.1a13 13 0 0 1-5.8-5.1c-.7-1.1-1.1-2.3-.9-3 .1-.6.8-1.4 1.3-1.5h.9c.2 0 .5-.1.7.5l1 2.3c.1.2.1.4 0 .6l-.5.8c-.1.2-.3.4-.1.7a9 9 0 0 0 3.9 3.5c.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.7-.1l2.1 1c.3.2.5.3.6.4 0 .2 0 .6-.1 1z"/></svg></span>
+  <span class="aa-cfab__lbl">Expert consult</span>
+</a>
+<style>
+  .aa-cfab{position:fixed;left:16px;bottom:20px;z-index:9992;display:inline-flex;align-items:center;gap:8px;
+    padding:7px 15px 7px 7px;border-radius:999px;text-decoration:none;
+    background:linear-gradient(135deg,#25D366,#0E9F6E);color:#fff;font-family:'Assistant',system-ui,sans-serif;font-weight:800;font-size:13.5px;letter-spacing:.01em;
+    box-shadow:0 10px 26px rgba(14,159,110,.4);animation:aacfIn .4s cubic-bezier(.22,1,.36,1) both}
+  .aa-cfab::before{content:"";position:absolute;inset:0;border-radius:999px;box-shadow:0 0 0 0 rgba(37,211,102,.5);animation:aacfPulse 2.6s ease-out infinite;pointer-events:none}
+  .aa-cfab__ic{position:relative;width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center}
+  .aa-cfab__ic svg{width:19px;height:19px}
+  .aa-cfab__lbl{position:relative;padding-right:4px}
+  .aa-cfab:hover{transform:translateY(-2px);transition:transform .2s}
+  @keyframes aacfPulse{to{box-shadow:0 0 0 14px rgba(37,211,102,0)}}
+  @keyframes aacfIn{from{opacity:0;transform:translateY(14px) scale(.9)}to{opacity:1;transform:none}}
+  body.template-product .aa-cfab{display:none} /* PDP uses the consult icon inside the sticky buy dock instead */
+  /* MOBILE: compact icon-only circle (recognizable WhatsApp, minimal footprint) */
+  @media (max-width:749px){
+    .aa-cfab{left:12px;bottom:16px;padding:0;width:50px;height:50px;justify-content:center;border-radius:50%}
+    .aa-cfab__lbl{display:none}
+    .aa-cfab__ic{width:auto;height:auto;background:transparent}
+    .aa-cfab__ic svg{width:26px;height:26px}
+    body.template-product .aa-cfab{bottom:84px}
+  }
+  @media (prefers-reduced-motion:reduce){ .aa-cfab,.aa-cfab::before{animation:none} }
+</style>
