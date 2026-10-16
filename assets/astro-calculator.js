@@ -14,7 +14,7 @@ function aaCalcInit() {
   // -----------------------------------------------------------------
   // API config
   // -----------------------------------------------------------------
-  var REMEDIES_API_URL = 'https://ieakxiipnpwvyvpsjnkl.supabase.co/functions/v1/public-quiz-remedy-api';
+  var REMEDIES_API_URL = 'https://api.astroaura.ai/functions/v1/public-quiz-remedy-api';
   // Set when the user picks a place from the Geoapify suggestions — carries the
   // lat/lon/timezone the chart engine hard-requires (a typed-only place has none).
   var aaSelectedPlace = null;

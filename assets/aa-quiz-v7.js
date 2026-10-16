@@ -3,7 +3,7 @@
   'use strict';
   try { window.AA_QUIZ_VERSION = 'quiz-v5-api'; } catch (e) {}
 
-  var API_URL = 'https://ieakxiipnpwvyvpsjnkl.supabase.co/functions/v1/public-quiz-remedy-api';
+  var API_URL = 'https://api.astroaura.ai/functions/v1/public-quiz-remedy-api';
   var API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImllYWt4aWlwbnB3dnl2cHNqbmtsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTUxOTA4NzcsImV4cCI6MjA3MDc2Njg3N30.R_seea1Eefbitn2ZI-ye0oASLsoazA7lynGTk7B1pH4';
 
   var GOAL_TITLE = {
